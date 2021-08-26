@@ -93,7 +93,7 @@ function defaultStyles_new() {
       isSlideshow: false,
       scrollDirection: 'VERTICAL', //TODO, create and use use NEW_CONSTS
       layoutOrientation: 'HORIZONTAL', //TODO, create and use use NEW_CONSTS
-      forceGroupOrder: 'BY_COLUMNS', //TODO, create and use use NEW_CON
+      forceGroupsOrder: 'BY_COLUMNS', //TODO, create and use use NEW_CON
       numberOfRows: 1,
       numberOfColumns: 3,
       columnRatios: '', //columnsRatio ? TBD

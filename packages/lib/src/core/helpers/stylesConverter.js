@@ -39,37 +39,37 @@ function convertStylesBackwards(initialStyles) {
 
 const layoutParamsMap = {
   //done
-  galleryMargin: 'layoutParams_gallerySpacing', //done
-  groupsPerStrip: 'layoutParams_numberOfGroupsPerRow', //done
+  galleryMargin: styleParamsMap.layoutParams.gallerySpacing, //done
+  groupsPerStrip: styleParamsMap.layoutParams.numberOfGroupsPerRow, //done
   columnWidths: styleParamsMap.layoutParams.columnRatios,
   cubeFitPosition: styleParamsMap.layoutParams.croppedAlignment,
   //Are all of the following content keys? so they could go into layoutParams_content_
-  cubeRatio: 'layoutParams_cropRatio', //done
-  cubeType: 'layoutParams_cropMethod',
-  cubeImages: 'layoutParams_enableCrop',
-  useMaxDimensions: 'layoutParams_enableStreching', //naming???
-  rotatingCropRatios: 'layoutParams_repeatingCropRatios',
-  smartCrop: 'layoutParams_enableSmartCrop',
-  minItemSize: 'layoutParams_minItemSize',
-  cropOnlyFill: 'layoutParams_cropOnlyFill', //????????????????
+  cubeRatio: styleParamsMap.layoutParams.cropRatio, //done
+  cubeType: styleParamsMap.layoutParams.cropMethod,
+  cubeImages: styleParamsMap.layoutParams.enableCrop,
+  useMaxDimensions: styleParamsMap.layoutParams.enableStreching, //naming???
+  rotatingCropRatios: styleParamsMap.layoutParams.repeatingCropRatios,
+  smartCrop: styleParamsMap.layoutParams.enableSmartCrop,
+  minItemSize: styleParamsMap.layoutParams.minItemSize,
+  cropOnlyFill: styleParamsMap.layoutParams.cropOnlyFill, //????????????????
 
-  imageMargin: 'layoutParams_itemSpacing',
-  placeGroupsLtr: 'layoutParams_groupsOrder', //REFACTOR - LEFT_TO_RIGHT, RIGHT_TO_LEFT
-  rotatingGroupTypes: 'layoutParams_repeatingGroupTypes',
+  imageMargin: styleParamsMap.layoutParams.itemSpacing,
+  placeGroupsLtr: styleParamsMap.layoutParams.forceGroupsOrder, //REFACTOR - LEFT_TO_RIGHT, RIGHT_TO_LEFT
+  rotatingGroupTypes: styleParamsMap.layoutParams.repeatingGroupTypes,
 
-  slideshowInfoSize: 'layoutParams_slideshowInfoSize',
+  slideshowInfoSize: styleParamsMap.layoutParams.slideshowInfoSize,
 
   //is is is?
-  isSlideshow: 'layoutParams_isSlideshow',
-  isGrid: 'layoutParams_isGrid',
-  isMasonry: 'layoutParams_isMasonry',
-  isSlider: 'layoutParams_isSlider',
-  isColumns: 'layoutParams_isColumns',
+  isSlideshow: styleParamsMap.layoutParams.isSlideshow,
+  isGrid: styleParamsMap.layoutParams.isGrid,
+  isMasonry: styleParamsMap.layoutParams.isMasonry,
+  isSlider: styleParamsMap.layoutParams.isSlider,
+  isColumns: styleParamsMap.layoutParams.isColumns,
   //targetItemSize
-  gallerySize: 'layoutParams_targetItemSize_smart',
-  gallerySizePx: 'layoutParams_targetItemSize_pixel',
-  gallerySizeRatio: 'layoutParams_targetItemSize_percent',
-  gallerySizeType: 'layoutParams_targetItemSize_mode',
+  gallerySize: styleParamsMap.layoutParams.targetItemSize.smart,
+  gallerySizePx: styleParamsMap.layoutParams.targetItemSize.pixel,
+  gallerySizeRatio: styleParamsMap.layoutParams.targetItemSize.percent,
+  gallerySizeType: styleParamsMap.layoutParams.targetItemSize.mode,
   //bundle collage
   collageAmount: styleParamsMap.layoutParams.collage.amount, //????????????????
   collageDensity: styleParamsMap.layoutParams.collage.density,
@@ -77,10 +77,10 @@ const layoutParamsMap = {
   groupTypes: styleParamsMap.layoutParams.collage.groupTypes,
   groupSize: styleParamsMap.layoutParams.collage.groupSize,
   //bundle thumbnails
-  hasThumbnails: 'layoutParams_thumbnails_enable',
-  thumbnailSpacings: 'layoutParams_thumbnails_spacing',
-  thumbnailSize: 'layoutParams_thumbnails_size',
-  galleryThumbnailsAlignment: 'layoutParams_thumbnails_alignment',
+  hasThumbnails: styleParamsMap.layoutParams.thumbnails.enable,
+  thumbnailSpacings: styleParamsMap.layoutParams.thumbnails.spacing,
+  thumbnailSize: styleParamsMap.layoutParams.thumbnails.size,
+  galleryThumbnailsAlignment: styleParamsMap.layoutParams.thumbnails.alignment,
 
   //bundle arrows
   showArrows: styleParamsMap.layoutParams.navigationArrows.enable,
@@ -90,29 +90,30 @@ const layoutParamsMap = {
   arrowsSize: styleParamsMap.layoutParams.navigationArrows.size,
   arrowsPosition: styleParamsMap.layoutParams.navigationArrows.position,
 
-  fixedColumns: 'layoutParams_fixedColumns', //????????????????
+  fixedColumns: styleParamsMap.layoutParams.fixedColumns, //????????????????
 
-  scatter: 'layoutParams_scatter_randomScatter',
-  rotatingScatter: 'layoutParams_scatter_manualScatter',
-  scrollDirection: 'layoutParams_scrollDirection',
+  scatter: styleParamsMap.layoutParams.scatter.randomScatter,
+  rotatingScatter: styleParamsMap.layoutParams.scatter.manualScatter,
+  scrollDirection: styleParamsMap.layoutParams.scrollDirection,
 
-  isVertical: 'layoutParams_layoutOrientation', // This needs to be refactored to be an enum. but can wait
+  isVertical: styleParamsMap.layoutParams.layoutOrientation, // This needs to be refactored to be an enum. but can wait
 
   //info
-  calculateTextBoxWidthMode: 'layoutParams_info_sizeCalculationMode',
-  textBoxHeight: 'layoutParams_info_height',
-  textBoxWidth: 'layoutParams_info_width',
-  // textBoxWidthPercent: 'layoutParams_info_widthByPercent'
-  textImageSpace: 'layoutParams_info_spacing',
-  titlePlacement: 'layoutParams_info_placement',
+  calculateTextBoxWidthMode:
+    styleParamsMap.layoutParams.info.sizeCalculationMode,
+  textBoxHeight: styleParamsMap.layoutParams.info.height,
+  textBoxWidth: styleParamsMap.layoutParams.info.width,
+  // textBoxWidthPercent: styleParamsMap.layoutParams.info.widthByPercent,
+  textImageSpace: styleParamsMap.layoutParams.info.spacing,
+  titlePlacement: styleParamsMap.layoutParams.info.placement,
   //----------border
-  textBoxBorderColor: 'layoutParams_info_border_color',
-  textBoxBorderRadius: 'layoutParams_info_border_radius',
-  textBoxBorderWidth: 'layoutParams_info_border_width',
+  textBoxBorderColor: styleParamsMap.layoutParams.info.border.color,
+  textBoxBorderRadius: styleParamsMap.layoutParams.info.border.radius,
+  textBoxBorderWidth: styleParamsMap.layoutParams.info.border.width,
 
-  externalInfoHeight: 'layoutParams_externalInfoHeight', //layouter API
-  externalInfoWidth: 'layoutParams_externalInfoWidth', //layouter API
-  targetItemSize: 'layoutParams_targetItemSize', //layouter API
+  externalInfoHeight: styleParamsMap.layoutParams.externalInfoHeight, //layouter API
+  externalInfoWidth: styleParamsMap.layoutParams.externalInfoWidth, //layouter API
+  targetItemSize: styleParamsMap.layoutParams.targetItemSize, //layouter API
 };
 
 const behaviourParams = {
@@ -199,29 +200,29 @@ function migrateStyles(oldStyles) {
   //naming
   newStyles = changeNames(newStyles, [
     ['imageMargin', styleParamsMap.layoutParams.itemSpacing],
-    ['cubeType', 'layoutParams_cropMethod'], //Must get its own function o unite with the rotating!
+    ['cubeType', styleParamsMap.layoutParams.cropMethod], //Must get its own function o unite with the rotating!
     //rotatingCropRatios + cropType//TODO!
-    ['cubeImages', 'layoutParams_enableCrop'],
-    ['smartCrop', 'layoutParams_enableSmartCrop'],
-    ['minItemSize', 'layoutParams_minItemSize'],
-    ['cropOnlyFill', 'layoutParams_cropOnlyFill'],
-    ['slideshowInfoSize', 'layoutParams_slideshowInfoSize'],
-    ['scatter', 'layoutParams_scatter_randomScatter'],
-    ['rotatingScatter', 'layoutParams_scatter_manualScatter'],
-    ['isSlideshow', 'layoutParams_isSlideshow'],
-    ['isGrid', 'layoutParams_isGrid'],
-    ['isMasonry', 'layoutParams_isMasonry'],
-    ['isSlider', 'layoutParams_isSlider'],
-    ['isColumns', 'layoutParams_isColumns'],
-    ['numberOfImagesPerCol', 'layoutParams_numberOfRows'],
+    ['cubeImages', styleParamsMap.layoutParams.enableCrop],
+    ['smartCrop', styleParamsMap.layoutParams.enableSmartCrop],
+    ['minItemSize', styleParamsMap.layoutParams.minItemSize],
+    ['cropOnlyFill', styleParamsMap.layoutParams.cropOnlyFill],
+    ['slideshowInfoSize', styleParamsMap.layoutParams.slideshowInfoSize],
+    ['scatter', styleParamsMap.layoutParams.scatter.randomScatter],
+    ['rotatingScatter', styleParamsMap.layoutParams.scatter.manualScatter],
+    ['isSlideshow', styleParamsMap.layoutParams.isSlideshow],
+    ['isGrid', styleParamsMap.layoutParams.isGrid],
+    ['isMasonry', styleParamsMap.layoutParams.isMasonry],
+    ['isSlider', styleParamsMap.layoutParams.isSlider],
+    ['isColumns', styleParamsMap.layoutParams.isColumns],
+    ['numberOfImagesPerCol', styleParamsMap.layoutParams.numberOfRows],
     ['columnWidths', styleParamsMap.layoutParams.columnRatios],
     //['collageAmount', styleParamsMap.layoutParams.collage.amount], //This doesnt really exist. need to eradicate as a refactor
     ['collageDensity', styleParamsMap.layoutParams.collage.density],
     ['chooseBestGroup', styleParamsMap.layoutParams.collage.groupByOrientation],
     ['groupSize', styleParamsMap.layoutParams.collage.groupSize],
-    ['hasThumbnails', 'layoutParams_thumbnails_enable'],
-    ['thumbnailSpacings', 'layoutParams_thumbnails_spacing'],
-    ['thumbnailSize', 'layoutParams_thumbnails_size'],
+    ['hasThumbnails', styleParamsMap.layoutParams.thumbnails.enable],
+    ['thumbnailSpacings', styleParamsMap.layoutParams.thumbnails.spacing],
+    ['thumbnailSize', styleParamsMap.layoutParams.thumbnails.size],
     ['showArrows', styleParamsMap.layoutParams.navigationArrows.enable],
     ['arrowsPadding', styleParamsMap.layoutParams.navigationArrows.padding],
     [
@@ -231,26 +232,29 @@ function migrateStyles(oldStyles) {
     ['arrowsSize', styleParamsMap.layoutParams.navigationArrows.size],
     ['arrowsPosition', styleParamsMap.layoutParams.navigationArrows.position],
 
-    ['calculateTextBoxWidthMode', 'layoutParams_info_sizeCalculationMode'],
-    ['textBoxHeight', 'layoutParams_info_height'],
-    ['textBoxWidth', 'layoutParams_info_width'],
-    //['textBoxWidthPercent', 'layoutParams_info_widthByPercent'],
-    ['textImageSpace', 'layoutParams_info_spacing'],
-    ['imageInfoType', 'layoutParams_info_backgroundMode'],
-    ['textBoxBorderWidth', 'layoutParams_info_border_width'],
-    ['textBoxBorderColor', 'layoutParams_info_border_color'],
-    ['textBoxBorderRadius', 'layoutParams_info_border_radius'],
-    ['gallerySize', 'layoutParams_targetItemSize_smart'],
-    ['gallerySizePx', 'layoutParams_targetItemSize_pixel'],
-    ['gallerySizeRatio', 'layoutParams_targetItemSize_percent'],
+    [
+      'calculateTextBoxWidthMode',
+      styleParamsMap.layoutParams.info.sizeCalculationMode,
+    ],
+    ['textBoxHeight', styleParamsMap.layoutParams.info.height],
+    ['textBoxWidth', styleParamsMap.layoutParams.info.width],
+    //['textBoxWidthPercent', styleParamsMap.layoutParams.info.widthByPercent],
+    ['textImageSpace', styleParamsMap.layoutParams.info.spacing],
+    ['imageInfoType', styleParamsMap.layoutParams.info.backgroundMode],
+    ['textBoxBorderWidth', styleParamsMap.layoutParams.info.border.width],
+    ['textBoxBorderColor', styleParamsMap.layoutParams.info.border.color],
+    ['textBoxBorderRadius', styleParamsMap.layoutParams.info.border.radius],
+    ['gallerySize', styleParamsMap.layoutParams.targetItemSize.smart],
+    ['gallerySizePx', styleParamsMap.layoutParams.targetItemSize.pixel],
+    ['gallerySizeRatio', styleParamsMap.layoutParams.targetItemSize.percent],
   ]);
   newStyles = reverseBooleans(newStyles, [
-    ['useMaxDimensions', 'layoutParams_enableStreching'],
+    ['useMaxDimensions', styleParamsMap.layoutParams.enableStreching],
   ]);
   newStyles = processThumbnailAlignment(newStyles);
   newStyles = processScrollDirection(newStyles);
   newStyles = processLayoutOrientation(newStyles);
-  newStyles = processForceGroupOrder(newStyles);
+  newStyles = processForceGroupsOrder(newStyles);
   newStyles = processGroupTypes(newStyles);
   newStyles = processNumberOfColumns(newStyles); // fixedColumns || numberOfImagesPerRow || numberOfGroupsPerRow (notice its losing if its 0)
   newStyles = processInfoBackgroundMode(newStyles);
@@ -389,12 +393,12 @@ function reverseBooleanTo(obj, oldName, newName) {
 
 //----- refactor functions ----------//
 function processThumbnailAlignment(obj) {
-  //['galleryThumbnailsAlignment', 'layoutParams_thumbnails_alignment'],
+  //['galleryThumbnailsAlignment', styleParamsMap.layoutParams.thumbnails.alignment'],
   let _obj = { ...obj };
   _obj = namingChange(
     _obj,
     'galleryThumbnailsAlignment',
-    'layoutParams_thumbnails_alignment'
+    styleParamsMap.layoutParams.thumbnails.alignment
   );
   _obj.layoutParams.thumbnails.alignment =
     _obj.layoutParams.thumbnails.alignment?.toUpperCase();
@@ -416,7 +420,7 @@ function processtargetItemSizeMode(obj) {
   _obj = namingChange(
     _obj,
     'gallerySizeType',
-    'layoutParams_targetItemSize_mode'
+    styleParamsMap.layoutParams.targetItemSize.mode
   );
   _obj.layoutParams.targetItemSize.mode =
     _obj.layoutParams.targetItemSize.mode?.toUpperCase();
@@ -441,7 +445,11 @@ function processVideoSpeed(obj) {
 }
 function processScrollDirection(obj) {
   let _obj = { ...obj };
-  _obj = namingChange(_obj, 'scrollDirection', 'layoutParams_scrollDirection');
+  _obj = namingChange(
+    _obj,
+    'scrollDirection',
+    styleParamsMap.layoutParams.scrollDirection
+  );
   switch (_obj.layoutParams.scrollDirection) {
     case 0:
       _obj.layoutParams.scrollDirection = 'VERTICAL';
@@ -471,7 +479,11 @@ function processlayoutDirection(obj) {
 }
 function processLayoutOrientation(obj) {
   let _obj = { ...obj };
-  _obj = namingChange(_obj, 'isVertical', 'layoutParams_layoutOrientation');
+  _obj = namingChange(
+    _obj,
+    'isVertical',
+    styleParamsMap.layoutParams.layoutOrientation
+  );
   switch (_obj.layoutParams.layoutOrientation) {
     case true:
       _obj.layoutParams.layoutOrientation = 'VERTICAL';
@@ -484,15 +496,19 @@ function processLayoutOrientation(obj) {
   }
   return _obj;
 }
-function processForceGroupOrder(obj) {
+function processForceGroupsOrder(obj) {
   let _obj = { ...obj };
-  _obj = namingChange(_obj, 'placeGroupsLtr', 'layoutParams_forceGroupOrder');
-  switch (_obj.layoutParams.forceGroupOrder) {
+  _obj = namingChange(
+    _obj,
+    'placeGroupsLtr',
+    styleParamsMap.layoutParams.forceGroupsOrder
+  );
+  switch (_obj.layoutParams.forceGroupsOrder) {
     case true:
-      _obj.layoutParams.forceGroupOrder = 'LEFT_TO_RIGHT';
+      _obj.layoutParams.forceGroupsOrder = 'LEFT_TO_RIGHT';
       break;
     case false:
-      _obj.layoutParams.forceGroupOrder = 'BY_COLUMNS';
+      _obj.layoutParams.forceGroupsOrder = 'BY_COLUMNS';
       break;
     default:
       break;
@@ -532,7 +548,7 @@ function processInfoBackgroundMode(obj) {
   _obj = namingChange(
     _obj,
     'imageInfoType',
-    'layoutParams_info_backgroundMode'
+    styleParamsMap.layoutParams.info.backgroundMode
   );
   switch (_obj.layoutParams.info.backgroundMode) {
     case 'DONT_SHOW':
@@ -564,7 +580,11 @@ function processOverlayHoveringBehaviour(obj) {
 }
 function processInfoPlacement(obj) {
   let _obj = { ...obj };
-  _obj = namingChange(_obj, 'titlePlacement', 'layoutParams_info_placement');
+  _obj = namingChange(
+    _obj,
+    'titlePlacement',
+    styleParamsMap.layoutParams.info.placement
+  );
   switch (_obj.layoutParams.info.placement) {
     case 'SHOW_ON_HOVER':
       _obj.layoutParams.info.placement = 'OVERLAY';
