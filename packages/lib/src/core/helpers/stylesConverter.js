@@ -72,10 +72,10 @@ const layoutParamsMap = {
   gallerySizeType: 'layoutParams_targetItemSize_mode',
   //bundle collage
   collageAmount: styleParamsMap.layoutParams.collage.amount, //????????????????
-  collageDensity: 'layoutParams_collage_density',
-  chooseBestGroup: 'layoutParams_collage_groupByOrientation',
-  groupTypes: 'layoutParams_collage_groupTypes',
-  groupSize: 'layoutParams_collage_groupSize',
+  collageDensity: styleParamsMap.layoutParams.collage.density,
+  chooseBestGroup: styleParamsMap.layoutParams.collage.groupByOrientation,
+  groupTypes: styleParamsMap.layoutParams.collage.groupTypes,
+  groupSize: styleParamsMap.layoutParams.collage.groupSize,
   //bundle thumbnails
   hasThumbnails: 'layoutParams_thumbnails_enable',
   thumbnailSpacings: 'layoutParams_thumbnails_spacing',
@@ -117,26 +117,30 @@ const layoutParamsMap = {
 
 const behaviourParams = {
   //item
-  itemClick: 'behaviourParams_item_clickAction', //possible refactor (join fullscreen, expand into one 'action')
+  itemClick: styleParamsMap.behaviourParams.item.clickAction, //possible refactor (join fullscreen, expand into one 'action')
   //----video
-  videoSpeed: 'behaviourParams_item_video_speed',
-  hidePlay: 'behaviourParams_item_video_enablePlayButton',
-  videoPlay: 'behaviourParams_item_video_playTrigger',
-  videoLoop: 'behaviourParams_item_video_loop',
-  showVideoControls: 'behaviourParams_item_video_enableControls',
-  videoSound: 'behaviourParams_item_video_volume',
-  enableVideoPlaceholder: 'behaviourParams_item_video_enablePlaceholder',
+  videoSpeed: styleParamsMap.behaviourParams.item.video.speed,
+  hidePlay: styleParamsMap.behaviourParams.item.video.enablePlayButton,
+  videoPlay: styleParamsMap.behaviourParams.item.video.playTrigger,
+  videoLoop: styleParamsMap.behaviourParams.item.video.loop,
+  showVideoControls: styleParamsMap.behaviourParams.item.video.enableControls,
+  videoSound: styleParamsMap.behaviourParams.item.video.volume,
+  enableVideoPlaceholder:
+    styleParamsMap.behaviourParams.item.video.enablePlaceholder,
   //----overlay
-  hoveringBehaviour: 'behaviourParams_item_overlay_hoveringBehaviour',
-  overlayAnimation: 'behaviourParams_item_overlay_hoverAnimation',
-  overlayPosition: 'behaviourParams_item_overlay_position',
-  overlaySize: 'behaviourParams_item_overlay_size',
-  overlaySizeType: 'behaviourParams_item_overlay_sizeUnits',
-  overlayPadding: 'behaviourParams_item_overlay_padding',
+  hoveringBehaviour:
+    styleParamsMap.behaviourParams.item.overlay.hoveringBehaviour,
+  overlayAnimation: styleParamsMap.behaviourParams.item.overlay.hoverAnimation,
+  overlayPosition: styleParamsMap.behaviourParams.item.overlay.position,
+  overlaySize: styleParamsMap.behaviourParams.item.overlay.size,
+  overlaySizeType: styleParamsMap.behaviourParams.item.overlay.sizeUnits,
+  overlayPadding: styleParamsMap.behaviourParams.item.overlay.padding,
   //----content
-  imageHoverAnimation: 'behaviourParams_item_content_hoverAnimation',
-  imagePlacementAnimation: 'behaviourParams_item_content_placementAnimation',
-  imageLoadingMode: 'behaviourParams_item_content_loader',
+  imageHoverAnimation:
+    styleParamsMap.behaviourParams.item.content.hoverAnimation,
+  imagePlacementAnimation:
+    styleParamsMap.behaviourParams.item.content.placementAnimation,
+  imageLoadingMode: styleParamsMap.behaviourParams.item.content.loader,
   //gallery
   scrollSnap: 'behaviourParams_gallery_enableScrollSnap',
   isRTL: 'behaviourParams_gallery_layoutDirection', // changes from boolean to an enum (refactor)
@@ -147,9 +151,12 @@ const behaviourParams = {
     'behaviourParams_gallery_enableIndexingShareLinks',
   //----vertical
   //--------loadMore
-  enableInfiniteScroll: 'behaviourParams_gallery_vertical_loadMore_enable',
-  loadMoreAmount: 'behaviourParams_gallery_vertical_loadMore_amount',
-  loadMoreButtonText: 'behaviourParams_gallery_vertical_loadMore_text',
+  enableInfiniteScroll:
+    styleParamsMap.behaviourParams.gallery.vertical.loadMore.enable,
+  loadMoreAmount:
+    styleParamsMap.behaviourParams.gallery.vertical.loadMore.amount,
+  loadMoreButtonText:
+    styleParamsMap.behaviourParams.gallery.vertical.loadMore.text,
 
   //----horizontal
   slideAnimation: 'behaviourParams_gallery_horizontal_slideAnimation',
@@ -208,10 +215,10 @@ function migrateStyles(oldStyles) {
     ['isColumns', 'layoutParams_isColumns'],
     ['numberOfImagesPerCol', 'layoutParams_numberOfRows'],
     ['columnWidths', styleParamsMap.layoutParams.columnRatios],
-    //['collageAmount', 'layoutParams_collage_amount'], //This doesnt really exist. need to eradicate as a refactor
-    ['collageDensity', 'layoutParams_collage_density'],
-    ['chooseBestGroup', 'layoutParams_collage_groupByOrientation'],
-    ['groupSize', 'layoutParams_collage_groupSize'],
+    //['collageAmount', styleParamsMap.layoutParams.collage.amount], //This doesnt really exist. need to eradicate as a refactor
+    ['collageDensity', styleParamsMap.layoutParams.collage.density],
+    ['chooseBestGroup', styleParamsMap.layoutParams.collage.groupByOrientation],
+    ['groupSize', styleParamsMap.layoutParams.collage.groupSize],
     ['hasThumbnails', 'layoutParams_thumbnails_enable'],
     ['thumbnailSpacings', 'layoutParams_thumbnails_spacing'],
     ['thumbnailSize', 'layoutParams_thumbnails_size'],
@@ -256,24 +263,33 @@ function migrateStyles(oldStyles) {
     ['videoLoop', 'behaviourParams_item_video_loop'],
     ['showVideoControls', 'behaviourParams_item_video_enableControls'],
     ['enableVideoPlaceholder', 'behaviourParams_item_video_enablePlaceholder'],
-    ['overlayAnimation', 'behaviourParams_item_overlay_hoverAnimation'],
-    ['overlayPosition', 'behaviourParams_item_overlay_position'],
-    ['overlaySize', 'behaviourParams_item_overlay_size'],
-    ['overlaySizeType', 'behaviourParams_item_overlay_sizeUnits'],
-    ['overlayPadding', 'behaviourParams_item_overlay_padding'],
-    ['imageHoverAnimation', 'behaviourParams_item_content_hoverAnimation'],
+    [
+      'overlayAnimation',
+      styleParamsMap.behaviourParams.item.overlay.hoverAnimation,
+    ],
+    ['overlayPosition', styleParamsMap.behaviourParams.item.overlay.position],
+    ['overlaySize', styleParamsMap.behaviourParams.item.overlay.size],
+    ['overlaySizeType', styleParamsMap.behaviourParams.item.overlay.sizeUnits],
+    ['overlayPadding', styleParamsMap.behaviourParams.item.overlay.padding],
+    [
+      'imageHoverAnimation',
+      styleParamsMap.behaviourParams.item.content.hoverAnimation,
+    ],
     [
       'imagePlacementAnimation',
-      'behaviourParams_item_content_placementAnimation',
+      styleParamsMap.behaviourParams.item.content.placementAnimation,
     ],
-    ['imageLoadingMode', 'behaviourParams_item_content_loader'],
+    ['imageLoadingMode', styleParamsMap.behaviourParams.item.content.loader],
     ['scrollSnap', 'behaviourParams_gallery_horizontal_enableScrollSnap'],
     ['scrollAnimation', 'behaviourParams_gallery_scrollAnimation'],
     [
       'shouldIndexDirectShareLinkInSEO',
       'behaviourParams_gallery_enableIndexingShareLinks',
     ],
-    ['loadMoreButtonText', 'behaviourParams_gallery_vertical_loadMore_text'],
+    [
+      'loadMoreButtonText',
+      styleParamsMap.behaviourParams.gallery.vertical.loadMore.text,
+    ],
     ['slideAnimation', 'behaviourParams_gallery_horizontal_slideAnimation'],
     ['slideTransition', 'behaviourParams_gallery_horizontal_slideTransition'],
     ['scrollDuration', 'behaviourParams_gallery_horizontal_navigationDuration'], //This might need to move to navigationArrows in layoutParams.
@@ -306,7 +322,7 @@ function migrateStyles(oldStyles) {
   newStyles = reverseBooleans(newStyles, [
     [
       'enableInfiniteScroll',
-      'behaviourParams_gallery_vertical_loadMore_enable',
+      styleParamsMap.behaviourParams.gallery.vertical.loadMore.enable,
     ],
     ['allowContextMenu', 'behaviourParams_gallery_disableContextMenu'],
     ['hidePlay', 'behaviourParams_item_video_enablePlayButton'],
@@ -489,7 +505,7 @@ function processLoadMoreAmount(obj) {
   _obj = namingChange(
     _obj,
     'loadMoreAmount',
-    'behaviourParams_gallery_vertical_loadMore_amount'
+    styleParamsMap.behaviourParams.gallery.vertical.loadMore.amount
   );
   _obj.behaviourParams.gallery.vertical.loadMore.amount =
     _obj.behaviourParams.gallery.vertical.loadMore.amount?.toUpperCase();
@@ -532,7 +548,7 @@ function processOverlayHoveringBehaviour(obj) {
   _obj = namingChange(
     _obj,
     'hoveringBehaviour',
-    'behaviourParams_item_overlay_hoveringBehaviour'
+    styleParamsMap.behaviourParams.item.overlay.hoveringBehaviour
   );
   switch (_obj.behaviourParams.item.overlay.hoveringBehaviour) {
     case 'NO_CHANGE':
@@ -616,7 +632,7 @@ function processAutoSlideBehaviour(obj) {
 }
 function processCropRatio(obj) {
   let _obj = { ...obj };
-  //['groupTypes', 'layoutParams_collage_groupTypes'], //Need to change this to incorporate rotatingGroupTypes //change the 'Types'?
+  //['groupTypes', styleParamsMap.layoutParams.collage.groupTypes'], //Need to change this to incorporate rotatingGroupTypes //change the 'Types'?
   let repeatingVal = obj.rotatingCropRatios;
   let val = obj.cubeRatio || obj.layoutParams?.cropRatio;
 
@@ -633,7 +649,7 @@ function processCropRatio(obj) {
 }
 function processGroupTypes(obj) {
   let _obj = { ...obj };
-  //['groupTypes', 'layoutParams_collage_groupTypes'], //Need to change this to incorporate rotatingGroupTypes //change the 'Types'?
+  //['groupTypes', styleParamsMap.layoutParams.collage.groupTypes'], //Need to change this to incorporate rotatingGroupTypes //change the 'Types'?
   let repeatingVal =
     obj.rotatingGroupTypes || obj.layoutParams?.repeatingGroupTypes;
   let val = obj.groupTypes;
