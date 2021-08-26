@@ -37,7 +37,7 @@ export const SECTIONS_ORDER = {
   STORE: 10,
 };
 
-export const stylesBySection = {
+export const optionsBySection = {
   [SECTIONS.PRESET]: ['galleryLayout'],
   [SECTIONS.LAYOUT]: [
     // 'allowLeanGallery',
@@ -171,10 +171,10 @@ export const stylesBySection = {
   ],
 };
 
-export const stylesList = [].concat(...Object.values(stylesBySection));
-export const sectionByStyle = Object.assign(
+export const optionsList = [].concat(...Object.values(optionsBySection));
+export const sectionByOption = Object.assign(
   {},
-  ...Object.entries(stylesBySection).map(([section, options]) =>
+  ...Object.entries(optionsBySection).map(([section, options]) =>
     options.reduce(
       (obj, option) => ({
         ...obj,
@@ -185,7 +185,7 @@ export const sectionByStyle = Object.assign(
   )
 );
 
-export const settingsManager = stylesList.reduce((obj, option) => {
+export const settingsManager = optionsList.reduce((obj, option) => {
   const settingsData = galleryOptions[option];
 
   return settingsData
@@ -193,7 +193,7 @@ export const settingsManager = stylesList.reduce((obj, option) => {
         ...obj,
         [option]: {
           ...settingsData,
-          section: sectionByStyle[option],
+          section: sectionByOption[option],
         },
       }
     : {
@@ -201,7 +201,7 @@ export const settingsManager = stylesList.reduce((obj, option) => {
         [option]: {
           missing: true,
           title: option,
-          section: sectionByStyle[option],
+          section: sectionByOption[option],
           isRelevant: () => false,
         },
       };
