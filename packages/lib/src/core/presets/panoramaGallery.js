@@ -2,32 +2,32 @@ import LAYOUTS from '../../common/constants/layout';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
 
-const fixToPanorama = (styles) => {
-  let presetStyles = { ...styles };
-  presetStyles.galleryLayout = LAYOUTS.PANORAMA;
-  presetStyles.cubeImages = false;
-  presetStyles.scrollDirection = SCROLL_DIRECTION.VERTICAL;
-  presetStyles.isVertical = true;
-  presetStyles.groupSize = 1;
-  presetStyles.groupTypes = '1';
+const fixToPanorama = (options) => {
+  let presetOptions = { ...options };
+  presetOptions.galleryLayout = LAYOUTS.PANORAMA;
+  presetOptions.cubeImages = false;
+  presetOptions.scrollDirection = SCROLL_DIRECTION.VERTICAL;
+  presetOptions.isVertical = true;
+  presetOptions.groupSize = 1;
+  presetOptions.groupTypes = '1';
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
 
-  presetStyles.galleryType = 'Columns';
-  presetStyles.fixedColumns = 1;
-  presetStyles.enableScroll = true;
-  presetStyles.isGrid = false;
-  presetStyles.isColumns = false;
-  presetStyles.isMasonry = false;
-  presetStyles.isSlider = false;
-  presetStyles.isSlideshow = false;
-  presetStyles.cropOnlyFill = false;
-  presetStyles.slideshowLoop = false;
-  return presetStyles;
+  presetOptions.galleryType = 'Columns';
+  presetOptions.fixedColumns = 1;
+  presetOptions.enableScroll = true;
+  presetOptions.isGrid = false;
+  presetOptions.isColumns = false;
+  presetOptions.isMasonry = false;
+  presetOptions.isSlider = false;
+  presetOptions.isSlideshow = false;
+  presetOptions.cropOnlyFill = false;
+  presetOptions.slideshowLoop = false;
+  return presetOptions;
 };
-export const fixedStyles = fixToPanorama({});
+export const fixedOptions = fixToPanorama({});
 
-export const createStyles = (styles) => {
-  let res = { ...styles };
+export const createOptions = (options) => {
+  let res = { ...options };
   res = fixToPanorama(res);
   res.targetItemSize = calcTargetItemSize(res);
   return res;

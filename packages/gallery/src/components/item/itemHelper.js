@@ -68,11 +68,10 @@ export function changeActiveElementIfNeeded({
   }
 }
 
-export function shouldCreateVideoPlaceholder(styles) {
+export function shouldCreateVideoPlaceholder(options) {
   return (
-    styles.enableVideoPlaceholder &&
-    (!utils.isSingleItemHorizontalDisplay(styles) ||
-      styles.behaviourParams.item.video.playTrigger !==
-        GALLERY_CONSTS.videoPlay.AUTO)
+    options.enableVideoPlaceholder &&
+    (!utils.isSingleItemHorizontalDisplay(options) ||
+      options.videoPlay !== GALLERY_CONSTS.videoPlay.AUTO)
   );
 }

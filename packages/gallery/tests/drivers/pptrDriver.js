@@ -45,8 +45,8 @@ export default class galleryDriver {
     return page;
   }
 
-  async navigate(styleParams) {
-    const pageUrl = this.getPageUrl(styleParams);
+  async navigate(options) {
+    const pageUrl = this.getPageUrl(options);
     await this.page.goto(pageUrl, { waitUntil: 'networkidle2' });
     await this.scrollInteraction();
     await this.page.waitFor(500);
@@ -86,9 +86,9 @@ export default class galleryDriver {
         }),
     };
   }
-  getPageUrl(styleParams) {
+  getPageUrl(options) {
     let urlParam = '';
-    let flatSP = flattenObject(styleParams);
+    let flatSP = flattenObject(options);
     Object.keys(flatSP).map((sp) => (urlParam += `${sp}=${flatSP[sp]}&`));
     const localhost = config.baseUrl;
     const url = `${localhost}/?${urlParam}isTestEnvironment=true`;

@@ -4,7 +4,7 @@ import SlideshowView from '../../src/components/gallery/proGallery/slideshowView
 import GalleryDriver from '../drivers/reactDriver';
 import sinon from 'sinon';
 
-describe('styleParam - autoSlideshowType', () => {
+describe('options - autoSlideshowType', () => {
   let driver;
   let galleryViewProps;
   let clock;
@@ -13,7 +13,7 @@ describe('styleParam - autoSlideshowType', () => {
   beforeEach(() => {
     driver = new GalleryDriver();
     initialProps = driver.props.galleryView();
-    Object.assign(initialProps.styleParams, {
+    Object.assign(initialProps.options, {
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     clock = sinon.useFakeTimers();
@@ -23,7 +23,7 @@ describe('styleParam - autoSlideshowType', () => {
     clock.restore();
   });
   it('Should call "next" with the correct value when auto autoSlideshowType set to "INTERVAL"', () => {
-    Object.assign(initialProps.styleParams, {
+    Object.assign(initialProps.options, {
       isAutoSlideshow: true,
       autoSlideshowInterval: 1,
       autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
@@ -40,7 +40,7 @@ describe('styleParam - autoSlideshowType', () => {
   });
 
   it('Should call "next" with the correct value when auto autoSlideshowType set to "CONTINUOUS"', () => {
-    Object.assign(initialProps.styleParams, {
+    Object.assign(initialProps.options, {
       isAutoSlideshow: true,
       autoSlideshowContinuousSpeed: 200,
       autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.CONTINUOUS,

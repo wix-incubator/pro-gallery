@@ -5,7 +5,7 @@ import {testMedia, testItems, testImages, testVideos, testTexts, monochromeImage
 import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { createMediaUrl } from '../../utils/itemResizer';
-import {setStyleParamsInUrl} from '../../constants/styleParams'
+import {setOptionsInUrl} from '../../constants/options'
 import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
 import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
@@ -33,7 +33,7 @@ let sideShownOnce = false;
 let totalItems = 0;
 
 export function App() {
-  const {getBlueprintFromServer, setContainer, styleParams, setItems, items, gallerySettings, setBlueprint, blueprint, container, setShowSide} = useGalleryContext(blueprintsManager);
+  const {getBlueprintFromServer, setContainer, options, setItems, items, gallerySettings, setBlueprint, blueprint, container, setShowSide} = useGalleryContext(blueprintsManager);
   const {showSide} = gallerySettings;
   sideShownOnce = sideShownOnce || showSide;
 
@@ -152,14 +152,14 @@ export function App() {
     } else if (gallerySettings.shouldUseBlueprintsFromServer) {
       const params = {
         container: getContainer(),
-        options: getStyles(),
+        options: getOptions(),
         items: getItems()
       }
       getBlueprintFromServer(params);
     } else {
-      const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, getTotalItemsCount});
+      const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getOptions, onBlueprintReady: setBlueprint, getTotalItemsCount});
       blueprintsManager.init({api: playgroundBlueprintsApi})
-      blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), container: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
+      blueprintsManager.createBlueprint({items: getItems(), options: getOptions(), container: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
     }
   }
 
@@ -174,7 +174,7 @@ export function App() {
       </div>
     </div>);
 
-    const { titlePlacement } = pgItemProps.styleParams;
+    const { titlePlacement } = pgItemProps.options;
 
     switch (type) {
       case 'HOVER':
@@ -218,8 +218,8 @@ export function App() {
     return {scrollBase: 0, ...container, ...(gallerySettings.responsivePreview && resizedDims)};
   }
 
-  const getStyles = () => {
-    return styleParams;
+  const getOptions = () => {
+    return options;
   }
 
   const canRender = ()=> {
@@ -237,18 +237,18 @@ export function App() {
     };
   }, [setContainer]);
 
-  if (!isTestingEnv) { // isTestingEnvironment is not a valid style param and would be removed from the url if we use setStyleParamsInUrl. this removed this protection for testing environment as well
-    setStyleParamsInUrl(styleParams);
+  if (!isTestingEnv) { // isTestingEnvironment is not a valid option and would be removed from the url if we use setOptionsInUrl. this removed this protection for testing environment as well
+    setOptionsInUrl(options);
   }
 
   const blueprintProps = gallerySettings.useBlueprints ? getOrInitBlueprint() :
   {
     items: getItems(),
-    options: styleParams,
+    options,
     container: getContainer()
   };
 
-  // console.log('Rendering App: ', {styleParams, items, dimensions, showSide, blueprint, blueprintProps})
+  // console.log('Rendering App: ', {options, items, dimensions, showSide, blueprint, blueprintProps})
   const getKeySettings = () => {
     const { mediaType, numberOfItems, isUnknownDimensions, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand} = gallerySettings;
     return { mediaType, numberOfItems, isUnknownDimensions, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
@@ -258,7 +258,7 @@ export function App() {
 
   const shouldRenderLeanGallery = isEligibleForLeanGallery({
     items: getItems(),
-    styles: styleParams,
+    styles: options,
     totalItemsCount: getTotalItemsCount()
   });
 

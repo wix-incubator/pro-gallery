@@ -100,8 +100,8 @@ export default class Gallery extends React.PureComponent {
     const containerClassName =
       viewMode === GALLERY_CONSTS.viewMode.PRERENDER ? 'no-transition' : '';
 
-    const hasUrlStyles = Object.keys(urlParams).length > 0;
-    const styles = hasUrlStyles ? urlParams : utils.defaultStyleParams;
+    const hasUrlOptions = Object.keys(urlParams).length > 0;
+    const options = hasUrlOptions ? urlParams : utils.defaultOptions;
 
     const items = urlParams.isTestEnvironment ?
       monochromeImages.slice(0, 20) :
@@ -123,7 +123,7 @@ export default class Gallery extends React.PureComponent {
         <Gallery
           id="ssr-simulator"
           items={items}
-          styles={styles}
+          options={options}
           settings={{
             disableSSROpacity: !!urlParams.disableSSROpacity,
             avoidInlineStyles: !urlParams.useLayoutFixer,
