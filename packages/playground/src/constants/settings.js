@@ -174,34 +174,34 @@ export const stylesBySection = {
 export const stylesList = [].concat(...Object.values(stylesBySection));
 export const sectionByStyle = Object.assign(
   {},
-  ...Object.entries(stylesBySection).map(([section, styleParams]) =>
-    styleParams.reduce(
-      (obj, styleParam) => ({
+  ...Object.entries(stylesBySection).map(([section, options]) =>
+    options.reduce(
+      (obj, option) => ({
         ...obj,
-        [styleParam]: section,
+        [option]: section,
       }),
       {}
     )
   )
 );
 
-export const settingsManager = stylesList.reduce((obj, styleParam) => {
-  const settingsData = galleryOptions[styleParam];
+export const settingsManager = stylesList.reduce((obj, option) => {
+  const settingsData = galleryOptions[option];
 
   return settingsData
     ? {
         ...obj,
-        [styleParam]: {
+        [option]: {
           ...settingsData,
-          section: sectionByStyle[styleParam],
+          section: sectionByStyle[option],
         },
       }
     : {
         ...obj,
-        [styleParam]: {
+        [option]: {
           missing: true,
-          title: styleParam,
-          section: sectionByStyle[styleParam],
+          title: option,
+          section: sectionByStyle[option],
           isRelevant: () => false,
         },
       };

@@ -29,15 +29,15 @@ function SideBar({ items, blueprintsManager, visible }) {
   const {
     gallerySettings,
     setGallerySettings,
-    setStyleParams,
-    styleParams,
+    setOptions,
+    options,
   } = useGalleryContext(blueprintsManager);
 
-  const flatStyleParams = flattenObject(styleParams)
+  const flatOptions = flattenObject(options)
   const [searchResult, setSearchResult] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const _setStyleParams = throttle(setStyleParams, 1000);
+  const _setOptions = throttle(setOptions, 1000);
   const createSearchString = (styleParam, searchTerm) => {
     let res = [styleParam];
     const props = settingsManager[styleParam];
@@ -61,8 +61,8 @@ function SideBar({ items, blueprintsManager, visible }) {
     setSearchResult('');
     setSearchTerm('');
   };
-  const changedStyleParams = Object.entries(flatStyleParams).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidOption(styleParam, value, flatStyleParams)).reduce((obj, [styleParam, value]) => ({ ...obj, [styleParam]: value }), {});
-  const didChangeStyleParams = Object.keys(changedStyleParams).length > 0;
+  const changedOptions = Object.entries(flatOptions).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidOption(styleParam, value, flatOptions)).reduce((obj, [styleParam, value]) => ({ ...obj, [styleParam]: value }), {});
+  const didChangeStyleParams = Object.keys(changedOptions).length > 0;
 
   const isDev = (window.location.hostname.indexOf('localhost') >= 0) || null;
   return (
@@ -98,13 +98,13 @@ function SideBar({ items, blueprintsManager, visible }) {
             border: 'none',
           }}>
             <JsonEditor
-              onChange={_setStyleParams}
-              allStyleParams={flatStyleParams}
-              styleParams={flatStyleParams}
+              onChange={_setOptions}
+              allOptions={flatOptions}
+              options={flatOptions}
               section={settingsManager[searchResult].section}
-              styleParam={searchResult}
+              option={searchResult}
               expandIcon={() => <Icon onClick={() => resetSearch()} type="close" />}
-              showAllStyles={true}
+              showAllOptions={true}
             />
           </Card>
         }
@@ -115,21 +115,21 @@ function SideBar({ items, blueprintsManager, visible }) {
           {didChangeStyleParams ?
             <Collapse.Panel header={'* Changed Settings'} key="-1">
               <JsonEditor
-                onChange={_setStyleParams}
-                allStyleParams={flatStyleParams}
-                styleParams={changedStyleParams}
-                showAllStyles={true}
+                onChange={_setOptions}
+                allOptions={flatOptions}
+                options={changedOptions}
+                showAllOptions={true}
               />
             </Collapse.Panel> : null}
           <Collapse.Panel header={SECTIONS.PRESET} key="1">
-            <LayoutPicker selectedLayout={flatStyleParams.galleryLayout} onSelectLayout={galleryLayout => setStyleParams('galleryLayout', galleryLayout)} />
+            <LayoutPicker selectedLayout={flatOptions.galleryLayout} onSelectLayout={galleryLayout => setOptions('galleryLayout', galleryLayout)} />
             <Divider />
             <JsonEditor
-              onChange={_setStyleParams}
-              allStyleParams={flatStyleParams}
-              styleParams={flatStyleParams}
+              onChange={_setOptions}
+              allOptions={flatOptions}
+              options={flatOptions}
               section={SECTIONS.PRESET}
-              showAllStyles={gallerySettings.showAllStyles}
+              showAllOptions={gallerySettings.showAllStyles}
             />
           </Collapse.Panel>
           {Object.values(SECTIONS).map((section, idx) => {
@@ -138,10 +138,10 @@ function SideBar({ items, blueprintsManager, visible }) {
                 <Collapse.Panel header={section} key={idx + 1}>
                   <JsonEditor
                     section={section}
-                    onChange={_setStyleParams}
-                    allStyleParams={flatStyleParams}
-                    styleParams={flatStyleParams}
-                    showAllStyles={gallerySettings.showAllStyles}
+                    onChange={_setOptions}
+                    allOptions={flatOptions}
+                    options={flatOptions}
+                    showAllOptions={gallerySettings.showAllStyles}
                   />
                 </Collapse.Panel>
               )
@@ -245,7 +245,7 @@ function SideBar({ items, blueprintsManager, visible }) {
                 <Button shape="circle" icon="arrow-right" target="_blank" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
               </Form.Item>
               {isDev && <Form.Item label="Simulate Local SSR" labelAlign="left">
-                <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}&${getContainerUrlParams(gallerySettings)}&${Object.entries(flatStyleParams).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
+                <Button shape="circle" icon="bug" target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useBlueprints=${gallerySettings.useBlueprints}&${getContainerUrlParams(gallerySettings)}&${Object.entries(flatOptions).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
               </Form.Item>}
             </Form>
           </Collapse.Panel>
@@ -257,17 +257,17 @@ function SideBar({ items, blueprintsManager, visible }) {
           {isDev && <Collapse.Panel header="Lean Gallery" key="lean">
             <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
               <Form.Item label="Allow Lean Gallery" labelAlign="left">
-                <Switch checked={!!flatStyleParams.allowLeanGallery} onChange={e => setStyleParams('allowLeanGallery', !!e)} />
+                <Switch checked={!!flatOptions.allowLeanGallery} onChange={e => setOptions('allowLeanGallery', !!e)} />
               </Form.Item>
               {
-                isEligibleForLeanGallery({ items, styles: flatStyleParams }) ?
+                isEligibleForLeanGallery({ items, styles: flatOptions }) ?
                   <Alert key={'leanGalleryAllowed'} message={'RENDERING LEAN GALLERY'} type="success" />
                   :
                   <List
                     size="small"
                     header="CAN NOT RENDER LEAN GALLERY"
                     bordered
-                    dataSource={notEligibleReasons({ items, styles: flatStyleParams })}
+                    dataSource={notEligibleReasons({ items, styles: flatOptions })}
                     renderItem={item => <List.Item>{item}</List.Item>}
                   />
               }

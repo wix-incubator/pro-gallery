@@ -51,9 +51,9 @@ export const isValidOption = (option, value, options) => {
     return false;
   }
   options = { ..._defaultOptions, ...options };
-  const flatFixedPresetStyles = flattenObject(NEW_PRESETS[getLayoutName(options.galleryLayout)]);
-  options = { ...options, ...flatFixedPresetStyles, }
-  if (option !== 'galleryLayout' && value === flatFixedPresetStyles[option]) {
+  const flatFixedPresetOptions = flattenObject(NEW_PRESETS[getLayoutName(options.galleryLayout)]);
+  options = { ...options, ...flatFixedPresetOptions, }
+  if (option !== 'galleryLayout' && value === flatFixedPresetOptions[option]) {
 
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is as the flatFixedPresetStyles: ${value}`, flatFixedPresetStyles, getLayoutName(options.galleryLayout));
     return false;
