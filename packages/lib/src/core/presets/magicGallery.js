@@ -42,7 +42,7 @@ const fixToMagic = (options) => {
 };
 export const fixedOptions = fixToMagic({});
 
-const addSeedStyles = (options) => {
+const addSeedOptions = (options) => {
   let res = { ...options };
   let seed = res.magicLayoutSeed;
   if (!seed > 0) {
@@ -138,6 +138,6 @@ const addSeedStyles = (options) => {
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToMagic(res);
-  res = addSeedStyles(res);
+  res = addSeedOptions(res);
   return res;
 };
