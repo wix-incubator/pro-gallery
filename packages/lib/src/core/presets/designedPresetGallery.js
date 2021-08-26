@@ -9,7 +9,7 @@ export const createOptions = (options) => {
     return {
       ...options,
       ...parsedOptions,
-      // targetItemSize: calcTargetItemSize(styles),
+      // targetItemSize: calcTargetItemSize(options),
     };
   } catch (e) {
     return {};
