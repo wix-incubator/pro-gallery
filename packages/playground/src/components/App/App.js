@@ -152,7 +152,7 @@ export function App() {
     } else if (gallerySettings.shouldUseBlueprintsFromServer) {
       const params = {
         container: getContainer(),
-        styleParams: getStyles(),
+        options: getStyles(),
         items: getItems()
       }
       getBlueprintFromServer(params);
@@ -283,7 +283,7 @@ export function App() {
     customComponents: getCustomComponents(),
     ...blueprintProps
   }
-  props.shouldValidateTypes = true
+  props.shouldValidateTypes = false
 
   return (
     <main id="sidebar_main" className={s.main}>

@@ -5,6 +5,13 @@ const coreStyles = {
     gallerySpacing: 0,
     cropRatio: 1, // determine the ratio of the images when using grid (use 1 for squares grid)
   },
+  behavourParams: {
+    item: {
+      video: {
+        playTrigger: 'HOVER',
+      },
+    },
+  },
   isRTL: false,
   isVertical: false,
   minItemSize: 120,
@@ -17,7 +24,7 @@ const coreStyles = {
   fullscreen: true,
   videoLoop: true,
   videoSound: false,
-  videoPlay: 'hover',
+  // videoPlay: 'hover',
   videoSpeed: 1,
   numberOfImagesPerRow: 3,
   collageDensity: 0.8,

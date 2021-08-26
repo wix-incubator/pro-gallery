@@ -36,7 +36,8 @@ class VideoItemWrapper extends GalleryComponent {
   }
 
   mightPlayVideo() {
-    const { videoPlay, itemClick } = this.props.styleParams;
+    const { itemClick } = this.props.styleParams;
+    const videoPlay = this.props.styleParams.behavourParams.item.playTrigger
     const { hasLink } = this.props;
     if (this.props.isVideoPlaceholder) {
       return false;

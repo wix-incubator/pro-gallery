@@ -4,7 +4,7 @@ import { StylingParams } from './stylingParams';
 
 export interface Options {
   layoutParams?: LayoutParams;
-  behavourParams?: BehaviourParams;
+  behavourParams: BehaviourParams;
   stylingParams?: StylingParams;
   [key: string]: any;
 }
