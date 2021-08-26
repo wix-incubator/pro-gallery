@@ -8,12 +8,8 @@ export default {
   isRelevant: (options) =>
     options.itemEnableShadow &&
     options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
-    !(
-      options.cubeImages &&
-      options.cubeType === GALLERY_CONSTS.cubeType.FIT
-    ) &&
-    (options.imageInfoType ===
-      GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND ||
+    !(options.cubeImages && options.cubeType === GALLERY_CONSTS.cubeType.FIT) &&
+    (options.imageInfoType === GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND ||
       options.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_HOVER),
   type: INPUT_TYPES.COLOR_PICKER,
   default: 'rgba(0,0,0,0.3)',

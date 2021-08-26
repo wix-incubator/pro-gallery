@@ -9,8 +9,7 @@ export default {
   isRelevant: (options) =>
     options.isAutoSlideshow &&
     options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-    options.autoSlideshowType ===
-      GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
+    options.autoSlideshowType === GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
   type: INPUT_TYPES.NUMBER,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Auto Slide" to "true".',
