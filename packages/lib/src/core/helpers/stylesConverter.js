@@ -1,4 +1,4 @@
-import { assignByString, getByString } from './stylesUtils';
+import { assignByString, getByString, mergeNestedObjects } from './stylesUtils';
 import styleParamsMap from './styleParamsMap';
 
 function convertStyles(initialStyles) {
@@ -203,6 +203,13 @@ const stylingParams = {
   itemBorderRadius: styleParamsMap.stylingParams.itemBorderRadius,
   itemBorderWidth: styleParamsMap.stylingParams.itemBorderWidth,
 };
+
+function addMigratedOptions(options) {
+  let migrated = migrateStyles(options);
+  let combinedOptions = mergeNestedObjects(migrated, options);
+  delete combinedOptions.oldRefactoredOptionInCore;
+  return combinedOptions;
+}
 
 function migrateStyles(oldStyles) {
   let newStyles = { ...oldStyles };
@@ -759,5 +766,6 @@ export {
   convertStyles,
   convertStylesBackwards,
   migrateStyles,
+  addMigratedOptions,
   layoutParamsMap,
 };

@@ -10,6 +10,8 @@ export { addPresetStyles } from './core/presets/presets';
 export {
   convertStyles,
   convertStylesBackwards,
+  migrateStyles,
+  addMigratedOptions,
 } from './core/helpers/stylesConverter';
 export { assignByString } from './core/helpers/stylesUtils';
 export { validateTypes } from './common/validateTypes/validateTypes';
