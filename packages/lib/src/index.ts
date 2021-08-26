@@ -12,6 +12,7 @@ export {
   convertOptionsBackwards,
 } from './core/helpers/optionsConverter';
 export { assignByString } from './core/helpers/optionsUtils';
+export { default as styleParamsMap } from './core/helpers/styleParamsMap';
 export { validateTypes } from './common/validateTypes/validateTypes';
 export { flatToNested } from './core/helpers/optionsUtils';
 export { flattenObject } from './core/helpers/optionsUtils';
