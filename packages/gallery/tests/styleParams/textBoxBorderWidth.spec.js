@@ -3,13 +3,9 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import {
-  styleParams,
-  container,
-  customComponents,
-} from '../drivers/mocks/styles';
+import { options, container, customComponents } from '../drivers/mocks/styles';
 
-describe('styleParam - textBoxBorderWidth', () => {
+describe('options - textBoxBorderWidth', () => {
   let driver;
   let initialProps;
 
@@ -18,13 +14,13 @@ describe('styleParam - textBoxBorderWidth', () => {
     initialProps = {
       container,
       items: images2,
-      styles: styleParams,
+      options,
       customComponents,
     };
   });
 
   it('should set border-width to the text container when "imageInfoType" is "SEPARATED_BACKGROUND"', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
@@ -41,7 +37,7 @@ describe('styleParam - textBoxBorderWidth', () => {
     driver.detach.proGallery();
   });
   it('should not set border-width to the text container when "imageInfoType" is not "SEPARATED_BACKGROUND"', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,

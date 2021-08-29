@@ -1,8 +1,8 @@
-module.exports = getStyleParamsMap;
+module.exports = getOptionsMap;
 
 const _ = require('lodash');
 
-function getStyleParamsMap(schema) {
+function getOptionsMap(schema) {
   let final = {};
   traverseProperties(schema.properties, schema, []);
   return final;
@@ -49,5 +49,5 @@ function assignByString(Obj, string, value) {
 //     encoding: 'utf8',
 //   })
 // );
-// const res = getStyleParamsMap(s);
+// const res = getOptionsMap(s);
 // console.log(JSON.stringify(res, null, 4));

@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import { testImages } from '../drivers/mocks/images-mock';
 import ItemView from '../../src/components/item/itemView';
 
-describe('styleParam - imageLoadingMode', () => {
+describe('options - imageLoadingMode', () => {
   let driver;
 
   function getSampleItemViewProps(imageLoadingMode, createUrlStub = () => {}) {
@@ -14,7 +14,7 @@ describe('styleParam - imageLoadingMode', () => {
     const sampleItemViewProps = driver.props.itemView(sampleItem);
     return Object.assign(sampleItemViewProps, {
       gotFirstScrollEvent: true,
-      styleParams: {
+      options: {
         imageLoadingMode,
       },
       createUrl: createUrlStub,

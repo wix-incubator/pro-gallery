@@ -42,7 +42,7 @@ class galleryDriver {
       },
     };
 
-    this.styleParams = {
+    this.options = {
       layoutParams: {
         gallerySpacing: 1,
         cropRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
@@ -112,7 +112,7 @@ class galleryDriver {
     this.layoutParams = {
       items: this.items,
       container: this.container,
-      styleParams: this.styleParams,
+      styleParams: this.options,
       gotScrollEvent: true,
     };
 
@@ -129,7 +129,7 @@ class galleryDriver {
     this.galleryConfig = {
       container: this.get.container,
       scroll: this.get.scroll,
-      styleParams: this.get.styleParams,
+      options: this.get.options,
       actions: this.get.actions,
       customComponents: this.customComponents,
     };
@@ -138,7 +138,7 @@ class galleryDriver {
   get get() {
     return {
       container: this.container,
-      styleParams: this.styleParams,
+      options: this.options,
       scroll: this.scroll,
       items: this.items,
       actions: this.actions,
@@ -266,7 +266,7 @@ class galleryDriver {
             galleryStructure: this.galleryStructure,
             scroll: this.scroll,
             container: this.container,
-            styleParams: this.styleParams,
+            options: this.options,
             actions: this.actions,
             customComponents: this.customComponents,
           };
@@ -275,7 +275,7 @@ class galleryDriver {
         const layoutParams = {
           items: galleryViewProps.items,
           container: galleryViewProps.container,
-          styleParams: galleryViewProps.styleParams,
+          styleParams: galleryViewProps.options,
         };
 
         const galleryStructure = ItemsHelper.convertToGalleryItems(
@@ -290,7 +290,7 @@ class galleryDriver {
           scroll: galleryViewProps.scroll,
           container: galleryViewProps.container,
           getVisibleItems: (items) => items,
-          styleParams: galleryViewProps.styleParams,
+          options: galleryViewProps.options,
           actions: galleryViewProps.actions,
           convertToGalleryItems: ItemsHelper.convertToGalleryItems,
           convertDtoToLayoutItem: ItemsHelper.convertDtoToLayoutItem,

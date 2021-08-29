@@ -1,8 +1,8 @@
 import GALLERY_CONSTS from './constants';
-import coreStyles from './coreStyles';
-import { mergeNestedObjects } from '../core/helpers/stylesUtils';
+import coreOptions from './coreOptions';
+import { mergeNestedObjects } from '../core/helpers/optionsUtils';
 
-const defaultStyles = mergeNestedObjects(coreStyles, {
+const defaultOptions = mergeNestedObjects(coreOptions, {
   layoutParams: {
     repeatingGroupTypes: '',
   },
@@ -52,4 +52,4 @@ const defaultStyles = mergeNestedObjects(coreStyles, {
   cubeFitPosition: GALLERY_CONSTS.cubeFitPosition.MIDDLE,
 });
 
-export default defaultStyles;
+export default defaultOptions;

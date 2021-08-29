@@ -1,17 +1,18 @@
 // import { calcTargetItemSize } from './layoutHelper';
-import { mergeNestedObjects, flatToNested } from '../helpers/stylesUtils';
-export const createStyles = (styles) => {
+import { mergeNestedObjects, flatToNested } from '../helpers/optionsUtils';
+
+export const createOptions = (options) => {
   try {
-    const parsedStyleParams = styles.jsonStyleParams
-      ? JSON.parse(styles.jsonStyleParams)
+    const parsedOptions = options.jsonStyleParams
+      ? JSON.parse(options.jsonStyleParams)
       : {};
 
-    const styleParams = mergeNestedObjects(
-      styles,
-      flatToNested(parsedStyleParams)
+    const combinedOptions = mergeNestedObjects(
+      options,
+      flatToNested(parsedOptions)
     );
 
-    return styleParams;
+    return combinedOptions;
   } catch (e) {
     return {};
   }

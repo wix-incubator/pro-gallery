@@ -4,8 +4,8 @@ import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Responsive Type',
-  isRelevant: (styleParams) =>
-    styleParams.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL,
+  isRelevant: (options) =>
+    options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL,
   isRelevantDescription:
     'Set a Vertical gallery ("Scroll Direction" as "Vertical").',
   type: INPUT_TYPES.OPTIONS,

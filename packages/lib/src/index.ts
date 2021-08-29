@@ -1,21 +1,23 @@
 export { default as GALLERY_CONSTS } from './common/constants';
 export { default as GalleryItem } from './core/galleryItem';
-export { default as defaultStyles } from './common/defaultStyles';
-export { default as coreStyles } from './common/coreStyles';
+export { default as defaultOptions } from './common/defaultOptions';
+export { default as coreOptions } from './common/coreOptions';
 export { default as dimensionsHelper } from './core/helpers/dimensionsHelper';
 export { ItemsHelper } from './core/helpers/itemsHelper';
 export { default as processLayouts } from './core/helpers/layoutHelper';
 export { featureManager } from './core/helpers/versionsHelper';
-export { addPresetStyles } from './core/presets/presets';
+export { addPresetOptions } from './core/presets/presets';
 export {
-  convertStyles,
-  convertStylesBackwards,
-} from './core/helpers/stylesConverter';
-export { assignByString } from './core/helpers/stylesUtils';
+  convertOptions,
+  convertOptionsBackwards,
+} from './core/helpers/optionsConverter';
+export { assignByString } from './core/helpers/optionsUtils';
+export { mutatingAssignMultipleByStrings } from './core/helpers/optionsUtils';
+export { default as optionsMap } from './core/helpers/optionsMap';
 export { validateTypes } from './common/validateTypes/validateTypes';
-export { flatToNested } from './core/helpers/stylesUtils';
-export { flattenObject } from './core/helpers/stylesUtils';
-export { mergeNestedObjects } from './core/helpers/stylesUtils';
+export { flatToNested } from './core/helpers/optionsUtils';
+export { flattenObject } from './core/helpers/optionsUtils';
+export { mergeNestedObjects } from './core/helpers/optionsUtils';
 export { NEW_PRESETS } from './core/presets/presets';
 export { getLayoutName } from './core/presets/presets';
 export { isInPreset } from './core/presets/presets';

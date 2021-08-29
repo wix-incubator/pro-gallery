@@ -2,32 +2,32 @@ import LAYOUTS from '../../common/constants/layout';
 import PLACEMENTS from '../../common/constants/placements';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
 
-const fixToCollage = (styles) => {
-  let presetStyles = { ...styles };
-  presetStyles.galleryLayout = LAYOUTS.COLLAGE;
-  presetStyles.cubeImages = false;
-  presetStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
-  presetStyles.groupSize = 3;
-  presetStyles.hasThumbnails = false;
-  presetStyles.groupTypes = '1,2h,2v,3t,3b,3l,3r';
-  presetStyles.slideshowLoop = false;
+const fixToCollage = (options) => {
+  let presetOptions = { ...options };
+  presetOptions.galleryLayout = LAYOUTS.COLLAGE;
+  presetOptions.cubeImages = false;
+  presetOptions.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
+  presetOptions.groupSize = 3;
+  presetOptions.hasThumbnails = false;
+  presetOptions.groupTypes = '1,2h,2v,3t,3b,3l,3r';
+  presetOptions.slideshowLoop = false;
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  presetStyles.targetItemSize = 0;
-  presetStyles.fixedColumns = 0;
-  presetStyles.enableScroll = true;
-  presetStyles.isGrid = false;
-  presetStyles.isSlider = false;
-  presetStyles.isMasonry = false;
-  presetStyles.isColumns = false;
-  presetStyles.isSlideshow = false;
-  presetStyles.cropOnlyFill = false;
-  return presetStyles;
+  presetOptions.targetItemSize = 0;
+  presetOptions.fixedColumns = 0;
+  presetOptions.enableScroll = true;
+  presetOptions.isGrid = false;
+  presetOptions.isSlider = false;
+  presetOptions.isMasonry = false;
+  presetOptions.isColumns = false;
+  presetOptions.isSlideshow = false;
+  presetOptions.cropOnlyFill = false;
+  return presetOptions;
 };
-export const fixedStyles = fixToCollage({});
+export const fixedOptions = fixToCollage({});
 
-export const createStyles = (styles) => {
-  let res = { ...styles };
+export const createOptions = (options) => {
+  let res = { ...options };
   res = fixToCollage(res);
   res.targetItemSize = calcTargetItemSize(
     res,
