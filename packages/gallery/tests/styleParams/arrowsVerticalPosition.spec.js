@@ -15,6 +15,11 @@ describe('styleParam - arrowsVerticalPosition', () => {
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    //base layout styles for entire test-suite
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      slideshowInfoSize: 39,
+    });
   });
 
   afterEach(() => {
@@ -22,8 +27,8 @@ describe('styleParam - arrowsVerticalPosition', () => {
   });
 
   it('Should not render the arrows when not enough info space', async () => {
+    // Exact style params relevant to this sub-test
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       slideshowInfoSize: 38, // info height is 39 when default, so slideshowInfoSize < arrowsSize
       arrowsVerticalPosition: 'INFO_CENTER',
     });
@@ -33,11 +38,9 @@ describe('styleParam - arrowsVerticalPosition', () => {
     expect(navArrows).to.have.lengthOf(0);
   });
 
-  // Checks if INFO_CENTER position is good on Slideshow
   it('Checks if "INFO_CENTER" has correct distance from top for SlideShow', async () => {
+    // Exact style params relevant to this sub-test
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      slideshowInfoSize: 39,
       arrowsVerticalPosition: 'INFO_CENTER',
     });
     driver.mount.proGallery(initialProps);
@@ -53,9 +56,8 @@ describe('styleParam - arrowsVerticalPosition', () => {
   });
 
   it('Checks if "ITEM_CENTER" has correct distance from top for SlideShow', async () => {
+    // Exact style params relevant to this sub-test
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      slideshowInfoSize: 39,
       arrowsVerticalPosition: 'ITEM_CENTER',
     });
     driver.mount.proGallery(initialProps);
@@ -66,9 +68,8 @@ describe('styleParam - arrowsVerticalPosition', () => {
   });
 
   it('Checks if "IMAGE_CENTER" has correct distance from top for SlideShow', async () => {
+    // Exact style params relevant to this sub-test
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      slideshowInfoSize: 39,
       arrowsVerticalPosition: 'IMAGE_CENTER',
     });
     driver.mount.proGallery(initialProps);
