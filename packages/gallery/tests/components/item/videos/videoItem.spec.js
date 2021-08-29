@@ -1,4 +1,4 @@
-import { utils, GALLERY_CONSTS } from 'pro-gallery-lib';
+import { utils } from 'pro-gallery-lib';
 import GalleryDriver from '../../../drivers/reactDriver';
 import { testVideos } from '../../../drivers/mocks/images-mock';
 import sinon from 'sinon';
