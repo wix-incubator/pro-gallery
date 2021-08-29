@@ -3,9 +3,9 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 
-describe('styleParam - showArrows', () => {
+describe('options - showArrows', () => {
   let driver;
   let initialProps;
   beforeEach(() => {
@@ -13,11 +13,11 @@ describe('styleParam - showArrows', () => {
     initialProps = {
       container,
       items: images2,
-      styles: styleParams,
+      options,
     };
   });
   it('should show arrows"', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       scrollSnap: true,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
@@ -30,7 +30,7 @@ describe('styleParam - showArrows', () => {
     driver.detach.proGallery();
   });
   it('should not show arrows"', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       scrollSnap: true,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,

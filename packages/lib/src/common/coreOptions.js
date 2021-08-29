@@ -1,5 +1,5 @@
 import GALLERY_CONSTS from './constants';
-const coreStyles = {
+const coreOptions = {
   //duplicated from lib
   layoutParams: {
     gallerySpacing: 0,
@@ -62,4 +62,4 @@ const coreStyles = {
   //duplicated from lib
 };
 
-export default coreStyles;
+export default coreOptions;

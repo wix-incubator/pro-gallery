@@ -3,9 +3,9 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 
-describe('styleParam - slideshowInfoSize', () => {
+describe('options - slideshowInfoSize', () => {
   let driver;
   let initialProps;
   beforeEach(() => {
@@ -13,11 +13,11 @@ describe('styleParam - slideshowInfoSize', () => {
     initialProps = {
       container,
       items: images2,
-      styles: styleParams,
+      options,
     };
   });
   it('should set style for "slideshowInfoSize=250"', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       slideshowInfoSize: 250,
     });
@@ -33,7 +33,7 @@ describe('styleParam - slideshowInfoSize', () => {
     driver.detach.proGallery();
   });
   it('should set the right height for the gallery', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       slideshowInfoSize: 250,
       isSlideshow: true,

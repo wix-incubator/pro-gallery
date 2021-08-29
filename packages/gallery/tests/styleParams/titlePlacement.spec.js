@@ -3,13 +3,9 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import {
-  styleParams,
-  container,
-  customComponents,
-} from '../drivers/mocks/styles';
+import { options, container, customComponents } from '../drivers/mocks/styles';
 
-describe('styleParam - titlePlacement', () => {
+describe('options - titlePlacement', () => {
   let driver;
   let initialProps;
 
@@ -18,13 +14,13 @@ describe('styleParam - titlePlacement', () => {
     initialProps = {
       container,
       items: images2,
-      styles: styleParams,
+      options,
       customComponents,
     };
   });
 
   it('should place texts below images when "titlePlacement" is "SHOW_BELOW"', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: 2,
       onRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
@@ -37,7 +33,7 @@ describe('styleParam - titlePlacement', () => {
     driver.detach.proGallery();
   });
   it('should place texts above images when "titlePlacement" is "SHOW_ABOVE"', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: 2,
       onRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
@@ -50,7 +46,7 @@ describe('styleParam - titlePlacement', () => {
     driver.detach.proGallery();
   });
   it('should render hover when "titlePlacement" is "SHOW_ON_HOVER"', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: 2,
       onRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,

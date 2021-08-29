@@ -3,13 +3,9 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import {
-  styleParams,
-  container,
-  customComponents,
-} from '../drivers/mocks/styles';
+import { options, container, customComponents } from '../drivers/mocks/styles';
 
-describe('styleParam - textImageSpace', () => {
+describe('options - textImageSpace', () => {
   let driver;
   let initialProps;
 
@@ -18,13 +14,13 @@ describe('styleParam - textImageSpace', () => {
     initialProps = {
       container,
       items: images2,
-      styles: styleParams,
+      options,
       customComponents,
     };
   });
 
   it('should set spacing between the image and the texts (texts below items and separated background)', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
@@ -42,7 +38,7 @@ describe('styleParam - textImageSpace', () => {
     driver.detach.proGallery();
   });
   it('should set spacing between the image and the texts (texts above items and separated background)', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
       imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
@@ -57,7 +53,7 @@ describe('styleParam - textImageSpace', () => {
     driver.detach.proGallery();
   });
   it('should not set when "imageInfoType" is not "SEPARATED_BACKGROUND"', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
       imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,

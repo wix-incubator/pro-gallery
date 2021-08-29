@@ -2,9 +2,9 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
-describe('styleParam - scrollDirection', () => {
+describe('options - scrollDirection', () => {
   let driver;
   let initialProps;
 
@@ -13,12 +13,12 @@ describe('styleParam - scrollDirection', () => {
     initialProps = {
       container,
       items: [...images2, ...images2],
-      styles: styleParams,
+      options,
     };
   });
 
   it('should render element "#gallery-horizontal-scroll" when "scrollDirection" is horizontal', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
       galleryLayout: 2,
     });
@@ -29,7 +29,7 @@ describe('styleParam - scrollDirection', () => {
     driver.detach.proGallery();
   });
   it('should render element "#pro-gallery-margin-container" when "scrollDirection" is vertical', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       galleryLayout: 2,
     });
@@ -40,7 +40,7 @@ describe('styleParam - scrollDirection', () => {
     driver.detach.proGallery();
   });
   it('should set margin on items to "0px" when scrollDirection is false(vertical)', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       galleryLayout: 2,
     });

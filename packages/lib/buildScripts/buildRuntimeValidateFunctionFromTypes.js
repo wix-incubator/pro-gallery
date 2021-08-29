@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const writeES5StandaloneValidateMethod = require('./writeStandaloneValidate');
 const getSchemaFromTypes = require('./getSchema');
-const getStyleParamsMap = require('./getStyleParamsMap');
+const getOptionsMap = require('./getOptionsMap');
 
 function start() {
   const libSrcFolder = path.join(__dirname, '../src');
@@ -30,10 +30,10 @@ function start() {
     rmSync: fs.rmSync,
   });
 
-  const styleParamsMap = getStyleParamsMap(schema);
-  const mapCode = `export default ${JSON.stringify(styleParamsMap, null, 4)}`;
+  const optionsMap = getOptionsMap(schema);
+  const mapCode = `export default ${JSON.stringify(optionsMap, null, 4)}`;
   fs.writeFileSync(
-    path.join(libSrcFolder, 'core/helpers/styleParamsMap.js'),
+    path.join(libSrcFolder, 'core/helpers/optionsMap.js'),
     mapCode
   );
 }

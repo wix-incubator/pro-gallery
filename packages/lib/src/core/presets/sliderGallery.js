@@ -2,34 +2,34 @@ import LAYOUTS from '../../common/constants/layout';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
 
-const fixToSlider = (styles) => {
-  let presetStyles = { ...styles };
-  presetStyles.galleryLayout = LAYOUTS.SLIDER;
-  presetStyles.enableInfiniteScroll = true;
-  presetStyles.cubeImages = true;
-  presetStyles.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
-  presetStyles.isVertical = false;
-  presetStyles.groupSize = 1;
-  presetStyles.groupTypes = '1';
+const fixToSlider = (options) => {
+  let presetOptions = { ...options };
+  presetOptions.galleryLayout = LAYOUTS.SLIDER;
+  presetOptions.enableInfiniteScroll = true;
+  presetOptions.cubeImages = true;
+  presetOptions.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
+  presetOptions.isVertical = false;
+  presetOptions.groupSize = 1;
+  presetOptions.groupTypes = '1';
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  presetStyles.smartCrop = false;
-  presetStyles.galleryType = 'Strips';
-  presetStyles.hasThumbnails = false;
-  presetStyles.enableScroll = true;
-  presetStyles.scrollSnap = true;
-  presetStyles.isGrid = false;
-  presetStyles.isSlider = true;
-  presetStyles.isColumns = false;
-  presetStyles.isMasonry = false;
-  presetStyles.isSlideshow = false;
-  presetStyles.cropOnlyFill = true;
-  return presetStyles;
+  presetOptions.smartCrop = false;
+  presetOptions.galleryType = 'Strips';
+  presetOptions.hasThumbnails = false;
+  presetOptions.enableScroll = true;
+  presetOptions.scrollSnap = true;
+  presetOptions.isGrid = false;
+  presetOptions.isSlider = true;
+  presetOptions.isColumns = false;
+  presetOptions.isMasonry = false;
+  presetOptions.isSlideshow = false;
+  presetOptions.cropOnlyFill = true;
+  return presetOptions;
 };
-export const fixedStyles = fixToSlider({});
+export const fixedOptions = fixToSlider({});
 
-export const createStyles = (styles) => {
-  let res = { ...styles };
+export const createOptions = (options) => {
+  let res = { ...options };
   res = fixToSlider(res);
   res.targetItemSize = calcTargetItemSize(res);
   return res;

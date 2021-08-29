@@ -198,7 +198,7 @@ It will expect a ready gallery Blueprint spread into the props it receives.
 We call the result of all the calculations that the `ProGalleryRenderer` needs a Blueprint.
 
 To create a Blueprint we need :
-- Styles
+- Options
 - Items
 - Container
 - totalItemsCount

@@ -25,7 +25,7 @@ describe('Text Item', () => {
   });
 
   it('should set background color', () => {
-    Object.assign(textItemProps, { styleParams: { cubeType: 'fit' } });
+    Object.assign(textItemProps, { options: { cubeType: 'fit' } });
     Object.assign(textItemProps, { style: { bgColor: 'red' } });
     galleryDriver.mount(TextItem, textItemProps);
     const style = galleryDriver.find

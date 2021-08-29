@@ -1,52 +1,53 @@
 import { expect } from 'chai';
-import {
-  // convertStyles,
-  // convertStylesBackwards,
-  migrateStyles,
-} from '../src/core/helpers/stylesConverter';
-import styleParamsMap from '../src/core/helpers/styleParamsMap';
+import optionsMap from '../src/core/helpers/optionsMap';
 import GALLERY_CONSTS from '../src/common/constants';
-import defaultStyles from '../src/common/defaultStyles';
+import defaultOptions from '../src/common/defaultOptions';
+import {
+  // convertOptions,
+  // layoutParamsMap,
+  migrateOptions,
+  // convertOptionsBackwards,
+} from '../src/core/helpers/optionsConverter';
 
-describe('stylesConverter', () => {
-  it('should contain correct keys for params map', () => {
-    expect(styleParamsMap.layoutParams.collage.density).to.equal(
-      'layoutParams_collage_density'
-    );
-    expect(
-      styleParamsMap.layoutParams.navigationArrows.verticalAlignment
-    ).to.equal('layoutParams_navigationArrows_verticalAlignment');
-  });
-  //   it('should create new styles from old ones', () => {
-  //     const expected = { ...oldStyles(), ...newStyles() };
-  //     const converted = convertStyles(oldStyles());
+// describe('optionsConverter', () => {
+//   it('should contain correct keys for params map', () => {
+//     expect(optionsMap.layoutParams.collage.density).to.equal(
+//       'layoutParams_collage_density'
+//     );
+//     expect(
+//       optionsMap.layoutParams.navigationArrows.verticalAlignment
+//     ).to.equal('layoutParams_navigationArrows_verticalAlignment');
+//   });
+//   it('should create new options from old ones', () => {
+//     const expected = { ...oldOptions(), ...newOptions() };
+//     const converted = convertOptions(oldOptions());
 
-  //     Object.keys(expected).forEach((key) => {
-  //       expect(converted[key]).to.equal(expected[key]);
-  //     });
-  //   });
-  //   it('should create old styles from new ones while keeping existing ones', () => {
-  //     const expected = {
-  //       ...oldStyles(),
-  //       ...newStyles(),
-  //       groupTypes: '1,2h,2v,3t,3b,3l,3r',
-  //       someUnrelatedOldStyle: 0,
-  //     };
-  //     const converted = convertStylesBackwards({
-  //       ...newStyles(),
-  //       groupTypes: '1,2h,2v,3t,3b,3l,3r',
-  //       someUnrelatedOldStyle: 0,
-  //     });
+//     Object.keys(expected).forEach((key) => {
+//       expect(converted[key]).to.equal(expected[key]);
+//     });
+//   });
+//   it('should create old options from new ones while keeping existing ones', () => {
+//     const expected = {
+//       ...oldOptions(),
+//       ...newOptions(),
+//       groupTypes: '1,2h,2v,3t,3b,3l,3r',
+//       someUnrelatedOldOption: 0,
+//     };
+//     const converted = convertOptionsBackwards({
+//       ...newOptions(),
+//       groupTypes: '1,2h,2v,3t,3b,3l,3r',
+//       someUnrelatedOldOption: 0,
+//     });
 
-  //     Object.keys(expected).forEach((key) => {
-  //       expect(converted[key]).to.equal(expected[key]);
-  //     });
-  //   });
-});
+//   //     Object.keys(expected).forEach((key) => {
+//   //       expect(converted[key]).to.equal(expected[key]);
+//   //     });
+//   //   });
+// });
 describe('Old to new styles processing', () => {
   it('should migrate styles from old to new until theres nothing ot migrate anymore', () => {
-    let migrated = migrateStyles(defaultStyles_old());
-    expect(migrated).to.eql(defaultStyles_new());
+    let migrated = migrateOptions(defaultOptions_old());
+    expect(migrated).to.eql(defaultOptions_new());
   });
 });
 
@@ -63,11 +64,11 @@ describe('Old to new styles processing', () => {
 //   };
 // }
 
-function defaultStyles_old() {
-  return defaultStyles;
+function defaultOptions_old() {
+  return defaultOptions;
 }
 
-function defaultStyles_new() {
+function defaultOptions_new() {
   let styles = {
     layoutParams: {
       groupTypes: '1,2h,2v,3t,3b,3l,3r',
@@ -208,6 +209,16 @@ function defaultStyles_new() {
     },
     // magicLayoutSeed: 1, //DELETE
     // gridStyle: 0, //Looks like it doesnt really exist
+function oldOptions() {
+  return {
+    cubeRatio: 0.5,
+    isVertical: false,
+  };
+}
+function newOptions() {
+  return {
+    layoutParams_cropRatio: 0.5,
+    layoutParams_isVerticalOrientation: false,
   };
 
   return styles;

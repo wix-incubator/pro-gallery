@@ -1,15 +1,15 @@
 import LAYOUTS from '../../common/constants/layout';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
 
-const fixToEmpty = (styles) => {
-  let presetStyles = { ...styles };
-  presetStyles.galleryLayout = LAYOUTS.EMPTY;
-  return presetStyles;
+const fixToEmpty = (options) => {
+  let presetOptions = { ...options };
+  presetOptions.galleryLayout = LAYOUTS.EMPTY;
+  return presetOptions;
 };
-export const fixedStyles = fixToEmpty({});
+export const fixedOptions = fixToEmpty({});
 
-export const createStyles = (styles) => {
-  let res = { ...styles };
+export const createOptions = (options) => {
+  let res = { ...options };
   res = fixToEmpty(res);
   res.targetItemSize = calcTargetItemSize(
     res,

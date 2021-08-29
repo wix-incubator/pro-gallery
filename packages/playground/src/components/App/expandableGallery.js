@@ -89,8 +89,8 @@ export default class ExpandableProGallery extends React.Component {
                             width: window.innerWidth,
                             height: window.innerHeight
                         }}
-                        styles={{
-                            ...(this.props.options || this.props.styles),
+                        options={{
+                            ...this.props.options,
                             galleryLayout: 5,
                             slideshowInfoSize: 80,
                             slideAnimation: utils.isMobile() ? 'SCROLL' : 'FADE',

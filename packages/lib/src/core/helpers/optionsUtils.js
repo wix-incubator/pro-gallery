@@ -28,6 +28,12 @@ function getByString(Obj, string) {
   }
 }
 
+function mutatingAssignMultipleByStrings(Obj, stringValuePairArray) {
+  for (let [string, value] of stringValuePairArray) {
+    Object.assign(Obj, assignByString(Obj, string, value));
+  }
+}
+
 function flattenObject(ob) {
   var toReturn = {};
 
@@ -56,7 +62,7 @@ function flattenObject(ob) {
 
 function flatToNested(ob) {
   return Object.entries(ob).reduce(
-    (obj, [styleParam, value]) => assignByString(obj, styleParam, value),
+    (obj, [option, value]) => assignByString(obj, option, value),
     {}
   );
 }
@@ -71,4 +77,5 @@ export {
   flatToNested,
   mergeNestedObjects,
   getByString,
+  mutatingAssignMultipleByStrings,
 };

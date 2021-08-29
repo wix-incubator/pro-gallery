@@ -2,7 +2,7 @@ import { INPUT_TYPES } from '../utils/constants';
 
 export default {
   title: 'Thumbnail Size',
-  isRelevant: (styleParams) => styleParams.hasThumbnails,
+  isRelevant: (options) => options.hasThumbnails,
   isRelevantDescription: 'Set "Gallery preset" to "Thumbnail".',
   type: INPUT_TYPES.NUMBER,
   default: 120,

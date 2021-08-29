@@ -1,18 +1,16 @@
 // import { calcTargetItemSize } from './layoutHelper';
 
-export const createStyles = (styles) => {
+export const createOptions = (options) => {
   try {
-    const parsedStyleParams = styles.jsonStyleParams
-      ? JSON.parse(styles.jsonStyleParams)
+    const parsedOptions = options.jsonStyleParams
+      ? JSON.parse(options.jsonStyleParams)
       : {};
 
-    const styleParams = {
-      ...styles,
-      ...parsedStyleParams,
-      // targetItemSize: calcTargetItemSize(styles),
+    return {
+      ...options,
+      ...parsedOptions,
+      // targetItemSize: calcTargetItemSize(options),
     };
-
-    return styleParams;
   } catch (e) {
     return {};
   }

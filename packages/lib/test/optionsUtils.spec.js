@@ -3,9 +3,10 @@ import {
   flattenObject,
   flatToNested,
   mergeNestedObjects,
-} from '../src/core/helpers/stylesUtils';
+  mutatingAssignMultipleByStrings,
+} from '../src/core/helpers/optionsUtils';
 
-describe('stylesUtils', () => {
+describe('optionsUtils', () => {
   it('should create a nested object out of a flat object', () => {
     expect(nested()).to.deep.equal(flatToNested(flat()));
   });
@@ -18,6 +19,27 @@ describe('stylesUtils', () => {
     let expected = merged();
     let actual = mergeNestedObjects(nested(), nested2());
     expect(actual).to.deep.equal(expected);
+  });
+  it('should assign multiple strings into the same object', () => {
+    let initial = {
+      layoutParams: {
+        bar: 'foo',
+      },
+    };
+    let expected = {
+      hi: 'bye',
+      layoutParams: {
+        bar: 'foo',
+        alice: 'bob',
+        moshe: 'bob',
+      },
+    };
+    mutatingAssignMultipleByStrings(initial, [
+      ['layoutParams_alice', 'bob'],
+      ['layoutParams_moshe', 'bob'],
+      ['hi', 'bye'],
+    ]);
+    expect(initial).to.deep.equal(expected);
   });
 });
 

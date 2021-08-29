@@ -13,55 +13,55 @@ import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
 import LAYOUTS from '../../common/constants/layout';
 import ARROWS_POSITION from '../../common/constants/arrowsPosition';
 import { default as GALLERY_CONSTS } from '../../common/constants/index';
-import {assignByString} from './stylesUtils'
+import {assignByString} from './optionsUtils'
 import processTextDimensions from './textBoxDimensionsHelper'
 
-export const calcTargetItemSize = (styles, smartCalc = false) => {
+export const calcTargetItemSize = (options, smartCalc = false) => {
   if (
-    styles.gallerySizeType === GALLERY_SIZE_TYPE.PIXELS &&
-    styles.gallerySizePx > 0
+    options.gallerySizeType === GALLERY_SIZE_TYPE.PIXELS &&
+    options.gallerySizePx > 0
   ) {
-    return styles.gallerySizePx;
+    return options.gallerySizePx;
   } else if (
-    styles.gallerySizeType === GALLERY_SIZE_TYPE.RATIO &&
-    styles.gallerySizeRatio > 0
+    options.gallerySizeType === GALLERY_SIZE_TYPE.RATIO &&
+    options.gallerySizeRatio > 0
   ) {
     return (
-      ((window && window.innerWidth) || 980) * (styles.gallerySizeRatio / 100)
+      ((window && window.innerWidth) || 980) * (options.gallerySizeRatio / 100)
     );
   } else {
-    return smartCalc ? smartCalc : styles.gallerySize;
+    return smartCalc ? smartCalc : options.gallerySize;
   }
 };
 
-export const processNumberOfImagesPerRow = (styles) => {
+export const processNumberOfImagesPerRow = (options) => {
   //This will be used in the masonry and grid presets
-  let res = {...styles}
+  let res = {...options}
   if (
-    styles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL || //relevant for grid, in Masonry its fixed to !oneRow
-      styles.isVertical //relevant for masonry, in grid its fixed to true.
+    options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL || //relevant for grid, in Masonry its fixed to !oneRow
+      options.isVertical //relevant for masonry, in grid its fixed to true.
   ) {
     res.fixedColumns =
-      String(styles.gridStyle) === '1'
-        ? Number(styles.numberOfImagesPerRow)
+      String(options.gridStyle) === '1'
+        ? Number(options.numberOfImagesPerRow)
         : 0;
     res.groupTypes = '1';
     res.groupSize = 1;
     res.collageAmount = 0;
     res.collageDensity = 0;
-  } 
+  }
   return res;
 }
 
-export const processNumberOfImagesPerCol = (styles) => {
+export const processNumberOfImagesPerCol = (options) => {
   //This will be used in the grid preset
-  let res = {...styles}
+  let res = {...options}
   if (
-    !utils.isUndefined(styles.numberOfImagesPerCol) &&
-    styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+    !utils.isUndefined(options.numberOfImagesPerCol) &&
+    options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
   ) {
     res.fixedColumns = 0;
-    switch (styles.numberOfImagesPerCol) {
+    switch (options.numberOfImagesPerCol) {
       case 1:
       default:
         res.groupTypes = '1';
@@ -86,272 +86,274 @@ export const processNumberOfImagesPerCol = (styles) => {
   return res
 }
 
-const forceInfoOnHoverWhenNeeded = (styles) =>{
-  let _styles = {...styles}
+const forceInfoOnHoverWhenNeeded = (options) =>{
+  let _options = {...options}
   const isDesignedPreset =
-  _styles.galleryLayout === LAYOUTS.DESIGNED_PRESET;
+  _options.galleryLayout === LAYOUTS.DESIGNED_PRESET;
 
   if (
-    (!_styles.isVertical ||
-      _styles.groupSize > 1 ||
-      (_styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && !isDesignedPreset)) &&
-    !_styles.isSlider &&
-    !_styles.isColumns
+    (!_options.isVertical ||
+      _options.groupSize > 1 ||
+      (_options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && !isDesignedPreset)) &&
+    !_options.isSlider &&
+    !_options.isColumns
   ) {
     // Dont allow titlePlacement to be above / below / left / right
-    _styles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
+    _options.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   }
 
-  return _styles;
+  return _options;
 }
 
-const setMobileFonts = (styles) => {
-  let _styles = {...styles}
-  if (isSlideshowFont(_styles)) {
-    if (!utils.isUndefined(_styles.itemFontSlideshow)) {
-      _styles = setTextUnderline('itemFontSlideshow', 'textDecorationTitle', _styles);
+const setMobileFonts = (options) => {
+  let _options = {...options}
+  if (isSlideshowFont(_options)) {
+    if (!utils.isUndefined(_options.itemFontSlideshow)) {
+      _options = setTextUnderline('itemFontSlideshow', 'textDecorationTitle', _options);
     }
-    if (!utils.isUndefined(_styles.itemDescriptionFontSlideshow)) {
-      _styles = setTextUnderline('itemDescriptionFontSlideshow', 'textDecorationDesc', _styles);
+    if (!utils.isUndefined(_options.itemDescriptionFontSlideshow)) {
+      _options = setTextUnderline('itemDescriptionFontSlideshow', 'textDecorationDesc', _options);
     }
   } else {
-    if (!utils.isUndefined(_styles.itemFont)) {
-      _styles = setTextUnderline('itemFont', 'textDecorationTitle', _styles);
+    if (!utils.isUndefined(_options.itemFont)) {
+      _options = setTextUnderline('itemFont', 'textDecorationTitle', _options);
     }
-    if (!utils.isUndefined(_styles.itemDescriptionFont)) {
-      _styles = setTextUnderline('itemDescriptionFont', 'textDecorationDesc', _styles);
+    if (!utils.isUndefined(_options.itemDescriptionFont)) {
+      _options = setTextUnderline('itemDescriptionFont', 'textDecorationDesc', _options);
     }
   }
 
-  return _styles;
+  return _options;
 }
 
-const forceHoverToShowTextsIfNeeded = (styles) =>{
-  let _styles = {...styles}
+const forceHoverToShowTextsIfNeeded = (options) =>{
+  let _options = {...options}
   if (
-    !hasHoverPlacement(_styles.titlePlacement) &&
-    _styles.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
+    !hasHoverPlacement(_options.titlePlacement) &&
+    _options.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
   ) {
-    _styles.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.APPEARS;
+    _options.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.APPEARS;
   }
 
-  return _styles
+  return _options
 }
 
-const processImageLoadingWithColorMode = (styles) => {
-  let _styles = {...styles}
+const processImageLoadingWithColorMode = (options) => {
+  let _options = {...options}
   if (
-    _styles.imageLoadingMode === LOADING_MODE.COLOR &&
-    _styles.imageLoadingWithColorMode ===
+    _options.imageLoadingMode === LOADING_MODE.COLOR &&
+    _options.imageLoadingWithColorMode ===
       LOADING_WITH_COLOR_MODE.MAIN_COLOR
   ) {
-    _styles.imageLoadingMode = LOADING_MODE.MAIN_COLOR;
+    _options.imageLoadingMode = LOADING_MODE.MAIN_COLOR;
   }
-  return _styles;
-}
-const removeShadowOnHorizontalGalleries = (styles) => {
-  let _styles = {...styles}
-  if(_styles.itemEnableShadow && _styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
-    _styles.itemEnableShadow = false;
-  }
-  return _styles;
-}
-const forceHorizontalOrientationInHorizontalGalleries = (styles) => {
-  let _styles = {...styles}
-  if (_styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
-    // in horizontal galleries allow only horizontal orientation
-    _styles.isVertical = false;
-  } 
-  return _styles;
-}
-const removeLoopOnVerticalGalleries = (styles) => {
-  let _styles = {...styles}
-  if (_styles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) {
-    _styles.slideshowLoop = false; // allow slideshowLoop only for horizontal layouts
-  }
-  return _styles;
-}
-const limitImageMargin = (styles) => {
-  let _styles = {...styles}
-  if (_styles.imageMargin > 0) {
-    _styles.imageMargin = Math.min(_styles.imageMargin, 50); // limit mobile spacing to 50px (25 on each side)
-  }
-  return _styles;
-}
-const forceScrollAnimationOnSingleImageInViewGalleries = (styles) => {
-  let _styles = {...styles}
-  if (
-    _styles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL ||
-    _styles.groupSize > 1 ||
-    !_styles.cubeImages
-  ) {
-    _styles.slideAnimation = SLIDE_ANIMATIONS.SCROLL;
-  }
-  return _styles;
-}
-const removeArrowPaddingIfOutsideTheGallery = (styles) => {
-  let _styles = {...styles}
-  if (_styles.arrowsPosition === ARROWS_POSITION.OUTSIDE_GALLERY) {
-    _styles.arrowsPadding = 0;
-  }
-  return _styles;
+  return _options;
 }
 
-const removeVideoAutoplayInIOS = (styles) => {
-  let _styles = {...styles}
+const removeShadowOnHorizontalGalleries = (options) => {
+  let _options = {...options}
+  if(_options.itemEnableShadow && _options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+    _options.itemEnableShadow = false;
+  }
+  return _options;
+}
+
+const forceHorizontalOrientationInHorizontalGalleries = (options) => {
+  let _options = {...options}
+  if (_options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+    // in horizontal galleries allow only horizontal orientation
+    _options.isVertical = false;
+  }
+  return _options;
+}
+
+const removeLoopOnVerticalGalleries = (options) => {
+  let _options = {...options}
+  if (_options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) {
+    _options.slideshowLoop = false; // allow slideshowLoop only for horizontal layouts
+  }
+  return _options;
+}
+
+const limitImageMargin = (options) => {
+  let _options = {...options}
+  if (_options.imageMargin > 0) {
+    _options.imageMargin = Math.min(_options.imageMargin, 50); // limit mobile spacing to 50px (25 on each side)
+  }
+  return _options;
+}
+
+const forceScrollAnimationOnSingleImageInViewGalleries = (options) => {
+  let _options = {...options}
+  if (
+    _options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL ||
+    _options.groupSize > 1 ||
+    !_options.cubeImages
+  ) {
+    _options.slideAnimation = SLIDE_ANIMATIONS.SCROLL;
+  }
+  return _options;
+}
+
+const removeArrowPaddingIfOutsideTheGallery = (options) => {
+  let _options = {...options}
+  if (_options.arrowsPosition === ARROWS_POSITION.OUTSIDE_GALLERY) {
+    _options.arrowsPadding = 0;
+  }
+  return _options;
+}
+
+const removeVideoAutoplayInIOS = (options) => {
+  let _options = {...options}
   // Handle case of autoplay on ios devices
   if (
-    _styles.videoPlay === 'auto' &&
-    _styles.itemClick === 'nothing' &&
+    _options.videoPlay === 'auto' &&
+    _options.itemClick === 'nothing' &&
     utils.isiOS()
   ) {
-    _styles.videoPlay = 'onClick';
+    _options.videoPlay = 'onClick';
   }
-  return _styles;
+  return _options;
 }
 
-
-const processForceMobileCustomButton = (styles) => {
-  let _styles = {...styles}
-  if (_styles.forceMobileCustomButton) {
-    _styles.targetItemSize = Math.round(30 * 8.5 + 150);
-    _styles.titlePlacement = PLACEMENTS.SHOW_BELOW;
-    _styles.galleryLayout = 2;
-    _styles.fixedColumns = 1;
-    _styles.numberOfImagesPerRow = 1;
+const processForceMobileCustomButton = (options) => {
+  let _options = {...options}
+  if (_options.forceMobileCustomButton) {
+    _options.targetItemSize = Math.round(30 * 8.5 + 150);
+    _options.titlePlacement = PLACEMENTS.SHOW_BELOW;
+    _options.galleryLayout = 2;
+    _options.fixedColumns = 1;
+    _options.numberOfImagesPerRow = 1;
   }
-  return _styles;
+  return _options;
 }
-const processSpecialGallerySize = (styles) => {
-  let _styles = {...styles}
+
+const processSpecialGallerySize = (options) => {
+  let _options = {...options}
   // in case a special gallery size was specified, use it
   if (
-    _styles.gallerySizeType === GALLERY_SIZE_TYPE.PIXELS &&
-    _styles.gallerySizePx > 0
+    _options.gallerySizeType === GALLERY_SIZE_TYPE.PIXELS &&
+    _options.gallerySizePx > 0
   ) {
-    _styles.targetItemSize = _styles.gallerySizePx;
+    _options.targetItemSize = _options.gallerySizePx;
   } else if (
-    _styles.gallerySizeType === GALLERY_SIZE_TYPE.RATIO &&
-    _styles.gallerySizeRatio > 0
+    _options.gallerySizeType === GALLERY_SIZE_TYPE.RATIO &&
+    _options.gallerySizeRatio > 0
   ) {
-    _styles.targetItemSize =
+    _options.targetItemSize =
       ((window && window.innerWidth) || 980) *
-      (_styles.gallerySizeRatio / 100);
+      (_options.gallerySizeRatio / 100);
   }
-  return _styles;
+  return _options;
 }
-const processLoadMoreButtonFont = (styles) => {
-  let _styles = {...styles}
-  if (_styles.loadMoreButtonFont && utils.isMobile()) {
-    _styles.loadMoreButtonFont.value =
-      _styles.loadMoreButtonFont.value.replace(/^font\s*:\s*/, '');
-    _styles.loadMoreButtonFont.value =
-      _styles.loadMoreButtonFont.value.replace(/;$/, '');
-    if (_styles.loadMoreButtonFont.value.indexOf('underline') > -1) {
-      _styles.loadMoreButtonFont.value =
-        _styles.loadMoreButtonFont.value.replace('underline', '');
-      _styles.textDecorationLoadMore = 'underline';
+
+const processLoadMoreButtonFont = (options) => {
+  let _options = {...options}
+  if (_options.loadMoreButtonFont && utils.isMobile()) {
+    _options.loadMoreButtonFont.value =
+      _options.loadMoreButtonFont.value.replace(/^font\s*:\s*/, '');
+    _options.loadMoreButtonFont.value =
+      _options.loadMoreButtonFont.value.replace(/;$/, '');
+    if (_options.loadMoreButtonFont.value.indexOf('underline') > -1) {
+      _options.loadMoreButtonFont.value =
+        _options.loadMoreButtonFont.value.replace('underline', '');
+      _options.textDecorationLoadMore = 'underline';
     } else {
-      _styles.textDecorationLoadMore = 'none';
+      _options.textDecorationLoadMore = 'none';
     }
   }
-  return _styles;
+  return _options;
 }
-const addMarginsToSupportShadows = (styles) => {
-  let _styles = {...styles}
 
-  if (_styles.itemEnableShadow && _styles.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) {
+const addMarginsToSupportShadows = (options) => {
+  let _options = {...options}
+
+  if (_options.itemEnableShadow && _options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) {
     // add gallerySpacing to allow the shadow to be seen
     let _gallerySpacing = Math.max(
-      _styles.layoutParams.gallerySpacing,
-      (_styles.itemShadowSize || 0) +
-        (_styles.itemShadowBlur || 0)
+      _options.layoutParams.gallerySpacing,
+      (_options.itemShadowSize || 0) +
+        (_options.itemShadowBlur || 0)
     );
-    _styles = assignByString(_styles, 'layoutParams_gallerySpacing', _gallerySpacing)
+    _options = assignByString(_options, 'layoutParams_gallerySpacing', _gallerySpacing)
   }
-  return _styles;
+  return _options;
 }
 
-const removeBordersIfNeeded = (styles) => {
-//TODO this can go into the _stylespective 4 layouts.
-let _styles = {...styles}
+const removeBordersIfNeeded = (options) => {
+  //TODO this can go into the _optionspective 4 layouts.
+  let _options = {...options}
 
-if (
-  _styles.cubeType === 'fit' &&
-  (_styles.isGrid || 
-    _styles.hasThumbnails ||
-    _styles.isSlider ||
-    _styles.isSlideshow)
-) {
-  _styles.itemBorderWidth = 0;
-  _styles.itemBorderRadius = 0;
-  _styles.itemEnableShadow = false;
+  if (_options.cubeType === 'fit' && (_options.isGrid || _options.hasThumbnails || _options.isSlider || _options.isSlideshow)) {
+    _options.itemBorderWidth = 0;
+    _options.itemBorderRadius = 0;
+    _options.itemEnableShadow = false;
+  }
+
+  return _options
 }
 
-return _styles
-}
-
-const setTextUnderline = (itemFontStyleParam, textDecorationType, styles) => {
-  /* itemFontStyleParam: itemFontSlideshow / itemDescriptionFontSlideshow / itemFont / itemDescriptionFont
+const setTextUnderline = (itemFontOption, textDecorationType, options) => {
+  /* itemFontOption: itemFontSlideshow / itemDescriptionFontSlideshow / itemFont / itemDescriptionFont
   textDecorationType: textDecorationTitle / textDecorationDesc */
 
-  let _styles = {...styles}
-  _styles[itemFontStyleParam].value = _styles[
-    itemFontStyleParam
+  let _options = {...options}
+  _options[itemFontOption].value = _options[
+    itemFontOption
   ].value.replace(/^font\s*:\s*/, '');
-  _styles[itemFontStyleParam].value = _styles[
-    itemFontStyleParam
+  _options[itemFontOption].value = _options[
+    itemFontOption
   ].value.replace(/;$/, '');
   if (
-    _styles[itemFontStyleParam].value.indexOf('underline') > -1 ||
-    _styles[itemFontStyleParam].style.underline === true
+    _options[itemFontOption].value.indexOf('underline') > -1 ||
+    _options[itemFontOption].style.underline === true
   ) {
-    _styles[itemFontStyleParam].value = _styles[
-      itemFontStyleParam
+    _options[itemFontOption].value = _options[
+      itemFontOption
     ].value.replace('underline', '');
-    _styles[textDecorationType] = 'underline';
-  } else if (_styles[itemFontStyleParam].style.underline === false) {
-    _styles[textDecorationType] = 'none';
+    _options[textDecorationType] = 'underline';
+  } else if (_options[itemFontOption].style.underline === false) {
+    _options[textDecorationType] = 'none';
   }
-  return _styles;
+  return _options;
 };
 
-function processLayouts(styles, customExternalInfoRendererExists) {
-  let processedStyles = {...styles};
+function processLayouts(options, customExternalInfoRendererExists) {
+  let processedOptions = {...options};
   if (utils.isMobile()) {
-    processedStyles = setMobileFonts(processedStyles);
-    processedStyles = limitImageMargin(processedStyles);
+    processedOptions = setMobileFonts(processedOptions);
+    processedOptions = limitImageMargin(processedOptions);
   }
-    processedStyles = forceInfoOnHoverWhenNeeded(processedStyles);
-    processedStyles = forceHoverToShowTextsIfNeeded(processedStyles);
-    processedStyles = processImageLoadingWithColorMode(processedStyles);
-    processedStyles = removeBordersIfNeeded(processedStyles);
-    processedStyles = removeShadowOnHorizontalGalleries(processedStyles);
-    processedStyles = addMarginsToSupportShadows(processedStyles);
-    processedStyles = removeArrowPaddingIfOutsideTheGallery(processedStyles);
-    processedStyles = forceHorizontalOrientationInHorizontalGalleries(processedStyles);
-    processedStyles = removeLoopOnVerticalGalleries(processedStyles);
-    processedStyles = forceScrollAnimationOnSingleImageInViewGalleries(processedStyles);
-    processedStyles = processLoadMoreButtonFont(processedStyles); //contains if isMobile, but also has an else.
-    processedStyles = processForceMobileCustomButton(processedStyles); //TODO this seems like it doesnt really exists. consider deleting support.
-    processedStyles = processSpecialGallerySize(processedStyles); 
-    processedStyles = processTextDimensions(processedStyles, customExternalInfoRendererExists);
-    processedStyles = removeVideoAutoplayInIOS(processedStyles); 
-    
-  return processedStyles;
+    processedOptions = forceInfoOnHoverWhenNeeded(processedOptions);
+    processedOptions = forceHoverToShowTextsIfNeeded(processedOptions);
+    processedOptions = processImageLoadingWithColorMode(processedOptions);
+    processedOptions = removeBordersIfNeeded(processedOptions);
+    processedOptions = removeShadowOnHorizontalGalleries(processedOptions);
+    processedOptions = addMarginsToSupportShadows(processedOptions);
+    processedOptions = removeArrowPaddingIfOutsideTheGallery(processedOptions);
+    processedOptions = forceHorizontalOrientationInHorizontalGalleries(processedOptions);
+    processedOptions = removeLoopOnVerticalGalleries(processedOptions);
+    processedOptions = forceScrollAnimationOnSingleImageInViewGalleries(processedOptions);
+    processedOptions = processLoadMoreButtonFont(processedOptions); //contains if isMobile, but also has an else.
+    processedOptions = processForceMobileCustomButton(processedOptions); //TODO this seems like it doesnt really exists. consider deleting support.
+    processedOptions = processSpecialGallerySize(processedOptions);
+    processedOptions = processTextDimensions(processedOptions, customExternalInfoRendererExists);
+    processedOptions = removeVideoAutoplayInIOS(processedOptions);
+
+  return processedOptions;
 }
 
-function isSlideshowFont(styles) {
-  const galleryLayout = styles.galleryLayout;
+function isSlideshowFont(options) {
+  const galleryLayout = options.galleryLayout;
   if (galleryLayout === LAYOUTS.SLIDESHOW) {
     return true;
   }
-  if (hasExternalVerticalPlacement(styles.titlePlacement)) {
+  if (hasExternalVerticalPlacement(options.titlePlacement)) {
     if (galleryLayout === 4 || galleryLayout === 6 || galleryLayout === 7) {
       return true;
-    } else if (galleryLayout === 1 && styles.isVertical) {
+    } else if (galleryLayout === 1 && options.isVertical) {
       return true;
-    } else if (galleryLayout === 2 && styles.scrollDirection !== 1) {
+    } else if (galleryLayout === 2 && options.scrollDirection !== 1) {
       return true;
     }
   }
