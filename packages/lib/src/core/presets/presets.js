@@ -54,7 +54,7 @@ import {
   fixedOptions as empty,
   createOptions as emptyOptions,
 } from './emptyGallery';
-import { createStyles as jsonFixedOptions } from './designedPresetGallery';
+import { createOptions as jsonFixedOptions } from './designedPresetGallery';
 
 //#endregion Imports
 
