@@ -280,15 +280,15 @@ const addMarginsToSupportShadows = (options) => {
   }
   return _options;
 }
-const centerArrowsWhenNeeded = (styles) => {
-  let _styles = {...styles}
-  if (!isConstantVerticalPlacement(_styles.titlePlacement, _styles.isSlideshow) || 
-      _styles.numberOfImagesPerCol > 1)
+const centerArrowsWhenNeeded = (options) => {
+  let _options = {...options}
+  if (!isConstantVerticalPlacement(_options.titlePlacement, _options.isSlideshow) || 
+      _options.numberOfImagesPerCol > 1)
     {
     // if text (info) placement is not above/below placement or more then 1 images per col, arrows are gallery("item") centered
-    _styles.arrowsVerticalPosition = GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER;
+    _options.arrowsVerticalPosition = GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER;
   }
-  return _styles;
+  return _options;
 }
 
 const removeBordersIfNeeded = (options) => {

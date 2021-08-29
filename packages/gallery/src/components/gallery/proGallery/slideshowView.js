@@ -939,7 +939,7 @@ class SlideshowView extends GalleryComponent {
       slideshowInfoSize,
       arrowsVerticalPosition,
       textBoxHeight,
-    } = this.props.styleParams;
+    } = this.props.options;
     const { height } = this.props.container;
     // Calc of Nav arrows container's height
     const { navArrowsContainerHeight } = this.getArrowsSizeData();
@@ -963,7 +963,7 @@ class SlideshowView extends GalleryComponent {
 
   // function to Determine whether we should render the navigation arrows
   shouldRenderNavArrows = () => {
-    const { showArrows } = this.props.styleParams;
+    const { showArrows } = this.props.options;
     const { isPrerenderMode, galleryStructure } = this.props;
     const isGalleryWiderThanRenderedItems = 
     galleryStructure.width <= this.props.container.galleryWidth;
