@@ -73,6 +73,7 @@ function migrateOptions(oldStyles) {
   newStyles = process_old_to_new_CroppedAlignment(newStyles);
   newStyles = process_old_to_new_CropRatio(newStyles);
   newStyles = process_old_to_new_textBoxSizeMode(newStyles);
+  newStyles = process_old_to_new_columnRatios(newStyles);
 
   ///----------- BEHAVIOUR -------------///
   newStyles = changeNames(newStyles, nameChangedBehaviourParams);
@@ -100,6 +101,23 @@ function migrateOptions(oldStyles) {
 }
 
 //----- refactor functions ----------//
+function process_old_to_new_columnRatios(obj) {
+  let _obj = { ...obj };
+
+  _obj = namingChange(
+    _obj,
+    'columnWidths',
+    optionsMap.layoutParams.columnRatios
+  );
+  if (_obj.layoutParams.columnRatios.length === 0) {
+    _obj.layoutParams.columnRatios = [];
+  } else {
+    _obj.layoutParams.columnRatios = [
+      ..._obj.layoutParams.columnRatios.split(',').map(Number),
+    ];
+  }
+  return _obj;
+}
 function process_old_to_new_targetItemSizeValue(obj) {
   let _obj = { ...obj };
   let unit = _obj.layoutParams.targetItemSize.unit;

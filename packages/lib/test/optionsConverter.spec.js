@@ -102,7 +102,7 @@ function defaultOptions_new() {
       forceGroupsOrder: 'BY_COLUMNS', //TODO, create and use use NEW_CON
       numberOfRows: 1,
       numberOfColumns: 3,
-      columnRatios: '', //columnsRatio ? TBD
+      columnRatios: [],
       collage: {
         groupByOrientation: true,
         density: 0.8,

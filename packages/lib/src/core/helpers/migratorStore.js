@@ -17,7 +17,6 @@ export const nameChangedLayoutParams = [
   ['isSlider', optionsMap.layoutParams.isSlider],
   ['isColumns', optionsMap.layoutParams.isColumns],
   ['numberOfImagesPerCol', optionsMap.layoutParams.numberOfRows],
-  ['columnWidths', optionsMap.layoutParams.columnRatios],
   //['collageAmount', optionsMap.layoutParams.collage.amount], //This doesnt really exist. need to eradicate as a refactor
   ['collageDensity', optionsMap.layoutParams.collage.density],
   ['chooseBestGroup', optionsMap.layoutParams.collage.groupByOrientation],

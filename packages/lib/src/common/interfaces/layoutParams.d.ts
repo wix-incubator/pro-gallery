@@ -13,7 +13,7 @@ export interface LayoutParams {
   // numberOfGroupsPerRow: number;
   numberOfColumns: number; //numberOfImagesPerCol: number;
   numberOfRows: number; //numberOfImagesPerRow: number;
-  columnRatios: string;
+  columnRatios: Array<number>;
   cropMethod: string;
 
   enableCrop: boolean;
