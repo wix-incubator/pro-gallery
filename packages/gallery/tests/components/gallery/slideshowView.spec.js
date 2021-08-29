@@ -171,7 +171,7 @@ describe('Slideshow View', () => {
       });
       // constants determining the gallery's height
       const galleryHeight = initialGalleryViewProps.container.galleryHeight;
-      const imageMargin = initialGalleryViewProps.styleParams.imageMargin;
+      const imageMargin = initialGalleryViewProps.options.imageMargin;
       // assigning the height parameter as in this.props.container to gallery's height
       Object.assign(initialGalleryViewProps.container, {
         height: galleryHeight - imageMargin,
