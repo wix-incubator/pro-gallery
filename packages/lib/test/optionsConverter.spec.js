@@ -8,6 +8,7 @@ import {
   migrateOptions,
   // convertOptionsBackwards,
 } from '../src/core/helpers/optionsConverter';
+import { reverseMigrateOptions } from '../src/core/helpers/optionsBackwardConverter';
 
 // describe('optionsConverter', () => {
 //   it('should contain correct keys for params map', () => {
@@ -48,6 +49,10 @@ describe('Old to new styles processing', () => {
   it('should migrate styles from old to new until theres nothing ot migrate anymore', () => {
     let migrated = migrateOptions(defaultOptions_old());
     expect(migrated).to.eql(defaultOptions_new());
+  });
+  it('should migrated new options to old ones', () => {
+    let old = reverseMigrateOptions(defaultOptions_new());
+    expect(old).to.eql(defaultOptions_old());
   });
 });
 
