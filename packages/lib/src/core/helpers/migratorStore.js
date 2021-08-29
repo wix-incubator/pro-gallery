@@ -33,18 +33,14 @@ export const nameChangedLayoutParams = [
   ],
   ['arrowsSize', optionsMap.layoutParams.navigationArrows.size],
   ['arrowsPosition', optionsMap.layoutParams.navigationArrows.position],
-  ['imageInfoType', optionsMap.layoutParams.info.backgroundMode],
+  ['imageInfoType', optionsMap.layoutParams.info.layout],
   ['textBoxHeight', optionsMap.layoutParams.info.height],
   ['textBoxWidth', optionsMap.layoutParams.info.width],
   //['textBoxWidthPercent', optionsMap.layoutParams.info.widthByPercent],
   ['textImageSpace', optionsMap.layoutParams.info.spacing],
-  ['imageInfoType', optionsMap.layoutParams.info.backgroundMode],
   ['textBoxBorderWidth', optionsMap.layoutParams.info.border.width],
   ['textBoxBorderColor', optionsMap.layoutParams.info.border.color],
   ['textBoxBorderRadius', optionsMap.layoutParams.info.border.radius],
-  ['gallerySize', optionsMap.layoutParams.targetItemSize.smart],
-  ['gallerySizePx', optionsMap.layoutParams.targetItemSize.pixel],
-  ['gallerySizeRatio', optionsMap.layoutParams.targetItemSize.percent],
 ];
 
 export const reversedLayoutParams = [

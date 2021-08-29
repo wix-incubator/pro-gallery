@@ -122,10 +122,8 @@ function defaultOptions_new() {
         verticalAlignment: GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER,
       },
       targetItemSize: {
-        mode: 'SMART',
-        smart: 30,
-        pixel: 0,
-        percent: 0,
+        unit: 'SMART',
+        value: 30,
       },
       info: {
         sizeCalculationMode:
@@ -133,7 +131,7 @@ function defaultOptions_new() {
         width: 200,
         height: 200,
         spacing: 10,
-        backgroundMode: GALLERY_CONSTS.infoType.NO_BACKGROUND,
+        layout: GALLERY_CONSTS.infoType.NO_BACKGROUND,
         // widthByPercent: 50, //I want this to be in the width just like we did the overlaySize
         placement: 'OVERLAY', //TODO, create and use use consts
         border: {

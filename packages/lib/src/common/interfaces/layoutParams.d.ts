@@ -62,7 +62,7 @@ export interface NavigationArrows {
 
 export interface TargetItemSize {
   unit: 'PERCENT' | 'PIXEL' | 'SMART';
-  value;
+  value: number;
 }
 export interface Info {
   sizeCalculationMode: 'PERCENT' | 'PIXEL';

@@ -68,7 +68,8 @@ function migrateOptions(oldStyles) {
   newStyles = process_old_to_new_ForceGroupsOrder(newStyles);
   newStyles = process_old_to_new_GroupTypes(newStyles);
   newStyles = process_old_to_new_NumberOfColumns(newStyles); // fixedColumns || numberOfImagesPerRow || numberOfGroupsPerRow (notice its losing if its 0)
-  newStyles = process_old_to_new_targetItemSizeMode(newStyles);
+  newStyles = process_old_to_new_targetItemSizeUnit(newStyles);
+  newStyles = process_old_to_new_targetItemSizeValue(newStyles);
   newStyles = process_old_to_new_CroppedAlignment(newStyles);
   newStyles = process_old_to_new_CropRatio(newStyles);
   newStyles = process_old_to_new_textBoxSizeMode(newStyles);
@@ -99,6 +100,29 @@ function migrateOptions(oldStyles) {
 }
 
 //----- refactor functions ----------//
+function process_old_to_new_targetItemSizeValue(obj) {
+  let _obj = { ...obj };
+  let unit = _obj.layoutParams.targetItemSize.unit;
+  let key;
+  switch (unit) {
+    case 'PIXEL':
+      key = 'gallerySizePx';
+      break;
+    case 'SMART':
+      key = 'gallerySize';
+      break;
+    case 'PERCENT':
+      key = 'gallerySizeRatio';
+      break;
+  }
+  _obj = namingChange(_obj, key, optionsMap.layoutParams.targetItemSize.value);
+
+  delete _obj.gallerySizePx;
+  delete _obj.gallerySizeRatio;
+  delete _obj.gallerySize;
+
+  return _obj;
+}
 function process_old_to_new_ThumbnailAlignment(obj) {
   //['galleryThumbnailsAlignment', optionsMap.layoutParams.thumbnails.alignment'],
   let _obj = { ...obj };
@@ -122,15 +146,15 @@ function process_old_to_new_VideoPlayTrigger(obj) {
     _obj.behaviourParams.item.video.playTrigger?.toUpperCase();
   return _obj;
 }
-function process_old_to_new_targetItemSizeMode(obj) {
+function process_old_to_new_targetItemSizeUnit(obj) {
   let _obj = { ...obj };
   _obj = namingChange(
     _obj,
     'gallerySizeType',
-    optionsMap.layoutParams.targetItemSize.mode
+    optionsMap.layoutParams.targetItemSize.unit
   );
-  _obj.layoutParams.targetItemSize.mode =
-    _obj.layoutParams.targetItemSize.mode?.toUpperCase();
+  _obj.layoutParams.targetItemSize.unit =
+    _obj.layoutParams.targetItemSize.unit?.toUpperCase();
   return _obj;
 }
 function process_old_to_new_VideoVolume(obj) {
