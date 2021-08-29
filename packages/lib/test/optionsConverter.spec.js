@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import optionsMap from '../src/core/helpers/optionsMap';
+// import optionsMap from '../src/core/helpers/optionsMap';
 import GALLERY_CONSTS from '../src/common/constants';
 import defaultOptions from '../src/common/defaultOptions';
 import {
@@ -69,7 +69,7 @@ function defaultOptions_old() {
 }
 
 function defaultOptions_new() {
-  let styles = {
+  let options = {
     layoutParams: {
       groupTypes: '1,2h,2v,3t,3b,3l,3r',
       gallerySpacing: 0,
@@ -209,17 +209,18 @@ function defaultOptions_new() {
     },
     // magicLayoutSeed: 1, //DELETE
     // gridStyle: 0, //Looks like it doesnt really exist
-function oldOptions() {
-  return {
-    cubeRatio: 0.5,
-    isVertical: false,
   };
+  return options;
 }
-function newOptions() {
-  return {
-    layoutParams_cropRatio: 0.5,
-    layoutParams_isVerticalOrientation: false,
-  };
-
-  return styles;
-}
+// function oldOptions() {
+//   return {
+//     cubeRatio: 0.5,
+//     isVertical: false,
+//   };
+// }
+// function newOptions() {
+//   return {
+//     layoutParams_cropRatio: 0.5,
+//     layoutParams_isVerticalOrientation: false,
+//   };
+// }
