@@ -48,7 +48,6 @@ function withMagnified(WrappedComponent) {
       const { clientX, clientY } = e;
       const { x, y, shouldMagnify } = this.state;
       if (!shouldMagnify) {
-        // console.log(this.getMagnifyInitialPos(e));
         this.setState(this.getMagnifyInitialPos(e));
       } else {
         this.dragStartX = x + clientX;
@@ -84,6 +83,7 @@ function withMagnified(WrappedComponent) {
         <ImageRenderer
           alt=""
           key={'magnified-item-preload-' + id}
+          className="magnified-item-preload"
           src={src}
           style={{
             width: magnifiedWidth,
@@ -149,7 +149,7 @@ function withMagnified(WrappedComponent) {
       if (shouldMagnify) {
         const magnifiedStyles = {
           position: 'relative',
-          cursor: 'grab',
+          cursor: 'zoom-out',
           width: magnifiedWidth,
           height: magnifiedHeight,
         };
