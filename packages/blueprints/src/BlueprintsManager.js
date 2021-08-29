@@ -73,7 +73,7 @@ export default class BlueprintsManager {
         this.createBlueprint({ items });
         // work with the new items...
       }
-    } else if (this.existingBlueprint.styles.slideshowLoop) {
+    } else if (this.existingBlueprint.options.slideshowLoop) {
       this.duplicateGalleryItems();
     }
   }
@@ -93,8 +93,6 @@ export default class BlueprintsManager {
       (this.api.isUsingCustomInfoElements &&
         this.api.isUsingCustomInfoElements()) ||
       this.currentState.isUsingCustomInfoElements;
-
-    params = this.alignParamNamingOptions(params);
 
     const { blueprint, changedParams } = blueprints.createBlueprint({
       params,
@@ -127,7 +125,6 @@ export default class BlueprintsManager {
 
   createSingleBlueprint(params = {}) {
     let { isUsingCustomInfoElements } = params;
-    params = this.alignParamNamingOptions(params);
 
     const { blueprint } = blueprints.createBlueprint({
       params,
@@ -150,22 +147,12 @@ export default class BlueprintsManager {
 
   // ------------------ Get all the needed raw data ---------------------------- //
   async completeParams(params) {
-    let { container, items, styles, id } =
-      this.alignParamNamingOptions(params);
+    let { container, items, options, id } = params || {}
     container = await this.fetchContainerIfNeeded(container);
     items = await this.fetchItemsIfNeeded(items);
-    styles = await this.fetchStylesIfNeeded(styles); // can be async... TODO
+    options = await this.fetchOptionsIfNeeded(options); // can be async... TODO
 
-    return { container, items, styles, id };
-  }
-
-  alignParamNamingOptions(params) {
-    let { container, items, styles, styleParams, options, id } =
-      params || {};
-
-    styles = { ...options, ...styles, ...styleParams };
-
-    return { container, items, styles, id };
+    return { container, items, options, id };
   }
 
   async fetchContainerIfNeeded(container) {
@@ -212,28 +199,28 @@ export default class BlueprintsManager {
     return items;
   }
 
-  async fetchStylesIfNeeded(styles) {
-    const shouldFetchStyles = (_styles) => {
+  async fetchOptionsIfNeeded(options) {
+    const shouldFetchOptions = (_options) => {
       let should = true;
-      if (_styles && Object.keys(_styles).length > 0) {
-        // TODO - should check if they are ready styles and use ClientLib if not?
+      if (_options && Object.keys(_options).length > 0) {
+        // TODO - should check if they are ready options and use ClientLib if not?
         should = false;
       }
 
       return should;
     };
-    if (shouldFetchStyles(styles)) {
+    if (shouldFetchOptions(options)) {
       // styles = ['yonatan - fake styles'] // get styles - from SA ; - worker code to be used here.
-      styles =
-        (this.api.fetchStyles && (await this.api.fetchStyles())) ||
-        this.currentState.styles;
+      options =
+        (this.api.fetchOptions && (await this.api.fetchOptions())) ||
+        this.currentState.options;
     }
 
-    return styles;
+    return options;
   }
 
   updateLastParamsIfNeeded(
-    { items, container, styles },
+    { items, container, options },
     changedParams,
     blueprintCreated
   ) {
@@ -244,9 +231,9 @@ export default class BlueprintsManager {
       this.currentState.container = changedParams.containerChanged
         ? { ...container }
         : this.currentState.container;
-      this.currentState.styles = changedParams.stylesChanged
-        ? { ...styles }
-        : this.currentState.styles;
+      this.currentState.options = changedParams.optionsChanged
+        ? { ...options }
+        : this.currentState.options;
     }
   }
 

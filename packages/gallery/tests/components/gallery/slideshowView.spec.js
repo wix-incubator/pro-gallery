@@ -13,7 +13,7 @@ describe('Slideshow View', () => {
   beforeEach(() => {
     driver = new GalleryDriver();
     initialGalleryViewProps = driver.props.galleryView();
-    Object.assign(initialGalleryViewProps.styleParams, {
+    Object.assign(initialGalleryViewProps.options, {
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     clock = sinon.useFakeTimers();
@@ -192,7 +192,7 @@ describe('Slideshow View', () => {
 
   describe('Thumbnails', () => {
     it('Thumbnails are created if layout is Thumbnails', () => {
-      Object.assign(initialGalleryViewProps.styleParams, {
+      Object.assign(initialGalleryViewProps.options, {
         hasThumbnails: true,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
@@ -211,7 +211,7 @@ describe('Slideshow View', () => {
     //In this test i use 900 + 300 ms timers but in fact the test run for about 240 ms in total.
     //To use fake timers you need to set them up. preferably in the beforeEact and afterEach. you can see how to do it in this file.
     it('startAutoSlideshow is called if needed', () => {
-      Object.assign(initialGalleryViewProps.styleParams, {
+      Object.assign(initialGalleryViewProps.options, {
         isAutoSlideshow: true,
         autoSlideshowInterval: 1,
         autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,

@@ -11,7 +11,7 @@ export default class TextItem extends GalleryComponent {
   }
 
   getTextDimensions() {
-  const { style, styleParams, cropRatio, imageDimensions } = this.props;
+  const { style, options, cropRatio, imageDimensions } = this.props;
     const isVerticalItem = style.ratio < cropRatio - 0.01;
     const { marginLeft, marginTop } = imageDimensions;
     //text dimensions include scaling
@@ -24,7 +24,7 @@ export default class TextItem extends GalleryComponent {
         ? style.width / style.maxWidth
         : style.height / style.maxHeight) * style.maxWidth;
     const translate =
-      styleParams.cubeType === 'fit'
+      options.cubeType === 'fit'
         ? '0, 0'
         : `${Math.round((style.width - textWidth) / 2)}px, ${Math.round(
             (style.height - textHeight) / 2
@@ -59,7 +59,7 @@ export default class TextItem extends GalleryComponent {
   }
 
   render() {
-    const { id, styleParams, html, style, actions, imageDimensions } =
+    const { id, options, html, style, actions, imageDimensions } =
       this.props;
     const processedHtml = this.processInnerhtml(html);
     const dimensions = this.getTextDimensions();
@@ -67,7 +67,7 @@ export default class TextItem extends GalleryComponent {
     const changeBgColor = {
       style: Object.assign(
         dimensions,
-        styleParams.cubeType === 'fit' ? { backgroundColor: style.bgColor } : {}
+        options.cubeType === 'fit' ? { backgroundColor: style.bgColor } : {}
       ),
     };
     const attributes = {
@@ -80,7 +80,7 @@ export default class TextItem extends GalleryComponent {
           ? imageDimensions.height
           : 'inherit',
       backgroundColor:
-        styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit',
+        options.cubeType !== 'fit' ? style.bgColor : 'inherit',
     };
 
     if (imageDimensions && imageDimensions.borderRadius) {

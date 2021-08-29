@@ -156,8 +156,7 @@ class VideoItem extends GalleryComponent {
 
     // adding 1 pixel to compensate for the difference we have sometimes from layouter in grid fill
     const isCrop =
-      this.props.styleParams.cubeImages &&
-      this.props.styleParams.cubeType === 'fill';
+      this.props.options.cubeImages && this.props.options.cubeType === 'fill';
 
     const url = this.props.videoUrl
       ? this.props.videoUrl
@@ -169,13 +168,13 @@ class VideoItem extends GalleryComponent {
     const attributes = {
       controlsList: 'nodownload',
       disablepictureinpicture: 'true',
-      muted: !this.props.styleParams.videoSound,
+      muted: !this.props.options.videoSound,
       preload: 'metadata',
       style: getStyle(isCrop, isWiderThenContainer),
       type: 'video/mp4',
     };
 
-    if (shouldCreateVideoPlaceholder(this.props.styleParams)) {
+    if (shouldCreateVideoPlaceholder(this.props.options)) {
       attributes.poster = this.props.createUrl(
         GALLERY_CONSTS.urlSizes.SCALED,
         GALLERY_CONSTS.urlTypes.HIGH_RES
@@ -191,9 +190,9 @@ class VideoItem extends GalleryComponent {
         height="100%"
         url={url}
         alt={this.props.alt ? this.props.alt : 'untitled video'}
-        loop={!!this.props.styleParams.videoLoop}
+        loop={!!this.props.options.videoLoop}
         ref={(player) => (this.video = player)}
-        volume={this.props.styleParams.videoSound ? 0.8 : 0}
+        volume={this.props.options.videoSound ? 0.8 : 0}
         playing={this.state.shouldPlay}
         onEnded={() => {
           this.setState({ isPlaying: false });
@@ -211,7 +210,7 @@ class VideoItem extends GalleryComponent {
             videoError: e,
           });
         }}
-        playbackRate={Number(this.props.styleParams.videoSpeed) || 1}
+        playbackRate={Number(this.props.options.videoSpeed) || 1}
         onStart={() => {
           if (!this.state.playedOnce) {
             this.setState({ playedOnce: true });
@@ -235,7 +234,7 @@ class VideoItem extends GalleryComponent {
             this.setState({ shouldPlay: false });
           }
         }}
-        controls={this.props.styleParams.showVideoControls}
+        controls={this.props.options.showVideoControls}
         config={{
           file: {
             attributes,
@@ -273,7 +272,7 @@ class VideoItem extends GalleryComponent {
     if (
       utils.deviceHasMemoryIssues() ||
       this.state.ready ||
-      !shouldCreateVideoPlaceholder(this.props.styleParams)
+      !shouldCreateVideoPlaceholder(this.props.options)
     ) {
       videoContainerStyle.backgroundColor = 'black';
     } else {
@@ -315,8 +314,7 @@ class VideoItem extends GalleryComponent {
     return (
       <div key={'video-and-hover-container' + this.props.idx}>
         {video}
-        {shouldCreateVideoPlaceholder(this.props.styleParams) &&
-          videoPlaceholder}
+        {shouldCreateVideoPlaceholder(this.props.options) && videoPlaceholder}
         {hover}
       </div>
     );

@@ -1,36 +1,36 @@
 import LAYOUTS from '../../common/constants/layout';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
-import { assignByString } from '../helpers/stylesUtils';
-const fixToColumn = (styles) => {
-  let presetStyles = { ...styles };
-  presetStyles.galleryLayout = LAYOUTS.COLUMN;
-  presetStyles.cubeType = 'fill';
-  presetStyles.cubeImages = true;
-  presetStyles = assignByString(presetStyles, 'layoutParams_cropRatio', 0.35);
-  presetStyles.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
-  presetStyles.isVertical = false;
-  presetStyles.groupSize = 1;
-  presetStyles.groupTypes = '1';
-  presetStyles.slideshowLoop = false;
+import { assignByString } from '../helpers/optionsUtils';
+const fixToColumn = (options) => {
+  let presetOptions = { ...options };
+  presetOptions.galleryLayout = LAYOUTS.COLUMN;
+  presetOptions.cubeType = 'fill';
+  presetOptions.cubeImages = true;
+  presetOptions = assignByString(presetOptions, 'layoutParams_cropRatio', 0.35);
+  presetOptions.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
+  presetOptions.isVertical = false;
+  presetOptions.groupSize = 1;
+  presetOptions.groupTypes = '1';
+  presetOptions.slideshowLoop = false;
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  presetStyles.smartCrop = false;
-  presetStyles.galleryType = 'Strips';
-  presetStyles.fixedColumns = 0;
-  presetStyles.enableScroll = true;
-  presetStyles.isGrid = false;
-  presetStyles.isColumns = true;
-  presetStyles.isMasonry = false;
-  presetStyles.isSlider = false;
-  presetStyles.isSlideshow = false;
-  presetStyles.cropOnlyFill = false;
-  return presetStyles;
+  presetOptions.smartCrop = false;
+  presetOptions.galleryType = 'Strips';
+  presetOptions.fixedColumns = 0;
+  presetOptions.enableScroll = true;
+  presetOptions.isGrid = false;
+  presetOptions.isColumns = true;
+  presetOptions.isMasonry = false;
+  presetOptions.isSlider = false;
+  presetOptions.isSlideshow = false;
+  presetOptions.cropOnlyFill = false;
+  return presetOptions;
 };
-export const fixedStyles = fixToColumn({});
+export const fixedOptions = fixToColumn({});
 
-export const createStyles = (styles) => {
-  let res = { ...styles };
+export const createOptions = (options) => {
+  let res = { ...options };
   res = fixToColumn(res);
   res.targetItemSize = calcTargetItemSize(res);
   return res;

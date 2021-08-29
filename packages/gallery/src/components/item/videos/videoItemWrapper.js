@@ -36,7 +36,7 @@ class VideoItemWrapper extends GalleryComponent {
   }
 
   mightPlayVideo() {
-    const { videoPlay, itemClick } = this.props.styleParams;
+    const { videoPlay, itemClick } = this.props.options;
     const { hasLink } = this.props;
     if (this.props.isVideoPlaceholder) {
       return false;
@@ -59,7 +59,7 @@ class VideoItemWrapper extends GalleryComponent {
       'description',
       'id',
       'idx',
-      'styleParams',
+      'options',
       'createUrl',
       'settings',
       'actions',
@@ -98,14 +98,14 @@ class VideoItemWrapper extends GalleryComponent {
   render() {
     const hover = this.props.hover;
     const showVideoPlayButton =
-      !this.props.hidePlay && this.props.styleParams.showVideoPlayButton;
+      !this.props.hidePlay && this.props.options.showVideoPlayButton;
     const videoPlaceholder = this.createVideoPlaceholder(showVideoPlayButton);
 
     const VideoItem = this.VideoItem;
     if (!this.mightPlayVideo() || !VideoItem) {
       return (
         <div>
-          {shouldCreateVideoPlaceholder(this.props.styleParams) && videoPlaceholder}
+          {shouldCreateVideoPlaceholder(this.props.options) && videoPlaceholder}
           {hover}
         </div>
       );

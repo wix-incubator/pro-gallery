@@ -3,9 +3,9 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 
-describe('styleParam - scrollSnap', () => {
+describe('options - scrollSnap', () => {
   let driver;
   let initialProps;
   beforeEach(() => {
@@ -13,11 +13,11 @@ describe('styleParam - scrollSnap', () => {
     initialProps = {
       container,
       items: images2,
-      styles: styleParams,
+      options,
     };
   });
   it('should set class "scroll-snap"', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       scrollSnap: true,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
@@ -30,7 +30,7 @@ describe('styleParam - scrollSnap', () => {
   });
 
   it('should not set class "scroll-snap"', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       scrollSnap: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,

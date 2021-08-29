@@ -2,52 +2,56 @@ import LAYOUTS from '../../common/constants/layout';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
-import { assignByString } from '../helpers/stylesUtils';
+import { assignByString } from '../helpers/optionsUtils';
 
-const fixToSlideshow = (styles) => {
-  let presetStyles = { ...styles };
-  presetStyles.galleryLayout = LAYOUTS.SLIDESHOW;
-  presetStyles.enableInfiniteScroll = true;
-  presetStyles = assignByString(
-    presetStyles,
+const fixToSlideshow = (options) => {
+  let presetOptions = { ...options };
+  presetOptions.galleryLayout = LAYOUTS.SLIDESHOW;
+  presetOptions.enableInfiniteScroll = true;
+  presetOptions = assignByString(
+    presetOptions,
     'layoutParams_cropRatio',
     '100%/100%'
   );
-  presetStyles.cubeImages = true;
-  presetStyles.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW;
-  presetStyles.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
-  presetStyles = assignByString(presetStyles, 'layoutParams_gallerySpacing', 0);
-  presetStyles.isVertical = false;
-  presetStyles.groupSize = 1;
-  presetStyles.groupTypes = '1';
-  presetStyles.itemBorderWidth = 0;
-  presetStyles.itemBorderRadius = 0;
-  presetStyles.itemBorderColor = undefined;
-  presetStyles.numberOfImagesPerCol = 1;
+  presetOptions.cubeImages = true;
+  presetOptions.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW;
+  presetOptions.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
+  presetOptions = assignByString(
+    presetOptions,
+    'layoutParams_gallerySpacing',
+    0
+  );
+  presetOptions.isVertical = false;
+  presetOptions.groupSize = 1;
+  presetOptions.groupTypes = '1';
+  presetOptions.itemBorderWidth = 0;
+  presetOptions.itemBorderRadius = 0;
+  presetOptions.itemBorderColor = undefined;
+  presetOptions.numberOfImagesPerCol = 1;
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  presetStyles.smartCrop = false;
-  presetStyles.targetItemSize = 550;
-  presetStyles.galleryType = 'Strips';
-  presetStyles.fixedColumns = 1;
-  presetStyles.hasThumbnails = false;
-  presetStyles.enableScroll = true;
-  presetStyles.scrollSnap = true;
-  presetStyles.isGrid = false;
-  presetStyles.isColumns = false;
-  presetStyles.isMasonry = false;
-  presetStyles.isSlider = false;
-  presetStyles.isSlideshow = true;
-  presetStyles.cropOnlyFill = false;
-  presetStyles.scatter = 0;
-  presetStyles.rotatingScatter = '';
-  presetStyles.imageMargin = 0;
-  return presetStyles;
+  presetOptions.smartCrop = false;
+  presetOptions.targetItemSize = 550;
+  presetOptions.galleryType = 'Strips';
+  presetOptions.fixedColumns = 1;
+  presetOptions.hasThumbnails = false;
+  presetOptions.enableScroll = true;
+  presetOptions.scrollSnap = true;
+  presetOptions.isGrid = false;
+  presetOptions.isColumns = false;
+  presetOptions.isMasonry = false;
+  presetOptions.isSlider = false;
+  presetOptions.isSlideshow = true;
+  presetOptions.cropOnlyFill = false;
+  presetOptions.scatter = 0;
+  presetOptions.rotatingScatter = '';
+  presetOptions.imageMargin = 0;
+  return presetOptions;
 };
-export const fixedStyles = fixToSlideshow({});
+export const fixedOptions = fixToSlideshow({});
 
-export const createStyles = (styles) => {
-  let res = { ...styles };
+export const createOptions = (options) => {
+  let res = { ...options };
   res = fixToSlideshow(res);
   res.targetItemSize = calcTargetItemSize(res);
   return res;

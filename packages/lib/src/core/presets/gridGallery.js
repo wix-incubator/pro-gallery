@@ -5,35 +5,35 @@ import {
   processNumberOfImagesPerCol,
 } from '../helpers/layoutHelper';
 
-const fixToGrid = (styles) => {
-  let presetStyles = { ...styles };
-  presetStyles.galleryLayout = LAYOUTS.GRID;
-  presetStyles.cubeImages = true;
-  presetStyles.isVertical = true;
-  presetStyles.groupSize = 1;
-  presetStyles.hasThumbnails = false;
-  presetStyles.groupTypes = '1';
-  presetStyles.slideshowLoop = false;
+const fixToGrid = (options) => {
+  let presetOptions = { ...options };
+  presetOptions.galleryLayout = LAYOUTS.GRID;
+  presetOptions.cubeImages = true;
+  presetOptions.isVertical = true;
+  presetOptions.groupSize = 1;
+  presetOptions.hasThumbnails = false;
+  presetOptions.groupTypes = '1';
+  presetOptions.slideshowLoop = false;
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  presetStyles.smartCrop = false;
-  presetStyles.galleryType = 'Columns';
-  presetStyles.fixedColumns = 0;
-  presetStyles.targetItemSize = 0;
-  presetStyles.enableScroll = true;
-  presetStyles.cropOnlyFill = false;
-  presetStyles.isSlider = false;
-  presetStyles.isColumns = false;
-  presetStyles.isGrid = true;
-  presetStyles.isMasonry = false;
-  presetStyles.isSlideshow = false;
-  presetStyles.minItemSize = 50;
-  return presetStyles;
+  presetOptions.smartCrop = false;
+  presetOptions.galleryType = 'Columns';
+  presetOptions.fixedColumns = 0;
+  presetOptions.targetItemSize = 0;
+  presetOptions.enableScroll = true;
+  presetOptions.cropOnlyFill = false;
+  presetOptions.isSlider = false;
+  presetOptions.isColumns = false;
+  presetOptions.isGrid = true;
+  presetOptions.isMasonry = false;
+  presetOptions.isSlideshow = false;
+  presetOptions.minItemSize = 50;
+  return presetOptions;
 };
 
-export const fixedStyles = fixToGrid({});
+export const fixedOptions = fixToGrid({});
 
-export const createStyles = (styles) => {
-  let res = { ...styles };
+export const createOptions = (options) => {
+  let res = { ...options };
   res = fixToGrid(res);
   res.targetItemSize = calcTargetItemSize(
     res,
