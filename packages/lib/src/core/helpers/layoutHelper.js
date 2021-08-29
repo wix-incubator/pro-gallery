@@ -5,6 +5,7 @@ import PLACEMENTS, {
   hasExternalVerticalPlacement,
   hasHoverPlacement,
   isConstantVerticalPlacement,
+  isHoverPlacement,
 } from '../../common/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import LOADING_MODE from '../../common/constants/loadingMode';
@@ -282,7 +283,11 @@ const addMarginsToSupportShadows = (options) => {
 }
 const centerArrowsWhenNeeded = (options) => {
   let _options = {...options}
-  if (!isConstantVerticalPlacement(_options.titlePlacement, _options.isSlideshow) || 
+  const filteredPlacement = _options.titlePlacement // filtering hover since it doesn't affect this product
+  .split(',')
+  .filter(placement => !isHoverPlacement(placement))
+  .join(',')
+  if (!isConstantVerticalPlacement(filteredPlacement, _options.isSlideshow) || 
       _options.numberOfImagesPerCol > 1)
     {
     // if text (info) placement is not above/below placement or more then 1 images per col, arrows are gallery("item") centered

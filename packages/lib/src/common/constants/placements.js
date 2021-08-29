@@ -56,18 +56,11 @@ const isExternalLeftPlacement = (placement) =>
 
 const isConstantVerticalPlacement = (placement, isSlideshow) => {
   const placementArray = placement.split(',');
-  const idxOfAboveOrBelow = placementArray.findIndex(
-    isExternalAboveOrBelowSinglePlacement
-  );
+  const firstPlacement = placementArray.shift();
   return (
-    isSlideshow || // Either SlideShow OR
-    (idxOfAboveOrBelow !== -1 && // There exist at least one ABOVE/BELOW AND
-      placementArray.every(
-        // every element in the placements array is ABOVE/BELOW (matching the one found) or HOVER
-        (placement) =>
-          placement === placementArray[idxOfAboveOrBelow] ||
-          isHoverPlacement(placement)
-      ))
+    isSlideshow || // Either SlideShow OR all placements are above/below (the same as the first one)
+    (isExternalAboveOrBelowSinglePlacement(firstPlacement) &&
+      placementArray.every((placement) => placement === firstPlacement))
   );
 };
 
