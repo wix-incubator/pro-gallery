@@ -4,75 +4,98 @@ import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('arrowsPosition - e2e', () => {
-  let driver;
+// Relevant to entire test suite (both 'describe's)
+let driver;
+let layoutStyles;
 
+describe('arrowsPosition with info below - e2e', () => {
   beforeAll(async () => {
     driver = new GalleryDriver();
+    // layout styles relevant to all sub-tests
+    layoutStyles = {
+      galleryLayout: GALLERY_CONSTS.layout.SLIDER,
+      titlePlacement: 'SHOW_BELOW',
+    };
     await driver.openPage();
+  });
+
+  afterEach(async () => {
+    await driver.waitFor.hookToBeVisible('item-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
+    expect(page).toMatchImageSnapshot();
   });
 
   afterAll(async () => {
     await driver.closePage();
   });
-  it('should have arrows on info center and info below', async () => {
-    await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.SLIDER,
-      titlePlacement: 'SHOW_BELOW',
+
+  it('should have arrows on info center', async () => {
+    const currentTestLayout = {
+      ...layoutStyles,
       arrowsVerticalPosition: 'INFO_CENTER',
-    });
-    await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchImageSnapshot();
+    };
+    await driver.navigate(currentTestLayout);
   });
-  it('should have arrows on item center and info below', async () => {
-    await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.SLIDER,
-      titlePlacement: 'SHOW_BELOW',
+
+  it('should have arrows on item center', async () => {
+    const currentTestLayout = {
+      ...layoutStyles,
       arrowsVerticalPosition: 'ITEM_CENTER',
-    });
-    await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchImageSnapshot();
+    };
+    await driver.navigate(currentTestLayout);
   });
-  it('should have arrows on image center and info below', async () => {
-    await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.SLIDER,
-      titlePlacement: 'SHOW_BELOW',
+
+  it('should have arrows on image center', async () => {
+    const currentTestLayout = {
+      ...layoutStyles,
       arrowsVerticalPosition: 'IMAGE_CENTER',
-    });
-    await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchImageSnapshot();
+    };
+    await driver.navigate(currentTestLayout);
   });
-  it('should have arrows on info center and info above', async () => {
-    await driver.navigate({
+});
+
+describe('arrowsPosition with info above - e2e', () => {
+  beforeAll(async () => {
+    driver = new GalleryDriver();
+    // layout styles relevant to all sub-tests
+    layoutStyles = {
       galleryLayout: GALLERY_CONSTS.layout.SLIDER,
       titlePlacement: 'SHOW_ABOVE',
+    };
+    await driver.openPage();
+  });
+
+  afterEach(async () => {
+    await driver.waitFor.hookToBeVisible('item-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
+    expect(page).toMatchImageSnapshot();
+  });
+
+  afterAll(async () => {
+    await driver.closePage();
+  });
+
+  it('should have arrows on info center', async () => {
+    const currentTestLayout = {
+      ...layoutStyles,
       arrowsVerticalPosition: 'INFO_CENTER',
-    });
-    await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchImageSnapshot();
+    };
+    await driver.navigate(currentTestLayout);
   });
-  it('should have arrows on item center and info above', async () => {
-    await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.SLIDER,
-      titlePlacement: 'SHOW_ABOVE',
+
+  it('should have arrows on item center', async () => {
+    const currentTestLayout = {
+      ...layoutStyles,
       arrowsVerticalPosition: 'ITEM_CENTER',
-    });
-    await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchImageSnapshot();
+    };
+    await driver.navigate(currentTestLayout);
   });
-  it('should have arrows on image center and info above', async () => {
-    await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.SLIDER,
-      titlePlacement: 'SHOW_ABOVE',
+
+  it('should have arrows on image center', async () => {
+    const currentTestLayout = {
+      ...layoutStyles,
       arrowsVerticalPosition: 'IMAGE_CENTER',
-    });
-    await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchImageSnapshot();
+    };
+    await driver.navigate(currentTestLayout);
   });
 });
