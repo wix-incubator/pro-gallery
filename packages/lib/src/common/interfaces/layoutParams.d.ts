@@ -61,20 +61,19 @@ export interface NavigationArrows {
 }
 
 export interface TargetItemSize {
-  mode: 'PERCENT' | 'PIXEL' | 'SMART';
-  pixel: number;
-  percent: number;
-  smart: number; //I need to understand the users of this. its a layout thing...
+  unit: 'PERCENT' | 'PIXEL' | 'SMART';
+  value;
 }
 export interface Info {
-  sizeCalculationMode: 'PERCENT' | 'MANUAL';
+  sizeCalculationMode: 'PERCENT' | 'PIXEL';
   width: number;
   height: number;
   spacing: number;
-  backgroundMode:
+  layout:
     | 'NO_BACKGROUND'
     | 'ATTACHED_BACKGROUND'
-    | 'SEPARATED_BACKGROUND';
+    | 'SEPARATED_BACKGROUND'
+    | 'DONT_SHOW';
   border: InfoBorder;
   placement:
     | 'OVERLAY'

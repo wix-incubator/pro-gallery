@@ -33,11 +33,7 @@ export const nameChangedLayoutParams = [
   ],
   ['arrowsSize', optionsMap.layoutParams.navigationArrows.size],
   ['arrowsPosition', optionsMap.layoutParams.navigationArrows.position],
-
-  [
-    'calculateTextBoxWidthMode',
-    optionsMap.layoutParams.info.sizeCalculationMode,
-  ],
+  ['imageInfoType', optionsMap.layoutParams.info.backgroundMode],
   ['textBoxHeight', optionsMap.layoutParams.info.height],
   ['textBoxWidth', optionsMap.layoutParams.info.width],
   //['textBoxWidthPercent', optionsMap.layoutParams.info.widthByPercent],

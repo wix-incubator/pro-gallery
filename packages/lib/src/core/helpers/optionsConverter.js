@@ -68,10 +68,10 @@ function migrateOptions(oldStyles) {
   newStyles = process_old_to_new_ForceGroupsOrder(newStyles);
   newStyles = process_old_to_new_GroupTypes(newStyles);
   newStyles = process_old_to_new_NumberOfColumns(newStyles); // fixedColumns || numberOfImagesPerRow || numberOfGroupsPerRow (notice its losing if its 0)
-  newStyles = process_old_to_new_InfoBackgroundMode(newStyles);
   newStyles = process_old_to_new_targetItemSizeMode(newStyles);
   newStyles = process_old_to_new_CroppedAlignment(newStyles);
   newStyles = process_old_to_new_CropRatio(newStyles);
+  newStyles = process_old_to_new_textBoxSizeMode(newStyles);
 
   ///----------- BEHAVIOUR -------------///
   newStyles = changeNames(newStyles, nameChangedBehaviourParams);
@@ -196,6 +196,25 @@ function process_old_to_new_layoutDirection(obj) {
   }
   return _obj;
 }
+function process_old_to_new_textBoxSizeMode(obj) {
+  let _obj = { ...obj };
+  _obj = namingChange(
+    _obj,
+    'calculateTextBoxWidthMode',
+    optionsMap.layoutParams.info.sizeCalculationMode
+  );
+  switch (_obj.layoutParams.info.sizeCalculationMode) {
+    case 'PERCENT':
+      _obj.layoutParams.info.sizeCalculationMode = 'PERCENT';
+      break;
+    case 'MANUAL':
+      _obj.layoutParams.info.sizeCalculationMode = 'PIXEL';
+      break;
+    default:
+      break;
+  }
+  return _obj;
+}
 function process_old_to_new_LayoutOrientation(obj) {
   let _obj = { ...obj };
   _obj = namingChange(
@@ -262,22 +281,22 @@ function process_old_to_new_CroppedAlignment(obj) {
   }
   return _obj;
 }
-function process_old_to_new_InfoBackgroundMode(obj) {
-  let _obj = { ...obj };
-  _obj = namingChange(
-    _obj,
-    'imageInfoType',
-    optionsMap.layoutParams.info.backgroundMode
-  );
-  switch (_obj.layoutParams.info.backgroundMode) {
-    case 'DONT_SHOW':
-      _obj.layoutParams.info.backgroundMode = 'NO_BACKGROUND';
-      break;
-    default:
-      break;
-  }
-  return _obj;
-}
+// function process_old_to_new_InfoBackgroundMode(obj) {
+//   let _obj = { ...obj };
+//   _obj = namingChange(
+//     _obj,
+//     'imageInfoType',
+//     optionsMap.layoutParams.info.backgroundMode
+//   );
+//   switch (_obj.layoutParams.info.backgroundMode) {
+//     case 'DONT_SHOW':
+//       _obj.layoutParams.info.backgroundMode = 'NO_BACKGROUND';
+//       break;
+//     default:
+//       break;
+//   }
+//   return _obj;
+// }
 function process_old_to_new_OverlayHoveringBehaviour(obj) {
   let _obj = { ...obj };
   _obj = namingChange(
