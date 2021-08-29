@@ -58,23 +58,16 @@ const isExternalRightPlacement = (placement) =>
 const isExternalLeftPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_THE_LEFT;
 
-const isAboveOrBelowPlacement = (placement, isSlideshow) => {
-  return (
-    isSlideshow ||
-    (String(placement).split(',').every(isExternalVerticalPlacement) &&
-      !hasExternalVerticalAlternatePlacement(placement))
-  );
-};
-
 const isConstantVerticalPlacement = (placement, isSlideshow) => {
   const placementArray = placement.split(',');
   const idxOfAboveOrBelow = placementArray.findIndex(
     isExternalAboveOrBelowSinglePlacement
   );
   return (
-    isSlideshow ||
-    (idxOfAboveOrBelow !== -1 &&
+    isSlideshow || // Either SlideShow OR
+    (idxOfAboveOrBelow !== -1 && // There exist at least one ABOVE/BELOW AND
       placementArray.every(
+        // every element in the placements array is ABOVE/BELOW (matching the one found) or HOVER
         (placement) =>
           placement === placementArray[idxOfAboveOrBelow] ||
           isHoverPlacement(placement)
@@ -101,6 +94,5 @@ export {
   isExternalLeftPlacement,
   isExternalVerticalPlacement,
   isExternalHorizontalPlacement,
-  isAboveOrBelowPlacement,
   isConstantVerticalPlacement,
 };
