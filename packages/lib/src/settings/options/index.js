@@ -89,6 +89,7 @@ import showVideoControls from './showVideoControls';
 import shouldIndexDirectShareLinkInSEO from './shouldIndexDirectShareLinkInSEO';
 import slideTransition from './slideTransition';
 import useMaxDimensions from './useMaxDimensions';
+import cubeFitPosition from './cubeFitPosition';
 import enableVideoPlaceholder from './enableVideoPlaceholder ';
 import overlayPosition from './overlayPosition';
 import overlaySize from './overlaySize';
@@ -190,6 +191,7 @@ export default {
   shouldIndexDirectShareLinkInSEO,
   slideTransition,
   useMaxDimensions,
+  cubeFitPosition,
   enableVideoPlaceholder,
   overlayPosition,
   overlaySize,

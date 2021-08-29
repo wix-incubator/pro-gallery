@@ -3,9 +3,9 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 
-describe('styleParam - thumbnailSize', () => {
+describe('options - thumbnailSize', () => {
   let driver;
   let initialProps;
   beforeEach(() => {
@@ -13,11 +13,11 @@ describe('styleParam - thumbnailSize', () => {
     initialProps = {
       container,
       items: images2,
-      styles: styleParams,
+      options,
     };
   });
   it('should "thumbnailSize" of "300"', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       thumbnailSize: 300,
     });
@@ -29,7 +29,7 @@ describe('styleParam - thumbnailSize', () => {
     driver.detach.proGallery();
   });
   it('should "thumbnailSize" of "150"', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       thumbnailSize: 150,
     });
@@ -41,7 +41,7 @@ describe('styleParam - thumbnailSize', () => {
     driver.detach.proGallery();
   });
   it('should set the gallery height for thumbnailSize=300', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       thumbnailSize: 300,
       thumbnailSpacings: 10,
@@ -57,7 +57,7 @@ describe('styleParam - thumbnailSize', () => {
   });
 
   it('should set the gallery width for thumbnailSize=300', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       thumbnailSize: 300,
       thumbnailSpacings: 10,

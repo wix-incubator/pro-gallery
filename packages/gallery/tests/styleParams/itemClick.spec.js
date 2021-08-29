@@ -2,10 +2,10 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2, videoItems } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
-describe('styleParam - itemClick', () => {
+describe('options - itemClick', () => {
   let driver;
   let initialProps;
 
@@ -14,13 +14,13 @@ describe('styleParam - itemClick', () => {
     initialProps = {
       container,
       items: images2,
-      styles: styleParams,
+      options,
     };
   });
 
   describe('should set the correct role for each "itemClick" value', () => {
     it('expect "role" to be "link" when "itemClick" is "link"', async () => {
-      initialProps.styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'link',
       });
       driver.mount.proGallery(initialProps);
@@ -30,7 +30,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect "role" to be "button" when "itemClick" is "expand"', async () => {
-      initialProps.styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'expand',
       });
       driver.mount.proGallery(initialProps);
@@ -40,7 +40,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect "role" to be "button" when "itemClick" is "fullscreen"', async () => {
-      initialProps.styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'fullscreen',
       });
       driver.mount.proGallery(initialProps);
@@ -50,7 +50,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect "role" to be "" when "itemClick" is "nothing"', async () => {
-      initialProps.styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'nothing',
       });
       driver.mount.proGallery(initialProps);
@@ -67,11 +67,11 @@ describe('styleParam - itemClick', () => {
       initialProps = {
         container,
         items: images2,
-        styles: styleParams,
+        options,
       };
     });
     it('expect item to have className "clickable" when "itemClick" is "link"', async () => {
-      initialProps.styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'link',
       });
       driver.mount.proGallery(initialProps);
@@ -81,7 +81,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect item to have className "clickable" when "itemClick" is "expand"', async () => {
-      initialProps.styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'expand',
       });
       driver.mount.proGallery(initialProps);
@@ -91,7 +91,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect item to have className "clickable" when "itemClick" is "fullscreen"', async () => {
-      initialProps.styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'fullscreen',
       });
       driver.mount.proGallery(initialProps);
@@ -101,7 +101,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect item to not have className "clickable" when "itemClick" is "nothing"', async () => {
-      initialProps.styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'nothing',
       });
       driver.mount.proGallery(initialProps);
@@ -118,11 +118,11 @@ describe('styleParam - itemClick', () => {
       initialProps = {
         container,
         items: images2,
-        styles: styleParams,
+        options,
       };
     });
     it('check href when itemClick = link', async () => {
-      initialProps.styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'link',
       });
       driver.mount.proGallery(initialProps);
@@ -132,7 +132,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('check href when itemClick = expand', async () => {
-      initialProps.styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'expand',
       });
       driver.mount.proGallery(initialProps);
@@ -149,12 +149,12 @@ describe('styleParam - itemClick', () => {
       initialProps = {
         container,
         items: videoItems,
-        styles: styleParams,
+        options,
       };
     });
 
     it('expect to find video element', async () => {
-      initialProps.styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'nothing',
         videoPlay: 'onClick',
       });
@@ -168,7 +168,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect not to find video element when "itemClick" is "expand"', async () => {
-      initialProps.styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'expand',
         videoPlay: 'onClick',
       });
@@ -181,7 +181,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect not to find video element when "itemClick" is "fullscreen"', async () => {
-      initialProps.styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'fullscreen',
         videoPlay: 'onClick',
       });
@@ -195,7 +195,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect not to find video element when "itemClick" is "link"', async () => {
-      initialProps.styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'link',
         videoPlay: 'onClick',
       });

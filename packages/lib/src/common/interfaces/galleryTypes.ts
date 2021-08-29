@@ -1,11 +1,11 @@
-import { Item } from '../../common/interfaces/Item';
-import { Container } from '../../common/interfaces/Container';
-import { EventsListener } from '../../common/interfaces/EventsListener';
-import { CreateMediaUrl } from '../../common/interfaces/CreateMediaUrl';
-import { CustomComponents } from '../../common/interfaces/CustomComponents';
-import { ScrollingElement } from '../../common/interfaces/ScrollingElement';
-import { Settings } from '../../common/interfaces/Settings';
-import { StyleParams } from './styles';
+import { Item } from './Item';
+import { Container } from './Container';
+import { EventsListener } from './EventsListener';
+import { CreateMediaUrl } from './CreateMediaUrl';
+import { CustomComponents } from './CustomComponents';
+import { ScrollingElement } from './ScrollingElement';
+import { Settings } from './Settings';
+import { Options } from './options';
 
 type ViewMode = 'SITE' | 'EDIT' | 'PREVIEW' | 'SEO';
 type DeviceType = 'desktop' | 'mobile' | 'tablet';
@@ -13,9 +13,7 @@ type DeviceType = 'desktop' | 'mobile' | 'tablet';
 export interface GalleryProps {
   container: Container;
   items: Item[];
-  styles?: StyleParams;
-  options?: StyleParams;
-  styleParams?: StyleParams;
+  options: Options;
   id?: string;
   totalItemsCount?: number;
   activeIndex?: number;

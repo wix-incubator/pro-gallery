@@ -39,7 +39,7 @@ class ImageItem extends GalleryComponent {
   }
 
   getImageContainerClassNames() {
-    const { styleParams, isTransparent } = this.props;
+    const { options, isTransparent } = this.props;
     const { isHighResImageLoaded } = this.state;
 
     const imageContainerClassNames = [
@@ -48,10 +48,10 @@ class ImageItem extends GalleryComponent {
       'gallery-item-visible',
       'gallery-item',
       'gallery-item-preloaded',
-      styleParams.cubeImages && styleParams.cubeType === 'fit'
+      options.cubeImages && options.cubeType === 'fit'
         ? 'grid-fit'
         : '',
-      styleParams.imageLoadingMode === GALLERY_CONSTS.loadingMode.COLOR && !isTransparent
+      options.imageLoadingMode === GALLERY_CONSTS.loadingMode.COLOR && !isTransparent
         ? `load-with-color ${isHighResImageLoaded ? 'image-loaded' : ''}`
         : '',
     ].join(' ');
@@ -78,10 +78,10 @@ class ImageItem extends GalleryComponent {
   }
 
   getImageAnimationOverlay() {
-    const { imageDimensions, styleParams, createUrl, id } = this.props;
+    const { imageDimensions, options, createUrl, id } = this.props;
 
     let imageAnimationUrl = null;
-    switch (styleParams.scrollAnimation) {
+    switch (options.scrollAnimation) {
       case GALLERY_CONSTS.scrollAnimations.BLUR:
         imageAnimationUrl = createUrl(
           GALLERY_CONSTS.urlSizes.RESIZED,
@@ -123,7 +123,7 @@ class ImageItem extends GalleryComponent {
       id,
       idx,
       settings = {},
-      styleParams,
+      options,
       gotFirstScrollEvent,
       isTransparent
     } = this.props;
@@ -141,7 +141,7 @@ class ImageItem extends GalleryComponent {
     const image = () => {
       const imagesComponents = [];
       const blockDownloadStyles =
-        utils.isMobile() && !this.props.styleParams.allowContextMenu
+        utils.isMobile() && !this.props.options.allowContextMenu
           ? {
               '-webkit-user-select': 'none',
               '-webkit-touch-callout': 'none',
@@ -164,7 +164,7 @@ class ImageItem extends GalleryComponent {
           loading: 'eager',
           ...imageProps,
         };
-        switch (styleParams.imageLoadingMode) {
+        switch (options.imageLoadingMode) {
           case GALLERY_CONSTS.loadingMode.BLUR:
             preload = (
               <ImageRenderer
@@ -207,7 +207,7 @@ class ImageItem extends GalleryComponent {
       }
 
       const shouldRenderHighResImages = !this.props.isPrerenderMode;
-      const src = 
+      const src =
         createUrl(
     GALLERY_CONSTS.urlSizes.MULTI,
             GALLERY_CONSTS.urlTypes.HIGH_RES

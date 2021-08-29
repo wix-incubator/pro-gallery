@@ -2,7 +2,7 @@ import { INPUT_TYPES } from '../utils/constants';
 
 export default {
   title: 'Choose Best Group',
-  isRelevant: (styleParams) => styleParams.groupSize > 1,
+  isRelevant: (options) => options.groupSize > 1,
   isRelevantDescription: 'Set "Max Group Size" to be greater than "1".',
   type: INPUT_TYPES.BOOLEAN,
   default: true,

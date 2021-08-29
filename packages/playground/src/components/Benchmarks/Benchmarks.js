@@ -17,7 +17,7 @@ import { testImages as images } from "../App/images";
 import { mixAndSlice } from "../../utils/utils";
 
 function Benchmarks() {
-  const { styleParams, setItems } = useGalleryContext();
+  const { options, setItems } = useGalleryContext();
 
   const [numberOfRuns, setNumberOfRuns] = React.useState(10);
   const [numberOfImages, setNumberOfImages] = React.useState(50);
@@ -55,7 +55,7 @@ function Benchmarks() {
             height: 1000,
             width: 1000
           },
-          styleParams
+          styleParams: options
         }
       };
     }
@@ -106,7 +106,7 @@ function Benchmarks() {
         startTime = Date.now();
         setItems(items);
       }
-    
+
       setTimeout(startRun, 1000);
     });
   }
@@ -238,13 +238,13 @@ function Benchmarks() {
             </Card>
           </div>
         )}
-{/* 
+{/*
         <Button block type="link" href="https://bundlephobia.com/result?p=pro-layouts@latest" target="_blank">
           Layouter Bundle Size
         </Button>
 
- */}        
-            
+ */}
+
       </Form>
     </div>
   );

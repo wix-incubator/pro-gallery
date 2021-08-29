@@ -108,7 +108,7 @@ class ItemView extends GalleryComponent {
   }
 
   onFocus() {
-    if (this.props.styleParams.isAccessible) {
+    if (this.props.options.isAccessible) {
       this.props.actions.eventsListener(
         GALLERY_CONSTS.events.HOVER_SET,
         this.props.idx
@@ -121,7 +121,7 @@ class ItemView extends GalleryComponent {
   }
 
   onBlur() {
-    if (this.props.styleParams.isAccessible) {
+    if (this.props.options.isAccessible) {
       this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
     }
     this.props.actions.eventsListener(
@@ -211,7 +211,7 @@ class ItemView extends GalleryComponent {
     const useDirectLink = !!(
       url &&
       target &&
-      this.props.styleParams.itemClick === 'link'
+      this.props.options.itemClick === 'link'
     );
     const shouldUseDirectLinkOnMobile =
       this.shouldShowHoverOnMobile() &&
@@ -229,7 +229,7 @@ class ItemView extends GalleryComponent {
   };
 
   isClickOnCurrentHoveredItem = () => this.state.isCurrentHover ||  // this single item was already hovered.
-  this.props.styleParams.hoveringBehaviour ===
+  this.props.options.hoveringBehaviour ===
   GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE; // all the items are always 'already' hovered
 
   handleHoverClickOnMobile(e) {
@@ -276,7 +276,7 @@ class ItemView extends GalleryComponent {
         allowDescription,
         allowTitle,
         isStoreGallery,
-      } = this.props.styleParams;
+      } = this.props.options;
       const isNewMobileSettings = featureManager.supports.mobileSettings;
       if (
         hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW
@@ -313,13 +313,13 @@ class ItemView extends GalleryComponent {
 
   shouldHover() {
     //see if this could be decided in the preset
-    const { styleParams } = this.props;
+    const { options } = this.props;
     const {
       alwaysShowHover,
       previewHover,
       hoveringBehaviour,
       overlayAnimation,
-    } = styleParams;
+    } = options;
     const { NEVER_SHOW, APPEARS } = GALLERY_CONSTS.infoBehaviourOnHover;
     const { NO_EFFECT } = GALLERY_CONSTS.overlayAnimations;
 
@@ -384,7 +384,7 @@ class ItemView extends GalleryComponent {
       'description',
       'id',
       'idx',
-      'styleParams',
+      'options',
       'createUrl',
       'settings',
       'isPrerenderMode',
@@ -429,7 +429,7 @@ class ItemView extends GalleryComponent {
   getTextItem(imageDimensions) {
     const props = utils.pick(this.props, [
       'id',
-      'styleParams',
+      'options',
       'style',
       'html',
       'cropRatio',
@@ -451,7 +451,7 @@ class ItemView extends GalleryComponent {
   }
 
   getItemInner() {
-    const { styleParams, type, style, offset } = this.props;
+    const { options, type, style, offset } = this.props;
     let itemInner;
 
     const { width, height, innerWidth, innerHeight } = style;
@@ -459,7 +459,7 @@ class ItemView extends GalleryComponent {
 
     const itemStyles = { width: innerWidth, height: innerHeight, marginTop: innerTop, marginLeft: innerLeft };
     let itemHover = null;
-    if (this.shouldHover() || styleParams.isSlideshow) {
+    if (this.shouldHover() || options.isSlideshow) {
       itemHover = this.getItemHover(itemStyles);
     }
 
@@ -483,12 +483,12 @@ class ItemView extends GalleryComponent {
         }
     }
 
-    if (styleParams.isSlideshow) {
+    if (options.isSlideshow) {
       const { customSlideshowInfoRenderer } = this.props.customComponents;
       const slideAnimationStyles = this.getSlideAnimationStyles();
       const infoStyle = {
-        height: `${styleParams.slideshowInfoSize}px`,
-        bottom: `-${styleParams.slideshowInfoSize}px`,
+        height: `${options.slideshowInfoSize}px`,
+        bottom: `-${options.slideshowInfoSize}px`,
         ...slideAnimationStyles,
         transition: 'none',
       };
@@ -527,7 +527,7 @@ class ItemView extends GalleryComponent {
   getRightInfoElementIfNeeded() {
     if (
       GALLERY_CONSTS.hasExternalRightPlacement(
-        this.props.styleParams.titlePlacement,
+        this.props.options.titlePlacement,
         this.props.idx
       )
     ) {
@@ -543,7 +543,7 @@ class ItemView extends GalleryComponent {
   getLeftInfoElementIfNeeded() {
     if (
       GALLERY_CONSTS.hasExternalLeftPlacement(
-        this.props.styleParams.titlePlacement,
+        this.props.options.titlePlacement,
         this.props.idx
       )
     ) {
@@ -559,7 +559,7 @@ class ItemView extends GalleryComponent {
   getBottomInfoElementIfNeeded() {
     if (
       GALLERY_CONSTS.hasExternalBelowPlacement(
-        this.props.styleParams.titlePlacement,
+        this.props.options.titlePlacement,
         this.props.idx
       )
     ) {
@@ -575,7 +575,7 @@ class ItemView extends GalleryComponent {
   getTopInfoElementIfNeeded() {
     if (
       GALLERY_CONSTS.hasExternalAbovePlacement(
-        this.props.styleParams.titlePlacement,
+        this.props.options.titlePlacement,
         this.props.idx
       )
     ) {
@@ -589,7 +589,7 @@ class ItemView extends GalleryComponent {
   }
 
   getExternalInfoElement(placement, elementName) {
-    const { styleParams, customComponents, style } = this.props;
+    const { options, customComponents, style } = this.props;
     if (!customComponents.customInfoRenderer) {
       return null;
     }
@@ -597,7 +597,7 @@ class ItemView extends GalleryComponent {
     //if there is no url for videos and images, we will not render the itemWrapper
     //but will render the info element if exists, with the whole size of the item
     const infoHeight =
-      styleParams.textBoxHeight + (this.hasRequiredMediaUrl ? 0 : style.height);
+      options.textBoxHeight + (this.hasRequiredMediaUrl ? 0 : style.height);
     const infoWidth =
       style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
@@ -610,15 +610,15 @@ class ItemView extends GalleryComponent {
       <div
         style={getOuterInfoStyle(
           placement,
-          styleParams,
+          options,
           style.height,
-          styleParams.textBoxHeight
+          options.textBoxHeight
         )}
       >
         <div
           style={getInnerInfoStyle(
             placement,
-            styleParams,
+            options,
             infoHeight,
             infoWidth
           )}
@@ -636,15 +636,15 @@ class ItemView extends GalleryComponent {
   simulateHover() {
     return (
       this.state.isCurrentHover ||
-      this.props.styleParams.alwaysShowHover === true ||
-      (isEditMode() && this.props.styleParams.previewHover)
+      this.props.options.alwaysShowHover === true ||
+      (isEditMode() && this.props.options.previewHover)
     );
   }
 
   simulateOverlayHover() {
     return (
       this.simulateHover() ||
-      this.props.styleParams.hoveringBehaviour ===
+      this.props.options.hoveringBehaviour ===
         GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE
     );
   }
@@ -662,17 +662,17 @@ class ItemView extends GalleryComponent {
       activeIndex,
       offset,
       style,
-      styleParams,
+      options,
       settings = {},
     } = this.props;
     const { scrollDirection, imageMargin, itemClick, isRTL, slideAnimation } =
-      styleParams;
+      options;
 
-    const containerStyleByStyleParams = getContainerStyle(styleParams);
+    const containerStyleByoptions = getContainerStyle(options);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
 
     const itemStyles = {
-      overflowY: styleParams.isSlideshow ? 'visible' : 'hidden',
+      overflowY: options.isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
       bottom: 'auto',
       margin:
@@ -743,7 +743,7 @@ class ItemView extends GalleryComponent {
     const itemContainerStyles = {
       ...itemStyles,
       ...layoutStyles,
-      ...containerStyleByStyleParams,
+      ...containerStyleByoptions,
       ...transitionStyles,
       ...opacityStyles,
       ...slideAnimationStyles,
@@ -753,32 +753,32 @@ class ItemView extends GalleryComponent {
   }
 
   getItemWrapperStyles() {
-    const { styleParams, style, type } = this.props;
+    const { options, style, type } = this.props;
     const { height, width} = style;
     const styles = {};
     if (type === 'text') {
       styles.backgroundColor =
-        styleParams.cubeType !== 'fit' ? 'transparent' : 'inherit';
+        options.cubeType !== 'fit' ? 'transparent' : 'inherit';
     } else {
       styles.backgroundColor =
-        (styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit') ||
+        (options.cubeType !== 'fit' ? style.bgColor : 'inherit') ||
         'transparent';
     }
 
     styles.height = height + 'px';
     styles.width = width + 'px';
-    styles.margin = -styleParams.itemBorderWidth + 'px';
+    styles.margin = -options.itemBorderWidth + 'px';
     const itemWrapperStyles = {
       ...styles,
-      ...(!styleParams.isSlideshow && this.getSlideAnimationStyles()),
+      ...(!options.isSlideshow && this.getSlideAnimationStyles()),
     };
 
     return itemWrapperStyles;
   }
 
   getSlideAnimationStyles() {
-    const { idx, activeIndex, styleParams, container } = this.props;
-    const { isRTL, slideAnimation } = styleParams;
+    const { idx, activeIndex, options, container } = this.props;
+    const { isRTL, slideAnimation } = options;
     const baseStyles = {
       position: 'absolute',
       display: 'block',
@@ -823,7 +823,7 @@ class ItemView extends GalleryComponent {
   }
 
   getItemAriaLabel() {
-    const { type, alt, styleParams } = this.props;
+    const { type, alt, options } = this.props;
     let label;
     switch (type) {
       case 'dummy':
@@ -839,24 +839,24 @@ class ItemView extends GalleryComponent {
         label = alt || 'Untitled image';
         break;
     }
-    return label + (styleParams.isStoreGallery ? ', Buy Now' : '');
+    return label + (options.isStoreGallery ? ', Buy Now' : '');
   }
 
   getItemContainerClass() {
-    const { styleParams } = this.props;
-    const isNOTslideshow = !styleParams.isSlideshow;
-    const imagePlacementAnimation = styleParams.imagePlacementAnimation;
-    const overlayAnimation = styleParams.overlayAnimation;
-    const imageHoverAnimation = styleParams.imageHoverAnimation;
+    const { options } = this.props;
+    const isNOTslideshow = !options.isSlideshow;
+    const imagePlacementAnimation = options.imagePlacementAnimation;
+    const overlayAnimation = options.overlayAnimation;
+    const imageHoverAnimation = options.imageHoverAnimation;
     const classNames = {
       'gallery-item-container': true,
       visible: true,
       highlight: this.isHighlight(),
-      clickable: styleParams.itemClick !== 'nothing',
+      clickable: options.itemClick !== 'nothing',
       'simulate-hover': this.simulateHover(),
       'hide-hover': !this.simulateHover() && utils.isMobile(),
       'invert-hover':
-        styleParams.hoveringBehaviour ===
+        options.hoveringBehaviour ===
         GALLERY_CONSTS.infoBehaviourOnHover.DISAPPEARS,
 
       //animations
@@ -913,11 +913,11 @@ class ItemView extends GalleryComponent {
   }
 
   getItemWrapperClass() {
-    const { styleParams, type } = this.props;
+    const { options, type } = this.props;
     const classes = ['gallery-item-wrapper', 'visible'];
 
-    if (styleParams.cubeImages) {
-      classes.push('cube-type-' + styleParams.cubeType);
+    if (options.cubeImages) {
+      classes.push('cube-type-' + options.cubeType);
     }
     if (type === 'text') {
       classes.push('gallery-item-wrapper-text');
@@ -986,13 +986,13 @@ class ItemView extends GalleryComponent {
   }
 
   onContextMenu(e) {
-    if (!utils.isDev() && !this.props.styleParams.allowContextMenu) {
+    if (!utils.isDev() && !this.props.options.allowContextMenu) {
       e.preventDefault(e);
     }
   }
 
   getItemAriaRole() {
-    switch (this.props.styleParams.itemClick) {
+    switch (this.props.options.itemClick) {
       case 'expand':
       case 'fullscreen':
         return 'button';
@@ -1004,9 +1004,9 @@ class ItemView extends GalleryComponent {
   }
 
   getLinkParams() {
-    const { directLink, styleParams, directShareLink } = this.props;
+    const { directLink, options, directShareLink } = this.props;
     const isSEO = isSEOMode();
-    if (styleParams.itemClick === GALLERY_CONSTS.itemClick.LINK) {
+    if (options.itemClick === GALLERY_CONSTS.itemClick.LINK) {
       const { url, target } = directLink || {};
       const noFollowForSEO = this.props.noFollowForSEO;
       const shouldUseNofollow = isSEO && noFollowForSEO;
@@ -1017,13 +1017,13 @@ class ItemView extends GalleryComponent {
         : {};
       return linkParams;
     } else if (
-      styleParams.itemClick === GALLERY_CONSTS.itemClick.FULLSCREEN ||
-      styleParams.itemClick === GALLERY_CONSTS.itemClick.EXPAND
+      options.itemClick === GALLERY_CONSTS.itemClick.FULLSCREEN ||
+      options.itemClick === GALLERY_CONSTS.itemClick.EXPAND
     ) {
       // place share link as the navigation item
       const url = directShareLink;
       const shouldUseDirectShareLink = !!url;
-      const shouldUseNofollow = !styleParams.shouldIndexDirectShareLinkInSEO;
+      const shouldUseNofollow = !options.shouldIndexDirectShareLinkInSEO;
       const seoLinkParams = shouldUseNofollow ? { rel: 'nofollow' } : {};
       const linkParams = shouldUseDirectShareLink
         ? { href: url, 'data-cancel-link': true, ...seoLinkParams }
@@ -1033,13 +1033,13 @@ class ItemView extends GalleryComponent {
   }
 
   composeItem() {
-    const { photoId, id, hash, idx, styleParams, type, url } = this.props;
+    const { photoId, id, hash, idx, options, type, url } = this.props;
 
     //if (there is an url for video items and image items) OR text item (text item do not use media url)
     this.hasRequiredMediaUrl = url || type === 'text';
     //if titlePlacement !== SHOW_ON_HOVER and !this.hasRequiredMediaUrl, we will NOT render the itemWrapper (but will render the info element with the whole size of the item)
     const isItemWrapperEmpty =
-      styleParams.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER &&
+      options.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER &&
       !this.hasRequiredMediaUrl;
     const innerDiv = (
       <div
@@ -1066,14 +1066,14 @@ class ItemView extends GalleryComponent {
         {this.getLeftInfoElementIfNeeded()}
         <div
           style={{
-            ...(!this.props.styleParams.isSlideshow &&
-              getImageStyle(this.props.styleParams)),
+            ...(!this.props.options.isSlideshow &&
+              getImageStyle(this.props.options)),
             ...(GALLERY_CONSTS.hasExternalRightPlacement(
-              this.props.styleParams.titlePlacement,
+              this.props.options.titlePlacement,
               this.props.idx
             ) && { float: 'left' }),
             ...(GALLERY_CONSTS.hasExternalLeftPlacement(
-              this.props.styleParams.titlePlacement,
+              this.props.options.titlePlacement,
               this.props.idx
             ) && { float: 'right' }),
           }}
@@ -1096,7 +1096,7 @@ class ItemView extends GalleryComponent {
       </div>
     );
 
-    if (styleParams.isSlideshow) {
+    if (options.isSlideshow) {
       return innerDiv;
     } else {
       return (

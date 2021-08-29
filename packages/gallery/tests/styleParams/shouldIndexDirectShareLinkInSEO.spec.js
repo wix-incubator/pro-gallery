@@ -4,15 +4,15 @@ import { expect } from 'chai';
 import { itemsWithDirectShareLink } from '../drivers/mocks/items';
 import ItemView from '../../src/components/item/itemView';
 
-describe('styleParam - shouldIndexDirectShareLinkInSEO', () => {
+describe('options - shouldIndexDirectShareLinkInSEO', () => {
   let driver;
 
-  function getSampleItemViewProps(styleParams) {
+  function getSampleItemViewProps(options) {
     driver = new GalleryDriver();
     const sampleItem = itemsWithDirectShareLink[0];
     const sampleItemViewProps = driver.props.itemView(sampleItem);
     return Object.assign(sampleItemViewProps, {
-      styleParams,
+      options,
     });
   }
 

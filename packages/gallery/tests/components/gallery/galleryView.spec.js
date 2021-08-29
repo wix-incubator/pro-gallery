@@ -12,9 +12,9 @@ describe('Gallery View', () => {
   beforeEach(() => {
     driver = new GalleryDriver();
     initialGalleryViewProps = driver.props.galleryView();
-    Object.assign(initialGalleryViewProps.styleParams, {
+    Object.assign(initialGalleryViewProps.options, {
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      styleParams: { imageMargin: 10, layoutParams: { gallerySpacing: 5 } },
+      options: { imageMargin: 10, layoutParams: { gallerySpacing: 5 } },
     });
   });
 
