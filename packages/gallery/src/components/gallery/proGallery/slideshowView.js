@@ -14,12 +14,9 @@ import PlayIcon from '../../svgs/components/play';
 import PauseIcon from '../../svgs/components/pause';
 import { GalleryComponent } from '../../galleryComponent';
 import TextItem from '../../item/textItem.js';
+import { getArrowsRenderData, shouldRenderNavArrows } from '../../helpers/navigationArrowUtils'
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
-const ARROWS_BASE_SIZE = {
-  width: 23,
-  height: 39,
-}
 
 function getDirection(code) {
   const reverse = [33, 37, 38]
@@ -867,110 +864,34 @@ class SlideshowView extends GalleryComponent {
   createDebugMsg() {
     return <GalleryDebugMessage {...this.props.debug} />;
   }
-
-  getArrowsSizeData(){
-    const { customNavArrowsRenderer } = this.props.customComponents;
-    const { arrowsSize } = this.props.options;
-    if (customNavArrowsRenderer) {
-      return {
-        navArrowsContainerWidth: arrowsSize,
-        navArrowsContainerHeight: arrowsSize,
-      }
-    }
-    const scalePercentage = arrowsSize / ARROWS_BASE_SIZE.width;
-    const navArrowsContainerWidth = arrowsSize; // === ARROWS_BASE_SIZE.width * scalePercentage
-    const navArrowsContainerHeight = ARROWS_BASE_SIZE.height * scalePercentage;
-    return {
-      navArrowsContainerWidth,
-      navArrowsContainerHeight,
-      scalePercentage,
-    }
-  }
-
-  getArrowsRenderData() {
-    const { customNavArrowsRenderer } = this.props.customComponents;
-    const {
-      navArrowsContainerWidth,
-      navArrowsContainerHeight,
-      scalePercentage,
-    } = this.getArrowsSizeData()
-    if (customNavArrowsRenderer) {
-      return {
-        arrowRenderer: customNavArrowsRenderer,
-        navArrowsContainerWidth,
-        navArrowsContainerHeight,
-      }
-    }
-    const svgStyle = { transform: `scale(${scalePercentage})` };
-    const { arrowsColor } = this.props.options;
-    const svgInternalStyle = utils.isMobile() && arrowsColor?.value ? {fill: arrowsColor.value} : {}
-
-
-    const arrowRenderer = (position) => {
-      const { d, transform } = position === 'right' ?
-        {
-          d: "M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z",
-          transform: "translate(-855 -230)"
-        }
-          :
-        {
-          d: "M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z",
-          transform: "translate(-133 -225)"
-        }
-      return (
-        <svg width={ARROWS_BASE_SIZE.width} height={ARROWS_BASE_SIZE.height} viewBox={`0 0 ${ARROWS_BASE_SIZE.width} ${ARROWS_BASE_SIZE.height}`} style={svgStyle}>
-          <path
-            className="slideshow-arrow"
-            style={svgInternalStyle}
-            d={d}
-            transform={transform}
-          />
-        </svg>
-      );
-    };
-
-    return {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight}
-  }
-
-  // Function that checks if the nav arrows parent-container is large enough for them
-  arrowsWillFitPosition = () => {
-    const {
+  
+  getShouldRenderArrowsArgs(){
+    const { 
+      showArrows,
       isSlideshow,
       slideshowInfoSize,
       arrowsVerticalPosition,
       textBoxHeight,
-    } = this.props.options;
-    const { height } = this.props.container;
-    // Calc of Nav arrows container's height
-    const { navArrowsContainerHeight } = this.getArrowsSizeData();
-    let parentHeight;
-    const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
-    switch (arrowsVerticalPosition){
-      case GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER:
-        parentHeight = infoHeight;
-        break;
-      case GALLERY_CONSTS.arrowsVerticalPosition.IMAGE_CENTER:
-        parentHeight = height - infoHeight;
-        break;
-      case GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER:
-      default:
-        parentHeight = height;
-        break;
+      arrowsSize, } = this.props.options;
+    const { isPrerenderMode, galleryStructure, customNavArrowsRenderer } = this.props;
+    const { height, galleryWidth } = this.props.container;
+    return {
+      options: { 
+        showArrows,
+        isSlideshow,
+        slideshowInfoSize,
+        arrowsVerticalPosition,
+        textBoxHeight,
+        arrowsSize, 
+      },
+      container: {
+        height,
+        galleryWidth,
+      },
+      isPrerenderMode,
+      galleryStructure,
+      customNavArrowsRenderer,
     }
-    return parentHeight >= navArrowsContainerHeight;
-
-  }
-
-  // function to Determine whether we should render the navigation arrows
-  shouldRenderNavArrows = () => {
-    const { showArrows } = this.props.options;
-    const { isPrerenderMode, galleryStructure } = this.props;
-    const isGalleryWiderThanRenderedItems = 
-    galleryStructure.width <= this.props.container.galleryWidth;
-    return showArrows && 
-    !isPrerenderMode &&
-    this.arrowsWillFitPosition() && 
-    !isGalleryWiderThanRenderedItems
   }
 
   createNavArrows() {
@@ -987,7 +908,11 @@ class SlideshowView extends GalleryComponent {
       textBoxHeight,
     } = this.props.options;
     const { hideLeftArrow, hideRightArrow } = this.state;
-    const {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight} = this.getArrowsRenderData();
+    const {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight} = getArrowsRenderData({
+      customNavArrowsRenderer: this.props.customNavArrowsRenderer,
+      arrowsColor: this.props.options.arrowsColor,
+      arrowsSize: this.props.options.arrowsSize,
+    });
 
     const { galleryHeight } = this.props.container;
     const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
@@ -1196,7 +1121,7 @@ class SlideshowView extends GalleryComponent {
         style={galleryStyle}
       >
         {this.createDebugMsg()}
-        {this.shouldRenderNavArrows() && this.createNavArrows()}
+        {shouldRenderNavArrows(this.getShouldRenderArrowsArgs()) && this.createNavArrows()}
         {this.createLayout()}
         {this.createAutoSlideShowPlayButton()}
         {this.createSlideShowNumbers()}
