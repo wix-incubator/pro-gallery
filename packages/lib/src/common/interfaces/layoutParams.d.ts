@@ -14,11 +14,10 @@ export interface LayoutParams {
   numberOfColumns: number; //numberOfImagesPerCol: number;
   numberOfRows: number; //numberOfImagesPerRow: number;
   columnRatios: Array<number>;
-  cropMethod: string;
+  cropMethod: 'FILL' | 'FIT' | 'MIN' | 'MAX';
 
   enableCrop: boolean;
   enableSmartCrop: boolean;
-  minItemSize: number;
   cropOnlyFill: boolean; //DELETE? - its used in slider gallery
   forceGroupsOrder: 'LEFT_TO_RIGHT' | 'RIGHT_TO_LEFT' | 'BY_COLUMNS'; //use const? or is this the new const?
   slideshowInfoSize: number;
@@ -63,6 +62,7 @@ export interface NavigationArrows {
 export interface TargetItemSize {
   unit: 'PERCENT' | 'PIXEL' | 'SMART';
   value: number;
+  minimum: number; //moved here but its not in the same units... we should make it so in the gallery in a refactor and consider it a bug
 }
 export interface Info {
   sizeCalculationMode: 'PERCENT' | 'PIXEL';

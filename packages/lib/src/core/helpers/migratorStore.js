@@ -3,10 +3,9 @@ import { assignByString, getByString } from './optionsUtils';
 
 export const nameChangedLayoutParams = [
   ['imageMargin', optionsMap.layoutParams.itemSpacing],
-  ['cubeType', optionsMap.layoutParams.cropMethod], //Must get its own function o unite with the rotating!
   ['cubeImages', optionsMap.layoutParams.enableCrop],
   ['smartCrop', optionsMap.layoutParams.enableSmartCrop],
-  ['minItemSize', optionsMap.layoutParams.minItemSize],
+  ['minItemSize', optionsMap.layoutParams.targetItemSize.minimum],
   ['cropOnlyFill', optionsMap.layoutParams.cropOnlyFill],
   ['slideshowInfoSize', optionsMap.layoutParams.slideshowInfoSize],
   ['scatter', optionsMap.layoutParams.scatter.randomScatter],

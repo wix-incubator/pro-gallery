@@ -74,6 +74,7 @@ function migrateOptions(oldStyles) {
   newStyles = process_old_to_new_CropRatio(newStyles);
   newStyles = process_old_to_new_textBoxSizeMode(newStyles);
   newStyles = process_old_to_new_columnRatios(newStyles);
+  newStyles = process_old_to_new_cropMethod(newStyles);
 
   ///----------- BEHAVIOUR -------------///
   newStyles = changeNames(newStyles, nameChangedBehaviourParams);
@@ -139,6 +140,12 @@ function process_old_to_new_targetItemSizeValue(obj) {
   delete _obj.gallerySizeRatio;
   delete _obj.gallerySize;
 
+  return _obj;
+}
+function process_old_to_new_cropMethod(obj) {
+  let _obj = { ...obj };
+  _obj = namingChange(_obj, 'cubeType', optionsMap.layoutParams.cropMethod);
+  _obj.layoutParams.cropMethod = _obj.layoutParams.cropMethod?.toUpperCase();
   return _obj;
 }
 function process_old_to_new_ThumbnailAlignment(obj) {

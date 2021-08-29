@@ -81,10 +81,9 @@ function defaultOptions_new() {
       cropRatio: [1], // determine the ratio of the images when using grid (use 1 for squares grid)
       itemSpacing: 10,
       enableStreching: true,
-      cropMethod: 'fill',
+      cropMethod: 'FILL',
       enableCrop: false,
       enableSmartCrop: false,
-      minItemSize: 120,
       cropOnlyFill: false,
       croppedAlignment: 'CENTER',
       slideshowInfoSize: 200,
@@ -124,6 +123,7 @@ function defaultOptions_new() {
       targetItemSize: {
         unit: 'SMART',
         value: 30,
+        minimum: 120,
       },
       info: {
         sizeCalculationMode:
