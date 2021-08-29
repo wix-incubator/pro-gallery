@@ -54,7 +54,7 @@ import {
   fixedOptions as empty,
   createOptions as emptyOptions,
 } from './emptyGallery';
-import { createOptions as designedPresetOptions } from './designedPresetGallery';
+import { createOptions as jsonFixedOptions } from './designedPresetGallery';
 
 //#endregion Imports
 
@@ -113,8 +113,8 @@ const addPresetOptions = (options) => {
         return alternateOptions(options);
       case LAYOUTS.EMPTY:
         return emptyOptions(options);
-      case LAYOUTS.DESIGNED_PRESET:
-        return designedPresetOptions(options);
+      case LAYOUTS.JSON_FIXED:
+        return jsonFixedOptions(options);
       case LAYOUTS.COLLAGE:
       default:
         return collageOptions(options);
