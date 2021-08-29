@@ -1,5 +1,9 @@
-import { mergeNestedObjects } from './optionsUtils';
-// import optionsMap from './optionsMap';
+import {
+  mergeNestedObjects,
+  flattenObject,
+  flatToNested,
+} from './optionsUtils';
+import optionsMap from './optionsMap';
 import {
   nameChangedLayoutParams,
   nameChangedBehaviourParams,
@@ -7,7 +11,7 @@ import {
   reversedLayoutParams,
   reversedBehaviourParams,
   changeNames,
-  // namingChange,
+  namingChange,
   reverseBooleans,
 } from './migratorStore';
 
@@ -18,7 +22,7 @@ export function addOldOptions(options) {
 }
 
 export function reverseMigrateOptions(oldStyles) {
-  let newStyles = { ...oldStyles };
+  let newStyles = flattenObject({ ...oldStyles });
 
   ///----------- LAYOUT -------------///
   newStyles = changeNames(
@@ -29,16 +33,16 @@ export function reverseMigrateOptions(oldStyles) {
     newStyles,
     [...reversedLayoutParams].map((ele) => ele.reverse())
   );
-  // newStyles = process_old_to_new_ThumbnailAlignment(newStyles);
-  // newStyles = process_old_to_new_ScrollDirection(newStyles);
-  // newStyles = process_old_to_new_LayoutOrientation(newStyles);
-  // newStyles = process_old_to_new_ForceGroupsOrder(newStyles);
-  // newStyles = process_old_to_new_GroupTypes(newStyles);
-  // newStyles = process_old_to_new_NumberOfColumns(newStyles); // fixedColumns || numberOfImagesPerRow || numberOfGroupsPerRow (notice its losing if its 0)
-  // newStyles = process_old_to_new_InfoBackgroundMode(newStyles);
-  // newStyles = process_old_to_new_targetItemSizeMode(newStyles);
-  // newStyles = process_old_to_new_CroppedAlignment(newStyles);
-  // newStyles = process_old_to_new_CropRatio(newStyles);
+  newStyles = process_new_to_old_ThumbnailAlignment(newStyles);
+  newStyles = process_new_to_old_ScrollDirection(newStyles);
+  newStyles = process_new_to_old_LayoutOrientation(newStyles);
+  newStyles = process_new_to_old_ForceGroupsOrder(newStyles);
+  // newStyles = process_new_to_old_GroupTypes(newStyles);
+  // newStyles = process_new_to_old_NumberOfColumns(newStyles); // fixedColumns || numberOfImagesPerRow || numberOfGroupsPerRow (notice its losing if its 0)
+  // newStyles = process_new_to_old_InfoBackgroundMode(newStyles);
+  // newStyles = process_new_to_old_targetItemSizeMode(newStyles);
+  // newStyles = process_new_to_old_CroppedAlignment(newStyles);
+  // newStyles = process_new_to_old_CropRatio(newStyles);
 
   ///----------- BEHAVIOUR -------------///
   newStyles = changeNames(
@@ -49,15 +53,15 @@ export function reverseMigrateOptions(oldStyles) {
     newStyles,
     [...reversedBehaviourParams].map((ele) => ele.reverse())
   );
-  // newStyles = process_old_to_new_ClickAction(newStyles);
-  // newStyles = process_old_to_new_VideoPlayTrigger(newStyles);
-  // newStyles = process_old_to_new_VideoVolume(newStyles);
-  // newStyles = process_old_to_new_VideoSpeed(newStyles);
-  // newStyles = process_old_to_new_OverlayHoveringBehaviour(newStyles);
-  // newStyles = process_old_to_new_InfoPlacement(newStyles);
-  // newStyles = process_old_to_new_layoutDirection(newStyles);
-  // newStyles = process_old_to_new_LoadMoreAmount(newStyles);
-  // newStyles = process_old_to_new_AutoSlideBehaviour(newStyles);
+  // newStyles = process_new_to_old_ClickAction(newStyles);
+  // newStyles = process_new_to_old_VideoPlayTrigger(newStyles);
+  // newStyles = process_new_to_old_VideoVolume(newStyles);
+  // newStyles = process_new_to_old_VideoSpeed(newStyles);
+  // newStyles = process_new_to_old_OverlayHoveringBehaviour(newStyles);
+  // newStyles = process_new_to_old_InfoPlacement(newStyles);
+  // newStyles = process_new_to_old_layoutDirection(newStyles);
+  // newStyles = process_new_to_old_LoadMoreAmount(newStyles);
+  // newStyles = process_new_to_old_AutoSlideBehaviour(newStyles);
 
   ///----------- STYLING -------------///
 
@@ -66,27 +70,27 @@ export function reverseMigrateOptions(oldStyles) {
     [...nameChangedStylingParams].map((ele) => ele.reverse())
   );
 
-  delete newStyles.textBoxWidthPercent;
-  delete newStyles.enableLeanGallery;
-  delete newStyles.fullscreen;
-  delete newStyles.magicLayoutSeed;
-  delete newStyles.gridStyle;
-  return newStyles;
+  // delete newStyles.textBoxWidthPercent;
+  // delete newStyles.enableLeanGallery;
+  // delete newStyles.fullscreen;
+  // delete newStyles.magicLayoutSeed;
+  // delete newStyles.gridStyle;
+  return flatToNested(newStyles);
 }
 
 //----- refactor functions ----------//
-// function process_old_to_new_ThumbnailAlignment(obj) {
-//   //['galleryThumbnailsAlignment', optionsMap.layoutParams.thumbnails.alignment'],
-//   let _obj = { ...obj };
-//   _obj = namingChange(
-//     _obj,
-//     'galleryThumbnailsAlignment',
-//     optionsMap.layoutParams.thumbnails.alignment
-//   );
-//   _obj.layoutParams.thumbnails.alignment =
-//     _obj.layoutParams.thumbnails.alignment?.toUpperCase();
-//   return _obj;
-// }
+function process_new_to_old_ThumbnailAlignment(obj) {
+  //['galleryThumbnailsAlignment', optionsMap.layoutParams.thumbnails.alignment'],
+  let _obj = { ...obj };
+  _obj = namingChange(
+    _obj,
+    optionsMap.layoutParams.thumbnails.alignment,
+    'galleryThumbnailsAlignment'
+  );
+  _obj['galleryThumbnailsAlignment'] =
+    _obj['galleryThumbnailsAlignment'].toLowerCase();
+  return _obj;
+}
 // function process_old_to_new_VideoPlayTrigger(obj) {
 //   let _obj = { ...obj };
 //   _obj = namingChange(
@@ -134,25 +138,25 @@ export function reverseMigrateOptions(oldStyles) {
 //   );
 //   return _obj;
 // }
-// function process_old_to_new_ScrollDirection(obj) {
-//   let _obj = { ...obj };
-//   _obj = namingChange(
-//     _obj,
-//     'scrollDirection',
-//     optionsMap.layoutParams.scrollDirection
-//   );
-//   switch (_obj.layoutParams.scrollDirection) {
-//     case 0:
-//       _obj.layoutParams.scrollDirection = 'VERTICAL';
-//       break;
-//     case 1:
-//       _obj.layoutParams.scrollDirection = 'HORIZONTAL';
-//       break;
-//     default:
-//       break;
-//   }
-//   return _obj;
-// }
+function process_new_to_old_ScrollDirection(obj) {
+  let _obj = { ...obj };
+  _obj = namingChange(
+    _obj,
+    optionsMap.layoutParams.scrollDirection,
+    'scrollDirection'
+  );
+  switch (_obj['scrollDirection']) {
+    case 'VERTICAL':
+      _obj['scrollDirection'] = 0;
+      break;
+    case 'HORIZONTAL':
+      _obj['scrollDirection'] = 1;
+      break;
+    default:
+      break;
+  }
+  return _obj;
+}
 // function process_old_to_new_layoutDirection(obj) {
 //   let _obj = { ...obj };
 //   _obj = namingChange(
@@ -172,45 +176,43 @@ export function reverseMigrateOptions(oldStyles) {
 //   }
 //   return _obj;
 // }
-// function process_old_to_new_LayoutOrientation(obj) {
-//   let _obj = { ...obj };
-//   _obj = namingChange(
-//     _obj,
-//     'isVertical',
-//     optionsMap.layoutParams.layoutOrientation
-//   );
-//   switch (_obj.layoutParams.layoutOrientation) {
-//     case true:
-//       _obj.layoutParams.layoutOrientation = 'VERTICAL';
-//       break;
-//     case false:
-//       _obj.layoutParams.layoutOrientation = 'HORIZONTAL';
-//       break;
-//     default:
-//       break;
-//   }
-//   return _obj;
-// }
-// function process_old_to_new_ForceGroupsOrder(obj) {
-//   let _obj = { ...obj };
-//   _obj = namingChange(
-//     _obj,
-//     'placeGroupsLtr',
-//     optionsMap.layoutParams.forceGroupsOrder
-//   );
-//   switch (_obj.layoutParams.forceGroupsOrder) {
-//     case true:
-//       _obj.layoutParams.forceGroupsOrder = 'LEFT_TO_RIGHT';
-//       break;
-//     case false:
-//       _obj.layoutParams.forceGroupsOrder = 'BY_COLUMNS';
-//       break;
-//     default:
-//       break;
-//   }
-//   // 'RIGHT_TO_LEFT' doesnt exist yet.
-//   return _obj;
-// }
+function process_new_to_old_LayoutOrientation(obj) {
+  let _obj = { ...obj };
+  _obj = namingChange(
+    _obj,
+    optionsMap.layoutParams.layoutOrientation,
+    'isVertical'
+  );
+  switch (_obj['isVertical']) {
+    case 'VERTICAL':
+      _obj['isVertical'] = true;
+      break;
+    case 'HORIZONTAL':
+      _obj['isVertical'] = false;
+      break;
+    default:
+      break;
+  }
+  return _obj;
+}
+function process_new_to_old_ForceGroupsOrder(obj) {
+  let _obj = { ...obj };
+  _obj = namingChange(
+    _obj,
+    optionsMap.layoutParams.forceGroupsOrder,
+    'placeGroupsLtr'
+  );
+  switch (_obj['placeGroupsLtr']) {
+    case 'LEFT_TO_RIGHT':
+      _obj['placeGroupsLtr'] = true;
+      break;
+    default:
+      _obj['placeGroupsLtr'] = false;
+      break;
+  }
+  // 'RIGHT_TO_LEFT' doesnt exist yet.
+  return _obj;
+}
 // function process_old_to_new_LoadMoreAmount(obj) {
 //   let _obj = { ...obj };
 //   _obj = namingChange(
