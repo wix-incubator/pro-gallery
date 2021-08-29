@@ -402,7 +402,7 @@ function process_old_to_new_GroupTypes(obj) {
   } else {
     finalVal = val;
   }
-  _obj.layoutParams.groupTypes = finalVal;
+  _obj.layoutParams.groupTypes = finalVal.split(',');
   delete _obj.layoutParams.repeatingGroupTypes;
   delete _obj.groupTypes;
   delete _obj.repeatingGroupTypes;

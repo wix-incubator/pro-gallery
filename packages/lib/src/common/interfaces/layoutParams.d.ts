@@ -37,7 +37,9 @@ export interface Collage {
   // amount: number; //doesnt exist. eradicate.
   density: number;
   groupByOrientation: boolean;
-  groupTypes: string | Array<string>; // the string is of a closed list of strings. need to validate it. how? //the Array is the representation of rotating.
+  groupTypes: Array<
+    '1' | '2h' | '2v' | '3h' | '3v' | '3t' | '3b' | '3l' | '3r'
+  >;
   groupSize: number;
 }
 export interface Thumbnails {

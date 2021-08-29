@@ -46,7 +46,7 @@ import { reverseMigrateOptions } from '../src/core/helpers/optionsBackwardConver
 //   //   });
 // });
 describe('Old to new styles processing', () => {
-  it('should migrate styles from old to new until theres nothing ot migrate anymore', () => {
+  it.only('should migrate styles from old to new until theres nothing ot migrate anymore', () => {
     let migrated = migrateOptions(defaultOptions_old());
     expect(migrated).to.eql(defaultOptions_new());
   });
@@ -76,7 +76,7 @@ function defaultOptions_old() {
 function defaultOptions_new() {
   let options = {
     layoutParams: {
-      groupTypes: '1,2h,2v,3t,3b,3l,3r',
+      groupTypes: ['1', '2h', '2v', '3t', '3b', '3l', '3r'],
       gallerySpacing: 0,
       cropRatio: 1, // determine the ratio of the images when using grid (use 1 for squares grid)
       itemSpacing: 10,
