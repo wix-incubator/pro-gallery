@@ -163,7 +163,7 @@ class JsonEditor extends React.Component {
 
 
   render() {
-    const {section, subSection, Options, allOptions, option, expandIcon} = this.props;
+    const {section, subSection, options, allOptions, option, expandIcon} = this.props;
     const context = {
       isMobile: false,
     }
@@ -189,11 +189,11 @@ class JsonEditor extends React.Component {
     const json = Object.entries(settingsManager)
       .filter(filterFunction)
       .reduce((acc, [key]) => {
-        if (typeof Options[key] === 'undefined') {
+        if (typeof options[key] === 'undefined') {
           return acc
         } else {
           acc[key] = settingsManager[key];
-          acc[key].value = Options[key];
+          acc[key].value = options[key];
           return acc;
         }
       }, {});
