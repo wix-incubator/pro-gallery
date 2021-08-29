@@ -78,7 +78,7 @@ function defaultOptions_new() {
     layoutParams: {
       groupTypes: ['1', '2h', '2v', '3t', '3b', '3l', '3r'],
       gallerySpacing: 0,
-      cropRatio: 1, // determine the ratio of the images when using grid (use 1 for squares grid)
+      cropRatio: [1], // determine the ratio of the images when using grid (use 1 for squares grid)
       itemSpacing: 10,
       enableStreching: true,
       cropMethod: 'fill',

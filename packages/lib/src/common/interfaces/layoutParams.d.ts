@@ -9,7 +9,7 @@ export interface LayoutParams {
   itemSpacing: number;
   enableStreching: boolean;
   croppedAlignment: 'CENTER' | 'TOP' | 'LEFT' | 'RIGHT' | 'BOTTOM';
-  cropRatios: number | string | Array<string>; //This is cropRatio and rotatingCropRatios all together.
+  cropRatios: Array<number>; //This is cropRatio and rotatingCropRatios all together.
   // numberOfGroupsPerRow: number;
   numberOfColumns: number; //numberOfImagesPerCol: number;
   numberOfRows: number; //numberOfImagesPerRow: number;

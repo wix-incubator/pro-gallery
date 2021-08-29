@@ -446,7 +446,7 @@ function process_old_to_new_CropRatio(obj) {
   } else {
     finalVal = val;
   }
-  _obj.layoutParams.cropRatio = finalVal;
+  _obj.layoutParams.cropRatio = String(finalVal).split(',').map(Number);
   delete _obj.cropRatio;
   delete _obj.rotatingCropRatios;
   return _obj;
