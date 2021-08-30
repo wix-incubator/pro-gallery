@@ -3,7 +3,7 @@ import React from 'react';
 import {
   GALLERY_CONSTS,
   processLayouts,
-  addPresetStyles,
+  addPresetOptions,
   isSEOMode,
   utils,
 } from 'pro-gallery-lib';
@@ -464,7 +464,7 @@ const get = (item, attr) => {
 export const formatLeanGalleryStyles = (styles) => {
   const customExternalInfoRendererExists = true;
   return processLayouts(
-    addPresetStyles(styles),
+    addPresetOptions(styles),
     customExternalInfoRendererExists
   ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
 };

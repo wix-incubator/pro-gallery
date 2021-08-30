@@ -12,5 +12,6 @@ test/e2e/screenshots
 *.iml
 .yo-rc.json
 package-lock.json
-yarn-lock
 standaloneValidateCode.js
+optionsMap.js
+schema.json

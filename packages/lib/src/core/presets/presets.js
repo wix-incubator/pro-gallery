@@ -2,119 +2,122 @@ import LAYOUTS from '../../common/constants/layout';
 
 //#region Imports Layouts
 import {
-  fixedStyles as alternate,
-  createStyles as alternateStyles,
+  fixedOptions as alternate,
+  createOptions as alternateOptions,
 } from './alternateGallery';
 import {
-  fixedStyles as bricks,
-  createStyles as bricksStyles,
+  fixedOptions as bricks,
+  createOptions as bricksOptions,
 } from './bricksGallery';
 import {
-  fixedStyles as collage,
-  createStyles as collageStyles,
+  fixedOptions as collage,
+  createOptions as collageOptions,
 } from './collageGallery';
 import {
-  fixedStyles as fullsize,
-  createStyles as fullsizeStyles,
+  fixedOptions as fullsize,
+  createOptions as fullsizeOptions,
 } from './fullsizeGallery';
 import {
-  fixedStyles as column,
-  createStyles as columnStyles,
+  fixedOptions as column,
+  createOptions as columnOptions,
 } from './columnGallery';
-import { fixedStyles as grid, createStyles as gridStyles } from './gridGallery';
 import {
-  fixedStyles as magic,
-  createStyles as magicStyles,
+  fixedOptions as grid,
+  createOptions as gridOptions,
+} from './gridGallery';
+import {
+  fixedOptions as magic,
+  createOptions as magicOptions,
 } from './magicGallery';
 import {
-  fixedStyles as masonry,
-  createStyles as masonryStyles,
+  fixedOptions as masonry,
+  createOptions as masonryOptions,
 } from './masonryGallery';
-import { fixedStyles as mix, createStyles as mixStyles } from './mixGallery';
+import { fixedOptions as mix, createOptions as mixOptions } from './mixGallery';
 import {
-  fixedStyles as panorama,
-  createStyles as panoramaStyles,
+  fixedOptions as panorama,
+  createOptions as panoramaOptions,
 } from './panoramaGallery';
 import {
-  fixedStyles as slider,
-  createStyles as sliderStyles,
+  fixedOptions as slider,
+  createOptions as sliderOptions,
 } from './sliderGallery';
 import {
-  fixedStyles as slideshow,
-  createStyles as slideshowStyles,
+  fixedOptions as slideshow,
+  createOptions as slideshowOptions,
 } from './slideshowGallery';
 import {
-  fixedStyles as thumbnails,
-  createStyles as thumbnailsStyles,
+  fixedOptions as thumbnails,
+  createOptions as thumbnailsOptions,
 } from './thumbnailGallery';
 import {
-  fixedStyles as empty,
-  createStyles as emptyStyles,
+  fixedOptions as empty,
+  createOptions as emptyOptions,
 } from './emptyGallery';
-import { createStyles as designedPresetStyles } from './designedPresetGallery';
+import { createOptions as jsonFixedOptions } from './designedPresetGallery';
 
 //#endregion Imports
 
-const addPresetStyles = (styles) => {
-  const galleryType = styles.galleryType;
-  const galleryLayoutV1 = styles.galleryType;
-  const galleryLayoutV2 = styles.galleryLayout;
+const addPresetOptions = (options) => {
+  const galleryType = options.galleryType;
+  const galleryLayoutV1 = options.galleryType;
+  const galleryLayoutV2 = options.galleryLayout;
   if (galleryLayoutV1 !== undefined && galleryLayoutV2 === undefined) {
     // legacy layouts - only if galleyrType parameter is specifically defined (i.e. layout had changed)
 
     switch (galleryType) {
       case '1': // horizontal collage
-        return collageStyles(styles);
+        return collageOptions(options);
       case '2': // grid
-        return gridStyles(styles);
+        return gridOptions(options);
       case '3': // vertical masonry
-        return masonryStyles(styles);
+        return masonryOptions(options);
       case '4': // horizontal masonry
-        return masonryStyles(styles);
+        return masonryOptions(options);
       case '5': // one column
-        return panoramaStyles(styles);
+        return panoramaOptions(options);
       case '6': // one row
-        return columnStyles(styles);
+        return columnOptions(options);
       case '7': // slideshow
-        return slideshowStyles(styles);
+        return slideshowOptions(options);
       case '0': // vertical collage
       default:
-        return collageStyles(styles);
+        return collageOptions(options);
     }
   } else {
     // new layouts
-    switch (styles.galleryLayout) {
+    switch (options.galleryLayout) {
       case LAYOUTS.MASONRY:
-        return masonryStyles(styles);
+        return masonryOptions(options);
       case LAYOUTS.GRID:
-        return gridStyles(styles);
+        return gridOptions(options);
       case LAYOUTS.THUMBNAIL:
-        return thumbnailsStyles(styles);
+        return thumbnailsOptions(options);
       case LAYOUTS.SLIDER:
-        return sliderStyles(styles);
+        return sliderOptions(options);
       case LAYOUTS.SLIDESHOW:
-        return slideshowStyles(styles);
+        return slideshowOptions(options);
       case LAYOUTS.PANORAMA:
-        return panoramaStyles(styles);
+        return panoramaOptions(options);
       case LAYOUTS.COLUMN:
-        return columnStyles(styles);
+        return columnOptions(options);
       case LAYOUTS.MAGIC:
-        return magicStyles(styles);
+        return magicOptions(options);
       case LAYOUTS.FULLSIZE:
-        return fullsizeStyles(styles);
+        return fullsizeOptions(options);
       case LAYOUTS.BRICKS:
-        return bricksStyles(styles);
+        return bricksOptions(options);
       case LAYOUTS.MIX:
-        return mixStyles(styles);
+        return mixOptions(options);
       case LAYOUTS.ALTERNATE:
-        return alternateStyles(styles);
+        return alternateOptions(options);
       case LAYOUTS.EMPTY:
-        return emptyStyles(styles);
-      case LAYOUTS.DESIGNED_PRESET:
-        return designedPresetStyles(styles);
+        return emptyOptions(options);
+      case LAYOUTS.JSON_FIXED:
+        return jsonFixedOptions(options);
       case LAYOUTS.COLLAGE:
       default:
-        return collageStyles(styles);
+        return collageOptions(options);
     }
   }
 };
@@ -162,4 +165,4 @@ const isInPreset = (galleryLayout, paramToCheck) => {
   return Object.keys(NEW_PRESETS[layoutName]).includes(paramToCheck);
 };
 
-export { addPresetStyles, NEW_PRESETS, getLayoutName, isInPreset };
+export { addPresetOptions, NEW_PRESETS, getLayoutName, isInPreset };

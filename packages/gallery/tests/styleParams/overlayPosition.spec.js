@@ -3,9 +3,9 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 
-describe('styleParam - overlaySize', () => {
+describe('options - overlaySize', () => {
   let driver;
   let initialProps;
 
@@ -14,9 +14,9 @@ describe('styleParam - overlaySize', () => {
     initialProps = {
       container,
       items: images2,
-      styles: styleParams,
+      options,
     };
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       overlaySize: 50,
       overlaySizeType: 'PIXEL',
@@ -25,7 +25,7 @@ describe('styleParam - overlaySize', () => {
   });
 
   it('should set the correct overlayPosition - TOP position', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       overlayPosition: GALLERY_CONSTS.overlayPositions.TOP,
     });
     driver.mount.proGallery(initialProps);
@@ -38,7 +38,7 @@ describe('styleParam - overlaySize', () => {
   });
 
   it('should set the correct overlayPosition - RIGHT position', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       overlayPosition: GALLERY_CONSTS.overlayPositions.RIGHT,
     });
     driver.mount.proGallery(initialProps);

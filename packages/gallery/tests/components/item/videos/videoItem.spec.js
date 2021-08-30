@@ -28,7 +28,7 @@ describe('Video Item ', () => {
   it('should create PlayerElement if video can play in gallery, and is set to play', async () => {
     //utils.isMobile() && itemClick !== 'expand'
     stub = sinon.stub(utils, 'isMobile').returns(true);
-    Object.assign(sampleItemViewProps.styleParams, {
+    Object.assign(sampleItemViewProps.options, {
       itemClick: 'link',
     });
     driver.mount(VideoItem, sampleItemViewProps);
@@ -41,7 +41,7 @@ describe('Video Item ', () => {
       0
     );
 
-    Object.assign(sampleItemViewProps.styleParams, {
+    Object.assign(sampleItemViewProps.options, {
       itemClick: 'nothing',
     });
     driver.mount(VideoItem, sampleItemViewProps);
@@ -57,7 +57,7 @@ describe('Video Item ', () => {
 
     //!utils.isMobile() && itemClick !== 'expand'
     stub = sinon.stub(utils, 'isMobile').returns(false);
-    Object.assign(sampleItemViewProps.styleParams, {
+    Object.assign(sampleItemViewProps.options, {
       itemClick: 'link',
     });
     driver.mount(VideoItem, sampleItemViewProps);
@@ -69,7 +69,7 @@ describe('Video Item ', () => {
     expect(driver.find.hook('video_container-image-element').length).to.equal(
       0
     );
-    Object.assign(sampleItemViewProps.styleParams, {
+    Object.assign(sampleItemViewProps.options, {
       itemClick: 'nothing',
     });
     driver.mount(VideoItem, sampleItemViewProps);
@@ -85,7 +85,7 @@ describe('Video Item ', () => {
 
     //!utils.isMobile() && videoPlay !== 'onClick'
     stub = sinon.stub(utils, 'isMobile').returns(false);
-    Object.assign(sampleItemViewProps.styleParams, {
+    Object.assign(sampleItemViewProps.options, {
       videoPlay: 'hover',
     });
     driver.mount(VideoItem, sampleItemViewProps);
@@ -97,7 +97,7 @@ describe('Video Item ', () => {
     expect(driver.find.hook('video_container-image-element').length).to.equal(
       0
     );
-    Object.assign(sampleItemViewProps.styleParams, {
+    Object.assign(sampleItemViewProps.options, {
       videoPlay: 'auto',
     });
     driver.mount(VideoItem, sampleItemViewProps);
@@ -159,7 +159,7 @@ describe('Video Item ', () => {
   //   Object.assign(sampleItemViewProps, {
   //     hidePlay: true,
   //   });
-  //   Object.assign(sampleItemViewProps.styleParams, {
+  //   Object.assign(sampleItemViewProps.options, {
   //     showVideoPlayButton: true,
   //   });
   //   driver.mount(VideoItemWrapper, sampleItemViewProps);
@@ -171,7 +171,7 @@ describe('Video Item ', () => {
   //   Object.assign(sampleItemViewProps, {
   //     hidePlay: false,
   //   });
-  //   Object.assign(sampleItemViewProps.styleParams, {
+  //   Object.assign(sampleItemViewProps.options, {
   //     showVideoPlayButton: true,
   //   });
   //   driver.mount(VideoItemWrapper, sampleItemViewProps);
@@ -180,7 +180,7 @@ describe('Video Item ', () => {
   //   Object.assign(sampleItemViewProps, {
   //     hidePlay: false,
   //   });
-  //   Object.assign(sampleItemViewProps.styleParams, {
+  //   Object.assign(sampleItemViewProps.options, {
   //     showVideoPlayButton: false,
   //   });
   //   driver.mount(VideoItemWrapper, sampleItemViewProps);

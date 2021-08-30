@@ -4,7 +4,7 @@ import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Scroll Animation',
-  description: `Choose the type of animation to be used when items appear while scrolling verticaly through the gallery`,
+  description: `Choose the type of animation to be used when items appear while scrolling vertically through the gallery`,
   isRelevantDescription:
     'To enable "Scroll Animation" either set a Vertical gallery ("Scroll Direction" as "Vertical")\nor set a Horizontal gallery ("Scroll Direction" as "Horizontal") with "Slide Animation" set to "Scroll".',
   isRelevant: (sp) =>

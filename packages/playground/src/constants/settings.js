@@ -37,7 +37,7 @@ export const SECTIONS_ORDER = {
   STORE: 10,
 };
 
-export const stylesBySection = {
+export const optionsBySection = {
   [SECTIONS.PRESET]: ['galleryLayout'],
   [SECTIONS.LAYOUT]: [
     // 'allowLeanGallery',
@@ -53,6 +53,7 @@ export const stylesBySection = {
     'cubeImages',
     'cubeType',
     'layoutParams_cropRatio',
+    'cubeFitPosition',
 
     'gallerySizeType',
     'gallerySize',
@@ -170,37 +171,37 @@ export const stylesBySection = {
   ],
 };
 
-export const stylesList = [].concat(...Object.values(stylesBySection));
-export const sectionByStyle = Object.assign(
+export const optionsList = [].concat(...Object.values(optionsBySection));
+export const sectionByOption = Object.assign(
   {},
-  ...Object.entries(stylesBySection).map(([section, styleParams]) =>
-    styleParams.reduce(
-      (obj, styleParam) => ({
+  ...Object.entries(optionsBySection).map(([section, options]) =>
+    options.reduce(
+      (obj, option) => ({
         ...obj,
-        [styleParam]: section,
+        [option]: section,
       }),
       {}
     )
   )
 );
 
-export const settingsManager = stylesList.reduce((obj, styleParam) => {
-  const settingsData = galleryOptions[styleParam];
+export const settingsManager = optionsList.reduce((obj, option) => {
+  const settingsData = galleryOptions[option];
 
   return settingsData
     ? {
         ...obj,
-        [styleParam]: {
+        [option]: {
           ...settingsData,
-          section: sectionByStyle[styleParam],
+          section: sectionByOption[option],
         },
       }
     : {
         ...obj,
-        [styleParam]: {
+        [option]: {
           missing: true,
-          title: styleParam,
-          section: sectionByStyle[styleParam],
+          title: option,
+          section: sectionByOption[option],
           isRelevant: () => false,
         },
       };

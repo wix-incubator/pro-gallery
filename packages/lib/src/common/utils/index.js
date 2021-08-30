@@ -624,10 +624,10 @@ class Utils {
     return isValidColor ? colorStr : defaultColor;
   }
 
-  logPlaygroundLink(styles) {
+  logPlaygroundLink(options) {
     try {
       if (this.isVerbose()) {
-        const stylesStr = Object.entries(styles)
+        const optionsStr = Object.entries(options)
           .filter(
             ([key, val]) =>
               typeof val !== 'object' &&
@@ -639,18 +639,19 @@ class Utils {
 
         console.log(
           'Gallery Playground link:',
-          `https://pro-gallery.surge.sh?${stylesStr}`
+          `https://pro-gallery.surge.sh?${optionsStr}`
         );
       }
     } catch (e) {
       console.error(e)
     }
   }
-  isSingleItemHorizontalDisplay(styles) {
-    return styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-      styles.groupSize === 1 &&
-      styles.cubeImages &&
-      styles.layoutParams.cropRatio === '100%/100%';
+
+  isSingleItemHorizontalDisplay(options) {
+    return options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+      options.groupSize === 1 &&
+      options.cubeImages &&
+      options.layoutParams.cropRatio === '100%/100%';
   }
 
   getAriaAttributes({ proGalleryRole, proGalleryRegionLabel }) {

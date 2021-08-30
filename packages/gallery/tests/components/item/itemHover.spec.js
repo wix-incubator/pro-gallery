@@ -43,7 +43,7 @@ describe('ItemHover', () => {
       itemWasHovered: false,
       renderCustomInfo: undefined,
     });
-    Object.assign(sampleItemViewProps.styleParams, {
+    Object.assign(sampleItemViewProps.options, {
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
       overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
     });
@@ -54,7 +54,7 @@ describe('ItemHover', () => {
       itemWasHovered: true,
       renderCustomInfo: undefined,
     });
-    Object.assign(sampleItemViewProps.styleParams, {
+    Object.assign(sampleItemViewProps.options, {
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
       overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
     });
@@ -65,7 +65,7 @@ describe('ItemHover', () => {
       itemWasHovered: false,
       renderCustomInfo: () => {},
     });
-    Object.assign(sampleItemViewProps.styleParams, {
+    Object.assign(sampleItemViewProps.options, {
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
       overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
     });
@@ -76,7 +76,7 @@ describe('ItemHover', () => {
       itemWasHovered: false,
       renderCustomInfo: () => {},
     });
-    Object.assign(sampleItemViewProps.styleParams, {
+    Object.assign(sampleItemViewProps.options, {
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.DISAPPEARS,
     });
     driver.mount(ItemHover, sampleItemViewProps);
@@ -86,7 +86,7 @@ describe('ItemHover', () => {
       itemWasHovered: false,
       renderCustomInfo: () => {},
     });
-    Object.assign(sampleItemViewProps.styleParams, {
+    Object.assign(sampleItemViewProps.options, {
       overlayAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,
     });
     driver.mount(ItemHover, sampleItemViewProps);
@@ -96,7 +96,7 @@ describe('ItemHover', () => {
       itemWasHovered: true,
       renderCustomInfo: () => {},
     });
-    Object.assign(sampleItemViewProps.styleParams, {
+    Object.assign(sampleItemViewProps.options, {
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
       overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
     });
@@ -121,13 +121,13 @@ describe('ItemHover', () => {
 
     //-------| fullscreen |-------
 
-    Object.assign(sampleItemViewProps.styleParams, {
+    Object.assign(sampleItemViewProps.options, {
       fullscreen: true,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     itemHoverHasClass(driver, 'fullscreen-enabled').to.equal(true);
 
-    Object.assign(sampleItemViewProps.styleParams, {
+    Object.assign(sampleItemViewProps.options, {
       fullscreen: false,
     });
     driver.mount(ItemHover, sampleItemViewProps);
@@ -135,11 +135,11 @@ describe('ItemHover', () => {
 
     //-------| opacity |-------
 
-    //styleParams.itemOpacity is undefined
+    //options.itemOpacity is undefined
     driver.mount(ItemHover, sampleItemViewProps);
     itemHoverHasClass(driver, 'default').to.equal(true);
 
-    Object.assign(sampleItemViewProps.styleParams, {
+    Object.assign(sampleItemViewProps.options, {
       itemOpacity: 0,
     });
     driver.mount(ItemHover, sampleItemViewProps);

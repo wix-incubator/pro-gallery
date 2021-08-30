@@ -3,9 +3,9 @@ import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 
-describe('styleParam - slideshowLoop', () => {
+describe('options - slideshowLoop', () => {
   let driver;
   let initialProps;
 
@@ -15,11 +15,11 @@ describe('styleParam - slideshowLoop', () => {
       container: { ...container, width: 400 },
       items: images2.slice(0, 2),
       totalItemsCount: 2,
-      styles: styleParams,
+      options,
     };
   });
   it('should be able to to click next when reached last item', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       slideshowLoop: true,
     });
@@ -31,7 +31,7 @@ describe('styleParam - slideshowLoop', () => {
     driver.detach.proGallery();
   });
   it('should not be able to to click next', async () => {
-    initialProps.styles = mergeNestedObjects(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       slideshowLoop: false,
     });

@@ -4,16 +4,16 @@ import { GalleryComponent } from '../galleryComponent';
 
 export default class ItemHover extends GalleryComponent {
   getHoverClass() {
-    const { styleParams, forceShowHover } = this.props;
+    const { options, forceShowHover } = this.props;
     const hoverClass = ['gallery-item-hover'];
 
     hoverClass.push(
-      'fullscreen-' + (styleParams.fullscreen ? 'enabled' : 'disabled')
+      'fullscreen-' + (options.fullscreen ? 'enabled' : 'disabled')
     );
 
-    if (utils.isUndefined(styleParams.itemOpacity)) {
+    if (utils.isUndefined(options.itemOpacity)) {
       //if gallery was just added to the page, and it's settings were never opened,
-      //the styles of opacity and background were not set (are undefined),
+      //the options of opacity and background were not set (are undefined),
       //so we are using the default background & opacity (is scss under .gallery-item-hover.default)
       hoverClass.push('default');
     }
@@ -29,13 +29,13 @@ export default class ItemHover extends GalleryComponent {
   }
 
   shouldRenderHoverInnerIfExist() {
-    const { itemWasHovered, styleParams } = this.props;
+    const { itemWasHovered, options } = this.props;
     const {
       hoveringBehaviour,
       overlayAnimation,
       alwaysShowHover,
       previewHover,
-    } = styleParams;
+    } = options;
     const { APPEARS } = GALLERY_CONSTS.infoBehaviourOnHover;
     const { NO_EFFECT } = GALLERY_CONSTS.overlayAnimations;
 
@@ -55,14 +55,14 @@ export default class ItemHover extends GalleryComponent {
   }
 
   getOverlayStyle() {
-    const { styleParams, imageDimensions } = this.props;
+    const { options, imageDimensions } = this.props;
     const style = {};
     const {
       overlayPosition,
       overlaySize: requiredOverlaySize,
       overlaySizeType,
       overlayPadding,
-    } = styleParams;
+    } = options;
 
     const isHorizontal =
       overlayPosition === GALLERY_CONSTS.overlayPositions.LEFT ||
@@ -125,8 +125,8 @@ export default class ItemHover extends GalleryComponent {
   }
 
   getOverlayPositionByFlex() {
-    const { styleParams, imageDimensions } = this.props;
-    const { overlayPosition } = styleParams;
+    const { options, imageDimensions } = this.props;
+    const { overlayPosition } = options;
     const { width, height, marginTop, marginLeft } = imageDimensions;
     const style = {
       width,

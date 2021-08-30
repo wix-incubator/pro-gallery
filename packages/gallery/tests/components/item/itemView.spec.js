@@ -50,7 +50,7 @@ describe('Item View', () => {
     it('should onItemClicked for items with link', () => {
       Object.assign(sampleItemViewProps, {
         type: 'image',
-        styleParams: { itemClick: 'link', videoPlay: 'onClick' },
+        options: { itemClick: 'link', videoPlay: 'onClick' },
       });
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
@@ -63,7 +63,7 @@ describe('Item View', () => {
       Object.assign(sampleItemViewProps, {
         thumbnailHighlightId: null,
         type: 'image',
-        styleParams: { itemClick: 'expand' },
+        options: { itemClick: 'expand' },
       });
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
@@ -76,7 +76,7 @@ describe('Item View', () => {
     // following will always fail for video items. it looks to me like a bug. videos will never have hover on mobile
     // it('should toggleHover onClick when the device is mobile and the onclick is styles to nothing', () => {
     //   const mobileStub = sinon.stub(utils, 'isMobile').returns(true);
-    //   Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'image', styleParams: {itemClick: 'nothing', videoPlay: 'onClick'}});
+    //   Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'image', options: {itemClick: 'nothing', videoPlay: 'onClick'}});
     //   driver.mount(ItemView, sampleItemViewProps);
     //   const spy = sinon.spy(ItemView.prototype, 'props.actions.setCurrentHover');
     //   driver.find.hook('item-wrapper').simulate('click');
@@ -96,7 +96,7 @@ describe('Item View', () => {
     it('should return a placeholder for non playing video', () => {
       Object.assign(sampleItemViewProps, {
         currentPlayingIdx: 1,
-        styleParams: {
+        options: {
           enableVideoPlaceholder: true,
           isSlideshow: false,
         },
@@ -111,7 +111,7 @@ describe('Item View', () => {
   describe('render', () => {
     it('should have boxshadow if defined', () => {
       Object.assign(sampleItemViewProps, {
-        styleParams: {
+        options: {
           itemEnableShadow: true,
           itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
           itemShadowBlur: 15,
@@ -125,7 +125,7 @@ describe('Item View', () => {
       let style = driver.find.hook('item-container').get(0).props.style;
       expect(style.boxShadow).to.equal('0px -18px 15px rgba(0, 0, 0, 0.2)');
       driver.set.props({
-        styleParams: {
+        options: {
           itemEnableShadow: false,
           itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
           itemShadowBlur: 20,
@@ -140,7 +140,7 @@ describe('Item View', () => {
     });
     it('should toggle overflowY visible/inherit', () => {
       Object.assign(sampleItemViewProps, {
-        styleParams: {
+        options: {
           isSlideshow: true,
         },
       });
@@ -148,7 +148,7 @@ describe('Item View', () => {
       let style = driver.find.hook('item-container').get(0).props.style;
       expect(style.overflowY).to.equal('visible');
       driver.set.props({
-        styleParams: {
+        options: {
           isSlideshow: false,
         },
       });
@@ -157,7 +157,7 @@ describe('Item View', () => {
     });
     it('item-Wrapper should have class based on cubeType', () => {
       Object.assign(sampleItemViewProps, {
-        styleParams: {
+        options: {
           cubeImages: true,
           cubeType: 'foo',
         },
@@ -167,7 +167,7 @@ describe('Item View', () => {
         driver.find.hook('item-wrapper').hasClass('cube-type-foo')
       ).to.equal(true);
       driver.set.props({
-        styleParams: {
+        options: {
           cubeImages: false,
         },
       });
@@ -178,7 +178,7 @@ describe('Item View', () => {
     it('should toggle overflowY visible/inherit test2', () => {
       Object.assign(sampleItemViewProps, {
         style: { bgColor: 'red' },
-        styleParams: {
+        options: {
           cubeType: 'fit',
         },
       });
@@ -186,7 +186,7 @@ describe('Item View', () => {
       let style = driver.find.hook('item-wrapper').get(0).props.style;
       expect(style.backgroundColor).to.equal('inherit');
       driver.set.props({
-        styleParams: {
+        options: {
           cubeType: 'foot',
         },
       });
