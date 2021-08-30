@@ -46,11 +46,11 @@ import { reverseMigrateOptions } from '../src/core/helpers/optionsBackwardConver
 //   //   });
 // });
 describe('Old to new styles processing', () => {
-  it.only('should migrate styles from old to new until theres nothing ot migrate anymore', () => {
+  it('should migrate styles from old to new until theres nothing ot migrate anymore', () => {
     let migrated = migrateOptions(defaultOptions_old());
     expect(migrated).to.eql(defaultOptions_new());
   });
-  it('should migrated new options to old ones', () => {
+  it.only('should migrated new options to old ones', () => {
     let old = reverseMigrateOptions(defaultOptions_new());
     expect(old).to.eql(defaultOptions_old());
   });
@@ -76,9 +76,8 @@ function defaultOptions_old() {
 function defaultOptions_new() {
   let options = {
     layoutParams: {
-      groupTypes: ['1', '2h', '2v', '3t', '3b', '3l', '3r'],
       gallerySpacing: 0,
-      cropRatio: [1], // determine the ratio of the images when using grid (use 1 for squares grid)
+      cropRatios: [1], // determine the ratio of the images when using grid (use 1 for squares grid)
       itemSpacing: 10,
       enableStreching: true,
       cropMethod: 'FILL',
@@ -106,6 +105,7 @@ function defaultOptions_new() {
         groupByOrientation: true,
         density: 0.8,
         groupSize: 3,
+        groupTypes: ['1', '2h', '2v', '3t', '3b', '3l', '3r'],
       },
       thumbnails: {
         size: 120,
@@ -126,8 +126,7 @@ function defaultOptions_new() {
         minimum: 120,
       },
       info: {
-        sizeCalculationMode:
-          GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT,
+        sizeUnits: GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT,
         width: 200,
         height: 200,
         spacing: 10,

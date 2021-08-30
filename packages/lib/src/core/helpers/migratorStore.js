@@ -206,7 +206,7 @@ export const layoutParamsMap = {
   isVertical: optionsMap.layoutParams.layoutOrientation, // This needs to be refactored to be an enum. but can wait
 
   //info
-  calculateTextBoxWidthMode: optionsMap.layoutParams.info.sizeCalculationMode,
+  calculateTextBoxWidthMode: optionsMap.layoutParams.info.sizeUnits,
   textBoxHeight: optionsMap.layoutParams.info.height,
   textBoxWidth: optionsMap.layoutParams.info.width,
   // textBoxWidthPercent: optionsMap.layoutParams.info.widthByPercent,

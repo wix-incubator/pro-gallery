@@ -65,7 +65,7 @@ export interface TargetItemSize {
   minimum: number; //moved here but its not in the same units... we should make it so in the gallery in a refactor and consider it a bug
 }
 export interface Info {
-  sizeCalculationMode: 'PERCENT' | 'PIXEL';
+  sizeUnits: 'PERCENT' | 'PIXEL';
   width: number;
   height: number;
   spacing: number;

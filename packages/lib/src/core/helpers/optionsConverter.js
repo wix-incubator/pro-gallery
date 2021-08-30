@@ -202,8 +202,8 @@ function process_old_to_new_VideoSpeed(obj) {
     'videoSpeed',
     optionsMap.behaviourParams.item.video.speed
   );
-  _obj.behaviourParams.item.video.volume = Number(
-    _obj.behaviourParams.item.video.volume
+  _obj.behaviourParams.item.video.speed = Number(
+    _obj.behaviourParams.item.video.speed
   );
   return _obj;
 }
@@ -250,14 +250,14 @@ function process_old_to_new_textBoxSizeMode(obj) {
   _obj = namingChange(
     _obj,
     'calculateTextBoxWidthMode',
-    optionsMap.layoutParams.info.sizeCalculationMode
+    optionsMap.layoutParams.info.sizeUnits
   );
-  switch (_obj.layoutParams.info.sizeCalculationMode) {
+  switch (_obj.layoutParams.info.sizeUnits) {
     case 'PERCENT':
-      _obj.layoutParams.info.sizeCalculationMode = 'PERCENT';
+      _obj.layoutParams.info.sizeUnits = 'PERCENT';
       break;
     case 'MANUAL':
-      _obj.layoutParams.info.sizeCalculationMode = 'PIXEL';
+      _obj.layoutParams.info.sizeUnits = 'PIXEL';
       break;
     default:
       break;
@@ -453,7 +453,7 @@ function process_old_to_new_CropRatio(obj) {
   } else {
     finalVal = val;
   }
-  _obj.layoutParams.cropRatio = String(finalVal).split(',').map(Number);
+  _obj.layoutParams.cropRatios = String(finalVal).split(',').map(Number);
   delete _obj.cropRatio;
   delete _obj.rotatingCropRatios;
   return _obj;
@@ -470,7 +470,7 @@ function process_old_to_new_GroupTypes(obj) {
   } else {
     finalVal = val;
   }
-  _obj.layoutParams.groupTypes = finalVal.split(',');
+  _obj.layoutParams.collage.groupTypes = finalVal.split(',');
   delete _obj.layoutParams.repeatingGroupTypes;
   delete _obj.groupTypes;
   delete _obj.repeatingGroupTypes;
