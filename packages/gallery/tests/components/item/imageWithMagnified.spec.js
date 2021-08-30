@@ -14,7 +14,7 @@ describe('imageWithMagnified', () => {
     sampleItem = testImages[0];
     imageItemsProps = driver.props.itemView(sampleItem);
     Object.assign(imageItemsProps, {
-      styleParams: { itemClick: GALLERY_CONSTS.itemClick.MAGNIFY },
+      options: { itemClick: GALLERY_CONSTS.itemClick.MAGNIFY },
       imageDimensions: { borderRadius: null },
       style: {
         magnifiedHeight: 500,
@@ -42,8 +42,9 @@ describe('imageWithMagnified', () => {
     expect(item.props().style).to.deep.equal({
       width: 500,
       height: 500,
-      cursor: 'grab',
+      cursor: 'zoom-out',
       position: 'relative',
+      transition: 'transform .3s ease',
       transform: 'translate(-5px, -5px)',
     });
   });
@@ -64,13 +65,13 @@ describe('imageWithMagnified', () => {
     });
     item.simulate('mouseup');
     item = driver.find.selector('.magnified-item-container').at(0);
-    console.log(item.html());
     expect(item.props().style).to.deep.equal({
       width: 500,
       height: 500,
-      cursor: 'grab',
+      cursor: 'zoom-out',
       position: 'relative',
       transform: 'translate(-10px, -10px)',
+      transition: 'none',
     });
   });
 });

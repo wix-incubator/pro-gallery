@@ -215,7 +215,7 @@ describe('options - itemClick', () => {
       galleryDriver,
       selector = '.magnified-item-container'
     ) => {
-      initialProps.styles = mergeNestedObjects(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: GALLERY_CONSTS.itemClick.MAGNIFY,
       });
       galleryDriver.mount.proGallery(initialProps);
@@ -224,24 +224,23 @@ describe('options - itemClick', () => {
     };
     it('should have magnification container', async () => {
       const items = await mountAndGetMagnifiedItems(driver);
-      expect(items.length).to.not.eq(0);
+      expect(items.length).to.be.greaterThan(0);
       driver.detach.proGallery();
     });
 
-    it('should not render magnified images', async () => {
-      const items = await mountAndGetMagnifiedItems(
-        driver,
-        '.magnified-images'
-      );
+    it('should not render magnified item', async () => {
+      const items = await mountAndGetMagnifiedItems(driver, '.magnified-item');
       expect(items.length).to.eq(0);
       driver.detach.proGallery();
     });
 
-    it('should render magnified images', async () => {
+    it('should render magnified item', async () => {
       const items = await mountAndGetMagnifiedItems(driver);
       const item = items.at(0);
       item.simulate('mouseup');
-      expect(driver.find.selector('.magnified-images').length).to.eq(1);
+      expect(driver.find.selector('.magnified-item').length).to.be.greaterThan(
+        0
+      );
       driver.detach.proGallery();
     });
     it('should have default styles', async () => {

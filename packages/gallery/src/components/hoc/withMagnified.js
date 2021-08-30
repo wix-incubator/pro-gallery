@@ -18,6 +18,7 @@ function withMagnified(WrappedComponent) {
         shouldMagnify: false,
         x: 0,
         y: 0,
+        shouldTransition: true,
       };
     }
 
@@ -32,6 +33,7 @@ function withMagnified(WrappedComponent) {
           this.props.style;
         const { clientY, clientX } = e;
         this.setState({
+          shouldTransition: false,
           x: Math.max(
             0,
             Math.min(this.dragStartX - clientX, magnifiedWidth - cubedWidth)
@@ -58,6 +60,7 @@ function withMagnified(WrappedComponent) {
     onMouseUp() {
       if (!this.isDragging) {
         this.toggleMagnify();
+        this.setState({ shouldTransition: true });
       }
       this.dragStarted = false;
       this.isDragging = false;
@@ -73,12 +76,15 @@ function withMagnified(WrappedComponent) {
     }
 
     getPreloadImage() {
-      const { createUrl, id, style } = this.props;
-      const { magnifiedWidth, magnifiedHeight } = style;
+      const { createUrl, id, style, imageDimensions, options } = this.props;
+      const { innerWidth, innerHeight } = style;
+      const { marginTop, marginLeft } = imageDimensions;
+      const { shouldMagnify } = this.state;
       const src = createUrl(
         GALLERY_CONSTS.urlSizes.RESIZED,
         GALLERY_CONSTS.urlTypes.HIGH_RES
       );
+      const scale = options.magnificationLevel;
       return (
         <ImageRenderer
           alt=""
@@ -86,10 +92,17 @@ function withMagnified(WrappedComponent) {
           className="magnified-item-preload"
           src={src}
           style={{
-            width: magnifiedWidth,
-            height: magnifiedHeight,
+            width: innerWidth,
+            height: innerHeight,
+            marginTop,
+            marginLeft,
+            transform: `scale(${shouldMagnify ? scale : 1})`,
+            opacity: shouldMagnify ? 1 : 0,
+            transformOrigin: `${marginLeft}px ${marginTop}px`,
             position: 'absolute',
-            zIndex: -1,
+            transition: `transform .3s ease${
+              !shouldMagnify ? ', opacity .1s 0.3s' : ''
+            }`,
           }}
         />
       );
@@ -141,9 +154,16 @@ function withMagnified(WrappedComponent) {
         y: Math.max(0, Math.min(y, magnifiedHeight - cubedHeight)),
       };
     }
+    getImageContainerStyle() {
+      const { shouldMagnify } = this.state;
+      return {
+        opacity: shouldMagnify ? 1 : 0,
+        transition: shouldMagnify ? 'opacity 0.1s 0.3s' : '',
+      };
+    }
 
     getContainerStyle() {
-      const { x, y, shouldMagnify } = this.state;
+      const { x, y, shouldMagnify, shouldTransition } = this.state;
       const { style } = this.props;
       const { magnifiedWidth, magnifiedHeight } = style;
       if (shouldMagnify) {
@@ -152,6 +172,7 @@ function withMagnified(WrappedComponent) {
           cursor: 'zoom-out',
           width: magnifiedWidth,
           height: magnifiedHeight,
+          transition: shouldTransition ? 'transform .3s ease' : 'none',
         };
 
         if (this.isMagnifiedBiggerThanContainer(style)) {
@@ -177,9 +198,13 @@ function withMagnified(WrappedComponent) {
 
     render() {
       const { shouldMagnify } = this.state;
-      const { itemClick } = this.props.styleParams;
+      const { itemClick } = this.props.options;
       if (itemClick !== GALLERY_CONSTS.itemClick.MAGNIFY) {
-        return <WrappedComponent {...this.props} />;
+        return (
+          <div className="test">
+            <WrappedComponent {...this.props} />
+          </div>
+        );
       }
       return (
         <div
@@ -192,20 +217,13 @@ function withMagnified(WrappedComponent) {
           onMouseUp={this.onMouseUp}
         >
           <WrappedComponent {...this.props} />
-          {shouldMagnify && (
-            <div
-              className={'magnified-images'}
-              style={{
-                zIndex: 1000,
-                position: 'absolute',
-                top: 0,
-                left: 0,
-              }}
-            >
-              {this.getPreloadImage()}
-              {this.getHighResImage()}
-            </div>
-          )}
+          {this.getPreloadImage()}
+          <div
+            style={this.getImageContainerStyle()}
+            className={'magnified-image-container'}
+          >
+            {shouldMagnify && this.getHighResImage()}
+          </div>
         </div>
       );
     }
