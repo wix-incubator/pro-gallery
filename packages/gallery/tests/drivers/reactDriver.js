@@ -90,10 +90,6 @@ class galleryDriver {
       itemShadowSize: 10,
       shouldIndexDirectShareLinkInSEO: true,
       enableVideoPlaceholder: true,
-      overlayPosition: GALLERY_CONSTS.overlayPositions.LEFT,
-      overlaySize: 100,
-      overlaySizeType: GALLERY_CONSTS.overlaySizeType.PERCENT,
-      overlayPadding: 0,
     };
 
     this.scroll = {
@@ -159,9 +155,7 @@ class galleryDriver {
 
   get mount() {
     const res = (Component, props) => {
-      this.wrapper = mount(
-        <Component styleParams={this.styleParams} {...props} />
-      );
+      this.wrapper = mount(<Component {...props} />);
       return this;
     };
     res.galleryContainer = (props) => {
