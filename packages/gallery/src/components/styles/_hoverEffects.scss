@@ -214,6 +214,7 @@ div.pro-gallery {
     }
 
     &.hover-animation-slide-up {
+
       .gallery-item-hover {
         transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
 
@@ -433,6 +434,7 @@ div.pro-gallery {
     }
 
     &.hover-animation-slide-up {
+      
       .gallery-item-hover {
         transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
 
