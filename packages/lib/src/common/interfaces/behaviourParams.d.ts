@@ -82,8 +82,7 @@ export interface LoadMore {
   [key: string]: any;
 }
 export interface BehaviourParams {
-  item: Item;
-  // gallery?: Gallery;
+  item?: Item;
   gallery?: Gallery;
   [key: string]: any;
 }
