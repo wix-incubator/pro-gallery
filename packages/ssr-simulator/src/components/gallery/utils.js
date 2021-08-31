@@ -117,7 +117,7 @@ const defOptions = {
   videoSpeed: '1',
   videoLoop: true,
 };
-mutatingAssignMultipleByStrings(this.options, [
+mutatingAssignMultipleByStrings(defOptions, [
   [optionsMap.behaviourParams.item.video.playTrigger,GALLERY_CONSTS.videoPlay.HOVER]
 ]);
 export const defaultOptions = defOptions
