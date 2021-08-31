@@ -64,7 +64,7 @@ describe('arrowsPosition with info above - e2e', () => {
     await driver.closePage();
   });
 
-  // gets info below relevant style params
+  // gets info above relevant style params
   const getLayoutStylesByVerticalPosition = (arrowsVerticalPosition) => {
     return {
       galleryLayout: GALLERY_CONSTS.layout.SLIDER,
