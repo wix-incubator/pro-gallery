@@ -22,7 +22,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci --ignore-scripts
+    - run: npm ci
     - run: npm run lint
   tests:
     runs-on: ubuntu-latest
@@ -38,7 +38,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci --ignore-scripts
+    - run: npm ci
     - run: npm run build
     - run: npm run ${{ matrix.test-script }}
       env:
@@ -61,7 +61,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         registry-url: 'https://registry.npmjs.org'
-    - run: npm ci --ignore-scripts
+    - run: npm ci
     - run: npm run build --if-present
     - run: git config --global user.email "octocat@github.com"
     - run: git config --global user.name "GitHub Actions"
@@ -100,7 +100,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         registry-url: 'https://registry.npmjs.org'
-    - run: npm ci --ignore-scripts
+    - run: npm ci
     - run: npm run build --if-present
     - run: node scripts/deployToSurge
       env:
