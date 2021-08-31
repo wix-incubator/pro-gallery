@@ -3,7 +3,7 @@ import { default as GALLERY_CONSTS } from '../../common/constants';
 
 export default {
   title: 'Scroll Snap In Sliding Galleries',
-  description: `Choose if you want the closest image to snap in to place when scrolling horizontaly`,
+  description: `Choose if you want the closest image to snap in to place when scrolling horizontally`,
   isRelevant: (options) =>
     options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL,
   isRelevantDescription:

@@ -6,6 +6,7 @@ export interface Video {
   playTrigger: 'CLICK' | 'HOVER' | 'AUTO'; //or playOn
   enablePlayButton: boolean;
   enableControls: boolean;
+  enablePlaceholder: boolean;
   [key: string]: any;
 }
 export interface Overlay {
@@ -45,22 +46,15 @@ export interface Content {
   loader: 'BLUR' | 'COLOR' | 'MAIN_COLOR';
   [key: string]: any;
 }
-export interface Info {
-  placement:
-    | 'ABOVE'
-    | 'BELOW'
-    | 'LEFT'
-    | 'RIGHT'
-    | 'ALTERNATE_HORIZONTALY'
-    | 'ALTERNATE_VERTICALY';
-  [key: string]: any;
-}
+
 export interface Vertical {
   loadMore: LoadMore;
   [key: string]: any;
 }
 export interface Horizontal {
+  enableScrollSnap: boolean;
   slideAnimation: 'SCROLL' | 'DECK' | 'FADE';
+  slideTransition: string;
   blockScroll: boolean;
   navigationDuration: number;
   loop: boolean;
@@ -90,17 +84,17 @@ export interface LoadMore {
 export interface BehaviourParams {
   item: Item;
   // gallery?: Gallery;
+  gallery?: Gallery;
   [key: string]: any;
 }
 export interface Item {
   clickAction: 'NOTHING' | 'LINK' | 'ACTION' | 'MAGNIFY';
   video: Video;
   overlay: Overlay;
-  info: Info;
+  content: Content;
   [key: string]: any;
 }
 export interface Gallery {
-  enableScrollSnap: boolean;
   layoutDirection: 'RIGHT_TO_LEFT' | 'LEFT_TO_RIGHT';
   disableContextMenu: boolean;
   scrollAnimation:
@@ -114,6 +108,7 @@ export interface Gallery {
     | 'ONE_COLOR'
     | 'MAIN_COLOR'
     | 'BLUR';
+  enableIndexingShareLinks: boolean;
   vertical: Vertical;
   horizontal: Horizontal;
   // allowLeanGallery: 'behaviourParams_gallery_enableLeanGallery', //think about removing this!

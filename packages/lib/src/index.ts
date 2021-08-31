@@ -10,6 +10,8 @@ export { addPresetOptions } from './core/presets/presets';
 export {
   convertOptions,
   convertOptionsBackwards,
+  migrateOptions,
+  addMigratedOptions,
 } from './core/helpers/optionsConverter';
 export { assignByString } from './core/helpers/optionsUtils';
 export { mutatingAssignMultipleByStrings } from './core/helpers/optionsUtils';
