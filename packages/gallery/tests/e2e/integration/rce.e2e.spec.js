@@ -1,6 +1,10 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import {
+  GALLERY_CONSTS,
+  optionsMap,
+  mutatingAssignMultipleByStrings,
+} from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -16,17 +20,10 @@ describe('RCE Integration test', () => {
     await driver.closePage();
   });
   it('should match screenshot with default RCE styles', async () => {
-    await driver.navigate({
+    const props = {
       layoutParams: {
         gallerySpacing: 0,
         cropRatio: 1,
-      },
-      behaviourParams: {
-        item: {
-          video: {
-            playTrigger: GALLERY_CONSTS.videoPlay.CLICK,
-          },
-        },
       },
       galleryLayout: 2,
       gallerySizeType: 'px',
@@ -51,7 +48,14 @@ describe('RCE Integration test', () => {
       thumbnailSize: 120,
       gotStyleParams: true,
       showVideoPlayButton: true,
-    });
+    };
+    mutatingAssignMultipleByStrings(this.options, [
+      [
+        optionsMap.behaviourParams.item.video.playTrigger,
+        GALLERY_CONSTS.videoPlay.CLICK,
+      ],
+    ]);
+    await driver.navigate(props);
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(400);
     const page = await driver.grab.partialScreenshot();

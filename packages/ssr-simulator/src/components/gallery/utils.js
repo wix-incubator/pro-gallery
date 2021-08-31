@@ -1,17 +1,15 @@
 import { GALLERY_CONSTS as Consts } from 'pro-gallery';
+import {
+  optionsMap,
+  GALLERY_CONSTS,
+  mutatingAssignMultipleByStrings,
+}from 'pro-gallery-lib';
 
-export const defaultOptions = {
+const defOptions = {
   layoutParams: {
     gallerySpacing: 0,
     cropRatio: 1,
     repeatingGroupTypes: '',
-  },
-  behaviourParams: {
-    item: {
-      video: {
-        playTrigger: 'HOVER',
-      },
-    },
   },
   isRTL: false,
   isVertical: 0,
@@ -119,6 +117,10 @@ export const defaultOptions = {
   videoSpeed: '1',
   videoLoop: true,
 };
+mutatingAssignMultipleByStrings(this.options, [
+  [optionsMap.behaviourParams.item.video.playTrigger,GALLERY_CONSTS.videoPlay.HOVER]
+]);
+export const defaultOptions = defOptions
 
 export function formatValue(val) {
   if (!isNaN(Number(val))) {

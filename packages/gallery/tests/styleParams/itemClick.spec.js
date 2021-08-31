@@ -1,6 +1,11 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { mergeNestedObjects, GALLERY_CONSTS } from 'pro-gallery-lib';
+import {
+  mergeNestedObjects,
+  GALLERY_CONSTS,
+  optionsMap,
+  mutatingAssignMultipleByStrings,
+} from 'pro-gallery-lib';
 import { images2, videoItems } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -153,16 +158,16 @@ describe('options - itemClick', () => {
     });
 
     it('expect to find video element', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      const obj = {
         itemClick: 'nothing',
-        behaviourParams: {
-          item: {
-            video: {
-              playTrigger: GALLERY_CONSTS.videoPlay.CLICK,
-            },
-          },
-        },
-      });
+      };
+      mutatingAssignMultipleByStrings(obj, [
+        [
+          optionsMap.behaviourParams.item.video.playTrigger,
+          GALLERY_CONSTS.videoPlay.HOVER,
+        ],
+      ]);
+      initialProps.options = mergeNestedObjects(initialProps.options, obj);
       driver.mount.proGallery(initialProps);
       await driver.update();
       await driver.update(100);
@@ -173,16 +178,16 @@ describe('options - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect not to find video element when "itemClick" is "expand"', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      const ob = {
         itemClick: 'expand',
-        behaviourParams: {
-          item: {
-            video: {
-              playTrigger: GALLERY_CONSTS.videoPlay.CLICK,
-            },
-          },
-        },
-      });
+      };
+      mutatingAssignMultipleByStrings(ob, [
+        [
+          optionsMap.behaviourParams.item.video.playTrigger,
+          GALLERY_CONSTS.videoPlay.HOVER,
+        ],
+      ]);
+      initialProps.options = mergeNestedObjects(initialProps.options, ob);
       driver.mount.proGallery(initialProps);
       await driver.update();
       await driver.update(100);
@@ -192,16 +197,16 @@ describe('options - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect not to find video element when "itemClick" is "fullscreen"', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      const ob = {
         itemClick: 'fullscreen',
-        behaviourParams: {
-          item: {
-            video: {
-              playTrigger: GALLERY_CONSTS.videoPlay.CLICK,
-            },
-          },
-        },
-      });
+      };
+      mutatingAssignMultipleByStrings(ob, [
+        [
+          optionsMap.behaviourParams.item.video.playTrigger,
+          GALLERY_CONSTS.videoPlay.HOVER,
+        ],
+      ]);
+      initialProps.options = mergeNestedObjects(initialProps.options, ob);
       driver.mount.proGallery(initialProps);
       await driver.update();
       await driver.update(100);
@@ -212,16 +217,16 @@ describe('options - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect not to find video element when "itemClick" is "link"', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      const ob = {
         itemClick: 'link',
-        behaviourParams: {
-          item: {
-            video: {
-              playTrigger: GALLERY_CONSTS.videoPlay.CLICK,
-            },
-          },
-        },
-      });
+      };
+      mutatingAssignMultipleByStrings(ob, [
+        [
+          optionsMap.behaviourParams.item.video.playTrigger,
+          GALLERY_CONSTS.videoPlay.HOVER,
+        ],
+      ]);
+      initialProps.options = mergeNestedObjects(initialProps.options, ob);
       driver.mount.proGallery(initialProps);
       await driver.update();
       await driver.update(100);

@@ -4,6 +4,8 @@ import {
   GalleryItem,
   ItemsHelper,
   window,
+  optionsMap,
+  mutatingAssignMultipleByStrings,
   utils,
 } from 'pro-gallery-lib';
 import { testImages } from './mocks/images-mock.js';
@@ -46,13 +48,6 @@ class galleryDriver {
       layoutParams: {
         gallerySpacing: 1,
         cropRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
-      },
-      behaviourParams: {
-        item: {
-          video: {
-            playTrigger: GALLERY_CONSTS.videoPlay.HOVER,
-          },
-        },
       },
       gotStyleParams: true,
       selectedLayout: 0,
@@ -97,6 +92,12 @@ class galleryDriver {
       shouldIndexDirectShareLinkInSEO: true,
       enableVideoPlaceholder: true,
     };
+    mutatingAssignMultipleByStrings(this.options, [
+      [
+        optionsMap.behaviourParams.item.video.playTrigger,
+        GALLERY_CONSTS.videoPlay.HOVER,
+      ],
+    ]);
 
     this.scroll = {
       top: 0,
