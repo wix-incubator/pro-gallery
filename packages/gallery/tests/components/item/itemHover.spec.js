@@ -25,8 +25,9 @@ describe('ItemHover', () => {
     Object.assign(sampleItemViewProps, {
       idx: 1,
       imageDimensions: {
-        height: `calc(100% - 80px)`,
+        height: 200,
         marginTop: 10,
+        width: 200,
       },
       actions: {
         handleItemMouseDown: () => {},
