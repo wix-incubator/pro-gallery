@@ -1,3 +1,5 @@
+import { mergeNestedObjects } from 'pro-gallery-lib';
+
 class Utils {
   constructor() {
     this._hash2int = {};
@@ -118,7 +120,7 @@ class Utils {
 
   addDefaultStyleParams(styleParams) {
     //default styleParams
-    const defaultSP = {
+    const defaultLayouterSP = {
       layoutParams: {
         gallerySpacing: 0,
         cropRatio: 1,
@@ -143,10 +145,7 @@ class Utils {
       columnWidths: '',
     };
 
-    const flatSP = this.flattenObject(styleParams);
-    const flatDefaultSP = this.flattenObject(defaultSP);
-    let _styles = this.flatToNested({ ...flatDefaultSP, ...flatSP });
-    return { ..._styles };
+    return { ...mergeNestedObjects(defaultLayouterSP, styleParams) };
   }
 
   convertContainer(container, styleParams) {
