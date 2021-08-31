@@ -6,16 +6,10 @@ expect.extend({ toMatchImageSnapshot });
 
 // Relevant to entire test suite (both 'describe's)
 let driver;
-let layoutStyles;
 
 describe('arrowsPosition with info below - e2e', () => {
   beforeAll(async () => {
     driver = new GalleryDriver();
-    // layout styles relevant to all sub-tests
-    layoutStyles = {
-      galleryLayout: GALLERY_CONSTS.layout.SLIDER,
-      titlePlacement: 'SHOW_BELOW',
-    };
     await driver.openPage();
   });
 
@@ -29,27 +23,27 @@ describe('arrowsPosition with info below - e2e', () => {
     await driver.closePage();
   });
 
-  it('should have arrows on info center', async () => {
-    const currentTestLayout = {
-      ...layoutStyles,
-      arrowsVerticalPosition: 'INFO_CENTER',
+  // gets info below relevant style params
+  const getLayoutStylesByVerticalPosition = (arrowsVerticalPosition) => {
+    return {
+      galleryLayout: GALLERY_CONSTS.layout.SLIDER,
+      titlePlacement: 'SHOW_BELOW',
+      arrowsVerticalPosition: arrowsVerticalPosition,
     };
+  };
+
+  it('should have arrows on info center', async () => {
+    const currentTestLayout = getLayoutStylesByVerticalPosition('INFO_CENTER');
     await driver.navigate(currentTestLayout);
   });
 
   it('should have arrows on item center', async () => {
-    const currentTestLayout = {
-      ...layoutStyles,
-      arrowsVerticalPosition: 'ITEM_CENTER',
-    };
+    const currentTestLayout = getLayoutStylesByVerticalPosition('ITEM_CENTER');
     await driver.navigate(currentTestLayout);
   });
 
   it('should have arrows on image center', async () => {
-    const currentTestLayout = {
-      ...layoutStyles,
-      arrowsVerticalPosition: 'IMAGE_CENTER',
-    };
+    const currentTestLayout = getLayoutStylesByVerticalPosition('IMAGE_CENTER');
     await driver.navigate(currentTestLayout);
   });
 });
@@ -57,11 +51,6 @@ describe('arrowsPosition with info below - e2e', () => {
 describe('arrowsPosition with info above - e2e', () => {
   beforeAll(async () => {
     driver = new GalleryDriver();
-    // layout styles relevant to all sub-tests
-    layoutStyles = {
-      galleryLayout: GALLERY_CONSTS.layout.SLIDER,
-      titlePlacement: 'SHOW_ABOVE',
-    };
     await driver.openPage();
   });
 
@@ -75,27 +64,27 @@ describe('arrowsPosition with info above - e2e', () => {
     await driver.closePage();
   });
 
-  it('should have arrows on info center', async () => {
-    const currentTestLayout = {
-      ...layoutStyles,
-      arrowsVerticalPosition: 'INFO_CENTER',
+  // gets info below relevant style params
+  const getLayoutStylesByVerticalPosition = (arrowsVerticalPosition) => {
+    return {
+      galleryLayout: GALLERY_CONSTS.layout.SLIDER,
+      titlePlacement: 'SHOW_ABOVE',
+      arrowsVerticalPosition: arrowsVerticalPosition,
     };
+  };
+
+  it('should have arrows on info center', async () => {
+    const currentTestLayout = getLayoutStylesByVerticalPosition('INFO_CENTER');
     await driver.navigate(currentTestLayout);
   });
 
   it('should have arrows on item center', async () => {
-    const currentTestLayout = {
-      ...layoutStyles,
-      arrowsVerticalPosition: 'ITEM_CENTER',
-    };
+    const currentTestLayout = getLayoutStylesByVerticalPosition('ITEM_CENTER');
     await driver.navigate(currentTestLayout);
   });
 
   it('should have arrows on image center', async () => {
-    const currentTestLayout = {
-      ...layoutStyles,
-      arrowsVerticalPosition: 'IMAGE_CENTER',
-    };
+    const currentTestLayout = getLayoutStylesByVerticalPosition('IMAGE_CENTER');
     await driver.navigate(currentTestLayout);
   });
 });
