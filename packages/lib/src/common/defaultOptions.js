@@ -6,13 +6,6 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   layoutParams: {
     repeatingGroupTypes: '',
   },
-  behaviourParams: {
-    item: {
-      video: {
-        playTrigger: GALLERY_CONSTS.videoPlay.HOVER,
-      },
-    },
-  },
   // adding
   gallerySizePx: 0,
   gallerySizeRatio: 0,

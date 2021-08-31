@@ -17,6 +17,13 @@ const coreOptions = {
   fullscreen: true,
   videoLoop: true,
   videoSound: false,
+  behaviourParams: {
+    item: {
+      video: {
+        playTrigger: GALLERY_CONSTS.videoPlay.HOVER,
+      },
+    },
+  },
   videoSpeed: 1,
   numberOfImagesPerRow: 3,
   collageDensity: 0.8,
