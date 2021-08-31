@@ -26,16 +26,17 @@ const getLayoutStylesByVerticalPosition = (
   };
 };
 
+// Grabbing page's snapshot and comparing to baseline
+async function grabSnapshotAndCompare() {
+  await driver.waitFor.hookToBeVisible('item-container');
+  const page = await driver.grab.elemScreenshot('.pro-gallery');
+  expect(page).toMatchImageSnapshot(testsSensitivityConfig);
+}
+
 describe('arrowsPosition with info below - e2e', () => {
   beforeAll(async () => {
     driver = new GalleryDriver();
     await driver.openPage();
-  });
-
-  afterEach(async () => {
-    await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchImageSnapshot(testsSensitivityConfig);
   });
 
   afterAll(async () => {
@@ -48,6 +49,7 @@ describe('arrowsPosition with info below - e2e', () => {
       'INFO_CENTER'
     );
     await driver.navigate(currentTestLayout);
+    await grabSnapshotAndCompare();
   });
 
   it('should have arrows on item center', async () => {
@@ -56,6 +58,7 @@ describe('arrowsPosition with info below - e2e', () => {
       'ITEM_CENTER'
     );
     await driver.navigate(currentTestLayout);
+    await grabSnapshotAndCompare();
   });
 
   it('should have arrows on image center', async () => {
@@ -64,6 +67,7 @@ describe('arrowsPosition with info below - e2e', () => {
       'IMAGE_CENTER'
     );
     await driver.navigate(currentTestLayout);
+    await grabSnapshotAndCompare();
   });
 });
 
@@ -73,12 +77,6 @@ describe('arrowsPosition with info above - e2e', () => {
     await driver.openPage();
   });
 
-  afterEach(async () => {
-    await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchImageSnapshot(testsSensitivityConfig);
-  });
-
   afterAll(async () => {
     await driver.closePage();
   });
@@ -89,6 +87,7 @@ describe('arrowsPosition with info above - e2e', () => {
       'INFO_CENTER'
     );
     await driver.navigate(currentTestLayout);
+    await grabSnapshotAndCompare();
   });
 
   it('should have arrows on item center', async () => {
@@ -97,6 +96,7 @@ describe('arrowsPosition with info above - e2e', () => {
       'ITEM_CENTER'
     );
     await driver.navigate(currentTestLayout);
+    await grabSnapshotAndCompare();
   });
 
   it('should have arrows on image center', async () => {
@@ -105,5 +105,6 @@ describe('arrowsPosition with info above - e2e', () => {
       'IMAGE_CENTER'
     );
     await driver.navigate(currentTestLayout);
+    await grabSnapshotAndCompare();
   });
 });
