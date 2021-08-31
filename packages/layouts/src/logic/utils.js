@@ -146,7 +146,7 @@ class Utils {
     const flatSP = this.flattenObject(styleParams);
     const flatDefaultSP = this.flattenObject(defaultSP);
     let _styles = this.flatToNested({ ...flatDefaultSP, ...flatSP });
-    return { ..._styles, ..._styles.layoutParams }; //I flatten the FLAT layoutsParam object here, when we are done only it should remain as other SP are irrelevant for the layouts
+    return { ..._styles };
   }
 
   convertContainer(container, styleParams) {
