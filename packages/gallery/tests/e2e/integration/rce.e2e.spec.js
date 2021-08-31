@@ -49,7 +49,7 @@ describe('RCE Integration test', () => {
       gotStyleParams: true,
       showVideoPlayButton: true,
     };
-    mutatingAssignMultipleByStrings(this.options, [
+    mutatingAssignMultipleByStrings(props, [
       [
         optionsMap.behaviourParams.item.video.playTrigger,
         GALLERY_CONSTS.videoPlay.CLICK,
