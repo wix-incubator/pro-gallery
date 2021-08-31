@@ -4,6 +4,12 @@ import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
+// This test needs to be more sensitive than what defined in matchers.js since changes are minor
+const testsSensitivityConfig = {
+  failureThreshold: 0,
+  failureThresholdType: 'pixel',
+};
+
 // Relevant to entire test suite (both 'describe's)
 let driver;
 
@@ -15,6 +21,7 @@ const getLayoutStylesByVerticalPosition = (
   return {
     galleryLayout: GALLERY_CONSTS.layout.SLIDER,
     titlePlacement: titlePlacement,
+    arrowsSize: 60,
     arrowsVerticalPosition: arrowsVerticalPosition,
   };
 };
@@ -28,7 +35,7 @@ describe('arrowsPosition with info below - e2e', () => {
   afterEach(async () => {
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchImageSnapshot();
+    expect(page).toMatchImageSnapshot(testsSensitivityConfig);
   });
 
   afterAll(async () => {
@@ -69,7 +76,7 @@ describe('arrowsPosition with info above - e2e', () => {
   afterEach(async () => {
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
-    expect(page).toMatchImageSnapshot();
+    expect(page).toMatchImageSnapshot(testsSensitivityConfig);
   });
 
   afterAll(async () => {
