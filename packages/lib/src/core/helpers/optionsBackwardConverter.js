@@ -382,7 +382,7 @@ function process_new_to_old_ClickAction(obj) {
 function process_new_to_old_AutoSlideBehaviour(obj) {
   let _obj = { ...obj };
   let val =
-    _obj[optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviou];
+    _obj[optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour];
   switch (val) {
     case 'OFF':
       _obj.isAutoSlideshow = false;
@@ -392,7 +392,6 @@ function process_new_to_old_AutoSlideBehaviour(obj) {
       _obj.isAutoSlideshow = true;
       _obj.autoSlideshowType = 'interval';
       break;
-
     case 'CONTINUOUS':
       _obj.isAutoSlideshow = true;
       _obj.autoSlideshowType = 'continuous';
@@ -436,8 +435,8 @@ function process_old_to_new_GroupTypes(obj) {
 }
 function process_new_to_old_NumberOfColumns(obj) {
   let _obj = { ...obj };
-  _obj.fixedColumns = _obj.numberOfColumns;
-  _obj.numberOfImagesPerRow = _obj.numberOfColumns;
-  _obj.groupsPerStrip = _obj.numberOfColumns;
+  _obj.fixedColumns = 0;
+  _obj.groupsPerStrip = _obj[optionsMap.layoutParams.numberOfColumns];
+  _obj.numberOfImagesPerRow = _obj[optionsMap.layoutParams.numberOfColumns];
   return _obj;
 }
