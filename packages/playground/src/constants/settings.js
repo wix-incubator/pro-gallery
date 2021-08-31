@@ -1,4 +1,4 @@
-import { galleryOptions } from 'pro-gallery-lib';
+import { galleryOptions, optionsMap } from 'pro-gallery-lib';
 
 export const INPUT_TYPES = {
   NUMBER: 'NUMBER',
@@ -163,7 +163,7 @@ export const optionsBySection = {
   ],
   [SECTIONS.VIDEO]: [
     'hidePlay',
-    'styles_behaviourParams_item_video_playTrigger',
+    optionsMap.behaviourParams.item.video.playTrigger,
     'videoSpeed',
     'videoSound',
     'videoLoop',
