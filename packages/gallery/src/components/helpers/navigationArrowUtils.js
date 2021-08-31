@@ -129,3 +129,33 @@ export const shouldRenderNavArrows = (shouldRenderArrowsRelevantArgs) => {
     !isGalleryWiderThanRenderedItems
   );
 };
+
+export const getShouldRenderArrowsArgs = (props) => {
+  const {
+    showArrows,
+    isSlideshow,
+    slideshowInfoSize,
+    arrowsVerticalPosition,
+    textBoxHeight,
+    arrowsSize,
+  } = props.options;
+  const { isPrerenderMode, galleryStructure, customNavArrowsRenderer } = props;
+  const { height, galleryWidth } = props.container;
+  return {
+    options: {
+      showArrows,
+      isSlideshow,
+      slideshowInfoSize,
+      arrowsVerticalPosition,
+      textBoxHeight,
+      arrowsSize,
+    },
+    container: {
+      height,
+      galleryWidth,
+    },
+    isPrerenderMode,
+    galleryStructure,
+    customNavArrowsRenderer,
+  };
+};

@@ -14,7 +14,11 @@ import PlayIcon from '../../svgs/components/play';
 import PauseIcon from '../../svgs/components/pause';
 import { GalleryComponent } from '../../galleryComponent';
 import TextItem from '../../item/textItem.js';
-import { getArrowsRenderData, shouldRenderNavArrows } from '../../helpers/navigationArrowUtils'
+import { 
+  getArrowsRenderData,
+  shouldRenderNavArrows,
+  getShouldRenderArrowsArgs,    
+} from '../../helpers/navigationArrowUtils'
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
@@ -864,35 +868,6 @@ class SlideshowView extends GalleryComponent {
   createDebugMsg() {
     return <GalleryDebugMessage {...this.props.debug} />;
   }
-  
-  getShouldRenderArrowsArgs(){
-    const { 
-      showArrows,
-      isSlideshow,
-      slideshowInfoSize,
-      arrowsVerticalPosition,
-      textBoxHeight,
-      arrowsSize, } = this.props.options;
-    const { isPrerenderMode, galleryStructure, customNavArrowsRenderer } = this.props;
-    const { height, galleryWidth } = this.props.container;
-    return {
-      options: { 
-        showArrows,
-        isSlideshow,
-        slideshowInfoSize,
-        arrowsVerticalPosition,
-        textBoxHeight,
-        arrowsSize, 
-      },
-      container: {
-        height,
-        galleryWidth,
-      },
-      isPrerenderMode,
-      galleryStructure,
-      customNavArrowsRenderer,
-    }
-  }
 
   createNavArrows() {
     const {
@@ -1121,7 +1096,7 @@ class SlideshowView extends GalleryComponent {
         style={galleryStyle}
       >
         {this.createDebugMsg()}
-        {shouldRenderNavArrows(this.getShouldRenderArrowsArgs()) && this.createNavArrows()}
+        {shouldRenderNavArrows(getShouldRenderArrowsArgs(this.props)) && this.createNavArrows()}
         {this.createLayout()}
         {this.createAutoSlideShowPlayButton()}
         {this.createSlideShowNumbers()}

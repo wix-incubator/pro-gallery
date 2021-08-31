@@ -77,6 +77,7 @@ class galleryDriver {
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       showArrows: true,
       arrowsSize: 23,
+      arrowsVerticalPosition: 'ITEM_CENTER',
       textBoxHeight: 200,
       slideshowInfoSize: 200,
       isSlideshow: false,
