@@ -270,21 +270,6 @@ export function App() {
 
   window.playgroundItems = getItems();
 
-  const props = {
-    key: `pro-gallery-${JSON.stringify(getKeySettings())}-${getItems()[0].itemId}`,
-    id: 'pro-gallery-playground',
-    scrollingElement: gallerySettings.responsivePreview ? document.getElementById('resizable') : window,
-    viewMode: gallerySettings.viewMode,
-    eventsListener: eventListener,
-    totalItemsCount: getTotalItemsCount(),
-    createMediaUrl: createMediaUrl,
-    settings: {avoidInlineStyles: !gallerySettings.useInlineStyles, disableSSROpacity: gallerySettings.viewMode === 'PRERENDER'},
-    activeIndex: gallerySettings.initialIdx,
-    customComponents: getCustomComponents(),
-    ...blueprintProps
-  }
-  props.shouldValidateTypes = false
-
   return (
     <main id="sidebar_main" className={s.main}>
       {/* <Loader/> */}
@@ -302,13 +287,26 @@ export function App() {
         </Suspense>}
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide && !utils.isMobile() ? SIDEBAR_WIDTH : 0}}>
-        {!canRender() ? <div>Waiting for blueprint...</div> : addResizable(GalleryComponent, props, resizedDims, dims => {setContainer(dims); setResizedDims(dims)}, gallerySettings)}
+        {!canRender() ? <div>Waiting for blueprint...</div> : addResizable(GalleryComponent, {
+          key: `pro-gallery-${JSON.stringify(getKeySettings())}-${getItems()[0].itemId}`,
+          id: 'pro-gallery-playground',
+          scrollingElement: gallerySettings.responsivePreview ? document.getElementById('resizable') : window,
+          viewMode: gallerySettings.viewMode,
+          eventsListener: eventListener,
+          totalItemsCount: getTotalItemsCount(),
+          createMediaUrl: createMediaUrl,
+          settings: {avoidInlineStyles: !gallerySettings.useInlineStyles, disableSSROpacity: gallerySettings.viewMode === 'PRERENDER'},
+          activeIndex: gallerySettings.initialIdx,
+          customComponents: getCustomComponents(),
+          ...blueprintProps
+        }, resizedDims, dims => {setContainer(dims); setResizedDims(dims)}, gallerySettings)}
       </section>
     </main>
   );
 }
 
 const addResizable = (Component, props, resizedDims, setResizedDims, gallerySettings) => {
+  props.shouldValidateTypes = false
   return gallerySettings.responsivePreview ? (<div style={{
     background: '#666',
     width: '100%',
