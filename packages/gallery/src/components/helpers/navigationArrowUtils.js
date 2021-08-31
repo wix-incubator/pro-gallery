@@ -95,7 +95,8 @@ const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
 };
 
 // function to Determine whether we should render the navigation arrows
-export const shouldRenderNavArrows = (shouldRenderArrowsRelevantArgs) => {
+export const shouldRenderNavArrows = (props) => {
+  const shouldRenderArrowsRelevantArgs = getShouldRenderArrowsArgs(props);
   const {
     showArrows,
     isSlideshow,
@@ -104,9 +105,9 @@ export const shouldRenderNavArrows = (shouldRenderArrowsRelevantArgs) => {
     textBoxHeight,
     arrowsSize,
   } = shouldRenderArrowsRelevantArgs.options;
+  const { height, galleryWidth } = shouldRenderArrowsRelevantArgs.container;
   const { isPrerenderMode, galleryStructure, customNavArrowsRenderer } =
     shouldRenderArrowsRelevantArgs;
-  const { height, galleryWidth } = shouldRenderArrowsRelevantArgs.container;
   const arrowsWillFitPositionRelevantArgs = {
     options: {
       isSlideshow,
@@ -130,7 +131,7 @@ export const shouldRenderNavArrows = (shouldRenderArrowsRelevantArgs) => {
   );
 };
 
-export const getShouldRenderArrowsArgs = (props) => {
+const getShouldRenderArrowsArgs = (props) => {
   const {
     showArrows,
     isSlideshow,
@@ -139,8 +140,8 @@ export const getShouldRenderArrowsArgs = (props) => {
     textBoxHeight,
     arrowsSize,
   } = props.options;
-  const { isPrerenderMode, galleryStructure, customNavArrowsRenderer } = props;
   const { height, galleryWidth } = props.container;
+  const { isPrerenderMode, galleryStructure, customNavArrowsRenderer } = props;
   return {
     options: {
       showArrows,

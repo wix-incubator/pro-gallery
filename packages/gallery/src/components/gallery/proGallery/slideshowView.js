@@ -17,7 +17,6 @@ import TextItem from '../../item/textItem.js';
 import { 
   getArrowsRenderData,
   shouldRenderNavArrows,
-  getShouldRenderArrowsArgs,    
 } from '../../helpers/navigationArrowUtils'
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
@@ -1096,7 +1095,13 @@ class SlideshowView extends GalleryComponent {
         style={galleryStyle}
       >
         {this.createDebugMsg()}
-        {shouldRenderNavArrows(getShouldRenderArrowsArgs(this.props)) && this.createNavArrows()}
+        {shouldRenderNavArrows({
+          options: this.props.options,
+          container: this.props.container,
+          isPrerenderMode: this.props.isPrerenderMode,
+          galleryStructure: this.props.galleryStructure,
+          customNavArrowsRenderer: this.props.customNavArrowsRenderer,
+        }) && this.createNavArrows()}
         {this.createLayout()}
         {this.createAutoSlideShowPlayButton()}
         {this.createSlideShowNumbers()}
