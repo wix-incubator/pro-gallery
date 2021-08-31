@@ -3,9 +3,9 @@ export interface StylingParams {
   itemShadowBlur: number;
   itemShadowDirection: number;
   itemShadowOpacityAndColor: string;
-  textBoxBorderColor: string;
-  textBoxBorderRadius: number;
   itemShadowSize: number;
   itemEnableShadow: boolean;
+  itemBorderRadius: number;
+  itemBorderWidth: number;
   [key: string]: any;
 }

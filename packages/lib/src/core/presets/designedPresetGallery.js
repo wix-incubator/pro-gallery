@@ -1,4 +1,5 @@
 // import { calcTargetItemSize } from './layoutHelper';
+import { mergeNestedObjects, flatToNested } from '../helpers/optionsUtils';
 
 export const createOptions = (options) => {
   try {
@@ -6,11 +7,12 @@ export const createOptions = (options) => {
       ? JSON.parse(options.jsonStyleParams)
       : {};
 
-    return {
-      ...options,
-      ...parsedOptions,
-      // targetItemSize: calcTargetItemSize(options),
-    };
+    const combinedOptions = mergeNestedObjects(
+      options,
+      flatToNested(parsedOptions)
+    );
+
+    return combinedOptions;
   } catch (e) {
     return {};
   }

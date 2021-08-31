@@ -1,4 +1,5 @@
 const LAYOUTS = {
+  JSON_FIXED: -3,
   DESIGNED_PRESET: -2,
   EMPTY: -1,
   COLLAGE: 0,
