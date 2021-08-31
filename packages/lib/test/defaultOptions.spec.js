@@ -41,7 +41,6 @@ function expectedOptions() {
     fullscreen: true,
     videoLoop: true,
     videoSound: false,
-    videoPlay: 'hover',
     videoSpeed: '1',
     numberOfImagesPerRow: 3,
     collageDensity: 0.8,
