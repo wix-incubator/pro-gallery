@@ -1,5 +1,9 @@
 //Yonatan Hattav Jun21
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import {
+  GALLERY_CONSTS,
+  mutatingAssignMultipleByStrings,
+  optionsMap,
+} from 'pro-gallery-lib';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import GalleryDriver from '../../drivers/reactDriver';
@@ -94,12 +98,19 @@ describe('Item View', () => {
   // not testing all the "return component" functions
   describe('getItemInner', () => {
     it('should return a placeholder for non playing video', () => {
+      const options = {
+        enableVideoPlaceholder: true,
+        isSlideshow: false,
+      };
+      mutatingAssignMultipleByStrings(options, [
+        [
+          optionsMap.behaviourParams.item.video.playTrigger,
+          GALLERY_CONSTS.videoPlay.HOVER,
+        ],
+      ]);
       Object.assign(sampleItemViewProps, {
         currentPlayingIdx: 1,
-        options: {
-          enableVideoPlaceholder: true,
-          isSlideshow: false,
-        },
+        options,
         type: 'video',
         idx: 0,
       });
