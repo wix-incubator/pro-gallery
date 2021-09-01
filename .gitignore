@@ -59,7 +59,6 @@ typings/
 .yarn-integrity
 
 # Lock files
-package-lock.json
 yarn-lock
 
 # Server output
