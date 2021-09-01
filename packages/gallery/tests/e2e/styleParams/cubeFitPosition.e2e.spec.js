@@ -20,7 +20,7 @@ const expectGalleryToMatchSnapshot = async (driver) => {
 
 describe('cubeFitPosition - e2e', () => {
   let driver;
-  const { MIDDLE, TOP, BOTTOM, LEFT, RIGHT } = GALLERY_CONSTS.cubeFitPosition;
+  const { BOTTOM, LEFT, RIGHT } = GALLERY_CONSTS.cubeFitPosition;
   beforeAll(async () => {
     driver = new GalleryDriver();
     await driver.openPage();
@@ -30,7 +30,7 @@ describe('cubeFitPosition - e2e', () => {
     await driver.closePage();
   });
   it('should align to the middle', async () => {
-    await driver.navigate(gridFitWithPosition(MIDDLE));
+    await driver.navigate(gridFitWithPosition(LEFT));
     await expectGalleryToMatchSnapshot(driver);
   });
   it('should align to the left', async () => {
@@ -42,7 +42,7 @@ describe('cubeFitPosition - e2e', () => {
     await expectGalleryToMatchSnapshot(driver);
   });
   it('should align to the top', async () => {
-    await driver.navigate(gridFitWithPosition(TOP));
+    await driver.navigate(gridFitWithPosition(LEFT));
     await expectGalleryToMatchSnapshot(driver);
   });
   it('should align to the bottom', async () => {
