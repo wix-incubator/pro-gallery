@@ -4,6 +4,14 @@ import { testImages } from '../../drivers/mocks/images-mock';
 import MagnifiedImage from '../../../src/components/item/imageWithMagnified';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
+const simulateEvent = (elem, eventName, options) => {
+  if (options) {
+    elem.simulate(eventName, options);
+  } else {
+    elem.simulate(eventName);
+  }
+};
+
 describe('imageWithMagnified', () => {
   let driver;
   let imageItemsProps;
@@ -33,11 +41,11 @@ describe('imageWithMagnified', () => {
   };
   it('should have correct magnified style', async () => {
     let item = createAndgetMagnifiedContainer(driver);
-    item.simulate('mousedown', {
+    simulateEvent(item, 'mousedown', {
       clientX: 5,
       clientY: 5,
     });
-    item.simulate('mouseup');
+    simulateEvent(item, 'mouseup');
     item = driver.find.selector('.magnified-item-container').at(0);
     expect(item.props().style).to.deep.equal({
       width: 500,
@@ -50,20 +58,20 @@ describe('imageWithMagnified', () => {
   });
   it('should be draggable', async () => {
     let item = createAndgetMagnifiedContainer(driver);
-    item.simulate('mousedown', {
+    simulateEvent(item, 'mousedown', {
       clientX: 0,
       clientY: 0,
     });
-    item.simulate('mouseup');
-    item.simulate('mousedown', {
+    simulateEvent(item, 'mouseup');
+    simulateEvent(item, 'mousedown', {
       clientX: 20,
       clientY: 20,
     });
-    item.simulate('mousemove', {
+    simulateEvent(item, 'mousemove', {
       clientX: 10,
       clientY: 10,
     });
-    item.simulate('mouseup');
+    simulateEvent(item, 'mouseup');
     item = driver.find.selector('.magnified-item-container').at(0);
     expect(item.props().style).to.deep.equal({
       width: 500,
