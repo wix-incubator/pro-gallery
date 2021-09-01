@@ -5,7 +5,7 @@ import { images2 } from '../drivers/mocks/items';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { options, container } from '../drivers/mocks/styles';
 
-const getCalcExpectedExpression = (expectedInfoSpace) => {
+const getExpectedCalcExpression = (expectedInfoSpace) => {
   return `calc(50%+0px-19.5px-${expectedInfoSpace}px)`;
 };
 
@@ -61,7 +61,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
     const { top } = navArrows.props().style;
     const expectedInfoSpace = (-1 * galleryHeight) / 2;
     expect(top.replace(/\s/g, '')).to.eq(
-      getCalcExpectedExpression(expectedInfoSpace)
+      getExpectedCalcExpression(expectedInfoSpace)
     );
   });
 
@@ -72,7 +72,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
     });
     const navArrows = await mountGalleryAndGetArrows(initialProps);
     const { top } = navArrows.props().style;
-    expect(top.replace(/\s/g, '')).to.eq(getCalcExpectedExpression(0));
+    expect(top.replace(/\s/g, '')).to.eq(getExpectedCalcExpression(0));
   });
 
   it('Checks if "IMAGE_CENTER" has correct distance from top for SlideShow', async () => {
@@ -84,7 +84,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
     const { top } = navArrows.props().style;
     const expectedInfoSpace = initialProps.options.slideshowInfoSize / 2;
     expect(top.replace(/\s/g, '')).to.eq(
-      getCalcExpectedExpression(expectedInfoSpace)
+      getExpectedCalcExpression(expectedInfoSpace)
     );
   });
 });
