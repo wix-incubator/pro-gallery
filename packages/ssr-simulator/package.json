@@ -1,6 +1,6 @@
 {
   "name": "ssr-simulator",
-  "version": "4.0.15-beta.108",
+  "version": "4.0.15-beta.113",
   "private": true,
   "engines": {
     "node": ">=10.15"
@@ -57,7 +57,7 @@
     "image-client-api": "^1.3130.0",
     "import-glob-loader": "^1.1.0",
     "isomorphic-unfetch": "^3.0.0",
-    "jest": "^24.8.0",
+    "jest": "^26.0.0",
     "lodash": "^4.17.21",
     "lodash-webpack-plugin": "^0.11.5",
     "mini-css-extract-plugin": "^0.8.0",
@@ -67,8 +67,8 @@
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
     "prettier": "^2.1.2",
-    "pro-gallery": "^4.0.15-beta.108",
-    "pro-layouts": "^4.0.15-beta.108",
+    "pro-gallery": "^4.0.15-beta.113",
+    "pro-layouts": "^4.0.15-beta.113",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dev-utils": "^11.0.0",

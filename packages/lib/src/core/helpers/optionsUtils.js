@@ -10,6 +10,23 @@ function assignByString(Obj, string, value) {
   pointer[assignedProperty] = value;
   return _obj;
 }
+function getByString(Obj, string) {
+  let _obj = { ...Obj };
+  let keyArr = string.split('_');
+  let assignedProperty = keyArr.pop();
+  let pointer = _obj;
+  if (
+    !keyArr.every((key) => {
+      if (typeof pointer[key] !== 'object') return false; //if its not an object there will be nothing in it...
+      pointer = pointer[key]; //programatically going town the rabit hole
+      return true;
+    })
+  ) {
+    return undefined;
+  } else {
+    return pointer[assignedProperty];
+  }
+}
 
 function mutatingAssignMultipleByStrings(Obj, stringValuePairArray) {
   for (let [string, value] of stringValuePairArray) {
@@ -59,5 +76,6 @@ export {
   assignByString,
   flatToNested,
   mergeNestedObjects,
+  getByString,
   mutatingAssignMultipleByStrings,
 };

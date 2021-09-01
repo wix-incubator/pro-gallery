@@ -2,23 +2,27 @@ export interface LayoutParams {
   collage: Collage;
   thumbnails: Thumbnails;
   navigationArrows: NavigationArrows;
+  info: Info;
+  targetItemSize: TargetItemSize;
 
   gallerySpacing: number;
   itemSpacing: number;
   enableStreching: boolean;
-
-  cropRatio: number | string | Array<string>; //This is cropRatio and rotatingCropRatios all together.
+  croppedAlignment: 'CENTER' | 'TOP' | 'LEFT' | 'RIGHT' | 'BOTTOM';
+  cropRatios: number | string | Array<string>; //This is cropRatio and rotatingCropRatios all together.
   // numberOfGroupsPerRow: number;
   numberOfColumns: number; //numberOfImagesPerCol: number;
   numberOfRows: number; //numberOfImagesPerRow: number;
-  cropType: string;
+  columnRatios: string;
+  cropMethod: string;
+
   enableCrop: boolean;
   enableSmartCrop: boolean;
   minItemSize: number;
   cropOnlyFill: boolean; //DELETE? - its used in slider gallery
-  forceGroupsOrder: 'LEFT_TO_RIGHT' | 'RIGHT_TO_LEFT'; //use const? or is this the new const?
+  forceGroupsOrder: 'LEFT_TO_RIGHT' | 'RIGHT_TO_LEFT' | 'BY_COLUMNS'; //use const? or is this the new const?
   slideshowInfoSize: number;
-  scatter: number; //make sure this is a number;
+  scatter: Scatter;
   scrollDirection: 'VERTICAL' | 'HORIZONTAL';
   layoutOrientation: 'VERTICAL' | 'HORIZONTAL'; //isVertical
   isSlideshow: boolean; //I dont want this but how can I get rid of it?
@@ -30,7 +34,7 @@ export interface LayoutParams {
 }
 
 export interface Collage {
-  amount: number;
+  // amount: number; //doesnt exist. eradicate.
   density: number;
   groupByOrientation: boolean;
   groupTypes: string | Array<string>; // the string is of a closed list of strings. need to validate it. how? //the Array is the representation of rotating.
@@ -38,20 +42,58 @@ export interface Collage {
 }
 export interface Thumbnails {
   enable: boolean;
-  spacings: number;
+  spacing: number;
   size: number;
-  alignment: 'bottom' | 'right' | 'left' | 'top';
+  alignment: 'BOTTOM' | 'RIGHT' | 'LEFT' | 'TOP';
+}
+export interface Scatter {
+  randomScatter: number;
+  manualScatter: string;
 }
 export interface NavigationArrows {
   enable: boolean;
   size: number;
   padding: number;
-  position: 'ON_THE_GALLERY' | 'OUTSIDE_THE_GALLERY';
-  verticalAlignment: 'ITEM' | 'IMAGE' | 'INFO';
+  position: 'ON_GALLERY' | 'OUTSIDE_GALLERY';
+  verticalAlignment: 'ITEM_CENTER' | 'IMAGE_CENTER' | 'INFO_CENTER';
+}
+
+export interface TargetItemSize {
+  mode: 'PERCENT' | 'PIXEL' | 'SMART';
+  pixel: number;
+  percent: number;
+  smart: number; //I need to understand the users of this. its a layout thing...
+}
+export interface Info {
+  sizeCalculationMode: 'PERCENT' | 'MANUAL';
+  width: number;
+  height: number;
+  spacing: number;
+  backgroundMode:
+    | 'NO_BACKGROUND'
+    | 'ATTACHED_BACKGROUND'
+    | 'SEPARATED_BACKGROUND';
+  border: InfoBorder;
+  placement:
+    | 'OVERLAY'
+    | 'ABOVE'
+    | 'BELOW'
+    | 'LEFT'
+    | 'RIGHT'
+    | 'ALTERNATE_HORIZONTALLY'
+    | 'ALTERNATE_VERTICALLY';
+  [key: string]: any;
+}
+export interface InfoBorder {
+  width: number;
+  color: string;
+  radius: number;
+  [key: string]: any;
 }
 // const layoutParamsMap = {
 //   fixedColumns: 'layoutParams_fixedColumns', // layouter internal
 //   externalInfoHeight: 'layoutParams_externalInfoHeight', //layouter API
 //   externalInfoWidth: 'layoutParams_externalInfoWidth', //layouter API
 //   targetItemSize: 'layoutParams_targetItemSize', //layouter API
+// forceMobileCustomButton - I'll delete this
 // };

@@ -878,6 +878,12 @@ class ItemView extends GalleryComponent {
       'hover-animation-slide-right':
         isNOTslideshow &&
         overlayAnimation === GALLERY_CONSTS.overlayAnimations.SLIDE_RIGHT,
+      'hover-animation-slide-down':
+        isNOTslideshow &&
+        overlayAnimation === GALLERY_CONSTS.overlayAnimations.SLIDE_DOWN,
+      'hover-animation-slide-left':
+        isNOTslideshow &&
+        overlayAnimation === GALLERY_CONSTS.overlayAnimations.SLIDE_LEFT,
 
       //image hover animations
       'zoom-in-on-hover':
