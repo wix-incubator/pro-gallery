@@ -255,9 +255,9 @@ export default class Layouter {
         ? Math.floor(this.galleryWidth / this.numOfCols)
         : this.targetItemSize;
 
-      const { columnWidths, cropRatio, externalInfoWidth, imageMargin } =
+      const { columnWidths, externalInfoWidth, imageMargin } =
         this.styleParams;
-
+      const {cropRatio} = this.styleParams.layoutParams;
       let columnWidthsArr = false;
       if (columnWidths && columnWidths.length > 0) {
         columnWidthsArr = columnWidths.split(',').map(Number);
