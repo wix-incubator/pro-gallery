@@ -622,7 +622,11 @@ class GalleryItem {
 
   get alt() {
     return (
-      this.metadata.alt || this.title || this.description || this.fileName || ''
+      (utils.isMeaningfulString(this.metadata.alt) && this.metadata.alt) ||
+      this.title ||
+      this.description ||
+      this.fileName ||
+      ''
     );
   }
 
