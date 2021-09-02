@@ -1,29 +1,15 @@
 export interface LayoutParams {
   collage: Collage;
+  crop: Crop;
+  structure: Structure;
   thumbnails: Thumbnails;
   navigationArrows: NavigationArrows;
   info: Info;
   targetItemSize: TargetItemSize;
 
   enableStreching: boolean;
-  cropMethod: 'FILL' | 'FIT' | 'MIN' | 'MAX';
-  croppedAlignment: 'CENTER' | 'TOP' | 'LEFT' | 'RIGHT' | 'BOTTOM';
-  enableCrop: boolean;
-  enableSmartCrop: boolean;
-  cropOnlyFill: boolean; //DELETE? - its used in slider gallery
-  cropRatios: Array<number>; //This is cropRatio and rotatingCropRatios all together.
-
   gallerySpacing: number;
   itemSpacing: number;
-
-  numberOfColumns: number; //numberOfImagesPerCol: number;
-  numberOfRows: number; //numberOfImagesPerRow: number;
-  responsiveMode: 'FIT_TO_SCREEN' | 'SET_ITEMS_PER_ROW';
-  columnRatios: Array<number>;
-  scatter: Scatter;
-  layoutOrientation: 'VERTICAL' | 'HORIZONTAL'; //isVertical
-
-  groupsOrder: 'LEFT_TO_RIGHT' | 'RIGHT_TO_LEFT' | 'BY_HEIGHT'; //use const? or is this the new const?
   scrollDirection: 'VERTICAL' | 'HORIZONTAL';
 
   isSlideshow: boolean; //I dont want this but how can I get rid of it?
@@ -38,7 +24,8 @@ export interface Collage {
   // amount: number; //doesnt exist. eradicate.
   density: number;
   groupByOrientation: boolean;
-  numberOfGroupsPerStrip: number;
+  numberOfGroupsPerRow: number;
+
   allowedGroupTypes: Array<
     '1' | '2h' | '2v' | '3h' | '3v' | '3t' | '3b' | '3l' | '3r'
   >;
@@ -63,6 +50,24 @@ export interface NavigationArrows {
   padding: number;
   position: 'ON_GALLERY' | 'OUTSIDE_GALLERY';
   verticalAlignment: 'ITEM_CENTER' | 'IMAGE_CENTER' | 'INFO_CENTER';
+}
+
+export interface Crop {
+  method: 'FILL' | 'FIT' | 'MIN' | 'MAX';
+  alignment: 'CENTER' | 'TOP' | 'LEFT' | 'RIGHT' | 'BOTTOM';
+  enable: boolean;
+  enableSmartCrop: boolean;
+  cropOnlyFill: boolean; //DELETE? - its used in slider gallery
+  ratios: Array<number>; //This is cropRatio and rotatingCropRatios all together.
+}
+export interface Structure {
+  numberOfColumns: number; //numberOfImagesPerCol: number;
+  numberOfRows: number; //numberOfImagesPerRow: number;
+  responsiveMode: 'FIT_TO_SCREEN' | 'SET_ITEMS_PER_ROW';
+  columnRatios: Array<number>;
+  scatter: Scatter;
+  layoutOrientation: 'VERTICAL' | 'HORIZONTAL'; //isVertical
+  groupsOrder: 'LEFT_TO_RIGHT' | 'RIGHT_TO_LEFT' | 'BY_HEIGHT'; //use const? or is this the new const?
 }
 
 export interface TargetItemSize {

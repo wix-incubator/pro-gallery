@@ -3,19 +3,20 @@ import { assignByString, getByString } from './optionsUtils';
 
 export const nameChangedLayoutParams = [
   ['imageMargin', optionsMap.layoutParams.itemSpacing],
-  ['cubeImages', optionsMap.layoutParams.enableCrop],
-  ['smartCrop', optionsMap.layoutParams.enableSmartCrop],
+  ['groupsPerStrip', optionsMap.layoutParams.collage.numberOfGroupsPerRow],
+  ['cubeImages', optionsMap.layoutParams.crop.enable],
+  ['smartCrop', optionsMap.layoutParams.crop.enableSmartCrop],
+  ['cropOnlyFill', optionsMap.layoutParams.crop.cropOnlyFill],
   ['minItemSize', optionsMap.layoutParams.targetItemSize.minimum],
-  ['cropOnlyFill', optionsMap.layoutParams.cropOnlyFill],
   ['slideshowInfoSize', optionsMap.layoutParams.info.slideshowInfoSize],
-  ['scatter', optionsMap.layoutParams.scatter.randomScatter],
-  ['rotatingScatter', optionsMap.layoutParams.scatter.manualScatter],
+  ['scatter', optionsMap.layoutParams.structure.scatter.randomScatter],
+  ['rotatingScatter', optionsMap.layoutParams.structure.scatter.manualScatter],
   ['isSlideshow', optionsMap.layoutParams.isSlideshow],
   ['isGrid', optionsMap.layoutParams.isGrid],
   ['isMasonry', optionsMap.layoutParams.isMasonry],
   ['isSlider', optionsMap.layoutParams.isSlider],
   ['isColumns', optionsMap.layoutParams.isColumns],
-  ['numberOfImagesPerCol', optionsMap.layoutParams.numberOfRows],
+  ['numberOfImagesPerCol', optionsMap.layoutParams.structure.numberOfRows],
   //['collageAmount', optionsMap.layoutParams.collage.amount], //This doesnt really exist. need to eradicate as a refactor
   ['collageDensity', optionsMap.layoutParams.collage.density],
   ['chooseBestGroup', optionsMap.layoutParams.collage.groupByOrientation],
@@ -146,19 +147,18 @@ export const nameChangedStylingParams = [
 export const layoutParamsMap = {
   //done
   galleryMargin: optionsMap.layoutParams.gallerySpacing, //done
-  groupsPerStrip: optionsMap.layoutParams.numberOfGroupsPerRow, //done
+  groupsPerStrip: optionsMap.layoutParams.collage.numberOfGroupsPerRow,
   columnWidths: optionsMap.layoutParams.columnRatios,
-  cubeFitPosition: optionsMap.layoutParams.croppedAlignment,
+  cubeFitPosition: optionsMap.layoutParams.crop.alignment,
   //Are all of the following content keys? so they could go into layoutParams_content_
-  cubeRatio: optionsMap.layoutParams.cropRatio, //done
-  cubeType: optionsMap.layoutParams.cropMethod,
-  cubeImages: optionsMap.layoutParams.enableCrop,
+  cubeRatio: optionsMap.layoutParams.crop.ratios, //done
+  cubeType: optionsMap.layoutParams.crop.method,
+  cubeImages: optionsMap.layoutParams.crop.enable,
   useMaxDimensions: optionsMap.layoutParams.enableStreching, //naming???
   rotatingCropRatios: optionsMap.layoutParams.repeatingCropRatios,
-  smartCrop: optionsMap.layoutParams.enableSmartCrop,
+  smartCrop: optionsMap.layoutParams.crop.enableSmartCrop,
   minItemSize: optionsMap.layoutParams.minItemSize,
-  cropOnlyFill: optionsMap.layoutParams.cropOnlyFill, //????????????????
-
+  cropOnlyFill: optionsMap.layoutParams.crop.cropOnlyFill, //????????????????
   imageMargin: optionsMap.layoutParams.itemSpacing,
   placeGroupsLtr: optionsMap.layoutParams.groupsOrder, //REFACTOR - LEFT_TO_RIGHT, RIGHT_TO_LEFT
   rotatingGroupTypes: optionsMap.layoutParams.repeatingGroupTypes,
@@ -198,8 +198,8 @@ export const layoutParamsMap = {
 
   fixedColumns: optionsMap.layoutParams.fixedColumns, //????????????????
 
-  scatter: optionsMap.layoutParams.scatter.randomScatter,
-  rotatingScatter: optionsMap.layoutParams.scatter.manualScatter,
+  scatter: optionsMap.layoutParams.structure.scatter.randomScatter,
+  rotatingScatter: optionsMap.layoutParams.structure.scatter.manualScatter,
   scrollDirection: optionsMap.layoutParams.scrollDirection,
 
   isVertical: optionsMap.layoutParams.layoutOrientation, // This needs to be refactored to be an enum. but can wait

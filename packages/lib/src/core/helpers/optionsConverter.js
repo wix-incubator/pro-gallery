@@ -68,7 +68,7 @@ function migrateOptions(oldStyles) {
   newStyles = process_old_to_new_groupsOrder(newStyles);
   newStyles = process_old_to_new_repeatingGroupTypes(newStyles);
   newStyles = process_old_to_new_AllowedGroupTypes(newStyles);
-  newStyles = process_old_to_new_NumberOfColumns(newStyles); // fixedColumns || numberOfImagesPerRow || numberOfGroupsPerRow (notice its losing if its 0)
+  newStyles = process_old_to_new_NumberOfColumns(newStyles); // fixedColumns || numberOfImagesPerRow
   newStyles = process_old_to_new_targetItemSizeUnit(newStyles);
   newStyles = process_old_to_new_targetItemSizeValue(newStyles);
   newStyles = process_old_to_new_CroppedAlignment(newStyles);
@@ -94,7 +94,6 @@ function migrateOptions(oldStyles) {
   ///----------- STYLING -------------///
 
   newStyles = changeNames(newStyles, nameChangedStylingParams);
-
   delete newStyles.enableLeanGallery;
   delete newStyles.fullscreen;
   delete newStyles.magicLayoutSeed;
@@ -108,13 +107,13 @@ function process_old_to_new_columnRatios(obj) {
   _obj = namingChange(
     _obj,
     'columnWidths',
-    optionsMap.layoutParams.columnRatios
+    optionsMap.layoutParams.structure.columnRatios
   );
-  if (_obj.layoutParams.columnRatios.length === 0) {
-    _obj.layoutParams.columnRatios = [];
+  if (_obj.layoutParams.structure.columnRatios.length === 0) {
+    _obj.layoutParams.structure.columnRatios = [];
   } else {
-    _obj.layoutParams.columnRatios = [
-      ..._obj.layoutParams.columnRatios.split(',').map(Number),
+    _obj.layoutParams.structure.columnRatios = [
+      ..._obj.layoutParams.structure.columnRatios.split(',').map(Number),
     ];
   }
   return _obj;
@@ -144,8 +143,8 @@ function process_old_to_new_targetItemSizeValue(obj) {
 }
 function process_old_to_new_cropMethod(obj) {
   let _obj = { ...obj };
-  _obj = namingChange(_obj, 'cubeType', optionsMap.layoutParams.cropMethod);
-  _obj.layoutParams.cropMethod = _obj.layoutParams.cropMethod?.toUpperCase();
+  _obj = namingChange(_obj, 'cubeType', optionsMap.layoutParams.crop.method);
+  _obj.layoutParams.crop.method = _obj.layoutParams.crop.method?.toUpperCase();
   return _obj;
 }
 function process_old_to_new_ThumbnailAlignment(obj) {
@@ -221,14 +220,14 @@ function process_old_to_new_responsiveMode(obj) {
   _obj = namingChange(
     _obj,
     'gridStyle',
-    optionsMap.layoutParams.responsiveMode
+    optionsMap.layoutParams.structure.responsiveMode
   );
-  switch (_obj.layoutParams.responsiveMode) {
+  switch (_obj.layoutParams.structure.responsiveMode) {
     case 0:
-      _obj.layoutParams.responsiveMode = 'FIT_TO_SCREEN';
+      _obj.layoutParams.structure.responsiveMode = 'FIT_TO_SCREEN';
       break;
     case 1:
-      _obj.layoutParams.responsiveMode = 'SET_ITEMS_PER_ROW';
+      _obj.layoutParams.structure.responsiveMode = 'SET_ITEMS_PER_ROW';
       break;
     default:
       break;
@@ -309,14 +308,14 @@ function process_old_to_new_LayoutOrientation(obj) {
   _obj = namingChange(
     _obj,
     'isVertical',
-    optionsMap.layoutParams.layoutOrientation
+    optionsMap.layoutParams.structure.layoutOrientation
   );
-  switch (_obj.layoutParams.layoutOrientation) {
+  switch (_obj.layoutParams.structure.layoutOrientation) {
     case true:
-      _obj.layoutParams.layoutOrientation = 'VERTICAL';
+      _obj.layoutParams.structure.layoutOrientation = 'VERTICAL';
       break;
     case false:
-      _obj.layoutParams.layoutOrientation = 'HORIZONTAL';
+      _obj.layoutParams.structure.layoutOrientation = 'HORIZONTAL';
       break;
     default:
       break;
@@ -328,14 +327,14 @@ function process_old_to_new_groupsOrder(obj) {
   _obj = namingChange(
     _obj,
     'placeGroupsLtr',
-    optionsMap.layoutParams.groupsOrder
+    optionsMap.layoutParams.structure.groupsOrder
   );
-  switch (_obj.layoutParams.groupsOrder) {
+  switch (_obj.layoutParams.structure.groupsOrder) {
     case true:
-      _obj.layoutParams.groupsOrder = 'LEFT_TO_RIGHT';
+      _obj.layoutParams.structure.groupsOrder = 'LEFT_TO_RIGHT';
       break;
     case false:
-      _obj.layoutParams.groupsOrder = 'BY_HEIGHT';
+      _obj.layoutParams.structure.groupsOrder = 'BY_HEIGHT';
       break;
     default:
       break;
@@ -359,11 +358,11 @@ function process_old_to_new_CroppedAlignment(obj) {
   _obj = namingChange(
     _obj,
     'cubeFitPosition',
-    optionsMap.layoutParams.croppedAlignment
+    optionsMap.layoutParams.crop.alignment
   );
-  switch (_obj.layoutParams.croppedAlignment) {
+  switch (_obj.layoutParams.crop.alignment) {
     case 'MIDDLE':
-      _obj.layoutParams.croppedAlignment = 'CENTER';
+      _obj.layoutParams.crop.alignment = 'CENTER';
       break;
     default:
       break;
@@ -483,9 +482,8 @@ function process_old_to_new_AutoSlideBehaviour(obj) {
 }
 function process_old_to_new_CropRatio(obj) {
   let _obj = { ...obj };
-  //['groupTypes', optionsMap.layoutParams.collage.groupTypes'], //Need to change this to incorporate rotatingGroupTypes //change the 'Types'?
   let repeatingVal = obj.rotatingCropRatios;
-  let val = obj.cubeRatio || obj.layoutParams?.cropRatio;
+  let val = _obj.cubeRatio || _obj.layoutParams?.cropRatio;
 
   let finalVal;
   if (typeof repeatingVal === 'string' && repeatingVal !== '') {
@@ -493,8 +491,9 @@ function process_old_to_new_CropRatio(obj) {
   } else {
     finalVal = val;
   }
-  _obj.layoutParams.cropRatios = String(finalVal).split(',').map(Number);
+  _obj.layoutParams.crop.ratios = String(finalVal).split(',').map(Number);
   delete _obj.cropRatio;
+  delete _obj.layoutParams.cropRatio;
   delete _obj.rotatingCropRatios;
   return _obj;
 }
@@ -502,7 +501,7 @@ function process_old_to_new_AllowedGroupTypes(obj) {
   let _obj = { ...obj };
 
   let val = _obj.groupTypes;
-  _obj.allowedGroupTypes = val.split(',');
+  _obj.layoutParams.collage.allowedGroupTypes = val.split(',');
   delete _obj.groupTypes;
   return _obj;
 }
@@ -516,7 +515,11 @@ function process_old_to_new_repeatingGroupTypes(obj) {
   } else {
     finalVal = [];
   }
-  _obj.layoutParams.collage.repeatingGroupTypes = finalVal;
+  _obj = assignByString(
+    _obj,
+    optionsMap.layoutParams.collage.repeatingGroupTypes,
+    finalVal
+  );
   delete _obj.layoutParams.repeatingGroupTypes;
   delete _obj.repeatingGroupTypes;
   return _obj;
@@ -525,13 +528,11 @@ function process_old_to_new_NumberOfColumns(obj) {
   let _obj = { ...obj };
   let fixedColumns = obj.fixedColumns;
   let numberOfImagesPerRow = obj.numberOfImagesPerRow;
-  let numberOfGroupsPerRow = obj.groupsPerStrip;
-  let finalVal = fixedColumns || numberOfImagesPerRow || numberOfGroupsPerRow;
+  let finalVal = fixedColumns || numberOfImagesPerRow;
 
-  _obj.layoutParams.numberOfColumns = finalVal;
+  _obj.layoutParams.structure.numberOfColumns = finalVal;
   delete _obj.fixedColumns;
   delete _obj.numberOfImagesPerRow;
-  delete _obj.groupsPerStrip;
   return _obj;
 }
 

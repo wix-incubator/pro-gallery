@@ -45,14 +45,14 @@ import { reverseMigrateOptions } from '../src/core/helpers/optionsBackwardConver
 //   //     });
 //   //   });
 // });
-describe('Old to new styles processing', () => {
+describe('Styles processing', () => {
+  it('should migrated new options to old ones', () => {
+    let old = reverseMigrateOptions(defaultOptions_new());
+    expect(old).to.eql(defaultOptions_old());
+  });
   it('should migrate styles from old to new until theres nothing ot migrate anymore', () => {
     let migrated = migrateOptions(defaultOptions_old());
     expect(migrated).to.eql(defaultOptions_new());
-  });
-  it.only('should migrated new options to old ones', () => {
-    let old = reverseMigrateOptions(defaultOptions_new());
-    expect(old).to.eql(defaultOptions_old());
   });
 });
 
@@ -79,33 +79,41 @@ function defaultOptions_old() {
 function defaultOptions_new() {
   let options = {
     layoutParams: {
+      scrollDirection: 'VERTICAL', //TODO, create and use use NEW_CONSTS
       gallerySpacing: 0,
-      cropRatios: [1], // determine the ratio of the images when using grid (use 1 for squares grid)
       itemSpacing: 10,
       enableStreching: true,
-      cropMethod: 'FILL',
-      enableCrop: false,
-      enableSmartCrop: false,
-      cropOnlyFill: false,
-      croppedAlignment: 'CENTER',
-      responsiveMode: 'FIT_TO_SCREEN',
-      scatter: {
-        randomScatter: 0,
-        manualScatter: '',
-      },
+
       isGrid: false,
       isSlider: false,
       isColumns: false,
       isMasonry: false,
       isSlideshow: false,
-      scrollDirection: 'VERTICAL', //TODO, create and use use NEW_CONSTS
-      layoutOrientation: 'HORIZONTAL', //TODO, create and use use NEW_CONSTS
-      groupsOrder: 'BY_HEIGHT', //TODO, create and use use NEW_CON
-      numberOfRows: 1,
-      numberOfColumns: 3,
-      columnRatios: [],
+
+      crop: {
+        ratios: [1], // determine the ratio of the images when using grid (use 1 for squares grid)
+        method: 'FILL',
+        enable: false,
+        enableSmartCrop: false,
+        cropOnlyFill: false,
+        alignment: 'CENTER',
+      },
+      structure: {
+        responsiveMode: 'FIT_TO_SCREEN',
+        scatter: {
+          randomScatter: 0,
+          manualScatter: '',
+        },
+        layoutOrientation: 'HORIZONTAL', //TODO, create and use use NEW_CONSTS
+        groupsOrder: 'BY_HEIGHT', //TODO, create and use use NEW_CON
+        numberOfRows: 1,
+        numberOfColumns: 3,
+        columnRatios: [],
+      },
+
       collage: {
         groupByOrientation: true,
+        numberOfGroupsPerRow: 0,
         density: 0.8,
         groupSize: 3,
         allowedGroupTypes: ['1', '2h', '2v', '3t', '3b', '3l', '3r'],
@@ -153,7 +161,7 @@ function defaultOptions_new() {
           loop: true,
           volume: 0,
           enableControls: false,
-          speed: '1',
+          speed: 1,
           enablePlayButton: true,
           enablePlaceholder: true,
         },
