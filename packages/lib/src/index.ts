@@ -13,6 +13,10 @@ export {
   migrateOptions,
   addMigratedOptions,
 } from './core/helpers/optionsConverter';
+export {
+  addOldOptions,
+  reverseMigrateOptions,
+} from './core/helpers/optionsBackwardConverter';
 export { assignByString } from './core/helpers/optionsUtils';
 export { mutatingAssignMultipleByStrings } from './core/helpers/optionsUtils';
 export { default as optionsMap } from './core/helpers/optionsMap';
