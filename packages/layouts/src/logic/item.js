@@ -24,7 +24,7 @@ export class Item {
       const { styleParams } = config;
       this.cubeType = styleParams.cubeType;
       this.cubeImages = styleParams.cubeImages;
-      this._cropRatio = styleParams.cropRatio;
+      this._cropRatio = styleParams.layoutParams.cropRatio;
       this.rotatingCropRatios = styleParams.rotatingCropRatios;
       this.smartCrop = styleParams.smartCrop;
       this.cropOnlyFill = styleParams.cropOnlyFill;

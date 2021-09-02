@@ -169,6 +169,13 @@ describe('Slideshow View', () => {
         top: 1,
         left: 1,
       });
+      // constants determining the gallery's height
+      const galleryHeight = initialGalleryViewProps.container.galleryHeight;
+      const imageMargin = initialGalleryViewProps.options.imageMargin;
+      // assigning the height parameter as in this.props.container to gallery's height
+      Object.assign(initialGalleryViewProps.container, {
+        height: galleryHeight - imageMargin,
+      });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
       expect(driver.get.state('activeIndex')).to.equal(0);

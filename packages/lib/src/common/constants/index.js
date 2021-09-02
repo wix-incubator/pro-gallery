@@ -36,6 +36,7 @@ import placements, {
   isExternalLeftPlacement,
   isExternalVerticalPlacement,
   isExternalHorizontalPlacement,
+  isConstantVerticalPlacement,
 } from './placements';
 import resizeMethods from './resizeMethods';
 import scrollAnimations from './scrollAnimations';
@@ -92,6 +93,7 @@ export default {
   isExternalLeftPlacement,
   isExternalVerticalPlacement,
   isExternalHorizontalPlacement,
+  isConstantVerticalPlacement,
   resizeMethods,
   scrollAnimations,
   slideAnimations,

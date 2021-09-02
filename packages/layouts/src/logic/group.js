@@ -55,7 +55,7 @@ export class Group {
       this.collageAmount = styleParams.collageAmount;
       this.collageDensity = styleParams.collageDensity;
       this.groupTypes = String(styleParams.groupTypes);
-      this.repeatingGroupTypes = String(styleParams.repeatingGroupTypes);
+      this.repeatingGroupTypes = String(styleParams.layoutParams.repeatingGroupTypes);
       this.rotatingCropRatios = String(styleParams.rotatingCropRatios);
       this.chooseBestGroup = styleParams.chooseBestGroup;
       this.externalInfoHeight = styleParams.externalInfoHeight;
