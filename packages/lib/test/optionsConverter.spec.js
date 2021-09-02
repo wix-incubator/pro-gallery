@@ -70,7 +70,10 @@ describe('Old to new styles processing', () => {
 // }
 
 function defaultOptions_old() {
-  return defaultOptions;
+  let def = { ...defaultOptions };
+  delete def.fullscreen; //removing this from tests, we should be also removing it from the code. Izaac tested that its not relevant
+  delete def.magicLayoutSeed;
+  return def;
 }
 
 function defaultOptions_new() {
@@ -85,7 +88,7 @@ function defaultOptions_new() {
       enableSmartCrop: false,
       cropOnlyFill: false,
       croppedAlignment: 'CENTER',
-      slideshowInfoSize: 200,
+      responsiveMode: 'FIT_TO_SCREEN',
       scatter: {
         randomScatter: 0,
         manualScatter: '',
@@ -97,7 +100,7 @@ function defaultOptions_new() {
       isSlideshow: false,
       scrollDirection: 'VERTICAL', //TODO, create and use use NEW_CONSTS
       layoutOrientation: 'HORIZONTAL', //TODO, create and use use NEW_CONSTS
-      forceGroupsOrder: 'BY_COLUMNS', //TODO, create and use use NEW_CON
+      groupsOrder: 'BY_HEIGHT', //TODO, create and use use NEW_CON
       numberOfRows: 1,
       numberOfColumns: 3,
       columnRatios: [],
@@ -105,7 +108,8 @@ function defaultOptions_new() {
         groupByOrientation: true,
         density: 0.8,
         groupSize: 3,
-        groupTypes: ['1', '2h', '2v', '3t', '3b', '3l', '3r'],
+        allowedGroupTypes: ['1', '2h', '2v', '3t', '3b', '3l', '3r'],
+        repeatingGroupTypes: [],
       },
       thumbnails: {
         size: 120,
@@ -127,7 +131,7 @@ function defaultOptions_new() {
       },
       info: {
         sizeUnits: GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT,
-        width: 200,
+        width: 50,
         height: 200,
         spacing: 10,
         layout: GALLERY_CONSTS.infoType.NO_BACKGROUND,
@@ -138,6 +142,7 @@ function defaultOptions_new() {
           radius: 0,
           color: '',
         },
+        slideshowInfoSize: 200,
       },
     },
     behaviourParams: {

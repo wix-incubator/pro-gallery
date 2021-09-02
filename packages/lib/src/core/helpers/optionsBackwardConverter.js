@@ -36,9 +36,8 @@ export function reverseMigrateOptions(oldStyles) {
   newStyles = process_new_to_old_ThumbnailAlignment(newStyles);
   newStyles = process_new_to_old_ScrollDirection(newStyles);
   newStyles = process_new_to_old_LayoutOrientation(newStyles);
-  newStyles = process_new_to_old_ForceGroupsOrder(newStyles);
-  newStyles = process_old_to_new_GroupTypes(newStyles);
-
+  newStyles = process_new_to_old_groupsOrder(newStyles);
+  newStyles = process_new_to_old_responsiveMode(newStyles);
   newStyles = process_new_to_old_NumberOfColumns(newStyles); // fixedColumns || numberOfImagesPerRow || numberOfGroupsPerRow (notice its losing if its 0)
   newStyles = process_new_to_old_targetItemSizeUnit(newStyles);
   newStyles = process_new_to_old_targetItemSizeValue(newStyles);
@@ -47,6 +46,8 @@ export function reverseMigrateOptions(oldStyles) {
   newStyles = process_new_to_old_textBoxSizeMode(newStyles);
   newStyles = process_new_to_old_columnRatios(newStyles);
   newStyles = process_new_to_old_cropMethod(newStyles);
+  newStyles = process_new_to_old_GroupTypes(newStyles);
+  newStyles = process_new_to_old_AllowedGroupTypes(newStyles);
   ///----------- BEHAVIOUR -------------///
   newStyles = changeNames(
     newStyles,
@@ -101,17 +102,30 @@ function process_new_to_old_targetItemSizeUnit(obj) {
     optionsMap.layoutParams.targetItemSize.unit,
     'gallerySizeType'
   );
-  _obj['gallerySizeType'] = _obj['gallerySizeType']?.toLowerCase();
+  switch (_obj['gallerySizeType']) {
+    case 'PIXEL':
+      _obj['gallerySizeType'] = 'px';
+      break;
+    case 'PERCENT':
+      _obj['gallerySizeType'] = 'ratio';
+      break;
+    case 'SMART':
+      _obj['gallerySizeType'] = 'smart';
+      break;
+  }
   return _obj;
 }
 function process_new_to_old_targetItemSizeValue(obj) {
   let _obj = { ...obj };
   let value = _obj[optionsMap.layoutParams.targetItemSize.value];
-  _obj['gallerySize'] =
-    _obj['gallerySizePx'] =
-    _obj['gallerySizeRatio'] =
-      value;
-
+  let type = _obj['gallerySizeType'];
+  let keys = {
+    smart: 'gallerySize',
+    px: 'gallerySizePx',
+    ratio: 'gallerySizeRatio',
+  };
+  _obj['gallerySize'] = _obj['gallerySizePx'] = _obj['gallerySizeRatio'] = 0;
+  _obj[keys[type]] = value;
   delete _obj[optionsMap.layoutParams.targetItemSize.value];
   return _obj;
 }
@@ -125,9 +139,40 @@ function process_new_to_old_textBoxSizeMode(obj) {
   switch (_obj['calculateTextBoxWidthMode']) {
     case 'PERCENT':
       _obj['calculateTextBoxWidthMode'] = 'PERCENT';
+      _obj = namingChange(
+        _obj,
+        optionsMap.layoutParams.info.width,
+        'textBoxWidthPercent'
+      );
+      _obj['textBoxWidth'] = _obj['textBoxWidth'] || 200;
       break;
     case 'PIXEL':
       _obj['calculateTextBoxWidthMode'] = 'MANUAL';
+      _obj = namingChange(
+        _obj,
+        optionsMap.layoutParams.info.width,
+        'textBoxWidth'
+      );
+      _obj['textBoxWidthPercent'] = _obj['textBoxWidthPercent'] || 50;
+      break;
+    default:
+      break;
+  }
+  return _obj;
+}
+function process_new_to_old_responsiveMode(obj) {
+  let _obj = { ...obj };
+  _obj = namingChange(
+    _obj,
+    optionsMap.layoutParams.responsiveMode,
+    'gridStyle'
+  );
+  switch (_obj['gridStyle']) {
+    case 'FIT_TO_SCREEN':
+      _obj['gridStyle'] = 0;
+      break;
+    case 'SET_ITEMS_PER_ROW':
+      _obj['gridStyle'] = 1;
       break;
     default:
       break;
@@ -249,11 +294,11 @@ function process_new_to_old_LayoutOrientation(obj) {
   }
   return _obj;
 }
-function process_new_to_old_ForceGroupsOrder(obj) {
+function process_new_to_old_groupsOrder(obj) {
   let _obj = { ...obj };
   _obj = namingChange(
     _obj,
-    optionsMap.layoutParams.forceGroupsOrder,
+    optionsMap.layoutParams.groupsOrder,
     'placeGroupsLtr'
   );
   switch (_obj['placeGroupsLtr']) {
@@ -417,20 +462,22 @@ function process_new_to_old_CropRatio(obj) {
   delete _obj[optionsMap.layoutParams.cropRatios];
   return _obj;
 }
-function process_old_to_new_GroupTypes(obj) {
+function process_new_to_old_AllowedGroupTypes(obj) {
   let _obj = { ...obj };
-  console.log(_obj);
-  let newVal = _obj[optionsMap.layoutParams.collage.groupTypes];
+
+  let val = _obj[optionsMap.layoutParams.collage.allowedGroupTypes];
+  _obj['groupTypes'] = val.join(',');
+  delete _obj[optionsMap.layoutParams.collage.allowedGroupTypes];
+  return _obj;
+}
+
+function process_new_to_old_GroupTypes(obj) {
+  let _obj = { ...obj };
   let repeatingVal =
-    obj.rotatingGroupTypes || obj.layoutParams?.repeatingGroupTypes;
-  if (newVal.length > 1) {
-    repeatingVal = newVal.join(',');
-  } else {
-    repeatingVal = '';
-  }
-  delete _obj[optionsMap.layoutParams.collage.groupTypes];
+    _obj[optionsMap.layoutParams.collage.repeatingGroupTypes].join(',');
+
   _obj['layoutParams_repeatingGroupTypes'] = repeatingVal;
-  _obj['groupTypes'] = newVal[0];
+  delete _obj[optionsMap.layoutParams.collage.repeatingGroupTypes];
   return _obj;
 }
 function process_new_to_old_NumberOfColumns(obj) {
@@ -438,5 +485,6 @@ function process_new_to_old_NumberOfColumns(obj) {
   _obj.fixedColumns = 0;
   _obj.groupsPerStrip = _obj[optionsMap.layoutParams.numberOfColumns];
   _obj.numberOfImagesPerRow = _obj[optionsMap.layoutParams.numberOfColumns];
+  delete _obj[optionsMap.layoutParams.numberOfColumns];
   return _obj;
 }

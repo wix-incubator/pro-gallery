@@ -65,8 +65,9 @@ function migrateOptions(oldStyles) {
   newStyles = process_old_to_new_ThumbnailAlignment(newStyles);
   newStyles = process_old_to_new_ScrollDirection(newStyles);
   newStyles = process_old_to_new_LayoutOrientation(newStyles);
-  newStyles = process_old_to_new_ForceGroupsOrder(newStyles);
-  newStyles = process_old_to_new_GroupTypes(newStyles);
+  newStyles = process_old_to_new_groupsOrder(newStyles);
+  newStyles = process_old_to_new_repeatingGroupTypes(newStyles);
+  newStyles = process_old_to_new_AllowedGroupTypes(newStyles);
   newStyles = process_old_to_new_NumberOfColumns(newStyles); // fixedColumns || numberOfImagesPerRow || numberOfGroupsPerRow (notice its losing if its 0)
   newStyles = process_old_to_new_targetItemSizeUnit(newStyles);
   newStyles = process_old_to_new_targetItemSizeValue(newStyles);
@@ -75,6 +76,7 @@ function migrateOptions(oldStyles) {
   newStyles = process_old_to_new_textBoxSizeMode(newStyles);
   newStyles = process_old_to_new_columnRatios(newStyles);
   newStyles = process_old_to_new_cropMethod(newStyles);
+  newStyles = process_old_to_new_responsiveMode(newStyles);
 
   ///----------- BEHAVIOUR -------------///
   newStyles = changeNames(newStyles, nameChangedBehaviourParams);
@@ -93,11 +95,9 @@ function migrateOptions(oldStyles) {
 
   newStyles = changeNames(newStyles, nameChangedStylingParams);
 
-  delete newStyles.textBoxWidthPercent;
   delete newStyles.enableLeanGallery;
   delete newStyles.fullscreen;
   delete newStyles.magicLayoutSeed;
-  delete newStyles.gridStyle;
   return newStyles;
 }
 
@@ -178,8 +178,17 @@ function process_old_to_new_targetItemSizeUnit(obj) {
     'gallerySizeType',
     optionsMap.layoutParams.targetItemSize.unit
   );
-  _obj.layoutParams.targetItemSize.unit =
-    _obj.layoutParams.targetItemSize.unit?.toUpperCase();
+  switch (_obj.layoutParams.targetItemSize.unit) {
+    case 'px':
+      _obj.layoutParams.targetItemSize.unit = 'PIXEL';
+      break;
+    case 'ratio':
+      _obj.layoutParams.targetItemSize.unit = 'PERCENT';
+      break;
+    case 'smart':
+      _obj.layoutParams.targetItemSize.unit = 'SMART';
+      break;
+  }
   return _obj;
 }
 function process_old_to_new_VideoVolume(obj) {
@@ -205,6 +214,25 @@ function process_old_to_new_VideoSpeed(obj) {
   _obj.behaviourParams.item.video.speed = Number(
     _obj.behaviourParams.item.video.speed
   );
+  return _obj;
+}
+function process_old_to_new_responsiveMode(obj) {
+  let _obj = { ...obj };
+  _obj = namingChange(
+    _obj,
+    'gridStyle',
+    optionsMap.layoutParams.responsiveMode
+  );
+  switch (_obj.layoutParams.responsiveMode) {
+    case 0:
+      _obj.layoutParams.responsiveMode = 'FIT_TO_SCREEN';
+      break;
+    case 1:
+      _obj.layoutParams.responsiveMode = 'SET_ITEMS_PER_ROW';
+      break;
+    default:
+      break;
+  }
   return _obj;
 }
 function process_old_to_new_ScrollDirection(obj) {
@@ -255,9 +283,21 @@ function process_old_to_new_textBoxSizeMode(obj) {
   switch (_obj.layoutParams.info.sizeUnits) {
     case 'PERCENT':
       _obj.layoutParams.info.sizeUnits = 'PERCENT';
+      _obj = namingChange(
+        _obj,
+        'textBoxWidthPercent',
+        optionsMap.layoutParams.info.width
+      );
+      delete _obj['textBoxWidth'];
       break;
     case 'MANUAL':
       _obj.layoutParams.info.sizeUnits = 'PIXEL';
+      _obj = namingChange(
+        _obj,
+        'textBoxWidth',
+        optionsMap.layoutParams.info.width
+      );
+      delete _obj['textBoxWidthPercent'];
       break;
     default:
       break;
@@ -283,19 +323,19 @@ function process_old_to_new_LayoutOrientation(obj) {
   }
   return _obj;
 }
-function process_old_to_new_ForceGroupsOrder(obj) {
+function process_old_to_new_groupsOrder(obj) {
   let _obj = { ...obj };
   _obj = namingChange(
     _obj,
     'placeGroupsLtr',
-    optionsMap.layoutParams.forceGroupsOrder
+    optionsMap.layoutParams.groupsOrder
   );
-  switch (_obj.layoutParams.forceGroupsOrder) {
+  switch (_obj.layoutParams.groupsOrder) {
     case true:
-      _obj.layoutParams.forceGroupsOrder = 'LEFT_TO_RIGHT';
+      _obj.layoutParams.groupsOrder = 'LEFT_TO_RIGHT';
       break;
     case false:
-      _obj.layoutParams.forceGroupsOrder = 'BY_COLUMNS';
+      _obj.layoutParams.groupsOrder = 'BY_HEIGHT';
       break;
     default:
       break;
@@ -458,21 +498,26 @@ function process_old_to_new_CropRatio(obj) {
   delete _obj.rotatingCropRatios;
   return _obj;
 }
-function process_old_to_new_GroupTypes(obj) {
+function process_old_to_new_AllowedGroupTypes(obj) {
   let _obj = { ...obj };
-  //['groupTypes', optionsMap.layoutParams.collage.groupTypes'], //Need to change this to incorporate rotatingGroupTypes //change the 'Types'?
+
+  let val = _obj.groupTypes;
+  _obj.allowedGroupTypes = val.split(',');
+  delete _obj.groupTypes;
+  return _obj;
+}
+function process_old_to_new_repeatingGroupTypes(obj) {
+  let _obj = { ...obj };
   let repeatingVal =
     obj.rotatingGroupTypes || obj.layoutParams?.repeatingGroupTypes;
-  let val = obj.groupTypes;
   let finalVal;
   if (typeof repeatingVal === 'string' && repeatingVal !== '') {
-    finalVal = repeatingVal;
+    finalVal = repeatingVal.split(',');
   } else {
-    finalVal = val;
+    finalVal = [];
   }
-  _obj.layoutParams.collage.groupTypes = finalVal.split(',');
+  _obj.layoutParams.collage.repeatingGroupTypes = finalVal;
   delete _obj.layoutParams.repeatingGroupTypes;
-  delete _obj.groupTypes;
   delete _obj.repeatingGroupTypes;
   return _obj;
 }

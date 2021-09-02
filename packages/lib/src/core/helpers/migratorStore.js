@@ -7,7 +7,7 @@ export const nameChangedLayoutParams = [
   ['smartCrop', optionsMap.layoutParams.enableSmartCrop],
   ['minItemSize', optionsMap.layoutParams.targetItemSize.minimum],
   ['cropOnlyFill', optionsMap.layoutParams.cropOnlyFill],
-  ['slideshowInfoSize', optionsMap.layoutParams.slideshowInfoSize],
+  ['slideshowInfoSize', optionsMap.layoutParams.info.slideshowInfoSize],
   ['scatter', optionsMap.layoutParams.scatter.randomScatter],
   ['rotatingScatter', optionsMap.layoutParams.scatter.manualScatter],
   ['isSlideshow', optionsMap.layoutParams.isSlideshow],
@@ -33,7 +33,6 @@ export const nameChangedLayoutParams = [
   ['arrowsPosition', optionsMap.layoutParams.navigationArrows.position],
   ['imageInfoType', optionsMap.layoutParams.info.layout],
   ['textBoxHeight', optionsMap.layoutParams.info.height],
-  ['textBoxWidth', optionsMap.layoutParams.info.width],
   //['textBoxWidthPercent', optionsMap.layoutParams.info.widthByPercent],
   ['textImageSpace', optionsMap.layoutParams.info.spacing],
   ['textBoxBorderWidth', optionsMap.layoutParams.info.border.width],
@@ -161,10 +160,10 @@ export const layoutParamsMap = {
   cropOnlyFill: optionsMap.layoutParams.cropOnlyFill, //????????????????
 
   imageMargin: optionsMap.layoutParams.itemSpacing,
-  placeGroupsLtr: optionsMap.layoutParams.forceGroupsOrder, //REFACTOR - LEFT_TO_RIGHT, RIGHT_TO_LEFT
+  placeGroupsLtr: optionsMap.layoutParams.groupsOrder, //REFACTOR - LEFT_TO_RIGHT, RIGHT_TO_LEFT
   rotatingGroupTypes: optionsMap.layoutParams.repeatingGroupTypes,
 
-  slideshowInfoSize: optionsMap.layoutParams.slideshowInfoSize,
+  slideshowInfoSize: optionsMap.layoutParams.info.slideshowInfoSize,
 
   //is is is?
   isSlideshow: optionsMap.layoutParams.isSlideshow,

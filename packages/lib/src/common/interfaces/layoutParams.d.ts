@@ -5,25 +5,27 @@ export interface LayoutParams {
   info: Info;
   targetItemSize: TargetItemSize;
 
-  gallerySpacing: number;
-  itemSpacing: number;
   enableStreching: boolean;
-  croppedAlignment: 'CENTER' | 'TOP' | 'LEFT' | 'RIGHT' | 'BOTTOM';
-  cropRatios: Array<number>; //This is cropRatio and rotatingCropRatios all together.
-  // numberOfGroupsPerRow: number;
-  numberOfColumns: number; //numberOfImagesPerCol: number;
-  numberOfRows: number; //numberOfImagesPerRow: number;
-  columnRatios: Array<number>;
   cropMethod: 'FILL' | 'FIT' | 'MIN' | 'MAX';
-
+  croppedAlignment: 'CENTER' | 'TOP' | 'LEFT' | 'RIGHT' | 'BOTTOM';
   enableCrop: boolean;
   enableSmartCrop: boolean;
   cropOnlyFill: boolean; //DELETE? - its used in slider gallery
-  forceGroupsOrder: 'LEFT_TO_RIGHT' | 'RIGHT_TO_LEFT' | 'BY_COLUMNS'; //use const? or is this the new const?
-  slideshowInfoSize: number;
+  cropRatios: Array<number>; //This is cropRatio and rotatingCropRatios all together.
+
+  gallerySpacing: number;
+  itemSpacing: number;
+
+  numberOfColumns: number; //numberOfImagesPerCol: number;
+  numberOfRows: number; //numberOfImagesPerRow: number;
+  responsiveMode: 'FIT_TO_SCREEN' | 'SET_ITEMS_PER_ROW';
+  columnRatios: Array<number>;
   scatter: Scatter;
-  scrollDirection: 'VERTICAL' | 'HORIZONTAL';
   layoutOrientation: 'VERTICAL' | 'HORIZONTAL'; //isVertical
+
+  groupsOrder: 'LEFT_TO_RIGHT' | 'RIGHT_TO_LEFT' | 'BY_HEIGHT'; //use const? or is this the new const?
+  scrollDirection: 'VERTICAL' | 'HORIZONTAL';
+
   isSlideshow: boolean; //I dont want this but how can I get rid of it?
   isGrid: boolean; //I dont want this but how can I get rid of it?
   isMasonry: boolean; //I dont want this but how can I get rid of it?
@@ -36,7 +38,11 @@ export interface Collage {
   // amount: number; //doesnt exist. eradicate.
   density: number;
   groupByOrientation: boolean;
-  groupTypes: Array<
+  numberOfGroupsPerStrip: number;
+  allowedGroupTypes: Array<
+    '1' | '2h' | '2v' | '3h' | '3v' | '3t' | '3b' | '3l' | '3r'
+  >;
+  repeatingGroupTypes: Array<
     '1' | '2h' | '2v' | '3h' | '3v' | '3t' | '3b' | '3l' | '3r'
   >;
   groupSize: number;
@@ -83,6 +89,8 @@ export interface Info {
     | 'RIGHT'
     | 'ALTERNATE_HORIZONTALLY'
     | 'ALTERNATE_VERTICALLY';
+  slideshowInfoSize: number;
+
   [key: string]: any;
 }
 export interface InfoBorder {
