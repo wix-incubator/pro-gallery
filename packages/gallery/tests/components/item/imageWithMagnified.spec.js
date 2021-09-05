@@ -26,10 +26,10 @@ describe('imageWithMagnified', () => {
       options: { itemClick: GALLERY_CONSTS.itemClick.MAGNIFY },
       imageDimensions: { borderRadius: null },
       style: {
-        magnifiedHeight: 500,
-        magnifiedWidth: 500,
         cubedWidth: 250,
         cubedHeight: 250,
+        innerWidth: 250,
+        innerHeight: 250,
       },
     });
   });
