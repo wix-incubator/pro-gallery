@@ -11,10 +11,9 @@ function assignByString(Obj, string, value) {
   return _obj;
 }
 function getByString(Obj, string) {
-  let _obj = { ...Obj };
   let keyArr = string.split('_');
   let assignedProperty = keyArr.pop();
-  let pointer = _obj;
+  let pointer = Obj;
   if (
     !keyArr.every((key) => {
       if (typeof pointer[key] !== 'object') return false; //if its not an object there will be nothing in it...

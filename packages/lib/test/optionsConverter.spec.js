@@ -3,71 +3,29 @@ import { expect } from 'chai';
 import GALLERY_CONSTS from '../src/common/constants';
 import defaultOptions from '../src/common/defaultOptions';
 import {
-  // convertOptions,
-  // layoutParamsMap,
   migrateOptions,
-  // convertOptionsBackwards,
+  addMigratedOptions,
 } from '../src/core/helpers/optionsConverter';
-import { reverseMigrateOptions } from '../src/core/helpers/optionsBackwardConverter';
+import {
+  reverseMigrateOptions,
+  addOldOptions,
+} from '../src/core/helpers/optionsBackwardConverter';
 
-// describe('optionsConverter', () => {
-//   it('should contain correct keys for params map', () => {
-//     expect(optionsMap.layoutParams.collage.density).to.equal(
-//       'layoutParams_collage_density'
-//     );
-//     expect(
-//       optionsMap.layoutParams.navigationArrows.verticalAlignment
-//     ).to.equal('layoutParams_navigationArrows_verticalAlignment');
-//   });
-//   it('should create new options from old ones', () => {
-//     const expected = { ...oldOptions(), ...newOptions() };
-//     const converted = convertOptions(oldOptions());
-
-//     Object.keys(expected).forEach((key) => {
-//       expect(converted[key]).to.equal(expected[key]);
-//     });
-//   });
-//   it('should create old options from new ones while keeping existing ones', () => {
-//     const expected = {
-//       ...oldOptions(),
-//       ...newOptions(),
-//       groupTypes: '1,2h,2v,3t,3b,3l,3r',
-//       someUnrelatedOldOption: 0,
-//     };
-//     const converted = convertOptionsBackwards({
-//       ...newOptions(),
-//       groupTypes: '1,2h,2v,3t,3b,3l,3r',
-//       someUnrelatedOldOption: 0,
-//     });
-
-//   //     Object.keys(expected).forEach((key) => {
-//   //       expect(converted[key]).to.equal(expected[key]);
-//   //     });
-//   //   });
-// });
 describe('Styles processing', () => {
   it('should migrated new options to old ones', () => {
     let old = reverseMigrateOptions(defaultOptions_new());
     expect(old).to.eql(defaultOptions_old());
   });
   it('should migrate styles from old to new until theres nothing ot migrate anymore', () => {
-    let migrated = migrateOptions(defaultOptions_old());
+    const migrated = migrateOptions(defaultOptions_old());
     expect(migrated).to.eql(defaultOptions_new());
   });
+  it('should have new and old styles combined coming from both old and new objects', () => {
+    const migrated = addMigratedOptions(defaultOptions_old());
+    const reversed = addOldOptions(defaultOptions_new());
+    expect(migrated).to.eql(reversed);
+  });
 });
-
-// function oldStyles() {
-//   return {
-//     cubeRatio: 0.5,
-//     isVertical: false,
-//   };
-// }
-// function newStyles() {
-//   return {
-//     layoutParams_cropRatio: 0.5,
-//     layoutParams_layoutOrientation: 'HORIZONTAL',
-//   };
-// }
 
 function defaultOptions_old() {
   let def = { ...defaultOptions };
@@ -228,15 +186,3 @@ function defaultOptions_new() {
   };
   return options;
 }
-// function oldOptions() {
-//   return {
-//     cubeRatio: 0.5,
-//     isVertical: false,
-//   };
-// }
-// function newOptions() {
-//   return {
-//     layoutParams_cropRatio: 0.5,
-//     layoutParams_isVerticalOrientation: false,
-//   };
-// }

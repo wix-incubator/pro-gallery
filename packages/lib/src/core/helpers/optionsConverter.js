@@ -1,4 +1,6 @@
 import { assignByString, mergeNestedObjects } from './optionsUtils';
+import cloneDeep from 'lodash/cloneDeep';
+
 import optionsMap from './optionsMap';
 import {
   nameChangedLayoutParams,
@@ -57,8 +59,7 @@ function addMigratedOptions(options) {
 }
 
 function migrateOptions(oldStyles) {
-  let newStyles = { ...oldStyles };
-
+  let newStyles = cloneDeep(oldStyles);
   ///----------- LAYOUT -------------///
   newStyles = changeNames(newStyles, nameChangedLayoutParams);
   newStyles = reverseBooleans(newStyles, reversedLayoutParams);
@@ -369,22 +370,6 @@ function process_old_to_new_CroppedAlignment(obj) {
   }
   return _obj;
 }
-// function process_old_to_new_InfoBackgroundMode(obj) {
-//   let _obj = { ...obj };
-//   _obj = namingChange(
-//     _obj,
-//     'imageInfoType',
-//     optionsMap.layoutParams.info.backgroundMode
-//   );
-//   switch (_obj.layoutParams.info.backgroundMode) {
-//     case 'DONT_SHOW':
-//       _obj.layoutParams.info.backgroundMode = 'NO_BACKGROUND';
-//       break;
-//     default:
-//       break;
-//   }
-//   return _obj;
-// }
 function process_old_to_new_OverlayHoveringBehaviour(obj) {
   let _obj = { ...obj };
   _obj = namingChange(
