@@ -299,7 +299,7 @@ class GalleryItem {
     }
   }
 
-  createMagnifiedUrl(scale) {
+  createMagnifiedUrl(scale = 1) {
     try {
       if (!this.urls.magnified_url) {
         const { innerWidth, innerHeight } = this.style;
