@@ -8,6 +8,7 @@ import {
   migrateOptions,
   // convertOptionsBackwards,
 } from '../src/core/helpers/optionsConverter';
+import { reverseMigrateOptions } from '../src/core/helpers/optionsBackwardConverter';
 
 // describe('optionsConverter', () => {
 //   it('should contain correct keys for params map', () => {
@@ -44,7 +45,11 @@ import {
 //   //     });
 //   //   });
 // });
-describe('Old to new styles processing', () => {
+describe('Styles processing', () => {
+  it('should migrated new options to old ones', () => {
+    let old = reverseMigrateOptions(defaultOptions_new());
+    expect(old).to.eql(defaultOptions_old());
+  });
   it('should migrate styles from old to new until theres nothing ot migrate anymore', () => {
     let migrated = migrateOptions(defaultOptions_old());
     expect(migrated).to.eql(defaultOptions_new());
@@ -65,43 +70,54 @@ describe('Old to new styles processing', () => {
 // }
 
 function defaultOptions_old() {
-  return defaultOptions;
+  let def = { ...defaultOptions };
+  delete def.fullscreen; //removing this from tests, we should be also removing it from the code. Izaac tested that its not relevant
+  delete def.magicLayoutSeed;
+  return def;
 }
 
 function defaultOptions_new() {
   let options = {
     layoutParams: {
-      groupTypes: '1,2h,2v,3t,3b,3l,3r',
+      scrollDirection: 'VERTICAL', //TODO, create and use use NEW_CONSTS
       gallerySpacing: 0,
-      cropRatio: 1, // determine the ratio of the images when using grid (use 1 for squares grid)
       itemSpacing: 10,
       enableStreching: true,
-      cropMethod: 'fill',
-      enableCrop: false,
-      enableSmartCrop: false,
-      minItemSize: 120,
-      cropOnlyFill: false,
-      croppedAlignment: 'CENTER',
-      slideshowInfoSize: 200,
-      scatter: {
-        randomScatter: 0,
-        manualScatter: '',
-      },
+
       isGrid: false,
       isSlider: false,
       isColumns: false,
       isMasonry: false,
       isSlideshow: false,
-      scrollDirection: 'VERTICAL', //TODO, create and use use NEW_CONSTS
-      layoutOrientation: 'HORIZONTAL', //TODO, create and use use NEW_CONSTS
-      forceGroupsOrder: 'BY_COLUMNS', //TODO, create and use use NEW_CON
-      numberOfRows: 1,
-      numberOfColumns: 3,
-      columnRatios: '', //columnsRatio ? TBD
+
+      crop: {
+        ratios: [1], // determine the ratio of the images when using grid (use 1 for squares grid)
+        method: 'FILL',
+        enable: false,
+        enableSmartCrop: false,
+        cropOnlyFill: false,
+        alignment: 'CENTER',
+      },
+      structure: {
+        responsiveMode: 'FIT_TO_SCREEN',
+        scatter: {
+          randomScatter: 0,
+          manualScatter: '',
+        },
+        layoutOrientation: 'HORIZONTAL', //TODO, create and use use NEW_CONSTS
+        groupsOrder: 'BY_HEIGHT', //TODO, create and use use NEW_CON
+        numberOfRows: 1,
+        numberOfColumns: 3,
+        columnRatios: [],
+      },
+
       collage: {
         groupByOrientation: true,
+        numberOfGroupsPerRow: 0,
         density: 0.8,
         groupSize: 3,
+        allowedGroupTypes: ['1', '2h', '2v', '3t', '3b', '3l', '3r'],
+        repeatingGroupTypes: [],
       },
       thumbnails: {
         size: 120,
@@ -117,18 +133,16 @@ function defaultOptions_new() {
         verticalAlignment: GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER,
       },
       targetItemSize: {
-        mode: 'SMART',
-        smart: 30,
-        pixel: 0,
-        percent: 0,
+        unit: 'SMART',
+        value: 30,
+        minimum: 120,
       },
       info: {
-        sizeCalculationMode:
-          GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT,
-        width: 200,
+        sizeUnits: GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT,
+        width: 50,
         height: 200,
         spacing: 10,
-        backgroundMode: GALLERY_CONSTS.infoType.NO_BACKGROUND,
+        layout: GALLERY_CONSTS.infoType.NO_BACKGROUND,
         // widthByPercent: 50, //I want this to be in the width just like we did the overlaySize
         placement: 'OVERLAY', //TODO, create and use use consts
         border: {
@@ -136,6 +150,7 @@ function defaultOptions_new() {
           radius: 0,
           color: '',
         },
+        slideshowInfoSize: 200,
       },
     },
     behaviourParams: {
@@ -146,7 +161,7 @@ function defaultOptions_new() {
           loop: true,
           volume: 0,
           enableControls: false,
-          speed: '1',
+          speed: 1,
           enablePlayButton: true,
           enablePlaceholder: true,
         },

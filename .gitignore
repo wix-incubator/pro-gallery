@@ -59,7 +59,7 @@ typings/
 .yarn-integrity
 
 # Lock files
-yarn-lock
+yarn.lock
 
 # Server output
 maven

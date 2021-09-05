@@ -43,6 +43,7 @@ function flattenObject(ob) {
 
     if (
       typeof ob[i] == 'object' &&
+      !(ob[i] instanceof Array) &&
       ob[i] !== null &&
       Object.keys(ob[i]).length > 0
     ) {

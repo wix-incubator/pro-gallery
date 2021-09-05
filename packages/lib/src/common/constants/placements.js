@@ -45,12 +45,24 @@ const isExternalAbovePlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ABOVE;
 const isExternalBelowPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_BELOW;
+const isExternalAboveOrBelowSinglePlacement = (placement) =>
+  isExternalAbovePlacement(placement) || isExternalBelowPlacement(placement);
 const isHoverPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_HOVER;
 const isExternalRightPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_THE_RIGHT;
 const isExternalLeftPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_THE_LEFT;
+
+const isConstantVerticalPlacement = (placement, isSlideshow) => {
+  const placementArray = placement.split(',');
+  const firstPlacement = placementArray.shift();
+  return (
+    isSlideshow || // Either SlideShow OR all placements are above/below (the same as the first one)
+    (isExternalAboveOrBelowSinglePlacement(firstPlacement) &&
+      placementArray.every((placement) => placement === firstPlacement))
+  );
+};
 
 export default PLACEMENTS;
 
@@ -69,4 +81,5 @@ export {
   isExternalLeftPlacement,
   isExternalVerticalPlacement,
   isExternalHorizontalPlacement,
+  isConstantVerticalPlacement,
 };

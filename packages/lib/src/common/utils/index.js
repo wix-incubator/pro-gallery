@@ -667,6 +667,11 @@ class Utils {
   focusGalleryElement(element){
     element.focus();
   }
+  
+  isMeaningfulString (str) {
+    if (typeof str !== 'string') return false 
+    return !!str.trim().length;
+  };
 }
 
 export default new Utils();
