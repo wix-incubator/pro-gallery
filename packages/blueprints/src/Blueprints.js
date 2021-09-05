@@ -1,6 +1,13 @@
-/* eslint-disable prettier/prettier */
 import { Layouter } from 'pro-layouts';
-import {defaultOptions, addPresetOptions, dimensionsHelper, ItemsHelper, processLayouts, GALLERY_CONSTS} from 'pro-gallery-lib'
+import {
+  defaultOptions,
+  addPresetOptions,
+  dimensionsHelper,
+  ItemsHelper,
+  processLayouts,
+  GALLERY_CONSTS,
+  addMigratedOptions,
+} from 'pro-gallery-lib';
 
 class Blueprints {
   createBlueprint({
@@ -242,9 +249,8 @@ class Blueprints {
     let formattedOptions;
     if (optionsHaveChanged(options, oldOptions)) {
       options = { ...defaultOptions, ...options };
-      formattedOptions = processLayouts(
-        addPresetOptions(options),
-        isUsingCustomInfoElements
+      formattedOptions = addMigratedOptions(
+        processLayouts(addPresetOptions(options), isUsingCustomInfoElements)
       ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
       changed = true;
     }
@@ -346,4 +352,3 @@ class Blueprints {
 }
 const blueprints = new Blueprints();
 export default blueprints;
-/* eslint-enable prettier/prettier */

@@ -8,9 +8,6 @@ import {
   nameChangedStylingParams,
   reversedLayoutParams,
   reversedBehaviourParams,
-  layoutParamsMap,
-  behaviourParams,
-  stylingParams,
   changeNames,
   namingChange,
   reverseBooleans,
@@ -18,36 +15,25 @@ import {
 function convertOptions(initialOptions) {
   //This will add the new names while keeping the old ones.
   let options = { ...initialOptions };
-  Object.keys(initialOptions).forEach((key) => {
-    options[layoutParamsMap[key]] = initialOptions[key];
-  });
-  Object.keys(initialOptions).forEach((key) => {
-    options[behaviourParams[key]] = initialOptions[key];
-  });
-  Object.keys(initialOptions).forEach((key) => {
-    options[stylingParams[key]] = initialOptions[key];
-  });
+  options.layoutParams.cropRatio =
+    options.layoutParams.cropRatio || initialOptions.cubeRatio || 1;
+  options.layoutParams.gallerySpacing =
+    options.layoutParams.gallerySpacing || initialOptions.galleryMargin || 0;
+  options.layoutParams.repeatingGroupTypes =
+    options.layoutParams.repeatingGroupTypes ||
+    initialOptions.rotatingGroupTypes ||
+    '';
   return options;
 }
 
 function convertOptionsBackwards(initialOptions) {
   //This will add the old names while keeping the new ones.
   let options = { ...initialOptions };
-  Object.keys(layoutParamsMap).forEach((key) => {
-    if (typeof initialOptions[layoutParamsMap[key]] !== 'undefined') {
-      options[key] = initialOptions[layoutParamsMap[key]];
-    }
-  });
-  Object.keys(behaviourParams).forEach((key) => {
-    if (typeof initialOptions[behaviourParams[key]] !== 'undefined') {
-      options[key] = initialOptions[behaviourParams[key]];
-    }
-  });
-  Object.keys(stylingParams).forEach((key) => {
-    if (typeof initialOptions[stylingParams[key]] !== 'undefined') {
-      options[key] = initialOptions[stylingParams[key]];
-    }
-  });
+  options.cubeRatio = options.cubeRatio || options.layoutParams.cropRatio || 1;
+  options.galleryMargin =
+    options.galleryMargin || options.layoutParams.gallerySpacing || 0;
+  options.rotatingGroupTypes =
+    options.rotatingGroupTypes || options.layoutParams.repeatingGroupTypes;
   return options;
 }
 
