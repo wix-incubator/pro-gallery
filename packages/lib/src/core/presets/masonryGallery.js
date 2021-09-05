@@ -18,11 +18,6 @@ const fixToMasonry = (options) => {
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   presetOptions.fixedColumns = 0;
   presetOptions.enableScroll = true;
-  presetOptions.isGrid = false;
-  presetOptions.isSlider = false;
-  presetOptions.isMasonry = true;
-  presetOptions.isColumns = false;
-  presetOptions.isSlideshow = false;
   presetOptions.cropOnlyFill = false;
   return presetOptions;
 };

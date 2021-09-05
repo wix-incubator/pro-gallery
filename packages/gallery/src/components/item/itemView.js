@@ -458,7 +458,8 @@ class ItemView extends GalleryComponent {
 
     const itemStyles = { width: innerWidth, height: innerHeight, marginTop: innerTop, marginLeft: innerLeft };
     let itemHover = null;
-    if (this.shouldHover() || options.isSlideshow) {
+    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(options)
+    if (this.shouldHover() || isSlideshow) {
       itemHover = this.getItemHover(itemStyles);
     }
 
@@ -482,7 +483,7 @@ class ItemView extends GalleryComponent {
         }
     }
 
-    if (options.isSlideshow) {
+    if (isSlideshow) {
       const { customSlideshowInfoRenderer } = this.props.customComponents;
       const slideAnimationStyles = this.getSlideAnimationStyles();
       const infoStyle = {
@@ -669,9 +670,10 @@ class ItemView extends GalleryComponent {
 
     const containerStyleByoptions = getContainerStyle(options);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
+    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
 
     const itemStyles = {
-      overflowY: options.isSlideshow ? 'visible' : 'hidden',
+      overflowY: isSlideshow ? 'visible' : 'hidden',
       position: 'absolute',
       bottom: 'auto',
       margin:
@@ -767,9 +769,11 @@ class ItemView extends GalleryComponent {
     styles.height = height + 'px';
     styles.width = width + 'px';
     styles.margin = -options.itemBorderWidth + 'px';
+    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(options)
+
     const itemWrapperStyles = {
       ...styles,
-      ...(!options.isSlideshow && this.getSlideAnimationStyles()),
+      ...(!isSlideshow && this.getSlideAnimationStyles()),
     };
 
     return itemWrapperStyles;
@@ -843,7 +847,7 @@ class ItemView extends GalleryComponent {
 
   getItemContainerClass() {
     const { options } = this.props;
-    const isNOTslideshow = !options.isSlideshow;
+    const isNOTslideshow = !GALLERY_CONSTS.isLayout('SLIDESHOW')(options);
     const imagePlacementAnimation = options.imagePlacementAnimation;
     const overlayAnimation = options.overlayAnimation;
     const imageHoverAnimation = options.imageHoverAnimation;
@@ -1100,8 +1104,9 @@ class ItemView extends GalleryComponent {
         {this.getBottomInfoElementIfNeeded()}
       </div>
     );
+    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(options)
 
-    if (options.isSlideshow) {
+    if (isSlideshow) {
       return innerDiv;
     } else {
       return (

@@ -7,6 +7,7 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
     repeatingGroupTypes: '',
   },
   // adding
+  galleryLayout: -1,
   gallerySizePx: 0,
   gallerySizeRatio: 0,
   gallerySizeType: GALLERY_CONSTS.gallerySizeType.SMART,
@@ -29,10 +30,6 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   enableInfiniteScroll: true,
   thumbnailSpacings: 4,
   enableScroll: true,
-  isGrid: false,
-  isSlider: false,
-  isColumns: false,
-  isMasonry: false,
   scrollSnap: false,
   itemClick: GALLERY_CONSTS.itemClick.NOTHING,
   slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,

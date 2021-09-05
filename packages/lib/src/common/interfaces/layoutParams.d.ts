@@ -11,12 +11,7 @@ export interface LayoutParams {
   gallerySpacing: number;
   itemSpacing: number;
   scrollDirection: 'VERTICAL' | 'HORIZONTAL';
-
-  isSlideshow: boolean; //I dont want this but how can I get rid of it?
-  isGrid: boolean; //I dont want this but how can I get rid of it?
-  isMasonry: boolean; //I dont want this but how can I get rid of it?
-  isSlider: boolean; //I dont want this but how can I get rid of it?
-  isColumns: boolean; //I dont want this but how can I get rid of it?
+  galleryLayout: number;
   [key: string]: any;
 }
 

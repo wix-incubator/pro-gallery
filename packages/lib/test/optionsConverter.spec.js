@@ -41,13 +41,7 @@ function defaultOptions_new() {
       gallerySpacing: 0,
       itemSpacing: 10,
       enableStreching: true,
-
-      isGrid: false,
-      isSlider: false,
-      isColumns: false,
-      isMasonry: false,
-      isSlideshow: false,
-
+      galleryLayout: -1,
       crop: {
         ratios: [1], // determine the ratio of the images when using grid (use 1 for squares grid)
         method: 'FILL',

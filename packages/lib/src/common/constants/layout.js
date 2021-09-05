@@ -17,4 +17,9 @@ const LAYOUTS = {
   ALTERNATE: 12,
 };
 
+const isLayout = (layoutName) => (options) => {
+  return options.gsalleryLayout === LAYOUTS[layoutName];
+};
+
 export default LAYOUTS;
+export { isLayout };
