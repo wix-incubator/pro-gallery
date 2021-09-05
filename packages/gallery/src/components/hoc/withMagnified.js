@@ -13,12 +13,12 @@ function withMagnified(WrappedComponent) {
         this.isMagnifiedBiggerThanContainer.bind(this);
       this.toggleMagnify = this.toggleMagnify.bind(this);
       this.getMagnifyInitialPos = this.getMagnifyInitialPos.bind(this);
+      this.getBoundrys = this.getBoundrys.bind(this);
       this.containerRef = null;
       this.state = {
         shouldMagnify: false,
         x: 0,
         y: 0,
-        shouldTransition: true,
       };
     }
 
@@ -32,14 +32,14 @@ function withMagnified(WrappedComponent) {
         const { cubedWidth, cubedHeight, magnifiedWidth, magnifiedHeight } =
           this.props.style;
         const { clientY, clientX } = e;
+        const { boundryY, boundryX } = this.getBoundrys();
         this.setState({
-          shouldTransition: false,
           x: Math.max(
-            0,
+            -boundryX,
             Math.min(this.dragStartX - clientX, magnifiedWidth - cubedWidth)
           ),
           y: Math.max(
-            0,
+            -boundryY,
             Math.min(this.dragStartY - clientY, magnifiedHeight - cubedHeight)
           ),
         });
@@ -60,7 +60,6 @@ function withMagnified(WrappedComponent) {
     onMouseUp() {
       if (!this.isDragging) {
         this.toggleMagnify();
-        this.setState({ shouldTransition: true });
       }
       this.dragStarted = false;
       this.isDragging = false;
@@ -79,12 +78,13 @@ function withMagnified(WrappedComponent) {
       const { createUrl, id, style, imageDimensions, options } = this.props;
       const { innerWidth, innerHeight } = style;
       const { marginTop, marginLeft } = imageDimensions;
-      const { shouldMagnify } = this.state;
+      const { shouldMagnify, x, y } = this.state;
+      const { magnificationLevel } = options;
       const src = createUrl(
         GALLERY_CONSTS.urlSizes.RESIZED,
         GALLERY_CONSTS.urlTypes.HIGH_RES
       );
-      const scale = options.magnificationLevel;
+      const scale = shouldMagnify ? magnificationLevel : 1;
       return (
         <ImageRenderer
           alt=""
@@ -94,14 +94,14 @@ function withMagnified(WrappedComponent) {
           style={{
             width: innerWidth,
             height: innerHeight,
-            marginTop,
-            marginLeft,
-            transform: `scale(${shouldMagnify ? scale : 1})`,
-            opacity: shouldMagnify ? 1 : 0,
-            transformOrigin: `${marginLeft}px ${marginTop}px`,
-            position: 'absolute',
-            transition: `transform .3s ease${
-              !shouldMagnify ? ', opacity .1s 0.3s' : ''
+            position: 'relative',
+            zIndex: 1,
+            transform: `scale(${scale})`,
+            transformOrigin: `${
+              (x + marginLeft) / (magnificationLevel - 1)
+            }px ${(y + marginTop) / (magnificationLevel - 1)}px`,
+            transition: `transform 0.3s ease${
+              shouldMagnify ? '' : ', opacity 0.1s ease 0.3s'
             }`,
           }}
         />
@@ -126,6 +126,7 @@ function withMagnified(WrappedComponent) {
           style={{
             width: magnifiedWidth,
             height: magnifiedHeight,
+            position: 'absolute',
           }}
         />
       );
@@ -135,7 +136,7 @@ function withMagnified(WrappedComponent) {
       const { cubedWidth, cubedHeight, magnifiedWidth, magnifiedHeight } =
         itemStyle;
 
-      return cubedWidth < magnifiedWidth && cubedHeight < magnifiedHeight;
+      return cubedWidth < magnifiedWidth || cubedHeight < magnifiedHeight;
     }
 
     getMagnifyInitialPos(e) {
@@ -149,62 +150,64 @@ function withMagnified(WrappedComponent) {
         ((clientX - left) / cubedWidth) * magnifiedWidth - (clientX - left);
       const y =
         ((clientY - top) / cubedHeight) * magnifiedHeight - (clientY - top);
+
+      const { boundryY, boundryX } = this.getBoundrys();
       return {
-        x: Math.max(0, Math.min(x, magnifiedWidth - cubedWidth)),
-        y: Math.max(0, Math.min(y, magnifiedHeight - cubedHeight)),
+        x: Math.max(-boundryX, Math.min(x, magnifiedWidth - cubedWidth)),
+        y: Math.max(-boundryY, Math.min(y, magnifiedHeight - cubedHeight)),
       };
     }
-    getImageContainerStyle() {
-      const { shouldMagnify } = this.state;
+
+    getBoundrys() {
+      const { style } = this.props;
+      const { magnifiedWidth, magnifiedHeight, cubedWidth, cubedHeight } =
+        style;
+      const boundryY =
+        magnifiedHeight < cubedHeight
+          ? cubedHeight / 2 - magnifiedHeight / 2
+          : 0;
+      const boundryX =
+        magnifiedWidth < cubedWidth ? cubedWidth / 2 - magnifiedWidth / 2 : 0;
       return {
-        opacity: shouldMagnify ? 1 : 0,
-        transition: shouldMagnify ? 'opacity 0.1s 0.3s' : '',
+        boundryY,
+        boundryX,
       };
     }
 
     getContainerStyle() {
-      const { x, y, shouldMagnify, shouldTransition } = this.state;
+      const { shouldMagnify } = this.state;
       const { style } = this.props;
-      const { magnifiedWidth, magnifiedHeight } = style;
-      if (shouldMagnify) {
-        const magnifiedStyles = {
-          position: 'relative',
-          cursor: 'zoom-out',
-          width: magnifiedWidth,
-          height: magnifiedHeight,
-          transition: shouldTransition ? 'transform .3s ease' : 'none',
-        };
+      const { cubedWidth, cubedHeight } = style;
+      return {
+        width: cubedWidth,
+        height: cubedHeight,
+        position: 'relative',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        cursor: shouldMagnify ? 'zoom-out' : 'zoom-in',
+      };
+    }
 
-        if (this.isMagnifiedBiggerThanContainer(style)) {
-          Object.assign(magnifiedStyles, {
-            transform: `translate(${-x}px, ${-y}px)`,
-          });
-        } else {
-          Object.assign(magnifiedStyles, {
-            transform: `translate(-50%, -50%)`,
-            top: '50%',
-            left: '50%',
-          });
-        }
-        return magnifiedStyles;
-      } else {
-        return {
-          width: '100%',
-          height: '100%',
-          cursor: 'zoom-in',
-        };
-      }
+    getMagnifiedImageStyle() {
+      const { shouldMagnify, x, y } = this.state;
+      return {
+        zIndex: 2,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        transform: `translate(${-x}px, ${-y}px)`,
+        opacity: shouldMagnify ? 1 : 0,
+        transition: 'opacity 0.1s ease',
+        transitionDelay: shouldMagnify ? '0.3s' : 'none',
+      };
     }
 
     render() {
       const { shouldMagnify } = this.state;
       const { itemClick } = this.props.options;
       if (itemClick !== GALLERY_CONSTS.itemClick.MAGNIFY) {
-        return (
-          <div className="test">
-            <WrappedComponent {...this.props} />
-          </div>
-        );
+        return <WrappedComponent {...this.props} />;
       }
       return (
         <div
@@ -219,8 +222,8 @@ function withMagnified(WrappedComponent) {
           <WrappedComponent {...this.props} />
           {this.getPreloadImage()}
           <div
-            style={this.getImageContainerStyle()}
-            className={'magnified-image-container'}
+            className={'magnified-images'}
+            style={this.getMagnifiedImageStyle()}
           >
             {shouldMagnify && this.getHighResImage()}
           </div>

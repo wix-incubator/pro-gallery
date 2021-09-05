@@ -506,17 +506,6 @@ div.pro-gallery {
         pointer-events: none;
       }
 
-      .magnified-item-container {
-        transition: all .3s;
-      }
-
-      .magnified-image-container{
-        z-index: 1000;
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-      
       .gallery-item-hover {
         white-space: initial;
         position: absolute;

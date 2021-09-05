@@ -10,6 +10,7 @@ const simulateEvent = (elem, eventName, options) => {
   } else {
     elem.simulate(eventName);
   }
+  return elem;
 };
 
 describe('imageWithMagnified', () => {
@@ -39,6 +40,32 @@ describe('imageWithMagnified', () => {
     galleryDriver.mount(MagnifiedImage, imageItemsProps);
     return galleryDriver.find.selector(selector).at(0);
   };
+  it('container should have correct initial styles', () => {
+    let item = createAndgetMagnifiedContainer(driver);
+    expect(item.props().style).to.deep.equal({
+      width: 250,
+      height: 250,
+      position: 'relative',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      cursor: 'zoom-in',
+    });
+  });
+  it('container should have correct magnified styles', () => {
+    let item = createAndgetMagnifiedContainer(driver);
+    simulateEvent(item, 'mouseup');
+    item = driver.find.selector('.magnified-item-container');
+    expect(item.props().style).to.deep.equal({
+      width: 250,
+      height: 250,
+      position: 'relative',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      cursor: 'zoom-out',
+    });
+  });
   it('should have correct magnified style', async () => {
     let item = createAndgetMagnifiedContainer(driver);
     simulateEvent(item, 'mousedown', {
@@ -46,14 +73,17 @@ describe('imageWithMagnified', () => {
       clientY: 5,
     });
     simulateEvent(item, 'mouseup');
-    item = driver.find.selector('.magnified-item-container').at(0);
+    item = driver.find.selector('.magnified-images').at(0);
+    console.log(item.props().style);
     expect(item.props().style).to.deep.equal({
-      width: 500,
-      height: 500,
-      cursor: 'zoom-out',
-      position: 'relative',
-      transition: 'transform .3s ease',
+      zIndex: 2,
+      position: 'absolute',
       transform: 'translate(-5px, -5px)',
+      transitionDelay: '0.3s',
+      opacity: 1,
+      top: 0,
+      left: 0,
+      transition: 'opacity 0.1s ease',
     });
   });
   it('should be draggable', async () => {
@@ -72,14 +102,17 @@ describe('imageWithMagnified', () => {
       clientY: 10,
     });
     simulateEvent(item, 'mouseup');
-    item = driver.find.selector('.magnified-item-container').at(0);
+    item = driver.find.selector('.magnified-images').at(0);
+    console.log(item.props().style);
     expect(item.props().style).to.deep.equal({
-      width: 500,
-      height: 500,
-      cursor: 'zoom-out',
-      position: 'relative',
+      zIndex: 2,
+      position: 'absolute',
       transform: 'translate(-10px, -10px)',
-      transition: 'none',
+      transitionDelay: '0.3s',
+      opacity: 1,
+      top: 0,
+      left: 0,
+      transition: 'opacity 0.1s ease',
     });
   });
 });
