@@ -122,12 +122,9 @@ function withMagnified(WrappedComponent) {
     }
 
     getHighResImage() {
-      const { createUrl, id, alt } = this.props;
+      const { createMagnifiedUrl, id, alt, options } = this.props;
       const { magnifiedWidth, magnifiedHeight } = this.getMagnifiedDimensions();
-      const src = createUrl(
-        GALLERY_CONSTS.urlSizes.MAGNIFIED,
-        GALLERY_CONSTS.urlTypes.HIGH_RES
-      );
+      const src = createMagnifiedUrl(options.magnificationLevel);
       return (
         <ImageRenderer
           key={`magnified-item-${id}`}

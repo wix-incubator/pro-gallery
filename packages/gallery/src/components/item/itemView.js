@@ -386,6 +386,7 @@ class ItemView extends GalleryComponent {
       'idx',
       'options',
       'createUrl',
+      'createMagnifiedUrl',
       'settings',
       'isPrerenderMode',
       'isTransparent',

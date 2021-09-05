@@ -23,8 +23,11 @@ describe('imageWithMagnified', () => {
     sampleItem = testImages[0];
     imageItemsProps = driver.props.itemView(sampleItem);
     Object.assign(imageItemsProps, {
-      options: { itemClick: GALLERY_CONSTS.itemClick.MAGNIFY },
-      imageDimensions: { borderRadius: null },
+      options: {
+        itemClick: GALLERY_CONSTS.itemClick.MAGNIFY,
+        magnificationLevel: 2,
+      },
+      imageDimensions: { marginLeft: 0, marginTop: 0 },
       style: {
         cubedWidth: 250,
         cubedHeight: 250,
@@ -74,7 +77,6 @@ describe('imageWithMagnified', () => {
     });
     simulateEvent(item, 'mouseup');
     item = driver.find.selector('.magnified-images').at(0);
-    console.log(item.props().style);
     expect(item.props().style).to.deep.equal({
       zIndex: 2,
       position: 'absolute',

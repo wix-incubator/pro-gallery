@@ -10,6 +10,7 @@ class GalleryItem {
     this.createdBy = config.createdBy;
 
     this.createUrl = this.createUrl.bind(this);
+    this.createMagnifiedUrl = this.createMagnifiedUrl.bind(this);
 
     this.update(config);
   }
@@ -100,6 +101,7 @@ class GalleryItem {
       fileName: this.fileName,
       description: this.description,
       createUrl: this.createUrl,
+      createMagnifiedUrl: this.createMagnifiedUrl,
       cubeImages: this.cubeImages,
       cubeType: this.cubeType,
       cropRatio: this.cropRatio,
@@ -297,6 +299,24 @@ class GalleryItem {
     }
   }
 
+  createMagnifiedUrl(scale) {
+    try {
+      if (!this.urls.magnified_url) {
+        const { innerWidth, innerHeight } = this.style;
+        this.urls.magnified_url = this.processedMediaUrl(
+          this.cubeType,
+          innerWidth * scale,
+          innerHeight * scale,
+          this.sharpParams,
+          true
+        );
+      }
+      return this.urls.magnified_url[URL_TYPES.HIGH_RES]();
+    } catch (e) {
+      return '';
+    }
+  }
+
   get resized_url() {
     if (!this.urls.resized_url) {
       this.urls.resized_url = this.processedMediaUrl(
@@ -394,20 +414,6 @@ class GalleryItem {
       );
     }
     return this.urls.sample_url;
-  }
-
-  get magnified_url() {
-    if (!this.urls.magnified_url) {
-      const { innerWidth, innerHeight } = this.style;
-      this.urls.magnified_url = this.processedMediaUrl(
-        this.cubeType,
-        innerWidth * this.magnificationLevel,
-        innerHeight * this.magnificationLevel,
-        this.sharpParams,
-        true
-      );
-    }
-    return this.urls.magnified_url;
   }
 
   get preload_url() {

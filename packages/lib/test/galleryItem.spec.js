@@ -55,7 +55,7 @@ describe('GalleryItem ', () => {
     expect(galleryItem.isGalleryItem).to.equal(true);
   });
   it('recieves correct styles from dto', () => {
-    expect(galleryItem.style).to.deep.include({
+    expect(galleryItem.style).to.deep.equal({
       width: 1920,
       innerWidth: 1920,
       cubedWidth: 1920,
@@ -65,7 +65,7 @@ describe('GalleryItem ', () => {
       cubedHeight: 1000,
       orgHeight: 1000,
     });
-    expect(antiGalleryItem.style).to.deep.include({
+    expect(antiGalleryItem.style).to.deep.equal({
       width: 1,
       cubedWidth: 1,
       height: 1,
