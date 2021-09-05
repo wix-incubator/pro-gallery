@@ -135,6 +135,7 @@ function defaultOptions_new() {
           hoverAnimation: GALLERY_CONSTS.imageHoverAnimations.NO_EFFECT,
           loader: GALLERY_CONSTS.loadingMode.BLUR,
           placementAnimation: GALLERY_CONSTS.imagePlacementAnimations.NO_EFFECT,
+          magnificationValue: 2,
         },
       },
       gallery: {
