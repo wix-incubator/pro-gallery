@@ -109,6 +109,7 @@ function withMagnified(WrappedComponent) {
             height: innerHeight,
             position: 'relative',
             zIndex: 1,
+            opacity: shouldMagnify ? 1 : 0,
             transform: `scale(${scale})`,
             transformOrigin: `${
               (x + marginLeft) / (magnificationLevel - 1)
