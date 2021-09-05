@@ -3,6 +3,7 @@ import {
   flattenObject,
   flatToNested,
 } from './optionsUtils';
+import cloneDeep from 'lodash/cloneDeep';
 import optionsMap from './optionsMap';
 import {
   nameChangedLayoutParams,
@@ -22,8 +23,7 @@ export function addOldOptions(options) {
 }
 
 export function reverseMigrateOptions(oldStyles) {
-  let newStyles = flattenObject({ ...oldStyles });
-
+  let newStyles = flattenObject(cloneDeep(oldStyles));
   ///----------- LAYOUT -------------///
   newStyles = changeNames(
     newStyles,
@@ -66,19 +66,11 @@ export function reverseMigrateOptions(oldStyles) {
   newStyles = process_new_to_old_layoutDirection(newStyles);
   newStyles = process_new_to_old_LoadMoreAmount(newStyles);
   newStyles = process_new_to_old_AutoSlideBehaviour(newStyles);
-
   ///----------- STYLING -------------///
-
   newStyles = changeNames(
     newStyles,
     [...nameChangedStylingParams].map((ele) => [...ele].reverse())
   );
-
-  // delete newStyles.textBoxWidthPercent;
-  // delete newStyles.enableLeanGallery;
-  // delete newStyles.fullscreen;
-  // delete newStyles.magicLayoutSeed;
-  // delete newStyles.gridStyle;
   return flatToNested(newStyles);
 }
 
@@ -338,22 +330,6 @@ function process_new_to_old_CroppedAlignment(obj) {
   }
   return _obj;
 }
-// function process_old_to_new_InfoBackgroundMode(obj) {
-//   let _obj = { ...obj };
-//   _obj = namingChange(
-//     _obj,
-//     'imageInfoType',
-//     optionsMap.layoutParams.info.backgroundMode
-//   );
-//   switch (_obj.layoutParams.info.backgroundMode) {
-//     case 'DONT_SHOW':
-//       _obj.layoutParams.info.backgroundMode = 'NO_BACKGROUND';
-//       break;
-//     default:
-//       break;
-//   }
-//   return _obj;
-// }
 function process_new_to_old_OverlayHoveringBehaviour(obj) {
   let _obj = { ...obj };
   _obj = namingChange(
