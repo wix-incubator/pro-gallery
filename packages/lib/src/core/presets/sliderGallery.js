@@ -21,7 +21,7 @@ const fixToSlider = (options) => {
   presetOptions.isGrid = false;
   presetOptions.isSlider = true;
   presetOptions.isColumns = false;
-  presetOptions.isMasonry = false;
+
   presetOptions.isSlideshow = false;
   presetOptions.cropOnlyFill = true;
   return presetOptions;

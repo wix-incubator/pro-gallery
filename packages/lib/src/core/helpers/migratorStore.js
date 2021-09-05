@@ -13,7 +13,6 @@ export const nameChangedLayoutParams = [
   ['rotatingScatter', optionsMap.layoutParams.structure.scatter.manualScatter],
   ['isSlideshow', optionsMap.layoutParams.isSlideshow],
   ['isGrid', optionsMap.layoutParams.isGrid],
-  ['isMasonry', optionsMap.layoutParams.isMasonry],
   ['isSlider', optionsMap.layoutParams.isSlider],
   ['isColumns', optionsMap.layoutParams.isColumns],
   ['numberOfImagesPerCol', optionsMap.layoutParams.structure.numberOfRows],
@@ -168,7 +167,6 @@ export const layoutParamsMap = {
   //is is is?
   isSlideshow: optionsMap.layoutParams.isSlideshow,
   isGrid: optionsMap.layoutParams.isGrid,
-  isMasonry: optionsMap.layoutParams.isMasonry,
   isSlider: optionsMap.layoutParams.isSlider,
   isColumns: optionsMap.layoutParams.isColumns,
   //targetItemSize

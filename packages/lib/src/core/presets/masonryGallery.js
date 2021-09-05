@@ -20,7 +20,6 @@ const fixToMasonry = (options) => {
   presetOptions.enableScroll = true;
   presetOptions.isGrid = false;
   presetOptions.isSlider = false;
-  presetOptions.isMasonry = true;
   presetOptions.isColumns = false;
   presetOptions.isSlideshow = false;
   presetOptions.cropOnlyFill = false;

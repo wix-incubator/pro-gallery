@@ -18,7 +18,6 @@ const fixToCollage = (options) => {
   presetOptions.enableScroll = true;
   presetOptions.isGrid = false;
   presetOptions.isSlider = false;
-  presetOptions.isMasonry = false;
   presetOptions.isColumns = false;
   presetOptions.isSlideshow = false;
   presetOptions.cropOnlyFill = false;

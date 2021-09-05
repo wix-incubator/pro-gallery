@@ -39,7 +39,7 @@ const fixToSlideshow = (options) => {
   presetOptions.scrollSnap = true;
   presetOptions.isGrid = false;
   presetOptions.isColumns = false;
-  presetOptions.isMasonry = false;
+
   presetOptions.isSlider = false;
   presetOptions.isSlideshow = true;
   presetOptions.cropOnlyFill = false;

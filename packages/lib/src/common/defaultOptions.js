@@ -32,7 +32,6 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   isGrid: false,
   isSlider: false,
   isColumns: false,
-  isMasonry: false,
   scrollSnap: false,
   itemClick: GALLERY_CONSTS.itemClick.NOTHING,
   slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,

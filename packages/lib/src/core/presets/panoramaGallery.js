@@ -17,7 +17,7 @@ const fixToPanorama = (options) => {
   presetOptions.enableScroll = true;
   presetOptions.isGrid = false;
   presetOptions.isColumns = false;
-  presetOptions.isMasonry = false;
+
   presetOptions.isSlider = false;
   presetOptions.isSlideshow = false;
   presetOptions.cropOnlyFill = false;

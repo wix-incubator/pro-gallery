@@ -38,7 +38,6 @@ const options = {
   isGrid: false,
   isSlider: false,
   isColumns: false,
-  isMasonry: false,
   isSlideshow: false,
   isAutoSlideshow: false,
   slideshowLoop: false,

@@ -99,7 +99,6 @@ function expectedOptions() {
     isGrid: false,
     isSlider: false,
     isColumns: false,
-    isMasonry: false,
     scrollSnap: false,
     itemClick: 'nothing',
     scrollDuration: 400,

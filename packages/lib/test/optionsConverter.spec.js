@@ -45,7 +45,6 @@ function defaultOptions_new() {
       isGrid: false,
       isSlider: false,
       isColumns: false,
-      isMasonry: false,
       isSlideshow: false,
 
       crop: {

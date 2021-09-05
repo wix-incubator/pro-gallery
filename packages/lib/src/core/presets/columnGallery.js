@@ -21,7 +21,7 @@ const fixToColumn = (options) => {
   presetOptions.enableScroll = true;
   presetOptions.isGrid = false;
   presetOptions.isColumns = true;
-  presetOptions.isMasonry = false;
+
   presetOptions.isSlider = false;
   presetOptions.isSlideshow = false;
   presetOptions.cropOnlyFill = false;

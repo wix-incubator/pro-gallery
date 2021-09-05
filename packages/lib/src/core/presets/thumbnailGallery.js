@@ -33,7 +33,7 @@ const fixToThumbnail = (options) => {
   presetOptions.scrollSnap = true;
   presetOptions.isGrid = false;
   presetOptions.isSlider = false;
-  presetOptions.isMasonry = false;
+
   presetOptions.isColumns = false;
   presetOptions.isSlideshow = false;
   presetOptions.cropOnlyFill = false;

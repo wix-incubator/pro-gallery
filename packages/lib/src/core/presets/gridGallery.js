@@ -24,7 +24,7 @@ const fixToGrid = (options) => {
   presetOptions.isSlider = false;
   presetOptions.isColumns = false;
   presetOptions.isGrid = true;
-  presetOptions.isMasonry = false;
+
   presetOptions.isSlideshow = false;
   presetOptions.minItemSize = 50;
   return presetOptions;
