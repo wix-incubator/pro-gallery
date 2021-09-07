@@ -58,7 +58,7 @@ function defaultOptions_new() {
         },
         layoutOrientation: 'HORIZONTAL', //TODO, create and use use NEW_CONSTS
         groupsOrder: 'BY_HEIGHT', //TODO, create and use use NEW_CON
-        numberOfRows: 1,
+        numberOfGridRows: 1,
         numberOfColumns: 3,
         columnRatios: [],
       },

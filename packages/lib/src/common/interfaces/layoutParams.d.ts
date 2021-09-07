@@ -56,7 +56,7 @@ export interface Structure {
   itemSpacing: number;
   scrollDirection: 'VERTICAL' | 'HORIZONTAL';
   numberOfColumns: number; //numberOfImagesPerCol: number;
-  numberOfRows: number; //numberOfImagesPerRow: number;
+  numberOfGridRows: number; //numberOfImagesPerRow: number;
   responsiveMode: 'FIT_TO_SCREEN' | 'SET_ITEMS_PER_ROW';
   columnRatios: Array<number>;
   scatter: Scatter;

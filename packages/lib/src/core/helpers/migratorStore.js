@@ -13,7 +13,7 @@ export const nameChangedLayoutParams = [
   ['galleryLayout', optionsMap.layoutParams.galleryLayout],
   ['scatter', optionsMap.layoutParams.structure.scatter.randomScatter],
   ['rotatingScatter', optionsMap.layoutParams.structure.scatter.manualScatter],
-  ['numberOfImagesPerCol', optionsMap.layoutParams.structure.numberOfRows],
+  ['numberOfImagesPerCol', optionsMap.layoutParams.structure.numberOfGridRows],
   //['collageAmount', optionsMap.layoutParams.groups.amount], //This doesnt really exist. need to eradicate as a refactor
   ['collageDensity', optionsMap.layoutParams.groups.density],
   ['chooseBestGroup', optionsMap.layoutParams.groups.groupByOrientation],
