@@ -1,7 +1,7 @@
 import {
   mergeNestedObjects,
-  addOldOptions,
   addMigratedOptions,
+  addOldOptions,
 } from 'pro-gallery-lib';
 
 class Utils {

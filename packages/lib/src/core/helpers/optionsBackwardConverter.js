@@ -207,7 +207,9 @@ function process_new_to_old_columnRatios(obj) {
     optionsMap.layoutParams.structure.columnRatios,
     'columnWidths'
   );
-  _obj['columnWidths'] = _obj['columnWidths']?.join(',');
+  _obj['columnWidths'] = _obj['columnWidths']
+    ? _obj['columnWidths']?.join(',')
+    : '';
   return _obj;
 }
 function process_new_to_old_cropMethod(obj) {
