@@ -1,6 +1,6 @@
 import { assignByString, mergeNestedObjects } from './optionsUtils';
 import cloneDeep from 'lodash/cloneDeep';
-
+import { isLayout } from '../../common/constants/layout';
 import optionsMap from './optionsMap';
 import {
   nameChangedLayoutParams,
@@ -79,6 +79,7 @@ function migrateOptions(oldStyles) {
   newStyles = process_old_to_new_cropMethod(newStyles);
   newStyles = process_old_to_new_responsiveMode(newStyles);
   newStyles = process_old_to_new_gallerySpacing(newStyles);
+  newStyles = process_old_to_new_slideshowInfoSize(newStyles);
 
   ///----------- BEHAVIOUR -------------///
   newStyles = changeNames(newStyles, nameChangedBehaviourParams);
@@ -287,6 +288,31 @@ function process_old_to_new_layoutDirection(obj) {
     default:
       break;
   }
+  return _obj;
+}
+function process_old_to_new_slideshowInfoSize(obj) {
+  let _obj = { ...obj };
+  const isSlideshow = isLayout('SLIDESHOW')({
+    galleryLayout:
+      obj.galleryLayout >= -3
+        ? obj.galleryLayout
+        : obj.layoutParams.structure.galleryLayout,
+  });
+  if (isSlideshow) {
+    _obj = namingChange(
+      _obj,
+      'slideshowInfoSize',
+      optionsMap.layoutParams.info.height
+    );
+  } else {
+    _obj = namingChange(
+      _obj,
+      'textBoxHeight',
+      optionsMap.layoutParams.info.height
+    );
+  }
+  delete _obj.slideshowInfoSize;
+  delete _obj.textBoxHeight;
   return _obj;
 }
 function process_old_to_new_textBoxSizeMode(obj) {

@@ -2,6 +2,7 @@ import optionsMap from './optionsMap';
 import { assignByString, getByString } from './optionsUtils';
 
 export const nameChangedLayoutParams = [
+  ['galleryLayout', optionsMap.layoutParams.structure.galleryLayout],
   ['galleryMargin', optionsMap.layoutParams.structure.gallerySpacing],
   ['imageMargin', optionsMap.layoutParams.structure.itemSpacing],
   ['groupsPerStrip', optionsMap.layoutParams.groups.numberOfGroupsPerRow],
@@ -9,7 +10,6 @@ export const nameChangedLayoutParams = [
   ['smartCrop', optionsMap.layoutParams.crop.enableSmartCrop],
   ['cropOnlyFill', optionsMap.layoutParams.crop.cropOnlyFill],
   ['minItemSize', optionsMap.layoutParams.targetItemSize.minimum],
-  ['slideshowInfoSize', optionsMap.layoutParams.info.slideshowInfoSize],
   ['galleryLayout', optionsMap.layoutParams.galleryLayout],
   ['scatter', optionsMap.layoutParams.structure.scatter.randomScatter],
   ['rotatingScatter', optionsMap.layoutParams.structure.scatter.manualScatter],
@@ -30,7 +30,7 @@ export const nameChangedLayoutParams = [
   ['arrowsSize', optionsMap.layoutParams.navigationArrows.size],
   ['arrowsPosition', optionsMap.layoutParams.navigationArrows.position],
   ['imageInfoType', optionsMap.layoutParams.info.layout],
-  ['textBoxHeight', optionsMap.layoutParams.info.height],
+
   //['textBoxWidthPercent', optionsMap.layoutParams.info.widthByPercent],
   ['textImageSpace', optionsMap.layoutParams.info.spacing],
   ['textBoxBorderWidth', optionsMap.layoutParams.info.border.width],

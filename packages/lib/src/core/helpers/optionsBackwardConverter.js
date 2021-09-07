@@ -3,6 +3,7 @@ import {
   flattenObject,
   flatToNested,
 } from './optionsUtils';
+import { isLayout } from '../../common/constants/layout';
 import cloneDeep from 'lodash/cloneDeep';
 import optionsMap from './optionsMap';
 import {
@@ -49,6 +50,7 @@ export function reverseMigrateOptions(oldStyles) {
   newStyles = process_new_to_old_GroupTypes(newStyles);
   newStyles = process_new_to_old_AllowedGroupTypes(newStyles);
   newStyles = process_new_to_old_gallerySpacing(newStyles);
+  newStyles = process_new_to_old_slideshowInfoSize(newStyles);
   ///----------- BEHAVIOUR -------------///
   newStyles = changeNames(
     newStyles,
@@ -120,6 +122,31 @@ function process_new_to_old_targetItemSizeValue(obj) {
   _obj['gallerySize'] = _obj['gallerySizePx'] = _obj['gallerySizeRatio'] = 0;
   _obj[keys[type]] = value;
   delete _obj[optionsMap.layoutParams.targetItemSize.value];
+  return _obj;
+}
+function process_new_to_old_slideshowInfoSize(obj) {
+  let _obj = { ...obj };
+  const isSlideshow = isLayout('SLIDESHOW')({
+    galleryLayout:
+      obj.galleryLayout >= -3
+        ? obj.galleryLayout
+        : obj.layoutParams.structure.galleryLayout,
+  });
+  if (isSlideshow) {
+    _obj = namingChange(
+      _obj,
+      optionsMap.layoutParams.info.height,
+      'slideshowInfoSize'
+    );
+    _obj['textBoxHeight'] = _obj['slideshowInfoSize'];
+  } else {
+    _obj = namingChange(
+      _obj,
+      optionsMap.layoutParams.info.height,
+      'textBoxHeight'
+    );
+    _obj['slideshowInfoSize'] = _obj['textBoxHeight'];
+  }
   return _obj;
 }
 function process_new_to_old_textBoxSizeMode(obj) {

@@ -102,7 +102,6 @@ function defaultOptions_new() {
           radius: 0,
           color: '',
         },
-        slideshowInfoSize: 200,
       },
     },
     behaviourParams: {
