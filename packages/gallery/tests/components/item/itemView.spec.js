@@ -98,7 +98,7 @@ describe('Item View', () => {
         currentPlayingIdx: 1,
         options: {
           enableVideoPlaceholder: true,
-          isSlideshow: false,
+          galleryLayout: GALLERY_CONSTS.layout.EMPTY,
         },
         type: 'video',
         idx: 0,
@@ -141,7 +141,7 @@ describe('Item View', () => {
     it('should toggle overflowY visible/inherit', () => {
       Object.assign(sampleItemViewProps, {
         options: {
-          isSlideshow: true,
+          galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
         },
       });
       driver.mount(ItemView, sampleItemViewProps);
@@ -149,7 +149,7 @@ describe('Item View', () => {
       expect(style.overflowY).to.equal('visible');
       driver.set.props({
         options: {
-          isSlideshow: false,
+          galleryLayout: GALLERY_CONSTS.layout.EMPTY,
         },
       });
       style = driver.find.hook('item-container').get(0).props.style;

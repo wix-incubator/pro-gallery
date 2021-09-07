@@ -37,12 +37,6 @@ function defaultOptions_old() {
 function defaultOptions_new() {
   let options = {
     layoutParams: {
-      isGrid: false,
-      isSlider: false,
-      isColumns: false,
-      isMasonry: false,
-      isSlideshow: false,
-
       crop: {
         ratios: [1], // determine the ratio of the images when using grid (use 1 for squares grid)
         method: 'FILL',
@@ -52,6 +46,7 @@ function defaultOptions_new() {
         alignment: 'CENTER',
       },
       structure: {
+        galleryLayout: -1,
         scrollDirection: 'VERTICAL', //TODO, create and use use NEW_CONSTS
         gallerySpacing: 0,
         itemSpacing: 10,

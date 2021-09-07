@@ -1,7 +1,10 @@
 import LAYOUTS from '../../common/constants/layout';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
-import { calcTargetItemSize } from '../helpers/layoutHelper';
+import {
+  calcTargetItemSize,
+  removeBordersIfNeeded,
+} from '../helpers/layoutHelper';
 import { assignByString } from '../helpers/optionsUtils';
 
 const fixToSlideshow = (options) => {
@@ -37,11 +40,6 @@ const fixToSlideshow = (options) => {
   presetOptions.hasThumbnails = false;
   presetOptions.enableScroll = true;
   presetOptions.scrollSnap = true;
-  presetOptions.isGrid = false;
-  presetOptions.isColumns = false;
-  presetOptions.isMasonry = false;
-  presetOptions.isSlider = false;
-  presetOptions.isSlideshow = true;
   presetOptions.cropOnlyFill = false;
   presetOptions.scatter = 0;
   presetOptions.rotatingScatter = '';
@@ -54,5 +52,6 @@ export const createOptions = (options) => {
   let res = { ...options };
   res = fixToSlideshow(res);
   res.targetItemSize = calcTargetItemSize(res);
+  res = removeBordersIfNeeded(res);
   return res;
 };

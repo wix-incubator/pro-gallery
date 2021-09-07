@@ -10,13 +10,9 @@ export const nameChangedLayoutParams = [
   ['cropOnlyFill', optionsMap.layoutParams.crop.cropOnlyFill],
   ['minItemSize', optionsMap.layoutParams.targetItemSize.minimum],
   ['slideshowInfoSize', optionsMap.layoutParams.info.slideshowInfoSize],
+  ['galleryLayout', optionsMap.layoutParams.galleryLayout],
   ['scatter', optionsMap.layoutParams.structure.scatter.randomScatter],
   ['rotatingScatter', optionsMap.layoutParams.structure.scatter.manualScatter],
-  ['isSlideshow', optionsMap.layoutParams.isSlideshow],
-  ['isGrid', optionsMap.layoutParams.isGrid],
-  ['isMasonry', optionsMap.layoutParams.isMasonry],
-  ['isSlider', optionsMap.layoutParams.isSlider],
-  ['isColumns', optionsMap.layoutParams.isColumns],
   ['numberOfImagesPerCol', optionsMap.layoutParams.structure.numberOfRows],
   //['collageAmount', optionsMap.layoutParams.groups.amount], //This doesnt really exist. need to eradicate as a refactor
   ['collageDensity', optionsMap.layoutParams.groups.density],
@@ -169,13 +165,7 @@ export const layoutParamsMap = {
   rotatingGroupTypes: optionsMap.layoutParams.repeatingGroupTypes,
 
   slideshowInfoSize: optionsMap.layoutParams.info.slideshowInfoSize,
-
-  //is is is?
-  isSlideshow: optionsMap.layoutParams.isSlideshow,
-  isGrid: optionsMap.layoutParams.isGrid,
-  isMasonry: optionsMap.layoutParams.isMasonry,
-  isSlider: optionsMap.layoutParams.isSlider,
-  isColumns: optionsMap.layoutParams.isColumns,
+  galleryLayout: optionsMap.layoutParams.galleryLayout,
   //targetItemSize
   gallerySize: optionsMap.layoutParams.targetItemSize.smart,
   gallerySizePx: optionsMap.layoutParams.targetItemSize.pixel,

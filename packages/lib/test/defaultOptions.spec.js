@@ -1,5 +1,4 @@
 import { expect } from 'chai';
-import _ from 'lodash';
 import defaultOptions from '../src/common/defaultOptions';
 import { flattenObject } from '../src/core/helpers/optionsUtils';
 import GALLERY_CONSTS from '../src/common/constants';
@@ -8,10 +7,7 @@ describe('defaultOptions', () => {
   it('should return the expected options unchanged', () => {
     const actual = flattenObject(defaultOptions);
     const expected = flattenObject(expectedOptions());
-    expect(_.isEqual(actual, expected)).eq(true);
-    const actualLength = _.keys(actual).length;
-    expect(actualLength).eq(_.keys(expected).length);
-    expect(actualLength).eq(105);
+    expect(actual).to.eql(expected);
   });
 });
 
@@ -22,6 +18,7 @@ function expectedOptions() {
       cropRatio: 1,
       repeatingGroupTypes: '',
     },
+    scrollSnap: false,
     isRTL: false,
     isVertical: false,
     minItemSize: 120,
@@ -38,12 +35,12 @@ function expectedOptions() {
     videoSpeed: '1',
     numberOfImagesPerRow: 3,
     collageDensity: 0.8,
+    galleryLayout: -1,
     galleryTextAlign: 'center',
     imageMargin: 10,
     fixedColumns: 0,
     showArrows: true,
     hasThumbnails: false,
-    isSlideshow: false,
     galleryThumbnailsAlignment: 'bottom',
     gridStyle: 0,
     titlePlacement: 'SHOW_ON_HOVER',
@@ -96,11 +93,6 @@ function expectedOptions() {
     enableInfiniteScroll: true,
     thumbnailSpacings: 4,
     enableScroll: true,
-    isGrid: false,
-    isSlider: false,
-    isColumns: false,
-    isMasonry: false,
-    scrollSnap: false,
     itemClick: 'nothing',
     scrollDuration: 400,
     arrowsPosition: 0,
