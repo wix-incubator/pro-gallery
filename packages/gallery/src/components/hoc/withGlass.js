@@ -13,12 +13,11 @@ function withGlass(WrappedComponent) {
       this.state = {
         x: 0,
         y: 0,
-        shouldMagnify: false
-      }
+        shouldMagnify: false,
+      };
     }
     onMouseMove(e) {
       const { clientX, clientY } = e;
-      const { cubedWidth, cubedHeight } = this.props.style;
       const { top, left } = this.containerRef.getBoundingClientRect();
       const x = clientX - left;
       const y = clientY - top;
@@ -39,20 +38,24 @@ function withGlass(WrappedComponent) {
 
     onMouseEnter() {
       this.setState({
-        shouldMagnify: true
-      })
+        shouldMagnify: true,
+      });
     }
 
     onMouseLeave() {
       this.setState({
-        shouldMagnify: false
-      })
+        shouldMagnify: false,
+      });
     }
     getHighResImage() {
-      const { createMagnifiedUrl, id, alt, options: { magnificationLevel } } = this.props;
+      const {
+        createMagnifiedUrl,
+        id,
+        alt,
+        options: { magnificationLevel },
+      } = this.props;
       const { magnifiedWidth, magnifiedHeight } = this.getMagnifiedDimensions();
       const src = createMagnifiedUrl(magnificationLevel);
-      const { x, y } = this.state;
       return (
         <ImageRenderer
           key={`magnified-item-${id}`}
@@ -72,8 +75,7 @@ function withGlass(WrappedComponent) {
     }
 
     getPreloadImage() {
-      const { createUrl, id, style, imageDimensions, options: { magnificationLevel } } = this.props;
-      const { x, y } = this.state;
+      const { createUrl, id } = this.props;
       const { magnifiedWidth, magnifiedHeight } = this.getMagnifiedDimensions();
       const src = createUrl(
         GALLERY_CONSTS.urlSizes.RESIZED,
@@ -89,15 +91,13 @@ function withGlass(WrappedComponent) {
             width: magnifiedWidth,
             height: magnifiedHeight,
             position: 'absolute',
-            zIndex: -1
+            zIndex: -1,
           }}
         />
       );
     }
     getMagnifyingLensStyle() {
-      const { x, y, shouldMagnify } = this.state;
-      const { imageDimensions } = this.props;
-      const { marginTop, marginLeft } = imageDimensions
+      const { x, y } = this.state;
       return {
         width: 200,
         height: 200,
@@ -107,24 +107,46 @@ function withGlass(WrappedComponent) {
         transform: `translate(${x - 100}px, ${y - 100}px)`,
         overflow: 'hidden',
         borderRadius: '50%',
-      }
+      };
     }
     getMagnifiedImagesStyle() {
-      const { x, y, shouldMagnify } = this.state;
-      const { imageDimensions, options: { magnificationLevel } } = this.props;
-      const { marginTop, marginLeft } = imageDimensions
+      const { x, y } = this.state;
+      const {
+        options: { magnificationLevel },
+      } = this.props;
       const { magnifiedWidth, magnifiedHeight } = this.getMagnifiedDimensions();
       return {
         position: 'relative',
-        transform: `translate(${(-x) * magnificationLevel + 100}px, ${(-y ) * magnificationLevel + 100}px)`,
+        transform: `translate(${-x * magnificationLevel + 100}px, ${
+          -y * magnificationLevel + 100
+        }px)`,
         width: magnifiedWidth,
         height: magnifiedHeight,
-      }
+      };
+    }
+    getMagnifiedItemContainerStyle() {
+      const { innerWidth, innerHeight } = this.props.style;
+      const { marginTop, marginLeft } = this.props.imageDimensions;
+      return {
+        cursor: 'none',
+        width: innerWidth,
+        height: innerHeight,
+        marginTop,
+        marginLeft,
+        position: 'absolute',
+        overflow: 'hidden',
+      };
     }
     render() {
       const { shouldMagnify } = this.state;
-      const { innerWidth, innerHeight, cubedHeight, cubedWidth } = this.props.style;
-      const { marginTop, marginLeft } = this.props.imageDimensions;
+      const { cubedHeight, cubedWidth } = this.props.style;
+      const { itemClick, magnificationType } = this.props.options;
+      if (
+        itemClick !== GALLERY_CONSTS.itemClick.MAGNIFY ||
+        magnificationType !== GALLERY_CONSTS.magnificationType.GLASS
+      ) {
+        return <WrappedComponent {...this.props} />;
+      }
       return (
         <div
           style={{
@@ -133,28 +155,21 @@ function withGlass(WrappedComponent) {
           }}
         >
           <WrappedComponent {...this.props} />
-          <div classname='container'
-            ref={(ref) => this.containerRef = ref}
+          <div
+            classname="magnified-item-container"
+            ref={(ref) => (this.containerRef = ref)}
             onMouseMove={this.onMouseMove}
             onMouseEnter={this.onMouseEnter}
             onMouseLeave={this.onMouseLeave}
-            style={{
-              cursor: 'none',
-              width: innerWidth,
-              height: innerHeight,
-              marginTop,
-              marginLeft,
-              position: 'absolute',
-              overflow: 'hidden',
-            }}
+            style={this.getMagnifiedItemContainerStyle()}
           >
             {shouldMagnify && (
               <div
-                className='magnifying-lens'
+                className="magnifying-lens"
                 style={this.getMagnifyingLensStyle()}
               >
                 <div
-                  className='magnified-images'
+                  className="magnified-images"
                   style={this.getMagnifiedImagesStyle()}
                 >
                   {this.getPreloadImage()}
@@ -164,9 +179,9 @@ function withGlass(WrappedComponent) {
             )}
           </div>
         </div>
-      )
+      );
     }
-  }
+  };
 }
 
-export default withGlass
+export default withGlass;

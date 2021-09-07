@@ -10,7 +10,6 @@ import {
   isSEOMode,
 } from 'pro-gallery-lib';
 import MagnifiedImage from './imageWithMagnified.js';
-import GlassImage from './imageWithGlass';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
 import { changeActiveElementIfNeeded, onAnchorFocus } from './itemHelper.js';
@@ -395,7 +394,7 @@ class ItemView extends GalleryComponent {
     ]);
 
     return (
-      <GlassImage
+      <MagnifiedImage
         {...props}
         key="imageItem"
         imageDimensions={imageDimensions}
