@@ -10,6 +10,7 @@ class GalleryItem {
     this.createdBy = config.createdBy;
 
     this.createUrl = this.createUrl.bind(this);
+    this.createMagnifiedUrl = this.createMagnifiedUrl.bind(this);
 
     this.update(config);
   }
@@ -74,6 +75,7 @@ class GalleryItem {
     this.group = scheme.group;
     this.orientation = scheme.orientation;
     this.visibility = scheme.visibility;
+    this.magnificationLevel = scheme.magnificationLevel;
   }
 
   renderProps(config) {
@@ -99,6 +101,7 @@ class GalleryItem {
       fileName: this.fileName,
       description: this.description,
       createUrl: this.createUrl,
+      createMagnifiedUrl: this.createMagnifiedUrl,
       cubeImages: this.cubeImages,
       cubeType: this.cubeType,
       cropRatio: this.cropRatio,
@@ -291,6 +294,24 @@ class GalleryItem {
   createUrl(size, type) {
     try {
       return this[size + '_url'][type]();
+    } catch (e) {
+      return '';
+    }
+  }
+
+  createMagnifiedUrl(scale = 1) {
+    try {
+      if (!this.urls.magnified_url) {
+        const { innerWidth, innerHeight } = this.style;
+        this.urls.magnified_url = this.processedMediaUrl(
+          this.cubeType,
+          innerWidth * scale,
+          innerHeight * scale,
+          this.sharpParams,
+          true
+        );
+      }
+      return this.urls.magnified_url[URL_TYPES.HIGH_RES]();
     } catch (e) {
       return '';
     }

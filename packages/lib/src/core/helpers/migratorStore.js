@@ -42,6 +42,10 @@ export const reversedLayoutParams = [
 ];
 
 export const nameChangedBehaviourParams = [
+  [
+    'magnificationLevel',
+    optionsMap.behaviourParams.item.content.magnificationValue,
+  ],
   ['videoLoop', optionsMap.behaviourParams.item.video.loop],
   ['showVideoControls', optionsMap.behaviourParams.item.video.enableControls],
   [

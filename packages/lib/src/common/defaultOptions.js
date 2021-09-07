@@ -56,6 +56,7 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   overlaySizeType: GALLERY_CONSTS.overlaySizeType.PERCENT,
   overlayPadding: 0,
   cubeFitPosition: GALLERY_CONSTS.cubeFitPosition.MIDDLE,
+  magnificationLevel: 2,
 });
 
 export default defaultOptions;
