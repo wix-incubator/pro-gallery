@@ -30,10 +30,6 @@ const fixToMagic = (options) => {
   presetOptions.cubeType = undefined;
   presetOptions.hasThumbnails = undefined;
   presetOptions.enableScroll = undefined;
-  presetOptions.isGrid = undefined;
-  presetOptions.isSlideshow = undefined;
-  presetOptions.isSlider = undefined;
-  presetOptions.isColumns = undefined;
   presetOptions.cropOnlyFill = undefined;
   presetOptions.fixedColumns = undefined;
   presetOptions.enableInfiniteScroll = undefined;
@@ -112,10 +108,6 @@ const addSeedOptions = (options) => {
   res.smartCrop = boolFromSeed('smartCrop');
   res.cubeType = 'fill';
   res.enableScroll = true;
-  res.isGrid = false;
-  res.isSlideshow = false;
-  res.isSlider = false;
-  res.isColumns = false;
   res.cropOnlyFill = false;
   res.fixedColumns = 0;
   res.enableInfiniteScroll = 1;

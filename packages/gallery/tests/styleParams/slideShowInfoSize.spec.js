@@ -36,7 +36,6 @@ describe('options - slideshowInfoSize', () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       slideshowInfoSize: 250,
-      isSlideshow: true,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

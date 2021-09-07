@@ -27,11 +27,6 @@ const fixToFullsize = (options) => {
   presetOptions.hasThumbnails = false;
   presetOptions.enableScroll = true;
   presetOptions.scrollSnap = true;
-  presetOptions.isGrid = false;
-  presetOptions.isSlider = false;
-  presetOptions.isColumns = false;
-  presetOptions.isMasonry = false;
-  presetOptions.isSlideshow = false;
   presetOptions.cropOnlyFill = false;
   presetOptions.scatter = 0;
   presetOptions.rotatingScatter = '';
