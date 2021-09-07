@@ -3,6 +3,7 @@ import {
   flattenObject,
   flatToNested,
 } from './optionsUtils';
+import { isLayout } from '../../common/constants/layout';
 import cloneDeep from 'lodash/cloneDeep';
 import optionsMap from './optionsMap';
 import {
@@ -48,6 +49,8 @@ export function reverseMigrateOptions(oldStyles) {
   newStyles = process_new_to_old_cropMethod(newStyles);
   newStyles = process_new_to_old_GroupTypes(newStyles);
   newStyles = process_new_to_old_AllowedGroupTypes(newStyles);
+  newStyles = process_new_to_old_gallerySpacing(newStyles);
+  newStyles = process_new_to_old_slideshowInfoSize(newStyles);
   ///----------- BEHAVIOUR -------------///
   newStyles = changeNames(
     newStyles,
@@ -119,6 +122,31 @@ function process_new_to_old_targetItemSizeValue(obj) {
   _obj['gallerySize'] = _obj['gallerySizePx'] = _obj['gallerySizeRatio'] = 0;
   _obj[keys[type]] = value;
   delete _obj[optionsMap.layoutParams.targetItemSize.value];
+  return _obj;
+}
+function process_new_to_old_slideshowInfoSize(obj) {
+  let _obj = { ...obj };
+  const isSlideshow = isLayout('SLIDESHOW')({
+    galleryLayout:
+      obj.galleryLayout >= -3
+        ? obj.galleryLayout
+        : obj.layoutParams.structure.galleryLayout,
+  });
+  if (isSlideshow) {
+    _obj = namingChange(
+      _obj,
+      optionsMap.layoutParams.info.height,
+      'slideshowInfoSize'
+    );
+    _obj['textBoxHeight'] = _obj['slideshowInfoSize'];
+  } else {
+    _obj = namingChange(
+      _obj,
+      optionsMap.layoutParams.info.height,
+      'textBoxHeight'
+    );
+    _obj['slideshowInfoSize'] = _obj['textBoxHeight'];
+  }
   return _obj;
 }
 function process_new_to_old_textBoxSizeMode(obj) {
@@ -229,11 +257,19 @@ function process_new_to_old_VideoSpeed(obj) {
   _obj['videoSpeed'] = String(_obj['videoSpeed']);
   return _obj;
 }
+function process_new_to_old_gallerySpacing(obj) {
+  let _obj = { ...obj };
+  if (_obj.galleryMargin >= 0 && !(_obj['layoutParams_gallerySpacing'] >= 0)) {
+    _obj['layoutParams_gallerySpacing'] = _obj.galleryMargin;
+  }
+  delete _obj.galleryMargin;
+  return _obj;
+}
 function process_new_to_old_ScrollDirection(obj) {
   let _obj = { ...obj };
   _obj = namingChange(
     _obj,
-    optionsMap.layoutParams.scrollDirection,
+    optionsMap.layoutParams.structure.scrollDirection,
     'scrollDirection'
   );
   switch (_obj['scrollDirection']) {
@@ -441,19 +477,19 @@ function process_new_to_old_CropRatio(obj) {
 function process_new_to_old_AllowedGroupTypes(obj) {
   let _obj = { ...obj };
 
-  let val = _obj[optionsMap.layoutParams.collage.allowedGroupTypes];
+  let val = _obj[optionsMap.layoutParams.groups.allowedGroupTypes];
   _obj['groupTypes'] = val.join(',');
-  delete _obj[optionsMap.layoutParams.collage.allowedGroupTypes];
+  delete _obj[optionsMap.layoutParams.groups.allowedGroupTypes];
   return _obj;
 }
 
 function process_new_to_old_GroupTypes(obj) {
   let _obj = { ...obj };
   let repeatingVal =
-    _obj[optionsMap.layoutParams.collage.repeatingGroupTypes].join(',');
+    _obj[optionsMap.layoutParams.groups.repeatingGroupTypes].join(',');
 
   _obj['layoutParams_repeatingGroupTypes'] = repeatingVal;
-  delete _obj[optionsMap.layoutParams.collage.repeatingGroupTypes];
+  delete _obj[optionsMap.layoutParams.groups.repeatingGroupTypes];
   return _obj;
 }
 function process_new_to_old_NumberOfColumns(obj) {

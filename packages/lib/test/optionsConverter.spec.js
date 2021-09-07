@@ -37,11 +37,6 @@ function defaultOptions_old() {
 function defaultOptions_new() {
   let options = {
     layoutParams: {
-      scrollDirection: 'VERTICAL', //TODO, create and use use NEW_CONSTS
-      gallerySpacing: 0,
-      itemSpacing: 10,
-      enableStreching: true,
-      galleryLayout: -1,
       crop: {
         ratios: [1], // determine the ratio of the images when using grid (use 1 for squares grid)
         method: 'FILL',
@@ -51,6 +46,11 @@ function defaultOptions_new() {
         alignment: 'CENTER',
       },
       structure: {
+        galleryLayout: -1,
+        scrollDirection: 'VERTICAL', //TODO, create and use use NEW_CONSTS
+        gallerySpacing: 0,
+        itemSpacing: 10,
+        enableStreching: true,
         responsiveMode: 'FIT_TO_SCREEN',
         scatter: {
           randomScatter: 0,
@@ -58,12 +58,12 @@ function defaultOptions_new() {
         },
         layoutOrientation: 'HORIZONTAL', //TODO, create and use use NEW_CONSTS
         groupsOrder: 'BY_HEIGHT', //TODO, create and use use NEW_CON
-        numberOfRows: 1,
+        numberOfGridRows: 1,
         numberOfColumns: 3,
         columnRatios: [],
       },
 
-      collage: {
+      groups: {
         groupByOrientation: true,
         numberOfGroupsPerRow: 0,
         density: 0.8,
@@ -102,7 +102,6 @@ function defaultOptions_new() {
           radius: 0,
           color: '',
         },
-        slideshowInfoSize: 200,
       },
     },
     behaviourParams: {
@@ -133,7 +132,7 @@ function defaultOptions_new() {
         },
       },
       gallery: {
-        disableContextMenu: true,
+        blockContextMenu: true,
         layoutDirection: 'LEFT_TO_RIGHT', //TODO, create and use use consts
         scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
         enableIndexingShareLinks: true,

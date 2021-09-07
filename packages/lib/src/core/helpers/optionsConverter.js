@@ -1,6 +1,6 @@
 import { assignByString, mergeNestedObjects } from './optionsUtils';
 import cloneDeep from 'lodash/cloneDeep';
-
+import { isLayout } from '../../common/constants/layout';
 import optionsMap from './optionsMap';
 import {
   nameChangedLayoutParams,
@@ -64,6 +64,8 @@ function migrateOptions(oldStyles) {
   newStyles = process_old_to_new_columnRatios(newStyles);
   newStyles = process_old_to_new_cropMethod(newStyles);
   newStyles = process_old_to_new_responsiveMode(newStyles);
+  newStyles = process_old_to_new_gallerySpacing(newStyles);
+  newStyles = process_old_to_new_slideshowInfoSize(newStyles);
 
   ///----------- BEHAVIOUR -------------///
   newStyles = changeNames(newStyles, nameChangedBehaviourParams);
@@ -202,6 +204,21 @@ function process_old_to_new_VideoSpeed(obj) {
   );
   return _obj;
 }
+function process_old_to_new_gallerySpacing(obj) {
+  let _obj = { ...obj };
+  if (
+    _obj.layoutParams?.gallerySpacing >= 0 &&
+    !(_obj.layoutParams?.structure.gallerySpacing >= 0)
+  ) {
+    assignByString(
+      _obj,
+      optionsMap.layoutParams.structure.gallerySpacing,
+      _obj.layoutParams?.gallerySpacing
+    );
+  }
+  delete _obj.layoutParams?.gallerySpacing;
+  return _obj;
+}
 function process_old_to_new_responsiveMode(obj) {
   let _obj = { ...obj };
   _obj = namingChange(
@@ -226,14 +243,14 @@ function process_old_to_new_ScrollDirection(obj) {
   _obj = namingChange(
     _obj,
     'scrollDirection',
-    optionsMap.layoutParams.scrollDirection
+    optionsMap.layoutParams.structure.scrollDirection
   );
-  switch (_obj.layoutParams.scrollDirection) {
+  switch (_obj.layoutParams.structure.scrollDirection) {
     case 0:
-      _obj.layoutParams.scrollDirection = 'VERTICAL';
+      _obj.layoutParams.structure.scrollDirection = 'VERTICAL';
       break;
     case 1:
-      _obj.layoutParams.scrollDirection = 'HORIZONTAL';
+      _obj.layoutParams.structure.scrollDirection = 'HORIZONTAL';
       break;
     default:
       break;
@@ -257,6 +274,31 @@ function process_old_to_new_layoutDirection(obj) {
     default:
       break;
   }
+  return _obj;
+}
+function process_old_to_new_slideshowInfoSize(obj) {
+  let _obj = { ...obj };
+  const isSlideshow = isLayout('SLIDESHOW')({
+    galleryLayout:
+      obj.galleryLayout >= -3
+        ? obj.galleryLayout
+        : obj.layoutParams.structure.galleryLayout,
+  });
+  if (isSlideshow) {
+    _obj = namingChange(
+      _obj,
+      'slideshowInfoSize',
+      optionsMap.layoutParams.info.height
+    );
+  } else {
+    _obj = namingChange(
+      _obj,
+      'textBoxHeight',
+      optionsMap.layoutParams.info.height
+    );
+  }
+  delete _obj.slideshowInfoSize;
+  delete _obj.textBoxHeight;
   return _obj;
 }
 function process_old_to_new_textBoxSizeMode(obj) {
@@ -472,7 +514,7 @@ function process_old_to_new_AllowedGroupTypes(obj) {
   let _obj = { ...obj };
 
   let val = _obj.groupTypes;
-  _obj.layoutParams.collage.allowedGroupTypes = val.split(',');
+  _obj.layoutParams.groups.allowedGroupTypes = val.split(',');
   delete _obj.groupTypes;
   return _obj;
 }
@@ -488,7 +530,7 @@ function process_old_to_new_repeatingGroupTypes(obj) {
   }
   _obj = assignByString(
     _obj,
-    optionsMap.layoutParams.collage.repeatingGroupTypes,
+    optionsMap.layoutParams.groups.repeatingGroupTypes,
     finalVal
   );
   delete _obj.layoutParams.repeatingGroupTypes;
