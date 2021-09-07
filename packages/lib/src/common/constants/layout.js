@@ -18,7 +18,7 @@ const LAYOUTS = {
 };
 
 const isLayout = (layoutName) => (options) => {
-  return options.gsalleryLayout === LAYOUTS[layoutName];
+  return options.galleryLayout === LAYOUTS[layoutName];
 };
 
 export default LAYOUTS;
