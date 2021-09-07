@@ -50,6 +50,7 @@ export interface Crop {
   ratios: Array<number>; //This is cropRatio and rotatingCropRatios all together.
 }
 export interface Structure {
+  galleryLayout: number;
   enableStreching: boolean;
   gallerySpacing: number;
   itemSpacing: number;
