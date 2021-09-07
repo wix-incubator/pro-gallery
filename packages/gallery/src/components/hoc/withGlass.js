@@ -156,7 +156,7 @@ function withGlass(WrappedComponent) {
         >
           <WrappedComponent {...this.props} />
           <div
-            classname="magnified-item-container"
+            className="magnified-item-container"
             ref={(ref) => (this.containerRef = ref)}
             onMouseMove={this.onMouseMove}
             onMouseEnter={this.onMouseEnter}
