@@ -502,7 +502,7 @@ function process_old_to_new_AllowedGroupTypes(obj) {
   let _obj = { ...obj };
 
   let val = _obj.groupTypes;
-  _obj.layoutParams.collage.allowedGroupTypes = val.split(',');
+  _obj.layoutParams.groups.allowedGroupTypes = val.split(',');
   delete _obj.groupTypes;
   return _obj;
 }
@@ -518,7 +518,7 @@ function process_old_to_new_repeatingGroupTypes(obj) {
   }
   _obj = assignByString(
     _obj,
-    optionsMap.layoutParams.collage.repeatingGroupTypes,
+    optionsMap.layoutParams.groups.repeatingGroupTypes,
     finalVal
   );
   delete _obj.layoutParams.repeatingGroupTypes;

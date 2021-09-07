@@ -4,7 +4,7 @@ import { assignByString, getByString } from './optionsUtils';
 export const nameChangedLayoutParams = [
   ['galleryMargin', optionsMap.layoutParams.structure.gallerySpacing],
   ['imageMargin', optionsMap.layoutParams.structure.itemSpacing],
-  ['groupsPerStrip', optionsMap.layoutParams.collage.numberOfGroupsPerRow],
+  ['groupsPerStrip', optionsMap.layoutParams.groups.numberOfGroupsPerRow],
   ['cubeImages', optionsMap.layoutParams.crop.enable],
   ['smartCrop', optionsMap.layoutParams.crop.enableSmartCrop],
   ['cropOnlyFill', optionsMap.layoutParams.crop.cropOnlyFill],
@@ -18,10 +18,10 @@ export const nameChangedLayoutParams = [
   ['isSlider', optionsMap.layoutParams.isSlider],
   ['isColumns', optionsMap.layoutParams.isColumns],
   ['numberOfImagesPerCol', optionsMap.layoutParams.structure.numberOfRows],
-  //['collageAmount', optionsMap.layoutParams.collage.amount], //This doesnt really exist. need to eradicate as a refactor
-  ['collageDensity', optionsMap.layoutParams.collage.density],
-  ['chooseBestGroup', optionsMap.layoutParams.collage.groupByOrientation],
-  ['groupSize', optionsMap.layoutParams.collage.groupSize],
+  //['collageAmount', optionsMap.layoutParams.groups.amount], //This doesnt really exist. need to eradicate as a refactor
+  ['collageDensity', optionsMap.layoutParams.groups.density],
+  ['chooseBestGroup', optionsMap.layoutParams.groups.groupByOrientation],
+  ['groupSize', optionsMap.layoutParams.groups.groupSize],
   ['hasThumbnails', optionsMap.layoutParams.thumbnails.enable],
   ['thumbnailSpacings', optionsMap.layoutParams.thumbnails.spacing],
   ['thumbnailSize', optionsMap.layoutParams.thumbnails.size],
@@ -152,7 +152,7 @@ export const nameChangedStylingParams = [
 export const layoutParamsMap = {
   //done
   galleryMargin: optionsMap.layoutParams.gallerySpacing, //done
-  groupsPerStrip: optionsMap.layoutParams.collage.numberOfGroupsPerRow,
+  groupsPerStrip: optionsMap.layoutParams.groups.numberOfGroupsPerRow,
   columnWidths: optionsMap.layoutParams.columnRatios,
   cubeFitPosition: optionsMap.layoutParams.crop.alignment,
   //Are all of the following content keys? so they could go into layoutParams_content_
@@ -182,11 +182,11 @@ export const layoutParamsMap = {
   gallerySizeRatio: optionsMap.layoutParams.targetItemSize.percent,
   gallerySizeType: optionsMap.layoutParams.targetItemSize.mode,
   //bundle collage
-  collageAmount: optionsMap.layoutParams.collage.amount, //????????????????
-  collageDensity: optionsMap.layoutParams.collage.density,
-  chooseBestGroup: optionsMap.layoutParams.collage.groupByOrientation,
-  groupTypes: optionsMap.layoutParams.collage.groupTypes,
-  groupSize: optionsMap.layoutParams.collage.groupSize,
+  collageAmount: optionsMap.layoutParams.groups.amount, //????????????????
+  collageDensity: optionsMap.layoutParams.groups.density,
+  chooseBestGroup: optionsMap.layoutParams.groups.groupByOrientation,
+  groupTypes: optionsMap.layoutParams.groups.groupTypes,
+  groupSize: optionsMap.layoutParams.groups.groupSize,
   //bundle thumbnails
   hasThumbnails: optionsMap.layoutParams.thumbnails.enable,
   thumbnailSpacings: optionsMap.layoutParams.thumbnails.spacing,

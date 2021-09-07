@@ -450,19 +450,19 @@ function process_new_to_old_CropRatio(obj) {
 function process_new_to_old_AllowedGroupTypes(obj) {
   let _obj = { ...obj };
 
-  let val = _obj[optionsMap.layoutParams.collage.allowedGroupTypes];
+  let val = _obj[optionsMap.layoutParams.groups.allowedGroupTypes];
   _obj['groupTypes'] = val.join(',');
-  delete _obj[optionsMap.layoutParams.collage.allowedGroupTypes];
+  delete _obj[optionsMap.layoutParams.groups.allowedGroupTypes];
   return _obj;
 }
 
 function process_new_to_old_GroupTypes(obj) {
   let _obj = { ...obj };
   let repeatingVal =
-    _obj[optionsMap.layoutParams.collage.repeatingGroupTypes].join(',');
+    _obj[optionsMap.layoutParams.groups.repeatingGroupTypes].join(',');
 
   _obj['layoutParams_repeatingGroupTypes'] = repeatingVal;
-  delete _obj[optionsMap.layoutParams.collage.repeatingGroupTypes];
+  delete _obj[optionsMap.layoutParams.groups.repeatingGroupTypes];
   return _obj;
 }
 function process_new_to_old_NumberOfColumns(obj) {

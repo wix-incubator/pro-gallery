@@ -68,7 +68,7 @@ function defaultOptions_new() {
         columnRatios: [],
       },
 
-      collage: {
+      groups: {
         groupByOrientation: true,
         numberOfGroupsPerRow: 0,
         density: 0.8,

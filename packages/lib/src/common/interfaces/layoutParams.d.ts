@@ -1,5 +1,5 @@
 export interface LayoutParams {
-  collage: Collage;
+  groups: Groups;
   crop: Crop;
   structure: Structure;
   thumbnails: Thumbnails;
@@ -15,7 +15,7 @@ export interface LayoutParams {
   [key: string]: any;
 }
 
-export interface Collage {
+export interface Groups {
   // amount: number; //doesnt exist. eradicate.
   density: number;
   groupByOrientation: boolean;
