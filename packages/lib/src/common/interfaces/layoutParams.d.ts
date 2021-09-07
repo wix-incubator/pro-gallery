@@ -7,11 +7,6 @@ export interface LayoutParams {
   info: Info;
   targetItemSize: TargetItemSize;
 
-  enableStreching: boolean;
-  gallerySpacing: number;
-  itemSpacing: number;
-  scrollDirection: 'VERTICAL' | 'HORIZONTAL';
-
   isSlideshow: boolean; //I dont want this but how can I get rid of it?
   isGrid: boolean; //I dont want this but how can I get rid of it?
   isMasonry: boolean; //I dont want this but how can I get rid of it?
@@ -61,6 +56,10 @@ export interface Crop {
   ratios: Array<number>; //This is cropRatio and rotatingCropRatios all together.
 }
 export interface Structure {
+  enableStreching: boolean;
+  gallerySpacing: number;
+  itemSpacing: number;
+  scrollDirection: 'VERTICAL' | 'HORIZONTAL';
   numberOfColumns: number; //numberOfImagesPerCol: number;
   numberOfRows: number; //numberOfImagesPerRow: number;
   responsiveMode: 'FIT_TO_SCREEN' | 'SET_ITEMS_PER_ROW';

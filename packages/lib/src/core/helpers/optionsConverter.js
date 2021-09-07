@@ -78,6 +78,7 @@ function migrateOptions(oldStyles) {
   newStyles = process_old_to_new_columnRatios(newStyles);
   newStyles = process_old_to_new_cropMethod(newStyles);
   newStyles = process_old_to_new_responsiveMode(newStyles);
+  newStyles = process_old_to_new_gallerySpacing(newStyles);
 
   ///----------- BEHAVIOUR -------------///
   newStyles = changeNames(newStyles, nameChangedBehaviourParams);
@@ -216,6 +217,21 @@ function process_old_to_new_VideoSpeed(obj) {
   );
   return _obj;
 }
+function process_old_to_new_gallerySpacing(obj) {
+  let _obj = { ...obj };
+  if (
+    _obj.layoutParams?.gallerySpacing >= 0 &&
+    !(_obj.layoutParams?.structure.gallerySpacing >= 0)
+  ) {
+    assignByString(
+      _obj,
+      optionsMap.layoutParams.structure.gallerySpacing,
+      _obj.layoutParams?.gallerySpacing
+    );
+  }
+  delete _obj.layoutParams?.gallerySpacing;
+  return _obj;
+}
 function process_old_to_new_responsiveMode(obj) {
   let _obj = { ...obj };
   _obj = namingChange(
@@ -240,14 +256,14 @@ function process_old_to_new_ScrollDirection(obj) {
   _obj = namingChange(
     _obj,
     'scrollDirection',
-    optionsMap.layoutParams.scrollDirection
+    optionsMap.layoutParams.structure.scrollDirection
   );
-  switch (_obj.layoutParams.scrollDirection) {
+  switch (_obj.layoutParams.structure.scrollDirection) {
     case 0:
-      _obj.layoutParams.scrollDirection = 'VERTICAL';
+      _obj.layoutParams.structure.scrollDirection = 'VERTICAL';
       break;
     case 1:
-      _obj.layoutParams.scrollDirection = 'HORIZONTAL';
+      _obj.layoutParams.structure.scrollDirection = 'HORIZONTAL';
       break;
     default:
       break;

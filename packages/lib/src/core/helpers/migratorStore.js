@@ -2,7 +2,8 @@ import optionsMap from './optionsMap';
 import { assignByString, getByString } from './optionsUtils';
 
 export const nameChangedLayoutParams = [
-  ['imageMargin', optionsMap.layoutParams.itemSpacing],
+  ['galleryMargin', optionsMap.layoutParams.structure.gallerySpacing],
+  ['imageMargin', optionsMap.layoutParams.structure.itemSpacing],
   ['groupsPerStrip', optionsMap.layoutParams.collage.numberOfGroupsPerRow],
   ['cubeImages', optionsMap.layoutParams.crop.enable],
   ['smartCrop', optionsMap.layoutParams.crop.enableSmartCrop],
@@ -42,7 +43,7 @@ export const nameChangedLayoutParams = [
 ];
 
 export const reversedLayoutParams = [
-  ['useMaxDimensions', optionsMap.layoutParams.enableStreching],
+  ['useMaxDimensions', optionsMap.layoutParams.structure.enableStreching],
 ];
 
 export const nameChangedBehaviourParams = [
@@ -158,7 +159,7 @@ export const layoutParamsMap = {
   cubeRatio: optionsMap.layoutParams.crop.ratios, //done
   cubeType: optionsMap.layoutParams.crop.method,
   cubeImages: optionsMap.layoutParams.crop.enable,
-  useMaxDimensions: optionsMap.layoutParams.enableStreching, //naming???
+  useMaxDimensions: optionsMap.layoutParams.structure.enableStreching, //naming???
   rotatingCropRatios: optionsMap.layoutParams.repeatingCropRatios,
   smartCrop: optionsMap.layoutParams.crop.enableSmartCrop,
   minItemSize: optionsMap.layoutParams.minItemSize,
@@ -204,7 +205,7 @@ export const layoutParamsMap = {
 
   scatter: optionsMap.layoutParams.structure.scatter.randomScatter,
   rotatingScatter: optionsMap.layoutParams.structure.scatter.manualScatter,
-  scrollDirection: optionsMap.layoutParams.scrollDirection,
+  scrollDirection: optionsMap.layoutParams.structure.scrollDirection,
 
   isVertical: optionsMap.layoutParams.layoutOrientation, // This needs to be refactored to be an enum. but can wait
 

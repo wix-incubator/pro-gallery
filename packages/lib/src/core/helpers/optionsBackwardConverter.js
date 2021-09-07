@@ -48,6 +48,7 @@ export function reverseMigrateOptions(oldStyles) {
   newStyles = process_new_to_old_cropMethod(newStyles);
   newStyles = process_new_to_old_GroupTypes(newStyles);
   newStyles = process_new_to_old_AllowedGroupTypes(newStyles);
+  newStyles = process_new_to_old_gallerySpacing(newStyles);
   ///----------- BEHAVIOUR -------------///
   newStyles = changeNames(
     newStyles,
@@ -229,11 +230,19 @@ function process_new_to_old_VideoSpeed(obj) {
   _obj['videoSpeed'] = String(_obj['videoSpeed']);
   return _obj;
 }
+function process_new_to_old_gallerySpacing(obj) {
+  let _obj = { ...obj };
+  if (_obj.galleryMargin >= 0 && !(_obj['layoutParams_gallerySpacing'] >= 0)) {
+    _obj['layoutParams_gallerySpacing'] = _obj.galleryMargin;
+  }
+  delete _obj.galleryMargin;
+  return _obj;
+}
 function process_new_to_old_ScrollDirection(obj) {
   let _obj = { ...obj };
   _obj = namingChange(
     _obj,
-    optionsMap.layoutParams.scrollDirection,
+    optionsMap.layoutParams.structure.scrollDirection,
     'scrollDirection'
   );
   switch (_obj['scrollDirection']) {

@@ -37,11 +37,6 @@ function defaultOptions_old() {
 function defaultOptions_new() {
   let options = {
     layoutParams: {
-      scrollDirection: 'VERTICAL', //TODO, create and use use NEW_CONSTS
-      gallerySpacing: 0,
-      itemSpacing: 10,
-      enableStreching: true,
-
       isGrid: false,
       isSlider: false,
       isColumns: false,
@@ -57,6 +52,10 @@ function defaultOptions_new() {
         alignment: 'CENTER',
       },
       structure: {
+        scrollDirection: 'VERTICAL', //TODO, create and use use NEW_CONSTS
+        gallerySpacing: 0,
+        itemSpacing: 10,
+        enableStreching: true,
         responsiveMode: 'FIT_TO_SCREEN',
         scatter: {
           randomScatter: 0,
