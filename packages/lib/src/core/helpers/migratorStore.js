@@ -126,7 +126,7 @@ export const reversedBehaviourParams = [
     'enableInfiniteScroll',
     optionsMap.behaviourParams.gallery.vertical.loadMore.enable,
   ],
-  ['allowContextMenu', optionsMap.behaviourParams.gallery.disableContextMenu],
+  ['allowContextMenu', optionsMap.behaviourParams.gallery.blockContextMenu],
   ['hidePlay', optionsMap.behaviourParams.item.video.enablePlayButton],
   ['enableScroll', optionsMap.behaviourParams.gallery.horizontal.blockScroll], //requires a reversal! (blocks instead of allowing),
 ];
@@ -244,7 +244,7 @@ export const behaviourParams = {
   scrollSnap: optionsMap.behaviourParams.gallery.horizontal.enableScrollSnap,
   isRTL: optionsMap.behaviourParams.gallery.layoutDirection, // changes from boolean to an enum (refactor)
   // allowLeanGallery: optionsMap.behaviourParams.gallery.enableLeanGallery', //think about removing this!
-  allowContextMenu: optionsMap.behaviourParams.gallery.disableContextMenu, //REFACTOR reverse
+  allowContextMenu: optionsMap.behaviourParams.gallery.blockContextMenu, //REFACTOR reverse
   scrollAnimation: optionsMap.behaviourParams.gallery.scrollAnimation,
   shouldIndexDirectShareLinkInSEO:
     optionsMap.behaviourParams.gallery.enableIndexingShareLinks,

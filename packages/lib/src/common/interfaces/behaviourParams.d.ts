@@ -96,7 +96,7 @@ export interface Item {
 }
 export interface Gallery {
   layoutDirection: 'RIGHT_TO_LEFT' | 'LEFT_TO_RIGHT';
-  disableContextMenu: boolean;
+  blockContextMenu: boolean;
   scrollAnimation:
     | 'NO_EFFECT'
     | 'FADE_IN'
