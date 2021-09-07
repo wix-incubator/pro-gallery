@@ -109,6 +109,8 @@ export const optionsBySection = {
     'scrollSnap',
     'allowContextMenu',
     'pauseAutoSlideshowOnHover',
+    'itemClick',
+    'magnificationLevel',
   ],
   [SECTIONS.DESIGN]: [
     'showArrows',

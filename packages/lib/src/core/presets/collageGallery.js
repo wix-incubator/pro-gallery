@@ -16,11 +16,6 @@ const fixToCollage = (options) => {
   presetOptions.targetItemSize = 0;
   presetOptions.fixedColumns = 0;
   presetOptions.enableScroll = true;
-  presetOptions.isGrid = false;
-  presetOptions.isSlider = false;
-  presetOptions.isMasonry = false;
-  presetOptions.isColumns = false;
-  presetOptions.isSlideshow = false;
   presetOptions.cropOnlyFill = false;
   return presetOptions;
 };

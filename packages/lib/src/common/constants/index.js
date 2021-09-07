@@ -14,7 +14,7 @@ import infoBehaviourOnHover from './infoBehaviourOnHover';
 import infoType from './infoType';
 import isVertical from './isVertical';
 import itemClick from './itemClick';
-import layout from './layout';
+import layout, { isLayout } from './layout';
 import layoutDirection from './layoutDirection';
 import loadingMode from './loadingMode';
 import loadingWithColorMode from './loadingWithColorMode';
@@ -72,6 +72,7 @@ export default {
   isVertical,
   itemClick,
   layout,
+  isLayout,
   layoutDirection,
   loadingMode,
   loadingWithColorMode,

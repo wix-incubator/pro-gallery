@@ -44,6 +44,7 @@ export interface Content {
     | 'DARKENED';
   placementAnimation: 'NO_EFFECT' | 'SLIDE';
   loader: 'BLUR' | 'COLOR' | 'MAIN_COLOR';
+  magnificationValue: number;
   [key: string]: any;
 }
 

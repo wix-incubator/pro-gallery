@@ -80,8 +80,6 @@ class galleryDriver {
       arrowsVerticalPosition: 'ITEM_CENTER',
       textBoxHeight: 200,
       slideshowInfoSize: 200,
-      isSlideshow: false,
-      isSlider: false,
       hasThumbnails: false,
       thumbnailSize: utils.isMobile() ? 90 : 120,
       galleryThumbnailsAlignment: 'bottom',
@@ -94,6 +92,7 @@ class galleryDriver {
       itemShadowSize: 10,
       shouldIndexDirectShareLinkInSEO: true,
       enableVideoPlaceholder: true,
+      magnificationLevel: 2,
     };
 
     this.scroll = {

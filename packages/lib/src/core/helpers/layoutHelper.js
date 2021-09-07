@@ -12,7 +12,6 @@ import LOADING_MODE from '../../common/constants/loadingMode';
 import LOADING_WITH_COLOR_MODE from '../../common/constants/loadingWithColorMode';
 import SLIDE_ANIMATIONS from '../../common/constants/slideAnimations';
 import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
-import LAYOUTS from '../../common/constants/layout';
 import ARROWS_POSITION from '../../common/constants/arrowsPosition';
 import { default as GALLERY_CONSTS } from '../../common/constants/index';
 import {assignByString} from './optionsUtils'
@@ -90,18 +89,18 @@ export const processNumberOfImagesPerCol = (options) => {
 
 const forceInfoOnHoverWhenNeeded = (options) =>{
   let _options = {...options}
-  const isDesignedPreset =
-  _options.galleryLayout === LAYOUTS.DESIGNED_PRESET;
-
-  if (
-    (!_options.isVertical ||
-      _options.groupSize > 1 ||
-      (_options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && !isDesignedPreset)) &&
-    !_options.isSlider &&
-    !_options.isColumns
+if (    
+  !GALLERY_CONSTS.isLayout('SLIDER')(_options) && //not slider
+  !GALLERY_CONSTS.isLayout('COLUMN')(_options) //not columns
   ) {
-    // Dont allow titlePlacement to be above / below / left / right
-    _options.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
+    if (
+      (!_options.isVertical || //layout orientation is horizontal
+        _options.groupSize > 1 || //groups are larger than one (items can be on top or right left of eachother)
+        (_options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && !GALLERY_CONSTS.isLayout('DESIGNED_PRESET')(_options))) //any horizontal layout that wasnt intentionally designed this way
+    ) {
+      // Dont allow titlePlacement to be above / below / left / right
+      _options.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
+    }
   }
 
   return _options;
@@ -287,7 +286,7 @@ const centerArrowsWhenNeeded = (options) => {
   .split(',')
   .filter(placement => !isHoverPlacement(placement))
   .join(',')
-  if (!isConstantVerticalPlacement(filteredPlacement, _options.isSlideshow) || 
+  if (!isConstantVerticalPlacement(filteredPlacement, GALLERY_CONSTS.isLayout('SLIDESHOW')(options)) || 
       _options.numberOfImagesPerCol > 1)
     {
     // if text (info) placement is not above/below placement or more then 1 images per col, arrows are gallery("item") centered
@@ -296,11 +295,11 @@ const centerArrowsWhenNeeded = (options) => {
   return _options;
 }
 
-const removeBordersIfNeeded = (options) => {
+export const removeBordersIfNeeded = (options) => {
   //TODO this can go into the _optionspective 4 layouts.
   let _options = {...options}
 
-  if (_options.cubeType === 'fit' && (_options.isGrid || _options.hasThumbnails || _options.isSlider || _options.isSlideshow)) {
+  if (_options.cubeType === 'fit' ) {
     _options.itemBorderWidth = 0;
     _options.itemBorderRadius = 0;
     _options.itemEnableShadow = false;
@@ -343,7 +342,6 @@ function processLayouts(options, customExternalInfoRendererExists) {
     processedOptions = forceInfoOnHoverWhenNeeded(processedOptions);
     processedOptions = forceHoverToShowTextsIfNeeded(processedOptions);
     processedOptions = processImageLoadingWithColorMode(processedOptions);
-    processedOptions = removeBordersIfNeeded(processedOptions);
     processedOptions = removeShadowOnHorizontalGalleries(processedOptions);
     processedOptions = addMarginsToSupportShadows(processedOptions);
     processedOptions = removeArrowPaddingIfOutsideTheGallery(processedOptions);
@@ -361,16 +359,15 @@ function processLayouts(options, customExternalInfoRendererExists) {
 }
 
 function isSlideshowFont(options) {
-  const galleryLayout = options.galleryLayout;
-  if (galleryLayout === LAYOUTS.SLIDESHOW) {
+  if (GALLERY_CONSTS.isLayout('SLIDESHOW')(options)) {
     return true;
   }
   if (hasExternalVerticalPlacement(options.titlePlacement)) {
-    if (galleryLayout === 4 || galleryLayout === 6 || galleryLayout === 7) {
+    if (GALLERY_CONSTS.isLayout('SLIDER')(options) ||GALLERY_CONSTS.isLayout('PANORAMA')(options) || GALLERY_CONSTS.isLayout('COLUMN')(options)) {
       return true;
-    } else if (galleryLayout === 1 && options.isVertical) {
+    } else if (GALLERY_CONSTS.isLayout('MASONRY')(options) && options.isVertical) {
       return true;
-    } else if (galleryLayout === 2 && options.scrollDirection !== 1) {
+    } else if (GALLERY_CONSTS.isLayout('GRID')(options) && options.scrollDirection !== 1) {
       return true;
     }
   }
