@@ -11,7 +11,7 @@ describe('defaultOptions', () => {
     expect(_.isEqual(actual, expected)).eq(true);
     const actualLength = _.keys(actual).length;
     expect(actualLength).eq(_.keys(expected).length);
-    expect(actualLength).eq(105);
+    expect(actualLength).eq(104);
   });
 });
 
