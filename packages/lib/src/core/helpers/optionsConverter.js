@@ -98,12 +98,13 @@ function process_old_to_new_columnRatios(obj) {
     'columnWidths',
     optionsMap.layoutParams.structure.columnRatios
   );
-  if (_obj.layoutParams.structure.columnRatios.length === 0) {
+  if (_obj.layoutParams?.structure?.columnRatios?.length === 0) {
     _obj.layoutParams.structure.columnRatios = [];
   } else {
-    _obj.layoutParams.structure.columnRatios = [
-      ..._obj.layoutParams.structure.columnRatios.split(',').map(Number),
-    ];
+    _obj.layoutParams.structure.columnRatios = _obj.layoutParams?.structure
+      ?.columnRatios
+      ? [..._obj.layoutParams?.structure?.columnRatios?.split(',').map(Number)]
+      : undefined;
   }
   return _obj;
 }
@@ -133,7 +134,7 @@ function process_old_to_new_targetItemSizeValue(obj) {
 function process_old_to_new_cropMethod(obj) {
   let _obj = { ...obj };
   _obj = namingChange(_obj, 'cubeType', optionsMap.layoutParams.crop.method);
-  _obj.layoutParams.crop.method = _obj.layoutParams.crop.method?.toUpperCase();
+  _obj.layoutParams.crop.method = _obj.layoutParams.crop?.method?.toUpperCase();
   return _obj;
 }
 function process_old_to_new_ThumbnailAlignment(obj) {
@@ -145,7 +146,7 @@ function process_old_to_new_ThumbnailAlignment(obj) {
     optionsMap.layoutParams.thumbnails.alignment
   );
   _obj.layoutParams.thumbnails.alignment =
-    _obj.layoutParams.thumbnails.alignment?.toUpperCase();
+    _obj.layoutParams?.thumbnails?.alignment?.toUpperCase();
   return _obj;
 }
 function process_old_to_new_VideoPlayTrigger(obj) {
@@ -156,7 +157,7 @@ function process_old_to_new_VideoPlayTrigger(obj) {
     optionsMap.behaviourParams.item.video.playTrigger
   );
   _obj.behaviourParams.item.video.playTrigger =
-    _obj.behaviourParams.item.video.playTrigger?.toUpperCase();
+    _obj.behaviourParams?.item?.video?.playTrigger?.toUpperCase();
   return _obj;
 }
 function process_old_to_new_targetItemSizeUnit(obj) {
@@ -208,7 +209,7 @@ function process_old_to_new_gallerySpacing(obj) {
   let _obj = { ...obj };
   if (
     _obj.layoutParams?.gallerySpacing >= 0 &&
-    !(_obj.layoutParams?.structure.gallerySpacing >= 0)
+    !(_obj.layoutParams?.structure?.gallerySpacing >= 0)
   ) {
     assignByString(
       _obj,
@@ -226,7 +227,7 @@ function process_old_to_new_responsiveMode(obj) {
     'gridStyle',
     optionsMap.layoutParams.structure.responsiveMode
   );
-  switch (_obj.layoutParams.structure.responsiveMode) {
+  switch (_obj.layoutParams?.structure?.responsiveMode) {
     case 0:
       _obj.layoutParams.structure.responsiveMode = 'FIT_TO_SCREEN';
       break;
@@ -245,7 +246,7 @@ function process_old_to_new_ScrollDirection(obj) {
     'scrollDirection',
     optionsMap.layoutParams.structure.scrollDirection
   );
-  switch (_obj.layoutParams.structure.scrollDirection) {
+  switch (_obj.layoutParams?.structure?.scrollDirection) {
     case 0:
       _obj.layoutParams.structure.scrollDirection = 'VERTICAL';
       break;
@@ -282,7 +283,7 @@ function process_old_to_new_slideshowInfoSize(obj) {
     galleryLayout:
       obj.galleryLayout >= -3
         ? obj.galleryLayout
-        : obj.layoutParams.structure.galleryLayout,
+        : obj.layoutParams?.structure?.galleryLayout,
   });
   if (isSlideshow) {
     _obj = namingChange(
@@ -379,7 +380,7 @@ function process_old_to_new_LoadMoreAmount(obj) {
     optionsMap.behaviourParams.gallery.vertical.loadMore.amount
   );
   _obj.behaviourParams.gallery.vertical.loadMore.amount =
-    _obj.behaviourParams.gallery.vertical.loadMore.amount?.toUpperCase();
+    _obj.behaviourParams?.gallery?.vertical?.loadMore?.amount?.toUpperCase();
   return _obj;
 }
 function process_old_to_new_CroppedAlignment(obj) {
@@ -459,7 +460,7 @@ function process_old_to_new_ClickAction(obj) {
     optionsMap.behaviourParams.item.clickAction
   );
   _obj.behaviourParams.item.clickAction =
-    _obj.behaviourParams.item.clickAction.toUpperCase();
+    _obj.behaviourParams?.item?.clickAction?.toUpperCase();
   switch (_obj.behaviourParams.item.clickAction) {
     case 'FULLSCREEN':
     case 'EXPAND':
@@ -513,8 +514,7 @@ function process_old_to_new_CropRatio(obj) {
 function process_old_to_new_AllowedGroupTypes(obj) {
   let _obj = { ...obj };
 
-  let val = _obj.groupTypes;
-  _obj.layoutParams.groups.allowedGroupTypes = val.split(',');
+  _obj.layoutParams.groups.allowedGroupTypes = _obj.groupTypes?.split(',');
   delete _obj.groupTypes;
   return _obj;
 }

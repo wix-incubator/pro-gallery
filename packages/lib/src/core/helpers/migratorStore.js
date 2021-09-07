@@ -10,7 +10,6 @@ export const nameChangedLayoutParams = [
   ['smartCrop', optionsMap.layoutParams.crop.enableSmartCrop],
   ['cropOnlyFill', optionsMap.layoutParams.crop.cropOnlyFill],
   ['minItemSize', optionsMap.layoutParams.targetItemSize.minimum],
-  ['galleryLayout', optionsMap.layoutParams.galleryLayout],
   ['scatter', optionsMap.layoutParams.structure.scatter.randomScatter],
   ['rotatingScatter', optionsMap.layoutParams.structure.scatter.manualScatter],
   ['numberOfImagesPerCol', optionsMap.layoutParams.structure.numberOfGridRows],
@@ -314,8 +313,7 @@ export function namingChange(obj, oldName, newName) {
   let val = obj[oldName];
   delete obj[oldName];
   return (
-    (typeof val !== 'undefined' &&
-      typeof getByString(obj, newName) === 'undefined' &&
+    (typeof getByString(obj, newName) === 'undefined' &&
       assignByString(obj, newName, val)) ||
     obj
   ); //dont overwrite existing property
