@@ -88,8 +88,6 @@ export interface Info {
     | 'RIGHT'
     | 'ALTERNATE_HORIZONTALLY'
     | 'ALTERNATE_VERTICALLY';
-  slideshowInfoSize: number;
-
   [key: string]: any;
 }
 export interface InfoBorder {
