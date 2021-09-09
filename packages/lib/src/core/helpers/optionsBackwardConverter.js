@@ -482,9 +482,9 @@ function process_new_to_old_CropRatio(obj) {
 }
 function process_new_to_old_AllowedGroupTypes(obj) {
   let _obj = { ...obj };
-  _obj['groupTypes'] = _obj['optionsMap.layoutParams.groups.allowedGroupTypes']
-    ? _obj['optionsMap.layoutParams.groups.allowedGroupTypes'].join
-      ? _obj['optionsMap.layoutParams.groups.allowedGroupTypes'].join(',')
+  _obj['groupTypes'] = _obj[optionsMap.layoutParams.groups.allowedGroupTypes]
+    ? _obj[optionsMap.layoutParams.groups.allowedGroupTypes].join
+      ? _obj[optionsMap.layoutParams.groups.allowedGroupTypes].join(',')
       : ''
     : '';
   delete _obj[optionsMap.layoutParams.groups.allowedGroupTypes];

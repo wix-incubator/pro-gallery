@@ -552,10 +552,10 @@ function process_old_to_new_NumberOfColumns(obj) {
   const fixedColumns = obj.fixedColumns;
   const numberOfImagesPerRow = obj.numberOfImagesPerRow;
   const finalVal =
-    fixedColumns >= 0
-      ? fixedColumns
-      : numberOfImagesPerRow >= 0
+    numberOfImagesPerRow >= 0
       ? numberOfImagesPerRow
+      : fixedColumns >= 0
+      ? fixedColumns
       : 0;
 
   _obj.layoutParams.structure.numberOfColumns = finalVal;
