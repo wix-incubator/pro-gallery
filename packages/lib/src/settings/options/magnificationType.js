@@ -4,7 +4,7 @@ import { default as GALLERY_CONSTS } from '../../common/constants';
 
 export default {
   title: 'Magnification Type',
-  isRelevant: () => true,
+  isRelevant: (sp) => sp.itemClick === GALLERY_CONSTS.itemClick.MAGNIFY,
   isRelevantDescription: 'Always relevant.',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.magnificationType.ZOOM,
