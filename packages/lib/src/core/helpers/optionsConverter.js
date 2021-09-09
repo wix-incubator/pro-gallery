@@ -8,9 +8,6 @@ import {
   nameChangedStylingParams,
   reversedLayoutParams,
   reversedBehaviourParams,
-  layoutParamsMap,
-  behaviourParams,
-  stylingParams,
   changeNames,
   namingChange,
   reverseBooleans,
@@ -18,36 +15,25 @@ import {
 function convertOptions(initialOptions) {
   //This will add the new names while keeping the old ones.
   let options = { ...initialOptions };
-  Object.keys(initialOptions).forEach((key) => {
-    options[layoutParamsMap[key]] = initialOptions[key];
-  });
-  Object.keys(initialOptions).forEach((key) => {
-    options[behaviourParams[key]] = initialOptions[key];
-  });
-  Object.keys(initialOptions).forEach((key) => {
-    options[stylingParams[key]] = initialOptions[key];
-  });
+  options.layoutParams.cropRatio =
+    options.layoutParams.cropRatio || initialOptions.cubeRatio || 1;
+  options.layoutParams.gallerySpacing =
+    options.layoutParams.gallerySpacing || initialOptions.galleryMargin || 0;
+  options.layoutParams.repeatingGroupTypes =
+    options.layoutParams.repeatingGroupTypes ||
+    initialOptions.rotatingGroupTypes ||
+    '';
   return options;
 }
 
 function convertOptionsBackwards(initialOptions) {
   //This will add the old names while keeping the new ones.
   let options = { ...initialOptions };
-  Object.keys(layoutParamsMap).forEach((key) => {
-    if (typeof initialOptions[layoutParamsMap[key]] !== 'undefined') {
-      options[key] = initialOptions[layoutParamsMap[key]];
-    }
-  });
-  Object.keys(behaviourParams).forEach((key) => {
-    if (typeof initialOptions[behaviourParams[key]] !== 'undefined') {
-      options[key] = initialOptions[behaviourParams[key]];
-    }
-  });
-  Object.keys(stylingParams).forEach((key) => {
-    if (typeof initialOptions[stylingParams[key]] !== 'undefined') {
-      options[key] = initialOptions[stylingParams[key]];
-    }
-  });
+  options.cubeRatio = options.cubeRatio || options.layoutParams.cropRatio || 1;
+  options.galleryMargin =
+    options.galleryMargin || options.layoutParams.gallerySpacing || 0;
+  options.rotatingGroupTypes =
+    options.rotatingGroupTypes || options.layoutParams.repeatingGroupTypes;
   return options;
 }
 
@@ -112,12 +98,19 @@ function process_old_to_new_columnRatios(obj) {
     'columnWidths',
     optionsMap.layoutParams.structure.columnRatios
   );
-  if (_obj.layoutParams.structure.columnRatios.length === 0) {
+  if (_obj.layoutParams?.structure?.columnRatios?.length === 0) {
     _obj.layoutParams.structure.columnRatios = [];
   } else {
-    _obj.layoutParams.structure.columnRatios = [
-      ..._obj.layoutParams.structure.columnRatios.split(',').map(Number),
-    ];
+    _obj.layoutParams.structure.columnRatios = _obj.layoutParams?.structure
+      ?.columnRatios
+      ? _obj.layoutParams?.structure?.columnRatios?.split
+        ? [
+            ..._obj.layoutParams?.structure?.columnRatios
+              ?.split(',')
+              .map(Number),
+          ]
+        : _obj.layoutParams?.structure?.columnRatios
+      : undefined;
   }
   return _obj;
 }
@@ -147,7 +140,7 @@ function process_old_to_new_targetItemSizeValue(obj) {
 function process_old_to_new_cropMethod(obj) {
   let _obj = { ...obj };
   _obj = namingChange(_obj, 'cubeType', optionsMap.layoutParams.crop.method);
-  _obj.layoutParams.crop.method = _obj.layoutParams.crop.method?.toUpperCase();
+  _obj.layoutParams.crop.method = _obj.layoutParams.crop?.method?.toUpperCase();
   return _obj;
 }
 function process_old_to_new_ThumbnailAlignment(obj) {
@@ -159,7 +152,7 @@ function process_old_to_new_ThumbnailAlignment(obj) {
     optionsMap.layoutParams.thumbnails.alignment
   );
   _obj.layoutParams.thumbnails.alignment =
-    _obj.layoutParams.thumbnails.alignment?.toUpperCase();
+    _obj.layoutParams?.thumbnails?.alignment?.toUpperCase();
   return _obj;
 }
 function process_old_to_new_VideoPlayTrigger(obj) {
@@ -170,7 +163,7 @@ function process_old_to_new_VideoPlayTrigger(obj) {
     optionsMap.behaviourParams.item.video.playTrigger
   );
   _obj.behaviourParams.item.video.playTrigger =
-    _obj.behaviourParams.item.video.playTrigger?.toUpperCase();
+    _obj.behaviourParams?.item?.video?.playTrigger?.toUpperCase();
   return _obj;
 }
 function process_old_to_new_targetItemSizeUnit(obj) {
@@ -222,7 +215,7 @@ function process_old_to_new_gallerySpacing(obj) {
   let _obj = { ...obj };
   if (
     _obj.layoutParams?.gallerySpacing >= 0 &&
-    !(_obj.layoutParams?.structure.gallerySpacing >= 0)
+    !(_obj.layoutParams?.structure?.gallerySpacing >= 0)
   ) {
     assignByString(
       _obj,
@@ -240,7 +233,7 @@ function process_old_to_new_responsiveMode(obj) {
     'gridStyle',
     optionsMap.layoutParams.structure.responsiveMode
   );
-  switch (_obj.layoutParams.structure.responsiveMode) {
+  switch (_obj.layoutParams?.structure?.responsiveMode) {
     case 0:
       _obj.layoutParams.structure.responsiveMode = 'FIT_TO_SCREEN';
       break;
@@ -259,7 +252,7 @@ function process_old_to_new_ScrollDirection(obj) {
     'scrollDirection',
     optionsMap.layoutParams.structure.scrollDirection
   );
-  switch (_obj.layoutParams.structure.scrollDirection) {
+  switch (_obj.layoutParams?.structure?.scrollDirection) {
     case 0:
       _obj.layoutParams.structure.scrollDirection = 'VERTICAL';
       break;
@@ -296,7 +289,7 @@ function process_old_to_new_slideshowInfoSize(obj) {
     galleryLayout:
       obj.galleryLayout >= -3
         ? obj.galleryLayout
-        : obj.layoutParams.structure.galleryLayout,
+        : obj.layoutParams?.structure?.galleryLayout,
   });
   if (isSlideshow) {
     _obj = namingChange(
@@ -393,7 +386,7 @@ function process_old_to_new_LoadMoreAmount(obj) {
     optionsMap.behaviourParams.gallery.vertical.loadMore.amount
   );
   _obj.behaviourParams.gallery.vertical.loadMore.amount =
-    _obj.behaviourParams.gallery.vertical.loadMore.amount?.toUpperCase();
+    _obj.behaviourParams?.gallery?.vertical?.loadMore?.amount?.toUpperCase();
   return _obj;
 }
 function process_old_to_new_CroppedAlignment(obj) {
@@ -473,7 +466,7 @@ function process_old_to_new_ClickAction(obj) {
     optionsMap.behaviourParams.item.clickAction
   );
   _obj.behaviourParams.item.clickAction =
-    _obj.behaviourParams.item.clickAction.toUpperCase();
+    _obj.behaviourParams?.item?.clickAction?.toUpperCase();
   switch (_obj.behaviourParams.item.clickAction) {
     case 'FULLSCREEN':
     case 'EXPAND':
@@ -527,8 +520,11 @@ function process_old_to_new_CropRatio(obj) {
 function process_old_to_new_AllowedGroupTypes(obj) {
   let _obj = { ...obj };
 
-  let val = _obj.groupTypes;
-  _obj.layoutParams.groups.allowedGroupTypes = val.split(',');
+  _obj.layoutParams.groups.allowedGroupTypes = _obj.groupTypes.split
+    ? _obj.groupTypes?.split(',')
+    : _obj.groupTypes
+    ? _obj.groupTypes
+    : '';
   delete _obj.groupTypes;
   return _obj;
 }
@@ -553,9 +549,14 @@ function process_old_to_new_repeatingGroupTypes(obj) {
 }
 function process_old_to_new_NumberOfColumns(obj) {
   let _obj = { ...obj };
-  let fixedColumns = obj.fixedColumns;
-  let numberOfImagesPerRow = obj.numberOfImagesPerRow;
-  let finalVal = fixedColumns || numberOfImagesPerRow;
+  const fixedColumns = obj.fixedColumns;
+  const numberOfImagesPerRow = obj.numberOfImagesPerRow;
+  const finalVal =
+    numberOfImagesPerRow >= 0
+      ? numberOfImagesPerRow
+      : fixedColumns >= 0
+      ? fixedColumns
+      : 0;
 
   _obj.layoutParams.structure.numberOfColumns = finalVal;
   delete _obj.fixedColumns;

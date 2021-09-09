@@ -87,7 +87,7 @@ function process_new_to_old_ThumbnailAlignment(obj) {
     'galleryThumbnailsAlignment'
   );
   _obj['galleryThumbnailsAlignment'] =
-    _obj['galleryThumbnailsAlignment'].toLowerCase();
+    _obj['galleryThumbnailsAlignment']?.toLowerCase();
   return _obj;
 }
 function process_new_to_old_targetItemSizeUnit(obj) {
@@ -130,7 +130,7 @@ function process_new_to_old_slideshowInfoSize(obj) {
     galleryLayout:
       obj.galleryLayout >= -3
         ? obj.galleryLayout
-        : obj.layoutParams.structure.galleryLayout,
+        : obj.layoutParams?.structure?.galleryLayout,
   });
   if (isSlideshow) {
     _obj = namingChange(
@@ -207,13 +207,17 @@ function process_new_to_old_columnRatios(obj) {
     optionsMap.layoutParams.structure.columnRatios,
     'columnWidths'
   );
-  _obj['columnWidths'] = _obj['columnWidths'].join(',');
+  _obj['columnWidths'] = _obj['columnWidths']
+    ? _obj['columnWidths'].join
+      ? _obj['columnWidths'].join(',')
+      : ''
+    : '';
   return _obj;
 }
 function process_new_to_old_cropMethod(obj) {
   let _obj = { ...obj };
   _obj = namingChange(_obj, optionsMap.layoutParams.crop.method, 'cubeType');
-  _obj['cubeType'] = _obj['cubeType'].toLowerCase();
+  _obj['cubeType'] = _obj['cubeType']?.toLowerCase();
   return _obj;
 }
 function process_new_to_old_VideoPlayTrigger(obj) {
@@ -223,7 +227,7 @@ function process_new_to_old_VideoPlayTrigger(obj) {
     optionsMap.behaviourParams.item.video.playTrigger,
     'videoPlay'
   );
-  _obj['videoPlay'] = _obj['videoPlay'].toLowerCase();
+  _obj['videoPlay'] = _obj['videoPlay']?.toLowerCase();
   return _obj;
 }
 // function process_old_to_new_targetItemSizeMode(obj) {
@@ -347,7 +351,7 @@ function process_new_to_old_LoadMoreAmount(obj) {
     optionsMap.behaviourParams.gallery.vertical.loadMore.amount,
     'loadMoreAmount'
   );
-  _obj['loadMoreAmount'] = _obj['loadMoreAmount'].toLowerCase();
+  _obj['loadMoreAmount'] = _obj['loadMoreAmount']?.toLowerCase();
   return _obj;
 }
 function process_new_to_old_CroppedAlignment(obj) {
@@ -426,7 +430,7 @@ function process_new_to_old_ClickAction(obj) {
     optionsMap.behaviourParams.item.clickAction,
     'itemClick'
   );
-  _obj['itemClick'] = _obj['itemClick'].toLowerCase();
+  _obj['itemClick'] = _obj['itemClick']?.toLowerCase();
   switch (_obj['itemClick']) {
     case 'action':
       _obj['itemClick'] = 'expand';
@@ -462,8 +466,10 @@ function process_new_to_old_AutoSlideBehaviour(obj) {
 function process_new_to_old_CropRatio(obj) {
   let _obj = { ...obj };
   let rotatingCropRatioVal;
-  let newVal = [..._obj[optionsMap.layoutParams.crop.ratios]];
-
+  const val = _obj[optionsMap.layoutParams.crop.ratios] && [
+    ..._obj[optionsMap.layoutParams.crop.ratios],
+  ];
+  let newVal = val || [];
   if (newVal.length > 1) {
     rotatingCropRatioVal = newVal.join(',');
   } else {
@@ -476,9 +482,11 @@ function process_new_to_old_CropRatio(obj) {
 }
 function process_new_to_old_AllowedGroupTypes(obj) {
   let _obj = { ...obj };
-
-  let val = _obj[optionsMap.layoutParams.groups.allowedGroupTypes];
-  _obj['groupTypes'] = val.join(',');
+  _obj['groupTypes'] = _obj[optionsMap.layoutParams.groups.allowedGroupTypes]
+    ? _obj[optionsMap.layoutParams.groups.allowedGroupTypes].join
+      ? _obj[optionsMap.layoutParams.groups.allowedGroupTypes].join(',')
+      : ''
+    : '';
   delete _obj[optionsMap.layoutParams.groups.allowedGroupTypes];
   return _obj;
 }
@@ -486,6 +494,7 @@ function process_new_to_old_AllowedGroupTypes(obj) {
 function process_new_to_old_GroupTypes(obj) {
   let _obj = { ...obj };
   let repeatingVal =
+    _obj[optionsMap.layoutParams.groups.repeatingGroupTypes] &&
     _obj[optionsMap.layoutParams.groups.repeatingGroupTypes].join(',');
 
   _obj['layoutParams_repeatingGroupTypes'] = repeatingVal;

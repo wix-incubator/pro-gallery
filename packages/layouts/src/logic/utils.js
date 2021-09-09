@@ -1,4 +1,8 @@
-import { mergeNestedObjects } from 'pro-gallery-lib';
+import {
+  mergeNestedObjects,
+  addMigratedOptions,
+  addOldOptions,
+} from 'pro-gallery-lib';
 
 class Utils {
   constructor() {
@@ -99,7 +103,11 @@ class Utils {
       columnWidths: '',
     };
 
-    return { ...mergeNestedObjects(defaultLayouterSP, styleParams) };
+    return addOldOptions(
+      addMigratedOptions({
+        ...mergeNestedObjects(defaultLayouterSP, styleParams),
+      })
+    );
   }
 
   convertContainer(container, styleParams) {

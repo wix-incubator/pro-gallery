@@ -25,7 +25,59 @@ describe('Styles processing', () => {
     const reversed = addOldOptions(defaultOptions_new());
     expect(migrated).to.eql(reversed);
   });
+
+  it('should have new and old options when converted back and forth', () => {
+    const migrated = addMigratedOptions(
+      addOldOptions(addMigratedOptions(addOldOptions(semiRefactored())))
+    );
+    // const expected = afterConverstionAndBack();
+    expect(migrated.layoutParams.info.height).to.eql(150);
+    expect(migrated.slideshowInfoSize).to.eql(150);
+    expect(migrated.textBoxHeight).to.eql(150);
+    expect(migrated.layoutParams.structure.galleryLayout).to.eql(4);
+    expect(migrated.galleryLayout).to.eql(4);
+    expect(migrated.isAutoSlideshow).to.eql(false);
+    expect(
+      migrated.behaviourParams.gallery.horizontal.autoSlide.behaviour
+    ).to.eql('OFF');
+    // expect(migrated).to.own.include(afterConverstionAndBack());
+  });
 });
+
+function semiRefactored() {
+  return {
+    layoutParams: {
+      info: { height: 150 },
+      structure: {
+        galleryLayout: 4,
+      },
+    },
+    isAutoSlideshow: false,
+  };
+}
+// function afterConverstionAndBack() {
+//   return {
+//     layoutParams: {
+//       info: { height: 150 },
+//       structure: {
+//         galleryLayout: 4,
+//       },
+//     },
+//     behaviourParams: {
+//       gallery: {
+//         horizontal: {
+//           autoSlide: {
+//             behaviour: 'OFF',
+//           },
+//         },
+//       },
+//     },
+//     isAutoSlideshow: false,
+//     galleryLayout: 4,
+//     textBoxHeight: 150,
+//     slideshowInfoSize: 150,
+//   };
+// }
 
 function defaultOptions_old() {
   let def = { ...defaultOptions };
