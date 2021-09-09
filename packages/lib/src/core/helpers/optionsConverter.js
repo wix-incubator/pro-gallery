@@ -103,7 +103,13 @@ function process_old_to_new_columnRatios(obj) {
   } else {
     _obj.layoutParams.structure.columnRatios = _obj.layoutParams?.structure
       ?.columnRatios
-      ? [..._obj.layoutParams?.structure?.columnRatios?.split(',').map(Number)]
+      ? _obj.layoutParams?.structure?.columnRatios?.split
+        ? [
+            ..._obj.layoutParams?.structure?.columnRatios
+              ?.split(',')
+              .map(Number),
+          ]
+        : _obj.layoutParams?.structure?.columnRatios
       : undefined;
   }
   return _obj;
@@ -514,7 +520,11 @@ function process_old_to_new_CropRatio(obj) {
 function process_old_to_new_AllowedGroupTypes(obj) {
   let _obj = { ...obj };
 
-  _obj.layoutParams.groups.allowedGroupTypes = _obj.groupTypes?.split(',');
+  _obj.layoutParams.groups.allowedGroupTypes = _obj.groupTypes.split
+    ? _obj.groupTypes?.split(',')
+    : _obj.groupTypes
+    ? _obj.groupTypes
+    : '';
   delete _obj.groupTypes;
   return _obj;
 }
@@ -539,9 +549,14 @@ function process_old_to_new_repeatingGroupTypes(obj) {
 }
 function process_old_to_new_NumberOfColumns(obj) {
   let _obj = { ...obj };
-  let fixedColumns = obj.fixedColumns;
-  let numberOfImagesPerRow = obj.numberOfImagesPerRow;
-  let finalVal = fixedColumns || numberOfImagesPerRow;
+  const fixedColumns = obj.fixedColumns;
+  const numberOfImagesPerRow = obj.numberOfImagesPerRow;
+  const finalVal =
+    fixedColumns >= 0
+      ? fixedColumns
+      : numberOfImagesPerRow >= 0
+      ? numberOfImagesPerRow
+      : 0;
 
   _obj.layoutParams.structure.numberOfColumns = finalVal;
   delete _obj.fixedColumns;

@@ -250,8 +250,8 @@ class Blueprints {
     let formattedOptions;
     if (optionsHaveChanged(options, oldOptions)) {
       options = { ...defaultOptions, ...options };
-      formattedOptions = addMigratedOptions(
-        addOldOptions(
+      formattedOptions = addOldOptions(
+        addMigratedOptions(
           processLayouts(addPresetOptions(options), isUsingCustomInfoElements)
         )
       ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
