@@ -66,6 +66,7 @@ function migrateOptions(oldStyles) {
   newStyles = process_old_to_new_responsiveMode(newStyles);
   newStyles = process_old_to_new_gallerySpacing(newStyles);
   newStyles = process_old_to_new_slideshowInfoSize(newStyles);
+  newStyles = process_old_to_new_arrowsPosition(newStyles);
 
   ///----------- BEHAVIOUR -------------///
   newStyles = changeNames(newStyles, nameChangedBehaviourParams);
@@ -79,6 +80,7 @@ function migrateOptions(oldStyles) {
   newStyles = process_old_to_new_layoutDirection(newStyles);
   newStyles = process_old_to_new_LoadMoreAmount(newStyles);
   newStyles = process_old_to_new_AutoSlideBehaviour(newStyles);
+  newStyles = process_old_to_new_galleryTextAlign(newStyles);
 
   ///----------- STYLING -------------///
 
@@ -224,6 +226,25 @@ function process_old_to_new_gallerySpacing(obj) {
     );
   }
   delete _obj.layoutParams?.gallerySpacing;
+  return _obj;
+}
+function process_old_to_new_arrowsPosition(obj) {
+  let _obj = { ...obj };
+  _obj = namingChange(
+    _obj,
+    'arrowsPosition',
+    optionsMap.layoutParams.navigationArrows.position
+  );
+  switch (_obj.layoutParams?.navigationArrows?.position) {
+    case 0:
+      _obj.layoutParams.navigationArrows.position = 'ON_GALLERY';
+      break;
+    case 1:
+      _obj.layoutParams.navigationArrows.position = 'OUTSIDE_GALLERY';
+      break;
+    default:
+      break;
+  }
   return _obj;
 }
 function process_old_to_new_responsiveMode(obj) {
@@ -376,6 +397,17 @@ function process_old_to_new_groupsOrder(obj) {
       break;
   }
   // 'RIGHT_TO_LEFT' doesnt exist yet.
+  return _obj;
+}
+function process_old_to_new_galleryTextAlign(obj) {
+  let _obj = { ...obj };
+  _obj = namingChange(
+    _obj,
+    'galleryTextAlign',
+    optionsMap.behaviourParams.gallery.horizontal.slideshowInfo.buttonsAlignment
+  );
+  _obj.behaviourParams.gallery.horizontal.slideshowInfo.buttonsAlignment =
+    _obj.behaviourParams?.gallery?.horizontal?.slideshowInfo?.buttonsAlignment?.toUpperCase();
   return _obj;
 }
 function process_old_to_new_LoadMoreAmount(obj) {

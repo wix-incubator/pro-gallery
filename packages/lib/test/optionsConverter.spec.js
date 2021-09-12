@@ -131,7 +131,7 @@ function defaultOptions_new() {
       },
       navigationArrows: {
         enable: true,
-        position: GALLERY_CONSTS.arrowsPosition.ON_GALLERY,
+        position: 'ON_GALLERY', //TODO, create and use use NEW_CONSTS
         padding: 23,
         size: 23,
         verticalAlignment: GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER,
@@ -202,7 +202,7 @@ function defaultOptions_new() {
             speed: 200,
           },
           slideshowInfo: {
-            buttonsAlignment: 'center',
+            buttonsAlignment: 'CENTER',
             enablePlayButton: false,
             enableCounter: false,
           },
@@ -226,8 +226,6 @@ function defaultOptions_new() {
       itemShadowOpacityAndColor: '',
       arrowsColor: '',
     },
-    // magicLayoutSeed: 1, //DELETE
-    // gridStyle: 0, //Looks like it doesnt really exist
   };
   return options;
 }

@@ -7,7 +7,6 @@ export interface Video {
   enablePlayButton: boolean;
   enableControls: boolean;
   enablePlaceholder: boolean;
-  [key: string]: any;
 }
 export interface Overlay {
   hoveringBehaviour: 'APPEARS' | 'DISAPPEARS' | 'ALWAYS_SHOW' | 'NEVER_SHOW';
@@ -30,7 +29,6 @@ export interface Overlay {
   size: number;
   sizeUnits: 'PIXEL' | 'PERCENT';
   padding: number;
-  [key: string]: any;
 }
 export interface Content {
   hoverAnimation:
@@ -45,12 +43,10 @@ export interface Content {
   placementAnimation: 'NO_EFFECT' | 'SLIDE';
   loader: 'BLUR' | 'COLOR' | 'MAIN_COLOR';
   magnificationValue: number;
-  [key: string]: any;
 }
 
 export interface Vertical {
   loadMore: LoadMore;
-  [key: string]: any;
 }
 export interface Horizontal {
   enableScrollSnap: boolean;
@@ -61,38 +57,32 @@ export interface Horizontal {
   loop: boolean;
   autoSlide: AutoSlide;
   slideshowInfo: SlideshowInfo;
-  [key: string]: any;
 }
 export interface AutoSlide {
   behaviour: 'OFF' | 'CONTINUOUS' | 'INTERVAL'; //this unites the "enable" and  "type"
   interval: number;
   pauseOnHover: boolean;
   speed: number;
-  [key: string]: any;
 }
 export interface SlideshowInfo {
   buttonsAlignment: 'LEFT' | 'RIGHT' | 'CENTER';
   enableCounter: boolean;
   enablePlayButton: boolean;
-  [key: string]: any;
 }
 export interface LoadMore {
   enable: boolean;
   amount: 'PARTIAL' | 'ALL';
   text: string;
-  [key: string]: any;
 }
 export interface BehaviourParams {
-  item?: Item;
-  gallery?: Gallery;
-  [key: string]: any;
+  item: Item;
+  gallery: Gallery;
 }
 export interface Item {
   clickAction: 'NOTHING' | 'LINK' | 'ACTION' | 'MAGNIFY';
   video: Video;
   overlay: Overlay;
   content: Content;
-  [key: string]: any;
 }
 export interface Gallery {
   layoutDirection: 'RIGHT_TO_LEFT' | 'LEFT_TO_RIGHT';
@@ -112,5 +102,4 @@ export interface Gallery {
   vertical: Vertical;
   horizontal: Horizontal;
   // allowLeanGallery: 'behaviourParams_gallery_enableLeanGallery', //think about removing this!
-  [key: string]: any;
 }

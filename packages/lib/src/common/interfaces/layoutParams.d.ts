@@ -6,7 +6,6 @@ export interface LayoutParams {
   navigationArrows: NavigationArrows;
   info: Info;
   targetItemSize: TargetItemSize;
-  [key: string]: any;
 }
 
 export interface Groups {
@@ -88,13 +87,11 @@ export interface Info {
     | 'RIGHT'
     | 'ALTERNATE_HORIZONTALLY'
     | 'ALTERNATE_VERTICALLY';
-  [key: string]: any;
 }
 export interface InfoBorder {
   width: number;
   color: string;
   radius: number;
-  [key: string]: any;
 }
 // const layoutParamsMap = {
 //   fixedColumns: 'layoutParams_fixedColumns', // layouter internal
