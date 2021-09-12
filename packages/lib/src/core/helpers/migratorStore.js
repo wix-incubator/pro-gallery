@@ -27,7 +27,6 @@ export const nameChangedLayoutParams = [
     optionsMap.layoutParams.navigationArrows.verticalAlignment,
   ],
   ['arrowsSize', optionsMap.layoutParams.navigationArrows.size],
-  ['arrowsPosition', optionsMap.layoutParams.navigationArrows.position],
   ['imageInfoType', optionsMap.layoutParams.info.layout],
 
   //['textBoxWidthPercent', optionsMap.layoutParams.info.widthByPercent],
@@ -105,11 +104,6 @@ export const nameChangedBehaviourParams = [
     optionsMap.behaviourParams.gallery.horizontal.autoSlide.speed,
   ],
   [
-    'galleryTextAlign',
-    optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
-      .buttonsAlignment,
-  ], //think if slideshow is under horizontal or is a separate thing
-  [
     'allowSlideshowCounter',
     optionsMap.behaviourParams.gallery.horizontal.slideshowInfo.enableCounter,
   ],
@@ -143,156 +137,6 @@ export const nameChangedStylingParams = [
   ['itemBorderRadius', optionsMap.stylingParams.itemBorderRadius],
   ['itemBorderWidth', optionsMap.stylingParams.itemBorderWidth],
 ];
-
-export const layoutParamsMap = {
-  //done
-  galleryMargin: optionsMap.layoutParams.gallerySpacing, //done
-  groupsPerStrip: optionsMap.layoutParams.groups.numberOfGroupsPerRow,
-  columnWidths: optionsMap.layoutParams.columnRatios,
-  cubeFitPosition: optionsMap.layoutParams.crop.alignment,
-  //Are all of the following content keys? so they could go into layoutParams_content_
-  cubeRatio: optionsMap.layoutParams.crop.ratios, //done
-  cubeType: optionsMap.layoutParams.crop.method,
-  cubeImages: optionsMap.layoutParams.crop.enable,
-  useMaxDimensions: optionsMap.layoutParams.structure.enableStreching, //naming???
-  rotatingCropRatios: optionsMap.layoutParams.repeatingCropRatios,
-  smartCrop: optionsMap.layoutParams.crop.enableSmartCrop,
-  minItemSize: optionsMap.layoutParams.minItemSize,
-  cropOnlyFill: optionsMap.layoutParams.crop.cropOnlyFill, //????????????????
-  imageMargin: optionsMap.layoutParams.itemSpacing,
-  placeGroupsLtr: optionsMap.layoutParams.groupsOrder, //REFACTOR - LEFT_TO_RIGHT, RIGHT_TO_LEFT
-  rotatingGroupTypes: optionsMap.layoutParams.repeatingGroupTypes,
-
-  slideshowInfoSize: optionsMap.layoutParams.info.slideshowInfoSize,
-  galleryLayout: optionsMap.layoutParams.galleryLayout,
-  //targetItemSize
-  gallerySize: optionsMap.layoutParams.targetItemSize.smart,
-  gallerySizePx: optionsMap.layoutParams.targetItemSize.pixel,
-  gallerySizeRatio: optionsMap.layoutParams.targetItemSize.percent,
-  gallerySizeType: optionsMap.layoutParams.targetItemSize.mode,
-  //bundle collage
-  collageAmount: optionsMap.layoutParams.groups.amount, //????????????????
-  collageDensity: optionsMap.layoutParams.groups.density,
-  chooseBestGroup: optionsMap.layoutParams.groups.groupByOrientation,
-  groupTypes: optionsMap.layoutParams.groups.groupTypes,
-  groupSize: optionsMap.layoutParams.groups.groupSize,
-  //bundle thumbnails
-  hasThumbnails: optionsMap.layoutParams.thumbnails.enable,
-  thumbnailSpacings: optionsMap.layoutParams.thumbnails.spacing,
-  thumbnailSize: optionsMap.layoutParams.thumbnails.size,
-  galleryThumbnailsAlignment: optionsMap.layoutParams.thumbnails.alignment,
-
-  //bundle arrows
-  showArrows: optionsMap.layoutParams.navigationArrows.enable,
-  arrowsPadding: optionsMap.layoutParams.navigationArrows.padding,
-  arrowsVerticalPosition:
-    optionsMap.layoutParams.navigationArrows.verticalAlignment,
-  arrowsSize: optionsMap.layoutParams.navigationArrows.size,
-  arrowsPosition: optionsMap.layoutParams.navigationArrows.position,
-
-  fixedColumns: optionsMap.layoutParams.fixedColumns, //????????????????
-
-  scatter: optionsMap.layoutParams.structure.scatter.randomScatter,
-  rotatingScatter: optionsMap.layoutParams.structure.scatter.manualScatter,
-  scrollDirection: optionsMap.layoutParams.structure.scrollDirection,
-
-  isVertical: optionsMap.layoutParams.layoutOrientation, // This needs to be refactored to be an enum. but can wait
-
-  //info
-  calculateTextBoxWidthMode: optionsMap.layoutParams.info.sizeUnits,
-  textBoxHeight: optionsMap.layoutParams.info.height,
-  textBoxWidth: optionsMap.layoutParams.info.width,
-  // textBoxWidthPercent: optionsMap.layoutParams.info.widthByPercent,
-  textImageSpace: optionsMap.layoutParams.info.spacing,
-  titlePlacement: optionsMap.layoutParams.info.placement,
-  //----------border
-  textBoxBorderColor: optionsMap.layoutParams.info.border.color,
-  textBoxBorderRadius: optionsMap.layoutParams.info.border.radius,
-  textBoxBorderWidth: optionsMap.layoutParams.info.border.width,
-
-  externalInfoHeight: optionsMap.layoutParams.externalInfoHeight, //layouter API
-  externalInfoWidth: optionsMap.layoutParams.externalInfoWidth, //layouter API
-  targetItemSize: optionsMap.layoutParams.targetItemSize, //layouter API
-};
-
-export const behaviourParams = {
-  //item
-  itemClick: optionsMap.behaviourParams.item.clickAction, //possible refactor (join fullscreen, expand into one 'action')
-  //----video
-  videoSpeed: optionsMap.behaviourParams.item.video.speed,
-  hidePlay: optionsMap.behaviourParams.item.video.enablePlayButton,
-  videoPlay: optionsMap.behaviourParams.item.video.playTrigger,
-  videoLoop: optionsMap.behaviourParams.item.video.loop,
-  showVideoControls: optionsMap.behaviourParams.item.video.enableControls,
-  videoSound: optionsMap.behaviourParams.item.video.volume,
-  enableVideoPlaceholder:
-    optionsMap.behaviourParams.item.video.enablePlaceholder,
-  //----overlay
-  hoveringBehaviour: optionsMap.behaviourParams.item.overlay.hoveringBehaviour,
-  overlayAnimation: optionsMap.behaviourParams.item.overlay.hoverAnimation,
-  overlayPosition: optionsMap.behaviourParams.item.overlay.position,
-  overlaySize: optionsMap.behaviourParams.item.overlay.size,
-  overlaySizeType: optionsMap.behaviourParams.item.overlay.sizeUnits,
-  overlayPadding: optionsMap.behaviourParams.item.overlay.padding,
-  //----content
-  imageHoverAnimation: optionsMap.behaviourParams.item.content.hoverAnimation,
-  imagePlacementAnimation:
-    optionsMap.behaviourParams.item.content.placementAnimation,
-  imageLoadingMode: optionsMap.behaviourParams.item.content.loader,
-  //gallery
-  scrollSnap: optionsMap.behaviourParams.gallery.horizontal.enableScrollSnap,
-  isRTL: optionsMap.behaviourParams.gallery.layoutDirection, // changes from boolean to an enum (refactor)
-  // allowLeanGallery: optionsMap.behaviourParams.gallery.enableLeanGallery', //think about removing this!
-  allowContextMenu: optionsMap.behaviourParams.gallery.blockContextMenu, //REFACTOR reverse
-  scrollAnimation: optionsMap.behaviourParams.gallery.scrollAnimation,
-  shouldIndexDirectShareLinkInSEO:
-    optionsMap.behaviourParams.gallery.enableIndexingShareLinks,
-  //----vertical
-  //--------loadMore
-  enableInfiniteScroll:
-    optionsMap.behaviourParams.gallery.vertical.loadMore.enable,
-  loadMoreAmount: optionsMap.behaviourParams.gallery.vertical.loadMore.amount,
-  loadMoreButtonText: optionsMap.behaviourParams.gallery.vertical.loadMore.text,
-
-  //----horizontal
-  slideAnimation: optionsMap.behaviourParams.gallery.horizontal.slideAnimation,
-  slideTransition:
-    optionsMap.behaviourParams.gallery.horizontal.slideTransition,
-  enableScroll: optionsMap.behaviourParams.gallery.horizontal.blockScroll, //requires a reversal! (blocks instead of allowing),
-  scrollDuration:
-    optionsMap.behaviourParams.gallery.horizontal.navigationDuration,
-  slideshowLoop: optionsMap.behaviourParams.gallery.horizontal.loop,
-  //--------Auto Slide
-  autoSlideshowInterval:
-    optionsMap.behaviourParams.gallery.horizontal.autoSlide.interval,
-  isAutoSlideshow: 'behaviourParams_gallery_horizontal_autoSlide_enable',
-  pauseAutoSlideshowOnHover:
-    optionsMap.behaviourParams.gallery.horizontal.autoSlide.pauseOnHover,
-  autoSlideshowType: 'behaviourParams_gallery_horizontal_autoSlide_type',
-  autoSlideshowContinuousSpeed:
-    optionsMap.behaviourParams.gallery.horizontal.autoSlide.continuous_speed,
-
-  //--------SlideshowInfo
-  galleryTextAlign:
-    optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
-      .buttonsAlignment, //think if slideshow is under horizontal or is a separate thing
-  allowSlideshowCounter:
-    optionsMap.behaviourParams.gallery.horizontal.slideshowInfo.enableCounter,
-  playButtonForAutoSlideShow:
-    optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
-      .enablePlayButton,
-};
-
-export const stylingParams = {
-  arrowsColor: optionsMap.stylingParams.arrowsColor,
-  itemShadowBlur: optionsMap.stylingParams.itemShadowBlur,
-  itemShadowDirection: optionsMap.stylingParams.itemShadowDirection,
-  itemShadowOpacityAndColor: optionsMap.stylingParams.itemShadowOpacityAndColor,
-  itemShadowSize: optionsMap.stylingParams.itemShadowSize,
-  itemEnableShadow: optionsMap.stylingParams.itemEnableShadow,
-  itemBorderRadius: optionsMap.stylingParams.itemBorderRadius,
-  itemBorderWidth: optionsMap.stylingParams.itemBorderWidth,
-};
 
 //---------tooling---------//
 export function changeNames(obj, pairsArray) {

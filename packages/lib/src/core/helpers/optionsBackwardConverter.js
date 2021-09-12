@@ -51,6 +51,7 @@ export function reverseMigrateOptions(oldStyles) {
   newStyles = process_new_to_old_AllowedGroupTypes(newStyles);
   newStyles = process_new_to_old_gallerySpacing(newStyles);
   newStyles = process_new_to_old_slideshowInfoSize(newStyles);
+  newStyles = process_new_to_old_arrowsPosition(newStyles);
   ///----------- BEHAVIOUR -------------///
   newStyles = changeNames(
     newStyles,
@@ -69,6 +70,7 @@ export function reverseMigrateOptions(oldStyles) {
   newStyles = process_new_to_old_layoutDirection(newStyles);
   newStyles = process_new_to_old_LoadMoreAmount(newStyles);
   newStyles = process_new_to_old_AutoSlideBehaviour(newStyles);
+  newStyles = process_new_to_old_galleryTextAlign(newStyles);
   ///----------- STYLING -------------///
   newStyles = changeNames(
     newStyles,
@@ -174,6 +176,25 @@ function process_new_to_old_textBoxSizeMode(obj) {
         'textBoxWidth'
       );
       _obj['textBoxWidthPercent'] = _obj['textBoxWidthPercent'] || 50;
+      break;
+    default:
+      break;
+  }
+  return _obj;
+}
+function process_new_to_old_arrowsPosition(obj) {
+  let _obj = { ...obj };
+  _obj = namingChange(
+    _obj,
+    optionsMap.layoutParams.navigationArrows.position,
+    'arrowsPosition'
+  );
+  switch (_obj['arrowsPosition']) {
+    case 'ON_GALLERY':
+      _obj['arrowsPosition'] = 0;
+      break;
+    case 'OUTSIDE_GALLERY':
+      _obj['arrowsPosition'] = 1;
       break;
     default:
       break;
@@ -342,6 +363,17 @@ function process_new_to_old_groupsOrder(obj) {
       break;
   }
   // 'RIGHT_TO_LEFT' doesnt exist yet.
+  return _obj;
+}
+function process_new_to_old_galleryTextAlign(obj) {
+  let _obj = { ...obj };
+  _obj = namingChange(
+    _obj,
+    optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
+      .buttonsAlignment,
+    'galleryTextAlign'
+  );
+  _obj['galleryTextAlign'] = _obj['galleryTextAlign']?.toLowerCase();
   return _obj;
 }
 function process_new_to_old_LoadMoreAmount(obj) {
