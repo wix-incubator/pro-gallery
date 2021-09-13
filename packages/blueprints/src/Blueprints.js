@@ -1,6 +1,7 @@
 import { Layouter } from 'pro-layouts';
 import {
   defaultOptions,
+  mergeNestedObjects,
   addPresetOptions,
   dimensionsHelper,
   ItemsHelper,
@@ -249,7 +250,7 @@ class Blueprints {
     let changed = false;
     let formattedOptions;
     if (optionsHaveChanged(options, oldOptions)) {
-      options = { ...defaultOptions, ...options };
+      options = mergeNestedObjects(defaultOptions, options)};
       formattedOptions = addOldOptions(
         addMigratedOptions(
           processLayouts(addPresetOptions(options), isUsingCustomInfoElements)
