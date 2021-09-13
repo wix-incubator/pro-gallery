@@ -21,6 +21,14 @@ class Blueprints {
     // cacheBlocker
     // if (this.cache[params]) return this.cache[params];
 
+    debugger;
+    this.reasons = {
+      items: '',
+      itemsAdded: '',
+      options: '',
+      container: '',
+    };
+
     let changedParams = {};
     try {
       const {
@@ -95,32 +103,38 @@ class Blueprints {
     } catch (error) {
       console.error('Could not create blueprint, error:', error);
     }
+
+    const reasons = Object.entries(this.reasons).reduce(
+      (reasons, [param, reason]) => [...reasons, `${param}: ${reason}`],
+      []
+    ).join(', '),
     // return the existing or the modified existing object
-    return { blueprint: existingBlueprint, changedParams, blueprintManagerId };
+    return {
+      blueprint: existingBlueprint,
+      changedParams,
+      blueprintManagerId,
+      reasons,
+    };
   }
 
   // ------------------ Raw data to Formated data (if needed) ---------------------------- //
 
   formatItemsIfNeeded(items, lastItems) {
-    const reason = {
-      items: '',
-      itemsAdded: '',
-    };
     const itemsWereAdded = (newItemsParams, oldItemsParams) => {
       if (newItemsParams === oldItemsParams) {
-        reason.itemsAdded = 'items are the same object.';
+        this.reasons.itemsAdded = 'items are the same object.';
         return false; // it is the exact same object
       }
       if (!newItemsParams) {
-        reason.itemsAdded = 'new items do not exist.';
+        this.reasons.itemsAdded = 'new items do not exist.';
         return false; // new items do not exist (use old items)
       }
       if (!oldItemsParams || (oldItemsParams && oldItemsParams.length === 0)) {
-        reason.itemsAdded = 'old items do not exist.';
+        this.reasons.itemsAdded = 'old items do not exist.';
         return false; // old items do not exist (it is not items addition)
       }
       if (oldItemsParams.length >= newItemsParams.length) {
-        reason.itemsAdded = 'more old items than new items.';
+        this.reasons.itemsAdded = 'more old items than new items.';
         return false; // more old items than new items
       }
       const idsNotChanged = oldItemsParams.reduce((is, _item, idx) => {
@@ -129,26 +143,26 @@ class Blueprints {
       }, true);
 
       if (!idsNotChanged) {
-        reason.itemsAdded = 'items ids were changed. ';
+        this.reasons.itemsAdded = 'items ids were changed. ';
       }
       return idsNotChanged;
     };
 
     const itemsHaveChanged = (newItemsParams, oldItemsParams) => {
       if (newItemsParams === oldItemsParams) {
-        reason.items = 'items are the same object.';
+        this.reasons.items = 'items are the same object.';
         return false; // it is the exact same object
       }
       if (!newItemsParams) {
-        reason.items = 'new items do not exist.';
+        this.reasons.items = 'new items do not exist.';
         return false; // new items do not exist (use old items)
       }
       if (!oldItemsParams || (oldItemsParams && oldItemsParams.length === 0)) {
-        reason.items = 'old items do not exist.';
+        this.reasons.items = 'old items do not exist.';
         return true; // old items do not exist
       }
       if (oldItemsParams.length !== newItemsParams.length) {
-        reason.items = 'more new items than old items (or vice versa).';
+        this.reasons.items = 'more new items than old items (or vice versa).';
         return true; // more new items than old items (or vice versa)
       }
       return newItemsParams.some((newItem, idx) => {
@@ -179,11 +193,11 @@ class Blueprints {
                 newItem.metaData.editorHtml !==
                   existingItem.metaData.editorHtml));
           if (itemsChanged) {
-            reason.items = `items #${idx} id was changed.`;
+            this.reasons.items = `items #${idx} id was changed.`;
           }
           return itemsChanged;
         } catch (e) {
-          reason.items = 'an error occured';
+          this.reasons.items = 'an error occured';
           return true;
         }
       }, false);
@@ -211,17 +225,13 @@ class Blueprints {
   }
 
   formatOptionsIfNeeded(options, lastOptions, isUsingCustomInfoElements) {
-    const reason = {
-      options: '',
-    };
-
     const optionsHaveChanged = (newOptions, oldOptions) => {
       if (!newOptions) {
-        reason.options = 'no new options.';
+        this.reasons.options = 'no new options.';
         return false; // no new options - use old options
       }
       if (!oldOptions) {
-        reason.options = 'no old options.';
+        this.reasons.options = 'no old options.';
         return true; // no old options
       }
       try {
@@ -236,7 +246,7 @@ class Blueprints {
         const wasChanged =
           JSON.stringify(newOptionsSorted) !== JSON.stringify(oldOptionsSorted);
         if (wasChanged) {
-          reason.options = 'options were changed.';
+          this.reasons.options = 'options were changed.';
         }
         return wasChanged;
       } catch (e) {
@@ -268,20 +278,17 @@ class Blueprints {
     formattedOptions,
     optionsChanged
   ) {
-    const reason = {
-      container: '',
-    };
     const containerHasChanged = ({
       newContainerParams,
       oldContainerParams,
       oldOptions,
     }) => {
       if (!oldOptions || !oldContainerParams) {
-        reason.container = 'no old container or options. ';
+        this.reasons.container = 'no old container or options. ';
         return true; // no old container or options (style may change container)
       }
       if (!newContainerParams) {
-        reason.container = 'no new container.';
+        this.reasons.container = 'no new container.';
         return false; // no new continainer
       }
       const containerHasChanged = {
@@ -299,7 +306,7 @@ class Blueprints {
       };
       return Object.keys(containerHasChanged).reduce((is, key) => {
         if (containerHasChanged[key]) {
-          reason.container += `container.${key} has changed. `;
+          this.reasons.container += `container.${key} has changed. `;
         }
         return is || containerHasChanged[key];
       }, false);
