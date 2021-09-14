@@ -112,7 +112,7 @@ export const shouldRenderNavArrows = (props) => {
   const isGalleryWiderThanRenderedItems =
     galleryStructure.width <= galleryWidth;
   return (
-    showArrows &&
+    !!showArrows &&
     !isPrerenderMode &&
     arrowsWillFitPosition(arrowsWillFitPositionRelevantArgs) &&
     !isGalleryWiderThanRenderedItems
