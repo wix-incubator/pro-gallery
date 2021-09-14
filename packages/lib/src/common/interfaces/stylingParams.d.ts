@@ -7,4 +7,5 @@ export interface StylingParams {
   itemEnableShadow: boolean;
   itemBorderRadius: number;
   itemBorderWidth: number;
+  [key: string]: any;
 }

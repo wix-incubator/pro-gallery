@@ -77,6 +77,7 @@ export interface LoadMore {
 export interface BehaviourParams {
   item: Item;
   gallery: Gallery;
+  [key: string]: any;
 }
 export interface Item {
   clickAction: 'NOTHING' | 'LINK' | 'ACTION' | 'MAGNIFY';

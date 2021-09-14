@@ -6,6 +6,7 @@ export interface LayoutParams {
   navigationArrows: NavigationArrows;
   info: Info;
   targetItemSize: TargetItemSize;
+  [key: string]: any;
 }
 
 export interface Groups {
