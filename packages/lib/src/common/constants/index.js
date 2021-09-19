@@ -53,6 +53,7 @@ import slideTransition from './slideTransition';
 import overlayPositions from './overlayPositions';
 import overlaySizeType from './overlaySizeType';
 import autoSlideshowTypes from './autoSlideshowTypes';
+import magnificationType from './magnificationType';
 
 export default {
   arrowsPosition,
@@ -111,4 +112,5 @@ export default {
   overlayPositions,
   overlaySizeType,
   autoSlideshowTypes,
+  magnificationType,
 };

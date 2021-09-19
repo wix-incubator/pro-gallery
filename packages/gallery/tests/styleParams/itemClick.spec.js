@@ -213,22 +213,33 @@ describe('options - itemClick', () => {
   describe('itemClick = "MAGNIFY"', async () => {
     const mountAndGetMagnifiedItems = async (
       galleryDriver,
+      options = {},
       selector = '.magnified-item-container'
     ) => {
       initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: GALLERY_CONSTS.itemClick.MAGNIFY,
+        magnificationType: GALLERY_CONSTS.magnificationType.ZOOM,
+        ...options,
       });
       galleryDriver.mount.proGallery(initialProps);
       await galleryDriver.update();
       return galleryDriver.find.selector(selector);
     };
-    it('should have magnification container', async () => {
+    it('should have magnification container - ZOOM mode', async () => {
       const items = await mountAndGetMagnifiedItems(driver);
       expect(items.length).to.not.eq(0);
       driver.detach.proGallery();
     });
 
-    it('should render magnified images', async () => {
+    it('should have magnification container - GLASS mode', async () => {
+      const items = await mountAndGetMagnifiedItems(driver, {
+        magnificationType: GALLERY_CONSTS.magnificationType.GLASS,
+      });
+      expect(items.length).to.not.eq(0);
+      driver.detach.proGallery();
+    });
+
+    it('should render magnified images - ZOOM mode', async () => {
       const items = await mountAndGetMagnifiedItems(driver);
       const item = items.at(0);
       item.simulate('mouseup');
@@ -237,10 +248,22 @@ describe('options - itemClick', () => {
       ).to.be.greaterThan(0);
       driver.detach.proGallery();
     });
-    it('should have default styles', async () => {
+
+    it('should render magnified images - GLASS mode', async () => {
+      const items = await mountAndGetMagnifiedItems(driver, {
+        magnificationType: GALLERY_CONSTS.magnificationType.GLASS,
+      });
+      const item = items.at(0);
+      item.simulate('mouseenter');
+      expect(
+        driver.find.selector('.magnified-images').length
+      ).to.be.greaterThan(0);
+      driver.detach.proGallery();
+    });
+
+    it('should have default styles - ZOOM mode', async () => {
       const items = await mountAndGetMagnifiedItems(driver);
       const magnificationContainer = items.at(0);
-      console.log(magnificationContainer.props().style);
       expect(magnificationContainer.props().style).to.deep.equal({
         width: 420,
         height: 420,

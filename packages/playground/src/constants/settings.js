@@ -111,6 +111,7 @@ export const optionsBySection = {
     'pauseAutoSlideshowOnHover',
     'itemClick',
     'magnificationLevel',
+    'magnificationType',
   ],
   [SECTIONS.DESIGN]: [
     'showArrows',
