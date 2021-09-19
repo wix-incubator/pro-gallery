@@ -44,13 +44,12 @@ export interface Overlay {
   hoveringBehaviour?: 'APPEARS' | 'DISAPPEARS' | 'ALWAYS_SHOW' | 'NEVER_SHOW';
   hoverAnimation?:
     | 'NO_EFFECT'
-    | 'ZOOM_IN'
-    | 'BLUR'
-    | 'GRAYSCALE'
-    | 'SHRINK'
-    | 'INVERT'
-    | 'COLOR_IN'
-    | 'DARKENED';
+    | 'FADE_IN'
+    | 'EXPAND'
+    | 'SLIDE_UP'
+    | 'SLIDE_RIGHT'
+    | 'SLIDE_DOWN'
+    | 'SLIDE_LEFT';
   position?:
     | 'LEFT'
     | 'TOP'
