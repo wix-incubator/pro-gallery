@@ -75,7 +75,7 @@ class GalleryItem {
     this.group = scheme.group;
     this.orientation = scheme.orientation;
     this.visibility = scheme.visibility;
-    this.magnificationLevel = scheme.magnificationLevel;
+    // this.magnificationLevel = scheme.magnificationLevel;
   }
 
   renderProps(config) {
