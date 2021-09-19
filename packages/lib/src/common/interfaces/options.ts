@@ -6,5 +6,5 @@ export interface Options {
   layoutParams?: LayoutParams;
   behaviourParams?: BehaviourParams;
   stylingParams?: StylingParams;
-  // [key: string]: any; // temp to support old options
+  [key: string]: any; // temp to support old options
 }
