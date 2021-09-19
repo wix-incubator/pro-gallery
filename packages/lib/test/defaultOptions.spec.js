@@ -18,13 +18,6 @@ function expectedOptions() {
       cropRatio: 1,
       repeatingGroupTypes: '',
     },
-    behaviourParams: {
-      item: {
-        content: {
-          magnificationValue: 2,
-        },
-      },
-    },
     scrollSnap: false,
     isRTL: false,
     isVertical: false,
@@ -122,5 +115,6 @@ function expectedOptions() {
     overlaySizeType: 'PERCENT',
     overlayPadding: 0,
     cubeFitPosition: GALLERY_CONSTS.cubeFitPosition.MIDDLE,
+    magnificationLevel: 2,
   };
 }
