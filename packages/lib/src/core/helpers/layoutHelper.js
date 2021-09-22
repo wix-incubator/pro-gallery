@@ -282,12 +282,14 @@ const addMarginsToSupportShadows = (options) => {
 }
 const centerArrowsWhenNeeded = (options) => {
   let _options = {...options}
+  const isSingleVerticalItemRendered =  _options.layoutParams_repeatingGroupTypes ? 
+  _options.layoutParams_repeatingGroupTypes === '1' : _options.groupTypes === '1' ; // only one item is being rendered vertically?
   const filteredPlacement = _options.titlePlacement // filtering hover since it doesn't affect this product
   .split(',')
   .filter(placement => !isHoverPlacement(placement))
   .join(',')
   if (!isConstantVerticalPlacement(filteredPlacement, GALLERY_CONSTS.isLayout('SLIDESHOW')(options)) || 
-      _options.numberOfImagesPerCol > 1)
+      !isSingleVerticalItemRendered)
     {
     // if text (info) placement is not above/below placement or more then 1 images per col, arrows are gallery("item") centered
     _options.arrowsVerticalPosition = GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER;
