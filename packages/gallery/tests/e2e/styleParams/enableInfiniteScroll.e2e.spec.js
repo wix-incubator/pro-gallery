@@ -15,7 +15,7 @@ describe('enableInfiniteScroll - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('should have "Load More" button when loadMore is enabled', async () => {
+  it('should have "Load More" button when "enableInfiniteScroll" is "false"', async () => {
     // 'should have "Load More" button when "loadMore" is enabled'
     await driver.navigate({
       galleryLayout: 2,
@@ -33,7 +33,7 @@ describe('enableInfiniteScroll - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should not have "Load More" button when "loadMore" is not enabled', async () => {
+  it('should not have "Load More" button when "enableInfiniteScroll" is "true"', async () => {
     // 'should not have "Load More" button when "loadMore" is not enabled'
     await driver.navigate({
       galleryLayout: 2,
