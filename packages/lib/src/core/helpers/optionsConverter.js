@@ -510,6 +510,12 @@ function process_old_to_new_ClickAction(obj) {
   return _obj;
 }
 function process_old_to_new_AutoSlideBehaviour(obj) {
+  if (
+    typeof obj.behaviourParams?.gallery?.horizontal?.autoSlide?.behaviour !==
+    'undefined'
+  ) {
+    return obj;
+  }
   let _obj = { ...obj };
   let isAutoSlide = _obj.isAutoSlideshow;
   let autoSlideshowType = _obj.autoSlideshowType;
@@ -533,6 +539,9 @@ function process_old_to_new_AutoSlideBehaviour(obj) {
   return _obj;
 }
 function process_old_to_new_CropRatio(obj) {
+  if (typeof obj.layoutParams?.crop?.ratios !== 'undefined') {
+    return obj;
+  }
   let _obj = { ...obj };
   let repeatingVal = obj.rotatingCropRatios;
   let val = _obj.cubeRatio || _obj.layoutParams?.cropRatio;
@@ -550,10 +559,13 @@ function process_old_to_new_CropRatio(obj) {
   return _obj;
 }
 function process_old_to_new_AllowedGroupTypes(obj) {
+  if (typeof obj.layoutParams?.groups?.allowedGroupTypes !== 'undefined') {
+    return obj;
+  }
   let _obj = { ...obj };
 
-  _obj.layoutParams.groups.allowedGroupTypes = _obj.groupTypes.split
-    ? _obj.groupTypes?.split(',')
+  _obj.layoutParams.groups.allowedGroupTypes = _obj.groupTypes?.split
+    ? _obj.groupTypes.split(',')
     : _obj.groupTypes
     ? _obj.groupTypes
     : '';
@@ -561,6 +573,9 @@ function process_old_to_new_AllowedGroupTypes(obj) {
   return _obj;
 }
 function process_old_to_new_repeatingGroupTypes(obj) {
+  if (typeof obj.layoutParams?.groups?.repeatingGroupTypes !== 'undefined') {
+    return obj;
+  }
   let _obj = { ...obj };
   let repeatingVal =
     obj.rotatingGroupTypes || obj.layoutParams?.repeatingGroupTypes;
@@ -580,6 +595,9 @@ function process_old_to_new_repeatingGroupTypes(obj) {
   return _obj;
 }
 function process_old_to_new_NumberOfColumns(obj) {
+  if (typeof obj.layoutParams?.structure?.numberOfColumns !== 'undefined') {
+    return obj;
+  }
   let _obj = { ...obj };
   const fixedColumns = obj.fixedColumns;
   const numberOfImagesPerRow = obj.numberOfImagesPerRow;
