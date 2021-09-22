@@ -552,8 +552,8 @@ function process_old_to_new_CropRatio(obj) {
 function process_old_to_new_AllowedGroupTypes(obj) {
   let _obj = { ...obj };
 
-  _obj.layoutParams.groups.allowedGroupTypes = _obj.groupTypes.split
-    ? _obj.groupTypes?.split(',')
+  _obj.layoutParams.groups.allowedGroupTypes = _obj.groupTypes?.split
+    ? _obj.groupTypes.split(',')
     : _obj.groupTypes
     ? _obj.groupTypes
     : '';
