@@ -10,5 +10,5 @@ export default {
   isRelevantDescription:
     'Set a Vertical gallery ("Scroll Direction" as "Vertical").',
   type: INPUT_TYPES.BOOLEAN,
-  default: true,
+  default: false,
 };

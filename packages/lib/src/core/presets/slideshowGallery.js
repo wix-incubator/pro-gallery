@@ -10,7 +10,11 @@ import { assignByString } from '../helpers/optionsUtils';
 const fixToSlideshow = (options) => {
   let presetOptions = { ...options };
   presetOptions.galleryLayout = LAYOUTS.SLIDESHOW;
-  presetOptions.enableInfiniteScroll = true;
+  presetOptions = assignByString(
+    presetOptions,
+    'behaviourParams_gallery_vertical_loadMore_enable',
+    false
+  );
   presetOptions = assignByString(
     presetOptions,
     'layoutParams_cropRatio',

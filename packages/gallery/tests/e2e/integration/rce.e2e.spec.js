@@ -21,6 +21,15 @@ describe('RCE Integration test', () => {
         gallerySpacing: 0,
         cropRatio: 1,
       },
+      behaviourParams: {
+        gallery: {
+          vertical: {
+            loadMore: {
+              enable: false,
+            },
+          },
+        },
+      },
       galleryLayout: 2,
       gallerySizeType: 'px',
       gallerySizePx: 300,
@@ -30,7 +39,6 @@ describe('RCE Integration test', () => {
       imageMargin: 20,
       thumbnailSpacings: 0,
       cubeType: 'fill',
-      enableInfiniteScroll: true,
       titlePlacement: 'SHOW_ON_HOVER',
       allowHover: false,
       itemClick: 'link',

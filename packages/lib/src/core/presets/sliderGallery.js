@@ -4,11 +4,16 @@ import {
   calcTargetItemSize,
   removeBordersIfNeeded,
 } from '../helpers/layoutHelper';
+import { assignByString } from '../helpers/optionsUtils';
 
 const fixToSlider = (options) => {
   let presetOptions = { ...options };
   presetOptions.galleryLayout = LAYOUTS.SLIDER;
-  presetOptions.enableInfiniteScroll = true;
+  presetOptions = assignByString(
+    presetOptions,
+    'behaviourParams_gallery_vertical_loadMore_enable',
+    false
+  );
   presetOptions.cubeImages = true;
   presetOptions.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
   presetOptions.isVertical = false;

@@ -32,7 +32,11 @@ const fixToMagic = (options) => {
   presetOptions.enableScroll = undefined;
   presetOptions.cropOnlyFill = undefined;
   presetOptions.fixedColumns = undefined;
-  presetOptions.enableInfiniteScroll = undefined;
+  presetOptions = assignByString(
+    presetOptions,
+    'behaviourParams_gallery_vertical_loadMore_enable',
+    undefined
+  );
   presetOptions.slideshowLoop = false;
   return presetOptions;
 };
@@ -110,7 +114,11 @@ const addSeedOptions = (options) => {
   res.enableScroll = true;
   res.cropOnlyFill = false;
   res.fixedColumns = 0;
-  res.enableInfiniteScroll = 1;
+  res = assignByString(
+    res,
+    'behaviourParams_gallery_vertical_loadMore_enable',
+    false
+  );
 
   //force adjustments
   if (res.oneRow) {

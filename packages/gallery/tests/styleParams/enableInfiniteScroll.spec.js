@@ -7,6 +7,7 @@ import { getElementDimensions } from '../utils/utils';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 describe('options - enableInfiniteScroll', () => {
+  // 'options - loadMore.enable'
   let driver;
   let initialProps;
 
@@ -24,11 +25,20 @@ describe('options - enableInfiniteScroll', () => {
   });
 
   it('should render "Show More" button when "enableInfiniteScroll" is "false"', async () => {
+    // 'should render "Show More" button when loadMore is enabled'
     // make sure to give the right params to make a vertical gallery for the test
     initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: 2,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      enableInfiniteScroll: false,
+      behaviourParams: {
+        gallery: {
+          vertical: {
+            loadMore: {
+              enable: true,
+            },
+          },
+        },
+      },
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -38,11 +48,20 @@ describe('options - enableInfiniteScroll', () => {
     driver.detach.proGallery();
   });
   it('should not render "Show More" button when "enableInfiniteScroll" is "true"', async () => {
+    // 'should not render "Show More" button when "loadMore" is not enabled'
     // make sure to give the right params to make a vertical gallery for the test
     initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: 2,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      enableInfiniteScroll: true,
+      behaviourParams: {
+        gallery: {
+          vertical: {
+            loadMore: {
+              enable: false,
+            },
+          },
+        },
+      },
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -52,11 +71,20 @@ describe('options - enableInfiniteScroll', () => {
     driver.detach.proGallery();
   });
   it('should not render "Show More" button in a horizontal gallery when "enableInfiniteScroll" is false', async () => {
+    // 'should not render "Show More" button in a horizontal gallery when "loadMore" is enabled'
     // make sure to give the right params to make a horizontal gallery for the test
     initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: 2,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
-      enableInfiniteScroll: false,
+      behaviourParams: {
+        gallery: {
+          vertical: {
+            loadMore: {
+              enable: true,
+            },
+          },
+        },
+      },
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -66,11 +94,20 @@ describe('options - enableInfiniteScroll', () => {
     driver.detach.proGallery();
   });
   it('should set the gallery height (container.height - show-more-container" height) when "enableInfiniteScroll" "false"', async () => {
+    // 'should set the gallery height (container.height - show-more-container" height) when "loadMore" is enabled'
     // make sure to give the right params to make a vertical gallery for the test
     initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: 2,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      enableInfiniteScroll: false,
+      behaviourParams: {
+        gallery: {
+          vertical: {
+            loadMore: {
+              enable: true,
+            },
+          },
+        },
+      },
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -86,7 +123,15 @@ describe('options - enableInfiniteScroll', () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: 2,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      enableInfiniteScroll: true,
+      behaviourParams: {
+        gallery: {
+          vertical: {
+            loadMore: {
+              enable: false,
+            },
+          },
+        },
+      },
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

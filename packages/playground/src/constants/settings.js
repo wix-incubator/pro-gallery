@@ -97,7 +97,7 @@ export const optionsBySection = {
   ],
   [SECTIONS.BEHAVIOR]: [
     'hoveringBehaviour',
-    'enableInfiniteScroll',
+    'behaviourParams_gallery_vertical_loadMore_enable',
     'loadMoreAmount',
     'scrollDuration',
     'slideshowLoop',

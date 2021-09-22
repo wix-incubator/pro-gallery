@@ -17,8 +17,16 @@ describe('loadMoreAmount - e2e', () => {
   });
   it('Should increase the height of the gallery container to fit all items', async () => {
     await driver.navigate({
+      behaviourParams: {
+        gallery: {
+          vertical: {
+            loadMore: {
+              enable: true,
+            },
+          },
+        },
+      },
       galleryLayout: GALLERY_CONSTS.layout.GRID,
-      enableInfiniteScroll: false,
       loadMoreAmount: GALLERY_CONSTS.loadMoreAmount.ALL,
     });
     await driver.waitFor.hookToBeVisible('item-container');

@@ -53,6 +53,13 @@ class galleryDriver {
             magnificationValue: 2,
           },
         },
+        gallery: {
+          vertical: {
+            loadMore: {
+              enable: false,
+            },
+          },
+        },
       },
       gotStyleParams: true,
       selectedLayout: 0,
@@ -78,7 +85,6 @@ class galleryDriver {
       collageDensity: 0.8,
       imageMargin: 5,
       viewMode: 'preview',
-      enableInfiniteScroll: true,
       itemClick: 'expand',
       fixedColumns: 0, //determine the number of columns regardless of the screen size (use 0 to ignore)
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,

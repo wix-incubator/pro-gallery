@@ -14,14 +14,8 @@ class JsonEditor extends React.Component {
   }
 
   onFieldChanged(key, value) {
-
-    if(key === 'enableInfiniteScroll') {
-      console.log(`[PLAYGROUND] Options changed: ${key} Changed to ${!value}`);
-      this.props.onChange(key, !value);
-    } else {
-      console.log(`[PLAYGROUND] Options changed: ${key} Changed to ${value}`);
-      this.props.onChange(key, value);
-    }
+    console.log(`[PLAYGROUND] Options changed: ${key} Changed to ${value}`);
+    this.props.onChange(key, value);
   }
 
   formatValue(val) {
@@ -45,7 +39,7 @@ class JsonEditor extends React.Component {
           <Switch
           checkedChildren={<Icon type="check" />}
           unCheckedChildren={<Icon type="close" />}
-          checked={key === 'enableInfiniteScroll'  ? !theValue : theValue }
+          checked={theValue}
           onChange={e => this.onFieldChanged(key, e)}
           />
           //     <Checkbox

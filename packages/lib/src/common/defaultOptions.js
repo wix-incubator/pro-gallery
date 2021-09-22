@@ -16,6 +16,13 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
         magnificationValue: 2,
       },
     },
+    gallery: {
+      vertical: {
+        loadMore: {
+          enable: false,
+        },
+      },
+    },
   },
   // adding
   galleryLayout: -1,
@@ -38,7 +45,6 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   scatter: 0,
   rotatingScatter: '',
   placeGroupsLtr: false,
-  enableInfiniteScroll: true,
   thumbnailSpacings: 4,
   enableScroll: true,
   scrollSnap: false,

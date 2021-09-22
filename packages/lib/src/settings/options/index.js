@@ -1,7 +1,7 @@
 import itemClick from './itemClick';
 import imageMargin from './imageMargin';
 import hoveringBehaviour from './hoveringBehaviour';
-import enableInfiniteScroll from './enableInfiniteScroll';
+import behaviourParams_gallery_vertical_loadMore_enable from './enableLoadMore';
 import cubeType from './cubeType';
 import cubeImages from './cubeImages';
 import layoutParams_cropRatio from './cropRatio';
@@ -106,7 +106,7 @@ export default {
   itemClick,
   imageMargin,
   hoveringBehaviour,
-  enableInfiniteScroll,
+  behaviourParams_gallery_vertical_loadMore_enable,
   cubeType,
   cubeImages,
   titlePlacement,

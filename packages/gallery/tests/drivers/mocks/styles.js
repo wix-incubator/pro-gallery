@@ -4,6 +4,15 @@ const options = {
     cropRatio: 1,
     repeatingGroupTypes: '',
   },
+  behaviourParams: {
+    gallery: {
+      vertical: {
+        loadMore: {
+          enable: false,
+        },
+      },
+    },
+  },
   titlePlacement: 'SHOW_ON_HOVER',
   hoveringBehaviour: 'NO_CHANGE',
   galleryLayout: 2,
@@ -31,7 +40,6 @@ const options = {
   gridStyle: 0,
   placeGroupsLtr: false,
   showArrows: true,
-  enableInfiniteScroll: true,
   thumbnailSpacings: 4,
   enableScroll: true,
   hasThumbnails: true,

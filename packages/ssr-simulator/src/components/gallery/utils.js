@@ -6,6 +6,15 @@ export const defaultOptions = {
     cropRatio: 1,
     repeatingGroupTypes: '',
   },
+  behaviourParams: {
+    gallery: {
+      vertical: {
+        loadMore: {
+          enable: false,
+        },
+      },
+    },
+  },
   isRTL: false,
   isVertical: 0,
   gallerySize: 30,

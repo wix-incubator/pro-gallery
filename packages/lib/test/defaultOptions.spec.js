@@ -24,6 +24,13 @@ function expectedOptions() {
           magnificationValue: 2,
         },
       },
+      gallery: {
+        vertical: {
+          loadMore: {
+            enable: false,
+          },
+        },
+      },
     },
     scrollSnap: false,
     isRTL: false,
@@ -97,7 +104,6 @@ function expectedOptions() {
     scatter: 0,
     rotatingScatter: '',
     placeGroupsLtr: false,
-    enableInfiniteScroll: true,
     thumbnailSpacings: 4,
     enableScroll: true,
     itemClick: 'nothing',
