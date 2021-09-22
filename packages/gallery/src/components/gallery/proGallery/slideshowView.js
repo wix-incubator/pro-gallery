@@ -883,7 +883,7 @@ class SlideshowView extends GalleryComponent {
     const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
     const { hideLeftArrow, hideRightArrow } = this.state;
     const {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight} = getArrowsRenderData({
-      customNavArrowsRenderer: this.props.customNavArrowsRenderer,
+      customNavArrowsRenderer: this.props.customComponents.customNavArrowsRenderer,
       arrowsColor: this.props.options.arrowsColor,
       arrowsSize: this.props.options.arrowsSize,
     });
@@ -1101,7 +1101,7 @@ class SlideshowView extends GalleryComponent {
           container: this.props.container,
           isPrerenderMode: this.props.isPrerenderMode,
           galleryStructure: this.props.galleryStructure,
-          customNavArrowsRenderer: this.props.customNavArrowsRenderer,
+          customNavArrowsRenderer: this.props.customComponents.customNavArrowsRenderer,
         }) && this.createNavArrows()}
         {this.createLayout()}
         {this.createAutoSlideShowPlayButton()}
