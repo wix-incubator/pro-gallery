@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 // import optionsMap from '../src/core/helpers/optionsMap';
 import GALLERY_CONSTS from '../src/common/constants';
+import { flattenObject } from '../src/core/helpers/optionsUtils';
 import {
   migrateOptions,
   addMigratedOptions,
@@ -39,7 +40,14 @@ describe('Styles processing', () => {
     expect(
       migrated.behaviourParams.gallery.horizontal.autoSlide.behaviour
     ).to.eql('OFF');
-    // expect(migrated).to.own.include(afterConverstionAndBack());
+  });
+  it('should not have defined properties if they were not initialy defined', () => {
+    const migrated = addOldOptions(addMigratedOptions({}));
+    const flat = flattenObject(migrated);
+    Object.keys(flat).forEach((key) =>
+      flat[key] === undefined ? delete flat[key] : {}
+    );
+    expect(Object.keys(flat).length).to.eql(0);
   });
 });
 
@@ -96,7 +104,7 @@ function defaultOptions_old() {
     numberOfImagesPerRow: 3,
     collageDensity: 0.8,
     galleryTextAlign: 'center',
-    fixedColumns: 0, // determine the number of columns regardless of the screen size (use 0 to ignore)
+    fixedColumns: undefined, // determine the number of columns regardless of the screen size (use 0 to ignore)
     showArrows: true,
     hasThumbnails: false,
     galleryThumbnailsAlignment: 'bottom',
@@ -137,8 +145,8 @@ function defaultOptions_old() {
     },
     // adding
     galleryLayout: -1,
-    gallerySizePx: 0,
-    gallerySizeRatio: 0,
+    gallerySizePx: undefined,
+    gallerySizeRatio: undefined,
     gallerySizeType: GALLERY_CONSTS.gallerySizeType.SMART,
     itemShadowOpacityAndColor: '',
     arrowsColor: '',
@@ -148,7 +156,7 @@ function defaultOptions_old() {
     // ----
     gallerySize: 30,
     cropOnlyFill: false,
-    rotatingCropRatios: '',
+    rotatingCropRatios: undefined,
     columnWidths: '',
     numberOfImagesPerCol: 1,
     groupsPerStrip: 0,

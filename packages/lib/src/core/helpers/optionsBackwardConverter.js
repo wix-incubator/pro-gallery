@@ -121,7 +121,10 @@ function process_new_to_old_targetItemSizeValue(obj) {
     px: 'gallerySizePx',
     ratio: 'gallerySizeRatio',
   };
-  _obj['gallerySize'] = _obj['gallerySizePx'] = _obj['gallerySizeRatio'] = 0;
+  _obj['gallerySize'] =
+    _obj['gallerySizePx'] =
+    _obj['gallerySizeRatio'] =
+      undefined;
   _obj[keys[type]] = value;
   delete _obj[optionsMap.layoutParams.targetItemSize.value];
   return _obj;
@@ -232,7 +235,7 @@ function process_new_to_old_columnRatios(obj) {
     ? _obj['columnWidths'].join
       ? _obj['columnWidths'].join(',')
       : ''
-    : '';
+    : undefined;
   return _obj;
 }
 function process_new_to_old_cropMethod(obj) {
@@ -269,7 +272,10 @@ function process_new_to_old_VideoVolume(obj) {
     optionsMap.behaviourParams.item.video.volume,
     'videoSound'
   );
-  _obj['videoSound'] = _obj['videoSound'] ? true : false;
+  _obj['videoSound'] =
+    typeof _obj['videoSound'] === 'undefined'
+      ? undefined
+      : !!_obj['videoSound'];
   return _obj;
 }
 function process_new_to_old_VideoSpeed(obj) {
@@ -279,7 +285,8 @@ function process_new_to_old_VideoSpeed(obj) {
     optionsMap.behaviourParams.item.video.speed,
     'videoSpeed'
   );
-  _obj['videoSpeed'] = String(_obj['videoSpeed']);
+  _obj['videoSpeed'] =
+    _obj['videoSpeed'] >= 0 ? String(_obj['videoSpeed']) : undefined;
   return _obj;
 }
 function process_new_to_old_gallerySpacing(obj) {
@@ -358,9 +365,12 @@ function process_new_to_old_groupsOrder(obj) {
     case 'LEFT_TO_RIGHT':
       _obj['placeGroupsLtr'] = true;
       break;
-    default:
+    case 'RIGHT_TO_LEFT':
+    case 'BY_HEIGHT':
       _obj['placeGroupsLtr'] = false;
       break;
+    default:
+      _obj['placeGroupsLtr'] = undefined;
   }
   // 'RIGHT_TO_LEFT' doesnt exist yet.
   return _obj;
@@ -504,8 +514,10 @@ function process_new_to_old_CropRatio(obj) {
   let newVal = val || [];
   if (newVal.length > 1) {
     rotatingCropRatioVal = newVal.join(',');
-  } else {
+  } else if (val?.length === 0) {
     rotatingCropRatioVal = '';
+  } else {
+    rotatingCropRatioVal = undefined;
   }
   _obj['layoutParams_cropRatio'] = newVal[0];
   _obj.rotatingCropRatios = rotatingCropRatioVal;
@@ -518,7 +530,7 @@ function process_new_to_old_AllowedGroupTypes(obj) {
     ? _obj[optionsMap.layoutParams.groups.allowedGroupTypes].join
       ? _obj[optionsMap.layoutParams.groups.allowedGroupTypes].join(',')
       : ''
-    : '';
+    : undefined;
   delete _obj[optionsMap.layoutParams.groups.allowedGroupTypes];
   return _obj;
 }
@@ -528,14 +540,13 @@ function process_new_to_old_GroupTypes(obj) {
   let repeatingVal =
     _obj[optionsMap.layoutParams.groups.repeatingGroupTypes] &&
     _obj[optionsMap.layoutParams.groups.repeatingGroupTypes].join(',');
-
   _obj['layoutParams_repeatingGroupTypes'] = repeatingVal;
   delete _obj[optionsMap.layoutParams.groups.repeatingGroupTypes];
   return _obj;
 }
 function process_new_to_old_NumberOfColumns(obj) {
   let _obj = { ...obj };
-  _obj.fixedColumns = 0;
+  _obj.fixedColumns = _obj.fixedColumns || undefined;
   _obj.numberOfImagesPerRow =
     _obj[optionsMap.layoutParams.structure.numberOfColumns];
   delete _obj[optionsMap.layoutParams.structure.numberOfColumns];
