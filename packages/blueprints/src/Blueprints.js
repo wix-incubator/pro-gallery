@@ -8,6 +8,7 @@ import {
   GALLERY_CONSTS,
   addMigratedOptions,
   addOldOptions,
+  mergeNestedObjects,
 } from 'pro-gallery-lib';
 
 class Blueprints {
@@ -249,11 +250,11 @@ class Blueprints {
     let changed = false;
     let formattedOptions;
     if (optionsHaveChanged(options, oldOptions)) {
-      options = { ...defaultOptions, ...options };
-      formattedOptions = addOldOptions(
-        addMigratedOptions(
-          processLayouts(addPresetOptions(options), isUsingCustomInfoElements)
-        )
+      options = mergeNestedObjects(defaultOptions, options);
+      const mergedOldAndNewStyles = addOldOptions(addMigratedOptions(options));
+      formattedOptions = processLayouts(
+        addPresetOptions(mergedOldAndNewStyles),
+        isUsingCustomInfoElements
       ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
       changed = true;
     }
