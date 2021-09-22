@@ -41,6 +41,7 @@ function addMigratedOptions(options) {
   let migrated = migrateOptions(options);
   let combinedOptions = mergeNestedObjects(migrated, options);
   delete combinedOptions.oldRefactoredOptionInCore;
+  delete combinedOptions.magnificationLevel;
   return combinedOptions;
 }
 
