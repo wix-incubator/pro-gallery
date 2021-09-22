@@ -25,7 +25,13 @@ describe('imageWithMagnified', () => {
     Object.assign(imageItemsProps, {
       options: {
         itemClick: GALLERY_CONSTS.itemClick.MAGNIFY,
-        magnificationLevel: 2,
+        behaviourParams: {
+          item: {
+            content: {
+              magnificationValue: 2,
+            },
+          },
+        },
       },
       imageDimensions: { marginLeft: 0, marginTop: 0 },
       style: {
