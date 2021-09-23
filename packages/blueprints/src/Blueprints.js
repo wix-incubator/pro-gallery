@@ -250,9 +250,11 @@ class Blueprints {
     let formattedOptions;
     if (optionsHaveChanged(options, oldOptions)) {
       const mergedOldAndNewStyles = addOldOptions(addMigratedOptions(options)); //add both old and new options
-      options = populateWithDefaultOptions(options); //add default for any undefined option
+      const fullOptionsOverDefualts = populateWithDefaultOptions(
+        mergedOldAndNewStyles
+      ); //add default for any undefined option
       formattedOptions = processLayouts(
-        addPresetOptions(mergedOldAndNewStyles),
+        addPresetOptions(fullOptionsOverDefualts),
         isUsingCustomInfoElements
       ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
       changed = true;
