@@ -3,8 +3,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('enableInfiniteScroll - e2e', () => {
-  // 'loadMore.enable - e2e'
+describe('loadMore-enable - e2e', () => {
   let driver;
 
   beforeAll(async () => {
@@ -15,8 +14,7 @@ describe('enableInfiniteScroll - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('should have "Load More" button when "enableInfiniteScroll" is "false"', async () => {
-    // 'should have "Load More" button when "loadMore" is enabled'
+  it('should have "Load More" button when "loadMore" is enabled', async () => {
     await driver.navigate({
       galleryLayout: 2,
       behaviourParams: {
@@ -33,8 +31,7 @@ describe('enableInfiniteScroll - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should not have "Load More" button when "enableInfiniteScroll" is "true"', async () => {
-    // 'should not have "Load More" button when "loadMore" is not enabled'
+  it('should not have "Load More" button when "loadMore" is not enabled', async () => {
     await driver.navigate({
       galleryLayout: 2,
       behaviourParams: {

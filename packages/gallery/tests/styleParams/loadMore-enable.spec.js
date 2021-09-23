@@ -6,8 +6,7 @@ import { options } from '../drivers/mocks/styles';
 import { getElementDimensions } from '../utils/utils';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
-describe('options - enableInfiniteScroll', () => {
-  // 'options - loadMore.enable'
+describe('options - loadMore-enable', () => {
   let driver;
   let initialProps;
 
@@ -24,8 +23,7 @@ describe('options - enableInfiniteScroll', () => {
     };
   });
 
-  it('should render "Show More" button when "enableInfiniteScroll" is "false"', async () => {
-    // 'should render "Show More" button when loadMore is enabled'
+  it('should render "Show More" button when loadMore is enabled', async () => {
     // make sure to give the right params to make a vertical gallery for the test
     initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: 2,
@@ -47,8 +45,7 @@ describe('options - enableInfiniteScroll', () => {
     expect(showMoreBtn).to.have.lengthOf(1);
     driver.detach.proGallery();
   });
-  it('should not render "Show More" button when "enableInfiniteScroll" is "true"', async () => {
-    // 'should not render "Show More" button when "loadMore" is not enabled'
+  it('should not render "Show More" button when "loadMore" is not enabled', async () => {
     // make sure to give the right params to make a vertical gallery for the test
     initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: 2,
@@ -70,8 +67,7 @@ describe('options - enableInfiniteScroll', () => {
     expect(showMoreBtn).to.have.lengthOf(0);
     driver.detach.proGallery();
   });
-  it('should not render "Show More" button in a horizontal gallery when "enableInfiniteScroll" is false', async () => {
-    // 'should not render "Show More" button in a horizontal gallery when "loadMore" is enabled'
+  it('should not render "Show More" button in a horizontal gallery when "loadMore" is enabled', async () => {
     // make sure to give the right params to make a horizontal gallery for the test
     initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: 2,
@@ -93,8 +89,7 @@ describe('options - enableInfiniteScroll', () => {
     expect(showMoreBtn).to.have.lengthOf(0);
     driver.detach.proGallery();
   });
-  it('should set the gallery height (container.height - show-more-container" height) when "enableInfiniteScroll" "false"', async () => {
-    // 'should set the gallery height (container.height - show-more-container" height) when "loadMore" is enabled'
+  it('should set the gallery height (container.height - show-more-container" height) when "loadMore" is enabled', async () => {
     // make sure to give the right params to make a vertical gallery for the test
     initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: 2,
