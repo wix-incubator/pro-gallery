@@ -253,9 +253,13 @@ class Blueprints {
       const fullOptionsOverDefualts = populateWithDefaultOptions(
         mergedOldAndNewStyles
       ); //add default for any undefined option
-      formattedOptions = processLayouts(
-        addPresetOptions(fullOptionsOverDefualts),
-        isUsingCustomInfoElements
+      formattedOptions = addOldOptions(
+        addMigratedOptions(
+          processLayouts(
+            addPresetOptions(fullOptionsOverDefualts),
+            isUsingCustomInfoElements
+          )
+        )
       ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
       changed = true;
     }
