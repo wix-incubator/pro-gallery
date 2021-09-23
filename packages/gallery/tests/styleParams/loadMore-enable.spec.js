@@ -23,7 +23,7 @@ describe('options - loadMore-enable', () => {
     };
   });
 
-  it('should render "Show More" button when loadMore is enabled', async () => {
+  it('should render "Show More" button when "loadMore" is enabled', async () => {
     // make sure to give the right params to make a vertical gallery for the test
     initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: 2,
