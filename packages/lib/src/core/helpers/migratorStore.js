@@ -3,7 +3,6 @@ import { assignByString, getByString } from './optionsUtils';
 
 export const nameChangedLayoutParams = [
   ['galleryLayout', optionsMap.layoutParams.structure.galleryLayout],
-  ['galleryMargin', optionsMap.layoutParams.structure.gallerySpacing],
   ['imageMargin', optionsMap.layoutParams.structure.itemSpacing],
   ['groupsPerStrip', optionsMap.layoutParams.groups.numberOfGroupsPerRow],
   ['cubeImages', optionsMap.layoutParams.crop.enable],

@@ -88,6 +88,11 @@ function semiRefactored() {
 
 function defaultOptions_old() {
   let def = {
+    //expected to have the 3 initial values of these as well:
+    galleryMargin: 0,
+    cubeRatio: 1,
+    rotatingGroupTypes: '',
+    //...
     isRTL: false,
     isVertical: false,
     minItemSize: 120,

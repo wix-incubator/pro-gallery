@@ -216,18 +216,23 @@ function process_old_to_new_VideoSpeed(obj) {
   return _obj;
 }
 function process_old_to_new_gallerySpacing(obj) {
-  let _obj = { ...obj };
-  if (
-    _obj.layoutParams?.gallerySpacing >= 0 &&
-    !(_obj.layoutParams?.structure?.gallerySpacing >= 0)
-  ) {
-    assignByString(
-      _obj,
-      optionsMap.layoutParams.structure.gallerySpacing,
-      _obj.layoutParams?.gallerySpacing
-    );
+  if (typeof obj.layoutParams?.structure?.gallerySpacing !== 'undefined') {
+    return obj;
   }
+  let _obj = { ...obj };
+  let spacingVal;
+  if (_obj.layoutParams?.gallerySpacing >= 0) {
+    spacingVal = _obj.layoutParams?.gallerySpacing;
+  } else if (_obj.galleryMargin >= 0) {
+    spacingVal = _obj.galleryMargin;
+  }
+  assignByString(
+    _obj,
+    optionsMap.layoutParams.structure.gallerySpacing,
+    spacingVal
+  );
   delete _obj.layoutParams?.gallerySpacing;
+  delete _obj.galleryMargin;
   return _obj;
 }
 function process_old_to_new_arrowsPosition(obj) {
@@ -559,7 +564,7 @@ function process_old_to_new_CropRatio(obj) {
   }
   _obj.layoutParams.crop.ratios =
     finalVal && String(finalVal).split(',').map(Number);
-  delete _obj.cropRatio;
+  delete _obj.cubeRatio;
   delete _obj.layoutParams.cropRatio;
   delete _obj.rotatingCropRatios;
   return _obj;
@@ -599,7 +604,7 @@ function process_old_to_new_repeatingGroupTypes(obj) {
     finalVal
   );
   delete _obj.layoutParams.repeatingGroupTypes;
-  delete _obj.repeatingGroupTypes;
+  delete _obj.rotatingGroupTypes;
   return _obj;
 }
 function process_old_to_new_NumberOfColumns(obj) {
