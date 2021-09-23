@@ -6,7 +6,7 @@ export default {
   title: 'Load More Behaviour',
   isRelevant: (sp) =>
     sp.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
-    sp.behaviourParams.gallery.vertical.loadMore.enable,
+    sp.behaviourParams_gallery_vertical_loadMore_enable,
   isRelevantDescription:
     'Set a Vertical gallery ("Scroll Direction" as "Vertical") and set "Enable load more button" to "true".',
   type: INPUT_TYPES.OPTIONS,
