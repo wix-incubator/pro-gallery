@@ -80,7 +80,7 @@ import videoSound from './videoSound';
 import videoSpeed from './videoSpeed';
 import allowSlideshowCounter from './allowSlideshowCounter';
 import playButtonForAutoSlideShow from './playButtonForAutoSlideShow';
-import hidePlay from './hidePlay';
+import behaviourParams_item_video_enablePlayButton from './enablePlayButton';
 import overlayBackground from './overlayBackground';
 import allowLeanGallery from './allowLeanGallery';
 import placeGroupsLtr from './placeGroupsLtr';
@@ -182,7 +182,7 @@ export default {
   videoSpeed,
   allowSlideshowCounter,
   playButtonForAutoSlideShow,
-  hidePlay,
+  behaviourParams_item_video_enablePlayButton,
   overlayBackground,
   allowLeanGallery,
   placeGroupsLtr,

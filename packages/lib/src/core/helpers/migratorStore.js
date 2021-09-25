@@ -120,7 +120,10 @@ export const reversedBehaviourParams = [
     optionsMap.behaviourParams.gallery.vertical.loadMore.enable,
   ],
   ['allowContextMenu', optionsMap.behaviourParams.gallery.blockContextMenu],
-  ['hidePlay', optionsMap.behaviourParams.item.video.enablePlayButton],
+  [
+    'showVideoPlayButton',
+    optionsMap.behaviourParams.item.video.enablePlayButton,
+  ],
   ['enableScroll', optionsMap.behaviourParams.gallery.horizontal.blockScroll], //requires a reversal! (blocks instead of allowing),
 ];
 

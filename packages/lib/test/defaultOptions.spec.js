@@ -46,6 +46,9 @@ function expectedOptions() {
         content: {
           magnificationValue: 2,
         },
+        video: {
+          enablePlayButton: true,
+        },
       },
     },
     scrollSnap: false,
@@ -110,7 +113,6 @@ function expectedOptions() {
     arrowsColor: '',
     textBoxBorderColor: '',
     allowContextMenu: false,
-    hidePlay: false,
     gallerySize: 30,
     cropOnlyFill: false,
     rotatingCropRatios: '',

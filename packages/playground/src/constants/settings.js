@@ -164,7 +164,7 @@ export const optionsBySection = {
     // 'usm_t',
   ],
   [SECTIONS.VIDEO]: [
-    'hidePlay',
+    'behaviourParams_item_video_enablePlayButton',
     'videoPlay',
     'videoSpeed',
     'videoSound',

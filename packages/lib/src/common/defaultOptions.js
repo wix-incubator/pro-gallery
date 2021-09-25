@@ -15,6 +15,9 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
       content: {
         magnificationValue: 2,
       },
+      video: {
+        enablePlayButton: true,
+      },
     },
   },
   // adding
@@ -26,7 +29,6 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   arrowsColor: '',
   textBoxBorderColor: '',
   allowContextMenu: false,
-  hidePlay: false,
   // ----
   gallerySize: 30,
   cropOnlyFill: false,

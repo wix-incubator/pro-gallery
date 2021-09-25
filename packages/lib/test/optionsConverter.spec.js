@@ -152,7 +152,7 @@ function defaultOptions_old() {
     arrowsColor: '',
     textBoxBorderColor: '',
     allowContextMenu: false,
-    hidePlay: false,
+    showVideoPlayButton: true,
     // ----
     gallerySize: 30,
     cropOnlyFill: false,
