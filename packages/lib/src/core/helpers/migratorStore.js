@@ -37,7 +37,7 @@ export const nameChangedLayoutParams = [
 ];
 
 export const reversedLayoutParams = [
-  ['useMaxDimensions', optionsMap.layoutParams.structure.enableStreching],
+  ['useMaxDimensions', optionsMap.layoutParams.structure.enableStretching],
 ];
 
 export const nameChangedBehaviourParams = [

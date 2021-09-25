@@ -40,6 +40,9 @@ function expectedOptions() {
       gallerySpacing: 0,
       cropRatio: 1,
       repeatingGroupTypes: '',
+      structure: {
+        enableStretching: true,
+      },
     },
     behaviourParams: {
       item: {
@@ -138,7 +141,6 @@ function expectedOptions() {
     showVideoControls: false,
     shouldIndexDirectShareLinkInSEO: true,
     slideTransition: 'cubic-bezier(0.46,0.1,0.25,1)',
-    useMaxDimensions: false,
     enableVideoPlaceholder: true,
     overlayPosition: 'LEFT',
     overlaySize: 100,

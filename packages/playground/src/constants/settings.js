@@ -79,7 +79,7 @@ export const optionsBySection = {
     'galleryThumbnailsAlignment',
     'thumbnailSize',
     'thumbnailSpacings',
-    'useMaxDimensions'
+    'layoutParams_structure_enableStretching'
   ],
   [SECTIONS.INFO]: [
     'titlePlacement',

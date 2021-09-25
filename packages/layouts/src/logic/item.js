@@ -33,8 +33,9 @@ export class Item {
       this.scatter = styleParams.scatter;
       this.rotatingScatter = styleParams.rotatingScatter;
       this.smartCrop = styleParams.smartCrop;
-      this.useMaxDimensions =
-        styleParams.useMaxDimensions && this.itemType !== 'text';
+      this.enableStretching =
+        styleParams.layoutParams.structure.enableStretching ||
+        this.itemType === 'text';
       this.cubeFitPosition = styleParams.cubeFitPosition;
     }
 
@@ -381,14 +382,14 @@ export class Item {
 
     const setTargetDimensions = (setByWidth, ratio) => {
       if (setByWidth) {
-        targetWidth = this.useMaxDimensions
-          ? Math.min(this.width, this.maxWidth)
-          : this.width;
+        targetWidth = this.enableStretching
+          ? this.width
+          : Math.min(this.width, this.maxWidth);
         targetHeight = targetWidth / ratio;
       } else {
-        targetHeight = this.useMaxDimensions
-          ? Math.min(this.height, this.maxHeight)
-          : this.height;
+        targetHeight = this.enableStretching
+          ? this.height
+          : Math.min(this.height, this.maxHeight);
         targetWidth = targetHeight * ratio;
       }
     };
@@ -397,7 +398,7 @@ export class Item {
     if (isGridFit) {
       setTargetDimensions(isLandscape, this.ratio);
     } else if (
-      this.useMaxDimensions &&
+      !this.enableStretching &&
       (this.width > this.maxWidth || this.height > this.maxHeight)
     ) {
       if (this.cubeImages) {

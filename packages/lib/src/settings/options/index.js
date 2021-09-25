@@ -88,7 +88,7 @@ import pauseAutoSlideshowOnHover from './pauseAutoSlideshowOnHover';
 import showVideoControls from './showVideoControls';
 import shouldIndexDirectShareLinkInSEO from './shouldIndexDirectShareLinkInSEO';
 import slideTransition from './slideTransition';
-import useMaxDimensions from './useMaxDimensions';
+import layoutParams_structure_enableStretching from './enableStretching';
 import cubeFitPosition from './cubeFitPosition';
 import enableVideoPlaceholder from './enableVideoPlaceholder ';
 import overlayPosition from './overlayPosition';
@@ -190,7 +190,7 @@ export default {
   pauseAutoSlideshowOnHover,
   shouldIndexDirectShareLinkInSEO,
   slideTransition,
-  useMaxDimensions,
+  layoutParams_structure_enableStretching,
   cubeFitPosition,
   enableVideoPlaceholder,
   overlayPosition,

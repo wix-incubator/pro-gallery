@@ -9,6 +9,9 @@ import {
 const defaultOptions = mergeNestedObjects(coreOptions, {
   layoutParams: {
     repeatingGroupTypes: '',
+    structure: {
+      enableStretching: true,
+    },
   },
   behaviourParams: {
     item: {
@@ -60,7 +63,6 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   showVideoControls: false,
   shouldIndexDirectShareLinkInSEO: true,
   slideTransition: GALLERY_CONSTS.slideTransition.ease,
-  useMaxDimensions: false,
   enableVideoPlaceholder: true,
   overlayPosition: GALLERY_CONSTS.overlayPositions.LEFT,
   overlaySize: 100,

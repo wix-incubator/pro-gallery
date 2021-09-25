@@ -216,7 +216,7 @@ function defaultOptions_new() {
         scrollDirection: 'VERTICAL', //TODO, create and use use NEW_CONSTS
         gallerySpacing: 0,
         itemSpacing: 10,
-        enableStreching: true,
+        enableStretching: true,
         responsiveMode: 'FIT_TO_SCREEN',
         scatter: {
           randomScatter: 0,

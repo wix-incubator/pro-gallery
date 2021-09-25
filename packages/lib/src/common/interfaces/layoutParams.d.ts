@@ -53,7 +53,7 @@ export interface Crop {
 
 export interface Structure {
   galleryLayout?: number;
-  enableStreching?: boolean;
+  enableStretching?: boolean;
   gallerySpacing?: number;
   itemSpacing?: number;
   scrollDirection?: 'VERTICAL' | 'HORIZONTAL';
