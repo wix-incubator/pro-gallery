@@ -1,4 +1,8 @@
-import { assignByString, mergeNestedObjects } from './optionsUtils';
+import {
+  assignByString,
+  mergeNestedObjects,
+  trimUndefinedValues,
+} from './optionsUtils';
 import cloneDeep from 'lodash/cloneDeep';
 import { isLayout } from '../../common/constants/layout';
 import optionsMap from './optionsMap';
@@ -12,34 +16,13 @@ import {
   namingChange,
   reverseBooleans,
 } from './migratorStore';
-function convertOptions(initialOptions) {
-  //This will add the new names while keeping the old ones.
-  let options = { ...initialOptions };
-  options.layoutParams.cropRatio =
-    options.layoutParams.cropRatio || initialOptions.cubeRatio || 1;
-  options.layoutParams.gallerySpacing =
-    options.layoutParams.gallerySpacing || initialOptions.galleryMargin || 0;
-  options.layoutParams.repeatingGroupTypes =
-    options.layoutParams.repeatingGroupTypes ||
-    initialOptions.rotatingGroupTypes ||
-    '';
-  return options;
-}
-
-function convertOptionsBackwards(initialOptions) {
-  //This will add the old names while keeping the new ones.
-  let options = { ...initialOptions };
-  options.cubeRatio = options.cubeRatio || options.layoutParams.cropRatio || 1;
-  options.galleryMargin =
-    options.galleryMargin || options.layoutParams.gallerySpacing || 0;
-  options.rotatingGroupTypes =
-    options.rotatingGroupTypes || options.layoutParams.repeatingGroupTypes;
-  return options;
-}
 
 function addMigratedOptions(options) {
   const migrated = migrateOptions(options);
-  let combinedOptions = mergeNestedObjects(migrated, options);
+  let combinedOptions = mergeNestedObjects(
+    trimUndefinedValues(migrated),
+    trimUndefinedValues(options)
+  );
   delete combinedOptions.oldRefactoredOptionInCore;
   return combinedOptions;
 }
@@ -627,9 +610,4 @@ function process_old_to_new_NumberOfColumns(obj) {
   return _obj;
 }
 
-export {
-  convertOptions,
-  convertOptionsBackwards,
-  migrateOptions,
-  addMigratedOptions,
-};
+export { migrateOptions, addMigratedOptions };

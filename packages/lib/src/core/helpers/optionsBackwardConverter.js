@@ -2,6 +2,7 @@ import {
   mergeNestedObjects,
   flattenObject,
   flatToNested,
+  trimUndefinedValues,
 } from './optionsUtils';
 import { isLayout } from '../../common/constants/layout';
 import cloneDeep from 'lodash/cloneDeep';
@@ -19,7 +20,10 @@ import {
 
 export function addOldOptions(options) {
   let oldOptions = reverseMigrateOptions(options);
-  let combinedOptions = mergeNestedObjects(oldOptions, options);
+  let combinedOptions = mergeNestedObjects(
+    trimUndefinedValues(oldOptions),
+    trimUndefinedValues(options)
+  );
   return combinedOptions;
 }
 
