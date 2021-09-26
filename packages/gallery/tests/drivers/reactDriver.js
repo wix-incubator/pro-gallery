@@ -104,9 +104,9 @@ class galleryDriver {
     // };
 
     this.options = mergeNestedObjects(defaultOptions, {
-      layoutParams: {
-        gallerySpacing: 1,
-      },
+      // layoutParams: {
+      //   gallerySpacing: 1,
+      // },
       targetItemSize: 320,
       // sharpParams: {
       //   quality: 90,
