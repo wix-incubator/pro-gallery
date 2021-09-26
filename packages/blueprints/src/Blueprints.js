@@ -83,12 +83,12 @@ class Blueprints {
         existingBlueprint.structure = structure;
 
         // if its an infinite gallery (loadMore is not enabled) - let the container loose
-        const isLoadMoreDisabled =
+        const isInfinite =
           existingBlueprint.options.scrollDirection ===
             GALLERY_CONSTS.scrollDirection.VERTICAL &&
           !existingBlueprint.options.behaviourParams.gallery.vertical.loadMore
             .enable;
-        if (isLoadMoreDisabled) {
+        if (isInfinite) {
           existingBlueprint.container.height =
             existingBlueprint.container.galleryHeight = structure.height;
         }

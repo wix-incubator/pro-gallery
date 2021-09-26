@@ -39,7 +39,6 @@ export const defaultOptions = {
   gridStyle: 0,
   placeGroupsLtr: false,
   showArrows: false,
-  enableInfiniteScroll: true,
   thumbnailSpacings: 4,
   galleryThumbnailsAlignment: Consts.thumbnailsAlignment.bottom,
   enableScroll: true,

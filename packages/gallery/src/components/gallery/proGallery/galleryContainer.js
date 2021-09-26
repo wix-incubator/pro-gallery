@@ -497,14 +497,13 @@ export class GalleryContainer extends React.Component {
   }
 
   containerInfiniteGrowthDirection(options = false) {
-    const _options = options || this.props.options;
     // return the direction in which the gallery can grow on it's own (aka infinite scroll)
-    const isLoadMoreEnabled = this.props.options.behaviourParams.gallery.vertical.loadMore.enable;
+    const _options = options || this.props.options;
     const { showMoreClickedAtLeastOnce } = this.state;
     const { scrollDirection, loadMoreAmount } = _options;
     if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
       return 'horizontal';
-    } else if (isLoadMoreEnabled) {
+    } else if (this.props.options.behaviourParams.gallery.vertical.loadMore.enable) {
       //vertical gallery with LoadMore button enabled
       if (showMoreClickedAtLeastOnce && loadMoreAmount === 'all') {
         return 'vertical';
