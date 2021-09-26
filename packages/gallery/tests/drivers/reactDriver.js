@@ -6,6 +6,7 @@ import {
   window,
   // utils,
   defaultOptions,
+  mergeNestedObjects,
 } from 'pro-gallery-lib';
 import { testImages } from './mocks/images-mock.js';
 import { mount, shallow, configure } from 'enzyme';
@@ -45,7 +46,7 @@ class galleryDriver {
 
     // this.options = {
     //   layoutParams: {
-    //     gallerySpacing: 1,
+    // gallerySpacing: 1,
     //     cropRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
     //   },
     //   behaviourParams: {
@@ -101,7 +102,24 @@ class galleryDriver {
     //   shouldIndexDirectShareLinkInSEO: true,
     //   enableVideoPlaceholder: true,
     // };
-    this.options = { ...defaultOptions };
+
+    this.options = mergeNestedObjects(defaultOptions, {
+      layoutParams: {
+        gallerySpacing: 1,
+      },
+      targetItemSize: 320,
+      sharpParams: {
+        quality: 90,
+        usm: {}, // do not apply usm - {usm_r: 0.66, usm_a: 1.00, usm_t: 0.01},
+      },
+      collageAmount: 0.8,
+      imageMargin: 5,
+      // viewMode: 'preview',
+      itemClick: 'expand',
+      // thumbnailSize: utils.isMobile() ? 90 : 120,
+      thumbnailSpacings: 0,
+      itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
+    });
 
     this.scroll = {
       top: 0,
