@@ -83,6 +83,9 @@ class Utils {
         gallerySpacing: 0,
         cropRatio: 1,
         repeatingGroupTypes: '',
+        structure: {
+          enableStretching: true,
+        },
       },
       cubeImages: false,
       cubeType: 'fill',
