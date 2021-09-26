@@ -115,7 +115,7 @@ class galleryDriver {
       // collageAmount: 0.8,
       // imageMargin: 5,
       // viewMode: 'preview',
-      itemClick: 'expand',
+      // itemClick: 'expand',
       // thumbnailSize: utils.isMobile() ? 90 : 120,
       // thumbnailSpacings: 0,
       // itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
