@@ -117,7 +117,7 @@ class galleryDriver {
       // viewMode: 'preview',
       itemClick: 'expand',
       // thumbnailSize: utils.isMobile() ? 90 : 120,
-      thumbnailSpacings: 0,
+      // thumbnailSpacings: 0,
       itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
     });
 
