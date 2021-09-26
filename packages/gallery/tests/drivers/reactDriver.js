@@ -107,7 +107,7 @@ class galleryDriver {
       layoutParams: {
         gallerySpacing: 1,
       },
-      targetItemSize: 320,
+      // targetItemSize: 320,
       // sharpParams: {
       //   quality: 90,
       //   usm: {}, // do not apply usm - {usm_r: 0.66, usm_a: 1.00, usm_t: 0.01},
