@@ -261,7 +261,7 @@ function SideBar({ items, blueprintsManager, visible }) {
               </Form.Item>
               {
                 // isEligibleForLeanGallery({ items, styles: flatOptions }) ?
-                //   <Alert key={'leanGalleryAllowed'} message={'RENDERING LEAN GALLERY'} type="success" />  Decided not to ask about lean gallery eventually
+                //   <Alert key={'leanGalleryAllowed'} message={'RENDERING LEAN GALLERY'} type="success" />  
                 //   :
                   <List
                     size="small"
