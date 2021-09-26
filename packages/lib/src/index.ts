@@ -11,8 +11,6 @@ export { default as processLayouts } from './core/helpers/layoutHelper';
 export { featureManager } from './core/helpers/versionsHelper';
 export { addPresetOptions } from './core/presets/presets';
 export {
-  convertOptions,
-  convertOptionsBackwards,
   migrateOptions,
   addMigratedOptions,
 } from './core/helpers/optionsConverter';
