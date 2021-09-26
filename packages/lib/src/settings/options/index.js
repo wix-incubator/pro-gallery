@@ -97,7 +97,7 @@ import overlaySizeType from './overlaySizeType';
 import overlayPadding from './overlayPadding';
 import autoSlideshowType from './autoSlideshowType';
 import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
-import magnificationLevel from './magnificationLevel';
+import behaviourParams_item_content_magnificationValue from './magnificationValue';
 
 export default {
   layoutParams_gallerySpacing,
@@ -199,7 +199,7 @@ export default {
   overlayPadding,
   autoSlideshowType,
   autoSlideshowContinuousSpeed,
-  magnificationLevel,
+  behaviourParams_item_content_magnificationValue,
 };
 
 // TODO = add the options:

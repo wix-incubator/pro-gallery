@@ -163,7 +163,7 @@ export function namingChange(obj, oldName, newName) {
   ); //dont overwrite existing property
 }
 export function reverseBooleanTo(obj, oldName, newName) {
-  let val = !obj[oldName];
+  let val = typeof obj[oldName] === 'undefined' ? undefined : !obj[oldName];
   delete obj[oldName];
   return assignByString(obj, newName, val);
 }

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 // import optionsMap from '../src/core/helpers/optionsMap';
 import GALLERY_CONSTS from '../src/common/constants';
-import defaultOptions from '../src/common/defaultOptions';
+import { flattenObject } from '../src/core/helpers/optionsUtils';
 import {
   migrateOptions,
   addMigratedOptions,
@@ -40,7 +40,14 @@ describe('Styles processing', () => {
     expect(
       migrated.behaviourParams.gallery.horizontal.autoSlide.behaviour
     ).to.eql('OFF');
-    // expect(migrated).to.own.include(afterConverstionAndBack());
+  });
+  it('should not have defined properties if they were not initialy defined', () => {
+    const migrated = addOldOptions(addMigratedOptions({}));
+    const flat = flattenObject(migrated);
+    Object.keys(flat).forEach((key) =>
+      flat[key] === undefined ? delete flat[key] : {}
+    );
+    expect(Object.keys(flat).length).to.eql(0);
   });
 });
 
@@ -80,7 +87,114 @@ function semiRefactored() {
 // }
 
 function defaultOptions_old() {
-  let def = { ...defaultOptions };
+  let def = {
+    isRTL: false,
+    isVertical: false,
+    minItemSize: 120,
+    groupSize: 3,
+    chooseBestGroup: true,
+    groupTypes: '1,2h,2v,3t,3b,3l,3r',
+    cubeImages: false,
+    cubeType: 'fill',
+    smartCrop: false,
+    fullscreen: true,
+    videoLoop: true,
+    videoSound: false,
+    videoPlay: 'hover',
+    numberOfImagesPerRow: 3,
+    collageDensity: 0.8,
+    galleryTextAlign: 'center',
+    fixedColumns: undefined, // determine the number of columns regardless of the screen size (use 0 to ignore)
+    showArrows: true,
+    hasThumbnails: false,
+    galleryThumbnailsAlignment: 'bottom',
+    gridStyle: 0,
+    titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
+    hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
+    isAutoSlideshow: false,
+    slideshowLoop: false,
+    playButtonForAutoSlideShow: false,
+    pauseAutoSlideshowOnHover: true,
+    allowSlideshowCounter: false,
+    autoSlideshowInterval: 4,
+    arrowsSize: 23,
+    slideshowInfoSize: 200,
+    imageLoadingMode: GALLERY_CONSTS.loadingMode.BLUR,
+    scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
+    overlayAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,
+    imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.NO_EFFECT,
+    itemBorderWidth: 0,
+    itemBorderRadius: 0,
+    itemEnableShadow: false,
+    itemShadowBlur: 20,
+    loadMoreAmount: 'all',
+    itemShadowDirection: 135,
+    itemShadowSize: 10,
+    imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
+    textBoxBorderRadius: 0,
+    textBoxBorderWidth: 0,
+    textBoxHeight: 200,
+    textImageSpace: 10,
+    scrollDirection: 0,
+    autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
+    autoSlideshowContinuousSpeed: 200,
+    layoutParams: {
+      repeatingGroupTypes: '',
+      gallerySpacing: 0,
+      cropRatio: 1, // determine the ratio of the images when using grid (use 1 for squares grid)
+    },
+    // adding
+    galleryLayout: -1,
+    gallerySizePx: undefined,
+    gallerySizeRatio: undefined,
+    gallerySizeType: GALLERY_CONSTS.gallerySizeType.SMART,
+    itemShadowOpacityAndColor: '',
+    arrowsColor: '',
+    textBoxBorderColor: '',
+    allowContextMenu: false,
+    hidePlay: false,
+    // ----
+    gallerySize: 30,
+    cropOnlyFill: false,
+    rotatingCropRatios: undefined,
+    columnWidths: '',
+    numberOfImagesPerCol: 1,
+    groupsPerStrip: 0,
+    imageMargin: 10,
+    scatter: 0,
+    rotatingScatter: '',
+    placeGroupsLtr: false,
+    enableInfiniteScroll: true,
+    thumbnailSpacings: 4,
+    enableScroll: true,
+    scrollSnap: false,
+    itemClick: GALLERY_CONSTS.itemClick.NOTHING,
+    slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
+    scrollDuration: 400,
+    arrowsPosition: GALLERY_CONSTS.arrowsPosition.ON_GALLERY,
+    arrowsVerticalPosition: GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER,
+    arrowsPadding: 23,
+    thumbnailSize: 120,
+    magicLayoutSeed: 1,
+    imagePlacementAnimation: GALLERY_CONSTS.imagePlacementAnimations.NO_EFFECT,
+    calculateTextBoxWidthMode:
+      GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT,
+    textBoxWidth: 200,
+    textBoxWidthPercent: 50,
+    loadMoreButtonText: '',
+    videoSpeed: '1',
+    showVideoControls: false,
+    shouldIndexDirectShareLinkInSEO: true,
+    slideTransition: GALLERY_CONSTS.slideTransition.ease,
+    useMaxDimensions: false,
+    enableVideoPlaceholder: true,
+    overlayPosition: GALLERY_CONSTS.overlayPositions.LEFT,
+    overlaySize: 100,
+    overlaySizeType: GALLERY_CONSTS.overlaySizeType.PERCENT,
+    overlayPadding: 0,
+    cubeFitPosition: GALLERY_CONSTS.cubeFitPosition.MIDDLE,
+    magnificationLevel: 2,
+  };
   delete def.fullscreen; //removing this from tests, we should be also removing it from the code. Izaac tested that its not relevant
   delete def.magicLayoutSeed;
   return def;

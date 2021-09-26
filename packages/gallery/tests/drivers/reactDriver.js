@@ -47,6 +47,13 @@ class galleryDriver {
         gallerySpacing: 1,
         cropRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
       },
+      behaviourParams: {
+        item: {
+          content: {
+            magnificationValue: 2,
+          },
+        },
+      },
       gotStyleParams: true,
       selectedLayout: 0,
       isVertical: false,
@@ -92,7 +99,6 @@ class galleryDriver {
       itemShadowSize: 10,
       shouldIndexDirectShareLinkInSEO: true,
       enableVideoPlaceholder: true,
-      magnificationLevel: 2,
     };
 
     this.scroll = {

@@ -195,10 +195,11 @@ function process_old_to_new_VideoVolume(obj) {
     'videoSound',
     optionsMap.behaviourParams.item.video.volume
   );
-  _obj.behaviourParams.item.video.volume = _obj.behaviourParams.item.video
-    .volume
-    ? _obj.behaviourParams.item.video.volume
-    : 0;
+  if (typeof _obj.behaviourParams.item.video.volume !== 'undefined') {
+    _obj.behaviourParams.item.video.volume = Number(
+      _obj.behaviourParams.item.video.volume
+    );
+  }
   return _obj;
 }
 function process_old_to_new_VideoSpeed(obj) {
@@ -208,9 +209,10 @@ function process_old_to_new_VideoSpeed(obj) {
     'videoSpeed',
     optionsMap.behaviourParams.item.video.speed
   );
-  _obj.behaviourParams.item.video.speed = Number(
-    _obj.behaviourParams.item.video.speed
-  );
+  _obj.behaviourParams.item.video.speed =
+    Number(_obj.behaviourParams.item.video.speed) >= 0
+      ? Number(_obj.behaviourParams.item.video.speed)
+      : undefined;
   return _obj;
 }
 function process_old_to_new_gallerySpacing(obj) {
@@ -510,17 +512,27 @@ function process_old_to_new_ClickAction(obj) {
   return _obj;
 }
 function process_old_to_new_AutoSlideBehaviour(obj) {
+  if (
+    typeof obj.behaviourParams?.gallery?.horizontal?.autoSlide?.behaviour !==
+    'undefined'
+  ) {
+    return obj;
+  }
   let _obj = { ...obj };
   let isAutoSlide = _obj.isAutoSlideshow;
   let autoSlideshowType = _obj.autoSlideshowType;
   let finalVal;
-  if (!isAutoSlide) {
-    finalVal = 'OFF';
+  if (typeof isAutoSlide === 'undefined') {
+    finalVal = undefined;
   } else {
-    if (autoSlideshowType === 'interval') {
-      finalVal = 'INTERVAL';
+    if (!isAutoSlide) {
+      finalVal = 'OFF';
     } else {
-      finalVal = 'CONTINUOUS';
+      if (autoSlideshowType === 'interval') {
+        finalVal = 'INTERVAL';
+      } else {
+        finalVal = 'CONTINUOUS';
+      }
     }
   }
   _obj = assignByString(
@@ -533,42 +545,53 @@ function process_old_to_new_AutoSlideBehaviour(obj) {
   return _obj;
 }
 function process_old_to_new_CropRatio(obj) {
+  if (typeof obj.layoutParams?.crop?.ratios !== 'undefined') {
+    return obj;
+  }
   let _obj = { ...obj };
   let repeatingVal = obj.rotatingCropRatios;
   let val = _obj.cubeRatio || _obj.layoutParams?.cropRatio;
-
   let finalVal;
   if (typeof repeatingVal === 'string' && repeatingVal !== '') {
     finalVal = repeatingVal;
   } else {
     finalVal = val;
   }
-  _obj.layoutParams.crop.ratios = String(finalVal).split(',').map(Number);
+  _obj.layoutParams.crop.ratios =
+    finalVal && String(finalVal).split(',').map(Number);
   delete _obj.cropRatio;
   delete _obj.layoutParams.cropRatio;
   delete _obj.rotatingCropRatios;
   return _obj;
 }
 function process_old_to_new_AllowedGroupTypes(obj) {
+  if (typeof obj.layoutParams?.groups?.allowedGroupTypes !== 'undefined') {
+    return obj;
+  }
   let _obj = { ...obj };
 
-  _obj.layoutParams.groups.allowedGroupTypes = _obj.groupTypes.split
-    ? _obj.groupTypes?.split(',')
+  _obj.layoutParams.groups.allowedGroupTypes = _obj.groupTypes?.split
+    ? _obj.groupTypes.split(',')
     : _obj.groupTypes
     ? _obj.groupTypes
-    : '';
+    : undefined;
   delete _obj.groupTypes;
   return _obj;
 }
 function process_old_to_new_repeatingGroupTypes(obj) {
+  if (typeof obj.layoutParams?.groups?.repeatingGroupTypes !== 'undefined') {
+    return obj;
+  }
   let _obj = { ...obj };
   let repeatingVal =
     obj.rotatingGroupTypes || obj.layoutParams?.repeatingGroupTypes;
   let finalVal;
   if (typeof repeatingVal === 'string' && repeatingVal !== '') {
     finalVal = repeatingVal.split(',');
-  } else {
+  } else if (typeof repeatingVal === 'string' && repeatingVal === '') {
     finalVal = [];
+  } else {
+    finalVal = undefined;
   }
   _obj = assignByString(
     _obj,
@@ -580,6 +603,9 @@ function process_old_to_new_repeatingGroupTypes(obj) {
   return _obj;
 }
 function process_old_to_new_NumberOfColumns(obj) {
+  if (typeof obj.layoutParams?.structure?.numberOfColumns !== 'undefined') {
+    return obj;
+  }
   let _obj = { ...obj };
   const fixedColumns = obj.fixedColumns;
   const numberOfImagesPerRow = obj.numberOfImagesPerRow;
@@ -588,7 +614,7 @@ function process_old_to_new_NumberOfColumns(obj) {
       ? numberOfImagesPerRow
       : fixedColumns >= 0
       ? fixedColumns
-      : 0;
+      : undefined;
 
   _obj.layoutParams.structure.numberOfColumns = finalVal;
   delete _obj.fixedColumns;

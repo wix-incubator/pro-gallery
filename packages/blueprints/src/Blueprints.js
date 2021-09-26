@@ -1,6 +1,6 @@
 import { Layouter } from 'pro-layouts';
 import {
-  defaultOptions,
+  populateWithDefaultOptions,
   addPresetOptions,
   dimensionsHelper,
   ItemsHelper,
@@ -8,7 +8,6 @@ import {
   GALLERY_CONSTS,
   addMigratedOptions,
   addOldOptions,
-  mergeNestedObjects,
 } from 'pro-gallery-lib';
 
 class Blueprints {
@@ -250,10 +249,12 @@ class Blueprints {
     let changed = false;
     let formattedOptions;
     if (optionsHaveChanged(options, oldOptions)) {
-      options = mergeNestedObjects(defaultOptions, options);
-      const mergedOldAndNewStyles = addOldOptions(addMigratedOptions(options));
+      const mergedOldAndNewStyles = addOldOptions(addMigratedOptions(options)); //add both old and new options
+      const fullOptionsOverDefualts = populateWithDefaultOptions(
+        mergedOldAndNewStyles
+      ); //add default for any undefined option
       formattedOptions = processLayouts(
-        addPresetOptions(mergedOldAndNewStyles),
+        addPresetOptions(fullOptionsOverDefualts),
         isUsingCustomInfoElements
       ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
       changed = true;
