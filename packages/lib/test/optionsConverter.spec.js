@@ -27,9 +27,7 @@ describe('Styles processing', () => {
   });
 
   it('should have new and old options when converted back and forth', () => {
-    const migrated = addMigratedOptions(
-      addOldOptions(addMigratedOptions(addOldOptions(semiRefactored())))
-    );
+    const migrated = addOldOptions(addMigratedOptions(semiRefactored()));
     // const expected = afterConverstionAndBack();
     expect(migrated.layoutParams.info.height).to.eql(150);
     expect(migrated.slideshowInfoSize).to.eql(150);
@@ -40,6 +38,10 @@ describe('Styles processing', () => {
     expect(
       migrated.behaviourParams.gallery.horizontal.autoSlide.behaviour
     ).to.eql('OFF');
+    expect(migrated.scrollSnap).to.eql(false);
+    expect(migrated.behaviourParams.gallery.horizontal.enableScrollSnap).to.eql(
+      false
+    );
   });
   it('should not have defined properties if they were not initialy defined', () => {
     const migrated = addOldOptions(addMigratedOptions({}));
@@ -59,6 +61,14 @@ function semiRefactored() {
         galleryLayout: 4,
       },
     },
+    behaviourParams: {
+      gallery: {
+        horizontal: {
+          enableScrollSnap: false,
+        },
+      },
+    },
+    // scrollSnap: false,
     isAutoSlideshow: false,
   };
 }
@@ -172,7 +182,7 @@ function defaultOptions_old() {
     enableInfiniteScroll: true,
     thumbnailSpacings: 4,
     enableScroll: true,
-    scrollSnap: false,
+    scrollSnap: true,
     itemClick: GALLERY_CONSTS.itemClick.NOTHING,
     slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
     scrollDuration: 400,
@@ -308,7 +318,7 @@ function defaultOptions_new() {
         scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
         enableIndexingShareLinks: true,
         horizontal: {
-          enableScrollSnap: false,
+          enableScrollSnap: true,
           navigationDuration: 400,
           blockScroll: false,
           loop: false,

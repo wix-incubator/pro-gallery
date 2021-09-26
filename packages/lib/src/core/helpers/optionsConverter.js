@@ -38,7 +38,7 @@ function convertOptionsBackwards(initialOptions) {
 }
 
 function addMigratedOptions(options) {
-  let migrated = migrateOptions(options);
+  const migrated = migrateOptions(options);
   let combinedOptions = mergeNestedObjects(migrated, options);
   delete combinedOptions.oldRefactoredOptionInCore;
   return combinedOptions;
