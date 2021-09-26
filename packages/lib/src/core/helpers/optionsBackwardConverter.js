@@ -291,10 +291,9 @@ function process_new_to_old_VideoSpeed(obj) {
 }
 function process_new_to_old_gallerySpacing(obj) {
   let _obj = { ...obj };
-  if (_obj.galleryMargin >= 0 && !(_obj['layoutParams_gallerySpacing'] >= 0)) {
-    _obj['layoutParams_gallerySpacing'] = _obj.galleryMargin;
-  }
-  delete _obj.galleryMargin;
+  _obj['layoutParams_gallerySpacing'] = _obj['galleryMargin'] =
+    _obj['layoutParams_structure_gallerySpacing'];
+  delete _obj['layoutParams_structure_gallerySpacing'];
   return _obj;
 }
 function process_new_to_old_ScrollDirection(obj) {
@@ -519,7 +518,7 @@ function process_new_to_old_CropRatio(obj) {
   } else {
     rotatingCropRatioVal = undefined;
   }
-  _obj['layoutParams_cropRatio'] = newVal[0];
+  _obj['layoutParams_cropRatio'] = _obj['cubeRatio'] = newVal[0];
   _obj.rotatingCropRatios = rotatingCropRatioVal;
   delete _obj[optionsMap.layoutParams.crop.ratios];
   return _obj;
@@ -540,7 +539,8 @@ function process_new_to_old_GroupTypes(obj) {
   let repeatingVal =
     _obj[optionsMap.layoutParams.groups.repeatingGroupTypes] &&
     _obj[optionsMap.layoutParams.groups.repeatingGroupTypes].join(',');
-  _obj['layoutParams_repeatingGroupTypes'] = repeatingVal;
+  _obj['layoutParams_repeatingGroupTypes'] = _obj['rotatingGroupTypes'] =
+    repeatingVal;
   delete _obj[optionsMap.layoutParams.groups.repeatingGroupTypes];
   return _obj;
 }

@@ -3,7 +3,6 @@ import { assignByString, getByString } from './optionsUtils';
 
 export const nameChangedLayoutParams = [
   ['galleryLayout', optionsMap.layoutParams.structure.galleryLayout],
-  ['galleryMargin', optionsMap.layoutParams.structure.gallerySpacing],
   ['imageMargin', optionsMap.layoutParams.structure.itemSpacing],
   ['groupsPerStrip', optionsMap.layoutParams.groups.numberOfGroupsPerRow],
   ['cubeImages', optionsMap.layoutParams.crop.enable],
@@ -165,5 +164,9 @@ export function namingChange(obj, oldName, newName) {
 export function reverseBooleanTo(obj, oldName, newName) {
   let val = typeof obj[oldName] === 'undefined' ? undefined : !obj[oldName];
   delete obj[oldName];
-  return assignByString(obj, newName, val);
+  return (
+    (typeof getByString(obj, newName) === 'undefined' &&
+      assignByString(obj, newName, val)) ||
+    obj
+  ); //dont overwrite existing property
 }

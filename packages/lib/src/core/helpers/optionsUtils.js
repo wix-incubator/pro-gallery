@@ -66,9 +66,17 @@ function flatToNested(ob) {
     {}
   );
 }
+function removeUndefinedValuesFromFlatObject(flatObject) {
+  Object.keys(flatObject).forEach((key) =>
+    flatObject[key] === undefined ? delete flatObject[key] : {}
+  );
+  return flatObject;
+}
 
 function mergeNestedObjects(...args) {
-  return flatToNested(Object.assign({}, ...args.map(flattenObject)));
+  let processObj = (obj) =>
+    removeUndefinedValuesFromFlatObject(flattenObject(obj));
+  return flatToNested(Object.assign({}, ...args.map(processObj)));
 }
 
 export {
