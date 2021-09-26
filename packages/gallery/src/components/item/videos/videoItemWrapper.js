@@ -97,7 +97,7 @@ class VideoItemWrapper extends GalleryComponent {
 
   render() {
     const hover = this.props.hover;
-    const showVideoPlayButton = this.props.options.behaviourParams.item.video.enablePlayButton;
+    const showVideoPlayButton = this.props.options.behaviourParams?.item?.video?.enablePlayButton;
     const videoPlaceholder = this.createVideoPlaceholder(showVideoPlayButton);
 
     const VideoItem = this.VideoItem;
