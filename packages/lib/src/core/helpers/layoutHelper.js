@@ -282,8 +282,8 @@ const addMarginsToSupportShadows = (options) => {
 }
 const centerArrowsWhenNeeded = (options) => {
   let _options = {...options}
-  const isSingleVerticalItemRendered =  _options.layoutParams_repeatingGroupTypes ? 
-  _options.layoutParams_repeatingGroupTypes === '1' : _options.groupTypes === '1' ; // only one item is being rendered vertically?
+  const isSingleVerticalItemRendered =  _options.layoutParams.repeatingGroupTypes ? 
+  String(_options.layoutParams.repeatingGroupTypes) === '1' : String(_options.groupTypes) === '1' ; // only one item is being rendered vertically?
   const filteredPlacement = _options.titlePlacement // filtering hover since it doesn't affect this product
   .split(',')
   .filter(placement => !isHoverPlacement(placement))
