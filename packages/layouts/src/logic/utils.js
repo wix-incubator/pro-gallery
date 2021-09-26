@@ -116,10 +116,7 @@ class Utils {
       columnWidths: '',
     };
     const fullMigratedAndOld = addOldOptions(addMigratedOptions(styleParams));
-    const populatedWithDefault = populateWithDefaultOptions(
-      defaultLayouterSP,
-      fullMigratedAndOld
-    );
+    const populatedWithDefault = populateWithDefaultOptions(fullMigratedAndOld);
     return addOldOptions(addMigratedOptions(populatedWithDefault));
   }
 
