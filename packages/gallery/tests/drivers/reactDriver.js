@@ -52,6 +52,9 @@ class galleryDriver {
           content: {
             magnificationValue: 2,
           },
+          video: {
+            enablePlayButton: true,
+          },
         },
       },
       gotStyleParams: true,
