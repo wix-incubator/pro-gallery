@@ -40,6 +40,9 @@ function expectedOptions() {
       gallerySpacing: 0,
       cropRatio: 1,
       repeatingGroupTypes: '',
+      thumbnails: {
+        alignment: 'BOTTOM',
+      },
     },
     behaviourParams: {
       item: {
@@ -71,7 +74,6 @@ function expectedOptions() {
     fixedColumns: 0,
     showArrows: true,
     hasThumbnails: false,
-    galleryThumbnailsAlignment: 'bottom',
     gridStyle: 0,
     titlePlacement: 'SHOW_ON_HOVER',
     hoveringBehaviour: 'APPEARS',

@@ -5,6 +5,7 @@ import { GALLERY_CONSTS } from 'pro-gallery-lib';
 expect.extend({ toMatchImageSnapshot });
 
 describe('galleryThumbnailsAlignment - e2e', () => {
+  // 'thumbnails-alignment - e2e'
   let driver;
 
   beforeAll(async () => {
@@ -18,7 +19,11 @@ describe('galleryThumbnailsAlignment - e2e', () => {
   it('should place thumbnails in the bottom', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
-      galleryThumbnailsAlignment: GALLERY_CONSTS.thumbnailsAlignment.BOTTOM,
+      layoutParams: {
+        thumbnails: {
+          alignment: GALLERY_CONSTS.thumbnailsAlignment.BOTTOM,
+        },
+      },
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -27,7 +32,11 @@ describe('galleryThumbnailsAlignment - e2e', () => {
   it('should place thumbnails on top', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
-      galleryThumbnailsAlignment: GALLERY_CONSTS.thumbnailsAlignment.TOP,
+      layoutParams: {
+        thumbnails: {
+          alignment: GALLERY_CONSTS.thumbnailsAlignment.TOP,
+        },
+      },
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -36,7 +45,11 @@ describe('galleryThumbnailsAlignment - e2e', () => {
   it('should place thumbnails on the left', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
-      galleryThumbnailsAlignment: GALLERY_CONSTS.thumbnailsAlignment.LEFT,
+      layoutParams: {
+        thumbnails: {
+          alignment: GALLERY_CONSTS.thumbnailsAlignment.LEFT,
+        },
+      },
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -45,7 +58,11 @@ describe('galleryThumbnailsAlignment - e2e', () => {
   it('should place thumbnails on the right', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
-      galleryThumbnailsAlignment: GALLERY_CONSTS.thumbnailsAlignment.RIGHT,
+      layoutParams: {
+        thumbnails: {
+          alignment: GALLERY_CONSTS.thumbnailsAlignment.RIGHT,
+        },
+      },
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');

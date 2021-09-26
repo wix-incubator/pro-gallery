@@ -3,6 +3,9 @@ const options = {
     gallerySpacing: 0,
     cropRatio: 1,
     repeatingGroupTypes: '',
+    thumbnails: {
+      alignment: 'BOTTOM',
+    },
   },
   titlePlacement: 'SHOW_ON_HOVER',
   hoveringBehaviour: 'NO_CHANGE',
@@ -59,7 +62,6 @@ const options = {
   playButtonForAutoSlideShow: false,
   pauseAutoSlideshowOnHover: true,
   allowSlideshowCounter: false,
-  galleryThumbnailsAlignment: 'bottom',
   thumbnailSize: 250,
   magicLayoutSeed: 1,
   //itemOpacity:'color-5', startWithOpacity: 0.60,

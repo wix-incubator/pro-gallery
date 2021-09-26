@@ -45,13 +45,13 @@ class DimensionsHelper {
           this.options.thumbnailSize +
           this.options.layoutParams.gallerySpacing +
           3 * this.options.thumbnailSpacings;
-        switch (this.options.galleryThumbnailsAlignment) {
-          case 'top':
-          case 'bottom':
+        switch (this.options.layoutParams.thumbnails.alignment) {
+          case 'TOP':
+          case 'BOTTOM':
             res.galleryHeight -= fixedThumbnailSize;
             break;
-          case 'left':
-          case 'right':
+          case 'LEFT':
+          case 'RIGHT':
             res.galleryWidth -= fixedThumbnailSize;
             break;
           default:

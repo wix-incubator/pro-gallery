@@ -27,7 +27,7 @@ import gridStyle from './gridStyle';
 import hasThumbnails from './hasThumbnails';
 import groupTypes from './groupTypes';
 import thumbnailSize from './thumbnailSize';
-import galleryThumbnailsAlignment from './galleryThumbnailsAlignment';
+import layoutParams_thumbnails_alignment from './thumbnailsAlignment';
 import isRTL from './isRTL';
 import scrollSnap from './scrollSnap';
 import itemBorderWidth from './itemBorderWidth';
@@ -130,7 +130,7 @@ export default {
   hasThumbnails,
   groupTypes,
   thumbnailSize,
-  galleryThumbnailsAlignment,
+  layoutParams_thumbnails_alignment,
   isRTL,
   scrollSnap,
   itemBorderWidth,

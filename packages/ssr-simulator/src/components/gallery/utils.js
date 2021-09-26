@@ -5,6 +5,9 @@ export const defaultOptions = {
     gallerySpacing: 0,
     cropRatio: 1,
     repeatingGroupTypes: '',
+    thumbnails: {
+      alignment: Consts.thumbnailsAlignment.BOTTOM,
+    },
   },
   isRTL: false,
   isVertical: 0,
@@ -32,7 +35,6 @@ export const defaultOptions = {
   showArrows: false,
   enableInfiniteScroll: true,
   thumbnailSpacings: 4,
-  galleryThumbnailsAlignment: Consts.thumbnailsAlignment.bottom,
   enableScroll: true,
   hasThumbnails: false,
   isAutoSlideshow: false,

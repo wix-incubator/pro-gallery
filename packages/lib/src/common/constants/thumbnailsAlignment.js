@@ -1,8 +1,8 @@
 const THUMBNAILS_ALIGNMENT = {
-  BOTTOM: 'bottom',
-  LEFT: 'left',
-  TOP: 'top',
-  RIGHT: 'right',
+  BOTTOM: 'BOTTOM',
+  LEFT: 'LEFT',
+  TOP: 'TOP',
+  RIGHT: 'RIGHT',
 };
 
 export default THUMBNAILS_ALIGNMENT;

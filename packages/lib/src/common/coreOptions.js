@@ -4,6 +4,9 @@ const coreOptions = {
   layoutParams: {
     gallerySpacing: 0,
     cropRatio: 1, // determine the ratio of the images when using grid (use 1 for squares grid)
+    thumbnails: {
+      alignment: 'BOTTOM',
+    },
   },
   isRTL: false,
   isVertical: false,
@@ -26,7 +29,6 @@ const coreOptions = {
   fixedColumns: 0, // determine the number of columns regardless of the screen size (use 0 to ignore)
   showArrows: true,
   hasThumbnails: false,
-  galleryThumbnailsAlignment: 'bottom',
   gridStyle: 0,
   titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
   hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,

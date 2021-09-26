@@ -683,17 +683,17 @@ class SlideshowView extends GalleryComponent {
 
     let thumbnailsMargin;
     const thumbnailSpacings = this.props.options.thumbnailSpacings;
-    switch (this.props.options.galleryThumbnailsAlignment) {
-      case 'bottom':
+    switch (this.props.options.layoutParams.thumbnails.alignment) {
+      case 'BOTTOM':
         thumbnailsMargin = `${thumbnailSpacings}px -${thumbnailSpacings}px 0 -${thumbnailSpacings}px`;
         break;
-      case 'left':
+      case 'LEFT':
         thumbnailsMargin = `-${thumbnailSpacings}px ${thumbnailSpacings}px -${thumbnailSpacings}px 0`;
         break;
-      case 'top':
+      case 'TOP':
         thumbnailsMargin = `0 -${thumbnailSpacings}px ${thumbnailSpacings}px -${thumbnailSpacings}px`;
         break;
-      case 'right':
+      case 'RIGHT':
         thumbnailsMargin = `-${thumbnailSpacings}px 0 -${thumbnailSpacings}px ${thumbnailSpacings}px`;
         break;
     }
@@ -1245,7 +1245,7 @@ class SlideshowView extends GalleryComponent {
   getThumbnails() {
     const hasThumbnails = this.props.options.hasThumbnails;
     const thumbnailsPosition =
-      this.props.options.galleryThumbnailsAlignment;
+      this.props.options.layoutParams.thumbnails.alignment;
 
     const thumbnailsGallery = hasThumbnails
       ? this.createThumbnails(thumbnailsPosition)
@@ -1253,13 +1253,13 @@ class SlideshowView extends GalleryComponent {
 
     const thumbnails = [];
     switch (thumbnailsPosition) {
-      case 'top':
-      case 'left':
+      case 'TOP':
+      case 'LEFT':
         thumbnails[0] = thumbnailsGallery;
         thumbnails[1] = false;
         break;
-      case 'right':
-      case 'bottom':
+      case 'RIGHT':
+      case 'BOTTOM':
         thumbnails[0] = false;
         thumbnails[1] = thumbnailsGallery;
         break;

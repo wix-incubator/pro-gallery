@@ -46,6 +46,9 @@ class galleryDriver {
       layoutParams: {
         gallerySpacing: 1,
         cropRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
+        thumbnails: {
+          alignment: 'BOTTOM',
+        },
       },
       behaviourParams: {
         item: {
@@ -89,7 +92,6 @@ class galleryDriver {
       slideshowInfoSize: 200,
       hasThumbnails: false,
       thumbnailSize: utils.isMobile() ? 90 : 120,
-      galleryThumbnailsAlignment: 'bottom',
       thumbnailSpacings: 0,
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
       itemEnableShadow: false,

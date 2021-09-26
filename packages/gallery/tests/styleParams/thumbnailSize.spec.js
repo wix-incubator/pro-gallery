@@ -45,7 +45,11 @@ describe('options - thumbnailSize', () => {
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       thumbnailSize: 300,
       thumbnailSpacings: 10,
-      galleryThumbnailsAlignment: 'bottom',
+      layoutParams: {
+        thumbnails: {
+          alignment: GALLERY_CONSTS.thumbnailsAlignment.BOTTOM,
+        },
+      },
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -61,7 +65,11 @@ describe('options - thumbnailSize', () => {
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       thumbnailSize: 300,
       thumbnailSpacings: 10,
-      galleryThumbnailsAlignment: 'left',
+      layoutParams: {
+        thumbnails: {
+          alignment: GALLERY_CONSTS.thumbnailsAlignment.LEFT,
+        },
+      },
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
