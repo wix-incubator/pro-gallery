@@ -108,6 +108,10 @@ export const nameChangedBehaviourParams = [
     optionsMap.behaviourParams.gallery.horizontal.slideshowInfo.enableCounter,
   ],
   [
+    'showVideoPlayButton',
+    optionsMap.behaviourParams.item.video.enablePlayButton,
+  ],
+  [
     'playButtonForAutoSlideShow',
     optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
       .enablePlayButton,
@@ -120,10 +124,6 @@ export const reversedBehaviourParams = [
     optionsMap.behaviourParams.gallery.vertical.loadMore.enable,
   ],
   ['allowContextMenu', optionsMap.behaviourParams.gallery.blockContextMenu],
-  [
-    'showVideoPlayButton',
-    optionsMap.behaviourParams.item.video.enablePlayButton,
-  ],
   ['enableScroll', optionsMap.behaviourParams.gallery.horizontal.blockScroll], //requires a reversal! (blocks instead of allowing),
 ];
 
