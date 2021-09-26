@@ -997,7 +997,7 @@ class ItemView extends GalleryComponent {
   }
 
   onContextMenu(e) {
-    if (!utils.isDev() && !this.props.options.allowContextMenu) {
+    if (!utils.isDev() && this.props.options.behaviourParams.gallery.blockContextMenu) {
       e.preventDefault(e);
     }
   }

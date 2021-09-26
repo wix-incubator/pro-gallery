@@ -11,6 +11,9 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
     repeatingGroupTypes: '',
   },
   behaviourParams: {
+    gallery: {
+      blockContextMenu: true,
+    },
     item: {
       content: {
         magnificationValue: 2,
@@ -25,7 +28,6 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   itemShadowOpacityAndColor: '',
   arrowsColor: '',
   textBoxBorderColor: '',
-  allowContextMenu: false,
   hidePlay: false,
   // ----
   gallerySize: 30,

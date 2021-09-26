@@ -107,7 +107,7 @@ export const optionsBySection = {
     'autoSlideshowContinuousSpeed',
     'playButtonForAutoSlideShow',
     'scrollSnap',
-    'allowContextMenu',
+    'behaviourParams_gallery_blockContextMenu',
     'pauseAutoSlideshowOnHover',
     'itemClick',
     'behaviourParams_item_content_magnificationValue',

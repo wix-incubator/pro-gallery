@@ -141,7 +141,7 @@ class ImageItem extends GalleryComponent {
     const image = () => {
       const imagesComponents = [];
       const blockDownloadStyles =
-        utils.isMobile() && !this.props.options.allowContextMenu
+        utils.isMobile() && this.props.options.behaviourParams.gallery.blockContextMenu
           ? {
               '-webkit-user-select': 'none',
               '-webkit-touch-callout': 'none',

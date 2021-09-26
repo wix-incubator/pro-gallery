@@ -42,6 +42,9 @@ function expectedOptions() {
       repeatingGroupTypes: '',
     },
     behaviourParams: {
+      gallery: {
+        blockContextMenu: true,
+      },
       item: {
         content: {
           magnificationValue: 2,
@@ -109,7 +112,6 @@ function expectedOptions() {
     itemShadowOpacityAndColor: '',
     arrowsColor: '',
     textBoxBorderColor: '',
-    allowContextMenu: false,
     hidePlay: false,
     gallerySize: 30,
     cropOnlyFill: false,

@@ -70,7 +70,7 @@ import gallerySizeType from './gallerySizeType';
 import gallerySize from './gallerySize';
 import gallerySizePx from './gallerySizePx';
 import gallerySizeRatio from './gallerySizeRatio';
-import allowContextMenu from './allowContextMenu';
+import behaviourParams_gallery_blockContextMenu from './blockContextMenu';
 import galleryLayout from './galleryLayout';
 import scrollDirection from './scrollDirection';
 import scrollDuration from './scrollDuration';
@@ -172,7 +172,7 @@ export default {
   gallerySize,
   gallerySizePx,
   gallerySizeRatio,
-  allowContextMenu,
+  behaviourParams_gallery_blockContextMenu,
   galleryLayout,
   scrollDirection,
   scrollDuration,
