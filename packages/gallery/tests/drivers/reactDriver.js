@@ -118,7 +118,7 @@ class galleryDriver {
       itemClick: 'expand',
       // thumbnailSize: utils.isMobile() ? 90 : 120,
       // thumbnailSpacings: 0,
-      itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
+      // itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
     });
 
     this.scroll = {
