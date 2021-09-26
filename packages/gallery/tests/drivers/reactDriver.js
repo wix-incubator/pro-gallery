@@ -44,81 +44,8 @@ class galleryDriver {
       },
     };
 
-    // this.options = {
-    //   layoutParams: {
-    // gallerySpacing: 1,
-    //     cropRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
-    //   },
-    //   behaviourParams: {
-    //     item: {
-    //       content: {
-    //         magnificationValue: 2,
-    //       },
-    //     },
-    //   },
-    //   gotStyleParams: true,
-    //   selectedLayout: 0,
-    //   isVertical: false,
-    //   isRTL: false,
-    //   targetItemSize: 320,
-    //   minItemSize: 120,
-    //   groupSize: 3,
-    //   chooseBestGroup: true,
-    //   groupTypes: '1,2h,2v,3t,3b,3l,3r',
-    //   cubeImages: false,
-    //   smartCrop: false,
-    //   fullscreen: true,
-    //   videoLoop: true,
-    //   videoSound: false,
-    //   videoSpeed: 1,
-    //   videoPlay: 'hover',
-    //   sharpParams: {
-    //     quality: 90,
-    //     usm: {}, // do not apply usm - {usm_r: 0.66, usm_a: 1.00, usm_t: 0.01},
-    //   },
-    //   collageAmount: 0.8,
-    //   collageDensity: 0.8,
-    //   imageMargin: 5,
-    //   viewMode: 'preview',
-    //   enableInfiniteScroll: true,
-    //   itemClick: 'expand',
-    //   fixedColumns: 0, //determine the number of columns regardless of the screen size (use 0 to ignore)
-    //   scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-    //   showArrows: true,
-    //   arrowsSize: 23,
-    //   arrowsVerticalPosition: 'ITEM_CENTER',
-    //   textBoxHeight: 200,
-    //   slideshowInfoSize: 200,
-    //   hasThumbnails: false,
-    //   thumbnailSize: utils.isMobile() ? 90 : 120,
-    //   galleryThumbnailsAlignment: 'bottom',
-    //   thumbnailSpacings: 0,
-    //   titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
-    //   itemEnableShadow: false,
-    //   itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
-    //   itemShadowBlur: 20,
-    //   itemShadowDirection: 135,
-    //   itemShadowSize: 10,
-    //   shouldIndexDirectShareLinkInSEO: true,
-    //   enableVideoPlaceholder: true,
-    // };
-
     this.options = mergeNestedObjects(defaultOptions, {
-      // layoutParams: {
-      //   gallerySpacing: 1,
-      // },
       targetItemSize: 320,
-      // sharpParams: {
-      //   quality: 90,
-      //   usm: {}, // do not apply usm - {usm_r: 0.66, usm_a: 1.00, usm_t: 0.01},
-      // },
-      // collageAmount: 0.8,
-      // imageMargin: 5,
-      // viewMode: 'preview',
-      // itemClick: 'expand',
-      // thumbnailSize: utils.isMobile() ? 90 : 120,
-      // thumbnailSpacings: 0,
-      // itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
     });
 
     this.scroll = {
