@@ -1,5 +1,5 @@
 //Yonatan Hattav Jun21
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, mergeNestedObjects } from 'pro-gallery-lib';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import GalleryDriver from '../../drivers/reactDriver';
@@ -96,13 +96,16 @@ describe('Item View', () => {
     it('should return a placeholder for non playing video', () => {
       Object.assign(sampleItemViewProps, {
         currentPlayingIdx: 1,
-        options: {
-          enableVideoPlaceholder: true,
-          galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-        },
         type: 'video',
         idx: 0,
       });
+      sampleItemViewProps.options = mergeNestedObjects(
+        sampleItemViewProps.options,
+        {
+          enableVideoPlaceholder: true,
+          galleryLayout: GALLERY_CONSTS.layout.EMPTY,
+        }
+      );
       driver.mount(ItemView, sampleItemViewProps);
       expect(driver.find.selector(VideoItemPlaceholder).length).to.equal(1);
     });
