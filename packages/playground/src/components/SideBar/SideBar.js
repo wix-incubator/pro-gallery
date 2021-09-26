@@ -16,7 +16,7 @@ import { throttle } from '../../utils/utils';
 import { isValidOption } from '../../constants/options';
 import s from './SideBar.module.scss';
 import { GALLERY_CONSTS } from 'pro-gallery';
-import { notEligibleReasons, isEligibleForLeanGallery } from 'lean-gallery';
+// import { notEligibleReasons, isEligibleForLeanGallery } from 'lean-gallery';
 
 import 'antd/dist/antd.css';
 import { getContainerUrlParams } from "./helper";
@@ -260,14 +260,14 @@ function SideBar({ items, blueprintsManager, visible }) {
                 <Switch checked={!!flatOptions.allowLeanGallery} onChange={e => setOptions('allowLeanGallery', !!e)} />
               </Form.Item>
               {
-                isEligibleForLeanGallery({ items, styles: flatOptions }) ?
-                  <Alert key={'leanGalleryAllowed'} message={'RENDERING LEAN GALLERY'} type="success" />
-                  :
+                // isEligibleForLeanGallery({ items, styles: flatOptions }) ?
+                //   <Alert key={'leanGalleryAllowed'} message={'RENDERING LEAN GALLERY'} type="success" />  Decided not to ask about lean gallery eventually
+                //   :
                   <List
                     size="small"
                     header="CAN NOT RENDER LEAN GALLERY"
                     bordered
-                    dataSource={notEligibleReasons({ items, styles: flatOptions })}
+                    // dataSource={notEligibleReasons({ items, styles: flatOptions })}
                     renderItem={item => <List.Item>{item}</List.Item>}
                   />
               }
