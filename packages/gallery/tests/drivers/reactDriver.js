@@ -108,10 +108,10 @@ class galleryDriver {
         gallerySpacing: 1,
       },
       targetItemSize: 320,
-      sharpParams: {
-        quality: 90,
-        usm: {}, // do not apply usm - {usm_r: 0.66, usm_a: 1.00, usm_t: 0.01},
-      },
+      // sharpParams: {
+      //   quality: 90,
+      //   usm: {}, // do not apply usm - {usm_r: 0.66, usm_a: 1.00, usm_t: 0.01},
+      // },
       collageAmount: 0.8,
       imageMargin: 5,
       // viewMode: 'preview',
