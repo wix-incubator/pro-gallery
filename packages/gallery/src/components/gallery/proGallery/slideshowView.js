@@ -554,8 +554,8 @@ class SlideshowView extends GalleryComponent {
     let numOfWholeThumbnails;
 
     switch (thumbnailPosition) {
-      case 'top':
-      case 'bottom':
+      case 'TOP':
+      case 'BOTTOM':
         width =
           this.props.container.galleryWidth +
           this.props.options.thumbnailSpacings;
@@ -572,8 +572,8 @@ class SlideshowView extends GalleryComponent {
               this.props.options.thumbnailSpacings * 2)
         );
         break;
-      case 'left':
-      case 'right':
+      case 'LEFT':
+      case 'RIGHT':
         height =
           this.props.container.galleryHeight +
           2 * this.props.options.thumbnailSpacings;
@@ -631,13 +631,13 @@ class SlideshowView extends GalleryComponent {
     ) {
       //there are less thumbnails than available thumbnails spots || one of the first thumbnails
       switch (thumbnailPosition) {
-        case 'top':
-        case 'bottom':
+        case 'TOP':
+        case 'BOTTOM':
           thumbnailsStyle.width = thumbnailsContainerSize + 'px';
           thumbnailsStyle.left = 0;
           break;
-        case 'left':
-        case 'right':
+        case 'LEFT':
+        case 'RIGHT':
           thumbnailsStyle.height = thumbnailsContainerSize + 'px';
           thumbnailsStyle.marginTop = 0;
           break;
@@ -648,13 +648,13 @@ class SlideshowView extends GalleryComponent {
     ) {
       //set selected to center only if neeeded
       switch (thumbnailPosition) {
-        case 'top':
-        case 'bottom':
+        case 'TOP':
+        case 'BOTTOM':
           thumbnailsStyle.width = thumbnailsContainerSize + 'px';
           thumbnailsStyle.left = (width - thumbnailsContainerSize) / 2 + 'px';
           break;
-        case 'left':
-        case 'right':
+        case 'LEFT':
+        case 'RIGHT':
           thumbnailsStyle.height = thumbnailsContainerSize + 'px';
           thumbnailsStyle.marginTop =
             (height - thumbnailsContainerSize) / 2 + 'px';
@@ -663,13 +663,13 @@ class SlideshowView extends GalleryComponent {
     } else if (activeIndex >= items.length - numOfThumbnails / 2) {
       //one of the last thumbnails
       switch (thumbnailPosition) {
-        case 'top':
-        case 'bottom':
+        case 'TOP':
+        case 'BOTTOM':
           thumbnailsStyle.left = width - thumbnailsContainerSize + 'px';
           thumbnailsStyle.overflow = 'visible';
           break;
-        case 'left':
-        case 'right':
+        case 'LEFT':
+        case 'RIGHT':
           thumbnailsStyle.top = height - thumbnailsContainerSize + 'px';
           thumbnailsStyle.overflow = 'visible';
           break;
