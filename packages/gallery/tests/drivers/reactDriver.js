@@ -1,10 +1,8 @@
 import { Layouter } from 'pro-layouts';
 import {
-  // GALLERY_CONSTS,
   GalleryItem,
   ItemsHelper,
   window,
-  // utils,
   defaultOptions,
   mergeNestedObjects,
 } from 'pro-gallery-lib';
