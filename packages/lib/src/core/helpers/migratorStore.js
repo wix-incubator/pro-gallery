@@ -1,5 +1,5 @@
 import optionsMap from './optionsMap';
-import { assignByString, getByString } from './optionsUtils';
+// import { assignByString, getByString } from './optionsUtils';
 
 export const nameChangedLayoutParams = [
   ['galleryLayout', optionsMap.layoutParams.structure.galleryLayout],
@@ -34,6 +34,38 @@ export const nameChangedLayoutParams = [
   ['textBoxBorderColor', optionsMap.layoutParams.info.border.color],
   ['textBoxBorderRadius', optionsMap.layoutParams.info.border.radius],
 ];
+
+// export const reverseNameChangedLayoutParams = [
+//   [optionsMap.layoutParams.structure.galleryLayout, 'galleryLayout'],
+//   [optionsMap.layoutParams.structure.itemSpacing, 'imageMargin', 'imageMargin'],
+//   [optionsMap.layoutParams.groups.numberOfGroupsPerRow, 'groupsPerStrip'],
+//   [optionsMap.layoutParams.crop.enable, 'cubeImages'],
+//   [optionsMap.layoutParams.crop.enableSmartCrop, 'smartCrop'],
+//   [optionsMap.layoutParams.crop.cropOnlyFill, 'cropOnlyFill'],
+//   [optionsMap.layoutParams.targetItemSize.minimum, 'minItemSize'],
+//   [optionsMap.layoutParams.structure.scatter.randomScatter, 'scatter'],
+//   [optionsMap.layoutParams.structure.scatter.manualScatter, 'rotatingScatter'],
+//   [optionsMap.layoutParams.structure.numberOfGridRows, 'numberOfImagesPerCol'],
+//   [optionsMap.layoutParams.groups.density, 'collageDensity'],
+//   [optionsMap.layoutParams.groups.groupByOrientation, 'chooseBestGroup'],
+//   [optionsMap.layoutParams.groups.groupSize, 'groupSize'],
+//   [optionsMap.layoutParams.thumbnails.enable, 'hasThumbnails'],
+//   [optionsMap.layoutParams.thumbnails.spacing, 'thumbnailSpacings'],
+//   [optionsMap.layoutParams.thumbnails.size, 'thumbnailSize'],
+//   [optionsMap.layoutParams.navigationArrows.enable, 'showArrows'],
+//   [optionsMap.layoutParams.navigationArrows.padding, 'arrowsPadding'],
+//   [
+//     optionsMap.layoutParams.navigationArrows.verticalAlignment,
+//     'arrowsVerticalPosition',
+//   ],
+//   [optionsMap.layoutParams.navigationArrows.size, 'arrowsSize'],
+//   [optionsMap.layoutParams.info.layout, 'imageInfoType'],
+
+//   [optionsMap.layoutParams.info.spacing, 'textImageSpace'],
+//   [optionsMap.layoutParams.info.border.width, 'textBoxBorderWidth'],
+//   [optionsMap.layoutParams.info.border.color, 'textBoxBorderColor'],
+//   [optionsMap.layoutParams.info.border.radius, 'textBoxBorderRadius'],
+// ];
 
 export const reversedLayoutParams = [
   ['useMaxDimensions', optionsMap.layoutParams.structure.enableStreching],
@@ -153,20 +185,22 @@ export function reverseBooleans(obj, pairsArray) {
   return _obj;
 }
 export function namingChange(obj, oldName, newName) {
-  let val = obj[oldName];
+  if (
+    typeof obj[newName] === 'undefined' &&
+    typeof obj[oldName] !== 'undefined'
+  ) {
+    obj[newName] = obj[oldName];
+  }
   delete obj[oldName];
-  return (
-    (typeof getByString(obj, newName) === 'undefined' &&
-      assignByString(obj, newName, val)) ||
-    obj
-  ); //dont overwrite existing property
+  return obj;
 }
 export function reverseBooleanTo(obj, oldName, newName) {
-  let val = typeof obj[oldName] === 'undefined' ? undefined : !obj[oldName];
+  if (
+    typeof obj[newName] === 'undefined' &&
+    typeof obj[oldName] !== 'undefined'
+  ) {
+    obj[newName] = !obj[oldName];
+  }
   delete obj[oldName];
-  return (
-    (typeof getByString(obj, newName) === 'undefined' &&
-      assignByString(obj, newName, val)) ||
-    obj
-  ); //dont overwrite existing property
+  return obj;
 }

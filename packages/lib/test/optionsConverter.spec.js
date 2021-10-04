@@ -9,6 +9,7 @@ import {
   reverseMigrateOptions,
   addOldOptions,
 } from '../src/core/helpers/optionsBackwardConverter';
+import { namingChange } from '../src/core/helpers/migratorStore';
 import v3DefaultOptions from '../src/common/v3DefaultOptions';
 import v4DefaultOptions from '../src/common/v4DefaultOptions';
 
@@ -17,7 +18,7 @@ describe('Styles processing', () => {
     let old = reverseMigrateOptions(defaultOptions_new());
     expect(old).to.eql(defaultOptions_old());
   });
-  it('should migrate styles from old to new until theres nothing ot migrate anymore', () => {
+  it('should migrate styles from old to new ', () => {
     const migrated = migrateOptions(defaultOptions_old());
     expect(migrated).to.eql(defaultOptions_new());
   });
@@ -53,7 +54,48 @@ describe('Styles processing', () => {
     expect(Object.keys(flat).length).to.eql(0);
   });
 });
+describe('should not be heavy', function () {
+  this.timeout(1000);
 
+  it('addOldOptions', () => {
+    for (let i = 0; i < 1000; i++) {
+      addOldOptions({});
+    }
+    expect(false).to.eql(false);
+  });
+  it('reverseMigrateOptions', () => {
+    for (let i = 0; i < 1; i++) {
+      reverseMigrateOptions({});
+    }
+    expect(false).to.eql(false);
+  });
+  it('addMigratedOptions', () => {
+    for (let i = 0; i < 1000; i++) {
+      addMigratedOptions({});
+    }
+    expect(false).to.eql(false);
+  });
+  it('namingChange', () => {
+    for (let i = 0; i < 100000; i++) {
+      namingChange(
+        {},
+        'textBoxBorderRadius',
+        'layoutParams_info_border_radius'
+      );
+    }
+    expect(false).to.eql(false);
+  });
+  it('namingChange', () => {
+    for (let i = 0; i < 100000; i++) {
+      namingChange(
+        {},
+        'layoutParams_info_border_radius',
+        'textBoxBorderRadius'
+      );
+    }
+    expect(false).to.eql(false);
+  });
+});
 function semiRefactored() {
   return {
     layoutParams: {
