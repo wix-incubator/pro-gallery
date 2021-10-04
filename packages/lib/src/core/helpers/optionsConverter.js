@@ -1,13 +1,14 @@
 import {
-  mergeNestedObjects,
-  trimUndefinedValues,
+  // mergeNestedObjects,
+  trimUndefinedValues_flat,
   flattenObject,
   flatToNested,
 } from './optionsUtils';
 
-import cloneDeep from 'lodash/cloneDeep';
+// import cloneDeep from 'lodash/cloneDeep';
 import { isLayout } from '../../common/constants/layout';
 import optionsMap from './optionsMap';
+import { addOldOptions } from './optionsBackwardConverter';
 import {
   nameChangedLayoutParams,
   nameChangedBehaviourParams,
@@ -19,61 +20,69 @@ import {
   reverseBooleans,
 } from './migratorStore';
 
-function addMigratedOptions(options) {
-  const migrated = migrateOptions(options);
-  let combinedOptions = mergeNestedObjects(
-    trimUndefinedValues(migrated),
-    trimUndefinedValues(options)
-  );
-  delete combinedOptions.oldRefactoredOptionInCore;
-  return combinedOptions;
+function extendNestedOptionsToIncludeOldAndNew(nestedOptions) {
+  let flatOptions = flattenObject(nestedOptions);
+  let populatedFlatOptions = addOldOptions(addMigratedOptions(flatOptions));
+  return flatToNested(populatedFlatOptions);
 }
 
-function migrateOptions(oldStyles) {
-  let newStyles = flattenObject(cloneDeep(oldStyles));
+function addMigratedOptions(flatOptions) {
+  const flat_migrated = migrateOptions(flatOptions);
+  let flat_combinedOptions = {
+    ...trimUndefinedValues_flat(flat_migrated),
+    ...trimUndefinedValues_flat(flatOptions),
+  };
+  delete flat_combinedOptions.oldRefactoredOptionInCore;
+  return flat_combinedOptions;
+}
+
+function migrateOptions(flatOptionsObject) {
+  let migratedOptions = { ...flatOptionsObject };
+  // let newStyles = flattenObject(cloneDeep(oldStyles));
   ///----------- LAYOUT -------------///
-  newStyles = changeNames(newStyles, nameChangedLayoutParams);
-  newStyles = reverseBooleans(newStyles, reversedLayoutParams);
-  newStyles = process_old_to_new_ThumbnailAlignment(newStyles);
-  newStyles = process_old_to_new_ScrollDirection(newStyles);
-  newStyles = process_old_to_new_LayoutOrientation(newStyles);
-  newStyles = process_old_to_new_groupsOrder(newStyles);
-  newStyles = process_old_to_new_repeatingGroupTypes(newStyles);
-  newStyles = process_old_to_new_AllowedGroupTypes(newStyles);
-  newStyles = process_old_to_new_NumberOfColumns(newStyles); // fixedColumns || numberOfImagesPerRow
-  newStyles = process_old_to_new_targetItemSizeUnit(newStyles);
-  newStyles = process_old_to_new_targetItemSizeValue(newStyles);
-  newStyles = process_old_to_new_CroppedAlignment(newStyles);
-  newStyles = process_old_to_new_CropRatio(newStyles);
-  newStyles = process_old_to_new_textBoxSizeMode(newStyles);
-  newStyles = process_old_to_new_columnRatios(newStyles);
-  newStyles = process_old_to_new_cropMethod(newStyles);
-  newStyles = process_old_to_new_responsiveMode(newStyles);
-  newStyles = process_old_to_new_gallerySpacing(newStyles);
-  newStyles = process_old_to_new_slideshowInfoSize(newStyles);
-  newStyles = process_old_to_new_arrowsPosition(newStyles);
+  migratedOptions = changeNames(migratedOptions, nameChangedLayoutParams);
+  migratedOptions = reverseBooleans(migratedOptions, reversedLayoutParams);
+  migratedOptions = process_old_to_new_ThumbnailAlignment(migratedOptions);
+  migratedOptions = process_old_to_new_ScrollDirection(migratedOptions);
+  migratedOptions = process_old_to_new_LayoutOrientation(migratedOptions);
+  migratedOptions = process_old_to_new_groupsOrder(migratedOptions);
+  migratedOptions = process_old_to_new_repeatingGroupTypes(migratedOptions);
+  migratedOptions = process_old_to_new_AllowedGroupTypes(migratedOptions);
+  migratedOptions = process_old_to_new_NumberOfColumns(migratedOptions); // fixedColumns || numberOfImagesPerRow
+  migratedOptions = process_old_to_new_targetItemSizeUnit(migratedOptions);
+  migratedOptions = process_old_to_new_targetItemSizeValue(migratedOptions);
+  migratedOptions = process_old_to_new_CroppedAlignment(migratedOptions);
+  migratedOptions = process_old_to_new_CropRatio(migratedOptions);
+  migratedOptions = process_old_to_new_textBoxSizeMode(migratedOptions);
+  migratedOptions = process_old_to_new_columnRatios(migratedOptions);
+  migratedOptions = process_old_to_new_cropMethod(migratedOptions);
+  migratedOptions = process_old_to_new_responsiveMode(migratedOptions);
+  migratedOptions = process_old_to_new_gallerySpacing(migratedOptions);
+  migratedOptions = process_old_to_new_slideshowInfoSize(migratedOptions);
+  migratedOptions = process_old_to_new_arrowsPosition(migratedOptions);
 
   ///----------- BEHAVIOUR -------------///
-  newStyles = changeNames(newStyles, nameChangedBehaviourParams);
-  newStyles = reverseBooleans(newStyles, reversedBehaviourParams);
-  newStyles = process_old_to_new_ClickAction(newStyles);
-  newStyles = process_old_to_new_VideoPlayTrigger(newStyles);
-  newStyles = process_old_to_new_VideoVolume(newStyles);
-  newStyles = process_old_to_new_VideoSpeed(newStyles);
-  newStyles = process_old_to_new_OverlayHoveringBehaviour(newStyles);
-  newStyles = process_old_to_new_InfoPlacement(newStyles);
-  newStyles = process_old_to_new_layoutDirection(newStyles);
-  newStyles = process_old_to_new_LoadMoreAmount(newStyles);
-  newStyles = process_old_to_new_AutoSlideBehaviour(newStyles);
-  newStyles = process_old_to_new_galleryTextAlign(newStyles);
+  migratedOptions = changeNames(migratedOptions, nameChangedBehaviourParams);
+  migratedOptions = reverseBooleans(migratedOptions, reversedBehaviourParams);
+  migratedOptions = process_old_to_new_ClickAction(migratedOptions);
+  migratedOptions = process_old_to_new_VideoPlayTrigger(migratedOptions);
+  migratedOptions = process_old_to_new_VideoVolume(migratedOptions);
+  migratedOptions = process_old_to_new_VideoSpeed(migratedOptions);
+  migratedOptions =
+    process_old_to_new_OverlayHoveringBehaviour(migratedOptions);
+  migratedOptions = process_old_to_new_InfoPlacement(migratedOptions);
+  migratedOptions = process_old_to_new_layoutDirection(migratedOptions);
+  migratedOptions = process_old_to_new_LoadMoreAmount(migratedOptions);
+  migratedOptions = process_old_to_new_AutoSlideBehaviour(migratedOptions);
+  migratedOptions = process_old_to_new_galleryTextAlign(migratedOptions);
 
   ///----------- STYLING -------------///
 
-  newStyles = changeNames(newStyles, nameChangedStylingParams);
-  delete newStyles.enableLeanGallery;
-  delete newStyles.fullscreen;
-  delete newStyles.magicLayoutSeed;
-  return flatToNested(newStyles);
+  migratedOptions = changeNames(migratedOptions, nameChangedStylingParams);
+  delete migratedOptions.enableLeanGallery;
+  delete migratedOptions.fullscreen;
+  delete migratedOptions.magicLayoutSeed;
+  return migratedOptions;
 }
 
 //----- refactor functions ----------//
@@ -631,4 +640,8 @@ function process_old_to_new_NumberOfColumns(obj) {
   return _obj;
 }
 
-export { migrateOptions, addMigratedOptions };
+export {
+  migrateOptions,
+  addMigratedOptions,
+  extendNestedOptionsToIncludeOldAndNew,
+};
