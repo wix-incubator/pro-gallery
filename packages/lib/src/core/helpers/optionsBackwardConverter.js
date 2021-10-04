@@ -1,11 +1,5 @@
-import {
-  // mergeNestedObjects,
-  // flattenObject,
-  // flatToNested,
-  trimUndefinedValues_flat,
-} from './optionsUtils';
+import { trimUndefinedValues_flat } from './optionsUtils';
 import { isLayout } from '../../common/constants/layout';
-// import cloneDeep from 'lodash/cloneDeep';
 import optionsMap from './optionsMap';
 import {
   nameChangedLayoutParams,
@@ -28,7 +22,6 @@ function addOldOptions(flatOptions) {
 }
 
 function reverseMigrateOptions(flatOptionsObject) {
-  // let newStyles = flattenObject(cloneDeep(oldStyles));
   let oldOptions = { ...flatOptionsObject };
   ///----------- LAYOUT -------------///
   oldOptions = changeNames(

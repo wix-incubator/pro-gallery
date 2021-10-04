@@ -1,11 +1,9 @@
 import {
-  // mergeNestedObjects,
   trimUndefinedValues_flat,
   flattenObject,
   flatToNested,
 } from './optionsUtils';
 
-// import cloneDeep from 'lodash/cloneDeep';
 import { isLayout } from '../../common/constants/layout';
 import optionsMap from './optionsMap';
 import { addOldOptions } from './optionsBackwardConverter';

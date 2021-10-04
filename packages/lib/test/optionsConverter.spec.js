@@ -10,7 +10,6 @@ import {
   reverseMigrateOptions,
   addOldOptions,
 } from '../src/core/helpers/optionsBackwardConverter';
-import { namingChange } from '../src/core/helpers/migratorStore';
 import v3DefaultOptions from '../src/common/v3DefaultOptions';
 import v4DefaultOptions from '../src/common/v4DefaultOptions';
 
@@ -56,7 +55,7 @@ describe('Styles processing', () => {
     expect(Object.keys(flat).length).to.eql(0);
   });
 });
-describe('should not be heavy', function () {
+describe('runtime should be acceptable (x10000)', function () {
   this.timeout(1000);
 
   it('addOldOptions', () => {
@@ -66,7 +65,7 @@ describe('should not be heavy', function () {
     expect(false).to.eql(false);
   });
   it('reverseMigrateOptions', () => {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 10000; i++) {
       reverseMigrateOptions({});
     }
     expect(false).to.eql(false);
@@ -77,23 +76,15 @@ describe('should not be heavy', function () {
     }
     expect(false).to.eql(false);
   });
-  it('namingChange', () => {
-    for (let i = 0; i < 100000; i++) {
-      namingChange(
-        {},
-        'textBoxBorderRadius',
-        'layoutParams_info_border_radius'
-      );
+  it('migrateOptions', () => {
+    for (let i = 0; i < 10000; i++) {
+      migrateOptions({});
     }
     expect(false).to.eql(false);
   });
-  it('namingChange', () => {
-    for (let i = 0; i < 100000; i++) {
-      namingChange(
-        {},
-        'layoutParams_info_border_radius',
-        'textBoxBorderRadius'
-      );
+  it('extendNestedOptionsToIncludeOldAndNew', () => {
+    for (let i = 0; i < 10000; i++) {
+      extendNestedOptionsToIncludeOldAndNew({});
     }
     expect(false).to.eql(false);
   });

@@ -6,8 +6,7 @@ import {
   ItemsHelper,
   processLayouts,
   GALLERY_CONSTS,
-  addMigratedOptions,
-  addOldOptions,
+  extendNestedOptionsToIncludeOldAndNew,
 } from 'pro-gallery-lib';
 
 class Blueprints {
@@ -249,16 +248,15 @@ class Blueprints {
     let changed = false;
     let formattedOptions;
     if (optionsHaveChanged(options, oldOptions)) {
-      const mergedOldAndNewStyles = addOldOptions(addMigratedOptions(options)); //add both old and new options
+      const mergedOldAndNewStyles =
+        extendNestedOptionsToIncludeOldAndNew(options); //add both old and new options
       const fullOptionsOverDefualts = populateWithDefaultOptions(
         mergedOldAndNewStyles
       ); //add default for any undefined option
-      formattedOptions = addOldOptions(
-        addMigratedOptions(
-          processLayouts(
-            addPresetOptions(fullOptionsOverDefualts),
-            isUsingCustomInfoElements
-          )
+      formattedOptions = extendNestedOptionsToIncludeOldAndNew(
+        processLayouts(
+          addPresetOptions(fullOptionsOverDefualts),
+          isUsingCustomInfoElements
         )
       ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
       changed = true;
