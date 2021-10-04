@@ -15,6 +15,7 @@ export { addPresetOptions } from './core/presets/presets';
 export {
   migrateOptions,
   addMigratedOptions,
+  extendNestedOptionsToIncludeOldAndNew,
 } from './core/helpers/optionsConverter';
 export {
   addOldOptions,

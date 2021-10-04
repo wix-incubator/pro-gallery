@@ -1,8 +1,7 @@
 import {
-  addMigratedOptions,
-  addOldOptions,
   flattenObject,
   flatToNested,
+  extendNestedOptionsToIncludeOldAndNew,
 } from 'pro-gallery-lib';
 
 class Utils {
@@ -115,9 +114,10 @@ class Utils {
       fixedColumns: 0,
       columnWidths: '',
     };
-    const fullMigratedAndOld = addOldOptions(addMigratedOptions(styleParams));
+    const fullMigratedAndOld =
+      extendNestedOptionsToIncludeOldAndNew(styleParams);
     const populatedWithDefault = populateWithDefaultOptions(fullMigratedAndOld);
-    return addOldOptions(addMigratedOptions(populatedWithDefault));
+    return extendNestedOptionsToIncludeOldAndNew(populatedWithDefault);
   }
 
   convertContainer(container, styleParams) {

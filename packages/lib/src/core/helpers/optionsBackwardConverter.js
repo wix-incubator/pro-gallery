@@ -1,11 +1,5 @@
-import {
-  mergeNestedObjects,
-  flattenObject,
-  flatToNested,
-  trimUndefinedValues,
-} from './optionsUtils';
+import { trimUndefinedValues_flat } from './optionsUtils';
 import { isLayout } from '../../common/constants/layout';
-import cloneDeep from 'lodash/cloneDeep';
 import optionsMap from './optionsMap';
 import {
   nameChangedLayoutParams,
@@ -18,69 +12,69 @@ import {
   reverseBooleans,
 } from './migratorStore';
 
-export function addOldOptions(options) {
-  let oldOptions = reverseMigrateOptions(options);
-  let combinedOptions = mergeNestedObjects(
-    trimUndefinedValues(oldOptions),
-    trimUndefinedValues(options)
-  );
-  return combinedOptions;
+function addOldOptions(flatOptions) {
+  const flat_migrated = reverseMigrateOptions(flatOptions);
+  let flat_combinedOptions = {
+    ...trimUndefinedValues_flat(flat_migrated),
+    ...trimUndefinedValues_flat(flatOptions),
+  };
+  return flat_combinedOptions;
 }
 
-export function reverseMigrateOptions(oldStyles) {
-  let newStyles = flattenObject(cloneDeep(oldStyles));
+function reverseMigrateOptions(flatOptionsObject) {
+  let oldOptions = { ...flatOptionsObject };
   ///----------- LAYOUT -------------///
-  newStyles = changeNames(
-    newStyles,
+  oldOptions = changeNames(
+    oldOptions,
     [...nameChangedLayoutParams].map((ele) => [...ele].reverse())
   );
-  newStyles = reverseBooleans(
-    newStyles,
+  oldOptions = reverseBooleans(
+    oldOptions,
     [...reversedLayoutParams].map((ele) => [...ele].reverse())
   );
-  newStyles = process_new_to_old_ThumbnailAlignment(newStyles);
-  newStyles = process_new_to_old_ScrollDirection(newStyles);
-  newStyles = process_new_to_old_LayoutOrientation(newStyles);
-  newStyles = process_new_to_old_groupsOrder(newStyles);
-  newStyles = process_new_to_old_responsiveMode(newStyles);
-  newStyles = process_new_to_old_NumberOfColumns(newStyles); // fixedColumns || numberOfImagesPerRow ||
-  newStyles = process_new_to_old_targetItemSizeUnit(newStyles);
-  newStyles = process_new_to_old_targetItemSizeValue(newStyles);
-  newStyles = process_new_to_old_CroppedAlignment(newStyles);
-  newStyles = process_new_to_old_CropRatio(newStyles);
-  newStyles = process_new_to_old_textBoxSizeMode(newStyles);
-  newStyles = process_new_to_old_columnRatios(newStyles);
-  newStyles = process_new_to_old_cropMethod(newStyles);
-  newStyles = process_new_to_old_GroupTypes(newStyles);
-  newStyles = process_new_to_old_AllowedGroupTypes(newStyles);
-  newStyles = process_new_to_old_gallerySpacing(newStyles);
-  newStyles = process_new_to_old_slideshowInfoSize(newStyles);
-  newStyles = process_new_to_old_arrowsPosition(newStyles);
+  oldOptions = process_new_to_old_ThumbnailAlignment(oldOptions);
+  oldOptions = process_new_to_old_ScrollDirection(oldOptions);
+  oldOptions = process_new_to_old_LayoutOrientation(oldOptions);
+  oldOptions = process_new_to_old_groupsOrder(oldOptions);
+  oldOptions = process_new_to_old_responsiveMode(oldOptions);
+  oldOptions = process_new_to_old_NumberOfColumns(oldOptions); // fixedColumns || numberOfImagesPerRow ||
+  oldOptions = process_new_to_old_targetItemSizeUnit(oldOptions);
+  oldOptions = process_new_to_old_targetItemSizeValue(oldOptions);
+  oldOptions = process_new_to_old_CroppedAlignment(oldOptions);
+  oldOptions = process_new_to_old_CropRatio(oldOptions);
+  oldOptions = process_new_to_old_textBoxSizeMode(oldOptions);
+  oldOptions = process_new_to_old_columnRatios(oldOptions);
+  oldOptions = process_new_to_old_cropMethod(oldOptions);
+  oldOptions = process_new_to_old_GroupTypes(oldOptions);
+  oldOptions = process_new_to_old_AllowedGroupTypes(oldOptions);
+  oldOptions = process_new_to_old_gallerySpacing(oldOptions);
+  oldOptions = process_new_to_old_slideshowInfoSize(oldOptions);
+  oldOptions = process_new_to_old_arrowsPosition(oldOptions);
   ///----------- BEHAVIOUR -------------///
-  newStyles = changeNames(
-    newStyles,
+  oldOptions = changeNames(
+    oldOptions,
     [...nameChangedBehaviourParams].map((ele) => [...ele].reverse())
   );
-  newStyles = reverseBooleans(
-    newStyles,
+  oldOptions = reverseBooleans(
+    oldOptions,
     [...reversedBehaviourParams].map((ele) => [...ele].reverse())
   );
-  newStyles = process_new_to_old_ClickAction(newStyles);
-  newStyles = process_new_to_old_VideoPlayTrigger(newStyles);
-  newStyles = process_new_to_old_VideoVolume(newStyles);
-  newStyles = process_new_to_old_VideoSpeed(newStyles);
-  newStyles = process_new_to_old_OverlayHoveringBehaviour(newStyles);
-  newStyles = process_new_to_old_InfoPlacement(newStyles);
-  newStyles = process_new_to_old_layoutDirection(newStyles);
-  newStyles = process_new_to_old_LoadMoreAmount(newStyles);
-  newStyles = process_new_to_old_AutoSlideBehaviour(newStyles);
-  newStyles = process_new_to_old_galleryTextAlign(newStyles);
+  oldOptions = process_new_to_old_ClickAction(oldOptions);
+  oldOptions = process_new_to_old_VideoPlayTrigger(oldOptions);
+  oldOptions = process_new_to_old_VideoVolume(oldOptions);
+  oldOptions = process_new_to_old_VideoSpeed(oldOptions);
+  oldOptions = process_new_to_old_OverlayHoveringBehaviour(oldOptions);
+  oldOptions = process_new_to_old_InfoPlacement(oldOptions);
+  oldOptions = process_new_to_old_layoutDirection(oldOptions);
+  oldOptions = process_new_to_old_LoadMoreAmount(oldOptions);
+  oldOptions = process_new_to_old_AutoSlideBehaviour(oldOptions);
+  oldOptions = process_new_to_old_galleryTextAlign(oldOptions);
   ///----------- STYLING -------------///
-  newStyles = changeNames(
-    newStyles,
+  oldOptions = changeNames(
+    oldOptions,
     [...nameChangedStylingParams].map((ele) => [...ele].reverse())
   );
-  return flatToNested(newStyles);
+  return oldOptions;
 }
 
 //----- refactor functions ----------//
@@ -556,3 +550,5 @@ function process_new_to_old_NumberOfColumns(obj) {
   delete _obj[optionsMap.layoutParams.structure.numberOfColumns];
   return _obj;
 }
+
+export { addOldOptions, reverseMigrateOptions };

@@ -3,8 +3,7 @@ import defaultOptions, {
   populateWithDefaultOptions,
 } from '../src/common/defaultOptions';
 import { flattenObject } from '../src/core/helpers/optionsUtils';
-import { addMigratedOptions } from '../src/core/helpers/optionsConverter';
-import { addOldOptions } from '../src/core/helpers/optionsBackwardConverter';
+import { extendNestedOptionsToIncludeOldAndNew } from '../src/core/helpers/optionsConverter';
 import GALLERY_CONSTS from '../src/common/constants';
 
 describe('defaultOptions', () => {
@@ -18,7 +17,7 @@ describe('defaultOptions', () => {
     const expected = flattenObject(expectedOptions());
     expect(actual).to.eql(expected);
     let customOptions = { layoutParams: { structure: { galleryLayout: 5 } } };
-    const migrated = addMigratedOptions(addOldOptions(customOptions));
+    const migrated = extendNestedOptionsToIncludeOldAndNew(customOptions);
     const flat = flattenObject(migrated);
     Object.keys(flat).forEach((key) =>
       flat[key] === undefined ? delete flat[key] : {}

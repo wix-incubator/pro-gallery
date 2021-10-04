@@ -66,12 +66,18 @@ function flatToNested(ob) {
     {}
   );
 }
-function trimUndefinedValues(object) {
+function trimUndefinedValues_nested(object) {
   const flatObject = flattenObject(object);
   Object.keys(flatObject).forEach((key) =>
     flatObject[key] === undefined ? delete flatObject[key] : {}
   );
   return flatToNested(flatObject);
+}
+function trimUndefinedValues_flat(flatObject) {
+  Object.keys(flatObject).forEach((key) =>
+    flatObject[key] === undefined ? delete flatObject[key] : {}
+  );
+  return flatObject;
 }
 
 function mergeNestedObjects(...args) {
@@ -85,5 +91,6 @@ export {
   mergeNestedObjects,
   getByString,
   mutatingAssignMultipleByStrings,
-  trimUndefinedValues,
+  trimUndefinedValues_nested,
+  trimUndefinedValues_flat,
 };
