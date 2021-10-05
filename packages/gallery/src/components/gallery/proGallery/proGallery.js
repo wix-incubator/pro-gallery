@@ -2,11 +2,10 @@ import '../../../common/utils/polyfills';
 import React from 'react';
 import { viewModeWrapper, utils } from 'pro-gallery-lib';
 import Gallery from './galleryContainer.js';
-import { GalleryComponent } from '../../galleryComponent';
 
 import '../../../versionLogger';
 
-export default class ProGallery extends GalleryComponent {
+export default class ProGallery extends React.Component {
   constructor(props) {
     super();
     this.init(props);
