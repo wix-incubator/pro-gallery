@@ -379,7 +379,7 @@ class ItemView extends GalleryComponent {
   getImageItem(imageDimensions) {
     const props = utils.pick(this.props, [
       'gotFirstScrollEvent',
-      'alt',
+      'fallbackAlt',
       'title',
       'description',
       'id',
@@ -391,7 +391,6 @@ class ItemView extends GalleryComponent {
       'isPrerenderMode',
       'isTransparent',
       'style',
-      'fallbackAlt'
     ]);
 
     return (
