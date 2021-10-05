@@ -281,15 +281,11 @@ const addMarginsToSupportShadows = (options) => {
   return _options;
 }
 
-// types is a comma-separated string with group types. returns true if all group types are '1' or '2h'
-const areAllGroupTypesOneRow = (types) => types.split(',').every(type => ['1','2h'].indexOf(type) > -1);
 
 const centerArrowsWhenNeeded = (options) => {  
   let _options = {...options}
   const isSingleVerticalItemRendered =  _options.layoutParams.repeatingGroupTypes ? 
-  areAllGroupTypesOneRow(String(_options.layoutParams.repeatingGroupTypes)) : 
-  areAllGroupTypesOneRow(String(_options.groupTypes)); // only one item is being rendered vertically?
-
+  _options.layoutParams.repeatingGroupTypes == "1" :  _options.groupTypes == "1"; // only one item is being rendered vertically?
   const filteredPlacement = _options.titlePlacement // filtering hover since it doesn't affect this product
   .split(',')
   .filter(placement => !isHoverPlacement(placement))
