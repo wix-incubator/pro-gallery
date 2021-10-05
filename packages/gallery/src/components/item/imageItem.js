@@ -117,7 +117,7 @@ class ImageItem extends GalleryComponent {
 
   getImageElement() {
     const {
-      alt,
+      fallbackAlt,
       imageDimensions,
       createUrl,
       id,
@@ -220,7 +220,7 @@ class ImageItem extends GalleryComponent {
           data-hook="gallery-item-image-img"
           data-idx={idx}
           src={src}
-          alt={alt ? alt : 'untitled image'}
+          alt={fallbackAlt ? fallbackAlt : 'untitled image'}
           onLoad={this.handleHighResImageLoad}
           style={{
             ...imageSizing,

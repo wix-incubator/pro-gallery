@@ -391,6 +391,7 @@ class ItemView extends GalleryComponent {
       'isPrerenderMode',
       'isTransparent',
       'style',
+      'fallbackAlt'
     ]);
 
     return (
