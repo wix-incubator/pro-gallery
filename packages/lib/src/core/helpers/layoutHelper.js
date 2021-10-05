@@ -281,7 +281,6 @@ const addMarginsToSupportShadows = (options) => {
   return _options;
 }
 
-
 const centerArrowsWhenNeeded = (options) => {  
   let _options = {...options}
   const isSingleVerticalItemRendered =  _options.layoutParams.repeatingGroupTypes ? 
