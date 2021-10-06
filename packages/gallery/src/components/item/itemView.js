@@ -378,7 +378,7 @@ class ItemView extends React.Component {
   getImageItem(imageDimensions) {
     const props = utils.pick(this.props, [
       'gotFirstScrollEvent',
-      'fallbackAlt',
+      'calculatedAlt',
       'title',
       'description',
       'id',

@@ -90,7 +90,7 @@ class GalleryItem {
       isVideoPlaceholder: this.isVideoPlaceholder,
       url: this.url,
       alt: this.alt,
-      fallbackAlt: this.fallbackAlt,
+      calculatedAlt: this.calculatedAlt,
       directLink: this.directLink,
       directShareLink: this.directShareLink,
       linkUrl: this.linkUrl,
@@ -641,7 +641,7 @@ class GalleryItem {
     );
   }
 
-  get fallbackAlt() {
+  get calculatedAlt() {
     return (
       (utils.isMeaningfulString(this.alt) && this.alt) ||
       this.title ||
