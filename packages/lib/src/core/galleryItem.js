@@ -90,6 +90,7 @@ class GalleryItem {
       isVideoPlaceholder: this.isVideoPlaceholder,
       url: this.url,
       alt: this.alt,
+      calculatedAlt: this.calculatedAlt,
       directLink: this.directLink,
       directShareLink: this.directShareLink,
       linkUrl: this.linkUrl,
@@ -640,14 +641,18 @@ class GalleryItem {
     );
   }
 
-  get alt() {
+  get calculatedAlt() {
     return (
-      (utils.isMeaningfulString(this.metadata.alt) && this.metadata.alt) ||
+      (utils.isMeaningfulString(this.alt) && this.alt) ||
       this.title ||
       this.description ||
       this.fileName ||
       ''
     );
+  }
+
+  get alt() {
+    return this.metadata.alt || '';
   }
 
   set alt(value) {
