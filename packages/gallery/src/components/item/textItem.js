@@ -1,8 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { GalleryComponent } from '../galleryComponent';
 
-export default class TextItem extends GalleryComponent {
+export default class TextItem extends React.Component {
   constructor(props) {
     super(props);
     if (typeof this.props.actions.setItemLoaded === 'function') {

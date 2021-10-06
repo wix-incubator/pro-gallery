@@ -1,8 +1,7 @@
 import React from 'react';
 import ImageItem from '../imageItem';
-import { GalleryComponent } from '../../galleryComponent';
 
-class VideoItemPlaceholder extends GalleryComponent {
+class VideoItemPlaceholder extends React.Component {
   render() {
     return (
       <ImageItem

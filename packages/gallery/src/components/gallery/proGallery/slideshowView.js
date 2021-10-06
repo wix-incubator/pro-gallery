@@ -12,7 +12,6 @@ import GalleryDebugMessage from './galleryDebugMessage.js';
 import { isGalleryInViewport } from './galleryHelpers.js';
 import PlayIcon from '../../svgs/components/play';
 import PauseIcon from '../../svgs/components/pause';
-import { GalleryComponent } from '../../galleryComponent';
 import TextItem from '../../item/textItem.js';
 import { 
   getArrowsRenderData,
@@ -29,7 +28,7 @@ function getDirection(code) {
   throw new Error(`no direction is defined for charCode: ${code}`)
 }
 
-class SlideshowView extends GalleryComponent {
+class SlideshowView extends React.Component {
   constructor(props) {
     super(props);
 
