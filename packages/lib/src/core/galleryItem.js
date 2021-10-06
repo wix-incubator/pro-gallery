@@ -299,21 +299,17 @@ class GalleryItem {
   }
 
   createMagnifiedUrl(scale = 1) {
-    try {
-      if (!this.urls.magnified_url) {
-        const { innerWidth, innerHeight } = this.style;
-        this.urls.magnified_url = this.processedMediaUrl(
-          this.cubeType,
-          innerWidth * scale,
-          innerHeight * scale,
-          this.sharpParams,
-          true
-        );
-      }
-      return this.urls.magnified_url[URL_TYPES.HIGH_RES]();
-    } catch (e) {
-      return '';
+    if (!this.urls.magnified_url) {
+      const { innerWidth, innerHeight } = this.style;
+      this.urls.magnified_url = this.processedMediaUrl(
+        this.cubeType,
+        innerWidth * scale,
+        innerHeight * scale,
+        this.sharpParams,
+        true
+      );
     }
+    return this.urls.magnified_url[URL_TYPES.HIGH_RES]();
   }
 
   get resized_url() {
