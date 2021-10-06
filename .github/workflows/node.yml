@@ -80,7 +80,7 @@ jobs:
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     - name: Push to pull request
-      if: github.event_name == 'pull_request'
+      if: github.event_name == 'pull_request' && github.actor != 'dependabot' 
       # run: echo "PULL REQUEST PUSH"
       run: lerna publish --canary --preid ${{ github.sha }} --yes
       env:
