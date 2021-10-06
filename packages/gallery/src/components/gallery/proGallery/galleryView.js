@@ -3,9 +3,8 @@ import React from 'react';
 import { window, utils, GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDebugMessage from './galleryDebugMessage';
 import itemView from '../../item/itemView.js';
-import { GalleryComponent } from '../../galleryComponent';
 
-class GalleryView extends GalleryComponent {
+class GalleryView extends React.Component {
   constructor(props) {
     super(props);
     this.handleKeys = this.handleKeys.bind(this);

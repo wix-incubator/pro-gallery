@@ -1,10 +1,9 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
-import { GalleryComponent } from '../galleryComponent';
 import ImageRenderer from './imageRenderer';
 
-class ImageItem extends GalleryComponent {
+class ImageItem extends React.Component {
   constructor(props) {
     super(props);
     this.getImageContainer = this.getImageContainer.bind(this);
