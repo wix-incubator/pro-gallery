@@ -108,7 +108,7 @@ class ItemView extends GalleryComponent {
   }
 
   onFocus() {
-    if (this.props.options.isAccessible) {
+    if (this.props.settings.isAccessible) {
       this.props.actions.eventsListener(
         GALLERY_CONSTS.events.HOVER_SET,
         this.props.idx
@@ -121,7 +121,7 @@ class ItemView extends GalleryComponent {
   }
 
   onBlur() {
-    if (this.props.options.isAccessible) {
+    if (this.props.settings.isAccessible) {
       this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
     }
     this.props.actions.eventsListener(
