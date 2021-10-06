@@ -200,7 +200,7 @@ class SlideshowView extends React.Component {
       activeElement.className.includes('gallery-item-container');
     const avoidIndividualNavigation =
       !isKeyboardNavigation ||
-      !(this.props.options.isAccessible && galleryItemIsFocused);
+      !(this.props.settings?.isAccessible && galleryItemIsFocused);
     let ignoreScrollPosition = false;
 
     if (
@@ -717,7 +717,7 @@ class SlideshowView extends React.Component {
           'pro-gallery inline-styles thumbnails-gallery ' +
           (horizontalThumbnails ? ' one-row hide-scrollbars ' : '') +
           (this.props.options.isRTL ? ' rtl ' : ' ltr ') +
-          (this.props.options.isAccessible ? ' accessible ' : '')
+          (this.props.settings?.isAccessible ? ' accessible ' : '')
         }
         style={{
           width,
@@ -1089,7 +1089,7 @@ class SlideshowView extends React.Component {
         className={
           'pro-gallery inline-styles one-row hide-scrollbars ' +
           (this.props.options.enableScroll ? ' slider ' : '') +
-          (this.props.options.isAccessible ? ' accessible ' : '') +
+          (this.props.settings?.isAccessible ? ' accessible ' : '') +
           (this.props.options.isRTL ? ' rtl ' : ' ltr ')
         }
         style={galleryStyle}
@@ -1316,7 +1316,7 @@ class SlideshowView extends React.Component {
   //-----------------------------------------| REACT |--------------------------------------------//
 
   blockAutoSlideshowIfNeeded(props = this.props) {
-    const { isGalleryInHover, options } = props;
+    const { isGalleryInHover, options, settings } = props;
     const { pauseAutoSlideshowClicked, shouldBlockAutoSlideshow, isInView, isInFocus } =
       this.state;
     let should = false;
@@ -1329,7 +1329,7 @@ class SlideshowView extends React.Component {
       should = true;
     } else if (
       isInFocus &&
-      options.isAccessible
+      settings?.isAccessible
     ) {
       should = true;
     }
