@@ -216,10 +216,10 @@ div.pro-gallery {
     &.hover-animation-slide-up {
 
       .gallery-item-hover {
-        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .4s ease, opacity .4s ease !important;
 
         &:before {
-          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .4s ease, opacity .4s ease !important;
           transform: translateY(100%);
           filter: opacity(0);
         }
@@ -242,10 +242,10 @@ div.pro-gallery {
 
     &.hover-animation-slide-right {
       .gallery-item-hover {
-        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .4s ease, opacity .4s ease !important;
 
         &:before {
-          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .4s ease, opacity .4s ease !important;
           transform: translateX(-100%);
           filter: opacity(0);
         }
@@ -268,10 +268,10 @@ div.pro-gallery {
 
     &.hover-animation-slide-left {
       .gallery-item-hover {
-        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .4s ease, opacity .4s ease !important;
 
         &:before {
-          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .4s ease, opacity .4s ease !important;
           transform: translateX(100%);
           filter: opacity(0);
         }
@@ -295,10 +295,10 @@ div.pro-gallery {
     &.hover-animation-slide-down {
 
       .gallery-item-hover {
-        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .4s ease, opacity .4s ease !important;
 
         &:before {
-          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .4s ease, opacity .4s ease !important;
           transform: translateY(-100%);
           filter: opacity(0);
         }
@@ -436,10 +436,10 @@ div.pro-gallery {
     &.hover-animation-slide-up {
 
       .gallery-item-hover {
-        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .4s ease, opacity .4s ease !important;
 
         &:before {
-          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .4s ease, opacity .4s ease !important;
           transform: translateY(0);
           filter: opacity(1);
         }
@@ -462,10 +462,10 @@ div.pro-gallery {
 
     &.hover-animation-slide-right {
       .gallery-item-hover {
-        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .4s ease, opacity .4s ease !important;
 
         &:before {
-          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .4s ease, opacity .4s ease !important;
           transform: translateX(0);
           filter: opacity(1);
         }
@@ -488,10 +488,10 @@ div.pro-gallery {
 
     &.hover-animation-slide-left {
       .gallery-item-hover {
-        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .4s ease, opacity .4s ease !important;
 
         &:before {
-          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .4s ease, opacity .4s ease !important;
           transform: translateX(100%);
           filter: opacity(1);
         }
@@ -514,10 +514,10 @@ div.pro-gallery {
 
     &.hover-animation-slide-down {
       .gallery-item-hover {
-        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .4s ease, opacity .4s ease !important;
 
         &:before {
-          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .4s ease, opacity .4s ease !important;
           transform: translateY(-100%);
           filter: opacity(1);
         }
