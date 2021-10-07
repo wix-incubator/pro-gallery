@@ -106,7 +106,7 @@ class VideoScrollHelper {
   }
 
   itemHovered(idx) {
-    if (this.videoPlay !== 'hover') return;
+    if (this.videoPlay !== GALLERY_CONSTS.videoPlay.HOVER) return;
     if (this.IdxExistsInVideoItems(idx)) {
       this.play(idx);
     } else {
@@ -115,7 +115,7 @@ class VideoScrollHelper {
   }
 
   itemClicked(idx) {
-    if (this.videoPlay !== 'onClick') return;
+    if (this.videoPlay !== GALLERY_CONSTS.videoPlay.CLICK) return;
     // if (this.itemClick !== 'nothing') return;
     if (this.IdxExistsInVideoItems(idx)) {
       if (this.currentPlayingIdx === idx) {
@@ -292,7 +292,7 @@ class VideoScrollHelper {
   }
 
   shouldAutoPlay() {
-    return this.videoPlay === 'auto';
+    return this.videoPlay === GALLERY_CONSTS.videoPlay.AUTO;
   }
   allowedLoop() {
     return this.videoLoop === true;
