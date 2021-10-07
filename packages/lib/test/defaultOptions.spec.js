@@ -41,10 +41,10 @@ function expectedOptions() {
       repeatingGroupTypes: '',
     },
     behaviourParams: {
-      video: {
-        playTrigger: GALLERY_CONSTS.videoPlay.HOVER,
-      },
       item: {
+        video: {
+          playTrigger: GALLERY_CONSTS.videoPlay.HOVER,
+        },
         content: {
           magnificationValue: 2,
         },
