@@ -12,9 +12,6 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   },
   behaviourParams: {
     item: {
-      video: {
-        playTrigger: GALLERY_CONSTS.videoPlay.HOVER,
-      },
       content: {
         magnificationValue: 2,
       },
