@@ -4,8 +4,6 @@ export {
   default as defaultOptions,
   populateWithDefaultOptions,
 } from './common/defaultOptions';
-export { default as v3DefaultOptions } from './common/v3DefaultOptions';
-export { default as v4DefaultOptions } from './common/v4DefaultOptions';
 export { default as dimensionsHelper } from './core/helpers/dimensionsHelper';
 export { ItemsHelper } from './core/helpers/itemsHelper';
 export { default as processLayouts } from './core/helpers/layoutHelper';
