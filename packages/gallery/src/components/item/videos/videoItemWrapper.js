@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { utils, isEditMode } from 'pro-gallery-lib';
+import { utils, isEditMode, GALLERY_CONSTS } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
@@ -40,7 +40,7 @@ class VideoItemWrapper extends React.Component {
     if (this.props.isVideoPlaceholder) {
       return false;
     }
-    if (videoPlay === 'hover' || videoPlay === 'auto') {
+    if (videoPlay === GALLERY_CONSTS.videoPlay.HOVER || videoPlay === GALLERY_CONSTS.videoPlay.AUTO) {
       return true;
     } else if (itemClick === 'nothing') {
       return true;
