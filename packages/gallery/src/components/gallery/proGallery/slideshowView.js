@@ -12,7 +12,6 @@ import GalleryDebugMessage from './galleryDebugMessage.js';
 import { isGalleryInViewport } from './galleryHelpers.js';
 import PlayIcon from '../../svgs/components/play';
 import PauseIcon from '../../svgs/components/pause';
-import { GalleryComponent } from '../../galleryComponent';
 import TextItem from '../../item/textItem.js';
 import { 
   getArrowsRenderData,
@@ -29,7 +28,7 @@ function getDirection(code) {
   throw new Error(`no direction is defined for charCode: ${code}`)
 }
 
-class SlideshowView extends GalleryComponent {
+class SlideshowView extends React.Component {
   constructor(props) {
     super(props);
 
@@ -217,7 +216,7 @@ class SlideshowView extends GalleryComponent {
     } else {
       if (
         avoidIndividualNavigation &&
-        this.props.options.isGrid &&
+        GALLERY_CONSTS.isLayout('GRID')(this.props.options) &&
         this.props.options.numberOfImagesPerCol
       ) {
         direction *= this.props.options.numberOfImagesPerCol;
@@ -872,7 +871,6 @@ class SlideshowView extends GalleryComponent {
     const {
       isRTL,
       scrollDirection,
-      isSlideshow,
       slideshowInfoSize,
       imageMargin,
       arrowsPadding,
@@ -881,9 +879,10 @@ class SlideshowView extends GalleryComponent {
       titlePlacement,
       textBoxHeight,
     } = this.props.options;
+    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
     const { hideLeftArrow, hideRightArrow } = this.state;
     const {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight} = getArrowsRenderData({
-      customNavArrowsRenderer: this.props.customNavArrowsRenderer,
+      customNavArrowsRenderer: this.props.customComponents.customNavArrowsRenderer,
       arrowsColor: this.props.options.arrowsColor,
       arrowsSize: this.props.options.arrowsSize,
     });
@@ -1017,13 +1016,13 @@ class SlideshowView extends GalleryComponent {
         })
       );
     };
-
+    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
     return galleryStructure.columns.map((column, c) => {
       const columnStyle = {
         width: this.props.isPrerenderMode ? '100%' : column.width,
         height: container.galleryHeight,
       };
-      if (this.props.options.isSlideshow) {
+      if (isSlideshow) {
         Object.assign(columnStyle, {
           paddingBottom: this.props.options.slideshowInfoSize,
         });
@@ -1076,8 +1075,9 @@ class SlideshowView extends GalleryComponent {
       ...galleryDimensions,
       ...galleryStyleForExternalArrows,
     };
+    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
 
-    if (this.props.options.isSlideshow) {
+    if (isSlideshow) {
       Object.assign(galleryStyle, {
         paddingBottom: this.props.options.slideshowInfoSize,
       });
@@ -1100,7 +1100,7 @@ class SlideshowView extends GalleryComponent {
           container: this.props.container,
           isPrerenderMode: this.props.isPrerenderMode,
           galleryStructure: this.props.galleryStructure,
-          customNavArrowsRenderer: this.props.customNavArrowsRenderer,
+          customNavArrowsRenderer: this.props.customComponents.customNavArrowsRenderer,
         }) && this.createNavArrows()}
         {this.createLayout()}
         {this.createAutoSlideShowPlayButton()}
@@ -1266,15 +1266,16 @@ class SlideshowView extends GalleryComponent {
     return thumbnails;
   }
 
-  getClassNames() {
+  getClassNames() {GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
+
     let classNames = 'pro-gallery-parent-container';
-    if (this.props.options.isSlideshow) {
+    if (GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)) {
       classNames += ' gallery-slideshow';
-    } else if (this.props.options.isSlider) {
+    } else if (GALLERY_CONSTS.isLayout('SLIDER')(this.props.options)) {
       classNames += ' gallery-slider';
     } else if (this.props.options.hasThumbnails) {
       classNames += ' gallery-thumbnails';
-    } else if (this.props.options.isColumns) {
+    } else if (GALLERY_CONSTS.isLayout('COLUMN')(this.props.options)) {
       classNames += ' gallery-columns';
     }
 
@@ -1398,8 +1399,7 @@ class SlideshowView extends GalleryComponent {
       }
     }
     const isAutoSlideShow =
-      props.options.galleryLayout === 5 &&
-      props.options.isSlideshow &&
+    GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options) &&
       props.options.isAutoSlideshow;
 
     this.shouldCreateSlideShowPlayButton =

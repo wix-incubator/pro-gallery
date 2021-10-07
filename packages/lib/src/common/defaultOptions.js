@@ -1,12 +1,24 @@
 import GALLERY_CONSTS from './constants';
 import coreOptions from './coreOptions';
-import { mergeNestedObjects } from '../core/helpers/optionsUtils';
+import {
+  mergeNestedObjects,
+  flattenObject,
+  flatToNested,
+} from '../core/helpers/optionsUtils';
 
 const defaultOptions = mergeNestedObjects(coreOptions, {
   layoutParams: {
     repeatingGroupTypes: '',
   },
+  behaviourParams: {
+    item: {
+      content: {
+        magnificationValue: 2,
+      },
+    },
+  },
   // adding
+  galleryLayout: -1,
   gallerySizePx: 0,
   gallerySizeRatio: 0,
   gallerySizeType: GALLERY_CONSTS.gallerySizeType.SMART,
@@ -29,10 +41,6 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   enableInfiniteScroll: true,
   thumbnailSpacings: 4,
   enableScroll: true,
-  isGrid: false,
-  isSlider: false,
-  isColumns: false,
-  isMasonry: false,
   scrollSnap: false,
   itemClick: GALLERY_CONSTS.itemClick.NOTHING,
   slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
@@ -59,6 +67,20 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   overlaySizeType: GALLERY_CONSTS.overlaySizeType.PERCENT,
   overlayPadding: 0,
   cubeFitPosition: GALLERY_CONSTS.cubeFitPosition.MIDDLE,
+
+  //migrated: keep here or it will still break users of this (no dependency on refactor)
+  magnificationLevel: 2,
 });
 
+export function populateWithDefaultOptions(options) {
+  const flatDefault = flattenObject(defaultOptions);
+  const flatOptions = flattenObject(options);
+  const mergedOptions = Object.assign({}, flatDefault, flatOptions);
+  Object.keys(mergedOptions).forEach((key) => {
+    if (typeof mergedOptions[key] === 'undefined') {
+      mergedOptions[key] = defaultOptions[key];
+    }
+  });
+  return flatToNested(mergedOptions);
+}
 export default defaultOptions;

@@ -1,6 +1,9 @@
 import LAYOUTS from '../../common/constants/layout';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
-import { calcTargetItemSize } from '../helpers/layoutHelper';
+import {
+  calcTargetItemSize,
+  removeBordersIfNeeded,
+} from '../helpers/layoutHelper';
 
 const fixToSlider = (options) => {
   let presetOptions = { ...options };
@@ -18,11 +21,6 @@ const fixToSlider = (options) => {
   presetOptions.hasThumbnails = false;
   presetOptions.enableScroll = true;
   presetOptions.scrollSnap = true;
-  presetOptions.isGrid = false;
-  presetOptions.isSlider = true;
-  presetOptions.isColumns = false;
-  presetOptions.isMasonry = false;
-  presetOptions.isSlideshow = false;
   presetOptions.cropOnlyFill = true;
   return presetOptions;
 };
@@ -32,5 +30,6 @@ export const createOptions = (options) => {
   let res = { ...options };
   res = fixToSlider(res);
   res.targetItemSize = calcTargetItemSize(res);
+  res = removeBordersIfNeeded(res);
   return res;
 };

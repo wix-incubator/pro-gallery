@@ -1,10 +1,9 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
-import { GalleryComponent } from '../galleryComponent';
 import ImageRenderer from './imageRenderer';
 
-export default class ImageItem extends GalleryComponent {
+class ImageItem extends React.Component {
   constructor(props) {
     super(props);
     this.getImageContainer = this.getImageContainer.bind(this);
@@ -117,7 +116,7 @@ export default class ImageItem extends GalleryComponent {
 
   getImageElement() {
     const {
-      alt,
+      calculatedAlt,
       imageDimensions,
       createUrl,
       id,
@@ -220,7 +219,7 @@ export default class ImageItem extends GalleryComponent {
           data-hook="gallery-item-image-img"
           data-idx={idx}
           src={src}
-          alt={alt ? alt : 'untitled image'}
+          alt={calculatedAlt ? calculatedAlt : 'untitled image'}
           onLoad={this.handleHighResImageLoad}
           style={{
             ...imageSizing,
@@ -252,3 +251,4 @@ export default class ImageItem extends GalleryComponent {
   }
 }
 /* eslint-enable prettier/prettier */
+export default ImageItem;

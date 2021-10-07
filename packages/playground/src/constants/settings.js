@@ -63,7 +63,7 @@ export const optionsBySection = {
   ],
   [SECTIONS.ADVANCED]: [
     'gridStyle',
-    'fixedColumns',
+    'numberOfImagesPerRow',
     'groupsPerStrip',
     'placeGroupsLtr',
 
@@ -109,6 +109,8 @@ export const optionsBySection = {
     'scrollSnap',
     'allowContextMenu',
     'pauseAutoSlideshowOnHover',
+    'itemClick',
+    'behaviourParams_item_content_magnificationValue',
   ],
   [SECTIONS.DESIGN]: [
     'showArrows',

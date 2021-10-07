@@ -19,11 +19,6 @@ const fixToColumn = (options) => {
   presetOptions.galleryType = 'Strips';
   presetOptions.fixedColumns = 0;
   presetOptions.enableScroll = true;
-  presetOptions.isGrid = false;
-  presetOptions.isColumns = true;
-  presetOptions.isMasonry = false;
-  presetOptions.isSlider = false;
-  presetOptions.isSlideshow = false;
   presetOptions.cropOnlyFill = false;
   return presetOptions;
 };

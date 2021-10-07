@@ -17,7 +17,7 @@ import { Resizable } from 're-resizable';
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
-import { LeanGallery, isEligibleForLeanGallery } from 'lean-gallery';
+// import { LeanGallery, isEligibleForLeanGallery } from 'lean-gallery';
 import 'lean-gallery/dist/styles/leanGallery.css';
 
 // //dummy commit
@@ -254,19 +254,19 @@ export function App() {
     return { mediaType, numberOfItems, isUnknownDimensions, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
   }
 
-  let GalleryComponent;
+  let GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProGalleryRenderer : ProGallery);
 
-  const shouldRenderLeanGallery = isEligibleForLeanGallery({
-    items: getItems(),
-    styles: options,
-    totalItemsCount: getTotalItemsCount()
-  });
+  // const shouldRenderLeanGallery = isEligibleForLeanGallery({
+  //   items: getItems(),
+  //   styles: options,
+  //   totalItemsCount: getTotalItemsCount()
+  // });
 
-  if(!shouldRenderLeanGallery) {
-    GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProGalleryRenderer : ProGallery);
-  } else {
-    GalleryComponent = LeanGallery;
-  };
+  // if(!shouldRenderLeanGallery) {
+  //   GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProGalleryRenderer : ProGallery);
+  // } else {
+  //   GalleryComponent = LeanGallery;
+  // };
 
   window.playgroundItems = getItems();
 

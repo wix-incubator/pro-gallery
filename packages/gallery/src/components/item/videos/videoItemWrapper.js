@@ -3,7 +3,6 @@ import React from 'react';
 
 import { utils, isEditMode, GALLERY_CONSTS } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
-import {GalleryComponent} from '../../galleryComponent';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import VideoItemPlaceholder from './videoItemPlaceholder';
@@ -27,7 +26,7 @@ const videoPlayButton = (
   </div>
 );
 
-class VideoItemWrapper extends GalleryComponent {
+class VideoItemWrapper extends React.Component {
   constructor(props) {
     super(props);
     this.mightPlayVideo = this.mightPlayVideo.bind(this);

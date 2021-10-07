@@ -3,6 +3,7 @@ import {
   calcTargetItemSize,
   processNumberOfImagesPerRow,
   processNumberOfImagesPerCol,
+  removeBordersIfNeeded,
 } from '../helpers/layoutHelper';
 
 const fixToGrid = (options) => {
@@ -21,11 +22,6 @@ const fixToGrid = (options) => {
   presetOptions.targetItemSize = 0;
   presetOptions.enableScroll = true;
   presetOptions.cropOnlyFill = false;
-  presetOptions.isSlider = false;
-  presetOptions.isColumns = false;
-  presetOptions.isGrid = true;
-  presetOptions.isMasonry = false;
-  presetOptions.isSlideshow = false;
   presetOptions.minItemSize = 50;
   return presetOptions;
 };
@@ -41,5 +37,6 @@ export const createOptions = (options) => {
   );
   res = processNumberOfImagesPerRow(res);
   res = processNumberOfImagesPerCol(res);
+  res = removeBordersIfNeeded(res);
   return res;
 };

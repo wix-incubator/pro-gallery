@@ -1,5 +1,5 @@
 import React from 'react';
-import { utils } from 'pro-gallery-lib';
+import { utils, GALLERY_CONSTS } from 'pro-gallery-lib';
 const ARROWS_BASE_SIZE = {
   width: 23,
   height: 39,
@@ -71,12 +71,14 @@ export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
 // Function that checks if the nav arrows parent-container is large enough for them
 const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
   const {
-    isSlideshow,
     slideshowInfoSize,
     arrowsVerticalPosition,
     textBoxHeight,
     arrowsSize,
   } = arrowsWillFitPositionRelevantArgs.options;
+  const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(
+    arrowsWillFitPositionRelevantArgs.options
+  );
   const { height } = arrowsWillFitPositionRelevantArgs.container;
   const { customNavArrowsRenderer } = arrowsWillFitPositionRelevantArgs;
   // Calc of Nav arrows container's height
@@ -97,34 +99,20 @@ const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
 // function to Determine whether we should render the navigation arrows
 export const shouldRenderNavArrows = (props) => {
   const shouldRenderArrowsRelevantArgs = getShouldRenderArrowsArgs(props);
-  const {
-    showArrows,
-    isSlideshow,
-    slideshowInfoSize,
-    arrowsVerticalPosition,
-    textBoxHeight,
-    arrowsSize,
-  } = shouldRenderArrowsRelevantArgs.options;
-  const { height, galleryWidth } = shouldRenderArrowsRelevantArgs.container;
+  const { showArrows } = shouldRenderArrowsRelevantArgs.options;
+
+  const { galleryWidth } = shouldRenderArrowsRelevantArgs.container;
   const { isPrerenderMode, galleryStructure, customNavArrowsRenderer } =
     shouldRenderArrowsRelevantArgs;
   const arrowsWillFitPositionRelevantArgs = {
-    options: {
-      isSlideshow,
-      slideshowInfoSize,
-      arrowsVerticalPosition,
-      textBoxHeight,
-      arrowsSize,
-    },
-    container: {
-      height,
-    },
+    options: shouldRenderArrowsRelevantArgs.options,
+    container: shouldRenderArrowsRelevantArgs.container,
     customNavArrowsRenderer,
   };
   const isGalleryWiderThanRenderedItems =
     galleryStructure.width <= galleryWidth;
   return (
-    showArrows &&
+    !!showArrows &&
     !isPrerenderMode &&
     arrowsWillFitPosition(arrowsWillFitPositionRelevantArgs) &&
     !isGalleryWiderThanRenderedItems
@@ -132,29 +120,10 @@ export const shouldRenderNavArrows = (props) => {
 };
 
 const getShouldRenderArrowsArgs = (props) => {
-  const {
-    showArrows,
-    isSlideshow,
-    slideshowInfoSize,
-    arrowsVerticalPosition,
-    textBoxHeight,
-    arrowsSize,
-  } = props.options;
-  const { height, galleryWidth } = props.container;
   const { isPrerenderMode, galleryStructure, customNavArrowsRenderer } = props;
   return {
-    options: {
-      showArrows,
-      isSlideshow,
-      slideshowInfoSize,
-      arrowsVerticalPosition,
-      textBoxHeight,
-      arrowsSize,
-    },
-    container: {
-      height,
-      galleryWidth,
-    },
+    options: props.options,
+    container: props.container,
     isPrerenderMode,
     galleryStructure,
     customNavArrowsRenderer,

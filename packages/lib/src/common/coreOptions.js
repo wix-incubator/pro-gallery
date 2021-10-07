@@ -32,7 +32,6 @@ const coreOptions = {
   fixedColumns: 0, // determine the number of columns regardless of the screen size (use 0 to ignore)
   showArrows: true,
   hasThumbnails: false,
-  isSlideshow: false,
   galleryThumbnailsAlignment: 'bottom',
   gridStyle: 0,
   titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,

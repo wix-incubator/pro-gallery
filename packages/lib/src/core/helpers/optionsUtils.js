@@ -11,10 +11,9 @@ function assignByString(Obj, string, value) {
   return _obj;
 }
 function getByString(Obj, string) {
-  let _obj = { ...Obj };
   let keyArr = string.split('_');
   let assignedProperty = keyArr.pop();
-  let pointer = _obj;
+  let pointer = Obj;
   if (
     !keyArr.every((key) => {
       if (typeof pointer[key] !== 'object') return false; //if its not an object there will be nothing in it...
@@ -43,6 +42,7 @@ function flattenObject(ob) {
 
     if (
       typeof ob[i] == 'object' &&
+      !(ob[i] instanceof Array) &&
       ob[i] !== null &&
       Object.keys(ob[i]).length > 0
     ) {
@@ -66,6 +66,19 @@ function flatToNested(ob) {
     {}
   );
 }
+function trimUndefinedValues_nested(object) {
+  const flatObject = flattenObject(object);
+  Object.keys(flatObject).forEach((key) =>
+    flatObject[key] === undefined ? delete flatObject[key] : {}
+  );
+  return flatToNested(flatObject);
+}
+function trimUndefinedValues_flat(flatObject) {
+  Object.keys(flatObject).forEach((key) =>
+    flatObject[key] === undefined ? delete flatObject[key] : {}
+  );
+  return flatObject;
+}
 
 function mergeNestedObjects(...args) {
   return flatToNested(Object.assign({}, ...args.map(flattenObject)));
@@ -78,4 +91,6 @@ export {
   mergeNestedObjects,
   getByString,
   mutatingAssignMultipleByStrings,
+  trimUndefinedValues_nested,
+  trimUndefinedValues_flat,
 };

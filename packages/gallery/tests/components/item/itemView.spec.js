@@ -3,6 +3,7 @@ import {
   GALLERY_CONSTS,
   mutatingAssignMultipleByStrings,
   optionsMap,
+  mergeNestedObjects,
 } from 'pro-gallery-lib';
 import { expect } from 'chai';
 import sinon from 'sinon';
@@ -54,8 +55,14 @@ describe('Item View', () => {
     it('should onItemClicked for items with link', () => {
       Object.assign(sampleItemViewProps, {
         type: 'image',
-        options: { itemClick: 'link', videoPlay: 'onClick' },
       });
+      sampleItemViewProps.options = mergeNestedObjects(
+        sampleItemViewProps.options,
+        {
+          itemClick: 'link',
+          videoPlay: 'onClick',
+        }
+      );
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
       driver.find.hook('item-wrapper').simulate('click');
@@ -67,8 +74,13 @@ describe('Item View', () => {
       Object.assign(sampleItemViewProps, {
         thumbnailHighlightId: null,
         type: 'image',
-        options: { itemClick: 'expand' },
       });
+      sampleItemViewProps.options = mergeNestedObjects(
+        sampleItemViewProps.options,
+        {
+          itemClick: 'expand',
+        }
+      );
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
       driver.find.hook('item-wrapper').simulate('click');
@@ -114,6 +126,13 @@ describe('Item View', () => {
         type: 'video',
         idx: 0,
       });
+      sampleItemViewProps.options = mergeNestedObjects(
+        sampleItemViewProps.options,
+        {
+          enableVideoPlaceholder: true,
+          galleryLayout: GALLERY_CONSTS.layout.EMPTY,
+        }
+      );
       driver.mount(ItemView, sampleItemViewProps);
       expect(driver.find.selector(VideoItemPlaceholder).length).to.equal(1);
     });
@@ -121,8 +140,9 @@ describe('Item View', () => {
   //compunentDidUpdate not tested
   describe('render', () => {
     it('should have boxshadow if defined', () => {
-      Object.assign(sampleItemViewProps, {
-        options: {
+      sampleItemViewProps.options = mergeNestedObjects(
+        sampleItemViewProps.options,
+        {
           itemEnableShadow: true,
           itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
           itemShadowBlur: 15,
@@ -130,57 +150,62 @@ describe('Item View', () => {
           itemShadowSize: 18,
           imageMargin: 5,
           imageInfoType: 'ATTACHED_BACKGROUND',
-        },
-      });
+        }
+      );
       driver.mount(ItemView, sampleItemViewProps);
       let style = driver.find.hook('item-container').get(0).props.style;
       expect(style.boxShadow).to.equal('0px -18px 15px rgba(0, 0, 0, 0.2)');
+      const updatedOptions = mergeNestedObjects(sampleItemViewProps.options, {
+        itemEnableShadow: false,
+        itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
+        itemShadowBlur: 20,
+        itemShadowDirection: 135,
+        itemShadowSize: 10,
+        imageMargin: 5,
+        imageInfoType: 'ATTACHED_BACKGROUND',
+      });
       driver.set.props({
-        options: {
-          itemEnableShadow: false,
-          itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
-          itemShadowBlur: 20,
-          itemShadowDirection: 135,
-          itemShadowSize: 10,
-          imageMargin: 5,
-          imageInfoType: 'ATTACHED_BACKGROUND',
-        },
+        options: updatedOptions,
       });
       style = driver.find.hook('item-container').get(0).props.style;
       expect(style.boxShadow).to.equal(undefined);
     });
     it('should toggle overflowY visible/inherit', () => {
-      Object.assign(sampleItemViewProps, {
-        options: {
-          isSlideshow: true,
-        },
-      });
+      sampleItemViewProps.options = mergeNestedObjects(
+        sampleItemViewProps.options,
+        {
+          galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+        }
+      );
       driver.mount(ItemView, sampleItemViewProps);
       let style = driver.find.hook('item-container').get(0).props.style;
       expect(style.overflowY).to.equal('visible');
+      const updatedOptions = mergeNestedObjects(sampleItemViewProps.options, {
+        galleryLayout: GALLERY_CONSTS.layout.EMPTY,
+      });
       driver.set.props({
-        options: {
-          isSlideshow: false,
-        },
+        options: updatedOptions,
       });
       style = driver.find.hook('item-container').get(0).props.style;
       expect(style.overflowY).to.equal('hidden');
     });
     it('item-Wrapper should have class based on cubeType', () => {
-      Object.assign(sampleItemViewProps, {
-        options: {
+      sampleItemViewProps.options = mergeNestedObjects(
+        sampleItemViewProps.options,
+        {
           cubeImages: true,
           cubeType: 'foo',
-        },
-      });
+        }
+      );
       driver.mount(ItemView, sampleItemViewProps);
       expect(
         driver.find.hook('item-wrapper').hasClass('cube-type-foo')
       ).to.equal(true);
+      const updatedOptions = mergeNestedObjects(sampleItemViewProps.options, {
+        cubeImages: false,
+      });
       driver.set.props({
-        options: {
-          cubeImages: false,
-        },
+        options: updatedOptions,
       });
       expect(
         driver.find.hook('item-wrapper').hasClass('cube-type-foo')
@@ -189,17 +214,21 @@ describe('Item View', () => {
     it('should toggle overflowY visible/inherit test2', () => {
       Object.assign(sampleItemViewProps, {
         style: { bgColor: 'red' },
-        options: {
-          cubeType: 'fit',
-        },
       });
+      sampleItemViewProps.options = mergeNestedObjects(
+        sampleItemViewProps.options,
+        {
+          cubeType: 'fit',
+        }
+      );
       driver.mount(ItemView, sampleItemViewProps);
       let style = driver.find.hook('item-wrapper').get(0).props.style;
       expect(style.backgroundColor).to.equal('inherit');
+      const updatedOptions = mergeNestedObjects(sampleItemViewProps.options, {
+        cubeType: 'foot',
+      });
       driver.set.props({
-        options: {
-          cubeType: 'foot',
-        },
+        options: updatedOptions,
       });
       style = driver.find.hook('item-wrapper').get(0).props.style;
       expect(style.backgroundColor).to.equal('red');

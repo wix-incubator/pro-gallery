@@ -1,12 +1,14 @@
 import { Layouter } from 'pro-layouts';
 import {
-  GALLERY_CONSTS,
   GalleryItem,
   ItemsHelper,
   window,
   optionsMap,
   mutatingAssignMultipleByStrings,
   utils,
+  defaultOptions,
+  mergeNestedObjects,
+  GALLERY_CONSTS,
 } from 'pro-gallery-lib';
 import { testImages } from './mocks/images-mock.js';
 import { mount, shallow, configure } from 'enzyme';
@@ -44,15 +46,7 @@ class galleryDriver {
       },
     };
 
-    this.options = {
-      layoutParams: {
-        gallerySpacing: 1,
-        cropRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
-      },
-      gotStyleParams: true,
-      selectedLayout: 0,
-      isVertical: false,
-      isRTL: false,
+    this.options = mergeNestedObjects(defaultOptions, {
       targetItemSize: 320,
       minItemSize: 120,
       groupSize: 3,
@@ -95,7 +89,7 @@ class galleryDriver {
       itemShadowSize: 10,
       shouldIndexDirectShareLinkInSEO: true,
       enableVideoPlaceholder: true,
-    };
+    });
     mutatingAssignMultipleByStrings(this.options, [
       [
         optionsMap.behaviourParams.item.video.playTrigger,

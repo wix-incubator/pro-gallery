@@ -1,6 +1,11 @@
 export { default as GALLERY_CONSTS } from './common/constants';
 export { default as GalleryItem } from './core/galleryItem';
-export { default as defaultOptions } from './common/defaultOptions';
+export {
+  default as defaultOptions,
+  populateWithDefaultOptions,
+} from './common/defaultOptions';
+export { default as v3DefaultOptions } from './common/v3DefaultOptions';
+export { default as v4DefaultOptions } from './common/v4DefaultOptions';
 export { default as coreOptions } from './common/coreOptions';
 export { default as dimensionsHelper } from './core/helpers/dimensionsHelper';
 export { ItemsHelper } from './core/helpers/itemsHelper';
@@ -8,11 +13,14 @@ export { default as processLayouts } from './core/helpers/layoutHelper';
 export { featureManager } from './core/helpers/versionsHelper';
 export { addPresetOptions } from './core/presets/presets';
 export {
-  convertOptions,
-  convertOptionsBackwards,
   migrateOptions,
   addMigratedOptions,
+  extendNestedOptionsToIncludeOldAndNew,
 } from './core/helpers/optionsConverter';
+export {
+  addOldOptions,
+  reverseMigrateOptions,
+} from './core/helpers/optionsBackwardConverter';
 export { assignByString } from './core/helpers/optionsUtils';
 export { mutatingAssignMultipleByStrings } from './core/helpers/optionsUtils';
 export { default as optionsMap } from './core/helpers/optionsMap';

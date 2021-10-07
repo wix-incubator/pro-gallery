@@ -10,6 +10,7 @@ class GalleryItem {
     this.createdBy = config.createdBy;
 
     this.createUrl = this.createUrl.bind(this);
+    this.createMagnifiedUrl = this.createMagnifiedUrl.bind(this);
 
     this.update(config);
   }
@@ -89,6 +90,7 @@ class GalleryItem {
       isVideoPlaceholder: this.isVideoPlaceholder,
       url: this.url,
       alt: this.alt,
+      calculatedAlt: this.calculatedAlt,
       directLink: this.directLink,
       directShareLink: this.directShareLink,
       linkUrl: this.linkUrl,
@@ -99,6 +101,7 @@ class GalleryItem {
       fileName: this.fileName,
       description: this.description,
       createUrl: this.createUrl,
+      createMagnifiedUrl: this.createMagnifiedUrl,
       cubeImages: this.cubeImages,
       cubeType: this.cubeType,
       cropRatio: this.cropRatio,
@@ -291,6 +294,24 @@ class GalleryItem {
   createUrl(size, type) {
     try {
       return this[size + '_url'][type]();
+    } catch (e) {
+      return '';
+    }
+  }
+
+  createMagnifiedUrl(scale = 1) {
+    try {
+      if (!this.urls.magnified_url) {
+        const { innerWidth, innerHeight } = this.style;
+        this.urls.magnified_url = this.processedMediaUrl(
+          this.cubeType,
+          innerWidth * scale,
+          innerHeight * scale,
+          this.sharpParams,
+          true
+        );
+      }
+      return this.urls.magnified_url[URL_TYPES.HIGH_RES]();
     } catch (e) {
       return '';
     }
@@ -620,8 +641,18 @@ class GalleryItem {
     );
   }
 
+  get calculatedAlt() {
+    return (
+      (utils.isMeaningfulString(this.alt) && this.alt) ||
+      this.title ||
+      this.description ||
+      this.fileName ||
+      ''
+    );
+  }
+
   get alt() {
-    return this.metadata.alt || this.title || this.description || '';
+    return this.metadata.alt || '';
   }
 
   set alt(value) {

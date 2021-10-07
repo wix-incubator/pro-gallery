@@ -1,17 +1,35 @@
 import { expect } from 'chai';
-import _ from 'lodash';
-import defaultOptions from '../src/common/defaultOptions';
+import defaultOptions, {
+  populateWithDefaultOptions,
+} from '../src/common/defaultOptions';
 import { flattenObject } from '../src/core/helpers/optionsUtils';
+import { extendNestedOptionsToIncludeOldAndNew } from '../src/core/helpers/optionsConverter';
 import GALLERY_CONSTS from '../src/common/constants';
 
 describe('defaultOptions', () => {
   it('should return the expected options unchanged', () => {
     const actual = flattenObject(defaultOptions);
     const expected = flattenObject(expectedOptions());
-    expect(_.isEqual(actual, expected)).eq(true);
-    const actualLength = _.keys(actual).length;
-    expect(actualLength).eq(_.keys(expected).length);
-    expect(actualLength).eq(104);
+    expect(actual).to.eql(expected);
+  });
+  it('should populate missing properties with default properties and should leave defined properties as they are', () => {
+    const actual = flattenObject(defaultOptions);
+    const expected = flattenObject(expectedOptions());
+    expect(actual).to.eql(expected);
+    let customOptions = { layoutParams: { structure: { galleryLayout: 5 } } };
+    const migrated = extendNestedOptionsToIncludeOldAndNew(customOptions);
+    const flat = flattenObject(migrated);
+    Object.keys(flat).forEach((key) =>
+      flat[key] === undefined ? delete flat[key] : {}
+    );
+    expect(Object.keys(flat).length).to.eql(2); //this object should contains only 2 defined options (the old and new galleryLayout)
+    let populated = populateWithDefaultOptions(migrated);
+    expect(populated.galleryLayout).to.eql(5); //this should be 5 and not the default (-1)
+    expect(populated.slideshowInfoSize).to.eql(200);
+    expect(populated.gallerySize).to.eql(30);
+    expect(populated.gallerySizeRatio).to.eql(0);
+    expect(populated.gallerySizePx).to.eql(0);
+    expect(populated.gallerySizeType).to.eql('smart');
   });
 });
 
@@ -23,12 +41,16 @@ function expectedOptions() {
       repeatingGroupTypes: '',
     },
     behaviourParams: {
+      video: {
+        playTrigger: GALLERY_CONSTS.videoPlay.HOVER,
+      },
       item: {
-        video: {
-          playTrigger: GALLERY_CONSTS.videoPlay.HOVER,
+        content: {
+          magnificationValue: 2,
         },
       },
     },
+    scrollSnap: false,
     isRTL: false,
     isVertical: false,
     minItemSize: 120,
@@ -44,12 +66,12 @@ function expectedOptions() {
     videoSpeed: '1',
     numberOfImagesPerRow: 3,
     collageDensity: 0.8,
+    galleryLayout: -1,
     galleryTextAlign: 'center',
     imageMargin: 10,
     fixedColumns: 0,
     showArrows: true,
     hasThumbnails: false,
-    isSlideshow: false,
     galleryThumbnailsAlignment: 'bottom',
     gridStyle: 0,
     titlePlacement: 'SHOW_ON_HOVER',
@@ -102,11 +124,6 @@ function expectedOptions() {
     enableInfiniteScroll: true,
     thumbnailSpacings: 4,
     enableScroll: true,
-    isGrid: false,
-    isSlider: false,
-    isColumns: false,
-    isMasonry: false,
-    scrollSnap: false,
     itemClick: 'nothing',
     scrollDuration: 400,
     arrowsPosition: 0,
@@ -129,5 +146,6 @@ function expectedOptions() {
     overlaySizeType: 'PERCENT',
     overlayPadding: 0,
     cubeFitPosition: GALLERY_CONSTS.cubeFitPosition.MIDDLE,
+    magnificationLevel: 2,
   };
 }

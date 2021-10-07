@@ -1,4 +1,8 @@
-import { mergeNestedObjects } from 'pro-gallery-lib';
+import {
+  flattenObject,
+  flatToNested,
+  extendNestedOptionsToIncludeOldAndNew,
+} from 'pro-gallery-lib';
 
 class Utils {
   constructor() {
@@ -73,6 +77,18 @@ class Utils {
   }
 
   addDefaultStyleParams(styleParams) {
+    function populateWithDefaultOptions(options) {
+      //This will override only undefined values with default values
+      const flatDefault = flattenObject(defaultLayouterSP);
+      const flatOptions = flattenObject(options);
+      const mergedOptions = Object.assign({}, flatDefault, flatOptions);
+      Object.keys(mergedOptions).forEach((key) => {
+        if (typeof mergedOptions[key] === 'undefined') {
+          mergedOptions[key] = defaultLayouterSP[key];
+        }
+      });
+      return flatToNested(mergedOptions);
+    }
     //default styleParams
     const defaultLayouterSP = {
       layoutParams: {
@@ -98,8 +114,10 @@ class Utils {
       fixedColumns: 0,
       columnWidths: '',
     };
-
-    return { ...mergeNestedObjects(defaultLayouterSP, styleParams) };
+    const fullMigratedAndOld =
+      extendNestedOptionsToIncludeOldAndNew(styleParams);
+    const populatedWithDefault = populateWithDefaultOptions(fullMigratedAndOld);
+    return extendNestedOptionsToIncludeOldAndNew(populatedWithDefault);
   }
 
   convertContainer(container, styleParams) {
