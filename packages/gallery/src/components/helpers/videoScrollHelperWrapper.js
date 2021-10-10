@@ -7,6 +7,7 @@ class VideoScrollHelperWrapper {
     this.setPlayingIdxState = setPlayingIdxState;
     this.handleEvent = () => {};
     this.onScroll = this.onScroll.bind(this);
+    this.initScroll = this.initScroll.bind(this);
     this.trigger = {
       SCROLL: this.onScroll,
       INIT_SCROLL: () => {},
@@ -14,9 +15,12 @@ class VideoScrollHelperWrapper {
     this.stop = () => {};
     this.initializePlayState = () => {};
   }
-  onScroll({ top, left }) {
+  initScroll({ top, left }) {
     this.top = top || this.top;
     this.left = left || this.left;
+  }
+  onScroll({ top, left }) {
+    this.initScroll({ top, left });
   }
   initVideoScrollHelperIfNeeded(galleryStructureData, items) {
     if (

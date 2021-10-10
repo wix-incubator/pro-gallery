@@ -84,6 +84,8 @@ export class GalleryContainer extends React.Component {
     this.handleNewGalleryStructure();
     this.eventsListener(GALLERY_CONSTS.events.APP_LOADED, {});
     this.videoScrollHelper.initializePlayState();
+    const currentItem = this.galleryStructure.items[this.props.activeIndex || 0];
+    this.videoScrollHelper.initScroll(currentItem.offset);
 
     try {
       if (typeof window.CustomEvent === 'function') {
