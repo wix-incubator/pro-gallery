@@ -90,6 +90,7 @@ class GalleryItem {
       isVideoPlaceholder: this.isVideoPlaceholder,
       url: this.url,
       alt: this.alt,
+      calculatedAlt: this.calculatedAlt,
       directLink: this.directLink,
       directShareLink: this.directShareLink,
       linkUrl: this.linkUrl,
@@ -299,21 +300,17 @@ class GalleryItem {
   }
 
   createMagnifiedUrl(scale = 1) {
-    try {
-      if (!this.urls.magnified_url) {
-        const { innerWidth, innerHeight } = this.style;
-        this.urls.magnified_url = this.processedMediaUrl(
-          this.cubeType,
-          innerWidth * scale,
-          innerHeight * scale,
-          this.sharpParams,
-          true
-        );
-      }
-      return this.urls.magnified_url[URL_TYPES.HIGH_RES]();
-    } catch (e) {
-      return '';
+    if (!this.urls.magnified_url) {
+      const { innerWidth, innerHeight } = this.style;
+      this.urls.magnified_url = this.processedMediaUrl(
+        this.cubeType,
+        innerWidth * scale,
+        innerHeight * scale,
+        this.sharpParams,
+        true
+      );
     }
+    return this.urls.magnified_url[URL_TYPES.HIGH_RES]();
   }
 
   get resized_url() {
@@ -640,14 +637,18 @@ class GalleryItem {
     );
   }
 
-  get alt() {
+  get calculatedAlt() {
     return (
-      (utils.isMeaningfulString(this.metadata.alt) && this.metadata.alt) ||
+      (utils.isMeaningfulString(this.alt) && this.alt) ||
       this.title ||
       this.description ||
       this.fileName ||
       ''
     );
+  }
+
+  get alt() {
+    return this.metadata.alt || '';
   }
 
   set alt(value) {

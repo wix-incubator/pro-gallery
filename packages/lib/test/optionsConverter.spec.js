@@ -1,9 +1,10 @@
 import { expect } from 'chai';
 // import optionsMap from '../src/core/helpers/optionsMap';
-import { flattenObject } from '../src/core/helpers/optionsUtils';
+import { flattenObject, flatToNested } from '../src/core/helpers/optionsUtils';
 import {
   migrateOptions,
   addMigratedOptions,
+  extendNestedOptionsToIncludeOldAndNew,
 } from '../src/core/helpers/optionsConverter';
 import {
   reverseMigrateOptions,
@@ -13,23 +14,24 @@ import v3DefaultOptions from '../src/common/v3DefaultOptions';
 import v4DefaultOptions from '../src/common/v4DefaultOptions';
 
 describe('Styles processing', () => {
+  //one way
   it('should migrated new options to old ones', () => {
-    let old = reverseMigrateOptions(defaultOptions_new());
-    expect(old).to.eql(defaultOptions_old());
+    let old = reverseMigrateOptions(flattenObject(defaultOptions_new()));
+    expect(flatToNested(old)).to.eql(defaultOptions_old());
   });
-  it('should migrate styles from old to new until theres nothing ot migrate anymore', () => {
-    const migrated = migrateOptions(defaultOptions_old());
-    expect(migrated).to.eql(defaultOptions_new());
+  //and the other
+  it('should migrate styles from old to new ', () => {
+    const migrated = migrateOptions(flattenObject(defaultOptions_old()));
+    expect(flatToNested(migrated)).to.eql(defaultOptions_new());
   });
   it('should have new and old styles combined coming from both old and new objects', () => {
-    const migrated = addMigratedOptions(defaultOptions_old());
-    const reversed = addOldOptions(defaultOptions_new());
+    const migrated = addMigratedOptions(flattenObject(defaultOptions_old()));
+    const reversed = addOldOptions(flattenObject(defaultOptions_new()));
     expect(migrated).to.eql(reversed);
   });
 
-  it('should have new and old options when converted back and forth', () => {
-    const migrated = addOldOptions(addMigratedOptions(semiRefactored()));
-    // const expected = afterConverstionAndBack();
+  it('should have new and old options when converted back and forth even with semi refactored objects', () => {
+    const migrated = extendNestedOptionsToIncludeOldAndNew(semiRefactored());
     expect(migrated.layoutParams.info.height).to.eql(150);
     expect(migrated.slideshowInfoSize).to.eql(150);
     expect(migrated.textBoxHeight).to.eql(150);
@@ -53,7 +55,40 @@ describe('Styles processing', () => {
     expect(Object.keys(flat).length).to.eql(0);
   });
 });
+describe('runtime should be acceptable (x10000)', function () {
+  this.timeout(1000);
 
+  it('addOldOptions', () => {
+    for (let i = 0; i < 10000; i++) {
+      addOldOptions({});
+    }
+    expect(false).to.eql(false);
+  });
+  it('reverseMigrateOptions', () => {
+    for (let i = 0; i < 10000; i++) {
+      reverseMigrateOptions({});
+    }
+    expect(false).to.eql(false);
+  });
+  it('addMigratedOptions', () => {
+    for (let i = 0; i < 10000; i++) {
+      addMigratedOptions({});
+    }
+    expect(false).to.eql(false);
+  });
+  it('migrateOptions', () => {
+    for (let i = 0; i < 10000; i++) {
+      migrateOptions({});
+    }
+    expect(false).to.eql(false);
+  });
+  it('extendNestedOptionsToIncludeOldAndNew', () => {
+    for (let i = 0; i < 10000; i++) {
+      extendNestedOptionsToIncludeOldAndNew({});
+    }
+    expect(false).to.eql(false);
+  });
+});
 function semiRefactored() {
   return {
     layoutParams: {

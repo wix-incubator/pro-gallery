@@ -1,5 +1,4 @@
 import optionsMap from './optionsMap';
-import { assignByString, getByString } from './optionsUtils';
 
 export const nameChangedLayoutParams = [
   ['galleryLayout', optionsMap.layoutParams.structure.galleryLayout],
@@ -153,20 +152,22 @@ export function reverseBooleans(obj, pairsArray) {
   return _obj;
 }
 export function namingChange(obj, oldName, newName) {
-  let val = obj[oldName];
+  if (
+    typeof obj[newName] === 'undefined' &&
+    typeof obj[oldName] !== 'undefined'
+  ) {
+    obj[newName] = obj[oldName];
+  }
   delete obj[oldName];
-  return (
-    (typeof getByString(obj, newName) === 'undefined' &&
-      assignByString(obj, newName, val)) ||
-    obj
-  ); //dont overwrite existing property
+  return obj;
 }
 export function reverseBooleanTo(obj, oldName, newName) {
-  let val = typeof obj[oldName] === 'undefined' ? undefined : !obj[oldName];
+  if (
+    typeof obj[newName] === 'undefined' &&
+    typeof obj[oldName] !== 'undefined'
+  ) {
+    obj[newName] = !obj[oldName];
+  }
   delete obj[oldName];
-  return (
-    (typeof getByString(obj, newName) === 'undefined' &&
-      assignByString(obj, newName, val)) ||
-    obj
-  ); //dont overwrite existing property
+  return obj;
 }

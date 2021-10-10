@@ -14,7 +14,6 @@ import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
 import { changeActiveElementIfNeeded, onAnchorFocus } from './itemHelper.js';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
-import { GalleryComponent } from '../galleryComponent';
 import {
   getOuterInfoStyle,
   getInnerInfoStyle,
@@ -23,7 +22,7 @@ import {
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
 
-class ItemView extends GalleryComponent {
+class ItemView extends React.Component {
   constructor(props) {
     super(props);
     this.props.actions.eventsListener(
@@ -108,7 +107,7 @@ class ItemView extends GalleryComponent {
   }
 
   onFocus() {
-    if (this.props.options.isAccessible) {
+    if (this.props.settings?.isAccessible) {
       this.props.actions.eventsListener(
         GALLERY_CONSTS.events.HOVER_SET,
         this.props.idx
@@ -121,7 +120,7 @@ class ItemView extends GalleryComponent {
   }
 
   onBlur() {
-    if (this.props.options.isAccessible) {
+    if (this.props.settings?.isAccessible) {
       this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
     }
     this.props.actions.eventsListener(
@@ -379,7 +378,7 @@ class ItemView extends GalleryComponent {
   getImageItem(imageDimensions) {
     const props = utils.pick(this.props, [
       'gotFirstScrollEvent',
-      'alt',
+      'calculatedAlt',
       'title',
       'description',
       'id',
