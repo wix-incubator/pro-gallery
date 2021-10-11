@@ -1,4 +1,4 @@
-import GalleryItem from '../src/core/galleryItem';
+import GalleryItem from '../src/classes/galleryItem';
 import { expect } from 'chai';
 
 describe('GalleryItem ', () => {

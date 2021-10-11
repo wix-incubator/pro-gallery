@@ -1,5 +1,6 @@
-import { Group } from 'pro-layouts';
-import utils from '../common/utils/index';
+import { Group } from '../logic/group';
+import { utils } from 'pro-gallery-lib';
+// done
 
 class GalleryGroup {
   constructor(config) {

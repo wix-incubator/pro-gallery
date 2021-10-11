@@ -1,7 +1,7 @@
-import GalleryItem from '../galleryItem';
-import GalleryGroup from '../galleryGroup';
-import utils from '../../common/utils';
-
+import GalleryItem from './galleryItem';
+import GalleryGroup from './galleryGroup';
+import { utils } from 'pro-gallery-lib';
+// done
 export class ItemsHelper {
   static convertDtoToLayoutItem(dto) {
     const isLayoutItem = !!(dto.id && dto.width > 0 && dto.height > 0);
