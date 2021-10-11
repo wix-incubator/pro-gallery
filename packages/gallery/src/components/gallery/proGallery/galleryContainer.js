@@ -2,7 +2,6 @@
 import React from 'react';
 import {
   GALLERY_CONSTS,
-  ItemsHelper,
   window,
   utils,
   isEditMode,
@@ -10,6 +9,7 @@ import {
   isPreviewMode,
   isSiteMode,
 } from 'pro-gallery-lib';
+import { ItemsHelper } from 'pro-layouts';
 import GalleryView from './galleryView';
 import SlideshowView from './slideshowView';
 import { scrollToItemImp, scrollToGroupImp } from '../../helpers/scrollHelper';
