@@ -81,7 +81,7 @@ export class GalleryContainer extends React.Component {
   initializeScrollPosition() {
     if (this.props.activeIndex > 0) {
       this.scrollToItem(this.props.activeIndex, false, true, 0);
-      const currentItem = this.galleryStructure.items[this.props.activeIndex || 0];
+      const currentItem = this.galleryStructure.items[this.props.activeIndex];
       this.onGalleryScroll(currentItem.offset);
     }
   }
