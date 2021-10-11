@@ -18,7 +18,6 @@ class VideoScrollHelperWrapper {
     this.top = top || this.top;
     this.left = left || this.left;
   }
-
   initVideoScrollHelperIfNeeded(galleryStructureData, items) {
     if (
       items.some(
