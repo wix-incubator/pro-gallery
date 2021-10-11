@@ -78,14 +78,19 @@ export class GalleryContainer extends React.Component {
 
     //not sure if there needs to be a handleNEwGalleryStructure here with the intial state. currently looks like not
   }
+  initializeScrollPosition() {
+    if (this.props.activeIndex > 0) {
+      this.scrollToItem(this.props.activeIndex, false, true, 0);
+      const currentItem = this.galleryStructure.items[this.props.activeIndex || 0];
+      this.onGalleryScroll(currentItem.offset);
+    }
+  }
 
   componentDidMount() {
-    this.scrollToItem(this.props.activeIndex, false, true, 0);
+    this.initializeScrollPosition()
     this.handleNewGalleryStructure();
     this.eventsListener(GALLERY_CONSTS.events.APP_LOADED, {});
     this.videoScrollHelper.initializePlayState();
-    const currentItem = this.galleryStructure.items[this.props.activeIndex || 0];
-    this.videoScrollHelper.initScroll(currentItem.offset);
 
     try {
       if (typeof window.CustomEvent === 'function') {
