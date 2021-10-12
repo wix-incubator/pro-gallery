@@ -166,7 +166,7 @@ class VideoItem extends React.Component {
 
     const attributes = {
       controlsList: 'nodownload',
-      disablepictureinpicture: 'true',
+      disablePictureInPicture: 'true',
       muted: !this.props.options.videoSound,
       preload: 'metadata',
       style: getStyle(isCrop, isWiderThenContainer),
