@@ -1,11 +1,5 @@
-import { Layouter } from 'pro-layouts';
-import {
-  GalleryItem,
-  ItemsHelper,
-  window,
-  defaultOptions,
-  mergeNestedObjects,
-} from 'pro-gallery-lib';
+import { Layouter, GalleryItem, ItemsHelper } from 'pro-layouts';
+import { window, defaultOptions, mergeNestedObjects } from 'pro-gallery-lib';
 import { testImages } from './mocks/images-mock.js';
 import { mount, shallow, configure } from 'enzyme';
 import { GalleryContainer } from '../../src/components/gallery/proGallery/galleryContainer'; //import GalleryContainer before the connect (without redux)

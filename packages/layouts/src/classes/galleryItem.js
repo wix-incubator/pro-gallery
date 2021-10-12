@@ -1,7 +1,5 @@
-import utils from '../common/utils/index';
-import { Item } from 'pro-layouts';
-import RESIZE_METHODS from '../common/constants/resizeMethods';
-import { URL_TYPES } from '../common/constants/urlTypes';
+import { utils, GALLERY_CONSTS } from 'pro-gallery-lib';
+import { Item } from '../logic/item';
 
 class GalleryItem {
   constructor(config) {
@@ -70,7 +68,7 @@ class GalleryItem {
     this.ratio = scheme.ratio;
     this.cropRatio = scheme.cropRatio;
     this.cubeImages = scheme.isCropped;
-    this.cubeType = scheme.cropType || RESIZE_METHODS.FILL;
+    this.cubeType = scheme.cropType || GALLERY_CONSTS.resizeMethods.FILL;
     this.offset = scheme.offset;
     this.group = scheme.group;
     this.orientation = scheme.orientation;
@@ -137,7 +135,7 @@ class GalleryItem {
       itemWidth: metadata.width,
       itemType: metadata.type || 'image',
       imageUrl: this.processedMediaUrl(
-        RESIZE_METHODS.FIT,
+        GALLERY_CONSTS.resizeMethods.FIT,
         200,
         200,
         null,
@@ -225,7 +223,9 @@ class GalleryItem {
     const thumbSize = 250;
 
     const focalPoint =
-      resizeMethod === RESIZE_METHODS.FILL && this.isCropped && this.focalPoint;
+      resizeMethod === GALLERY_CONSTS.resizeMethods.FILL &&
+      this.isCropped &&
+      this.focalPoint;
 
     const urls = {};
     let imgUrl = this.url;
@@ -233,7 +233,7 @@ class GalleryItem {
     if (this.isText) {
       return Object.assign(
         {},
-        ...Object.values(URL_TYPES).map((value) => ({
+        ...Object.values(GALLERY_CONSTS.urlTypes).map((value) => ({
           [value]: () => '',
         }))
       );
@@ -241,20 +241,20 @@ class GalleryItem {
       imgUrl = this.poster?.url;
 
       if (utils.isExternalUrl(this.url)) {
-        urls[URL_TYPES.VIDEO] = () => this.url;
+        urls[GALLERY_CONSTS.urlTypes.VIDEO] = () => this.url;
       } else {
-        urls[URL_TYPES.VIDEO] = () =>
+        urls[GALLERY_CONSTS.urlTypes.VIDEO] = () =>
           mediaUrl(
             this,
             this.url,
-            RESIZE_METHODS.VIDEO,
+            GALLERY_CONSTS.resizeMethods.VIDEO,
             requiredWidth,
             requiredHeight
           );
       }
     }
 
-    urls[URL_TYPES.HIGH_RES] = () =>
+    urls[GALLERY_CONSTS.urlTypes.HIGH_RES] = () =>
       mediaUrl(
         this,
         imgUrl,
@@ -265,13 +265,13 @@ class GalleryItem {
         focalPoint
       );
 
-    urls[URL_TYPES.LOW_RES] = () =>
+    urls[GALLERY_CONSTS.urlTypes.LOW_RES] = () =>
       mediaUrl(
         this,
         imgUrl,
-        this.cubeImages && resizeMethod !== RESIZE_METHODS.FIT
-          ? RESIZE_METHODS.FILL
-          : RESIZE_METHODS.FIT,
+        this.cubeImages && resizeMethod !== GALLERY_CONSTS.resizeMethods.FIT
+          ? GALLERY_CONSTS.resizeMethods.FILL
+          : GALLERY_CONSTS.resizeMethods.FIT,
         thumbSize,
         thumbSize,
         { ...sharpParams, quality: 30, blur: 30 },
@@ -310,7 +310,7 @@ class GalleryItem {
         true
       );
     }
-    return this.urls.magnified_url[URL_TYPES.HIGH_RES]();
+    return this.urls.magnified_url[GALLERY_CONSTS.urlTypes.HIGH_RES]();
   }
 
   get resized_url() {
@@ -344,7 +344,7 @@ class GalleryItem {
       const resizedRatio = this.resizeWidth / this.resizeHeight;
       const isOrgWider = resizedRatio < orgRatio;
       this.urls.scaled_url = this.processedMediaUrl(
-        RESIZE_METHODS.FILL,
+        GALLERY_CONSTS.resizeMethods.FILL,
         isOrgWider ? orgRatio * this.resizeHeight : this.resizeWidth,
         isOrgWider ? this.resizeHeight : this.resizeWidth / orgRatio,
         this.sharpParams
@@ -355,9 +355,14 @@ class GalleryItem {
 
   get pixel_url() {
     if (!this.urls.pixel_url) {
-      this.urls.pixel_url = this.processedMediaUrl(RESIZE_METHODS.FILL, 1, 1, {
-        quality: 5,
-      });
+      this.urls.pixel_url = this.processedMediaUrl(
+        GALLERY_CONSTS.resizeMethods.FILL,
+        1,
+        1,
+        {
+          quality: 5,
+        }
+      );
     }
     return this.urls.pixel_url;
   }
@@ -365,7 +370,7 @@ class GalleryItem {
   get thumbnail_url() {
     if (!this.urls.thumbnail_url) {
       this.urls.thumbnail_url = this.processedMediaUrl(
-        RESIZE_METHODS.FILL,
+        GALLERY_CONSTS.resizeMethods.FILL,
         this.thumbnailSize,
         this.thumbnailSize,
         { quality: 70 }
@@ -377,7 +382,7 @@ class GalleryItem {
   get square_url() {
     if (!this.urls.square_url) {
       this.urls.square_url = this.processedMediaUrl(
-        RESIZE_METHODS.FILL,
+        GALLERY_CONSTS.resizeMethods.FILL,
         100,
         100,
         {
@@ -391,7 +396,7 @@ class GalleryItem {
   get full_url() {
     if (!this.urls.full_url) {
       this.urls.full_url = this.processedMediaUrl(
-        RESIZE_METHODS.FULL,
+        GALLERY_CONSTS.resizeMethods.FULL,
         this.maxWidth,
         this.maxHeight,
         this.sharpParams
@@ -403,7 +408,7 @@ class GalleryItem {
   get sample_url() {
     if (!this.urls.sample_url) {
       this.urls.sample_url = this.processedMediaUrl(
-        RESIZE_METHODS.FIT,
+        GALLERY_CONSTS.resizeMethods.FIT,
         500,
         500,
         this.sharpParams
@@ -496,7 +501,9 @@ class GalleryItem {
   }
 
   get isCropped() {
-    return this.cubeImages && this.cubeType === RESIZE_METHODS.FILL;
+    return (
+      this.cubeImages && this.cubeType === GALLERY_CONSTS.resizeMethods.FILL
+    );
   }
 
   get focalPoint() {
