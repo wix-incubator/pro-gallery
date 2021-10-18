@@ -204,19 +204,6 @@ const removeArrowPaddingIfOutsideTheGallery = (options) => {
   return _options;
 }
 
-const removeVideoAutoplayInIOS = (options) => {
-  let _options = {...options}
-  // Handle case of autoplay on ios devices
-  if (
-    _options.videoPlay === 'auto' &&
-    _options.itemClick === 'nothing' &&
-    utils.isiOS()
-  ) {
-    _options.videoPlay = 'onClick';
-  }
-  return _options;
-}
-
 const processForceMobileCustomButton = (options) => {
   let _options = {...options}
   if (_options.forceMobileCustomButton) {
@@ -355,7 +342,6 @@ function processLayouts(options, customExternalInfoRendererExists) {
     processedOptions = processForceMobileCustomButton(processedOptions); //TODO this seems like it doesnt really exists. consider deleting support.
     processedOptions = processSpecialGallerySize(processedOptions);
     processedOptions = processTextDimensions(processedOptions, customExternalInfoRendererExists);
-    processedOptions = removeVideoAutoplayInIOS(processedOptions);
     processedOptions = centerArrowsWhenNeeded(processedOptions); 
     
   return processedOptions;

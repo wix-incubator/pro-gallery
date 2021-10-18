@@ -54,6 +54,47 @@ describe('Styles processing', () => {
     );
     expect(Object.keys(flat).length).to.eql(0);
   });
+  it('should work with string percent cropRatios', () => {
+    const migrated = addOldOptions(
+      addMigratedOptions({
+        layoutParams_crop_ratios: ['100%/50%'],
+      })
+    );
+    expect(migrated['layoutParams_cropRatio']).to.eql('100%/50%');
+    expect(migrated['layoutParams_crop_ratios']).to.eql(['100%/50%']);
+    expect(migrated['cubeRatio']).to.eql('100%/50%');
+
+    const migrated2 = addOldOptions(
+      addMigratedOptions({
+        cubeRatio: '100%/50%',
+      })
+    );
+    expect(migrated2['layoutParams_cropRatio']).to.eql('100%/50%');
+    expect(migrated2['layoutParams_crop_ratios']).to.eql(['100%/50%']);
+    expect(migrated2['cubeRatio']).to.eql('100%/50%');
+    const migrated3 = addOldOptions(
+      addMigratedOptions({
+        layoutParams_cropRatio: '100%/50%',
+      })
+    );
+    expect(migrated3['layoutParams_cropRatio']).to.eql('100%/50%');
+    expect(migrated3['layoutParams_crop_ratios']).to.eql(['100%/50%']);
+    expect(migrated3['cubeRatio']).to.eql('100%/50%');
+  });
+  it('should not override values if they were defined initially, even if they would be different otherwise', () => {
+    let styles = {
+      layoutParams_cropRatio: 4 / 3,
+      rotatingCropRatios: '25%/100%,50%/100%',
+    };
+
+    const migrated = addOldOptions(addMigratedOptions(styles));
+    expect(migrated['layoutParams_cropRatio']).to.eql(4 / 3); //the migration would assign'25%/100%' here if it wasnt namely defined in the initial object
+    expect(migrated['layoutParams_crop_ratios']).to.eql([
+      '25%/100%',
+      '50%/100%',
+    ]);
+    expect(migrated['cubeRatio']).to.eql('25%/100%');
+  });
 });
 describe('runtime should be acceptable (x10000)', function () {
   this.timeout(1000);

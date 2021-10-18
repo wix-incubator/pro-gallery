@@ -2,7 +2,6 @@
 import React from 'react';
 import {
   GALLERY_CONSTS,
-  ItemsHelper,
   window,
   utils,
   isEditMode,
@@ -10,6 +9,7 @@ import {
   isPreviewMode,
   isSiteMode,
 } from 'pro-gallery-lib';
+import { ItemsHelper } from 'pro-layouts';
 import GalleryView from './galleryView';
 import SlideshowView from './slideshowView';
 import { scrollToItemImp, scrollToGroupImp } from '../../helpers/scrollHelper';
@@ -78,9 +78,16 @@ export class GalleryContainer extends React.Component {
 
     //not sure if there needs to be a handleNEwGalleryStructure here with the intial state. currently looks like not
   }
+  initializeScrollPosition() {
+    if (this.props.activeIndex > 0) {
+      this.scrollToItem(this.props.activeIndex, false, true, 0);
+      const currentItem = this.galleryStructure.items[this.props.activeIndex];
+      this.onGalleryScroll(currentItem.offset);
+    }
+  }
 
   componentDidMount() {
-    this.scrollToItem(this.props.activeIndex, false, true, 0);
+    this.initializeScrollPosition()
     this.handleNewGalleryStructure();
     this.eventsListener(GALLERY_CONSTS.events.APP_LOADED, {});
     this.videoScrollHelper.initializePlayState();

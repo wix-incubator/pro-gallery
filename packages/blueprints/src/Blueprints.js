@@ -1,9 +1,8 @@
-import { Layouter } from 'pro-layouts';
+import { Layouter, ItemsHelper } from 'pro-layouts';
 import {
   populateWithDefaultOptions,
   addPresetOptions,
   dimensionsHelper,
-  ItemsHelper,
   processLayouts,
   GALLERY_CONSTS,
   extendNestedOptionsToIncludeOldAndNew,

@@ -510,7 +510,7 @@ function process_new_to_old_CropRatio(obj) {
   ];
   let newVal = val || [];
   if (newVal.length > 1) {
-    rotatingCropRatioVal = newVal.join(',');
+    rotatingCropRatioVal = newVal.slice(0).join(',');
   } else if (val?.length === 0) {
     rotatingCropRatioVal = '';
   } else {
