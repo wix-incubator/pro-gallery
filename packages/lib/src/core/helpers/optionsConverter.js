@@ -568,8 +568,15 @@ function process_old_to_new_CropRatio(obj) {
   } else {
     finalVal = val;
   }
+  const getVal = (ele) => {
+    if (Number(ele) >= 0) {
+      return Number(ele);
+    } else {
+      return ele;
+    }
+  };
   _obj[optionsMap.layoutParams.crop.ratios] =
-    finalVal && String(finalVal).split(',').map(Number);
+    finalVal && String(finalVal).split(',').map(getVal);
   delete _obj['cubeRatio'];
   delete _obj['layoutParams_cropRatio'];
   delete _obj['rotatingCropRatios'];
