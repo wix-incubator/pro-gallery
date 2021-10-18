@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { assert } from 'chai';
+import { expect } from 'chai';
 
 import { blueprints } from '../src/index';
 
@@ -12,11 +12,15 @@ function readJsonFromDir(name) {
   return args;
 }
 
-it('createblueprint should be fast', () => {
+const threshholdForBlueprintInMs = 40;
+it(`should run in less than ${threshholdForBlueprintInMs}ms`, () => {
   const args = readJsonFromDir('slowArgs.json');
-  const result = blueprints.createBlueprint(args);
-  /* assert.deepEqual(result, getExpected()) */
-  assert.equal(JSON.stringify(result), JSON.stringify(getExpected()));
+  const hrstart = process.hrtime();
+  const actual = blueprints.createBlueprint(args);
+  const hrend = process.hrtime(hrstart);
+  const msMultiplier = 1000000;
+  expect(hrend[1] / msMultiplier).to.be.lessThan(threshholdForBlueprintInMs);
+  expect(JSON.stringify(actual)).to.equal(JSON.stringify(getExpected()));
 });
 
 function getExpected() {
