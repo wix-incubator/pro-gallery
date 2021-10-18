@@ -13,7 +13,7 @@ describe('optionsUtils', () => {
     const actual = reverseMigrateOptions(data);
     const hrend = process.hrtime(hrstart);
     const currentExecutionTime = 2708390;
-    const refactorImprovment = 1;
+    const refactorImprovment = 7;
     expect(hrend[1]).to.be.lessThan(currentExecutionTime / refactorImprovment);
     expect(JSON.stringify(actual)).to.equal(JSON.stringify(expected()));
   });
