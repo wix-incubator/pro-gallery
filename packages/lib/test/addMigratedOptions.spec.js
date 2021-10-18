@@ -12,7 +12,8 @@ describe('optionsUtils', () => {
     const actual = addMigratedOptions(data);
     const hrend = process.hrtime(hrstart);
     const currentExecutionTime = 2821646;
-    expect(hrend[1]).to.be.lessThan(currentExecutionTime);
+    const refactorImprovment = 5;
+    expect(hrend[1]).to.be.lessThan(currentExecutionTime / refactorImprovment);
     expect(actual).to.deep.equal(expected());
   });
 });
