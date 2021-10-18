@@ -1,5 +1,5 @@
-function assignByString(Obj, string, value) {
-  let _obj = { ...Obj };
+function assignByString(Obj, string, value, cloneObject = true) {
+  let _obj = cloneObject ? { ...Obj } : Obj;
   let keyArr = string.split('_');
   let assignedProperty = keyArr.pop();
   let pointer = _obj;
@@ -61,8 +61,9 @@ function flattenObject(ob) {
 }
 
 function flatToNested(ob) {
+  const cloneObject = false;
   return Object.entries(ob).reduce(
-    (obj, [option, value]) => assignByString(obj, option, value),
+    (obj, [option, value]) => assignByString(obj, option, value, cloneObject),
     {}
   );
 }

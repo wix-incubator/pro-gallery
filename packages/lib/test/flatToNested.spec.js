@@ -6,6 +6,14 @@ describe('optionsUtils', () => {
     const actual = flatToNested(input());
     expect(actual).to.deep.equal(expected());
   });
+  it('should run fast', () => {
+    const data = input();
+    const hrstart = process.hrtime();
+    const actual = flatToNested(data);
+    const hrend = process.hrtime(hrstart);
+    expect(hrend[1]).to.be.lessThan(842426);
+    expect(actual).to.deep.equal(expected());
+  });
 });
 
 function input() {
