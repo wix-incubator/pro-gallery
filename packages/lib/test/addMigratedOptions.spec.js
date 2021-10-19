@@ -13,7 +13,7 @@ describe('optionsUtils', () => {
     const hrend = process.hrtime(hrstart);
     const currentExecutionTime = 2821646;
     // const refactorImprovment = 5;
-    const refactorImprovment = 2; // THIS IS BECAUSE OF CI MACHINES SLOW RUNTIME
+    const refactorImprovment = 1; // THIS IS BECAUSE OF CI MACHINES SLOW RUNTIME
     expect(hrend[1]).to.be.lessThan(currentExecutionTime / refactorImprovment);
     expect(actual).to.deep.equal(expected());
   });
