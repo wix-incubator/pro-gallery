@@ -65,7 +65,7 @@ jobs:
     - run: npm run build --if-present
     - run: git config --global user.email "octocat@github.com"
     - run: git config --global user.name "GitHub Actions"
-    - run: git remote set-url origin https://wix@github.com/wix/pro-gallery
+    - run: git remote set-url origin https://nirnaor@github.com/publish-test
     - run: |
         echo "registry=http://registry.npmjs.org/" >> .npmrc
         echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
