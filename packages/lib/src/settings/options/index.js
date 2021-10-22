@@ -99,6 +99,7 @@ import autoSlideshowType from './autoSlideshowType';
 import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
 import behaviourParams_item_content_magnificationValue from './magnificationValue';
 import behaviourParams_item_loadTransition from './loadTransition';
+import behaviourParams_item_loadTransitionDuration from './loadTransitionDuration';
 
 export default {
   layoutParams_gallerySpacing,
@@ -202,6 +203,7 @@ export default {
   autoSlideshowContinuousSpeed,
   behaviourParams_item_content_magnificationValue,
   behaviourParams_item_loadTransition,
+  behaviourParams_item_loadTransitionDuration,
 };
 
 // TODO = add the options:
