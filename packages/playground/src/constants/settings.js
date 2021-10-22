@@ -155,6 +155,8 @@ export const optionsBySection = {
     'slideAnimation',
     'oneColorAnimationColor',
     'slideTransition',
+    'behaviourParams_item_loadTransition',
+    'behaviourParams_item_loadTransitionDuration',
   ],
   [SECTIONS.IMAGE]: [
     // 'imageQuality',

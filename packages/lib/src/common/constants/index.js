@@ -15,6 +15,7 @@ import infoType from './infoType';
 import isVertical from './isVertical';
 import itemClick from './itemClick';
 import layout, { isLayout } from './layout';
+import loadTransition, { isLoadTransition } from './loadTransition';
 import layoutDirection from './layoutDirection';
 import loadingMode from './loadingMode';
 import loadingWithColorMode from './loadingWithColorMode';
@@ -73,6 +74,8 @@ export default {
   itemClick,
   layout,
   isLayout,
+  loadTransition,
+  isLoadTransition,
   layoutDirection,
   loadingMode,
   loadingWithColorMode,

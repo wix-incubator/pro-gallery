@@ -114,6 +114,25 @@ class ImageItem extends React.Component {
     );
   }
 
+  getLoadTransitionStyle() {
+    const style = {};
+    const { loadTransition, loadTransitionDuration } = this.props.options?.behaviourParams?.item || {};
+    if (loadTransitionDuration && loadTransition && loadTransition !== GALLERY_CONSTS.loadTransition.NO_EFFECT) {
+      switch (loadTransition) {
+        case GALLERY_CONSTS.loadTransition.BLUR_OUT: {
+          style.transition = `filter ${loadTransitionDuration}ms`;
+          if (this.state.isHighResImageLoaded) {
+            style.filter = "blur(0px)";
+          } else {
+            style.filter = "blur(20px)";
+          }
+          break;
+        }
+      }
+    }
+    return style;
+  }
+
   getImageElement() {
     const {
       calculatedAlt,
@@ -153,6 +172,7 @@ class ImageItem extends React.Component {
             height: '100%',
           }
         : {};
+      const loadTransitionStyle = this.getLoadTransitionStyle();
 
       if (!isHighResImageLoaded && gotFirstScrollEvent && !isTransparent) {
         let preload = null;
@@ -177,6 +197,7 @@ class ImageItem extends React.Component {
                   ...imageSizing,
                   ...preloadStyles,
                   ...blockDownloadStyles,
+                  ...loadTransitionStyle,
                 }}
                 {...preloadProps}
               />
@@ -195,6 +216,7 @@ class ImageItem extends React.Component {
                   ...imageSizing,
                   ...preloadStyles,
                   ...blockDownloadStyles,
+                  ...loadTransitionStyle,
                 }}
                 {...preloadProps}
               />
@@ -224,6 +246,7 @@ class ImageItem extends React.Component {
           style={{
             ...imageSizing,
             ...blockDownloadStyles,
+            ...loadTransitionStyle,
             ...(!shouldRenderHighResImages && preloadStyles),
           }}
           {...imageProps}

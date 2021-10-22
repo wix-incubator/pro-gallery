@@ -5,6 +5,11 @@ const coreOptions = {
     gallerySpacing: 0,
     cropRatio: 1, // determine the ratio of the images when using grid (use 1 for squares grid)
   },
+  behaviourParams: {
+    item: {
+      loadTransitionDuration: 300,
+    },
+  },
   isRTL: false,
   isVertical: false,
   minItemSize: 120,

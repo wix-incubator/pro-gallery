@@ -8,6 +8,8 @@ export interface Item {
   video?: Video;
   overlay?: Overlay;
   content?: Content;
+  loadTransition?: 'NO_EFFECT' | 'BLUR_OUT';
+  loadTransitionDuration: number;
 }
 
 export interface Gallery {

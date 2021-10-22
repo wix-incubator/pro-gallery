@@ -15,6 +15,7 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
       content: {
         magnificationValue: 2,
       },
+      loadTransitionDuration: 300,
     },
   },
   // adding
