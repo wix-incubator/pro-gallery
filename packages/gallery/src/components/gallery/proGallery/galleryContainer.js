@@ -301,7 +301,6 @@ export class GalleryContainer extends React.Component {
     structure = structure || this.props.structure;
     id = id || this.props.id;
     createMediaUrl = createMediaUrl || this.props.createMediaUrl;
-    console.log(structure);
 
     if (typeof customComponents.customImageRenderer === 'function') {
       ImageRenderer.customImageRenderer = customComponents.customImageRenderer;
