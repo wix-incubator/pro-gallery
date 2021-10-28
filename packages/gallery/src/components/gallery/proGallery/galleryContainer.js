@@ -118,46 +118,45 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (!this.currentHoverChangeEvent.galleryId && nextProps.id) {
-      this.currentHoverChangeEvent.galleryId = nextProps.id;
+  reCreateGallery = (props) => {
+    const galleryState = this.propsToState(props);
+    if (Object.keys(galleryState).length > 0) {
+      this.setState(galleryState, this.handleNewGalleryStructure);
+    }
+  };
+
+  getGallerySignificantProps = (props) => {
+    const { id, options, container, items, isInDisplay } = props;
+    return { id, options, container, items, isInDisplay };
+  };
+
+  componentDidUpdate(prevProps) {
+
+    if (!this.currentHoverChangeEvent.galleryId && this.props.id) {
+      this.currentHoverChangeEvent.galleryId = this.props.id;
     }
     if (
-      this.props.activeIndex !== nextProps.activeIndex &&
-      nextProps.activeIndex !== this.currentSlideshowViewIdx
+      prevProps.activeIndex !== this.props.activeIndex &&
+      this.props.activeIndex !== this.currentSlideshowViewIdx
     ) {
-      this.scrollToItem(nextProps.activeIndex, false, true, 0);
+      this.scrollToItem(this.props.activeIndex, false, true, 0);
     }
 
-    const reCreateGallery = () => {
-      const galleryState = this.propsToState(nextProps);
-      if (Object.keys(galleryState).length > 0) {
-        this.setState(galleryState, this.handleNewGalleryStructure);
-      }
-    };
+    let hasSignificantPropsChanged = true;
 
-    const getSignificantProps = (props) => {
-      const { id, options, container, items, isInDisplay } = props;
-      return { id, options, container, items, isInDisplay };
-    };
-
-    if (this.reCreateGalleryTimer) {
-      clearTimeout(this.reCreateGalleryTimer);
-    }
-
-    let hasPropsChanged = true;
     try {
-      const currentSignificantProps = getSignificantProps(this.props);
-      const nextSignificantProps = getSignificantProps(nextProps);
-      hasPropsChanged =
-        JSON.stringify(currentSignificantProps) !==
-        JSON.stringify(nextSignificantProps);
-      if (utils.isVerbose() && hasPropsChanged) {
+      const currentGallerySignificantProps =
+        this.getGallerySignificantProps(prevProps);
+      const newGallerySignificantProps = this.getGallerySignificantProps(this.props);
+      hasSignificantPropsChanged =
+        JSON.stringify(currentGallerySignificantProps) !==
+        JSON.stringify(newGallerySignificantProps);
+      if (utils.isVerbose() && hasSignificantPropsChanged) {
         console.log(
           'New props arrived',
           utils.printableObjectsDiff(
-            currentSignificantProps,
-            nextSignificantProps
+            currentGallerySignificantProps,
+            newGallerySignificantProps
           )
         );
       }
@@ -165,19 +164,16 @@ export class GalleryContainer extends React.Component {
       console.error('Cannot compare props', e);
     }
 
-    if (hasPropsChanged) {
-      reCreateGallery();
+    if (hasSignificantPropsChanged) {
+      this.reCreateGallery(this.props);
 
-      if (!!nextProps.activeIndex && nextProps.activeIndex > 0) {
-        this.scrollToItem(nextProps.activeIndex, false, true, 0);
+      if (!!this.props.activeIndex && this.props.activeIndex > 0) {
+        this.scrollToItem(this.props.activeIndex, false, true, 0);
       }
 
-      if (this.props.isInDisplay !== nextProps.isInDisplay) {
-        this.handleNavigation(nextProps.isInDisplay);
+      if (prevProps.isInDisplay !== this.props.isInDisplay) {
+        this.handleNavigation(this.props.isInDisplay);
       }
-    } else {
-      //this is a hack, because in fullwidth, new props arrive without any changes
-      // this.reCreateGalleryTimer = setTimeout(reCreateGallery, 1000);
     }
   }
 
