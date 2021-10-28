@@ -118,19 +118,19 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (!this.currentHoverChangeEvent.galleryId && nextProps.id) {
-      this.currentHoverChangeEvent.galleryId = nextProps.id;
+  componentDidUpdate(prevProps) {
+    if (!this.currentHoverChangeEvent.galleryId && this.props.id) {
+      this.currentHoverChangeEvent.galleryId = this.props.id;
     }
     if (
-      this.props.activeIndex !== nextProps.activeIndex &&
-      nextProps.activeIndex !== this.currentSlideshowViewIdx
+      prevProps.activeIndex !== this.props.activeIndex &&
+      this.props.activeIndex !== this.currentSlideshowViewIdx
     ) {
-      this.scrollToItem(nextProps.activeIndex, false, true, 0);
+      this.scrollToItem(this.props.activeIndex, false, true, 0);
     }
 
-    const reCreateGallery = () => {
-      const galleryState = this.propsToState(nextProps);
+    const reCreateGallery = (props) => {
+      const galleryState = this.propsToState(props);
       if (Object.keys(galleryState).length > 0) {
         this.setState(galleryState, this.handleNewGalleryStructure);
       }
@@ -141,14 +141,10 @@ export class GalleryContainer extends React.Component {
       return { id, options, container, items, isInDisplay };
     };
 
-    if (this.reCreateGalleryTimer) {
-      clearTimeout(this.reCreateGalleryTimer);
-    }
-
     let hasPropsChanged = true;
     try {
-      const currentSignificantProps = getSignificantProps(this.props);
-      const nextSignificantProps = getSignificantProps(nextProps);
+      const currentSignificantProps = getSignificantProps(prevProps);
+      const nextSignificantProps = getSignificantProps(this.props);
       hasPropsChanged =
         JSON.stringify(currentSignificantProps) !==
         JSON.stringify(nextSignificantProps);
@@ -166,13 +162,10 @@ export class GalleryContainer extends React.Component {
     }
 
     if (hasPropsChanged) {
-      reCreateGallery();
-      if (this.props.isInDisplay !== nextProps.isInDisplay) {
-        this.handleNavigation(nextProps.isInDisplay);
+      reCreateGallery(this.props);
+      if (prevProps.isInDisplay !== this.props.isInDisplay) {
+        this.handleNavigation(this.props.isInDisplay);
       }
-    } else {
-      //this is a hack, because in fullwidth, new props arrive without any changes
-      // this.reCreateGalleryTimer = setTimeout(reCreateGallery, 1000);
     }
   }
 

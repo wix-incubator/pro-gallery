@@ -88,8 +88,8 @@ export default class Gallery extends React.Component<
     }
   }
 
-  UNSAFE_componentWillReceiveProps(newProps) {
-    this.onNewProps(newProps, false);
+  componentDidUpdate() {
+    this.onNewProps(this.props, false);
   }
 
   render() {
