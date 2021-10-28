@@ -167,10 +167,6 @@ export class GalleryContainer extends React.Component {
     if (hasSignificantPropsChanged) {
       this.reCreateGallery(this.props);
 
-      if (!!this.props.activeIndex && this.props.activeIndex > 0) {
-        this.scrollToItem(this.props.activeIndex, false, true, 0);
-      }
-
       if (prevProps.isInDisplay !== this.props.isInDisplay) {
         this.handleNavigation(this.props.isInDisplay);
       }
