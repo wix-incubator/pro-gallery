@@ -111,7 +111,11 @@ export default class ScrollIndicator extends React.Component {
         this.setState({
           scrollTop: top,
         });
-        this.props.getMoreItemsIfNeeded(top);
+        if (
+          this.props.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL
+        ) {
+          this.props.getMoreItemsIfNeeded(top);
+        }
         this.debouncedOnScroll({ top, left });
       }
     };
