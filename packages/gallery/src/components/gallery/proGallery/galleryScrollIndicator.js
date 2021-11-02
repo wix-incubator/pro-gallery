@@ -76,7 +76,6 @@ export default class ScrollIndicator extends React.Component {
           GALLERY_CONSTS.scrollDirection.HORIZONTAL
         ) {
           this.setState({
-            scrollTop: left, //todo use both scrollTop and scrollLeft
             scrollLeft: left,
           });
           this.props.getMoreItemsIfNeeded(left);
@@ -109,15 +108,11 @@ export default class ScrollIndicator extends React.Component {
       }
       // console.log('[RTL SCROLL] onVerticalScroll: ', left);
       if (top >= 0) {
-        if (
-          this.props.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL
-        ) {
-          this.setState({
-            scrollTop: top,
-          });
-          this.props.getMoreItemsIfNeeded(top);
-          this.debouncedOnScroll({ top, left });
-        }
+        this.setState({
+          scrollTop: top,
+        });
+        this.props.getMoreItemsIfNeeded(top);
+        this.debouncedOnScroll({ top, left });
       }
     };
     try {
