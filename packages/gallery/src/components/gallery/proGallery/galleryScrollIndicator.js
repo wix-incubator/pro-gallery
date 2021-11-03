@@ -97,7 +97,7 @@ export default class ScrollIndicator extends React.Component {
             this.onHorizontalScrollTransition
           );
       } catch (e) {
-        console.error(e)
+        console.error(e);
       }
     }
     //Vertical Scroll
@@ -123,7 +123,7 @@ export default class ScrollIndicator extends React.Component {
         .vertical()
         .addEventListener('scroll', this.onVerticalScroll);
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
   }
 
