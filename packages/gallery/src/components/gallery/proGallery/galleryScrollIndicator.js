@@ -54,7 +54,6 @@ export default class ScrollIndicator extends React.Component {
           GALLERY_CONSTS.scrollDirection.HORIZONTAL
         ) {
           this.setState({
-            scrollTop: this.state.scrollTop + step, //todo use both scrollTop and scrollLeft
             scrollLeft: this.state.scrollLeft + step,
           });
         }
@@ -98,7 +97,7 @@ export default class ScrollIndicator extends React.Component {
             this.onHorizontalScrollTransition
           );
       } catch (e) {
-        //
+        console.error(e)
       }
     }
     //Vertical Scroll
@@ -124,7 +123,7 @@ export default class ScrollIndicator extends React.Component {
         .vertical()
         .addEventListener('scroll', this.onVerticalScroll);
     } catch (e) {
-      //
+      console.error(e)
     }
   }
 
