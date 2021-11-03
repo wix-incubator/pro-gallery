@@ -54,7 +54,6 @@ export default class ScrollIndicator extends React.Component {
           GALLERY_CONSTS.scrollDirection.HORIZONTAL
         ) {
           this.setState({
-            scrollTop: this.state.scrollTop + step, //todo use both scrollTop and scrollLeft
             scrollLeft: this.state.scrollLeft + step,
           });
         }
@@ -64,7 +63,6 @@ export default class ScrollIndicator extends React.Component {
     this.onHorizontalScroll = (e) => {
       this.props.setGotFirstScrollIfNeeded();
       const target = e.currentTarget || e.target || e;
-      const top = target && (target.scrollY || target.scrollTop || target.y);
       let left = target && (target.scrollX || target.scrollLeft || target.x);
       if (this.props.isRTL) {
         left = Math.abs(left); //this.props.totalWidth - left;
@@ -76,48 +74,48 @@ export default class ScrollIndicator extends React.Component {
           GALLERY_CONSTS.scrollDirection.HORIZONTAL
         ) {
           this.setState({
-            scrollTop: left, //todo use both scrollTop and scrollLeft
             scrollLeft: left,
           });
           this.props.getMoreItemsIfNeeded(left);
-          this.debouncedOnScroll({ top, left });
+          this.debouncedOnScroll({ left });
         }
       }
     };
-    try {
-      scrollingElement
-        .horizontal()
-        .addEventListener('scroll', this.onHorizontalScroll);
 
-      scrollingElement
-        .horizontal()
-        .addEventListener(
-          'scrollTransition',
-          this.onHorizontalScrollTransition
-        );
-    } catch (e) {
-      //
+    if (
+      this.props.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+    ) {
+      try {
+        scrollingElement
+          .horizontal()
+          .addEventListener('scroll', this.onHorizontalScroll);
+
+        scrollingElement
+          .horizontal()
+          .addEventListener(
+            'scrollTransition',
+            this.onHorizontalScrollTransition
+          );
+      } catch (e) {
+        console.error(e);
+      }
     }
     //Vertical Scroll
     this.onVerticalScroll = (e) => {
       this.props.setGotFirstScrollIfNeeded();
       const target = e.currentTarget || e.target || e;
       const top = target && (target.scrollY || target.scrollTop || target.y);
-      let left = target && (target.scrollX || target.scrollLeft || target.x);
-      if (this.props.isRTL) {
-        left = this.props.totalWidth - left;
-      }
       // console.log('[RTL SCROLL] onVerticalScroll: ', left);
       if (top >= 0) {
+        this.setState({
+          scrollTop: top,
+        });
         if (
           this.props.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL
         ) {
-          this.setState({
-            scrollTop: top,
-          });
           this.props.getMoreItemsIfNeeded(top);
-          this.debouncedOnScroll({ top, left });
         }
+        this.debouncedOnScroll({ top });
       }
     };
     try {
@@ -125,7 +123,7 @@ export default class ScrollIndicator extends React.Component {
         .vertical()
         .addEventListener('scroll', this.onVerticalScroll);
     } catch (e) {
-      //
+      console.error(e);
     }
   }
 
