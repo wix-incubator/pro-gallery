@@ -124,7 +124,8 @@ export class GalleryContainer extends React.Component {
     }
     if (
       this.props.activeIndex !== nextProps.activeIndex &&
-      nextProps.activeIndex !== this.currentSlideshowViewIdx
+      nextProps.activeIndex !== this.currentSlideshowViewIdx &&
+      !this.state.isScrollLessGallery
     ) {
       this.scrollToItem(nextProps.activeIndex, false, true, 0);
     }
