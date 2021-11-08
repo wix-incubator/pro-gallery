@@ -80,9 +80,7 @@ export class GalleryContainer extends React.Component {
   }
   initializeScrollPosition() {
     if (this.props.activeIndex > 0) {
-      if (!this.state.isScrollLessGallery) {
-        this.scrollToItem(this.props.activeIndex, false, true, 0);
-      }
+      this.scrollToItem(this.props.activeIndex, false, true, 0);
       const currentItem = this.galleryStructure.items[this.props.activeIndex];
       this.onGalleryScroll(currentItem.offset);
     }
@@ -126,8 +124,7 @@ export class GalleryContainer extends React.Component {
     }
     if (
       this.props.activeIndex !== nextProps.activeIndex &&
-      nextProps.activeIndex !== this.currentSlideshowViewIdx &&
-      !this.state.isScrollLessGallery
+      nextProps.activeIndex !== this.currentSlideshowViewIdx
     ) {
       this.scrollToItem(nextProps.activeIndex, false, true, 0);
     }
@@ -398,6 +395,9 @@ export class GalleryContainer extends React.Component {
         this.setState({
           gotFirstScrollEvent:true,
         });
+      }
+      if (this.isScrollLessGallery) {
+        return;
       }
       const scrollingElement = this._scrollingElement;
       const horizontalElement = scrollingElement.horizontal();
