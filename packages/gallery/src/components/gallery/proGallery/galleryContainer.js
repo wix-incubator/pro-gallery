@@ -396,7 +396,7 @@ export class GalleryContainer extends React.Component {
           gotFirstScrollEvent:true,
         });
       }
-      if (this.isScrollLessGallery) {
+      if (this.state.isScrollLessGallery) {
         return;
       }
       const scrollingElement = this._scrollingElement;
