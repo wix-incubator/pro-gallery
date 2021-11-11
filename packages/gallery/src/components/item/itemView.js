@@ -21,7 +21,7 @@ import {
   getImageStyle,
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
-import {getSlideAnimationStyles} from './pure'
+import {getSlideAnimationStyles, getCustomInfoRendererProps} from './pure'
 
 class ItemView extends React.Component {
   constructor(props) {
@@ -72,8 +72,6 @@ class ItemView extends React.Component {
     this.onBlur = this.onBlur.bind(this);
     this.checkIfCurrentHoverChanged =
       this.checkIfCurrentHoverChanged.bind(this);
-    this.getCustomInfoRendererProps =
-      this.getCustomInfoRendererProps.bind(this);
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -365,7 +363,7 @@ class ItemView extends React.Component {
           }}
           renderCustomInfo={
             customComponents.customHoverRenderer
-              ? () => customComponents.customHoverRenderer(this.getCustomInfoRendererProps())
+              ? () => customComponents.customHoverRenderer(getCustomInfoRendererProps(this.props))
               : null
           }
         ></ItemHover>
@@ -373,9 +371,6 @@ class ItemView extends React.Component {
     );
   }
 
-  getCustomInfoRendererProps() {
-    return { ...this.props, ...{ isMobile: utils.isMobile() } };
-  }
 
   getImageItem(imageDimensions) {
     const props = utils.pick(this.props, [
@@ -503,7 +498,7 @@ class ItemView extends React.Component {
         transition: 'none',
       };
       const slideshowInfo = customSlideshowInfoRenderer
-        ? customSlideshowInfoRenderer(this.getCustomInfoRendererProps())
+        ? customSlideshowInfoRenderer(getCustomInfoRendererProps(this.props))
         : null;
 
       const { photoId, id } = this.props;
@@ -609,7 +604,7 @@ class ItemView extends React.Component {
       style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
     const itemExternalInfo = customComponents.customInfoRenderer(
-      this.getCustomInfoRendererProps(),
+      getCustomInfoRendererProps(this.props),
       placement
     );
 
