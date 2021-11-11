@@ -74,6 +74,7 @@ export default class ScrollIndicator extends React.Component {
           GALLERY_CONSTS.scrollDirection.HORIZONTAL
         ) {
           this.setState({
+            scrollTop: left,
             scrollLeft: left,
           });
           this.props.getMoreItemsIfNeeded(left);
