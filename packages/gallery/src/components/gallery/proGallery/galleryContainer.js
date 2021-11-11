@@ -54,7 +54,6 @@ export class GalleryContainer extends React.Component {
       playingVideoIdx: -1,
       viewComponent: null,
       firstUserInteractionExecuted: false,
-      isScrollLessGallery: this.getIsScrollLessGallery(this.props.options),
       isInHover: false,
     };
 
@@ -366,7 +365,6 @@ export class GalleryContainer extends React.Component {
       options,
       container,
       structure,
-      isScrollLessGallery: this.getIsScrollLessGallery(options),
     };
     return newState;
   }
@@ -395,6 +393,9 @@ export class GalleryContainer extends React.Component {
         this.setState({
           gotFirstScrollEvent:true,
         });
+      }
+      if (this.getIsScrollLessGallery(this.state.options)) {
+        return;
       }
       const scrollingElement = this._scrollingElement;
       const horizontalElement = scrollingElement.horizontal();
@@ -646,7 +647,7 @@ export class GalleryContainer extends React.Component {
     }
     if (eventName === GALLERY_CONSTS.events.CURRENT_ITEM_CHANGED) {
       this.setCurrentSlideshowViewIdx(eventData.idx);
-      if (this.state.isScrollLessGallery) {
+      if (this.getIsScrollLessGallery(this.state.options)) {
         this.simulateScrollToItem(this.galleryStructure.items[eventData.idx]);
       }
     }
