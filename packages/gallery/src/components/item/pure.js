@@ -1,6 +1,6 @@
-export { getSlideAnimationStyles };
+export { getSlideAnimationStyles, getCustomInfoRendererProps };
 
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 
 function getSlideAnimationStyles({ idx, activeIndex, options, container }) {
   const { isRTL, slideAnimation } = options;
@@ -45,4 +45,8 @@ function getSlideAnimationStyles({ idx, activeIndex, options, container }) {
     default:
       return {};
   }
+}
+
+function getCustomInfoRendererProps(props) {
+  return { ...props, ...{ isMobile: utils.isMobile() } };
 }
