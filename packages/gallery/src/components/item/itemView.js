@@ -6,8 +6,7 @@ import {
   window,
   utils,
   isEditMode,
-  isPreviewMode,
-  isSEOMode,
+  isPreviewMode
 } from 'pro-gallery-lib';
 import MagnifiedImage from './imageWithMagnified.js';
 import TextItem from './textItem.js';
@@ -21,7 +20,7 @@ import {
   getImageStyle,
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
-import {getSlideAnimationStyles, getCustomInfoRendererProps} from './pure'
+import {getSlideAnimationStyles, getCustomInfoRendererProps, getLinkParams} from './pure'
 
 class ItemView extends React.Component {
   constructor(props) {
@@ -508,7 +507,7 @@ class ItemView extends React.Component {
             data-id={photoId}
             data-idx={idx}
             key={'item-container-link-' + id}
-            {...this.getLinkParams()}
+            {...getLinkParams(this.props)}
             tabIndex={-1}
             style={{ ...slideAnimationStyles, width, height }}
           >
@@ -968,34 +967,6 @@ class ItemView extends React.Component {
     }
   }
 
-  getLinkParams() {
-    const { directLink, options, directShareLink } = this.props;
-    const isSEO = isSEOMode();
-    if (options.itemClick === GALLERY_CONSTS.itemClick.LINK) {
-      const { url, target } = directLink || {};
-      const noFollowForSEO = this.props.noFollowForSEO;
-      const shouldUseNofollow = isSEO && noFollowForSEO;
-      const shouldUseDirectLink = !!(url && target);
-      const seoLinkParams = shouldUseNofollow ? { rel: 'nofollow' } : {};
-      const linkParams = shouldUseDirectLink
-        ? { href: url, target, ...seoLinkParams }
-        : {};
-      return linkParams;
-    } else if (
-      options.itemClick === GALLERY_CONSTS.itemClick.FULLSCREEN ||
-      options.itemClick === GALLERY_CONSTS.itemClick.EXPAND
-    ) {
-      // place share link as the navigation item
-      const url = directShareLink;
-      const shouldUseDirectShareLink = !!url;
-      const shouldUseNofollow = !options.shouldIndexDirectShareLinkInSEO;
-      const seoLinkParams = shouldUseNofollow ? { rel: 'nofollow' } : {};
-      const linkParams = shouldUseDirectShareLink
-        ? { href: url, 'data-cancel-link': true, ...seoLinkParams }
-        : {};
-      return linkParams;
-    }
-  }
 
   composeItem() {
     const { photoId, id, hash, idx, options, type, url } = this.props;
@@ -1079,7 +1050,7 @@ class ItemView extends React.Component {
               itemContainer: this.itemContainer,
             });
           }}
-          {...this.getLinkParams()}
+          {...getLinkParams(this.props)}
           tabIndex={-1}
           onKeyDown={(e) => {
             /* Relvenat only for Screen-Reader case:
