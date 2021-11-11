@@ -21,6 +21,7 @@ import {
   getImageStyle,
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
+import {getSlideAnimationStyles} from './pure'
 
 class ItemView extends React.Component {
   constructor(props) {
@@ -44,6 +45,7 @@ class ItemView extends React.Component {
 
   init() {
     this.onItemClick = this.onItemClick.bind(this);
+    this.getSlideshowItemInner = this.getSlideshowItemInner.bind(this);
     this.onItemWrapperClick = this.onItemWrapperClick.bind(this);
     this.onItemInfoClick = this.onItemInfoClick.bind(this);
     this.onContainerKeyDown = this.onContainerKeyDown.bind(this);
@@ -485,6 +487,13 @@ class ItemView extends React.Component {
     }
 
     if (isSlideshow) {
+      return this.getSlideshowItemInner({options, width, height, itemInner})
+    }
+
+    return itemInner;
+  }
+
+  getSlideshowItemInner({options, width, height, itemInner}) {
       const { customSlideshowInfoRenderer } = this.props.customComponents;
       const slideAnimationStyles = this.getSlideAnimationStyles();
       const infoStyle = {
@@ -498,7 +507,7 @@ class ItemView extends React.Component {
         : null;
 
       const { photoId, id, idx } = this.props;
-      itemInner = (
+      return (
         <div>
           <a
             ref={(e) => (this.itemAnchor = e)}
@@ -520,9 +529,6 @@ class ItemView extends React.Component {
           </div>
         </div>
       );
-    }
-
-    return itemInner;
   }
 
   getRightInfoElementIfNeeded() {
@@ -781,49 +787,7 @@ class ItemView extends React.Component {
   }
 
   getSlideAnimationStyles() {
-    const { idx, activeIndex, options, container } = this.props;
-    const { isRTL, slideAnimation } = options;
-    const baseStyles = {
-      position: 'absolute',
-      display: 'block',
-    };
-    switch (slideAnimation) {
-      case GALLERY_CONSTS.slideAnimations.FADE:
-        return {
-          ...baseStyles,
-          transition: `opacity 600ms ease`,
-          opacity: activeIndex === idx ? 1 : 0,
-        };
-      case GALLERY_CONSTS.slideAnimations.DECK: {
-        const rtlFix = isRTL ? 1 : -1;
-        if (activeIndex < idx) {
-          //the slides behind the deck
-          return {
-            ...baseStyles,
-            transition: `opacity .2s ease 600ms`,
-            zIndex: -1,
-            opacity: 0,
-          };
-        } else if (activeIndex === idx) {
-          return {
-            ...baseStyles,
-            zIndex: 0,
-            transition: `transform 600ms ease`,
-            transform: `translateX(0)`,
-          };
-        } else if (activeIndex > idx) {
-          return {
-            ...baseStyles,
-            zIndex: 1,
-            transition: `transform 600ms ease`,
-            transform: `translateX(${rtlFix * Math.round(container.width)}px)`,
-          };
-        }
-        break;
-      }
-      default:
-        return {};
-    }
+    return getSlideAnimationStyles(this.props)
   }
 
   getItemAriaLabel() {
