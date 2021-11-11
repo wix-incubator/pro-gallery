@@ -488,7 +488,7 @@ class ItemView extends React.Component {
     return itemInner;
   }
 
-  getSlideshowItemInner({options, width, height, itemInner, customComponents,  idx, activeIndex, container }) {
+  getSlideshowItemInner({options, width, height, itemInner, customComponents,  idx, activeIndex, container,  photoId, id }) {
       const { customSlideshowInfoRenderer } = customComponents;
       const slideAnimationStyles = getSlideAnimationStyles({ idx, activeIndex, options, container });
       const infoStyle = {
@@ -501,7 +501,6 @@ class ItemView extends React.Component {
         ? customSlideshowInfoRenderer(getCustomInfoRendererProps(this.props))
         : null;
 
-      const { photoId, id } = this.props;
       return (
         <div>
           <a
