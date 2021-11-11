@@ -91,7 +91,8 @@ const forceInfoOnHoverWhenNeeded = (options) =>{
   let _options = {...options}
 if (    
   !GALLERY_CONSTS.isLayout('SLIDER')(_options) && //not slider
-  !GALLERY_CONSTS.isLayout('COLUMN')(_options) //not columns
+  !GALLERY_CONSTS.isLayout('COLUMN')(_options) &&  //not columns
+  !GALLERY_CONSTS.isLayout('NIR')(_options) //not columns
   ) {
     if (
       (!_options.isVertical || //layout orientation is horizontal
