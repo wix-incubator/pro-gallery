@@ -6,8 +6,7 @@ import {
   window,
   utils,
   isEditMode,
-  isPreviewMode,
-  isSEOMode,
+  isPreviewMode
 } from 'pro-gallery-lib';
 import MagnifiedImage from './imageWithMagnified.js';
 import TextItem from './textItem.js';
@@ -21,6 +20,7 @@ import {
   getImageStyle,
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
+import {getSlideAnimationStyles, getCustomInfoRendererProps, getLinkParams} from './pure'
 
 class ItemView extends React.Component {
   constructor(props) {
@@ -44,6 +44,7 @@ class ItemView extends React.Component {
 
   init() {
     this.onItemClick = this.onItemClick.bind(this);
+    this.getSlideshowItemInner = this.getSlideshowItemInner.bind(this);
     this.onItemWrapperClick = this.onItemWrapperClick.bind(this);
     this.onItemInfoClick = this.onItemInfoClick.bind(this);
     this.onContainerKeyDown = this.onContainerKeyDown.bind(this);
@@ -70,8 +71,6 @@ class ItemView extends React.Component {
     this.onBlur = this.onBlur.bind(this);
     this.checkIfCurrentHoverChanged =
       this.checkIfCurrentHoverChanged.bind(this);
-    this.getCustomInfoRendererProps =
-      this.getCustomInfoRendererProps.bind(this);
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -363,7 +362,7 @@ class ItemView extends React.Component {
           }}
           renderCustomInfo={
             customComponents.customHoverRenderer
-              ? () => customComponents.customHoverRenderer(this.getCustomInfoRendererProps())
+              ? () => customComponents.customHoverRenderer(getCustomInfoRendererProps(this.props))
               : null
           }
         ></ItemHover>
@@ -371,9 +370,6 @@ class ItemView extends React.Component {
     );
   }
 
-  getCustomInfoRendererProps() {
-    return { ...this.props, ...{ isMobile: utils.isMobile() } };
-  }
 
   getImageItem(imageDimensions) {
     const props = utils.pick(this.props, [
@@ -485,8 +481,15 @@ class ItemView extends React.Component {
     }
 
     if (isSlideshow) {
-      const { customSlideshowInfoRenderer } = this.props.customComponents;
-      const slideAnimationStyles = this.getSlideAnimationStyles();
+      return this.getSlideshowItemInner({options, width, height, itemInner, customComponents: this.props.customComponents})
+    }
+
+    return itemInner;
+  }
+
+  getSlideshowItemInner({options, width, height, itemInner, customComponents,  photoId, id }) {
+      const { customSlideshowInfoRenderer } = customComponents;
+      const slideAnimationStyles = getSlideAnimationStyles(this.props);
       const infoStyle = {
         height: `${options.slideshowInfoSize}px`,
         bottom: `-${options.slideshowInfoSize}px`,
@@ -494,18 +497,18 @@ class ItemView extends React.Component {
         transition: 'none',
       };
       const slideshowInfo = customSlideshowInfoRenderer
-        ? customSlideshowInfoRenderer(this.getCustomInfoRendererProps())
+        ? customSlideshowInfoRenderer(getCustomInfoRendererProps(this.props))
         : null;
 
-      const { photoId, id, idx } = this.props;
-      itemInner = (
+      const { idx } = this.props;
+      return (
         <div>
           <a
             ref={(e) => (this.itemAnchor = e)}
             data-id={photoId}
             data-idx={idx}
             key={'item-container-link-' + id}
-            {...this.getLinkParams()}
+            {...getLinkParams(this.props)}
             tabIndex={-1}
             style={{ ...slideAnimationStyles, width, height }}
           >
@@ -520,9 +523,6 @@ class ItemView extends React.Component {
           </div>
         </div>
       );
-    }
-
-    return itemInner;
   }
 
   getRightInfoElementIfNeeded() {
@@ -603,7 +603,7 @@ class ItemView extends React.Component {
       style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
     const itemExternalInfo = customComponents.customInfoRenderer(
-      this.getCustomInfoRendererProps(),
+      getCustomInfoRendererProps(this.props),
       placement
     );
 
@@ -774,57 +774,12 @@ class ItemView extends React.Component {
 
     const itemWrapperStyles = {
       ...styles,
-      ...(!isSlideshow && this.getSlideAnimationStyles()),
+      ...(!isSlideshow && getSlideAnimationStyles(this.props)),
     };
 
     return itemWrapperStyles;
   }
 
-  getSlideAnimationStyles() {
-    const { idx, activeIndex, options, container } = this.props;
-    const { isRTL, slideAnimation } = options;
-    const baseStyles = {
-      position: 'absolute',
-      display: 'block',
-    };
-    switch (slideAnimation) {
-      case GALLERY_CONSTS.slideAnimations.FADE:
-        return {
-          ...baseStyles,
-          transition: `opacity 600ms ease`,
-          opacity: activeIndex === idx ? 1 : 0,
-        };
-      case GALLERY_CONSTS.slideAnimations.DECK: {
-        const rtlFix = isRTL ? 1 : -1;
-        if (activeIndex < idx) {
-          //the slides behind the deck
-          return {
-            ...baseStyles,
-            transition: `opacity .2s ease 600ms`,
-            zIndex: -1,
-            opacity: 0,
-          };
-        } else if (activeIndex === idx) {
-          return {
-            ...baseStyles,
-            zIndex: 0,
-            transition: `transform 600ms ease`,
-            transform: `translateX(0)`,
-          };
-        } else if (activeIndex > idx) {
-          return {
-            ...baseStyles,
-            zIndex: 1,
-            transition: `transform 600ms ease`,
-            transform: `translateX(${rtlFix * Math.round(container.width)}px)`,
-          };
-        }
-        break;
-      }
-      default:
-        return {};
-    }
-  }
 
   getItemAriaLabel() {
     const { type, alt, options } = this.props;
@@ -1013,34 +968,6 @@ class ItemView extends React.Component {
     }
   }
 
-  getLinkParams() {
-    const { directLink, options, directShareLink } = this.props;
-    const isSEO = isSEOMode();
-    if (options.itemClick === GALLERY_CONSTS.itemClick.LINK) {
-      const { url, target } = directLink || {};
-      const noFollowForSEO = this.props.noFollowForSEO;
-      const shouldUseNofollow = isSEO && noFollowForSEO;
-      const shouldUseDirectLink = !!(url && target);
-      const seoLinkParams = shouldUseNofollow ? { rel: 'nofollow' } : {};
-      const linkParams = shouldUseDirectLink
-        ? { href: url, target, ...seoLinkParams }
-        : {};
-      return linkParams;
-    } else if (
-      options.itemClick === GALLERY_CONSTS.itemClick.FULLSCREEN ||
-      options.itemClick === GALLERY_CONSTS.itemClick.EXPAND
-    ) {
-      // place share link as the navigation item
-      const url = directShareLink;
-      const shouldUseDirectShareLink = !!url;
-      const shouldUseNofollow = !options.shouldIndexDirectShareLinkInSEO;
-      const seoLinkParams = shouldUseNofollow ? { rel: 'nofollow' } : {};
-      const linkParams = shouldUseDirectShareLink
-        ? { href: url, 'data-cancel-link': true, ...seoLinkParams }
-        : {};
-      return linkParams;
-    }
-  }
 
   composeItem() {
     const { photoId, id, hash, idx, options, type, url } = this.props;
@@ -1124,7 +1051,7 @@ class ItemView extends React.Component {
               itemContainer: this.itemContainer,
             });
           }}
-          {...this.getLinkParams()}
+          {...getLinkParams(this.props)}
           tabIndex={-1}
           onKeyDown={(e) => {
             /* Relvenat only for Screen-Reader case:
