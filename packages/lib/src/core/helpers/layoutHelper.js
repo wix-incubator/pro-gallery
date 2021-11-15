@@ -253,12 +253,18 @@ const processLoadMoreButtonFont = (options) => {
   }
   return _options;
 }
-const showCounterIfAllowedByProduct = (options) => {
+const blockCounterByProduct = (options) => {
   let _options = {...options}
+  if(!_options.allowSlideshowCounter) {
+    return _options
+  }
 
-  if ((GALLERY_CONSTS.isLayout('SLIDESHOW')(options)|| GALLERY_CONSTS.isLayout('NIR')(options)) && options.isAutoSlideshow ) {
-    // add gallerySpacing to allow the shadow to be seen
-    _options.allowSlideshowCounter = true;
+  if(!_options.isAutoSlideshow) {
+    _options.allowSlideshowCounter = false
+  }
+
+  if ((GALLERY_CONSTS.isLayout('SLIDESHOW')(options)|| GALLERY_CONSTS.isLayout('NIR')(options)) === false) {
+    _options.allowSlideshowCounter = false;
   }
   return _options;
 }
@@ -353,7 +359,7 @@ function processLayouts(options, customExternalInfoRendererExists) {
     processedOptions = processSpecialGallerySize(processedOptions);
     processedOptions = processTextDimensions(processedOptions, customExternalInfoRendererExists);
     processedOptions = centerArrowsWhenNeeded(processedOptions); 
-    processedOptions = showCounterIfAllowedByProduct(processedOptions); 
+    processedOptions = blockCounterByProduct(processedOptions); 
 
   return processedOptions;
 }
