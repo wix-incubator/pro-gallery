@@ -47,7 +47,10 @@ import {
   createOptions as slideshowOptions,
 } from './slideshowGallery';
 
-import { fixedOptions as nir, createOptions as nirOptions } from './nirGallery';
+import {
+  fixedOptions as futureSlideshow,
+  createOptions as futureSlideshowOptions,
+} from './futureSlideshowGallery';
 
 import {
   fixedOptions as thumbnails,
@@ -120,8 +123,8 @@ const addPresetOptions = (options) => {
         return emptyOptions(options);
       case LAYOUTS.JSON_FIXED:
         return jsonFixedOptions(options);
-      case LAYOUTS.NIR:
-        return nirOptions(options);
+      case LAYOUTS.FUTURE_SLIDESHOW:
+        return futureSlideshowOptions(options);
       case LAYOUTS.COLLAGE:
       default:
         return collageOptions(options);
@@ -142,7 +145,7 @@ const NEW_PRESETS = {
   panorama,
   slider,
   slideshow,
-  nir,
+  futureSlideshow,
   thumbnails,
   empty,
 };
@@ -163,7 +166,7 @@ const getLayoutName = (galleryLayout) => {
     'bricks', // 10
     'alternate', // 11
     'mix', // 12,
-    'nir', // 13,
+    'futureSlideshow', // 13,
   ];
   return galleyLayoutList[galleryLayout + 1];
 };

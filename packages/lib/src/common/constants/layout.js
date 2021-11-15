@@ -15,7 +15,7 @@ const LAYOUTS = {
   BRICKS: 10,
   MIX: 11,
   ALTERNATE: 12,
-  NIR: 13,
+  FUTURE_SLIDESHOW: 13,
 };
 
 const isLayout = (layoutName) => (options) => {

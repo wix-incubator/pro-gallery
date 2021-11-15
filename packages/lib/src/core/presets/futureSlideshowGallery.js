@@ -9,7 +9,7 @@ import { assignByString } from '../helpers/optionsUtils';
 
 const fixToSlideshow = (options) => {
   let presetOptions = { ...options };
-  presetOptions.galleryLayout = LAYOUTS.NIR;
+  presetOptions.galleryLayout = LAYOUTS.FUTURE_SLIDESHOW;
   presetOptions.enableInfiniteScroll = true;
   presetOptions = assignByString(
     presetOptions,

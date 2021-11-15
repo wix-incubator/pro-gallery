@@ -64,7 +64,7 @@ export const svgs = {
     sel: ColumnSel,
     key: 7,
   },
-  nir: {
+  futureSlideshow: {
     reg: Alternate,
     sel: AlternateSel,
     key: 13,
