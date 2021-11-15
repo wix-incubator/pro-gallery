@@ -253,6 +253,15 @@ const processLoadMoreButtonFont = (options) => {
   }
   return _options;
 }
+const showCounterIfAllowedByProduct = (options) => {
+  let _options = {...options}
+
+  if ((GALLERY_CONSTS.isLayout('SLIDESHOW')(options)|| GALLERY_CONSTS.isLayout('NIR')(options)) && options.isAutoSlideshow ) {
+    // add gallerySpacing to allow the shadow to be seen
+    _options.allowSlideshowCounter = true;
+  }
+  return _options;
+}
 
 const addMarginsToSupportShadows = (options) => {
   let _options = {...options}
@@ -344,7 +353,8 @@ function processLayouts(options, customExternalInfoRendererExists) {
     processedOptions = processSpecialGallerySize(processedOptions);
     processedOptions = processTextDimensions(processedOptions, customExternalInfoRendererExists);
     processedOptions = centerArrowsWhenNeeded(processedOptions); 
-    
+    processedOptions = showCounterIfAllowedByProduct(processedOptions); 
+
   return processedOptions;
 }
 

@@ -1398,15 +1398,12 @@ class SlideshowView extends React.Component {
         this.startAutoSlideshowIfNeeded(props.options);
       }
     }
-    const isAutoSlideShow =
-    GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options) &&
-      props.options.isAutoSlideshow;
 
     this.shouldCreateSlideShowPlayButton =
-      isAutoSlideShow && props.options.playButtonForAutoSlideShow;
+      props.options.isAutoSlideshow && props.options.playButtonForAutoSlideShow;
 
     this.shouldCreateSlideShowNumbers =
-      isAutoSlideShow && props.options.allowSlideshowCounter;
+      props.options.isAutoSlideshow && props.options.allowSlideshowCounter;
   }
 
   removeArrowsIfNeeded() {
