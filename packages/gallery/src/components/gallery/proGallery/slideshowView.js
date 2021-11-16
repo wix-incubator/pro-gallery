@@ -64,7 +64,6 @@ class SlideshowView extends React.Component {
     };
     this.lastCurrentItem = undefined;
     this.shouldCreateSlideShowPlayButton = false;
-    this.shouldCreateSlideShowNumbers = false;
     this.skipFromSlide = Math.round(
       this.props.totalItemsCount * SKIP_SLIDES_MULTIPLIER
     ); // Used in infinite loop
@@ -1170,7 +1169,7 @@ class SlideshowView extends React.Component {
         : {
             right: `${
               imageMargin / 2 +
-              (this.shouldCreateSlideShowNumbers
+              (this.props.options.allowSlideshowCounter
                 ? this.calcSlideshowCounterWidth()
                 : 0)
             }px`,
@@ -1201,7 +1200,7 @@ class SlideshowView extends React.Component {
   }
 
   createSlideShowNumbers() {
-    if (!this.shouldCreateSlideShowNumbers) {
+    if (!this.props.options.allowSlideshowCounter) {
       return false;
     }
     const {
@@ -1398,15 +1397,10 @@ class SlideshowView extends React.Component {
         this.startAutoSlideshowIfNeeded(props.options);
       }
     }
-    const isAutoSlideShow =
-    GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options) &&
-      props.options.isAutoSlideshow;
 
     this.shouldCreateSlideShowPlayButton =
-      isAutoSlideShow && props.options.playButtonForAutoSlideShow;
+      props.options.isAutoSlideshow && props.options.playButtonForAutoSlideShow;
 
-    this.shouldCreateSlideShowNumbers =
-      isAutoSlideShow && props.options.allowSlideshowCounter;
   }
 
   removeArrowsIfNeeded() {

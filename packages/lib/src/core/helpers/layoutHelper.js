@@ -91,7 +91,8 @@ const forceInfoOnHoverWhenNeeded = (options) =>{
   let _options = {...options}
 if (    
   !GALLERY_CONSTS.isLayout('SLIDER')(_options) && //not slider
-  !GALLERY_CONSTS.isLayout('COLUMN')(_options) //not columns
+  !GALLERY_CONSTS.isLayout('COLUMN')(_options) &&  //not columns
+  !GALLERY_CONSTS.isLayout('FUTURE_SLIDESHOW')(_options) //not columns
   ) {
     if (
       (!_options.isVertical || //layout orientation is horizontal
@@ -252,6 +253,21 @@ const processLoadMoreButtonFont = (options) => {
   }
   return _options;
 }
+const blockCounterByProduct = (options) => {
+  let _options = {...options}
+  if(!_options.allowSlideshowCounter) {
+    return _options
+  }
+
+  if(!_options.isAutoSlideshow) {
+    _options.allowSlideshowCounter = false
+  }
+
+  if ((GALLERY_CONSTS.isLayout('SLIDESHOW')(options)|| GALLERY_CONSTS.isLayout('FUTURE_SLIDESHOW')(options)) === false) {
+    _options.allowSlideshowCounter = false;
+  }
+  return _options;
+}
 
 const addMarginsToSupportShadows = (options) => {
   let _options = {...options}
@@ -343,7 +359,8 @@ function processLayouts(options, customExternalInfoRendererExists) {
     processedOptions = processSpecialGallerySize(processedOptions);
     processedOptions = processTextDimensions(processedOptions, customExternalInfoRendererExists);
     processedOptions = centerArrowsWhenNeeded(processedOptions); 
-    
+    processedOptions = blockCounterByProduct(processedOptions); 
+
   return processedOptions;
 }
 
