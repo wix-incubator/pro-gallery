@@ -10,6 +10,7 @@ import layoutParams_gallerySpacing from './gallerySpacing';
 import isVertical from './isVertical';
 import numberOfImagesPerRow from './numberOfImagesPerRow';
 import numberOfImagesPerCol from './numberOfImagesPerCol';
+import layoutParams_structure_numberOfGridRows from './numberOfImagesPerCol';
 import galleryTextAlign from './galleryTextAlign';
 import videoPlay from './videoPlay';
 import imageHoverAnimation from './imageHoverAnimation';
@@ -113,6 +114,7 @@ export default {
   isVertical,
   numberOfImagesPerRow,
   numberOfImagesPerCol,
+  layoutParams_structure_numberOfGridRows,
   galleryTextAlign,
   videoPlay,
   imageHoverAnimation,
