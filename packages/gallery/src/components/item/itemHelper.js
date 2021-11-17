@@ -75,3 +75,10 @@ export function shouldCreateVideoPlaceholder(options) {
       options.videoPlay !== GALLERY_CONSTS.videoPlay.AUTO)
   );
 }
+
+export function extractContent(html) {
+  const span = document.createElement('span');
+  span.innerHTML = html;
+  const content = span.innerText;
+  return content.trim();
+}

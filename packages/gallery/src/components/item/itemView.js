@@ -21,6 +21,7 @@ import {
   getImageStyle,
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
+import { extractContent } from './itemHelper';
 
 class ItemView extends React.Component {
   constructor(props) {
@@ -834,7 +835,7 @@ class ItemView extends React.Component {
         label = '';
         break;
       case 'text':
-        label =  this.getContentForTextItem() || 'Text item';
+        label =  extractContent(this.props.html) || 'Text item';
        
         break;
       case 'video':
