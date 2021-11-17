@@ -834,7 +834,8 @@ class ItemView extends React.Component {
         label = '';
         break;
       case 'text':
-        label = 'Text item';
+        label =  this.getContentForTextItem() || 'Text item';
+       
         break;
       case 'video':
         label = alt || 'Untitled video';
@@ -846,8 +847,14 @@ class ItemView extends React.Component {
     return label + (options.isStoreGallery ? ', Buy Now' : '');
   }
 
-  getItemAriaLabelledby() {
-  return document.querySelector("te-pro-gallery-text-item").textContent;
+  getContentForTextItem() {
+    const { html} = this.props;
+    const span = document.createElement('span');
+    span.innerHTML = html;
+    const content = span.innerText;
+    console.log(content);
+    return content.trim();
+    
   }
 
   getItemContainerClass() {
@@ -1067,7 +1074,6 @@ class ItemView extends React.Component {
         onBlur={this.onBlur} // The onblur event is the opposite of the onfocus event.
         onKeyDown={this.onContainerKeyDown}
         tabIndex={this.getItemContainerTabIndex()}
-        aria-labelledby={this.getItemAriaLabelledby()}
         aria-label={this.getItemAriaLabel()}
         data-hash={hash}
         data-id={photoId}
