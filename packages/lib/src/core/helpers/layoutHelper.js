@@ -96,8 +96,7 @@ if (
   ) {
     if (
       (!_options.isVertical || //layout orientation is horizontal
-        _options.groupSize > 1 || //groups are larger than one (items can be on top or right left of eachother)
-        (_options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && !GALLERY_CONSTS.isLayout('DESIGNED_PRESET')(_options))) //any horizontal layout that wasnt intentionally designed this way
+        _options.groupSize > 1) //groups are larger than one (items can be on top or right left of eachother)
     ) {
       // Dont allow titlePlacement to be above / below / left / right
       _options.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;

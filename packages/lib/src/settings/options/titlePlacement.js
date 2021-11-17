@@ -5,11 +5,8 @@ import { createOptions } from '../utils/utils';
 export default {
   title: 'Texts Placement',
   isRelevantDescription:
-    'Set a Vertical gallery ("Scroll Direction" as "Vertical"), set "Layout Orientation" to "Columns" and set "Max Group Size" to "1".',
-  isRelevant: (options) =>
-    (options.isVertical ||
-      options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) &&
-    options.groupSize === 1,
+    'Set "Layout Orientation" to "Columns" and set "Max Group Size" to "1".',
+  isRelevant: (options) => options.isVertical || options.groupSize === 1,
   type: INPUT_TYPES.MULTISELECT,
   default: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
   options: createOptions('placements'),
