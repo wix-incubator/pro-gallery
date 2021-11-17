@@ -76,9 +76,9 @@ export function shouldCreateVideoPlaceholder(options) {
   );
 }
 
-export function extractContent(html) {
+export function extractTextItemContent(html) {
   const span = document.createElement('span');
   span.innerHTML = html;
   const content = span.innerText;
-  return content.trim();
+  return content.trim() || 'Text item';
 }
