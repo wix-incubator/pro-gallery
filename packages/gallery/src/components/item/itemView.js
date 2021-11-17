@@ -846,6 +846,10 @@ class ItemView extends React.Component {
     return label + (options.isStoreGallery ? ', Buy Now' : '');
   }
 
+  getItemAriaLabelledby() {
+  return document.querySelector("te-pro-gallery-text-item").textContent;
+  }
+
   getItemContainerClass() {
     const { options } = this.props;
     const isNOTslideshow = !GALLERY_CONSTS.isLayout('SLIDESHOW')(options);
@@ -1063,6 +1067,7 @@ class ItemView extends React.Component {
         onBlur={this.onBlur} // The onblur event is the opposite of the onfocus event.
         onKeyDown={this.onContainerKeyDown}
         tabIndex={this.getItemContainerTabIndex()}
+        aria-labelledby={this.getItemAriaLabelledby()}
         aria-label={this.getItemAriaLabel()}
         data-hash={hash}
         data-id={photoId}
