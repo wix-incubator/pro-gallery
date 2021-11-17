@@ -2,7 +2,6 @@
 import React from 'react';
 import {
   GALLERY_CONSTS,
-  ItemsHelper,
   window,
   utils,
   isEditMode,
@@ -10,6 +9,7 @@ import {
   isPreviewMode,
   isSiteMode,
 } from 'pro-gallery-lib';
+import { ItemsHelper } from 'pro-layouts';
 import GalleryView from './galleryView';
 import SlideshowView from './slideshowView';
 import { scrollToItemImp, scrollToGroupImp } from '../../helpers/scrollHelper';
@@ -54,7 +54,6 @@ export class GalleryContainer extends React.Component {
       playingVideoIdx: -1,
       viewComponent: null,
       firstUserInteractionExecuted: false,
-      isScrollLessGallery: this.getIsScrollLessGallery(this.props.options),
       isInHover: false,
     };
 
@@ -78,9 +77,16 @@ export class GalleryContainer extends React.Component {
 
     //not sure if there needs to be a handleNEwGalleryStructure here with the intial state. currently looks like not
   }
+  initializeScrollPosition() {
+    if (this.props.activeIndex > 0) {
+      this.scrollToItem(this.props.activeIndex, false, true, 0);
+      const currentItem = this.galleryStructure.items[this.props.activeIndex];
+      this.onGalleryScroll(currentItem.offset);
+    }
+  }
 
   componentDidMount() {
-    this.scrollToItem(this.props.activeIndex, false, true, 0);
+    this.initializeScrollPosition()
     this.handleNewGalleryStructure();
     this.eventsListener(GALLERY_CONSTS.events.APP_LOADED, {});
     this.videoScrollHelper.initializePlayState();
@@ -160,11 +166,6 @@ export class GalleryContainer extends React.Component {
 
     if (hasPropsChanged) {
       reCreateGallery();
-
-      if (!!nextProps.activeIndex && nextProps.activeIndex > 0) {
-        this.scrollToItem(nextProps.activeIndex, false, true, 0);
-      }
-
       if (this.props.isInDisplay !== nextProps.isInDisplay) {
         this.handleNavigation(nextProps.isInDisplay);
       }
@@ -364,7 +365,6 @@ export class GalleryContainer extends React.Component {
       options,
       container,
       structure,
-      isScrollLessGallery: this.getIsScrollLessGallery(options),
     };
     return newState;
   }
@@ -393,6 +393,9 @@ export class GalleryContainer extends React.Component {
         this.setState({
           gotFirstScrollEvent:true,
         });
+      }
+      if (this.getIsScrollLessGallery(this.state.options)) {
+        return;
       }
       const scrollingElement = this._scrollingElement;
       const horizontalElement = scrollingElement.horizontal();
@@ -644,7 +647,7 @@ export class GalleryContainer extends React.Component {
     }
     if (eventName === GALLERY_CONSTS.events.CURRENT_ITEM_CHANGED) {
       this.setCurrentSlideshowViewIdx(eventData.idx);
-      if (this.state.isScrollLessGallery) {
+      if (this.getIsScrollLessGallery(this.state.options)) {
         this.simulateScrollToItem(this.galleryStructure.items[eventData.idx]);
       }
     }

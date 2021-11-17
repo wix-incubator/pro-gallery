@@ -1,6 +1,6 @@
-import GalleryItem from '../galleryItem';
-import GalleryGroup from '../galleryGroup';
-import utils from '../../common/utils';
+import GalleryItem from './galleryItem';
+import GalleryGroup from './galleryGroup';
+import { utils } from 'pro-gallery-lib';
 
 export class ItemsHelper {
   static convertDtoToLayoutItem(dto) {

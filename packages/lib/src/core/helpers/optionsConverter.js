@@ -85,7 +85,7 @@ function migrateOptions(flatOptionsObject) {
 
 //----- refactor functions ----------//
 function process_old_to_new_columnRatios(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
 
   _obj = namingChange(
     _obj,
@@ -111,7 +111,7 @@ function process_old_to_new_columnRatios(obj) {
 }
 
 function process_old_to_new_targetItemSizeValue(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   let unit = _obj[optionsMap.layoutParams.targetItemSize.unit];
   let key;
   switch (unit) {
@@ -134,7 +134,7 @@ function process_old_to_new_targetItemSizeValue(obj) {
   return _obj;
 }
 function process_old_to_new_cropMethod(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(_obj, 'cubeType', optionsMap.layoutParams.crop.method);
   _obj[optionsMap.layoutParams.crop.method] =
     _obj[optionsMap.layoutParams.crop.method]?.toUpperCase();
@@ -142,7 +142,7 @@ function process_old_to_new_cropMethod(obj) {
 }
 function process_old_to_new_ThumbnailAlignment(obj) {
   //['galleryThumbnailsAlignment', optionsMap.layoutParams.thumbnails.alignment'],
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(
     _obj,
     'galleryThumbnailsAlignment',
@@ -153,7 +153,7 @@ function process_old_to_new_ThumbnailAlignment(obj) {
   return _obj;
 }
 function process_old_to_new_VideoPlayTrigger(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(
     _obj,
     'videoPlay',
@@ -164,7 +164,7 @@ function process_old_to_new_VideoPlayTrigger(obj) {
   return _obj;
 }
 function process_old_to_new_targetItemSizeUnit(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(
     _obj,
     'gallerySizeType',
@@ -184,7 +184,7 @@ function process_old_to_new_targetItemSizeUnit(obj) {
   return _obj;
 }
 function process_old_to_new_VideoVolume(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(
     _obj,
     'videoSound',
@@ -200,7 +200,7 @@ function process_old_to_new_VideoVolume(obj) {
   return _obj;
 }
 function process_old_to_new_VideoSpeed(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(
     _obj,
     'videoSpeed',
@@ -218,7 +218,7 @@ function process_old_to_new_gallerySpacing(obj) {
   ) {
     return obj;
   }
-  let _obj = { ...obj };
+  let _obj = obj;
   let spacingVal;
   if (_obj['layoutParams.gallerySpacing'] >= 0) {
     spacingVal = _obj['layoutParams.gallerySpacing'];
@@ -231,7 +231,7 @@ function process_old_to_new_gallerySpacing(obj) {
   return _obj;
 }
 function process_old_to_new_arrowsPosition(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(
     _obj,
     'arrowsPosition',
@@ -251,7 +251,7 @@ function process_old_to_new_arrowsPosition(obj) {
   return _obj;
 }
 function process_old_to_new_responsiveMode(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(
     _obj,
     'gridStyle',
@@ -271,7 +271,7 @@ function process_old_to_new_responsiveMode(obj) {
   return _obj;
 }
 function process_old_to_new_ScrollDirection(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(
     _obj,
     'scrollDirection',
@@ -290,7 +290,7 @@ function process_old_to_new_ScrollDirection(obj) {
   return _obj;
 }
 function process_old_to_new_layoutDirection(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(
     _obj,
     'isRTL',
@@ -311,7 +311,7 @@ function process_old_to_new_layoutDirection(obj) {
   return _obj;
 }
 function process_old_to_new_slideshowInfoSize(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   const isSlideshow = isLayout('SLIDESHOW')({
     galleryLayout:
       obj['galleryLayout'] >= -3
@@ -336,7 +336,7 @@ function process_old_to_new_slideshowInfoSize(obj) {
   return _obj;
 }
 function process_old_to_new_textBoxSizeMode(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(
     _obj,
     'calculateTextBoxWidthMode',
@@ -367,7 +367,7 @@ function process_old_to_new_textBoxSizeMode(obj) {
   return _obj;
 }
 function process_old_to_new_LayoutOrientation(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(
     _obj,
     'isVertical',
@@ -386,7 +386,7 @@ function process_old_to_new_LayoutOrientation(obj) {
   return _obj;
 }
 function process_old_to_new_groupsOrder(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(
     _obj,
     'placeGroupsLtr',
@@ -406,7 +406,7 @@ function process_old_to_new_groupsOrder(obj) {
   return _obj;
 }
 function process_old_to_new_galleryTextAlign(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(
     _obj,
     'galleryTextAlign',
@@ -422,7 +422,7 @@ function process_old_to_new_galleryTextAlign(obj) {
   return _obj;
 }
 function process_old_to_new_LoadMoreAmount(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(
     _obj,
     'loadMoreAmount',
@@ -435,7 +435,7 @@ function process_old_to_new_LoadMoreAmount(obj) {
   return _obj;
 }
 function process_old_to_new_CroppedAlignment(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(
     _obj,
     'cubeFitPosition',
@@ -451,7 +451,7 @@ function process_old_to_new_CroppedAlignment(obj) {
   return _obj;
 }
 function process_old_to_new_OverlayHoveringBehaviour(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(
     _obj,
     'hoveringBehaviour',
@@ -472,7 +472,7 @@ function process_old_to_new_OverlayHoveringBehaviour(obj) {
   return _obj;
 }
 function process_old_to_new_InfoPlacement(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(
     _obj,
     'titlePlacement',
@@ -506,7 +506,7 @@ function process_old_to_new_InfoPlacement(obj) {
   return _obj;
 }
 function process_old_to_new_ClickAction(obj) {
-  let _obj = { ...obj };
+  let _obj = obj;
   _obj = namingChange(
     _obj,
     'itemClick',
@@ -532,7 +532,7 @@ function process_old_to_new_AutoSlideBehaviour(obj) {
   ) {
     return obj;
   }
-  let _obj = { ...obj };
+  let _obj = obj;
   let isAutoSlide = _obj['isAutoSlideshow'];
   let autoSlideshowType = _obj['autoSlideshowType'];
   let finalVal;
@@ -559,7 +559,7 @@ function process_old_to_new_CropRatio(obj) {
   if (typeof obj[optionsMap.layoutParams.crop.ratios] !== 'undefined') {
     return obj;
   }
-  let _obj = { ...obj };
+  let _obj = obj;
   let repeatingVal = _obj['rotatingCropRatios'];
   let val = _obj['cubeRatio'] || _obj['layoutParams_cropRatio'];
   let finalVal;
@@ -568,8 +568,15 @@ function process_old_to_new_CropRatio(obj) {
   } else {
     finalVal = val;
   }
+  const getVal = (ele) => {
+    if (Number(ele) >= 0) {
+      return Number(ele);
+    } else {
+      return ele;
+    }
+  };
   _obj[optionsMap.layoutParams.crop.ratios] =
-    finalVal && String(finalVal).split(',').map(Number);
+    finalVal && String(finalVal).split(',').map(getVal);
   delete _obj['cubeRatio'];
   delete _obj['layoutParams_cropRatio'];
   delete _obj['rotatingCropRatios'];
@@ -581,7 +588,7 @@ function process_old_to_new_AllowedGroupTypes(obj) {
   ) {
     return obj;
   }
-  let _obj = { ...obj };
+  let _obj = obj;
 
   _obj[optionsMap.layoutParams.groups.allowedGroupTypes] = _obj['groupTypes']
     ?.split
@@ -599,7 +606,7 @@ function process_old_to_new_repeatingGroupTypes(obj) {
   ) {
     return obj;
   }
-  let _obj = { ...obj };
+  let _obj = obj;
   let repeatingVal =
     _obj['rotatingGroupTypes'] || _obj['layoutParams_repeatingGroupTypes'];
   let finalVal;
@@ -622,7 +629,7 @@ function process_old_to_new_NumberOfColumns(obj) {
   ) {
     return obj;
   }
-  let _obj = { ...obj };
+  let _obj = obj;
   const fixedColumns = obj['fixedColumns'];
   const numberOfImagesPerRow = obj['numberOfImagesPerRow'];
   const finalVal =
