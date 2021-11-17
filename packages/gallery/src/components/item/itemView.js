@@ -802,15 +802,6 @@ class ItemView extends React.Component {
     return label + (options.isStoreGallery ? ', Buy Now' : '');
   }
 
-  getContentForTextItem() {
-    const { html} = this.props;
-    const span = document.createElement('span');
-    span.innerHTML = html;
-    const content = span.innerText;
-    return content.trim();
-    
-  }
-
   getItemContainerClass() {
     const { options } = this.props;
     const isNOTslideshow = !GALLERY_CONSTS.isLayout('SLIDESHOW')(options);
