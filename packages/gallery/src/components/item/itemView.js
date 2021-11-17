@@ -852,7 +852,6 @@ class ItemView extends React.Component {
     const span = document.createElement('span');
     span.innerHTML = html;
     const content = span.innerText;
-    console.log(content);
     return content.trim();
     
   }
