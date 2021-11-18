@@ -1,4 +1,5 @@
 import itemClick from './itemClick';
+import behaviourParams_item_clickAction from './itemClick';
 import imageMargin from './imageMargin';
 import hoveringBehaviour from './hoveringBehaviour';
 import enableInfiniteScroll from './enableInfiniteScroll';
@@ -105,6 +106,7 @@ export default {
   layoutParams_cropRatio,
   layoutParams_repeatingGroupTypes,
   itemClick,
+  behaviourParams_item_clickAction,
   imageMargin,
   hoveringBehaviour,
   enableInfiniteScroll,
