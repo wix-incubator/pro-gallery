@@ -21,7 +21,7 @@ import {
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
 import {getSlideAnimationStyles, getCustomInfoRendererProps, getLinkParams} from './pure'
-
+import { extractTextItemContent } from './itemHelper';
 class ItemView extends React.Component {
   constructor(props) {
     super(props);
@@ -789,7 +789,7 @@ class ItemView extends React.Component {
         label = '';
         break;
       case 'text':
-        label = 'Text item';
+        label = extractTextItemContent(this.props.html);
         break;
       case 'video':
         label = alt || 'Untitled video';
