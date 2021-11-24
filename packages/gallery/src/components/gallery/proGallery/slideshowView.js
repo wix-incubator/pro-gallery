@@ -1084,7 +1084,7 @@ class SlideshowView extends React.Component {
 
     return (
       <div
-        id={this.props.getContainerGalleryId()}
+        id={this.props.getContainerGalleryId}
         className={
           'pro-gallery inline-styles one-row hide-scrollbars ' +
           (this.props.options.enableScroll ? ' slider ' : '') +
