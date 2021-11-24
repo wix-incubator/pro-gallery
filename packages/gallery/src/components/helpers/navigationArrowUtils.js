@@ -34,21 +34,15 @@ export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
       navArrowsContainerHeight,
     };
   }
-  const svgStyle = { transform: `scale(${scalePercentage})` };
+
   const svgInternalStyle =
     utils.isMobile() && arrowsColor?.value ? { fill: arrowsColor.value } : {};
 
   const arrowRenderer = (position) => {
-    const { d, transform } =
-      position === 'right'
-        ? {
-            d: 'M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z',
-            transform: 'translate(-855 -230)',
-          }
-        : {
-            d: 'M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z',
-            transform: 'translate(-133 -225)',
-          };
+    const scaleX = position === 'right' ? 1 : -1;
+    const svgStyle = {
+      transform: `scale(${scalePercentage}) scaleX(${scaleX})`,
+    };
     return (
       <svg
         width={ARROWS_BASE_SIZE.width}
@@ -59,8 +53,8 @@ export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
         <path
           className="slideshow-arrow"
           style={svgInternalStyle}
-          d={d}
-          transform={transform}
+          d="M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z"
+          transform="translate(-855 -230)"
         />
       </svg>
     );
