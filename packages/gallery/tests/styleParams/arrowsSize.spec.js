@@ -28,7 +28,7 @@ describe('options - arrowsSize', () => {
     const arrowImage = driver.find.selector('.nav-arrows-container svg');
     const { transform } = arrowImage.props().style;
     const arrowFinalSize = initialProps.options.arrowsSize / 23;
-    expect(transform).to.eq(`scale(${arrowFinalSize})`);
+    expect(transform).to.eq(`scale(${arrowFinalSize}) scaleX(1)`);
     driver.detach.proGallery();
   });
   it('should set the position of arrows according to arrowsSize', async () => {
