@@ -1,5 +1,14 @@
 import React from 'react';
 import { utils, GALLERY_CONSTS } from 'pro-gallery-lib';
+import {
+  arrow1,
+  arrow2,
+  arrow3,
+  arrow4,
+  arrow5,
+  arrow6,
+  arrowDefault,
+} from '../svgs';
 const ARROWS_BASE_SIZE = {
   width: 23,
   height: 39,
@@ -23,7 +32,7 @@ const getArrowsSizeData = (customNavArrowsRenderer, arrowsSize) => {
 };
 
 export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
-  const { customNavArrowsRenderer, arrowsColor, arrowsSize } =
+  const { customNavArrowsRenderer, arrowsColor, arrowsSize, arrowsType } =
     arrowsDataRelevantArgs;
   const { navArrowsContainerWidth, navArrowsContainerHeight, scalePercentage } =
     getArrowsSizeData(customNavArrowsRenderer, arrowsSize);
@@ -34,38 +43,18 @@ export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
       navArrowsContainerHeight,
     };
   }
-  const svgStyle = { transform: `scale(${scalePercentage})` };
   const svgInternalStyle =
     utils.isMobile() && arrowsColor?.value ? { fill: arrowsColor.value } : {};
 
-  const arrowRenderer = (position) => {
-    const { d, transform } =
-      position === 'right'
-        ? {
-            d: 'M857.005,231.479L858.5,230l18.124,18-18.127,18-1.49-1.48L873.638,248Z',
-            transform: 'translate(-855 -230)',
-          }
-        : {
-            d: 'M154.994,259.522L153.477,261l-18.471-18,18.473-18,1.519,1.48L138.044,243Z',
-            transform: 'translate(-133 -225)',
-          };
-    return (
-      <svg
-        width={ARROWS_BASE_SIZE.width}
-        height={ARROWS_BASE_SIZE.height}
-        viewBox={`0 0 ${ARROWS_BASE_SIZE.width} ${ARROWS_BASE_SIZE.height}`}
-        style={svgStyle}
-      >
-        <path
-          className="slideshow-arrow"
-          style={svgInternalStyle}
-          d={d}
-          transform={transform}
-        />
-      </svg>
-    );
+  return {
+    arrowRenderer: getArrowsRenderer({
+      scalePercentage,
+      svgInternalStyle,
+      arrowsType,
+    }),
+    navArrowsContainerWidth,
+    navArrowsContainerHeight,
   };
-  return { arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight };
 };
 
 // Function that checks if the nav arrows parent-container is large enough for them
@@ -127,5 +116,45 @@ const getShouldRenderArrowsArgs = (props) => {
     isPrerenderMode,
     galleryStructure,
     customNavArrowsRenderer,
+  };
+};
+
+const getArrowsRenderer = ({
+  scalePercentage,
+  svgInternalStyle,
+  arrowsType,
+}) => {
+  let ArrowComp;
+  switch (arrowsType) {
+    case 1:
+      ArrowComp = arrow1;
+      break;
+    case 2:
+      ArrowComp = arrow2;
+      break;
+    case 3:
+      ArrowComp = arrow3;
+      break;
+    case 4:
+      ArrowComp = arrow4;
+      break;
+    case 5:
+      ArrowComp = arrow5;
+      break;
+    case 6:
+      ArrowComp = arrow6;
+      break;
+    default:
+      ArrowComp = arrowDefault;
+      break;
+  }
+  return (position) => {
+    const scaleX = position === 'right' ? 1 : -1;
+    const svgStyle = {
+      transform: `scale(${scalePercentage}) scaleX(${scaleX})`,
+    };
+    return (
+      <ArrowComp svgStyle={svgStyle} svgInternalStyle={svgInternalStyle} />
+    );
   };
 };

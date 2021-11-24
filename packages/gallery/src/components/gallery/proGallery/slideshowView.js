@@ -884,6 +884,7 @@ class SlideshowView extends React.Component {
       customNavArrowsRenderer: this.props.customComponents.customNavArrowsRenderer,
       arrowsColor: this.props.options.arrowsColor,
       arrowsSize: this.props.options.arrowsSize,
+      arrowsType:  this.props.options.arrowsType
     });
 
     const { galleryHeight } = this.props.container;

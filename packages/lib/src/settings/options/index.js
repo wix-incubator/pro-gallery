@@ -100,6 +100,7 @@ import overlayPadding from './overlayPadding';
 import autoSlideshowType from './autoSlideshowType';
 import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
 import behaviourParams_item_content_magnificationValue from './magnificationValue';
+import arrowsType from './arrowsType';
 
 export default {
   layoutParams_gallerySpacing,
@@ -204,6 +205,7 @@ export default {
   autoSlideshowType,
   autoSlideshowContinuousSpeed,
   behaviourParams_item_content_magnificationValue,
+  arrowsType,
 };
 
 // TODO = add the options:
