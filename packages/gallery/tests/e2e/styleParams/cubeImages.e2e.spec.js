@@ -51,7 +51,7 @@ describe('cubeImages - e2e', () => {
       },
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery inline-styles');
+    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
     expect(page).toMatchImageSnapshot();
   });
 });
