@@ -22,5 +22,10 @@ const isLayout = (layoutName) => (options) => {
   return options.galleryLayout === LAYOUTS[layoutName];
 };
 
+function getHeight(options, container) {
+  const field = isLayout('THUMBNAIL')(options) ? 'galleryHeight' : 'height';
+  return container[field];
+}
+
 export default LAYOUTS;
-export { isLayout };
+export { isLayout, getHeight };
