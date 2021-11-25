@@ -1015,17 +1015,11 @@ class SlideshowView extends React.Component {
         })
       );
     };
-    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
     return galleryStructure.columns.map((column, c) => {
       const columnStyle = {
         width: this.props.isPrerenderMode ? '100%' : column.width,
-        height: container.galleryHeight,
+        height: container.galleryHeight + this.props.options.slideshowInfoSize
       };
-      if (isSlideshow) {
-        Object.assign(columnStyle, {
-          paddingBottom: this.props.options.slideshowInfoSize,
-        });
-      }
       return (
         <div
           data-hook="gallery-column"
