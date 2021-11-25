@@ -49,7 +49,7 @@ describe('options - thumbnailSize', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const galleryContainer = driver.find.selector('#pro-gallery-container');
+    const galleryContainer = driver.find.selector('.pro-gallery');
     const { height } = galleryContainer.props().style;
     // expect to galleryContainer height without the thumbnails to be container.height - thumbnails and margins
     expect(initialProps.container.height - 300 - 3 * 10).to.eq(height);
@@ -65,7 +65,7 @@ describe('options - thumbnailSize', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const galleryContainer = driver.find.selector('#pro-gallery-container');
+    const galleryContainer = driver.find.selector('.pro-gallery');
     const { width } = galleryContainer.props().style;
     // expect to galleryContainer width without the thumbnails to be container.width - thumbnails and margins
     expect(initialProps.container.width - 300 - 3 * 10).to.eq(width);

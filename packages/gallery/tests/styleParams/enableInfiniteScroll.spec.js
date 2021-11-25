@@ -74,7 +74,7 @@ describe('options - enableInfiniteScroll', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const galleryContainer = driver.find.selector('#pro-gallery-container');
+    const galleryContainer = driver.find.selector('.pro-gallery');
     const galleryHeight = getElementDimensions(galleryContainer).height;
 
     //expect the height to be container.height - show-more-container" height(138)
@@ -90,7 +90,7 @@ describe('options - enableInfiniteScroll', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const galleryContainer = driver.find.selector('#pro-gallery-container');
+    const galleryContainer = driver.find.selector('.pro-gallery');
     const galleryHeight = getElementDimensions(galleryContainer).height;
 
     //expect the height to be more than the height given in container.height

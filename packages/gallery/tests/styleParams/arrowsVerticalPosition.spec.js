@@ -56,7 +56,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
       arrowsVerticalPosition: 'INFO_CENTER',
     });
     const navArrows = await mountGalleryAndGetArrows(initialProps);
-    const galleryContainer = driver.find.selector('#pro-gallery-container');
+    const galleryContainer = driver.find.selector('.pro-gallery');
     const { height: galleryHeight } = galleryContainer.props().style;
     const { top } = navArrows.props().style;
     const expectedInfoSpace = (-1 * galleryHeight) / 2;
