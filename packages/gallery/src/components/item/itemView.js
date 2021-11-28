@@ -1046,8 +1046,6 @@ class ItemView extends React.Component {
           onFocus={() => {
             onAnchorFocus({
               itemAnchor: this.itemAnchor,
-              enableExperimentalFeatures:
-                this.props.enableExperimentalFeatures,
               itemContainer: this.itemContainer,
             });
           }}

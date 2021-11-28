@@ -989,7 +989,6 @@ class SlideshowView extends React.Component {
       isPrerenderMode: this.props.isPrerenderMode,
       totalWidth: this.props.galleryStructure.width,
       firstUserInteractionExecuted: this.props.firstUserInteractionExecuted,
-      enableExperimentalFeatures: this.props.enableExperimentalFeatures,
       actions: {
         eventsListener: this.props.actions.eventsListener,
       },

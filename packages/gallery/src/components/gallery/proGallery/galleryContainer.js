@@ -807,7 +807,6 @@ export class GalleryContainer extends React.Component {
           proGalleryRole={this.props.proGalleryRole}
           firstUserInteractionExecuted={this.state.firstUserInteractionExecuted}
           isGalleryInHover={this.state.isInHover}
-          enableExperimentalFeatures={this.props.enableExperimentalFeatures}
           galleryContainerRef={this.galleryContainerRef}
           outOfViewComponent={this.outOfViewComponent}
           actions={{
