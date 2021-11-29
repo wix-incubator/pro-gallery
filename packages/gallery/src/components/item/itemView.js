@@ -780,7 +780,7 @@ class ItemView extends React.Component {
     return itemWrapperStyles;
   }
 
-
+//yuval
   getItemAriaLabel() {
     const { type, alt, options } = this.props;
     let label;
