@@ -100,7 +100,7 @@ import overlayPadding from './overlayPadding';
 import autoSlideshowType from './autoSlideshowType';
 import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
 import behaviourParams_item_content_magnificationValue from './magnificationValue';
-import { optionsMap } from '../../core/helpers/optionsMap';
+import optionsMap from '../../core/helpers/optionsMap';
 
 export default {
   layoutParams_gallerySpacing,
