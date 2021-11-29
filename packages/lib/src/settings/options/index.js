@@ -74,6 +74,7 @@ import gallerySizePx from './gallerySizePx';
 import gallerySizeRatio from './gallerySizeRatio';
 import allowContextMenu from './allowContextMenu';
 import galleryLayout from './galleryLayout';
+import layoutParams_structure_galleryLayout from './galleryLayout';
 import scrollDirection from './scrollDirection';
 import scrollDuration from './scrollDuration';
 import isAutoSlideshow from './isAutoSlideshow';
@@ -178,6 +179,7 @@ export default {
   gallerySizeRatio,
   allowContextMenu,
   galleryLayout,
+  layoutParams_structure_galleryLayout,
   scrollDirection,
   scrollDuration,
   isAutoSlideshow,
