@@ -1,4 +1,5 @@
 import itemClick from './itemClick';
+import behaviourParams_item_clickAction from './itemClick';
 import imageMargin from './imageMargin';
 import hoveringBehaviour from './hoveringBehaviour';
 import enableInfiniteScroll from './enableInfiniteScroll';
@@ -99,12 +100,14 @@ import overlayPadding from './overlayPadding';
 import autoSlideshowType from './autoSlideshowType';
 import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
 import behaviourParams_item_content_magnificationValue from './magnificationValue';
+import optionsMap from '../../core/helpers/optionsMap';
 
 export default {
   layoutParams_gallerySpacing,
   layoutParams_cropRatio,
   layoutParams_repeatingGroupTypes,
   itemClick,
+  behaviourParams_item_clickAction,
   imageMargin,
   hoveringBehaviour,
   enableInfiniteScroll,
@@ -176,7 +179,9 @@ export default {
   gallerySizeRatio,
   allowContextMenu,
   galleryLayout,
+  [optionsMap.layoutParams.structure.galleryLayout]: galleryLayout,
   scrollDirection,
+  [optionsMap.layoutParams.structure.scrollDirection]: scrollDirection,
   scrollDuration,
   isAutoSlideshow,
   loadMoreAmount,
