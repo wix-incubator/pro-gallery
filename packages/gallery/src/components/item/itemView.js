@@ -783,12 +783,21 @@ class ItemView extends React.Component {
 
   getItemAriaLabel() {
     const { type, alt, options } = this.props;
-    const mapTypeToLabel = {
-      'dummy' : '',
-      'text' : extractTextItemContent(this.props.html),
-      'video': alt || 'Untitled video',
+    let label;
+    switch (type) {
+      case 'dummy':
+        label = '';
+        break;
+      case 'text':
+        label = extractTextItemContent(this.props.html);
+        break;
+      case 'video':
+        label = alt || 'Untitled video';
+        break;
+      default:
+        label = alt || 'Untitled image';
+        break;
     }
-    const label = mapTypeToLabel[type] || alt || 'Untitled image';
     return label + (options.isStoreGallery ? ', Buy Now' : '');
   }
 
