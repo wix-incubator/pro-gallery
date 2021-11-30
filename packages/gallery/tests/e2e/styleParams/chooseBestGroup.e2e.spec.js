@@ -23,7 +23,7 @@ describe('chooseBestGroup - e2e', () => {
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('.pro-galleryr');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
   it('should not choose best group', async () => {
