@@ -35,6 +35,7 @@ class ItemView extends React.Component {
     this.state = {
       isCurrentHover: false,
       itemWasHovered: false,
+      ariaLabel: '',
     };
 
     this.activeElement = '';
@@ -783,21 +784,12 @@ class ItemView extends React.Component {
 
   getItemAriaLabel() {
     const { type, alt, options } = this.props;
-    let label;
-    switch (type) {
-      case 'dummy':
-        label = '';
-        break;
-      case 'text':
-        label = extractTextItemContent(this.props.html);
-        break;
-      case 'video':
-        label = alt || 'Untitled video';
-        break;
-      default:
-        label = alt || 'Untitled image';
-        break;
+    const mapTypeToLabel = {
+      'dummy': '',
+      'text' : extractTextItemContent(this.props.html),
+      'video': alt || 'Untitled video',
     }
+    const label = mapTypeToLabel[type] || alt || 'Untitled image';
     return label + (options.isStoreGallery ? ', Buy Now' : '');
   }
 
@@ -914,6 +906,11 @@ class ItemView extends React.Component {
       'current_hover_change',
       this.checkIfCurrentHoverChanged
     );
+
+    this.setState({
+      ariaLabel: this.getItemAriaLabel(),
+    });
+
   }
 
   componentWillUnmount() {
@@ -990,7 +987,7 @@ class ItemView extends React.Component {
         onBlur={this.onBlur} // The onblur event is the opposite of the onfocus event.
         onKeyDown={this.onContainerKeyDown}
         tabIndex={this.getItemContainerTabIndex()}
-        aria-label={this.getItemAriaLabel()}
+        aria-label={this.state.ariaLabel}
         data-hash={hash}
         data-id={photoId}
         data-idx={idx}
