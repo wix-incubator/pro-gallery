@@ -25,7 +25,7 @@ describe('cubeImages - e2e', () => {
       },
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery inline-styles');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
   it('should crop the images and fill the containers', async () => {
@@ -38,7 +38,7 @@ describe('cubeImages - e2e', () => {
       },
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('.pro-gallery inline-styles');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
   it('should have a "cropRatio" of "2"', async () => {

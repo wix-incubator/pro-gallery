@@ -44,7 +44,7 @@ describe('masonry - e2e', () => {
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('pro-gallery');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
 });
