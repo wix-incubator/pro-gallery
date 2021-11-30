@@ -105,7 +105,6 @@ import optionsMap from '../../core/helpers/optionsMap';
 export default {
   layoutParams_gallerySpacing,
   layoutParams_cropRatio,
-  [optionsMap.layoutParams.crop.ratios]: layoutParams_cropRatio,
   layoutParams_repeatingGroupTypes,
   itemClick,
   behaviourParams_item_clickAction,
