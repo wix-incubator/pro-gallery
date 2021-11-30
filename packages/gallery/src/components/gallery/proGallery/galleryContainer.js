@@ -37,7 +37,6 @@ export class GalleryContainer extends React.Component {
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
     this.getVisibleItems = this.getVisibleItems.bind(this);
     this.findNeighborItem = this.findNeighborItem.bind(this);
-    this.getContainerGalleryId = this.getContainerGalleryId.bind(this);
     this.setCurrentSlideshowViewIdx =
       this.setCurrentSlideshowViewIdx.bind(this);
     this.getIsScrollLessGallery = this.getIsScrollLessGallery.bind(this);
@@ -738,10 +737,6 @@ export class GalleryContainer extends React.Component {
     this.setState({ isInHover: false });
   }
 
-  getContainerGalleryId()  {
-    return `pro-gallery-container-${this.props.id}`;
-  }
-
   findNeighborItem = (itemIdx, dir) =>
     findNeighborItem(itemIdx, dir, this.state.structure.items); // REFACTOR BLUEPRINTS - this makes the function in the layouter irrelevant (unless the layouter is used as a stand alone with this function, maybe the layouter needs to be split for bundle size as well...)
 
@@ -815,7 +810,7 @@ export class GalleryContainer extends React.Component {
           enableExperimentalFeatures={this.props.enableExperimentalFeatures}
           galleryContainerRef={this.galleryContainerRef}
           outOfViewComponent={this.outOfViewComponent}
-          getContainerGalleryId={this.getContainerGalleryId}
+          getContainerGalleryId={`pro-gallery-container-${this.props.id}`}
           actions={{
             ...this.props.actions,
             findNeighborItem: this.findNeighborItem,

@@ -217,6 +217,7 @@ class galleryDriver {
             options: this.options,
             actions: this.actions,
             customComponents: this.customComponents,
+            galleryContainerId: `pro-gallery-container-1}`,
           };
         }
 
