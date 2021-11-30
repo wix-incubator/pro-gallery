@@ -67,7 +67,6 @@ class SlideshowView extends React.Component {
     this.skipFromSlide = Math.round(
       this.props.totalItemsCount * SKIP_SLIDES_MULTIPLIER
     ); // Used in infinite loop
-    this.getContainerGalleryId = this.getContainerGalleryId.bind(this);
   }
 
   isFirstItem() {

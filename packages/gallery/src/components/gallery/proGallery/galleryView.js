@@ -12,7 +12,6 @@ class GalleryView extends React.Component {
     this.createGalleryConfig = this.createGalleryConfig.bind(this);
     this.screenLogs = this.screenLogs.bind(this);
     this.createGallery = this.createGallery.bind(this);
-    this.getContainerGalleryId = this.getContainerGalleryId.bind(this);
 
     this.id = Date.now() + '|' + Math.floor(Math.random() * 10000);
 
