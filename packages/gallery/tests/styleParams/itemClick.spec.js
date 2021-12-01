@@ -121,13 +121,13 @@ describe('options - itemClick', () => {
         options,
       };
     });
-    it('check href when itemClick = link', async () => {
+    it.only('check href when itemClick = link', async () => {
       initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'link',
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
-      const item = driver.find.selector('.pro-gallery').at(0);
+      const item = driver.find.selector('#pro-gallery-container a').at(0);
       expect(item.props().href).to.not.be.undefined;
       driver.detach.proGallery();
     });
@@ -137,7 +137,7 @@ describe('options - itemClick', () => {
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
-      const item = driver.find.selector('.pro-gallery').at(0);
+      const item = driver.find.selector('#pro-gallery-container a').at(0);
       expect(item.props().href).to.be.undefined;
       driver.detach.proGallery();
     });

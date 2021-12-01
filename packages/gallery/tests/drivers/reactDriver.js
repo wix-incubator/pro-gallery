@@ -178,6 +178,10 @@ class galleryDriver {
     };
   }
 
+  getContainer() {
+    return this.find.selector('#pro-gallery-container-default-dom-id');
+  }
+
   get text() {
     return this.wrapper.text();
   }
@@ -202,6 +206,7 @@ class galleryDriver {
           layout,
           actions: this.actions,
           customComponents: this.customComponents,
+          galleryContainerId: 'pro-gallery-container-default-dom-id',
         };
       },
 
@@ -217,7 +222,7 @@ class galleryDriver {
             options: this.options,
             actions: this.actions,
             customComponents: this.customComponents,
-            galleryContainerId: 'pro-gallery-container-1',
+            // galleryContainerId: 'pro-gallery-container-default-dom-id',
           };
         }
 

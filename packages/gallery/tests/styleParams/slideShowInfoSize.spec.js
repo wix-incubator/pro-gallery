@@ -39,7 +39,7 @@ describe('options - slideshowInfoSize', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const galleryContainer = driver.find.selector('.pro-gallery');
+    const galleryContainer = driver.getContainer();
     const { height } = galleryContainer.props().style;
     //expect height to be container.height - slideshowInfoSize
     expect(height).to.eq(initialProps.container.height - 250);

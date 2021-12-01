@@ -25,7 +25,7 @@ describe('options - enableScroll', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const galleryContainer = driver.find.selector('.pro-gallery');
+    const galleryContainer = driver.getContainer();
     expect(galleryContainer.hasClass('slider')).to.be.true;
     driver.detach.proGallery();
   });
@@ -38,7 +38,7 @@ describe('options - enableScroll', () => {
 
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const galleryContainer = driver.find.selector('.pro-gallery');
+    const galleryContainer = driver.getContainer();
     expect(galleryContainer.hasClass('slider')).to.be.false;
     driver.detach.proGallery();
   });
