@@ -8,14 +8,23 @@ import {
 } from '../window/viewModeWrapper';
 import GALLERY_CONSTS from '../constants'
 
-class Utils {
-  constructor() {
-    this._cache = {};
-    this._hash2int = {};
-    this._params = {};
+type Lodash = typeof lodash;
 
-    Object.assign(this, lodash);
-  }
+class LodashClass implements Lodash {
+  debounce = lodash.debounce;
+  throttle = lodash.throttle;
+  isEqual = lodash.isEqual;
+  get = lodash.get;
+  isFunction = lodash.isFunction;
+  isNumber = lodash.isNumber;
+  pick = lodash.pick;
+}
+
+
+class Utils extends LodashClass {
+  _cache: Record<string, any> = {};
+  _hash2int: Record<string, number> = {};
+  _params: Record<string, any> = {};
 
   shouldUseCache() {
     return !isEditMode() && !isPreviewMode() && !this.isSSR();
@@ -61,14 +70,14 @@ class Utils {
     }
   }
 
-  parseGetParam(val, url) {
+  parseGetParam(val, url?) {
     try {
       if (!this.isUndefined(this._params[val])) {
         return this._params[val];
       }
 
       let result = '',
-        tmp = [];
+        tmp: string[] = [];
 
       let _location = location;
 
@@ -76,7 +85,7 @@ class Utils {
         _location = {
           search: '?' + (url.split('?')[1] || ''),
           pathname: (url.split('?')[0] || '').split('/')[1] || '',
-        };
+        } as Location;
       }
 
       _location.search
@@ -170,7 +179,7 @@ class Utils {
 
   isMobileByProps() {
     const _isMobileByProps = () => {
-      const deviceType = this.parseGetParam('deviceType') || window.deviceType;
+      const deviceType = this.parseGetParam('deviceType') || (window as any).deviceType;
       const isMobileViewer = this.parseGetParam('showMobileView') === 'true';
       const deviceTypeMobile = isDeviceTypeMobile();
       if (isMobileViewer) {
@@ -202,7 +211,7 @@ class Utils {
           ) {
             check = true;
           }
-        })(navigator.userAgent || navigator.vendor || window.opera);
+        })(navigator.userAgent || navigator.vendor || (window as any).opera);
         return check;
       };
 
@@ -227,7 +236,7 @@ class Utils {
 
   isTest() {
     try {
-      return window.isTest;
+      return (window as any).isTest;
     } catch (e) {
       return false;
     }
@@ -235,7 +244,7 @@ class Utils {
 
   isLocal() {
     try {
-      const host = window.location.hostname;
+      const host = window!.location.hostname;
       if (host === 'local.wix.com') {
         return true;
       }
@@ -256,21 +265,21 @@ class Utils {
       return (
         this.shouldDebug('ph_local') ||
         (this.isOOI() && process.env.NODE_ENV === 'development') ||
-        (this.safeLocalStorage() || {}).forceDevMode === 'true'
+        (this.safeLocalStorage() || {} as any).forceDevMode === 'true'
       );
     });
   }
 
   isVerbose() {
     return (
-      !this.isTest() && (this.safeLocalStorage() || {}).forceDevMode === 'true'
+      !this.isTest() && (this.safeLocalStorage() || {} as any).forceDevMode === 'true'
     );
   }
 
   isStoreGallery() {
     return this.getOrPutFromCache('isStoreGallery', () => {
       try {
-        return window.location.search.toLowerCase().indexOf('isstore') > -1;
+        return window!.location.search.toLowerCase().indexOf('isstore') > -1;
       } catch (e) {
         if (this.isDev()) {
           console.error('cant find window', e);
@@ -308,7 +317,7 @@ class Utils {
   isiOS() {
     return this.getOrPutFromCache('isiOS', () => {
       try {
-        return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        return /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
       } catch (e) {
         return false;
       }
@@ -318,7 +327,7 @@ class Utils {
   isiPhone() {
     return this.getOrPutFromCache('isiPhone', () => {
       try {
-        return /iPhone/.test(navigator.userAgent) && !window.MSStream;
+        return /iPhone/.test(navigator.userAgent) && !(window as any).MSStream;
       } catch (e) {
         return false;
       }
@@ -331,10 +340,10 @@ class Utils {
         return false;
       }
       try {
-        if (!this.isUndefined(window.orientation)) {
-          return window.orientation === 90 || window.orientation === -90;
+        if (!this.isUndefined(window!.orientation)) {
+          return window!.orientation === 90 || window!.orientation === -90;
         } else {
-          const mql = window.matchMedia('(orientation: landscape)');
+          const mql = (window as any).matchMedia('(orientation: landscape)');
           if (mql && mql.matches === true) {
             return true;
           } else {
@@ -358,8 +367,8 @@ class Utils {
   shouldDebug(str) {
     try {
       return (
-        !!this.safeLocalStorage()[str] ||
-        (window.debugApp || '').indexOf(str) >= 0 ||
+        !!this.safeLocalStorage()![str] ||
+        ((window as any).debugApp || '').indexOf(str) >= 0 ||
         (this.parseGetParam('debugApp') || '').indexOf(str) >= 0
       );
     } catch (e) {
@@ -450,7 +459,8 @@ class Utils {
       if (depth > 3) {
         return {};
       }
-      const innerDiff = Object.entries(_obj1).reduce((res, [k, v]) => {
+      const innerDiff = Object.entries(_obj1).reduce((res, [k, _v]) => {
+        let v = _v as any;
         if (!this.isEqual(v, _obj2[k])) {
           if (Array.isArray(_obj2[k])) {
             if (v.length !== _obj2[k].length) {
@@ -499,9 +509,9 @@ class Utils {
     }
     try {
       if (this.isLandscape()) {
-        return Math.max(window.screen.width, window.screen.height);
+        return Math.max(window!.screen.width, window!.screen.height);
       } else {
-        return window.screen.width;
+        return window!.screen.width;
       }
     } catch (e) {
       return 1920;
@@ -514,9 +524,9 @@ class Utils {
     }
     try {
       if (this.isLandscape()) {
-        return Math.min(window.screen.width, window.screen.height);
+        return Math.min(window!.screen.width, window!.screen.height);
       } else {
-        return window.screen.height;
+        return window!.screen.height;
       }
     } catch (e) {
       return 1200;
@@ -525,7 +535,7 @@ class Utils {
 
   getWindowWidth() {
     try {
-      return window.innerWidth || 980;
+      return window!.innerWidth || 980;
     } catch (e) {
       return 980;
     }
@@ -543,7 +553,7 @@ class Utils {
     }
     if (this.isUndefined(this._cache.params[name])) {
       try {
-        this._cache.params[name] = top.location.search
+        this._cache.params[name] = top!.location.search
           .replace('?', '')
           .split('&')
           .map((ele) => {
@@ -634,7 +644,7 @@ class Utils {
               String(key).indexOf('Expand') === -1 &&
               String(key).indexOf('Color') === -1
           )
-          .map(([key, val]) => `${key}=${encodeURI(val)}`)
+          .map(([key, val]) => `${key}=${encodeURI(val as string)}`)
           .join('&');
 
         console.log(

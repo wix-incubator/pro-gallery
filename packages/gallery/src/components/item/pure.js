@@ -54,8 +54,8 @@ function getCustomInfoRendererProps(props) {
 function getLinkParams({
   directLink,
   options,
-  directShareLink,
-  noFollowForSEO,
+  directShareLink = undefined,
+  noFollowForSEO = undefined,
 }) {
   const isSEO = isSEOMode();
   if (options.itemClick === GALLERY_CONSTS.itemClick.LINK) {

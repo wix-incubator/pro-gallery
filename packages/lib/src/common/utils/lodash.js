@@ -36,7 +36,7 @@ export const debounce = (callback, wait) => {
   };
 };
 
-export const get = (obj, path, defaultValue) => {
+export const get = (obj, path, defaultValue = undefined) => {
   const result = String.prototype.split
     .call(path, /[,[\].]+?/)
     .filter(Boolean)

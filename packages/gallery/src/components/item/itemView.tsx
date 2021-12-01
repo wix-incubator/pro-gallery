@@ -1,12 +1,15 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import {
   GALLERY_CONSTS,
   featureManager,
   window,
   utils,
   isEditMode,
-  isPreviewMode
+  isPreviewMode,
+  GalleryProps,
+  CustomComponents,
+  GallerySettings,
 } from 'pro-gallery-lib';
 import MagnifiedImage from './imageWithMagnified.js';
 import TextItem from './textItem.js';
@@ -22,7 +25,64 @@ import {
 import VideoItemWrapper from './videos/videoItemWrapper';
 import {getSlideAnimationStyles, getCustomInfoRendererProps, getLinkParams} from './pure'
 
-class ItemView extends React.Component {
+
+interface IItemViewProps {
+  idx: number;
+  id: string;
+  galleryId: string;
+  photoId: string;
+  hash: string;
+  thumbnailHighlightId: string;
+  playingVideoIdx: number;
+  url: string;
+  type: string;
+  activeIndex: number;
+  enableExperimentalFeatures: boolean;
+  offset: {
+    innerTop;
+    innerLeft;
+    left;
+    top;
+  };
+  style: {
+    width;
+    height;
+    innerWidth;
+    innerHeight;
+    infoWidth;
+    infoHeight;
+    bgColor;
+  };
+  isPrerenderMode: boolean;
+  linkUrl: string;
+  linkData: any;
+  alt: string;
+  isVideoPlaceholder: boolean;
+  options: GalleryProps["options"];
+  settings: GallerySettings;
+  customComponents: CustomComponents;
+  actions: {
+    eventsListener: (name: string, ...data: any) => void;
+  };
+  directLink: { target: HTMLElement; url: string };
+  container: HTMLElement;
+}
+
+interface IItemViewState {
+  isCurrentHover: boolean;
+  itemWasHovered: boolean;
+  loaded?: boolean;
+}
+
+
+class ItemView extends React.Component<IItemViewProps, IItemViewState> {
+  activeElement: string;
+  itemAnchor?: HTMLElement | null;
+  itemContainer?: HTMLElement | null;
+  longPressTimer?: number;
+  itemLoadedTimeout?: number;
+  hasRequiredMediaUrl?: boolean;
+
   constructor(props) {
     super(props);
     this.props.actions.eventsListener(
@@ -136,7 +196,7 @@ class ItemView extends React.Component {
         e.stopPropagation();
         this.onItemClick(e, clickTarget, false); //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
         if (this.shouldUseDirectLink()) {
-          this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
+          this.itemAnchor?.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
         }
         return false;
       default:
@@ -180,7 +240,7 @@ class ItemView extends React.Component {
     if (
       utils.isFunction(utils.get(window, 'galleryWixCodeApi.onItemClicked'))
     ) {
-      window.galleryWixCodeApi.onItemClicked(this.props); //TODO remove after OOI is fully integrated
+      (window as any).galleryWixCodeApi.onItemClicked(this.props); //TODO remove after OOI is fully integrated
     }
     this.props.actions.eventsListener(
       GALLERY_CONSTS.events.ITEM_CLICKED,
@@ -275,7 +335,7 @@ class ItemView extends React.Component {
         allowTitle,
         isStoreGallery,
       } = this.props.options;
-      const isNewMobileSettings = featureManager.supports.mobileSettings;
+      const isNewMobileSettings = (featureManager.supports as any).mobileSettings;
       if (
         hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW
       ) {
@@ -362,7 +422,7 @@ class ItemView extends React.Component {
           }}
           renderCustomInfo={
             customComponents.customHoverRenderer
-              ? () => customComponents.customHoverRenderer(getCustomInfoRendererProps(this.props))
+              ? () => customComponents.customHoverRenderer && customComponents.customHoverRenderer(getCustomInfoRendererProps(this.props))
               : null
           }
         ></ItemHover>
@@ -454,7 +514,7 @@ class ItemView extends React.Component {
     const { innerTop, innerLeft } = offset;
 
     const itemStyles = { width: innerWidth, height: innerHeight, marginTop: innerTop, marginLeft: innerLeft };
-    let itemHover = null;
+    let itemHover: any = null;
     const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(options)
     if (this.shouldHover() || isSlideshow) {
       itemHover = this.getItemHover(itemStyles);
@@ -487,7 +547,7 @@ class ItemView extends React.Component {
     return itemInner;
   }
 
-  getSlideshowItemInner({options, width, height, itemInner, customComponents,  photoId, id }) {
+  getSlideshowItemInner({options, width, height, itemInner, customComponents,  photoId = undefined, id = undefined }) {
       const { customSlideshowInfoRenderer } = customComponents;
       const slideAnimationStyles = getSlideAnimationStyles(this.props);
       const infoStyle = {
@@ -594,7 +654,7 @@ class ItemView extends React.Component {
     if (!customComponents.customInfoRenderer) {
       return null;
     }
-    let info = null;
+    let info: React.ReactNode = null;
     //if there is no url for videos and images, we will not render the itemWrapper
     //but will render the info element if exists, with the whole size of the item
     const infoHeight =
@@ -614,7 +674,7 @@ class ItemView extends React.Component {
           options,
           style.height,
           options.textBoxHeight
-        )}
+        ) as CSSProperties}
       >
         <div
           style={getInnerInfoStyle(
@@ -622,7 +682,7 @@ class ItemView extends React.Component {
             options,
             infoHeight,
             infoWidth
-          )}
+          ) as CSSProperties}
           className={'gallery-item-common-info ' + elementName}
           onClick={this.onItemInfoClick}
         >
@@ -757,7 +817,7 @@ class ItemView extends React.Component {
   getItemWrapperStyles() {
     const { options, style, type } = this.props;
     const { height, width} = style;
-    const styles = {};
+    const styles: Partial<CSSProperties> = {};
     if (type === 'text') {
       styles.backgroundColor =
         options.cubeType !== 'fit' ? 'transparent' : 'inherit';
@@ -902,15 +962,8 @@ class ItemView extends React.Component {
   //-----------------------------------------| REACT |--------------------------------------------//
 
   componentDidMount() {
-    if (utils.isMobile() && typeof React.initializeTouchEvents === 'function') {
-      try {
-        React.initializeTouchEvents(true);
-      } catch (e) {
-        console.error(e)
-      }
-    }
 
-    window.addEventListener(
+    window!.addEventListener(
       'current_hover_change',
       this.checkIfCurrentHoverChanged
     );
@@ -918,7 +971,7 @@ class ItemView extends React.Component {
 
   componentWillUnmount() {
     clearTimeout(this.itemLoadedTimeout);
-    window.removeEventListener(
+    window!.removeEventListener(
       'current_hover_change',
       this.checkIfCurrentHoverChanged
     );
@@ -973,7 +1026,7 @@ class ItemView extends React.Component {
     const { photoId, id, hash, idx, options, type, url } = this.props;
 
     //if (there is an url for video items and image items) OR text item (text item do not use media url)
-    this.hasRequiredMediaUrl = url || type === 'text';
+    this.hasRequiredMediaUrl = !!url || type === 'text';
     //if titlePlacement !== SHOW_ON_HOVER and !this.hasRequiredMediaUrl, we will NOT render the itemWrapper (but will render the info element with the whole size of the item)
     const isItemWrapperEmpty =
       options.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER &&
