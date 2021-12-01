@@ -50,7 +50,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
     expect(navArrows).to.have.lengthOf(0);
   });
 
-  it('Checks if "INFO_CENTER" has correct distance from top for SlideShow', async () => {
+  it.skip('Checks if "INFO_CENTER" has correct distance from top for SlideShow', async () => {
     // Exact style params relevant to this sub-test
     initialProps.options = mergeNestedObjects(initialProps.options, {
       arrowsVerticalPosition: 'INFO_CENTER',
