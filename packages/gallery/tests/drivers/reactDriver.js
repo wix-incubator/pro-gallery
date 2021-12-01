@@ -206,7 +206,6 @@ class galleryDriver {
           layout,
           actions: this.actions,
           customComponents: this.customComponents,
-          galleryContainerId: 'pro-gallery-container-default-dom-id',
         };
       },
 
@@ -222,7 +221,6 @@ class galleryDriver {
             options: this.options,
             actions: this.actions,
             customComponents: this.customComponents,
-            // galleryContainerId: 'pro-gallery-container-default-dom-id',
           };
         }
 

@@ -121,13 +121,15 @@ describe('options - itemClick', () => {
         options,
       };
     });
-    it.only('check href when itemClick = link', async () => {
+    it('check href when itemClick = link', async () => {
       initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'link',
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
-      const item = driver.find.selector('#pro-gallery-container a').at(0);
+      const item = driver.find
+        .selector('#pro-gallery-container-default-dom-id a')
+        .at(0);
       expect(item.props().href).to.not.be.undefined;
       driver.detach.proGallery();
     });
@@ -137,12 +139,13 @@ describe('options - itemClick', () => {
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
-      const item = driver.find.selector('#pro-gallery-container a').at(0);
+      const item = driver.find
+        .selector('#pro-gallery-container-default-dom-id a')
+        .at(0);
       expect(item.props().href).to.be.undefined;
       driver.detach.proGallery();
     });
   });
-
   describe('should play video onClick in gallery only when itemClick is nothing and videoPlay is onClick', () => {
     beforeEach(() => {
       driver = new GalleryDriver();
