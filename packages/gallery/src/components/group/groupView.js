@@ -1,5 +1,5 @@
 import React from 'react';
-import itemView from '../item/itemView.js';
+import itemView from '../item/itemView';
 
 class GroupView extends React.Component {
   constructor(props) {
