@@ -1,5 +1,5 @@
 import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
-import { useEffect, useRef, useState } from 'react';
+import { CSSProperties, useEffect, useRef, useState } from 'react';
 import { isInFocus } from '../itemHelper';
 import { IItemViewProps } from '../itemView';
 import { getImageStyle } from '../itemViewStyleProvider';
@@ -212,7 +212,7 @@ export function useItemView(props: IItemViewProps) {
     }
   }
 
-  function getItemWrapperContainerStyle() {
+  function getItemWrapperContainerStyle(): CSSProperties {
     return {
       ...(!props.options.isSlideshow && getImageStyle(props.options)),
       ...(GALLERY_CONSTS.hasExternalRightPlacement(
