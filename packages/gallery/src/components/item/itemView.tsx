@@ -9,9 +9,9 @@ import {
 import { onAnchorFocus } from './itemHelper.js';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
 import {getLinkParams} from './pure'
-import { useItemView } from './itemView/controller.js';
-import { ITemViewInner } from './itemView/content.js';
-import { ItemViewBottomInfo, ItemViewLeftInfo, ItemViewRightInfo, ItemViewTopInfo } from './itemView/info.js';
+import { useItemView } from './itemView/controller';
+import { ITemViewInner } from './itemView/content';
+import { ItemViewBottomInfo, ItemViewLeftInfo, ItemViewRightInfo, ItemViewTopInfo } from './itemView/info';
 
 
 export interface IItemViewProps {
