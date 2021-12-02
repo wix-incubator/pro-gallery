@@ -25,15 +25,6 @@ describe('Item View', () => {
     expect(driver.find.hook('item-wrapper').length).to.equal(1);
   });
 
-  describe('item loaded setItemLoaded', () => {
-    it('should set states when called', () => {
-      const spy = sinon.spy(ItemView.prototype, 'setItemLoaded');
-      driver.mount(ItemView, sampleItemViewProps);
-      driver.get.instance().setItemLoaded();
-      expect(spy.called).to.be.true;
-      spy.restore();
-    });
-  });
   // describe('toggleHoverOnMobile', () => {
   //   it('should toggle showHover', () => {
   //     driver.mount(ItemView, sampleItemViewProps);
