@@ -2,7 +2,7 @@
 import React from 'react';
 import { window, utils, GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDebugMessage from './galleryDebugMessage';
-import itemView from '../../item/itemView.js';
+import itemView from '../../item/itemView';
 
 class GalleryView extends React.Component {
   constructor(props) {

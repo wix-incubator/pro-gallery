@@ -31,11 +31,7 @@ export function onAnchorFocus({
   }
 }
 
-export function changeActiveElementIfNeeded({
-  prevProps,
-  currentProps,
-  itemContainer,
-}) {
+export function isInFocus() {
   try {
     if (
       shouldChangeActiveElement() &&
@@ -47,24 +43,12 @@ export function changeActiveElementIfNeeded({
       const isShowMoreInFocus = isThisGalleryElementInFocus('show-more');
 
       if (isGalleryItemInFocus || isShowMoreInFocus) {
-        if (
-          currentProps.thumbnailHighlightId !==
-            prevProps.thumbnailHighlightId &&
-          currentProps.thumbnailHighlightId === currentProps.id
-        ) {
-          // if the highlighted thumbnail changed and it is the same as this itemview's
-          itemContainer.focus();
-        } else if (
-          currentProps.activeIndex !== prevProps.activeIndex &&
-          currentProps.activeIndex === currentProps.idx
-        ) {
-          //check if activeIndex has changed to the current item
-          itemContainer.focus();
-        }
+        return true;
       }
     }
   } catch (e) {
     console.error('Could not set focus to active element', e);
+    return false;
   }
 }
 
