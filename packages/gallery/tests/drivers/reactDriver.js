@@ -179,7 +179,8 @@ class galleryDriver {
   }
 
   getContainer() {
-    return this.find.selector('#pro-gallery-container-default-dom-id');
+    const id = this.wrapper.props().id || 'default-dom-id';
+    return this.find.selector(`#pro-gallery-container-${id}`);
   }
 
   get text() {
