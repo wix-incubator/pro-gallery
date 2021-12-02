@@ -9,6 +9,7 @@ import { CSSProperties } from 'react';
 import type { IItemViewProps } from '../itemView';
 import { getContainerStyle } from '../itemViewStyleProvider';
 import { getSlideAnimationStyles } from '../pure';
+import { extractTextItemContent } from '../itemHelper';
 
 export function isClickOnCurrentHoveredItem(
   props: IItemViewProps,
@@ -127,21 +128,12 @@ export function itemHasLink(props: IItemViewProps): boolean {
 
 export function getItemAriaLabel(props: IItemViewProps): string {
   const { type, alt, options } = props;
-  let label;
-  switch (type) {
-    case 'dummy':
-      label = '';
-      break;
-    case 'text':
-      label = 'Text item';
-      break;
-    case 'video':
-      label = alt || 'Untitled video';
-      break;
-    default:
-      label = alt || 'Untitled image';
-      break;
-  }
+  const mapTypeToLabel = {
+    dummy: '',
+    text: extractTextItemContent(props.html),
+    video: alt || 'Untitled video',
+  };
+  const label = mapTypeToLabel[type] || alt || 'Untitled image';
   return label + (options.isStoreGallery ? ', Buy Now' : '');
 }
 

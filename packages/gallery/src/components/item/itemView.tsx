@@ -18,6 +18,7 @@ export interface IItemViewProps {
   idx: number;
   id: string;
   galleryId: string;
+  html: string;
   photoId: string;
   hash: string;
   thumbnailHighlightId: string;
@@ -72,7 +73,7 @@ function ItemView(props: IItemViewProps): JSX.Element {
     getItemWrapperStyles,
     getItemAriaRole,
     getItemContainerTabIndex,
-    getItemAriaLabel,
+    ariaLabel,
     onBlur,
     onContainerKeyDown,
     onFocus,
@@ -108,7 +109,7 @@ function ItemView(props: IItemViewProps): JSX.Element {
         onBlur={onBlur} // The onblur event is the opposite of the onfocus event.
         onKeyDown={onContainerKeyDown}
         tabIndex={getItemContainerTabIndex()}
-        aria-label={getItemAriaLabel()}
+        aria-label={ariaLabel}
         data-hash={hash}
         data-id={photoId}
         data-idx={idx}

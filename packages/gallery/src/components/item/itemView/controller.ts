@@ -67,6 +67,7 @@ export function useItemView(props: IItemViewProps) {
   const events = useItemViewEvents(props);
   const itemAnchor = useRef<HTMLAnchorElement>(null);
   const itemContainer = useRef<HTMLDivElement>(null);
+  const [ariaLabel, setAriaLabel] = useState<string>('');
   const timers = useRef({
     longPressTimer: null as null | number,
     itemLoadedTimeout: null as null | number,
@@ -88,6 +89,8 @@ export function useItemView(props: IItemViewProps) {
         }
       }
     }
+
+    setAriaLabel(getItemAriaLabel(props));
 
     window!.addEventListener(
       'current_hover_change',
@@ -240,7 +243,6 @@ export function useItemView(props: IItemViewProps) {
   return {
     getItemContainerClass: () => getItemContainerClass(props, isCurrentHover),
     getItemContainerTabIndex: () => getItemContainerTabIndex(props),
-    getItemAriaLabel: () => getItemAriaLabel(props),
     getItemAriaRole: () => getItemAriaRole(props),
     getItemWrapperClass: () => getItemWrapperClass(props),
     getItemWrapperStyles: () => getItemWrapperStyles(props),
@@ -250,6 +252,7 @@ export function useItemView(props: IItemViewProps) {
     simulateOverlayHover: () => simulateOverlayHover(props, isCurrentHover),
     isCurrentHover,
     onAnchorKeyDown,
+    ariaLabel: ariaLabel,
     itemWasHovered,
     shouldHover: () => shouldHover(props, itemWasHovered),
     onItemWrapperClick,
