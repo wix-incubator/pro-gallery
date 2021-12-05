@@ -9,7 +9,7 @@ export default class GalleryRenderer extends React.Component<GalleryRendererProp
     const { id, options, eventsListener, customComponents, ...otherProps } =
       this.props;
 
-    const _eventsListener = (eventName, eventData) =>
+    const _eventsListener = (eventName: any, eventData: any) =>
       typeof eventsListener === 'function' && eventsListener(eventName, eventData);
 
     const _options = { ...defaultOptions, ...options }; //TODOVER3 can we remove the default options?? blueprints should take care of it

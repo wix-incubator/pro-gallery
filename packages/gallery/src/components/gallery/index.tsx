@@ -10,8 +10,8 @@ export default class Gallery extends React.Component<
   GalleryProps,
   GalleryState
 > {
-  private blueprintsManager: any;
-  private galleryProps: any;
+  private blueprintsManager: BlueprintsManager;
+  private galleryProps!: GalleryProps;
 
   constructor(props: GalleryProps) {
     super(props);
@@ -21,7 +21,7 @@ export default class Gallery extends React.Component<
       deviceType: props.deviceType,
       api: {
         isUsingCustomInfoElements: this.isUsingCustomInfoElements,
-        fetchMoreItems: (from) => {
+        fetchMoreItems: (from: any) => {
           typeof props.eventsListener === 'function' &&
             props.eventsListener(GALLERY_CONSTS.events.NEED_MORE_ITEMS, from);
         },
@@ -29,7 +29,7 @@ export default class Gallery extends React.Component<
           blueprint,
           blueprintChanged,
           initialBlueprint,
-        }) => {
+        }: any) => {
           if (blueprintChanged) {
             this.setBlueprint(blueprint, initialBlueprint);
           } else {
@@ -46,7 +46,7 @@ export default class Gallery extends React.Component<
     };
   }
 
-  setBlueprint(blueprint, initialBlueprint) {
+  setBlueprint(blueprint: any, initialBlueprint: any) {
     if (initialBlueprint) {
       // the blueprint from the initial blueprint flow will be set in the constructor
     } else {
@@ -56,15 +56,18 @@ export default class Gallery extends React.Component<
 
   isUsingCustomInfoElements() {
     return (
+      // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
       !!this.galleryProps.customComponents.customHoverRenderer ||
+      // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
       !!this.galleryProps.customComponents.customInfoRenderer ||
+      // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
       !!this.galleryProps.customComponents.customSlideshowInfoRenderer
     );
   }
 
-  onNewProps(props, calledByConstructor) {
+  onNewProps(props: any, calledByConstructor: any) {
     const { eventsListener, ...otherProps } = props;
-    const _eventsListener = (eventName, eventData) => {
+    const _eventsListener = (eventName: any, eventData: any) => {
       if (eventName === GALLERY_CONSTS.events.NEED_MORE_ITEMS) {
         this.blueprintsManager.getMoreItems(eventData);
       } else {
@@ -88,7 +91,7 @@ export default class Gallery extends React.Component<
     }
   }
 
-  UNSAFE_componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps: any) {
     this.onNewProps(newProps, false);
   }
 
