@@ -11,7 +11,7 @@ export default class Gallery extends React.Component<
   GalleryState
 > {
   private blueprintsManager: BlueprintsManager;
-  private galleryProps!: GalleryProps;
+  private galleryProps!: any;
 
   constructor(props: GalleryProps) {
     super(props);
@@ -56,11 +56,8 @@ export default class Gallery extends React.Component<
 
   isUsingCustomInfoElements() {
     return (
-      // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
       !!this.galleryProps.customComponents.customHoverRenderer ||
-      // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
       !!this.galleryProps.customComponents.customInfoRenderer ||
-      // @ts-expect-error ts-migrate(2532) FIXME: Object is possibly 'undefined'.
       !!this.galleryProps.customComponents.customSlideshowInfoRenderer
     );
   }
