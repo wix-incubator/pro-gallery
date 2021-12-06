@@ -1,3 +1,4 @@
+import stylingParams_itemResolutionMode from './itemResolutionMode';
 import itemClick from './itemClick';
 import behaviourParams_item_clickAction from './itemClick';
 import imageMargin from './imageMargin';
@@ -239,6 +240,7 @@ export default {
   autoSlideshowType,
   autoSlideshowContinuousSpeed,
   behaviourParams_item_content_magnificationValue,
+  stylingParams_itemResolutionMode,
 };
 
 // TODO = add the options:

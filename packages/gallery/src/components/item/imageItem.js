@@ -206,11 +206,18 @@ class ImageItem extends React.Component {
       }
 
       const shouldRenderHighResImages = !this.props.isPrerenderMode;
-      const src =
-        createUrl(
-    GALLERY_CONSTS.urlSizes.MULTI,
+      let src = "";
+      if (options.stylingParams?.itemResolutionMode === 'FULL') {
+        src = createUrl(
+            GALLERY_CONSTS.urlSizes.FULL,
+            GALLERY_CONSTS.urlTypes.HIGH_RES
+        );
+      } else {
+        src = createUrl(
+            GALLERY_CONSTS.urlSizes.MULTI,
             GALLERY_CONSTS.urlTypes.HIGH_RES
           );
+      }
 
       const highres = (
         <ImageRenderer

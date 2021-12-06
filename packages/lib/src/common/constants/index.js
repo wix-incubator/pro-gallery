@@ -53,9 +53,11 @@ import slideTransition from './slideTransition';
 import overlayPositions from './overlayPositions';
 import overlaySizeType from './overlaySizeType';
 import autoSlideshowTypes from './autoSlideshowTypes';
+import itemResolutionMode from './itemResolutionMode';
 
 export default {
   arrowsPosition,
+  itemResolutionMode,
   arrowsVerticalPosition,
   cubeType,
   dimensions,
