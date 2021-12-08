@@ -28,7 +28,7 @@ describe('options - arrowsPosition', () => {
     driver.mount.proGallery(initialProps);
     await driver.update();
 
-    const galleryContainer = driver.find.selector('#pro-gallery-container');
+    const galleryContainer = driver.getContainer();
     const { width } = galleryContainer.props().style;
     const newWidth =
       initialProps.container.width -
@@ -48,7 +48,7 @@ describe('options - arrowsPosition', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const galleryContainer = driver.find.selector('#pro-gallery-container');
+    const galleryContainer = driver.getContainer();
     const { width } = galleryContainer.props().style;
 
     expect(width).to.eq(initialProps.container.width);

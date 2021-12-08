@@ -810,6 +810,7 @@ export class GalleryContainer extends React.Component {
           enableExperimentalFeatures={this.props.enableExperimentalFeatures}
           galleryContainerRef={this.galleryContainerRef}
           outOfViewComponent={this.outOfViewComponent}
+          galleryContainerId={`pro-gallery-container-${this.props.id}`}
           actions={{
             ...this.props.actions,
             findNeighborItem: this.findNeighborItem,

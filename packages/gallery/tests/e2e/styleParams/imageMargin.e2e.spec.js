@@ -21,7 +21,7 @@ describe('imageMargin - e2e', () => {
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(2000);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
   it('should not create a margin between items when "imageMargin" is "0"', async () => {
@@ -31,7 +31,7 @@ describe('imageMargin - e2e', () => {
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(2000);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
 });

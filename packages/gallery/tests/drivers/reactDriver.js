@@ -178,6 +178,11 @@ class galleryDriver {
     };
   }
 
+  getContainer() {
+    const id = this.wrapper.props().id || 'default-dom-id';
+    return this.find.selector(`#pro-gallery-container-${id}`);
+  }
+
   get text() {
     return this.wrapper.text();
   }
