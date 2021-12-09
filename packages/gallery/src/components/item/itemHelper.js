@@ -26,12 +26,12 @@ export function onAnchorFocus({
   }
 }
 
-function isThisGalleryElementInFocus(className, id) {
+function isThisGalleryElementInFocus(className, galleryId) {
   const activeElement = window.document.activeElement;
   return (
     String(activeElement.className).includes(className) &&
     !!window.document.querySelector(
-      `#pro-gallery-${id} #${String(activeElement.id)}`
+      `#pro-gallery-${galleryId} #${String(activeElement.id)}`
     )
   );
 }
