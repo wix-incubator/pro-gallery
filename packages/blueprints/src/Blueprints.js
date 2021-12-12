@@ -19,7 +19,6 @@ class Blueprints {
     // cacheBlocker
     // if (this.cache[params]) return this.cache[params];
 
-    debugger;
     this.reasons = {
       items: '',
       itemsAdded: '',
@@ -102,10 +101,13 @@ class Blueprints {
       console.error('Could not create blueprint, error:', error);
     }
 
-    const reasons = Object.entries(this.reasons).reduce(
-      (reasons, [param, reason]) => [...reasons, `${param}: ${reason}`],
-      []
-    ).join(', '),
+    const reasons = Object.entries(this.reasons)
+      .reduce(
+        (reasons, [param, reason]) => [...reasons, `${param}: ${reason}`],
+        []
+      )
+      .join(', ');
+
     // return the existing or the modified existing object
     return {
       blueprint: existingBlueprint,
