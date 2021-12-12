@@ -23,25 +23,6 @@
     "build-all-and-start-playground": "npm run start-playground",
     "build-all-and-start-ssr-simulator": "npm run start-ssr-simulator"
   },
-  "deprecated": {
-    "test:all": "npm run test && npm run test:e2e",
-    "publishNewAlpha": "lerna publish prerelease --dist-tag next --yes",
-    "bootstrap": "lerna bootstrap --hoist",
-    "start": "npm run watch",
-    "watch": "lerna run --parallel watch",
-    "build-packages-by-order": "echo 'lerna already ran `lerna run build` which runs build in all these pacakges - so this is no longer required'",
-    "link-packages": "echo 'lerna is linking pacakges so this is not needed anymore'",
-    "build:dev": "echo 'packages are linked in postinstall script with lerna, and packages are built with lerna run build - so this is no longer needed'",
-    "fixLatestTag": "npm dist-tag add pro-gallery@3.1.38 latest",
-    "build:dev-deprecated": "npm run link-packages && npm run build-packages-by-order",
-    "deployToSurge": "node scripts/deployToSurge",
-    "deprecatedPublish": "node scripts/publishPackages",
-    "build-packages-by-order-deprecated": "cd packages/layouts && npm run build && cd ../lib && npm run build && cd ../gallery && npm run build && cd ../lean-gallery && npm run build && cd ../playground && npm run build && cd ../ssr-simulator && npm run build && cd ../..",
-    "link-packages-deprecated": "cd packages/layouts && yarn link && cd ../lib && yarn link && yarn link pro-layouts && cd ../lean-gallery && yarn link && yarn link pro-gallery-lib && cd ../gallery && yarn link && yarn link pro-layouts && yarn link pro-gallery-lib && cd ../playground && yarn link pro-gallery && yarn link pro-gallery-lib && yarn link lean-gallery && cd ../ssr-simulator && yarn link pro-gallery && cd ../layouts && yarn link pro-gallery-lib && cd ../..",
-    "patch": "npm config set registry https://registry.npmjs.org/ && npm run lint && node scripts/releaseVersion --patch",
-    "minor": "npm config set registry https://registry.npmjs.org/ && npm run lint && node scripts/releaseVersion --minor",
-    "major": "npm config set registry https://registry.npmjs.org/ && npm run lint && node scripts/releaseVersion --major"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -70,7 +51,8 @@
     "lodash": "^4.17.21",
     "prettier": "^2.1.2",
     "prompt": "^1.0.0",
-    "semver": "^6.3.0"
+    "semver": "^6.3.0",
+    "set-value": "^4.1.0"
   },
   "dependencies": {
     "pro-gallery": "3.1.38",

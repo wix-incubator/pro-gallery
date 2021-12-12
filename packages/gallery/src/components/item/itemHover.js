@@ -1,8 +1,7 @@
 import React from 'react';
 import { GALLERY_CONSTS, isEditMode, utils } from 'pro-gallery-lib';
-import { GalleryComponent } from '../galleryComponent';
 
-export default class ItemHover extends GalleryComponent {
+export default class ItemHover extends React.Component {
   getHoverClass() {
     const { options, forceShowHover } = this.props;
     const hoverClass = ['gallery-item-hover'];

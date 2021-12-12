@@ -91,12 +91,12 @@ const forceInfoOnHoverWhenNeeded = (options) =>{
   let _options = {...options}
 if (    
   !GALLERY_CONSTS.isLayout('SLIDER')(_options) && //not slider
-  !GALLERY_CONSTS.isLayout('COLUMN')(_options) //not columns
+  !GALLERY_CONSTS.isLayout('COLUMN')(_options) &&  //not columns
+  !GALLERY_CONSTS.isLayout('FUTURE_SLIDESHOW')(_options) //not columns
   ) {
     if (
       (!_options.isVertical || //layout orientation is horizontal
-        _options.groupSize > 1 || //groups are larger than one (items can be on top or right left of eachother)
-        (_options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && !GALLERY_CONSTS.isLayout('DESIGNED_PRESET')(_options))) //any horizontal layout that wasnt intentionally designed this way
+        _options.groupSize > 1) //groups are larger than one (items can be on top or right left of eachother)
     ) {
       // Dont allow titlePlacement to be above / below / left / right
       _options.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
@@ -204,19 +204,6 @@ const removeArrowPaddingIfOutsideTheGallery = (options) => {
   return _options;
 }
 
-const removeVideoAutoplayInIOS = (options) => {
-  let _options = {...options}
-  // Handle case of autoplay on ios devices
-  if (
-    _options.videoPlay === 'auto' &&
-    _options.itemClick === 'nothing' &&
-    utils.isiOS()
-  ) {
-    _options.videoPlay = 'onClick';
-  }
-  return _options;
-}
-
 const processForceMobileCustomButton = (options) => {
   let _options = {...options}
   if (_options.forceMobileCustomButton) {
@@ -265,6 +252,21 @@ const processLoadMoreButtonFont = (options) => {
   }
   return _options;
 }
+const blockCounterByProduct = (options) => {
+  let _options = {...options}
+  if(!_options.allowSlideshowCounter) {
+    return _options
+  }
+
+  if(!_options.isAutoSlideshow) {
+    _options.allowSlideshowCounter = false
+  }
+
+  if ((GALLERY_CONSTS.isLayout('SLIDESHOW')(options)|| GALLERY_CONSTS.isLayout('FUTURE_SLIDESHOW')(options)) === false) {
+    _options.allowSlideshowCounter = false;
+  }
+  return _options;
+}
 
 const addMarginsToSupportShadows = (options) => {
   let _options = {...options}
@@ -280,14 +282,17 @@ const addMarginsToSupportShadows = (options) => {
   }
   return _options;
 }
-const centerArrowsWhenNeeded = (options) => {
+
+const centerArrowsWhenNeeded = (options) => {  
   let _options = {...options}
+  const isSingleVerticalItemRendered =  _options.layoutParams.repeatingGroupTypes ? 
+  _options.layoutParams.repeatingGroupTypes == "1" :  _options.groupTypes == "1"; // only one item is being rendered vertically?
   const filteredPlacement = _options.titlePlacement // filtering hover since it doesn't affect this product
   .split(',')
   .filter(placement => !isHoverPlacement(placement))
   .join(',')
   if (!isConstantVerticalPlacement(filteredPlacement, GALLERY_CONSTS.isLayout('SLIDESHOW')(options)) || 
-      _options.numberOfImagesPerCol > 1)
+      !isSingleVerticalItemRendered)
     {
     // if text (info) placement is not above/below placement or more then 1 images per col, arrows are gallery("item") centered
     _options.arrowsVerticalPosition = GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER;
@@ -352,9 +357,9 @@ function processLayouts(options, customExternalInfoRendererExists) {
     processedOptions = processForceMobileCustomButton(processedOptions); //TODO this seems like it doesnt really exists. consider deleting support.
     processedOptions = processSpecialGallerySize(processedOptions);
     processedOptions = processTextDimensions(processedOptions, customExternalInfoRendererExists);
-    processedOptions = removeVideoAutoplayInIOS(processedOptions);
     processedOptions = centerArrowsWhenNeeded(processedOptions); 
-    
+    processedOptions = blockCounterByProduct(processedOptions); 
+
   return processedOptions;
 }
 

@@ -3,8 +3,8 @@ import { BehaviourParams } from './behaviourParams';
 import { StylingParams } from './stylingParams';
 
 export interface Options {
-  layoutParams: LayoutParams;
-  behaviourParams: BehaviourParams;
-  stylingParams: StylingParams;
-  [key: string]: any;
+  layoutParams?: LayoutParams;
+  behaviourParams?: BehaviourParams;
+  stylingParams?: StylingParams;
+  [key: string]: any; // temp to support old options
 }

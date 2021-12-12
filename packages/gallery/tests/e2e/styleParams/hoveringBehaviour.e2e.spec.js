@@ -23,7 +23,7 @@ describe('hoveringBehaviour - e2e', () => {
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.actions.hover('item-container')[0];
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
   it('should make hover state disapear on hover (reverse-hover) when "hoveringBehaviour" is "DISAPPEARS', async () => {
@@ -34,7 +34,7 @@ describe('hoveringBehaviour - e2e', () => {
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.actions.hover('item-container')[0];
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
   it('should set all items in constant hover state when "hoveringBehaviour" is "NO_CHANGE"', async () => {
@@ -45,7 +45,7 @@ describe('hoveringBehaviour - e2e', () => {
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.actions.hover('item-container')[0];
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
 });

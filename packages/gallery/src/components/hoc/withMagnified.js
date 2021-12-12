@@ -78,13 +78,13 @@ function withMagnified(WrappedComponent) {
 
     getMagnifiedDimensions() {
       const {
-        style,
-        options: { magnificationLevel },
+        style: { innerHeight, innerWidth },
+        options: { behaviourParams },
       } = this.props;
-      const { innerHeight, innerWidth } = style;
+      const { magnificationValue } = behaviourParams.item.content;
       return {
-        magnifiedHeight: innerHeight * magnificationLevel,
-        magnifiedWidth: innerWidth * magnificationLevel,
+        magnifiedHeight: innerHeight * magnificationValue,
+        magnifiedWidth: innerWidth * magnificationValue,
       };
     }
     getPreloadImage() {
@@ -92,12 +92,12 @@ function withMagnified(WrappedComponent) {
       const { innerWidth, innerHeight } = style;
       const { marginTop, marginLeft } = imageDimensions;
       const { shouldMagnify, x, y } = this.state;
-      const { magnificationLevel } = options;
+      const { magnificationValue } = options.behaviourParams.item.content;
       const src = createUrl(
         GALLERY_CONSTS.urlSizes.RESIZED,
         GALLERY_CONSTS.urlTypes.HIGH_RES
       );
-      const scale = shouldMagnify ? magnificationLevel : 1;
+      const scale = shouldMagnify ? magnificationValue : 1;
       return (
         <ImageRenderer
           alt=""
@@ -112,8 +112,8 @@ function withMagnified(WrappedComponent) {
             opacity: shouldMagnify ? 1 : 0,
             transform: `scale(${scale})`,
             transformOrigin: `${
-              (x + marginLeft) / (magnificationLevel - 1)
-            }px ${(y + marginTop) / (magnificationLevel - 1)}px`,
+              (x + marginLeft) / (magnificationValue - 1)
+            }px ${(y + marginTop) / (magnificationValue - 1)}px`,
             transition: `transform 0.3s ease${
               shouldMagnify ? '' : ', opacity 0.1s ease 0.3s'
             }`,
@@ -125,7 +125,9 @@ function withMagnified(WrappedComponent) {
     getHighResImage() {
       const { createMagnifiedUrl, id, alt, options } = this.props;
       const { magnifiedWidth, magnifiedHeight } = this.getMagnifiedDimensions();
-      const src = createMagnifiedUrl(options.magnificationLevel);
+      const src = createMagnifiedUrl(
+        options.behaviourParams.item.content.magnificationValue
+      );
       return (
         <ImageRenderer
           key={`magnified-item-${id}`}

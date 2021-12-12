@@ -1,10 +1,9 @@
 import React from 'react';
 import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
-import { GalleryComponent } from '../../galleryComponent';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import getStyle from './getStyle';
 
-class VideoItem extends GalleryComponent {
+class VideoItem extends React.Component {
   constructor(props) {
     super(props);
 
@@ -167,7 +166,7 @@ class VideoItem extends GalleryComponent {
 
     const attributes = {
       controlsList: 'nodownload',
-      disablepictureinpicture: 'true',
+      disablePictureInPicture: 'true',
       muted: !this.props.options.videoSound,
       preload: 'metadata',
       style: getStyle(isCrop, isWiderThenContainer),

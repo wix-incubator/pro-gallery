@@ -1,8 +1,7 @@
 import React from 'react';
 import itemView from '../item/itemView.js';
-import { GalleryComponent } from '../galleryComponent';
 
-class GroupView extends GalleryComponent {
+class GroupView extends React.Component {
   constructor(props) {
     super(props);
     this.displayName = 'GroupView';

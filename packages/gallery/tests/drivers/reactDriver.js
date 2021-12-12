@@ -1,11 +1,5 @@
-import { Layouter } from 'pro-layouts';
-import {
-  GALLERY_CONSTS,
-  GalleryItem,
-  ItemsHelper,
-  window,
-  utils,
-} from 'pro-gallery-lib';
+import { Layouter, GalleryItem, ItemsHelper } from 'pro-layouts';
+import { window, defaultOptions, mergeNestedObjects } from 'pro-gallery-lib';
 import { testImages } from './mocks/images-mock.js';
 import { mount, shallow, configure } from 'enzyme';
 import { GalleryContainer } from '../../src/components/gallery/proGallery/galleryContainer'; //import GalleryContainer before the connect (without redux)
@@ -42,58 +36,9 @@ class galleryDriver {
       },
     };
 
-    this.options = {
-      layoutParams: {
-        gallerySpacing: 1,
-        cropRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
-      },
-      gotStyleParams: true,
-      selectedLayout: 0,
-      isVertical: false,
-      isRTL: false,
+    this.options = mergeNestedObjects(defaultOptions, {
       targetItemSize: 320,
-      minItemSize: 120,
-      groupSize: 3,
-      chooseBestGroup: true,
-      groupTypes: '1,2h,2v,3t,3b,3l,3r',
-      cubeImages: false,
-      smartCrop: false,
-      fullscreen: true,
-      videoLoop: true,
-      videoSound: false,
-      videoSpeed: 1,
-      videoPlay: 'hover',
-      sharpParams: {
-        quality: 90,
-        usm: {}, // do not apply usm - {usm_r: 0.66, usm_a: 1.00, usm_t: 0.01},
-      },
-      collageAmount: 0.8,
-      collageDensity: 0.8,
-      imageMargin: 5,
-      viewMode: 'preview',
-      enableInfiniteScroll: true,
-      itemClick: 'expand',
-      fixedColumns: 0, //determine the number of columns regardless of the screen size (use 0 to ignore)
-      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      showArrows: true,
-      arrowsSize: 23,
-      arrowsVerticalPosition: 'ITEM_CENTER',
-      textBoxHeight: 200,
-      slideshowInfoSize: 200,
-      hasThumbnails: false,
-      thumbnailSize: utils.isMobile() ? 90 : 120,
-      galleryThumbnailsAlignment: 'bottom',
-      thumbnailSpacings: 0,
-      titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
-      itemEnableShadow: false,
-      itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
-      itemShadowBlur: 20,
-      itemShadowDirection: 135,
-      itemShadowSize: 10,
-      shouldIndexDirectShareLinkInSEO: true,
-      enableVideoPlaceholder: true,
-      magnificationLevel: 2,
-    };
+    });
 
     this.scroll = {
       top: 0,
@@ -231,6 +176,11 @@ class galleryDriver {
         return this.wrapper.find(str);
       },
     };
+  }
+
+  getContainer() {
+    const id = this.wrapper.props().id || 'default-dom-id';
+    return this.find.selector(`#pro-gallery-container-${id}`);
   }
 
   get text() {

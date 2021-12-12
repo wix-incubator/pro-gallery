@@ -1,6 +1,9 @@
 import { expect } from 'chai';
-import defaultOptions from '../src/common/defaultOptions';
+import defaultOptions, {
+  populateWithDefaultOptions,
+} from '../src/common/defaultOptions';
 import { flattenObject } from '../src/core/helpers/optionsUtils';
+import { extendNestedOptionsToIncludeOldAndNew } from '../src/core/helpers/optionsConverter';
 import GALLERY_CONSTS from '../src/common/constants';
 
 describe('defaultOptions', () => {
@@ -8,6 +11,25 @@ describe('defaultOptions', () => {
     const actual = flattenObject(defaultOptions);
     const expected = flattenObject(expectedOptions());
     expect(actual).to.eql(expected);
+  });
+  it('should populate missing properties with default properties and should leave defined properties as they are', () => {
+    const actual = flattenObject(defaultOptions);
+    const expected = flattenObject(expectedOptions());
+    expect(actual).to.eql(expected);
+    let customOptions = { layoutParams: { structure: { galleryLayout: 5 } } };
+    const migrated = extendNestedOptionsToIncludeOldAndNew(customOptions);
+    const flat = flattenObject(migrated);
+    Object.keys(flat).forEach((key) =>
+      flat[key] === undefined ? delete flat[key] : {}
+    );
+    expect(Object.keys(flat).length).to.eql(2); //this object should contains only 2 defined options (the old and new galleryLayout)
+    let populated = populateWithDefaultOptions(migrated);
+    expect(populated.galleryLayout).to.eql(5); //this should be 5 and not the default (-1)
+    expect(populated.slideshowInfoSize).to.eql(200);
+    expect(populated.gallerySize).to.eql(30);
+    expect(populated.gallerySizeRatio).to.eql(0);
+    expect(populated.gallerySizePx).to.eql(0);
+    expect(populated.gallerySizeType).to.eql('smart');
   });
 });
 
@@ -17,6 +39,13 @@ function expectedOptions() {
       gallerySpacing: 0,
       cropRatio: 1,
       repeatingGroupTypes: '',
+    },
+    behaviourParams: {
+      item: {
+        content: {
+          magnificationValue: 2,
+        },
+      },
     },
     scrollSnap: false,
     isRTL: false,

@@ -1,5 +1,5 @@
-function assignByString(Obj, string, value) {
-  let _obj = { ...Obj };
+function assignByString(Obj, string, value, cloneObject = true) {
+  let _obj = cloneObject ? { ...Obj } : Obj;
   let keyArr = string.split('_');
   let assignedProperty = keyArr.pop();
   let pointer = _obj;
@@ -61,10 +61,24 @@ function flattenObject(ob) {
 }
 
 function flatToNested(ob) {
+  const cloneObject = false;
   return Object.entries(ob).reduce(
-    (obj, [option, value]) => assignByString(obj, option, value),
+    (obj, [option, value]) => assignByString(obj, option, value, cloneObject),
     {}
   );
+}
+function trimUndefinedValues_nested(object) {
+  const flatObject = flattenObject(object);
+  Object.keys(flatObject).forEach((key) =>
+    flatObject[key] === undefined ? delete flatObject[key] : {}
+  );
+  return flatToNested(flatObject);
+}
+function trimUndefinedValues_flat(flatObject) {
+  Object.keys(flatObject).forEach((key) =>
+    flatObject[key] === undefined ? delete flatObject[key] : {}
+  );
+  return flatObject;
 }
 
 function mergeNestedObjects(...args) {
@@ -78,4 +92,6 @@ export {
   mergeNestedObjects,
   getByString,
   mutatingAssignMultipleByStrings,
+  trimUndefinedValues_nested,
+  trimUndefinedValues_flat,
 };

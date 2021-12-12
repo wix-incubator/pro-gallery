@@ -3,9 +3,8 @@ import React from 'react';
 import { window, utils, GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDebugMessage from './galleryDebugMessage';
 import itemView from '../../item/itemView.js';
-import { GalleryComponent } from '../../galleryComponent';
 
-class GalleryView extends GalleryComponent {
+class GalleryView extends React.Component {
   constructor(props) {
     super(props);
     this.handleKeys = this.handleKeys.bind(this);
@@ -103,7 +102,7 @@ class GalleryView extends GalleryComponent {
     );
   }
   showMoreItems() {
-    if (this.props.options.isAccessible) {
+    if (this.props.settings?.isAccessible) {
       // tal - I left this check since we do not want to focus the last item in non-accessibility mode
       //find the last visible item and focus on it
       try {
@@ -129,6 +128,7 @@ class GalleryView extends GalleryComponent {
   createGallery(showMore) {
     const {
       options,
+      settings,
       container,
       galleryStructure,
       getVisibleItems,
@@ -160,14 +160,14 @@ class GalleryView extends GalleryComponent {
 
     return (
       <div
-        id="pro-gallery-container"
+        id= {this.props.galleryContainerId}
         className={
           'pro-gallery inline-styles ' +
           (options.scrollDirection ===
           GALLERY_CONSTS.scrollDirection.HORIZONTAL
             ? ' one-row slider hide-scrollbars '
             : '') +
-          (options.isAccessible ? ' accessible ' : '') +
+          (settings?.isAccessible ? ' accessible ' : '') +
           (options.isRTL ? ' rtl ' : ' ltr ')
         }
         style={{

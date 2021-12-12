@@ -1,36 +1,37 @@
 import { expect } from 'chai';
 // import optionsMap from '../src/core/helpers/optionsMap';
-import GALLERY_CONSTS from '../src/common/constants';
-import defaultOptions from '../src/common/defaultOptions';
+import { flattenObject, flatToNested } from '../src/core/helpers/optionsUtils';
 import {
   migrateOptions,
   addMigratedOptions,
+  extendNestedOptionsToIncludeOldAndNew,
 } from '../src/core/helpers/optionsConverter';
 import {
   reverseMigrateOptions,
   addOldOptions,
 } from '../src/core/helpers/optionsBackwardConverter';
+import v3DefaultOptions from '../src/common/v3DefaultOptions';
+import v4DefaultOptions from '../src/common/v4DefaultOptions';
 
 describe('Styles processing', () => {
+  //one way
   it('should migrated new options to old ones', () => {
-    let old = reverseMigrateOptions(defaultOptions_new());
-    expect(old).to.eql(defaultOptions_old());
+    let old = reverseMigrateOptions(flattenObject(defaultOptions_new()));
+    expect(flatToNested(old)).to.eql(defaultOptions_old());
   });
-  it('should migrate styles from old to new until theres nothing ot migrate anymore', () => {
-    const migrated = migrateOptions(defaultOptions_old());
-    expect(migrated).to.eql(defaultOptions_new());
+  //and the other
+  it('should migrate styles from old to new ', () => {
+    const migrated = migrateOptions(flattenObject(defaultOptions_old()));
+    expect(flatToNested(migrated)).to.eql(defaultOptions_new());
   });
   it('should have new and old styles combined coming from both old and new objects', () => {
-    const migrated = addMigratedOptions(defaultOptions_old());
-    const reversed = addOldOptions(defaultOptions_new());
+    const migrated = addMigratedOptions(flattenObject(defaultOptions_old()));
+    const reversed = addOldOptions(flattenObject(defaultOptions_new()));
     expect(migrated).to.eql(reversed);
   });
 
-  it('should have new and old options when converted back and forth', () => {
-    const migrated = addMigratedOptions(
-      addOldOptions(addMigratedOptions(addOldOptions(semiRefactored())))
-    );
-    // const expected = afterConverstionAndBack();
+  it('should have new and old options when converted back and forth even with semi refactored objects', () => {
+    const migrated = extendNestedOptionsToIncludeOldAndNew(semiRefactored());
     expect(migrated.layoutParams.info.height).to.eql(150);
     expect(migrated.slideshowInfoSize).to.eql(150);
     expect(migrated.textBoxHeight).to.eql(150);
@@ -40,10 +41,95 @@ describe('Styles processing', () => {
     expect(
       migrated.behaviourParams.gallery.horizontal.autoSlide.behaviour
     ).to.eql('OFF');
-    // expect(migrated).to.own.include(afterConverstionAndBack());
+    expect(migrated.scrollSnap).to.eql(false);
+    expect(migrated.behaviourParams.gallery.horizontal.enableScrollSnap).to.eql(
+      false
+    );
+  });
+  it('should not have defined properties if they were not initialy defined', () => {
+    const migrated = addOldOptions(addMigratedOptions({}));
+    const flat = flattenObject(migrated);
+    Object.keys(flat).forEach((key) =>
+      flat[key] === undefined ? delete flat[key] : {}
+    );
+    expect(Object.keys(flat).length).to.eql(0);
+  });
+  it('should work with string percent cropRatios', () => {
+    const migrated = addOldOptions(
+      addMigratedOptions({
+        layoutParams_crop_ratios: ['100%/50%'],
+      })
+    );
+    expect(migrated['layoutParams_cropRatio']).to.eql('100%/50%');
+    expect(migrated['layoutParams_crop_ratios']).to.eql(['100%/50%']);
+    expect(migrated['cubeRatio']).to.eql('100%/50%');
+
+    const migrated2 = addOldOptions(
+      addMigratedOptions({
+        cubeRatio: '100%/50%',
+      })
+    );
+    expect(migrated2['layoutParams_cropRatio']).to.eql('100%/50%');
+    expect(migrated2['layoutParams_crop_ratios']).to.eql(['100%/50%']);
+    expect(migrated2['cubeRatio']).to.eql('100%/50%');
+    const migrated3 = addOldOptions(
+      addMigratedOptions({
+        layoutParams_cropRatio: '100%/50%',
+      })
+    );
+    expect(migrated3['layoutParams_cropRatio']).to.eql('100%/50%');
+    expect(migrated3['layoutParams_crop_ratios']).to.eql(['100%/50%']);
+    expect(migrated3['cubeRatio']).to.eql('100%/50%');
+  });
+  it('should not override values if they were defined initially, even if they would be different otherwise', () => {
+    let styles = {
+      layoutParams_cropRatio: 4 / 3,
+      rotatingCropRatios: '25%/100%,50%/100%',
+    };
+
+    const migrated = addOldOptions(addMigratedOptions(styles));
+    expect(migrated['layoutParams_cropRatio']).to.eql(4 / 3); //the migration would assign'25%/100%' here if it wasnt namely defined in the initial object
+    expect(migrated['layoutParams_crop_ratios']).to.eql([
+      '25%/100%',
+      '50%/100%',
+    ]);
+    expect(migrated['cubeRatio']).to.eql('25%/100%');
   });
 });
+describe('runtime should be acceptable (x10000)', function () {
+  this.timeout(1000);
 
+  it('addOldOptions', () => {
+    for (let i = 0; i < 10000; i++) {
+      addOldOptions({});
+    }
+    expect(false).to.eql(false);
+  });
+  it('reverseMigrateOptions', () => {
+    for (let i = 0; i < 10000; i++) {
+      reverseMigrateOptions({});
+    }
+    expect(false).to.eql(false);
+  });
+  it('addMigratedOptions', () => {
+    for (let i = 0; i < 10000; i++) {
+      addMigratedOptions({});
+    }
+    expect(false).to.eql(false);
+  });
+  it('migrateOptions', () => {
+    for (let i = 0; i < 10000; i++) {
+      migrateOptions({});
+    }
+    expect(false).to.eql(false);
+  });
+  it('extendNestedOptionsToIncludeOldAndNew', () => {
+    for (let i = 0; i < 10000; i++) {
+      extendNestedOptionsToIncludeOldAndNew({});
+    }
+    expect(false).to.eql(false);
+  });
+});
 function semiRefactored() {
   return {
     layoutParams: {
@@ -52,6 +138,14 @@ function semiRefactored() {
         galleryLayout: 4,
       },
     },
+    behaviourParams: {
+      gallery: {
+        horizontal: {
+          enableScrollSnap: false,
+        },
+      },
+    },
+    // scrollSnap: false,
     isAutoSlideshow: false,
   };
 }
@@ -80,152 +174,15 @@ function semiRefactored() {
 // }
 
 function defaultOptions_old() {
-  let def = { ...defaultOptions };
-  delete def.fullscreen; //removing this from tests, we should be also removing it from the code. Izaac tested that its not relevant
-  delete def.magicLayoutSeed;
-  return def;
+  const oldDefaults = v3DefaultOptions;
+  // these are merged in the migration and will not be defined going new to old.
+  oldDefaults.gallerySizePx = undefined;
+  oldDefaults.gallerySizeRatio = undefined;
+  oldDefaults.rotatingCropRatios = undefined;
+  oldDefaults.fixedColumns = undefined;
+  return oldDefaults;
 }
 
 function defaultOptions_new() {
-  let options = {
-    layoutParams: {
-      crop: {
-        ratios: [1], // determine the ratio of the images when using grid (use 1 for squares grid)
-        method: 'FILL',
-        enable: false,
-        enableSmartCrop: false,
-        cropOnlyFill: false,
-        alignment: 'CENTER',
-      },
-      structure: {
-        galleryLayout: -1,
-        scrollDirection: 'VERTICAL', //TODO, create and use use NEW_CONSTS
-        gallerySpacing: 0,
-        itemSpacing: 10,
-        enableStreching: true,
-        responsiveMode: 'FIT_TO_SCREEN',
-        scatter: {
-          randomScatter: 0,
-          manualScatter: '',
-        },
-        layoutOrientation: 'HORIZONTAL', //TODO, create and use use NEW_CONSTS
-        groupsOrder: 'BY_HEIGHT', //TODO, create and use use NEW_CON
-        numberOfGridRows: 1,
-        numberOfColumns: 3,
-        columnRatios: [],
-      },
-
-      groups: {
-        groupByOrientation: true,
-        numberOfGroupsPerRow: 0,
-        density: 0.8,
-        groupSize: 3,
-        allowedGroupTypes: ['1', '2h', '2v', '3t', '3b', '3l', '3r'],
-        repeatingGroupTypes: [],
-      },
-      thumbnails: {
-        size: 120,
-        spacing: 4,
-        enable: false,
-        alignment: 'BOTTOM', //TODO, create and use use NEW_CONSTS
-      },
-      navigationArrows: {
-        enable: true,
-        position: 'ON_GALLERY', //TODO, create and use use NEW_CONSTS
-        padding: 23,
-        size: 23,
-        verticalAlignment: GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER,
-      },
-      targetItemSize: {
-        unit: 'SMART',
-        value: 30,
-        minimum: 120,
-      },
-      info: {
-        sizeUnits: GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT,
-        width: 50,
-        height: 200,
-        spacing: 10,
-        layout: GALLERY_CONSTS.infoType.NO_BACKGROUND,
-        // widthByPercent: 50, //I want this to be in the width just like we did the overlaySize
-        placement: 'OVERLAY', //TODO, create and use use consts
-        border: {
-          width: 0,
-          radius: 0,
-          color: '',
-        },
-      },
-    },
-    behaviourParams: {
-      item: {
-        clickAction: 'NOTHING', //TODO, create and use use NEW_CONSTS
-        video: {
-          playTrigger: 'HOVER',
-          loop: true,
-          volume: 0,
-          enableControls: false,
-          speed: 1,
-          enablePlayButton: true,
-          enablePlaceholder: true,
-        },
-        overlay: {
-          hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
-          hoverAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,
-          position: GALLERY_CONSTS.overlayPositions.LEFT,
-          size: 100,
-          sizeUnits: GALLERY_CONSTS.overlaySizeType.PERCENT,
-          padding: 0,
-        },
-        content: {
-          hoverAnimation: GALLERY_CONSTS.imageHoverAnimations.NO_EFFECT,
-          loader: GALLERY_CONSTS.loadingMode.BLUR,
-          placementAnimation: GALLERY_CONSTS.imagePlacementAnimations.NO_EFFECT,
-          magnificationValue: 2,
-        },
-      },
-      gallery: {
-        blockContextMenu: true,
-        layoutDirection: 'LEFT_TO_RIGHT', //TODO, create and use use consts
-        scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
-        enableIndexingShareLinks: true,
-        horizontal: {
-          enableScrollSnap: false,
-          navigationDuration: 400,
-          blockScroll: false,
-          loop: false,
-          slideTransition: GALLERY_CONSTS.slideTransition.ease,
-          slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
-          autoSlide: {
-            behaviour: 'OFF',
-            interval: 4,
-            pauseOnHover: true,
-            speed: 200,
-          },
-          slideshowInfo: {
-            buttonsAlignment: 'CENTER',
-            enablePlayButton: false,
-            enableCounter: false,
-          },
-        },
-        vertical: {
-          loadMore: {
-            enable: false,
-            text: '',
-            amount: 'ALL',
-          },
-        },
-      },
-    },
-    stylingParams: {
-      itemBorderWidth: 0,
-      itemBorderRadius: 0,
-      itemEnableShadow: false,
-      itemShadowBlur: 20,
-      itemShadowDirection: 135,
-      itemShadowSize: 10,
-      itemShadowOpacityAndColor: '',
-      arrowsColor: '',
-    },
-  };
-  return options;
+  return v4DefaultOptions;
 }
