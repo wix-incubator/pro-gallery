@@ -54,11 +54,11 @@ export default class BlueprintsManager {
       params,
       lastParams: this.currentState,
       existingBlueprint: this.existingBlueprint,
-      blueprintManagerId: blueprintManagerId + lastBlueprintId,
+      blueprintManagerId: this.id + lastBlueprintId,
       isUsingCustomInfoElements: this.currentState.isUsingCustomInfoElements,
     });
 
-    if (blueprintManagerId !== this.lastBlueprintId) return;
+    if (blueprintManagerId !== (this.id + this.lastBlueprintId)) return;
 
     const blueprintChanged = Object.values(changedParams).some(
       (changedParam) => !!changedParam
