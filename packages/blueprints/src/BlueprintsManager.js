@@ -54,7 +54,7 @@ export default class BlueprintsManager {
       params,
       lastParams: this.currentState,
       existingBlueprint: this.existingBlueprint,
-      blueprintManagerId: lastBlueprintId,
+      blueprintManagerId: blueprintManagerId + lastBlueprintId,
       isUsingCustomInfoElements: this.currentState.isUsingCustomInfoElements,
     });
 
