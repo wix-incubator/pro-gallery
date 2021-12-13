@@ -3,6 +3,14 @@ import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import getStyle from './getStyle';
 
+const YOUTUBE_PLAY_STATES = {
+  UNSTARTED: -1,
+  ENDED: 0,
+  PLAYING: 1,
+  PAUSED: 2,
+  BUFFERING: 3,
+  VIDEO_CUED: 5,
+};
 class VideoItem extends React.Component {
   constructor(props) {
     super(props);
@@ -29,6 +37,12 @@ class VideoItem extends React.Component {
     this.dynamiclyImportVideoPlayers();
   }
 
+  isVimeoVideo = () =>
+    this.props.videoUrl && this.props.videoUrl.includes('vimeo.com');
+
+  isYoutubeVideo = () =>
+    this.props.videoUrl && this.props.videoUrl.includes('youtube.com');
+
   dynamiclyImportVideoPlayers() {
     if (!(window && window.ReactPlayer)) {
       import(
@@ -42,8 +56,7 @@ class VideoItem extends React.Component {
     if (
       //Vimeo player must be loaded by us, problem with requireJS
       !(window && window.Vimeo) &&
-      this.props.videoUrl &&
-      this.props.videoUrl.includes('vimeo.com')
+      this.isVimeoVideo()
     ) {
       import(
         /* webpackChunkName: "proGallery_vimeoPlayer" */ '@vimeo/player'
@@ -85,14 +98,9 @@ class VideoItem extends React.Component {
   }
 
   updatePlayer = async () => {
-    const playStates = {
-      unstarted: -1,
-      ended: 0,
-      playing: 1,
-      paused: 2,
-      buffering: 3,
-      videoCued: 5,
-    };
+    if (!this.isYoutubeVideo()) {
+      return;
+    }
     // eslint-disable-next-line no-constant-condition
     while (true) {
       // if the user click play on iframe and state not yet updated break
@@ -110,7 +118,8 @@ class VideoItem extends React.Component {
       }
       if (this.video?.player?.player?.player?.playVideo) {
         const player = this.video.player.player.player;
-        const playerIsPlaying = player.getPlayerState() === playStates.playing;
+        const playerIsPlaying =
+          player.getPlayerState() === YOUTUBE_PLAY_STATES.PLAYING;
 
         if (this.state.shouldPlay === playerIsPlaying) {
           break;
@@ -234,6 +243,9 @@ class VideoItem extends React.Component {
       );
     }
 
+    const playing =
+      this.state.shouldPlay && !this.isYoutubeVideo() ? true : undefined;
+
     return (
       <PlayerElement
         playsinline
@@ -241,6 +253,7 @@ class VideoItem extends React.Component {
         id={`video-${this.props.id}`}
         width="100%"
         height="100%"
+        playing={playing}
         url={url}
         alt={this.props.alt ? this.props.alt : 'untitled video'}
         loop={!!this.props.options.videoLoop}
