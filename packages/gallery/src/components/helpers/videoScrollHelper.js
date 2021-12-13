@@ -83,6 +83,11 @@ class VideoScrollHelper {
         //case VIDEO_EVENTS.clicked:
         this.itemClicked(eventData.idx);
         break;
+      case GALLERY_CONSTS.events.VIDEO_PAUSED:
+        if (this.currentPlayingIdx === eventData.idx) {
+          this.stop(eventData.idx);
+        }
+        break;
       case GALLERY_CONSTS.events.HOVER_SET:
         //case VIDEO_EVENTS.hovered:
         this.itemHovered(eventData);
@@ -157,6 +162,9 @@ class VideoScrollHelper {
   }
 
   videoPlayed(idx) {
+    if (this.currentPlayingIdx !== idx) {
+      this.play(idx);
+    }
     this.lastVideoPlayed = idx;
   }
   videoErrorReported() {

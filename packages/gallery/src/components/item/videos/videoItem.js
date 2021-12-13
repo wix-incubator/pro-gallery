@@ -22,6 +22,9 @@ class VideoItem extends React.Component {
     };
   }
 
+  playingFromIframeClick = false;
+  pausingFromIframeClick = false;
+
   componentDidMount() {
     this.dynamiclyImportVideoPlayers();
   }
@@ -81,13 +84,64 @@ class VideoItem extends React.Component {
     return this.isHLSVideo() && utils.isiOS();
   }
 
+  updatePlayer = async () => {
+    const playStates = {
+      unstarted: -1,
+      ended: 0,
+      playing: 1,
+      paused: 2,
+      buffering: 3,
+      videoCued: 5,
+    };
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      // if the user click play on iframe and state not yet updated break
+      if (this.state.shouldPlay && this.playingFromIframeClick) {
+        this.playingFromIframeClick = false;
+      }
+      if (!this.state.shouldPlay && this.pausingFromIframeClick) {
+        this.pausingFromIframeClick = false;
+      }
+      if (!this.state.shouldPlay && this.playingFromIframeClick) {
+        break;
+      }
+      if (this.state.shouldPlay && this.pausingFromIframeClick) {
+        break;
+      }
+      if (this.video?.player?.player?.player?.playVideo) {
+        const player = this.video.player.player.player;
+        const playerIsPlaying = player.getPlayerState() === playStates.playing;
+
+        if (this.state.shouldPlay === playerIsPlaying) {
+          break;
+        }
+        if (this.state.shouldPlay && !this.pausingFromIframeClick) {
+          player.playVideo();
+        } else if (!this.state.shouldPlay && !this.playingFromIframeClick) {
+          player.pauseVideo();
+        }
+      }
+
+      // sleep until player is loaded
+      await utils.sleep(100);
+    }
+  };
+
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.shouldPlay || nextProps.firstUserInteractionExecuted) {
       this.setState({ loadVideo: true });
     }
 
-    if (nextProps.shouldPlay) {
-      this.setState({ shouldPlay: true });
+    if (nextProps.shouldPlay && !this.state.shouldPlay) {
+      this.playingFromIframeClick = false;
+      this.setState({ shouldPlay: true }, () => {
+        this.updatePlayer();
+      });
+    } else if (!nextProps.shouldPlay && this.state.shouldPlay) {
+      this.pausingFromIframeClick = false;
+      this.setState({ shouldPlay: false }, () => {
+        this.updatePlayer();
+      });
     }
 
     this.playVideoIfNeeded(nextProps);
@@ -190,9 +244,13 @@ class VideoItem extends React.Component {
         url={url}
         alt={this.props.alt ? this.props.alt : 'untitled video'}
         loop={!!this.props.options.videoLoop}
-        ref={(player) => (this.video = player)}
+        ref={(player) => {
+          if (!this.video) {
+            this.video = player;
+            this.updatePlayer();
+          }
+        }}
         volume={this.props.options.videoSound ? 0.8 : 0}
-        playing={this.state.shouldPlay}
         onEnded={() => {
           this.setState({ isPlaying: false });
           this.props.actions.eventsListener(
@@ -201,7 +259,14 @@ class VideoItem extends React.Component {
           );
         }}
         onPause={() => {
+          if (this.state.shouldPlay) {
+            this.pausingFromIframeClick = true;
+          }
           this.setState({ isPlaying: false });
+          this.props.actions.eventsListener(
+            GALLERY_CONSTS.events.VIDEO_PAUSED,
+            this.props
+          );
         }}
         onError={(e) => {
           this.props.actions.eventsListener(GALLERY_CONSTS.events.VIDEO_ERROR, {
@@ -216,6 +281,9 @@ class VideoItem extends React.Component {
           }
         }}
         onPlay={() => {
+          if (!this.props.shouldPlay) {
+            this.playingFromIframeClick = true;
+          }
           this.props.actions.eventsListener(
             GALLERY_CONSTS.events.VIDEO_PLAYED,
             this.props
@@ -226,12 +294,8 @@ class VideoItem extends React.Component {
           this.playVideoIfNeeded();
           this.fixIFrameTabIndexIfNeeded();
           this.props.actions.setItemLoaded();
+          this.updatePlayer();
           this.setState({ ready: true });
-        }}
-        onProgress={() => {
-          if (!this.props.shouldPlay) {
-            this.setState({ shouldPlay: false });
-          }
         }}
         controls={this.props.options.showVideoControls}
         config={{

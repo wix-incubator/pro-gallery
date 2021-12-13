@@ -7,7 +7,7 @@ import PlayTriangle from '../../svgs/components/play_triangle';
 import VideoItemPlaceholder from './videoItemPlaceholder';
 
 const videoPlayButton = (
-  <div>
+  <div style={{ "-webkit-touch-callout": "none" }}>
     <i
       key="play-triangle"
       data-hook="play-triangle"
