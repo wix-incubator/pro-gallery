@@ -101,6 +101,9 @@ import autoSlideshowType from './autoSlideshowType';
 import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
 import behaviourParams_item_content_magnificationValue from './magnificationValue';
 import optionsMap from '../../core/helpers/optionsMap';
+import arrowsContainerStyleType from './arrowsContainerStyleType';
+import arrowsContainerBackgroundColor from './arrowsContainerBackgroundColor';
+import arrowsContainerBorderRadius from './arrowsContainerBorderRadius';
 
 export default {
   layoutParams_gallerySpacing,
@@ -239,6 +242,15 @@ export default {
   autoSlideshowType,
   autoSlideshowContinuousSpeed,
   behaviourParams_item_content_magnificationValue,
+  arrowsContainerStyleType,
+  [optionsMap.layoutParams.navigationArrows.arrowsContainerStyleType]:
+    arrowsContainerStyleType,
+  arrowsContainerBackgroundColor,
+  [optionsMap.layoutParams.navigationArrows.arrowsContainerBackgroundColor]:
+    arrowsContainerBackgroundColor,
+  arrowsContainerBorderRadius,
+  [optionsMap.layoutParams.navigationArrows.arrowsContainerBorderRadius]:
+    arrowsContainerBorderRadius,
 };
 
 // TODO = add the options:

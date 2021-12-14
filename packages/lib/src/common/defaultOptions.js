@@ -67,7 +67,9 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   overlaySizeType: GALLERY_CONSTS.overlaySizeType.PERCENT,
   overlayPadding: 0,
   cubeFitPosition: GALLERY_CONSTS.cubeFitPosition.MIDDLE,
-
+  arrowsContainerStyleType: 'SHADOW',
+  arrowsContainerBackgroundColor: 'rgba(0,0,0,0)',
+  arrowsContainerBorderRadius: 0,
   //migrated: keep here or it will still break users of this (no dependency on refactor)
   magnificationLevel: 2,
 });

@@ -48,6 +48,9 @@ const defaultOptions = {
       padding: 23,
       size: 23,
       verticalAlignment: GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER,
+      arrowsContainerStyleType: GALLERY_CONSTS.arrowsContainerStyleType.SHADOW,
+      arrowsContainerBackgroundColor: 'rgba(0,0,0,0)',
+      arrowsContainerBorderRadius: 0,
     },
     targetItemSize: {
       unit: 'SMART',

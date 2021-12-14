@@ -119,6 +119,9 @@ export const optionsBySection = {
     'arrowsPosition',
     'arrowsPadding',
     'arrowsVerticalPosition',
+    'arrowsContainerStyleType',
+    'arrowsContainerBackgroundColor',
+    'arrowsContainerBorderRadius',
 
     'overlayBackground',
     'overlayPosition',

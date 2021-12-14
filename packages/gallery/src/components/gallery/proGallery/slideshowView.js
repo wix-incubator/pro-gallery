@@ -875,6 +875,7 @@ class SlideshowView extends React.Component {
       arrowsPadding,
       arrowsPosition,
       arrowsVerticalPosition,
+      // arrowsContainerStyleType,
       titlePlacement,
       textBoxHeight,
     } = this.props.options;
@@ -934,8 +935,11 @@ class SlideshowView extends React.Component {
     const nextContainerStyle = {
       right: arrowsPos,
     };
-
-
+    // const useDropShadow = arrowsContainerStyleType === GALLERY_CONSTS.arrowsContainerStyleType.SHADOW;
+    // const arrowsClassNames = [
+    //   'nav-arrows-container',
+    //   useDropShadow ? 'drop-shadow' : ''
+    // ]
     return [
       hideLeftArrow ? null : (
         <button
