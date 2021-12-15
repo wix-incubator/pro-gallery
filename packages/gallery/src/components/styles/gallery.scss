@@ -119,7 +119,7 @@ body.pro-gallery {
     opacity: 1;
   }
 
-  .drop-shadow svg {
+  &.drop-shadow svg {
     filter: drop-shadow(0px 1px 0.15px #B2B2B2);
   }
 }

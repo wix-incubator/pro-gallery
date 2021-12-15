@@ -10,7 +10,7 @@ export default {
       GALLERY_CONSTS.arrowsContainerStyleType.BOX,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal"), "Show Navigation Arrows" to "true" and Navigation arrows styling ("arrowsContainerStyleType") to "BOX".',
-  type: INPUT_TYPES.COLOR_PICKER,
+  type: INPUT_TYPES.TEXT,
   default: 'rgba(0,0,0,0)',
   description: `Choose the color of the navigating arrows background.
   `,

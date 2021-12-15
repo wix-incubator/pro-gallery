@@ -23,10 +23,18 @@ const getArrowsSizeData = (customNavArrowsRenderer, arrowsSize) => {
 };
 
 export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
-  const { customNavArrowsRenderer, arrowsColor, arrowsSize } =
-    arrowsDataRelevantArgs;
+  const {
+    customNavArrowsRenderer,
+    arrowsColor,
+    arrowsSize,
+    arrowsContainerStyleType,
+  } = arrowsDataRelevantArgs;
   const { navArrowsContainerWidth, navArrowsContainerHeight, scalePercentage } =
-    getArrowsSizeData(customNavArrowsRenderer, arrowsSize);
+    getArrowsSizeData(
+      customNavArrowsRenderer,
+      arrowsSize,
+      arrowsContainerStyleType
+    );
   if (customNavArrowsRenderer) {
     return {
       arrowRenderer: customNavArrowsRenderer,
@@ -75,6 +83,7 @@ const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
     arrowsVerticalPosition,
     textBoxHeight,
     arrowsSize,
+    arrowsContainerStyleType,
   } = arrowsWillFitPositionRelevantArgs.options;
   const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(
     arrowsWillFitPositionRelevantArgs.options
@@ -84,7 +93,8 @@ const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
   // Calc of Nav arrows container's height
   const { navArrowsContainerHeight } = getArrowsSizeData(
     customNavArrowsRenderer,
-    arrowsSize
+    arrowsSize,
+    arrowsContainerStyleType
   );
   const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
   const parentHeightByVerticalPosition = {
@@ -127,5 +137,15 @@ const getShouldRenderArrowsArgs = (props) => {
     isPrerenderMode,
     galleryStructure,
     customNavArrowsRenderer,
+  };
+};
+
+export const getArrowBoxStyle = ({
+  arrowsContainerBackgroundColor,
+  arrowsContainerBorderRadius,
+}) => {
+  return {
+    backgroundColor: arrowsContainerBackgroundColor,
+    borderRadius: arrowsContainerBorderRadius,
   };
 };
