@@ -2,15 +2,7 @@ import React from 'react';
 import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import getStyle from './getStyle';
-
-const YOUTUBE_PLAY_STATES = {
-  UNSTARTED: -1,
-  ENDED: 0,
-  PLAYING: 1,
-  PAUSED: 2,
-  BUFFERING: 3,
-  VIDEO_CUED: 5,
-};
+import VideoPlayer from './videoPlayer';
 class VideoItem extends React.Component {
   constructor(props) {
     super(props);
@@ -23,134 +15,28 @@ class VideoItem extends React.Component {
       playedOnce: false,
       loadVideo: props.loadVideo || props.shouldPlay,
       isPlaying: false,
-      shouldPlay: props.shouldPlay,
-      reactPlayerLoaded: false,
-      vimeoPlayerLoaded: false,
-      hlsPlayerLoaded: false,
     };
   }
 
-  playingFromIframeClick = false;
-  pausingFromIframeClick = false;
-
-  componentDidMount() {
-    this.dynamiclyImportVideoPlayers();
-  }
-
-  isVimeoVideo = () =>
-    this.props.videoUrl && this.props.videoUrl.includes('vimeo.com');
-
-  isYoutubeVideo = () =>
-    this.props.videoUrl && this.props.videoUrl.includes('youtube.com');
-
-  dynamiclyImportVideoPlayers() {
-    if (!(window && window.ReactPlayer)) {
-      import(
-        /* webpackChunkName: "proGallery_reactPlayer" */ 'react-player'
-      ).then((ReactPlayer) => {
-        window.ReactPlayer = ReactPlayer.default;
-        this.setState({ reactPlayerLoaded: true });
-        this.playVideoIfNeeded();
-      });
-    }
-    if (
-      //Vimeo player must be loaded by us, problem with requireJS
-      !(window && window.Vimeo) &&
-      this.isVimeoVideo()
-    ) {
-      import(
-        /* webpackChunkName: "proGallery_vimeoPlayer" */ '@vimeo/player'
-      ).then((Player) => {
-        window.Vimeo = { Player: Player.default };
-        this.setState({ vimeoPlayerLoaded: true });
-        this.playVideoIfNeeded();
-      });
-    }
-    if (
-      //Hls player must be loaded by us, problem with requireJS
-      !(window && window.Hls) &&
-      this.isHLSVideo()
-    ) {
-      import(/* webpackChunkName: "proGallery_HlsPlayer" */ 'hls.js').then(
-        (Player) => {
-          window.Hls = Player.default;
-          this.setState({ hlsPlayerLoaded: true });
-          this.playVideoIfNeeded();
-        }
-      );
-    }
-  }
-
-  isHLSVideo() {
+  isHLSVideo = () => {
     return (
       this.props.videoUrl &&
       (this.props.videoUrl.includes('/hls') ||
         this.props.videoUrl.includes('.m3u8'))
     );
-  }
+  };
 
-  shouldUseHlsPlayer() {
+  shouldUseHlsPlayer = () => {
     return this.isHLSVideo() && !utils.isiOS();
-  }
+  };
 
-  shouldForceVideoForHLS() {
+  shouldForceVideoForHLS = () => {
     return this.isHLSVideo() && utils.isiOS();
-  }
-
-  updatePlayer = async () => {
-    if (!this.isYoutubeVideo()) {
-      return;
-    }
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
-      // if the user click play on iframe and state not yet updated break
-      if (this.state.shouldPlay && this.playingFromIframeClick) {
-        this.playingFromIframeClick = false;
-      }
-      if (!this.state.shouldPlay && this.pausingFromIframeClick) {
-        this.pausingFromIframeClick = false;
-      }
-      if (!this.state.shouldPlay && this.playingFromIframeClick) {
-        break;
-      }
-      if (this.state.shouldPlay && this.pausingFromIframeClick) {
-        break;
-      }
-      if (this.video?.player?.player?.player?.playVideo) {
-        const player = this.video.player.player.player;
-        const playerIsPlaying =
-          player.getPlayerState() === YOUTUBE_PLAY_STATES.PLAYING;
-
-        if (this.state.shouldPlay === playerIsPlaying) {
-          break;
-        }
-        if (this.state.shouldPlay && !this.pausingFromIframeClick) {
-          player.playVideo();
-        } else if (!this.state.shouldPlay && !this.playingFromIframeClick) {
-          player.pauseVideo();
-        }
-      }
-
-      // sleep until player is loaded
-      await utils.sleep(100);
-    }
   };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.shouldPlay || nextProps.firstUserInteractionExecuted) {
       this.setState({ loadVideo: true });
-    }
-
-    if (nextProps.shouldPlay && !this.state.shouldPlay) {
-      this.playingFromIframeClick = false;
-      this.setState({ shouldPlay: true }, () => {
-        this.updatePlayer();
-      });
-    } else if (!nextProps.shouldPlay && this.state.shouldPlay) {
-      this.pausingFromIframeClick = false;
-      this.setState({ shouldPlay: false }, () => {
-        this.updatePlayer();
-      });
     }
 
     this.playVideoIfNeeded(nextProps);
@@ -204,16 +90,9 @@ class VideoItem extends React.Component {
   //-----------------------------------------| UTILS |--------------------------------------------//
   createPlayerElement() {
     //video dimensions are for videos in grid fill - placing the video with negative margins to crop into a square
-    if (
-      !(
-        window &&
-        window.ReactPlayer &&
-        (this.state.loadVideo || this.props.playing)
-      )
-    ) {
+    if (!(this.state.loadVideo || this.props.playing)) {
       return null;
     }
-    const PlayerElement = window.ReactPlayer;
     const isWiderThenContainer = this.props.style.ratio >= this.props.cropRatio;
 
     // adding 1 pixel to compensate for the difference we have sometimes from layouter in grid fill
@@ -243,26 +122,17 @@ class VideoItem extends React.Component {
       );
     }
 
-    const playing =
-      this.state.shouldPlay && !this.isYoutubeVideo() ? true : undefined;
-
     return (
-      <PlayerElement
+      <VideoPlayer
         playsinline
         className={'gallery-item-visible video gallery-item'}
         id={`video-${this.props.id}`}
         width="100%"
         height="100%"
-        playing={playing}
+        playing={this.props.shouldPlay}
         url={url}
         alt={this.props.alt ? this.props.alt : 'untitled video'}
         loop={!!this.props.options.videoLoop}
-        ref={(player) => {
-          if (!this.video) {
-            this.video = player;
-            this.updatePlayer();
-          }
-        }}
         volume={this.props.options.videoSound ? 0.8 : 0}
         onEnded={() => {
           this.setState({ isPlaying: false });
@@ -272,9 +142,6 @@ class VideoItem extends React.Component {
           );
         }}
         onPause={() => {
-          if (this.state.shouldPlay) {
-            this.pausingFromIframeClick = true;
-          }
           this.setState({ isPlaying: false });
           this.props.actions.eventsListener(
             GALLERY_CONSTS.events.VIDEO_PAUSED,
@@ -294,9 +161,6 @@ class VideoItem extends React.Component {
           }
         }}
         onPlay={() => {
-          if (!this.props.shouldPlay) {
-            this.playingFromIframeClick = true;
-          }
           this.props.actions.eventsListener(
             GALLERY_CONSTS.events.VIDEO_PLAYED,
             this.props
@@ -307,7 +171,6 @@ class VideoItem extends React.Component {
           this.playVideoIfNeeded();
           this.fixIFrameTabIndexIfNeeded();
           this.props.actions.setItemLoaded();
-          this.updatePlayer();
           this.setState({ ready: true });
         }}
         controls={this.props.options.showVideoControls}
