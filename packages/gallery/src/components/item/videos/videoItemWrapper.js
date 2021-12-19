@@ -6,8 +6,11 @@ import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import VideoItemPlaceholder from './videoItemPlaceholder';
 
-const videoPlayButton = (
-  <div>
+const isIos = utils.isiOS();
+const useTransparentPlayButtonAndForceLoadVideo = (props) => props.videoUrl.includes('youtube.com') && isIos;
+
+const VideoPlayButton = ({pointerEvents}) => (
+  <div style={{ pointerEvents: pointerEvents ? "initial" : "none" }}>
     <i
       key="play-triangle"
       data-hook="play-triangle"
@@ -72,7 +75,7 @@ class VideoItemWrapper extends React.Component {
         isThumbnail={!!this.props.thumbnailHighlightId}
         id={this.props.idx}
         videoPlayButton={
-          showVideoPlayButton && !this.mightPlayVideo() && videoPlayButton
+          showVideoPlayButton && !this.mightPlayVideo() && <VideoPlayButton pointerEvents={!useTransparentPlayButtonAndForceLoadVideo(this.props)} />
         }
       />
     );
@@ -109,11 +112,13 @@ class VideoItemWrapper extends React.Component {
         </div>
       );
     }
+    const shouldUseTransparentPlayButtonAndForceLoadVideo = useTransparentPlayButtonAndForceLoadVideo(this.props);
     return (
       <VideoItem
         {...this.props}
+        loadVideo={this.props.loadVideo || shouldUseTransparentPlayButtonAndForceLoadVideo}
         videoPlaceholder={videoPlaceholder}
-        videoPlayButton={showVideoPlayButton && videoPlayButton}
+        videoPlayButton={showVideoPlayButton && <VideoPlayButton pointerEvents={!shouldUseTransparentPlayButtonAndForceLoadVideo} />}
       />
     );
   }
