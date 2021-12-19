@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import type { ReactPlayerProps } from 'react-player';
+import { reactLazy } from '../../../common/utils/react';
 
 type PlayerProps = ReactPlayerProps;
 
-const ReactPlayer = React.lazy(() => import('react-player'));
+const ReactPlayer = reactLazy(() => import('react-player'));
 
-function VideoPlayer(props: PlayerProps) {
-  return (
+class VideoPlayer extends React.Component<PlayerProps> {
+  render = () => (
     <React.Suspense fallback={null}>
-      <ReactPlayer {...props} />
+      <ReactPlayer {...this.props} />
     </React.Suspense>
   );
 }
@@ -20,54 +21,60 @@ const isVimeo = (url: string): boolean => url.includes('vimeo.com');
 
 const isHlsOrVimeo = (url: string): boolean => isHls(url) || isVimeo(url);
 
-function VimeoOrHlsVideoPlayer(props: PlayerProps) {
-  const [vimeoIsLoaded, setVimeoIsLoaded] = React.useState(false);
+class VimeoOrHlsVideoPlayer extends React.Component<
+  PlayerProps,
+  { isPlayerLoaded: boolean }
+> {
+  state = {
+    isPlayerLoaded: false,
+  };
 
-  useEffect(() => {
-    if (typeof props.url === 'string') {
-      if (isVimeo(props.url)) {
+  componentDidMount = () => {
+    if (typeof this.props.url === 'string') {
+      if (isVimeo(this.props.url)) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         if (window.Vimeo) {
-          setVimeoIsLoaded(true);
+          this.setState({ isPlayerLoaded: true });
         } else {
           import('@vimeo/player').then(({ default: Player }) => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             window.Vimeo = { Player };
-            setVimeoIsLoaded(true);
+            this.setState({ isPlayerLoaded: true });
           });
         }
       }
-      if (isHls(props.url)) {
+      if (isHls(this.props.url)) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         if (window.HLS) {
-          setVimeoIsLoaded(true);
+          this.setState({ isPlayerLoaded: true });
         } else {
           import('hls.js').then(({ default: Hls }) => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             window.Hls = Hls;
-            setVimeoIsLoaded(true);
+            this.setState({ isPlayerLoaded: true });
           });
         }
       }
     }
-  }, []);
+  };
 
-  return vimeoIsLoaded ? <VideoPlayer {...props} /> : null;
+  render = () =>
+    this.state.isPlayerLoaded ? <VideoPlayer {...this.props} /> : null;
 }
 
-function VideoPlyaerWithYouTubeAndVimeoSupport(
-  props: PlayerProps
-): JSX.Element {
-  if (typeof props.url === 'string') {
-    if (isHlsOrVimeo(props.url)) {
-      return <VimeoOrHlsVideoPlayer {...props} />;
+class VideoPlyaerWithYouTubeAndVimeoSupport extends React.Component<PlayerProps> {
+  render = () => {
+    if (typeof this.props.url === 'string') {
+      if (isHlsOrVimeo(this.props.url)) {
+        return <VimeoOrHlsVideoPlayer {...this.props} />;
+      }
     }
-  }
-  return <VideoPlayer {...props} />;
+    return <VideoPlayer {...this.props} />;
+  };
 }
 
 export default VideoPlyaerWithYouTubeAndVimeoSupport;
