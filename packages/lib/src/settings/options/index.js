@@ -171,6 +171,7 @@ export default {
   slideshowLoop,
   [optionsMap.behaviourParams.gallery.horizontal.loop]: slideshowLoop,
   arrowsPadding,
+  [optionsMap.layoutParams.navigationArrows.padding]: arrowsPadding,
   arrowsSize,
   [optionsMap.layoutParams.navigationArrows.size]: arrowsSize,
   slideshowInfoSize,
