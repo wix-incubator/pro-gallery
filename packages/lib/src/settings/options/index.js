@@ -104,6 +104,8 @@ import optionsMap from '../../core/helpers/optionsMap';
 
 export default {
   layoutParams_gallerySpacing,
+  [optionsMap.layoutParams.structure.gallerySpacing]:
+    layoutParams_gallerySpacing,
   layoutParams_cropRatio,
   layoutParams_repeatingGroupTypes,
   itemClick,
@@ -189,10 +191,16 @@ export default {
   [optionsMap.layoutParams.navigationArrows.verticalAlignment]:
     arrowsVerticalPosition,
   itemShadowSize,
+  [optionsMap.stylingParams.itemShadowSize]: itemShadowSize,
   itemShadowBlur,
+  [optionsMap.stylingParams.itemShadowBlur]: itemShadowBlur,
   itemShadowDirection,
+  [optionsMap.stylingParams.itemShadowDirection]: itemShadowDirection,
   itemShadowOpacityAndColor,
+  [optionsMap.stylingParams.itemShadowOpacityAndColor]:
+    itemShadowOpacityAndColor,
   itemEnableShadow,
+  [optionsMap.stylingParams.itemEnableShadow]: itemEnableShadow,
   videoLoop,
   showArrows,
   [optionsMap.layoutParams.navigationArrows.enable]: showArrows,
