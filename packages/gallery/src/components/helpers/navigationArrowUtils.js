@@ -19,7 +19,7 @@ const getArrowsSizeData = ({
     : arrowsSize / svgData.width;
   const navArrowsContainerWidth = isLandscape
     ? svgData.width * scalePercentage
-    : arrowsSize; // === ARROWS_BASE_SIZE.width * scalePercentage
+    : arrowsSize;
   const navArrowsContainerHeight = isLandscape
     ? arrowsSize
     : svgData.height * scalePercentage;
@@ -33,11 +33,12 @@ const getArrowsSizeData = ({
 export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
   const { customNavArrowsRenderer, arrowsColor, arrowsSize } =
     arrowsDataRelevantArgs;
+  const arrowData = getArrowIconData();
   const { navArrowsContainerWidth, navArrowsContainerHeight, scalePercentage } =
     getArrowsSizeData({
       customNavArrowsRenderer,
       arrowsSize,
-      svgData: ARROWS_DATA.DEFAULT_ARROW,
+      svgData: arrowData,
     });
   if (customNavArrowsRenderer) {
     return {
@@ -53,7 +54,7 @@ export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
       transform: `scaleX(${scaleX}) scale(${scalePercentage})`,
       fill: utils.isMobile() && arrowsColor?.value ? arrowsColor.value : '',
     };
-    return <ARROWS_DATA.DEFAULT_ARROW.SvgComp style={style} />;
+    return <arrowData.SvgComp style={style} />;
   };
   return { arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight };
 };
@@ -72,10 +73,11 @@ const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
   const { height } = arrowsWillFitPositionRelevantArgs.container;
   const { customNavArrowsRenderer } = arrowsWillFitPositionRelevantArgs;
   // Calc of Nav arrows container's height
+  const arrowData = getArrowIconData();
   const { navArrowsContainerHeight } = getArrowsSizeData({
     customNavArrowsRenderer,
     arrowsSize,
-    svgData: ARROWS_DATA.DEFAULT_ARROW,
+    svgData: arrowData,
   });
   const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
   const parentHeightByVerticalPosition = {
@@ -119,4 +121,15 @@ const getShouldRenderArrowsArgs = (props) => {
     galleryStructure,
     customNavArrowsRenderer,
   };
+};
+
+const getArrowIconData = (arrowType = 0) => {
+  let arrowData;
+  switch (arrowType) {
+    case 0:
+    default:
+      arrowData = ARROWS_DATA.DEFAULT_ARROW;
+      break;
+  }
+  return arrowData;
 };
