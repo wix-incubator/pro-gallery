@@ -31,9 +31,9 @@ const getArrowsSizeData = ({
 };
 
 export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
-  const { customNavArrowsRenderer, arrowsColor, arrowsSize } =
+  const { customNavArrowsRenderer, arrowsColor, arrowsSize, arrowsType } =
     arrowsDataRelevantArgs;
-  const arrowData = getArrowIconData();
+  const arrowData = getArrowIconData(arrowsType);
   const { navArrowsContainerWidth, navArrowsContainerHeight, scalePercentage } =
     getArrowsSizeData({
       customNavArrowsRenderer,
@@ -66,6 +66,7 @@ const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
     arrowsVerticalPosition,
     textBoxHeight,
     arrowsSize,
+    arrowsType,
   } = arrowsWillFitPositionRelevantArgs.options;
   const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(
     arrowsWillFitPositionRelevantArgs.options
@@ -73,7 +74,7 @@ const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
   const { height } = arrowsWillFitPositionRelevantArgs.container;
   const { customNavArrowsRenderer } = arrowsWillFitPositionRelevantArgs;
   // Calc of Nav arrows container's height
-  const arrowData = getArrowIconData();
+  const arrowData = getArrowIconData(arrowsType);
   const { navArrowsContainerHeight } = getArrowsSizeData({
     customNavArrowsRenderer,
     arrowsSize,
@@ -126,6 +127,12 @@ const getShouldRenderArrowsArgs = (props) => {
 const getArrowIconData = (arrowType = 0) => {
   let arrowData;
   switch (arrowType) {
+    case 1:
+      arrowData = ARROWS_DATA.ARROW_1;
+      break;
+    case 2:
+      arrowData = ARROWS_DATA.ARROW_2;
+      break;
     case 0:
     default:
       arrowData = ARROWS_DATA.DEFAULT_ARROW;
