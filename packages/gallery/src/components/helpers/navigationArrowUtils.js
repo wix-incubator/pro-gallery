@@ -6,7 +6,20 @@ const getArrowsSizeData = ({
   customNavArrowsRenderer,
   arrowsSize,
   svgData,
+  arrowsContainerStyleType,
 }) => {
+  // const diagonalDist = arrowsSize * Math.sqrt(2);
+  // console.log(diagonalDist);
+  if (
+    arrowsContainerStyleType === GALLERY_CONSTS.arrowsContainerStyleType.BOX
+  ) {
+    // const calculatedSize = arrowsSize * 2;
+    return {
+      navArrowsContainerWidth: arrowsSize,
+      navArrowsContainerHeight: arrowsSize,
+      scalePercentage: arrowsSize / svgData.height / 2,
+    };
+  }
   if (customNavArrowsRenderer) {
     return {
       navArrowsContainerWidth: arrowsSize,
@@ -31,14 +44,19 @@ const getArrowsSizeData = ({
 };
 
 export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
-  const { customNavArrowsRenderer, arrowsColor, arrowsSize } =
-    arrowsDataRelevantArgs;
+  const {
+    customNavArrowsRenderer,
+    arrowsColor,
+    arrowsSize,
+    arrowsContainerStyleType,
+  } = arrowsDataRelevantArgs;
   const arrowData = getArrowIconData();
   const { navArrowsContainerWidth, navArrowsContainerHeight, scalePercentage } =
     getArrowsSizeData({
       customNavArrowsRenderer,
       arrowsSize,
       svgData: arrowData,
+      arrowsContainerStyleType,
     });
   if (customNavArrowsRenderer) {
     return {
@@ -66,7 +84,7 @@ const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
     arrowsVerticalPosition,
     textBoxHeight,
     arrowsSize,
-    // arrowsContainerStyleType,
+    arrowsContainerStyleType,
   } = arrowsWillFitPositionRelevantArgs.options;
   const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(
     arrowsWillFitPositionRelevantArgs.options
@@ -79,6 +97,7 @@ const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
     customNavArrowsRenderer,
     arrowsSize,
     svgData: arrowData,
+    arrowsContainerStyleType,
   });
   const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
   const parentHeightByVerticalPosition = {
