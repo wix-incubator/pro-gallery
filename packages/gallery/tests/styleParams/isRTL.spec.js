@@ -25,7 +25,7 @@ describe('options - isRTL', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const galleryContainer = driver.find.selector('#pro-gallery-container');
+    const galleryContainer = driver.getContainer();
     expect(galleryContainer.hasClass('rtl')).to.be.false;
     driver.detach.proGallery();
   });
@@ -36,7 +36,7 @@ describe('options - isRTL', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const galleryContainer = driver.find.selector('#pro-gallery-container');
+    const galleryContainer = driver.getContainer();
     expect(galleryContainer.hasClass('rtl')).to.be.true;
     driver.detach.proGallery();
   });
@@ -67,7 +67,7 @@ describe('options - isRTL', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const galleryContainer = driver.find.selector('#pro-gallery-container');
+    const galleryContainer = driver.getContainer();
     expect(galleryContainer.hasClass('rtl')).to.be.true;
     driver.detach.proGallery();
   });
@@ -79,7 +79,7 @@ describe('options - isRTL', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const galleryContainer = driver.find.selector('#pro-gallery-container');
+    const galleryContainer = driver.getContainer();
     expect(galleryContainer.hasClass('rtl')).to.be.true;
     driver.detach.proGallery();
   });
