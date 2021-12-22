@@ -99,6 +99,7 @@ import overlayPadding from './overlayPadding';
 import autoSlideshowType from './autoSlideshowType';
 import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
 import behaviourParams_item_content_magnificationValue from './magnificationValue';
+import arrowsColor from './arrowsColor';
 import optionsMap from '../../core/helpers/optionsMap';
 
 export default {
@@ -285,12 +286,13 @@ export default {
     autoSlideshowType,
   autoSlideshowContinuousSpeed,
   behaviourParams_item_content_magnificationValue,
+  arrowsColor,
+  [optionsMap.stylingParams.arrowsColor]: arrowsColor,
 };
 
 // TODO = add the options:
 /*
 itemOpacity
-arrowsColor
 imageLoadingColor
 oneColorAnimationColor
 */
