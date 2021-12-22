@@ -2,7 +2,7 @@ import React from 'react';
 import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import getStyle from './getStyle';
-
+import VideoPlayer from './videoPlayer';
 class VideoItem extends React.Component {
   constructor(props) {
     super(props);
@@ -15,79 +15,28 @@ class VideoItem extends React.Component {
       playedOnce: false,
       loadVideo: props.loadVideo || props.shouldPlay,
       isPlaying: false,
-      shouldPlay: props.shouldPlay,
-      reactPlayerLoaded: false,
-      vimeoPlayerLoaded: false,
-      hlsPlayerLoaded: false,
     };
   }
 
-  componentDidMount() {
-    this.dynamiclyImportVideoPlayers();
-  }
-
-  dynamiclyImportVideoPlayers() {
-    if (!(window && window.ReactPlayer)) {
-      import(
-        /* webpackChunkName: "proGallery_reactPlayer" */ 'react-player'
-      ).then((ReactPlayer) => {
-        window.ReactPlayer = ReactPlayer.default;
-        this.setState({ reactPlayerLoaded: true });
-        this.playVideoIfNeeded();
-      });
-    }
-    if (
-      //Vimeo player must be loaded by us, problem with requireJS
-      !(window && window.Vimeo) &&
-      this.props.videoUrl &&
-      this.props.videoUrl.includes('vimeo.com')
-    ) {
-      import(
-        /* webpackChunkName: "proGallery_vimeoPlayer" */ '@vimeo/player'
-      ).then((Player) => {
-        window.Vimeo = { Player: Player.default };
-        this.setState({ vimeoPlayerLoaded: true });
-        this.playVideoIfNeeded();
-      });
-    }
-    if (
-      //Hls player must be loaded by us, problem with requireJS
-      !(window && window.Hls) &&
-      this.isHLSVideo()
-    ) {
-      import(/* webpackChunkName: "proGallery_HlsPlayer" */ 'hls.js').then(
-        (Player) => {
-          window.Hls = Player.default;
-          this.setState({ hlsPlayerLoaded: true });
-          this.playVideoIfNeeded();
-        }
-      );
-    }
-  }
-
-  isHLSVideo() {
+  isHLSVideo = () => {
     return (
       this.props.videoUrl &&
       (this.props.videoUrl.includes('/hls') ||
         this.props.videoUrl.includes('.m3u8'))
     );
-  }
+  };
 
-  shouldUseHlsPlayer() {
+  shouldUseHlsPlayer = () => {
     return this.isHLSVideo() && !utils.isiOS();
-  }
+  };
 
-  shouldForceVideoForHLS() {
+  shouldForceVideoForHLS = () => {
     return this.isHLSVideo() && utils.isiOS();
-  }
+  };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.shouldPlay || nextProps.firstUserInteractionExecuted) {
       this.setState({ loadVideo: true });
-    }
-
-    if (nextProps.shouldPlay) {
-      this.setState({ shouldPlay: true });
     }
 
     this.playVideoIfNeeded(nextProps);
@@ -141,16 +90,9 @@ class VideoItem extends React.Component {
   //-----------------------------------------| UTILS |--------------------------------------------//
   createPlayerElement() {
     //video dimensions are for videos in grid fill - placing the video with negative margins to crop into a square
-    if (
-      !(
-        window &&
-        window.ReactPlayer &&
-        (this.state.loadVideo || this.props.playing)
-      )
-    ) {
+    if (!(this.state.loadVideo || this.props.playing)) {
       return null;
     }
-    const PlayerElement = window.ReactPlayer;
     const isWiderThenContainer = this.props.style.ratio >= this.props.cropRatio;
 
     // adding 1 pixel to compensate for the difference we have sometimes from layouter in grid fill
@@ -181,18 +123,17 @@ class VideoItem extends React.Component {
     }
 
     return (
-      <PlayerElement
+      <VideoPlayer
         playsinline
         className={'gallery-item-visible video gallery-item'}
         id={`video-${this.props.id}`}
         width="100%"
         height="100%"
+        playing={this.props.shouldPlay}
         url={url}
         alt={this.props.alt ? this.props.alt : 'untitled video'}
         loop={!!this.props.options.videoLoop}
-        ref={(player) => (this.video = player)}
         volume={this.props.options.videoSound ? 0.8 : 0}
-        playing={this.state.shouldPlay}
         onEnded={() => {
           this.setState({ isPlaying: false });
           this.props.actions.eventsListener(
@@ -202,6 +143,10 @@ class VideoItem extends React.Component {
         }}
         onPause={() => {
           this.setState({ isPlaying: false });
+          this.props.actions.eventsListener(
+            GALLERY_CONSTS.events.VIDEO_PAUSED,
+            this.props
+          );
         }}
         onError={(e) => {
           this.props.actions.eventsListener(GALLERY_CONSTS.events.VIDEO_ERROR, {
@@ -227,11 +172,6 @@ class VideoItem extends React.Component {
           this.fixIFrameTabIndexIfNeeded();
           this.props.actions.setItemLoaded();
           this.setState({ ready: true });
-        }}
-        onProgress={() => {
-          if (!this.props.shouldPlay) {
-            this.setState({ shouldPlay: false });
-          }
         }}
         controls={this.props.options.showVideoControls}
         config={{

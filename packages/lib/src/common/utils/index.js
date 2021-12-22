@@ -168,6 +168,10 @@ class Utils {
     return hash;
   }
 
+  sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   isMobileByProps() {
     const _isMobileByProps = () => {
       const deviceType = this.parseGetParam('deviceType') || window.deviceType;
