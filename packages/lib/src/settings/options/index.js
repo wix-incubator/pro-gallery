@@ -107,7 +107,6 @@ export default {
   [optionsMap.layoutParams.structure.gallerySpacing]:
     layoutParams_gallerySpacing,
   layoutParams_cropRatio,
-  [optionsMap.layoutParams.crop.ratios]: layoutParams_cropRatio,
   layoutParams_repeatingGroupTypes,
   itemClick,
   [optionsMap.behaviourParams.item.clickAction]: itemClick,
