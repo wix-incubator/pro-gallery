@@ -876,12 +876,15 @@ class SlideshowView extends React.Component {
       arrowsPadding,
       arrowsPosition,
       arrowsVerticalPosition,
-      arrowsContainerStyleType,
-      arrowsContainerBackgroundColor,
-      arrowsContainerBorderRadius,
+      layoutParams,
       titlePlacement,
       textBoxHeight,
     } = this.props.options;
+    const {
+      arrowsContainerStyleType,
+      arrowsContainerBackgroundColor,
+      arrowsContainerBorderRadius
+    } = layoutParams.navigationArrows;
     const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
     const { hideLeftArrow, hideRightArrow } = this.state;
     const {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight} = getArrowsRenderData({
