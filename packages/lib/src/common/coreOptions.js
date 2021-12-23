@@ -58,9 +58,6 @@ const coreOptions = {
   slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
   autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
   autoSlideshowContinuousSpeed: 200,
-  arrowsContainerStyleType: 'SHADOW',
-  arrowsContainerBackgroundColor: 'rgba(0,0,0,0)',
-  arrowsContainerBorderRadius: 0,
   //duplicated from lib
 };
 

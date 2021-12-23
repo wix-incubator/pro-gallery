@@ -103,9 +103,6 @@ const v3DefaultOptions = {
   scrollDirection: 0,
   autoSlideshowType: 'interval',
   autoSlideshowContinuousSpeed: 200,
-  arrowsContainerStyleType: 'SHADOW',
-  arrowsContainerBackgroundColor: 'rgba(0,0,0,0)',
-  arrowsContainerBorderRadius: 0,
   //duplicated from lib
   magnificationLevel: 2,
 };

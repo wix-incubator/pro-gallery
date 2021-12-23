@@ -184,5 +184,10 @@ function defaultOptions_old() {
 }
 
 function defaultOptions_new() {
-  return v4DefaultOptions;
+  const newDefaults = v4DefaultOptions;
+  delete newDefaults.layoutParams.navigationArrows.arrowsContainerStyleType;
+  delete newDefaults.layoutParams.navigationArrows
+    .arrowsContainerBackgroundColor;
+  delete newDefaults.layoutParams.navigationArrows.arrowsContainerBorderRadius;
+  return newDefaults;
 }
