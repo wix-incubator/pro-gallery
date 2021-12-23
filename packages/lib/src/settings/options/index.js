@@ -242,13 +242,10 @@ export default {
   autoSlideshowType,
   autoSlideshowContinuousSpeed,
   behaviourParams_item_content_magnificationValue,
-  arrowsContainerStyleType,
   [optionsMap.layoutParams.navigationArrows.arrowsContainerStyleType]:
     arrowsContainerStyleType,
-  arrowsContainerBackgroundColor,
   [optionsMap.layoutParams.navigationArrows.arrowsContainerBackgroundColor]:
     arrowsContainerBackgroundColor,
-  arrowsContainerBorderRadius,
   [optionsMap.layoutParams.navigationArrows.arrowsContainerBorderRadius]:
     arrowsContainerBorderRadius,
 };

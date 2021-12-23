@@ -8,17 +8,17 @@ const getArrowsSizeData = ({
   svgData,
   arrowsContainerStyleType,
 }) => {
-  // const diagonalDist = arrowsSize * Math.sqrt(2);
-  // console.log(diagonalDist);
   if (
     arrowsContainerStyleType === GALLERY_CONSTS.arrowsContainerStyleType.BOX
   ) {
-    // const calculatedSize = arrowsSize * 2;
-    return {
+    const sizeData = {
       navArrowsContainerWidth: arrowsSize,
       navArrowsContainerHeight: arrowsSize,
-      scalePercentage: arrowsSize / svgData.height / 2,
     };
+    if (svgData) {
+      sizeData.scalePercentage = arrowsSize / 4 / svgData.width;
+    }
+    return sizeData;
   }
   if (customNavArrowsRenderer) {
     return {
@@ -65,7 +65,6 @@ export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
       navArrowsContainerHeight,
     };
   }
-
   const arrowRenderer = (position) => {
     const scaleX = position === 'right' ? 1 : -1;
     const style = {
