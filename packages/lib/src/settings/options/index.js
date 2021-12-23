@@ -249,7 +249,6 @@ export default {
   autoSlideshowType,
   autoSlideshowContinuousSpeed,
   behaviourParams_item_content_magnificationValue,
-  arrowsType,
   [optionsMap.layoutParams.navigationArrows.arrowsType]: arrowsType,
 };
 

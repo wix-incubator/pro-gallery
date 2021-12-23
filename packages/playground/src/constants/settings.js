@@ -119,7 +119,7 @@ export const optionsBySection = {
     'arrowsPosition',
     'arrowsPadding',
     'arrowsVerticalPosition',
-    'arrowsType',
+    'layoutParams_navigationArrows_arrowsType',
 
     'overlayBackground',
     'overlayPosition',

@@ -105,6 +105,5 @@ const v3DefaultOptions = {
   autoSlideshowContinuousSpeed: 200,
   //duplicated from lib
   magnificationLevel: 2,
-  arrowsType: 0,
 };
 export default v3DefaultOptions;
