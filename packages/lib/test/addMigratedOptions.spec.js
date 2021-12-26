@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { addMigratedOptions } from '../src/core/helpers/optionsConverter';
+import GALLERY_CONSTS from '../src/common/constants';
 
 describe('optionsUtils', () => {
   it('should create a nested object out of a flat object', () => {
@@ -252,7 +253,7 @@ function input() {
     targetItemSize: 650,
     enableScroll: true,
     cropOnlyFill: false,
-    layoutParams_navigationArrows_type: 0,
+    layoutParams_navigationArrows_type: GALLERY_CONSTS.arrowsType.DEFAULT_ARROW,
   };
 }
 

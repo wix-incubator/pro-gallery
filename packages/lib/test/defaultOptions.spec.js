@@ -40,7 +40,7 @@ function expectedOptions() {
       cropRatio: 1,
       repeatingGroupTypes: '',
       navigationArrows: {
-        type: 0,
+        type: GALLERY_CONSTS.arrowsType.DEFAULT_ARROW,
       },
     },
     behaviourParams: {
