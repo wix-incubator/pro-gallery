@@ -252,6 +252,7 @@ function input() {
     targetItemSize: 650,
     enableScroll: true,
     cropOnlyFill: false,
+    layoutParams_navigationArrows_containerStyleType: 'SHADOW',
     layoutParams_navigationArrows_containerBackgroundColor: 'rgba(0,0,0,0)',
     layoutParams_navigationArrows_containerBorderRadius: 0,
   };
@@ -434,6 +435,9 @@ function expected() {
     layoutParams_navigationArrows_padding: 23,
     layoutParams_navigationArrows_verticalAlignment: 'ITEM_CENTER',
     layoutParams_navigationArrows_size: 23,
+    layoutParams_navigationArrows_containerStyleType: 'SHADOW',
+    layoutParams_navigationArrows_containerBackgroundColor: 'rgba(0,0,0,0)',
+    layoutParams_navigationArrows_containerBorderRadius: 0,
     layoutParams_info_layout: 'NO_BACKGROUND',
     layoutParams_info_spacing: 10,
     layoutParams_info_border_width: 0,

@@ -39,6 +39,11 @@ function expectedOptions() {
       gallerySpacing: 0,
       cropRatio: 1,
       repeatingGroupTypes: '',
+      navigationArrows: {
+        containerStyleType: GALLERY_CONSTS.arrowsContainerStyleType.SHADOW,
+        containerBackgroundColor: 'rgba(0,0,0,0)',
+        containerBorderRadius: 0,
+      },
     },
     behaviourParams: {
       item: {
