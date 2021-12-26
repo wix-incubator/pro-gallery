@@ -29,6 +29,14 @@ function getExpected() {
       options: {
         layoutParams: {
           cropRatio: 1,
+          navigationArrows: {
+            type: 0,
+            enable: true,
+            padding: 23,
+            verticalAlignment: 'ITEM_CENTER',
+            size: 23,
+            position: 'ON_GALLERY',
+          },
           repeatingGroupTypes: '',
           structure: {
             galleryLayout: 0,
@@ -72,13 +80,6 @@ function getExpected() {
             spacing: 0,
             size: 120,
             alignment: 'BOTTOM',
-          },
-          navigationArrows: {
-            enable: true,
-            padding: 23,
-            verticalAlignment: 'ITEM_CENTER',
-            size: 23,
-            position: 'ON_GALLERY',
           },
           info: {
             layout: 'NO_BACKGROUND',
