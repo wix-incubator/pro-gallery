@@ -39,6 +39,9 @@ function expectedOptions() {
       gallerySpacing: 0,
       cropRatio: 1,
       repeatingGroupTypes: '',
+      navigationArrows: {
+        type: 0,
+      },
     },
     behaviourParams: {
       item: {

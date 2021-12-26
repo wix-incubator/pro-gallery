@@ -8,7 +8,7 @@ const testsSensitivityConfig = {
   failureThresholdType: 'pixel',
 };
 
-describe('arrowsType - e2e', () => {
+describe('layoutParams_navigationArrows_type - e2e', () => {
   let driver;
 
   beforeAll(async () => {
@@ -23,8 +23,12 @@ describe('arrowsType - e2e', () => {
     it(`should display ${arrowValue}`, async () => {
       await driver.navigate({
         galleryLayout: GALLERY_CONSTS.layout.SLIDER,
-        arrowsType: GALLERY_CONSTS.arrowsType[arrowValue],
         arrowsSize: 150,
+        layoutParams: {
+          navigationArrows: {
+            type: GALLERY_CONSTS.arrowsType[arrowValue],
+          },
+        },
       });
       await driver.waitFor.hookToBeVisible('item-container');
       const page = await driver.grab.elemScreenshot('.pro-gallery');

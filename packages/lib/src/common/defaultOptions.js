@@ -9,6 +9,9 @@ import {
 const defaultOptions = mergeNestedObjects(coreOptions, {
   layoutParams: {
     repeatingGroupTypes: '',
+    navigationArrows: {
+      type: 0,
+    },
   },
   behaviourParams: {
     item: {

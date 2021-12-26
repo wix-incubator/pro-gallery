@@ -48,7 +48,7 @@ const defaultOptions = {
       padding: 23,
       size: 23,
       verticalAlignment: GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER,
-      arrowsType: 0,
+      type: 0,
     },
     targetItemSize: {
       unit: 'SMART',

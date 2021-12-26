@@ -40,7 +40,7 @@ export interface NavigationArrows {
   padding?: number;
   position?: 'ON_GALLERY' | 'OUTSIDE_GALLERY';
   verticalAlignment?: 'ITEM_CENTER' | 'IMAGE_CENTER' | 'INFO_CENTER';
-  arrowsType: number;
+  type: number;
 }
 
 export interface Crop {

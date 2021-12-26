@@ -184,7 +184,5 @@ function defaultOptions_old() {
 }
 
 function defaultOptions_new() {
-  const newDefaults = v4DefaultOptions;
-  delete newDefaults.layoutParams.navigationArrows.arrowsType;
-  return newDefaults;
+  return v4DefaultOptions;
 }

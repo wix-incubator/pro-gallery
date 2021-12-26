@@ -66,7 +66,7 @@ const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
     arrowsVerticalPosition,
     textBoxHeight,
     arrowsSize,
-    arrowsType,
+    layoutParams,
   } = arrowsWillFitPositionRelevantArgs.options;
   const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(
     arrowsWillFitPositionRelevantArgs.options
@@ -74,7 +74,7 @@ const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
   const { height } = arrowsWillFitPositionRelevantArgs.container;
   const { customNavArrowsRenderer } = arrowsWillFitPositionRelevantArgs;
   // Calc of Nav arrows container's height
-  const arrowData = getArrowIconData(arrowsType);
+  const arrowData = getArrowIconData(layoutParams.navigationArrows.type);
   const { navArrowsContainerHeight } = getArrowsSizeData({
     customNavArrowsRenderer,
     arrowsSize,
