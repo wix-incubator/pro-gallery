@@ -8,7 +8,7 @@ import { List, Switch, Select, Form, InputNumber, Collapse, AutoComplete, Input,
 import { SECTIONS, settingsManager } from '../../constants/settings';
 import {
   INPUT_TYPES,
-  flattenObject
+  flattenObject,
 } from 'pro-gallery-lib';
 import { Divider, Alert } from 'antd';
 import comments from './comments';

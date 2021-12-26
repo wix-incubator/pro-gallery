@@ -1,6 +1,6 @@
 import React from 'react';
 import {Alert, Popover, Select, Menu, Icon, Collapse, Switch, Input, Slider, InputNumber, Row, Col, Button, Divider} from 'antd';
-import {INPUT_TYPES, isInPreset} from 'pro-gallery-lib';
+import {INPUT_TYPES, isInPreset, flatToNested} from 'pro-gallery-lib';
 import ColorPicker from '../ColorPicker/ColorPicker';
 import { settingsManager } from '../../constants/settings';
 
@@ -164,6 +164,7 @@ class JsonEditor extends React.Component {
 
   render() {
     const {section, subSection, options, allOptions, option, expandIcon} = this.props;
+    const nestedOptions = flatToNested(allOptions)
     const context = {
       isMobile: false,
     }
@@ -182,7 +183,7 @@ class JsonEditor extends React.Component {
     ([key, settings]) =>
       (!section || settings.section === section) &&
       (!subSection || settings.subSection === subSection) &&
-      (this.props.showAllOptions || settings.isRelevant(allOptions, context))
+      (this.props.showAllOptions || settings.isRelevant(nestedOptions, context))
 
     const activeKey = option ? {activeKey: 'collapse' + option} : {defaultActiveKey: []};
 
@@ -201,7 +202,7 @@ class JsonEditor extends React.Component {
     const isSingleItem = !!option;
 
     const Extra = settings => {
-      if (settings.isRelevant(allOptions)) {
+      if (settings.isRelevant(nestedOptions)) {
         return null; //<Icon type="check" style={{fontSize: 10, color: '#52c41a'}} />
       } else {
         if (settings.missing) {
@@ -230,7 +231,7 @@ class JsonEditor extends React.Component {
                 <Divider/>
                 <p><b>Section: </b>{settings.section + (settings.subSection ? ` > ${settings.subSection}` : '')}</p>
                 <p><b>Overriden by current Preset: </b>{isInPreset(allOptions.galleryLayout, option) ? 'Yes' : 'No'}</p>
-                <p><b>Relevant in current configuration: </b>{settings.isRelevant(allOptions, false) ? 'Yes' : 'No'}</p>
+                <p><b>Relevant in current configuration: </b>{settings.isRelevant(nestedOptions, false) ? 'Yes' : 'No'}</p>
               </>)}
               {isDev && <>
                 <Divider/>

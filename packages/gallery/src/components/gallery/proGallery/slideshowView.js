@@ -881,9 +881,9 @@ class SlideshowView extends React.Component {
       textBoxHeight,
     } = this.props.options;
     const {
-      arrowsContainerStyleType,
-      arrowsContainerBackgroundColor,
-      arrowsContainerBorderRadius
+      containerStyleType,
+      containerBackgroundColor,
+      containerBorderRadius
     } = layoutParams.navigationArrows;
     const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
     const { hideLeftArrow, hideRightArrow } = this.state;
@@ -891,7 +891,7 @@ class SlideshowView extends React.Component {
       customNavArrowsRenderer: this.props.customComponents.customNavArrowsRenderer,
       arrowsColor: this.props.options.arrowsColor,
       arrowsSize: this.props.options.arrowsSize,
-      arrowsContainerStyleType
+      containerStyleType
     });
 
     const { galleryHeight } = this.props.container;
@@ -927,8 +927,9 @@ class SlideshowView extends React.Component {
       top: `calc(${galleryVerticalCenter} - ${navArrowsContainerHeight / 2}px - 
         ${verticalPositionFix / 2}px)`,
       ...getArrowBoxStyle({
-        arrowsContainerBackgroundColor,
-        arrowsContainerBorderRadius
+        containerBackgroundColor,
+        containerBorderRadius,
+        containerStyleType
       })
     };
 
@@ -946,7 +947,7 @@ class SlideshowView extends React.Component {
     const nextContainerStyle = {
       right: arrowsPos,
     };
-    const useDropShadow = arrowsContainerStyleType === GALLERY_CONSTS.arrowsContainerStyleType.SHADOW;
+    const useDropShadow = containerStyleType === GALLERY_CONSTS.arrowsContainerStyleType.SHADOW;
     const arrowsBaseClasses = [
       'nav-arrows-container',
       useDropShadow ? 'drop-shadow' : ''

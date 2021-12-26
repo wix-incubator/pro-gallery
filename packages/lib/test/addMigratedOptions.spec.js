@@ -252,6 +252,8 @@ function input() {
     targetItemSize: 650,
     enableScroll: true,
     cropOnlyFill: false,
+    layoutParams_navigationArrows_containerBackgroundColor: 'rgba(0,0,0,0)',
+    layoutParams_navigationArrows_containerBorderRadius: 0,
   };
 }
 

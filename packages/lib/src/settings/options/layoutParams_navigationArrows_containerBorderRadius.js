@@ -6,10 +6,10 @@ export default {
   isRelevant: (options) =>
     options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
     options.showArrows &&
-    options.arrowsContainerStyleType ===
+    options.layoutParams.navigationArrows.containerStyleType ===
       GALLERY_CONSTS.arrowsContainerStyleType.BOX,
   isRelevantDescription:
-    'Set a Horizontal gallery ("Scroll Direction" as "Horizontal"), "Show Navigation Arrows" to "true" and Navigation arrows styling ("arrowsContainerStyleType") to "BOX".',
+    'Set a Horizontal gallery ("Scroll Direction" as "Horizontal"), "Show Navigation Arrows" to "true" and Navigation arrows styling ("containerStyleType") to "BOX".',
   type: INPUT_TYPES.NUMBER,
   default: 0,
   description: `Choose the border radius of the navigating arrows container.

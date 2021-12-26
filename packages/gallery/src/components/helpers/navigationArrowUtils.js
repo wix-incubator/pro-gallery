@@ -6,11 +6,9 @@ const getArrowsSizeData = ({
   customNavArrowsRenderer,
   arrowsSize,
   svgData,
-  arrowsContainerStyleType,
+  containerStyleType,
 }) => {
-  if (
-    arrowsContainerStyleType === GALLERY_CONSTS.arrowsContainerStyleType.BOX
-  ) {
+  if (containerStyleType === GALLERY_CONSTS.arrowsContainerStyleType.BOX) {
     const sizeData = {
       navArrowsContainerWidth: arrowsSize,
       navArrowsContainerHeight: arrowsSize,
@@ -48,7 +46,7 @@ export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
     customNavArrowsRenderer,
     arrowsColor,
     arrowsSize,
-    arrowsContainerStyleType,
+    containerStyleType,
   } = arrowsDataRelevantArgs;
   const arrowData = getArrowIconData();
   const { navArrowsContainerWidth, navArrowsContainerHeight, scalePercentage } =
@@ -56,7 +54,7 @@ export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
       customNavArrowsRenderer,
       arrowsSize,
       svgData: arrowData,
-      arrowsContainerStyleType,
+      containerStyleType,
     });
   if (customNavArrowsRenderer) {
     return {
@@ -83,7 +81,7 @@ const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
     arrowsVerticalPosition,
     textBoxHeight,
     arrowsSize,
-    arrowsContainerStyleType,
+    layoutParams,
   } = arrowsWillFitPositionRelevantArgs.options;
   const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(
     arrowsWillFitPositionRelevantArgs.options
@@ -96,7 +94,7 @@ const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
     customNavArrowsRenderer,
     arrowsSize,
     svgData: arrowData,
-    arrowsContainerStyleType,
+    containerStyleType: layoutParams.navigationArrows.containerStyleType,
   });
   const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
   const parentHeightByVerticalPosition = {
@@ -154,11 +152,14 @@ const getArrowIconData = (arrowType = 0) => {
 };
 
 export const getArrowBoxStyle = ({
-  arrowsContainerBackgroundColor,
-  arrowsContainerBorderRadius,
+  containerBackgroundColor,
+  containerBorderRadius,
+  containerStyleType,
 }) => {
-  return {
-    backgroundColor: arrowsContainerBackgroundColor,
-    borderRadius: arrowsContainerBorderRadius,
-  };
+  return containerStyleType === GALLERY_CONSTS.arrowsContainerStyleType.BOX
+    ? {
+        backgroundColor: containerBackgroundColor,
+        borderRadius: containerBorderRadius,
+      }
+    : {};
 };
