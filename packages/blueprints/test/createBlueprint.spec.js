@@ -30,6 +30,7 @@ function getExpected() {
         layoutParams: {
           cropRatio: 1,
           navigationArrows: {
+            containerStyleType: 'SHADOW',
             containerBackgroundColor: 'rgba(0,0,0,0)',
             containerBorderRadius: 0,
             enable: true,
