@@ -26,6 +26,7 @@ const fixToSlideshow = (options) => {
   );
   presetOptions.isVertical = false;
   presetOptions.groupSize = 1;
+  presetOptions.titlePlacement = 'SHOW_BELOW';
   presetOptions.groupTypes = '1';
   presetOptions.itemBorderWidth = 0;
   presetOptions.itemBorderRadius = 0;
