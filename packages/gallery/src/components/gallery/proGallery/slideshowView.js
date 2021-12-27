@@ -1253,7 +1253,7 @@ class SlideshowView extends React.Component {
     return thumbnails;
   }
 
-  getClassNames() {GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
+  getClassNames() {
 
     let classNames = 'pro-gallery-parent-container';
     if (GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)) {
