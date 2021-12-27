@@ -40,6 +40,7 @@ export interface NavigationArrows {
   padding?: number;
   position?: 'ON_GALLERY' | 'OUTSIDE_GALLERY';
   verticalAlignment?: 'ITEM_CENTER' | 'IMAGE_CENTER' | 'INFO_CENTER';
+  type: number;
   containerStyleType?: 'NONE' | 'SHADOW' | 'BOX';
   containerBorderRadius?: number;
   containerBackgroundColor?: string;

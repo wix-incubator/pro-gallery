@@ -53,6 +53,7 @@ import slideTransition from './slideTransition';
 import overlayPositions from './overlayPositions';
 import overlaySizeType from './overlaySizeType';
 import autoSlideshowTypes from './autoSlideshowTypes';
+import arrowsType from './arrowsType';
 import arrowsContainerStyleType from './arrowsContainerStyleType';
 
 export default {
@@ -112,5 +113,6 @@ export default {
   overlayPositions,
   overlaySizeType,
   autoSlideshowTypes,
+  arrowsType,
   arrowsContainerStyleType,
 };

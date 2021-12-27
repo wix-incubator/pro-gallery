@@ -101,6 +101,7 @@ import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
 import behaviourParams_item_content_magnificationValue from './magnificationValue';
 import arrowsColor from './arrowsColor';
 import optionsMap from '../../core/helpers/optionsMap';
+import layoutParams_navigationArrows_type from './layoutParams_navigationArrows_type';
 import layoutParams_navigationArrows_containerStyleType from './layoutParams_navigationArrows_containerStyleType';
 import layoutParams_navigationArrows_containerBackgroundColor from './layoutParams_navigationArrows_containerBackgroundColor';
 import layoutParams_navigationArrows_containerBorderRadius from './layoutParams_navigationArrows_containerBorderRadius';
@@ -290,6 +291,8 @@ export default {
   behaviourParams_item_content_magnificationValue,
   arrowsColor,
   [optionsMap.stylingParams.arrowsColor]: arrowsColor,
+  [optionsMap.layoutParams.navigationArrows.type]:
+    layoutParams_navigationArrows_type,
   [optionsMap.layoutParams.navigationArrows.containerStyleType]:
     layoutParams_navigationArrows_containerStyleType,
   [optionsMap.layoutParams.navigationArrows.containerBackgroundColor]:

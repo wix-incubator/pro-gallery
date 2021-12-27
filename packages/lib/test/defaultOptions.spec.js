@@ -40,6 +40,7 @@ function expectedOptions() {
       cropRatio: 1,
       repeatingGroupTypes: '',
       navigationArrows: {
+        type: GALLERY_CONSTS.arrowsType.DEFAULT_ARROW,
         containerStyleType: GALLERY_CONSTS.arrowsContainerStyleType.SHADOW,
         containerBackgroundColor: 'rgba(0,0,0,0)',
         containerBorderRadius: 0,

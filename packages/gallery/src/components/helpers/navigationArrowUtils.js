@@ -46,9 +46,10 @@ export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
     customNavArrowsRenderer,
     arrowsColor,
     arrowsSize,
+    arrowsType,
     containerStyleType,
   } = arrowsDataRelevantArgs;
-  const arrowData = getArrowIconData();
+  const arrowData = getArrowIconData(arrowsType);
   const { navArrowsContainerWidth, navArrowsContainerHeight, scalePercentage } =
     getArrowsSizeData({
       customNavArrowsRenderer,
@@ -89,7 +90,7 @@ const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
   const { height } = arrowsWillFitPositionRelevantArgs.container;
   const { customNavArrowsRenderer } = arrowsWillFitPositionRelevantArgs;
   // Calc of Nav arrows container's height
-  const arrowData = getArrowIconData();
+  const arrowData = getArrowIconData(layoutParams.navigationArrows.type);
   const { navArrowsContainerHeight } = getArrowsSizeData({
     customNavArrowsRenderer,
     arrowsSize,
@@ -143,6 +144,12 @@ const getShouldRenderArrowsArgs = (props) => {
 const getArrowIconData = (arrowType = 0) => {
   let arrowData;
   switch (arrowType) {
+    case 1:
+      arrowData = ARROWS_DATA.ARROW_1;
+      break;
+    case 2:
+      arrowData = ARROWS_DATA.ARROW_2;
+      break;
     case 0:
     default:
       arrowData = ARROWS_DATA.DEFAULT_ARROW;

@@ -1,10 +1,13 @@
+import GALLERY_CONSTS from './constants';
+
 const v3DefaultOptions = {
   layoutParams: {
     gallerySpacing: 0,
     cropRatio: 1, // determine the ratio of the images when using grid (use 1 for squares grid)
     repeatingGroupTypes: '',
     navigationArrows: {
-      containerStyleType: 'SHADOW',
+      type: GALLERY_CONSTS.arrowsType.DEFAULT_ARROW,
+      containerStyleType: GALLERY_CONSTS.arrowsContainerStyleType.SHADOW,
       containerBackgroundColor: 'rgba(0,0,0,0)',
       containerBorderRadius: 0,
     },

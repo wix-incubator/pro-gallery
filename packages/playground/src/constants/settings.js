@@ -119,6 +119,7 @@ export const optionsBySection = {
     'arrowsPosition',
     'arrowsPadding',
     'arrowsVerticalPosition',
+    'layoutParams_navigationArrows_type',
     'layoutParams_navigationArrows_containerStyleType',
     'layoutParams_navigationArrows_containerBackgroundColor',
     'layoutParams_navigationArrows_containerBorderRadius',

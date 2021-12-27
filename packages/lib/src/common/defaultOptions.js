@@ -10,7 +10,8 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   layoutParams: {
     repeatingGroupTypes: '',
     navigationArrows: {
-      containerStyleType: 'SHADOW',
+      type: GALLERY_CONSTS.arrowsType.DEFAULT_ARROW,
+      containerStyleType: GALLERY_CONSTS.arrowsContainerStyleType.SHADOW,
       containerBackgroundColor: 'rgba(0,0,0,0)',
       containerBorderRadius: 0,
     },
