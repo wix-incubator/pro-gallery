@@ -160,7 +160,7 @@ class GalleryView extends React.Component {
 
     return (
       <div
-        id="pro-gallery-container"
+        id= {this.props.galleryContainerId}
         className={
           'pro-gallery inline-styles ' +
           (options.scrollDirection ===

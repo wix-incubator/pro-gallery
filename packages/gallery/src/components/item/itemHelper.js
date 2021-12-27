@@ -10,11 +10,6 @@ function shouldChangeActiveElement() {
   return (isSiteMode() || isSEOMode()) && !utils.isMobile() && window.document;
 }
 
-function isThisGalleryElementInFocus(className) {
-  const activeElement = window.document.activeElement;
-  return String(activeElement.className).includes(className);
-}
-
 export function onAnchorFocus({
   itemContainer,
   enableExperimentalFeatures,
@@ -31,6 +26,16 @@ export function onAnchorFocus({
   }
 }
 
+function isThisGalleryElementInFocus(className, galleryId) {
+  const activeElement = window.document.activeElement;
+  return (
+    String(activeElement.className).includes(className) &&
+    !!window.document.querySelector(
+      `#pro-gallery-${galleryId} #${String(activeElement.id)}`
+    )
+  );
+}
+
 export function changeActiveElementIfNeeded({
   prevProps,
   currentProps,
@@ -42,10 +47,13 @@ export function changeActiveElementIfNeeded({
       window.document.activeElement.className
     ) {
       const isGalleryItemInFocus = isThisGalleryElementInFocus(
-        'gallery-item-container'
+        'gallery-item-container',
+        currentProps.galleryId
       );
-      const isShowMoreInFocus = isThisGalleryElementInFocus('show-more');
-
+      const isShowMoreInFocus = isThisGalleryElementInFocus(
+        'show-more',
+        currentProps.galleryId
+      );
       if (isGalleryItemInFocus || isShowMoreInFocus) {
         if (
           currentProps.thumbnailHighlightId !==
@@ -74,4 +82,11 @@ export function shouldCreateVideoPlaceholder(options) {
     (!utils.isSingleItemHorizontalDisplay(options) ||
       options.videoPlay !== GALLERY_CONSTS.videoPlay.AUTO)
   );
+}
+
+export function extractTextItemContent(html) {
+  const span = document.createElement('span');
+  span.innerHTML = html;
+  const content = span.innerText;
+  return content?.trim();
 }
