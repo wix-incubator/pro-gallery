@@ -4,6 +4,7 @@ import path from 'path';
 import { expect } from 'chai';
 
 import { blueprints } from '../src/index';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 const opts = { encoding: 'utf-8' };
 function readJsonFromDir(name) {
@@ -30,7 +31,7 @@ function getExpected() {
         layoutParams: {
           cropRatio: 1,
           navigationArrows: {
-            type: 0,
+            type: GALLERY_CONSTS.arrowsType.DEFAULT_ARROW,
             enable: true,
             padding: 23,
             verticalAlignment: 'ITEM_CENTER',
