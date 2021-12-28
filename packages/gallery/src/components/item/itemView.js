@@ -35,7 +35,6 @@ class ItemView extends React.Component {
     this.state = {
       isCurrentHover: false,
       itemWasHovered: false,
-      ariaLabel: '',
     };
 
     this.activeElement = '';
@@ -907,10 +906,6 @@ class ItemView extends React.Component {
       this.checkIfCurrentHoverChanged
     );
 
-    this.setState({
-      ariaLabel: this.getItemAriaLabel(),
-    });
-
   }
 
   componentWillUnmount() {
@@ -987,7 +982,7 @@ class ItemView extends React.Component {
         onBlur={this.onBlur} // The onblur event is the opposite of the onfocus event.
         onKeyDown={this.onContainerKeyDown}
         tabIndex={this.getItemContainerTabIndex()}
-        aria-label={this.state.ariaLabel}
+        aria-label={this.getItemAriaLabel()}
         data-hash={hash}
         data-id={photoId}
         data-idx={idx}

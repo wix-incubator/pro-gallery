@@ -85,8 +85,5 @@ export function shouldCreateVideoPlaceholder(options) {
 }
 
 export function extractTextItemContent(html) {
-  const span = document.createElement('span');
-  span.innerHTML = html;
-  const content = span.innerText;
-  return content?.trim();
+  return html?.replace(/<[^<>]*>/g, '').trim();
 }
