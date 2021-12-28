@@ -5,7 +5,7 @@ import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
-describe('options - layoutParams_navigationArrows_container_backgroundColor', () => {
+describe('options - layoutParams_navigationArrows_container', () => {
   let driver;
   let initialProps;
 
@@ -18,21 +18,34 @@ describe('options - layoutParams_navigationArrows_container_backgroundColor', ()
     };
   });
 
-  it('should set arrows background-color', async () => {
+  const mountSlideshowGalleryAnGetArrow = async (containerOptions) => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       layoutParams: {
         navigationArrows: {
           container: {
             type: GALLERY_CONSTS.arrowsContainerStyleType.BOX,
-            backgroundColor: 'red',
+            ...containerOptions,
           },
         },
       },
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const arrow = driver.find.selector('.nav-arrows-container');
+    return driver.find.selector('.nav-arrows-container');
+  };
+
+  it('should set arrows background-color', async () => {
+    const arrow = await mountSlideshowGalleryAnGetArrow({
+      backgroundColor: 'red',
+    });
     expect(arrow.props().style.backgroundColor).to.eq('red');
+    driver.detach.proGallery();
+  });
+
+  it('should set arrows border-radius', async () => {
+    const arrow = await mountSlideshowGalleryAnGetArrow({ borderRadius: 10 });
+    expect(arrow.props().style.borderRadius).to.eq('10%');
+    driver.detach.proGallery();
   });
 });
