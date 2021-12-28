@@ -787,8 +787,9 @@ class ItemView extends React.Component {
       'dummy': '',
       'text' : extractTextItemContent(this.props.html),
       'video': alt || 'Untitled video',
+      'image': alt || 'Untitled image',
     }
-    const label = mapTypeToLabel[type] || alt || 'Untitled image';
+    const label = mapTypeToLabel[type];
     return label + (options.isStoreGallery ? ', Buy Now' : '');
   }
 
