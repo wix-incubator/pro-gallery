@@ -1,4 +1,5 @@
 import LAYOUTS from '../../common/constants/layout';
+import SLIDE_ANIMATIONS from '../../common/constants/slideAnimations';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import {
@@ -26,6 +27,8 @@ const fixToSlideshow = (options) => {
   );
   presetOptions.isVertical = false;
   presetOptions.groupSize = 1;
+  presetOptions.titlePlacement = 'SHOW_BELOW';
+  presetOptions.slideAnimation = SLIDE_ANIMATIONS.SCROLL;
   presetOptions.groupTypes = '1';
   presetOptions.itemBorderWidth = 0;
   presetOptions.itemBorderRadius = 0;
