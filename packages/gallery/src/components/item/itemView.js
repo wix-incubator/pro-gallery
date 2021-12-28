@@ -1000,7 +1000,7 @@ class ItemView extends React.Component {
         {this.getLeftInfoElementIfNeeded()}
         <div
           style={{
-            ...(!this.props.options.isSlideshow &&
+            ...(
               getImageStyle(this.props.options)),
             ...(GALLERY_CONSTS.hasExternalRightPlacement(
               this.props.options.titlePlacement,
