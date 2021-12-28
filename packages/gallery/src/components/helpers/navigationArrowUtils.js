@@ -57,8 +57,22 @@ export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
       containerStyleType,
     });
   if (customNavArrowsRenderer) {
+    const size =
+      containerStyleType === GALLERY_CONSTS.arrowsContainerStyleType.BOX
+        ? arrowsSize / 2.4
+        : arrowsSize;
+    const customRenderer = (position) => (
+      <span
+        style={{
+          width: size,
+          height: size,
+        }}
+      >
+        {customNavArrowsRenderer(position)}
+      </span>
+    );
     return {
-      arrowRenderer: customNavArrowsRenderer,
+      arrowRenderer: customRenderer,
       navArrowsContainerWidth,
       navArrowsContainerHeight,
     };
@@ -94,7 +108,8 @@ const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
     customNavArrowsRenderer,
     arrowsSize,
     svgData: arrowData,
-    containerStyleType: layoutParams.navigationArrows.containerStyleType,
+    containerStyleType:
+      layoutParams.navigationArrows.container.containerStyleType,
   });
   const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
   const parentHeightByVerticalPosition = {
@@ -160,15 +175,11 @@ const getArrowIconData = (
   return arrowData;
 };
 
-export const getArrowBoxStyle = ({
-  containerBackgroundColor,
-  containerBorderRadius,
-  containerStyleType,
-}) => {
-  return containerStyleType === GALLERY_CONSTS.arrowsContainerStyleType.BOX
+export const getArrowBoxStyle = ({ type, backgroundColor, borderRadius }) => {
+  return type === GALLERY_CONSTS.arrowsContainerStyleType.BOX
     ? {
-        backgroundColor: containerBackgroundColor,
-        borderRadius: containerBorderRadius,
+        backgroundColor: backgroundColor,
+        borderRadius: `${borderRadius}%`,
       }
     : {};
 };

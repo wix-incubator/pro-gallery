@@ -14,7 +14,9 @@ const mountSlideshowGalleryAnGetArrow = async (
     galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
     layoutParams: {
       navigationArrows: {
-        containerStyleType: containerStyleType,
+        container: {
+          type: containerStyleType,
+        },
       },
     },
   });
@@ -22,7 +24,7 @@ const mountSlideshowGalleryAnGetArrow = async (
   await driver.update();
   return driver.find.selector('.nav-arrows-container');
 };
-describe('options - layoutParams_navigationArrows_containerStyleType', () => {
+describe('options - layoutParams_navigationArrows_container_type', () => {
   let driver;
   let initialProps;
 

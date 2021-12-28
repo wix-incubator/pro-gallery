@@ -102,9 +102,9 @@ import behaviourParams_item_content_magnificationValue from './magnificationValu
 import arrowsColor from './arrowsColor';
 import optionsMap from '../../core/helpers/optionsMap';
 import layoutParams_navigationArrows_type from './layoutParams_navigationArrows_type';
-import layoutParams_navigationArrows_containerStyleType from './layoutParams_navigationArrows_containerStyleType';
-import layoutParams_navigationArrows_containerBackgroundColor from './layoutParams_navigationArrows_containerBackgroundColor';
-import layoutParams_navigationArrows_containerBorderRadius from './layoutParams_navigationArrows_containerBorderRadius';
+import layoutParams_navigationArrows_container_type from './layoutParams_navigationArrows_container_type';
+import layoutParams_navigationArrows_container_backgroundColor from './layoutParams_navigationArrows_container_backgroundColor';
+import layoutParams_navigationArrows_container_borderRadius from './layoutParams_navigationArrows_container_borderRadius';
 
 export default {
   layoutParams_gallerySpacing,
@@ -293,12 +293,12 @@ export default {
   [optionsMap.stylingParams.arrowsColor]: arrowsColor,
   [optionsMap.layoutParams.navigationArrows.type]:
     layoutParams_navigationArrows_type,
-  [optionsMap.layoutParams.navigationArrows.containerStyleType]:
-    layoutParams_navigationArrows_containerStyleType,
-  [optionsMap.layoutParams.navigationArrows.containerBackgroundColor]:
-    layoutParams_navigationArrows_containerBackgroundColor,
-  [optionsMap.layoutParams.navigationArrows.containerBorderRadius]:
-    layoutParams_navigationArrows_containerBorderRadius,
+  [optionsMap.layoutParams.navigationArrows.container.type]:
+    layoutParams_navigationArrows_container_type,
+  [optionsMap.layoutParams.navigationArrows.container.backgroundColor]:
+    layoutParams_navigationArrows_container_backgroundColor,
+  [optionsMap.layoutParams.navigationArrows.container.borderRadius]:
+    layoutParams_navigationArrows_container_borderRadius,
 };
 // TODO = add the options:
 /*
