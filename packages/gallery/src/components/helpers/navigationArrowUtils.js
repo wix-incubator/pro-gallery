@@ -8,14 +8,14 @@ const getArrowsSizeData = ({
   svgData,
   containerStyleType,
 }) => {
+  const isLandscape = svgData.width / svgData.height > 1;
   if (containerStyleType === GALLERY_CONSTS.arrowsContainerStyleType.BOX) {
     const sizeData = {
       navArrowsContainerWidth: arrowsSize,
       navArrowsContainerHeight: arrowsSize,
+      scalePercentage:
+        arrowsSize / 2.4 / (isLandscape ? svgData.width : svgData.height),
     };
-    if (svgData) {
-      sizeData.scalePercentage = arrowsSize / 4 / svgData.width;
-    }
     return sizeData;
   }
   if (customNavArrowsRenderer) {
@@ -24,7 +24,6 @@ const getArrowsSizeData = ({
       navArrowsContainerHeight: arrowsSize,
     };
   }
-  const isLandscape = svgData.width / svgData.height > 1;
   const scalePercentage = isLandscape
     ? arrowsSize / svgData.height
     : arrowsSize / svgData.width;
@@ -141,16 +140,19 @@ const getShouldRenderArrowsArgs = (props) => {
   };
 };
 
-const getArrowIconData = (arrowType = 0) => {
+const getArrowIconData = (
+  arrowType = GALLERY_CONSTS.arrowsType.DEFAULT_ARROW
+) => {
+  const { DEFAULT_ARROW, ARROW1, ARROW2 } = GALLERY_CONSTS.arrowsType;
   let arrowData;
   switch (arrowType) {
-    case 1:
+    case ARROW1:
       arrowData = ARROWS_DATA.ARROW_1;
       break;
-    case 2:
+    case ARROW2:
       arrowData = ARROWS_DATA.ARROW_2;
       break;
-    case 0:
+    case DEFAULT_ARROW:
     default:
       arrowData = ARROWS_DATA.DEFAULT_ARROW;
       break;
