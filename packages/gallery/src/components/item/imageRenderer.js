@@ -1,4 +1,5 @@
 import React from 'react';
+import { PrintOnlyImageSource } from './printOnlySource';
 
 const ImageRenderer = (props) => {
   if (typeof ImageRenderer.customImageRenderer === 'function') {
@@ -11,9 +12,13 @@ const ImageRenderer = (props) => {
         id={`multi_picture_${props.id}`}
         key={`multi_picture_${props.id}`}
       >
-        {props.src.map((src) => (
-          <source srcSet={src.dpr || src.url} type={`image/${src.type}`} />
-        ))}
+        {props.src.map((src) =>
+          src.forPrinting ? (
+            <PrintOnlyImageSource srcSet={src.dpr} type={`image/${src.type}`} />
+          ) : (
+            <source srcSet={src.dpr || src.url} type={`image/${src.type}`} />
+          )
+        )}
         <img
           alt={props.alt}
           {...props}
