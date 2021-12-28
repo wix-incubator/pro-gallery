@@ -101,6 +101,7 @@ import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
 import behaviourParams_item_content_magnificationValue from './magnificationValue';
 import arrowsColor from './arrowsColor';
 import optionsMap from '../../core/helpers/optionsMap';
+import layoutParams_navigationArrows_type from './layoutParams_navigationArrows_type';
 
 export default {
   layoutParams_gallerySpacing,
@@ -287,6 +288,8 @@ export default {
   behaviourParams_item_content_magnificationValue,
   arrowsColor,
   [optionsMap.stylingParams.arrowsColor]: arrowsColor,
+  [optionsMap.layoutParams.navigationArrows.type]:
+    layoutParams_navigationArrows_type,
 };
 
 // TODO = add the options:

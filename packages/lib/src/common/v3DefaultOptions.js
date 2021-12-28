@@ -1,8 +1,13 @@
+import GALLERY_CONSTS from './constants';
+
 const v3DefaultOptions = {
   layoutParams: {
     gallerySpacing: 0,
     cropRatio: 1, // determine the ratio of the images when using grid (use 1 for squares grid)
     repeatingGroupTypes: '',
+    navigationArrows: {
+      type: GALLERY_CONSTS.arrowsType.DEFAULT_ARROW,
+    },
   },
   galleryMargin: 0,
   cubeRatio: 1,

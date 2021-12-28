@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { addMigratedOptions } from '../src/core/helpers/optionsConverter';
+import GALLERY_CONSTS from '../src/common/constants';
 
 describe('optionsUtils', () => {
   it('should create a nested object out of a flat object', () => {
@@ -252,6 +253,7 @@ function input() {
     targetItemSize: 650,
     enableScroll: true,
     cropOnlyFill: false,
+    layoutParams_navigationArrows_type: GALLERY_CONSTS.arrowsType.DEFAULT_ARROW,
   };
 }
 
@@ -432,6 +434,7 @@ function expected() {
     layoutParams_navigationArrows_padding: 23,
     layoutParams_navigationArrows_verticalAlignment: 'ITEM_CENTER',
     layoutParams_navigationArrows_size: 23,
+    layoutParams_navigationArrows_type: GALLERY_CONSTS.arrowsType.DEFAULT_ARROW,
     layoutParams_info_layout: 'NO_BACKGROUND',
     layoutParams_info_spacing: 10,
     layoutParams_info_border_width: 0,
