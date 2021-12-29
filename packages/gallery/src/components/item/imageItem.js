@@ -221,6 +221,7 @@ class ImageItem extends React.Component {
           src={src}
           alt={calculatedAlt ? calculatedAlt : 'untitled image'}
           onLoad={this.handleHighResImageLoad}
+          loading={this.props.isPrerenderMode ? 'lazy' : 'eager'}
           style={{
             ...imageSizing,
             ...blockDownloadStyles,
