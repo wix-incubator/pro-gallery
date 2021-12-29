@@ -456,6 +456,7 @@ class ItemView extends React.Component {
 
     const itemStyles = { width: innerWidth, height: innerHeight, marginTop: innerTop, marginLeft: innerLeft };
     let itemHover = null;
+    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(options);
     if (this.shouldHover()) {
       itemHover = this.getItemHover(itemStyles);
     }
@@ -480,7 +481,7 @@ class ItemView extends React.Component {
         }
     }
 
-    if (GALLERY_CONSTS.isLayout('SLIDESHOW')(options)) {
+    if (isSlideshow) {
       return this.getSlideshowItemInner({options, width, height, itemInner, customComponents: this.props.customComponents})
     }
 
