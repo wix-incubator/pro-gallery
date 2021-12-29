@@ -6,10 +6,6 @@ import { mergeNestedObjects } from 'pro-gallery-lib';
 
 describe('options - slideAnimation', () => {
   let initialProps;
-  const notCurrentFadeAnimationStylesMock = {
-    opacity: 0,
-    display: 'block',
-  };
   const currentFadeAnimationStylesMock = {
     opacity: 1,
     display: 'block',
@@ -33,30 +29,6 @@ describe('options - slideAnimation', () => {
 
     afterEach(() => {
       driver.detach.proGallery();
-    });
-    it('should set the correct "Fade" animation styles to the items', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
-        galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-        slideAnimation: GALLERY_CONSTS.slideAnimations.FADE,
-      });
-      driver.mount.proGallery(initialProps);
-      await driver.update();
-      const currentItem = driver.find.selector('.gallery-item-wrapper a').at(0);
-      const nextItem = driver.find.selector('.gallery-item-wrapper a').at(1);
-      expect(getRelevantStylesForCompare(currentItem.props().style)).toEqual(
-        currentFadeAnimationStylesMock
-      );
-      expect(getRelevantStylesForCompare(nextItem.props().style)).toEqual(
-        notCurrentFadeAnimationStylesMock
-      );
-      const button = driver.find.hook('nav-arrow-next');
-      button.simulate('click');
-      await driver.update(400);
-      const prevItem = driver.find.selector('.gallery-item-wrapper a').at(0);
-      expect(getRelevantStylesForCompare(prevItem.props().style)).toEqual(
-        notCurrentFadeAnimationStylesMock
-      );
-      expect(1).toEqual(1);
     });
     it('should not have Fade animation styles when "slideAnimations" is "Scroll"', async () => {
       initialProps.options = mergeNestedObjects(initialProps.options, {
@@ -83,29 +55,6 @@ describe('options - slideAnimation', () => {
 
     afterEach(() => {
       driver.detach.proGallery();
-    });
-    it('should set the correct "Fade" animation styles to the items', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
-        galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
-        slideAnimation: GALLERY_CONSTS.slideAnimations.FADE,
-      });
-      driver.mount.proGallery(initialProps);
-      await driver.update();
-      const currentItem = driver.find.hook('item-wrapper').at(0);
-      const nextItem = driver.find.hook('item-wrapper').at(1);
-      expect(
-        getRelevantStylesForCompare(currentItem.props().style)
-      ).toMatchObject(currentFadeAnimationStylesMock);
-      expect(getRelevantStylesForCompare(nextItem.props().style)).toMatchObject(
-        notCurrentFadeAnimationStylesMock
-      );
-      const button = driver.find.hook('nav-arrow-next');
-      button.simulate('click');
-      await driver.update(400);
-      const prevItem = driver.find.hook('item-wrapper').at(0);
-      expect(getRelevantStylesForCompare(prevItem.props().style)).toMatchObject(
-        notCurrentFadeAnimationStylesMock
-      );
     });
     it('should not have Fade animation styles when "slideAnimations" is "Scroll"', async () => {
       initialProps.options = mergeNestedObjects(initialProps.options, {
