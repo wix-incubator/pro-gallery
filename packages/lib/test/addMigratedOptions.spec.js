@@ -254,6 +254,10 @@ function input() {
     enableScroll: true,
     cropOnlyFill: false,
     layoutParams_navigationArrows_type: GALLERY_CONSTS.arrowsType.DEFAULT_ARROW,
+    layoutParams_navigationArrows_container_type:
+      GALLERY_CONSTS.arrowsContainerStyleType.SHADOW,
+    layoutParams_navigationArrows_container_backgroundColor: 'rgba(0,0,0,0)',
+    layoutParams_navigationArrows_container_borderRadius: 0,
   };
 }
 
@@ -435,6 +439,10 @@ function expected() {
     layoutParams_navigationArrows_verticalAlignment: 'ITEM_CENTER',
     layoutParams_navigationArrows_size: 23,
     layoutParams_navigationArrows_type: GALLERY_CONSTS.arrowsType.DEFAULT_ARROW,
+    layoutParams_navigationArrows_container_type:
+      GALLERY_CONSTS.arrowsContainerStyleType.SHADOW,
+    layoutParams_navigationArrows_container_backgroundColor: 'rgba(0,0,0,0)',
+    layoutParams_navigationArrows_container_borderRadius: 0,
     layoutParams_info_layout: 'NO_BACKGROUND',
     layoutParams_info_spacing: 10,
     layoutParams_info_border_width: 0,

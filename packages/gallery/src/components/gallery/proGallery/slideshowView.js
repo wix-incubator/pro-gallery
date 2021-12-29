@@ -16,6 +16,7 @@ import TextItem from '../../item/textItem.js';
 import { 
   getArrowsRenderData,
   shouldRenderNavArrows,
+  getArrowBoxStyle
 } from '../../helpers/navigationArrowUtils'
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
@@ -879,6 +880,13 @@ class SlideshowView extends React.Component {
       titlePlacement,
       textBoxHeight,
     } = this.props.options;
+    const {
+      container: {
+        type,
+        backgroundColor,
+        borderRadius,
+      },
+    } = layoutParams.navigationArrows;
     const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
     const { hideLeftArrow, hideRightArrow } = this.state;
     const {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight} = getArrowsRenderData({
@@ -886,6 +894,7 @@ class SlideshowView extends React.Component {
       arrowsColor: this.props.options.arrowsColor,
       arrowsSize: this.props.options.arrowsSize,
       arrowsType: layoutParams.navigationArrows.type,
+      containerStyleType: type
     });
 
     const { galleryHeight } = this.props.container;
@@ -920,6 +929,11 @@ class SlideshowView extends React.Component {
       padding: 0,
       top: `calc(${galleryVerticalCenter} - ${navArrowsContainerHeight / 2}px - 
         ${verticalPositionFix / 2}px)`,
+      ...getArrowBoxStyle({
+        type,
+        backgroundColor,
+        borderRadius,
+      })
     };
 
     const arrowsPos =
@@ -936,13 +950,16 @@ class SlideshowView extends React.Component {
     const nextContainerStyle = {
       right: arrowsPos,
     };
-
-
+    const useDropShadow = type === GALLERY_CONSTS.arrowsContainerStyleType.SHADOW;
+    const arrowsBaseClasses = [
+      'nav-arrows-container',
+      useDropShadow ? 'drop-shadow' : ''
+    ]
     return [
       hideLeftArrow ? null : (
         <button
           className={
-            'nav-arrows-container' +
+            arrowsBaseClasses.join(' ') +
             (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')
           }
           onClick={() => this._next({ direction: -1 })}
@@ -957,7 +974,7 @@ class SlideshowView extends React.Component {
       ),
       hideRightArrow ? null : (
         <button
-          className={'nav-arrows-container'}
+          className={arrowsBaseClasses.join(' ')}
           onClick={() => this._next({ direction: 1 })}
           aria-label={`${!isRTL ? 'Next' : 'Previous'} Item`}
           tabIndex={utils.getTabIndex('slideshowNext')}

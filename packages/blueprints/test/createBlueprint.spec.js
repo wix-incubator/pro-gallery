@@ -32,6 +32,11 @@ function getExpected() {
           cropRatio: 1,
           navigationArrows: {
             type: GALLERY_CONSTS.arrowsType.DEFAULT_ARROW,
+            container: {
+              type: GALLERY_CONSTS.arrowsContainerStyleType.SHADOW,
+              backgroundColor: 'rgba(0,0,0,0)',
+              borderRadius: 0,
+            },
             enable: true,
             padding: 23,
             verticalAlignment: 'ITEM_CENTER',

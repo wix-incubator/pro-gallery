@@ -40,7 +40,14 @@ export interface NavigationArrows {
   padding?: number;
   position?: 'ON_GALLERY' | 'OUTSIDE_GALLERY';
   verticalAlignment?: 'ITEM_CENTER' | 'IMAGE_CENTER' | 'INFO_CENTER';
-  type: number;
+  type?: number;
+  container?: NavigationArrowsContainer;
+}
+
+export interface NavigationArrowsContainer {
+  type?: 'NONE' | 'SHADOW' | 'BOX';
+  borderRadius?: number;
+  backgroundColor?: string;
 }
 
 export interface Crop {
