@@ -50,7 +50,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
     expect(navArrows).to.have.lengthOf(0);
   });
 
-  it.skip('Checks if "INFO_CENTER" has correct distance from top for SlideShow', async () => {
+  it('Checks if "INFO_CENTER" has correct distance from top for SlideShow', async () => {
     // Exact style params relevant to this sub-test
     initialProps.options = mergeNestedObjects(initialProps.options, {
       arrowsVerticalPosition: 'INFO_CENTER',
@@ -59,7 +59,8 @@ describe('styleParam - arrowsVerticalPosition', () => {
     const galleryContainer = driver.getContainer();
     const { height: galleryHeight } = galleryContainer.props().style;
     const { top } = navArrows.props().style;
-    const expectedInfoSpace = (-1 * galleryHeight) / 2;
+    const expectedInfoSpace =
+      (-1 * galleryHeight) / 2 + initialProps.options.slideshowInfoSize / 2;
     expect(top.replace(/\s/g, '')).to.eq(
       getExpectedCalcExpression(expectedInfoSpace)
     );
