@@ -62,14 +62,14 @@ export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
         ? arrowsSize / 2.4
         : arrowsSize;
     const customRenderer = (position) => (
-      <span
+      <div
         style={{
           width: size,
           height: size,
         }}
       >
         {customNavArrowsRenderer(position)}
-      </span>
+      </div>
     );
     return {
       arrowRenderer: customRenderer,
