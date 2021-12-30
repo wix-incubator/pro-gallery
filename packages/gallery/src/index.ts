@@ -2,6 +2,7 @@ export { default as ProGallery } from './components/gallery/index';
 export { default as ProGalleryRenderer } from './components/gallery/rendererIndex';
 export { cssScrollHelper } from './components/helpers/cssScrollHelper';
 export { default as ItemView } from './components/item/itemView';
+export { PrintOnlyImageSource } from './components/item/printOnlySource';
 
 export { Item, PhotoItem, VideoItem, TextItem } from 'pro-gallery-lib';
 export { Container } from 'pro-gallery-lib';
