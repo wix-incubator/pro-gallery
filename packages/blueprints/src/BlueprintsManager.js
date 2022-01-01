@@ -138,11 +138,21 @@ export default class BlueprintsManager {
   }
 
   duplicateGalleryItems() {
-    const items = this.currentState.items.concat(
-      ...this.currentState.items.slice(0, this.currentState.totalItemsCount)
-    );
+    const structureWidth = this.existingBlueprint.structure.width;
+    const containerGalleryWidth = this.existingBlueprint.container.galleryWidth;
+    let numOfTimesToDupe = Math.min(1,Math.floor(containerGalleryWidth / structureWidth));
+    console.log({numOfTimesToDupe,structureWidth,containerGalleryWidth})
+    let addedItems =      [ ...this.currentState.items.slice(0, this.currentState.totalItemsCount)]
+    let _items;
+    do {
+      _items = this.currentState.items.concat(
+        addedItems
+      );
+      numOfTimesToDupe--;
+    } while (numOfTimesToDupe>0);
     this.loopingItems = true;
-    this.createBlueprint({ items });
+    console.log(_items.length)
+    this.createBlueprint({ items: _items });
   }
 
   // ------------------ Get all the needed raw data ---------------------------- //

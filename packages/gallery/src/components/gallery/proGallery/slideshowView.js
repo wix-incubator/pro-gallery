@@ -1405,6 +1405,11 @@ class SlideshowView extends React.Component {
     if (this.props.totalItemsCount !== props.totalItemsCount) {
       this.removeArrowsIfNeeded();
     }
+    if(this.isAllItemsLoaded() && !this.isLastItemFullyVisible()) {
+      console.log('GOING IN HERE, REQUESTIONG MORE ITEMS ON MOUNT')
+      this.props.getMoreItemsIfNeeded(this.props.totalItemsCount)
+    }
+    
     if (isEditMode() || isPreviewMode()) {
       if (
         //check that the change is related to the slideshow settings
@@ -1477,6 +1482,7 @@ class SlideshowView extends React.Component {
     if (this.scrollElement) {
       this.scrollElement.addEventListener('scroll', this._setCurrentItemByScroll);
     }
+
     if (this.state.activeIndex > 0) {
       this.props.actions.scrollToItem(this.state.activeIndex);
       this.onCurrentItemChanged();
