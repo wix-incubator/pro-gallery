@@ -1039,9 +1039,8 @@ class SlideshowView extends React.Component {
   }
 
   getDimensions() {
-    // const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
-    // const addition = isSlideshow ? this.props.options.slideshowInfoSize : 0
-    const addition = 0
+    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
+    const addition = isSlideshow ? this.props.options.slideshowInfoSize : 0
     const height  = this.props.container.galleryHeight + addition
     return this.props.isPrerenderMode
       ? {
@@ -1075,13 +1074,6 @@ class SlideshowView extends React.Component {
       ...galleryDimensions,
       ...galleryStyleForExternalArrows,
     };
-    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
-
-    if (isSlideshow) {
-      Object.assign(galleryStyle, {
-        paddingBottom: this.props.options.slideshowInfoSize,
-      });
-    }
 
     return (
       <div
