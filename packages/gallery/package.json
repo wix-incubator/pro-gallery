@@ -37,7 +37,7 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
-    "@vimeo/player": "2.8.2",
+    "@vimeo/player": "^2.16.2",
     "hls.js": "^0.14.12",
     "pro-gallery-blueprints": "4.0.15-beta.186",
     "pro-gallery-lib": "4.0.15-beta.186",
