@@ -14,7 +14,7 @@
     "start-playground": "node scripts/start.js"
   },
   "dependencies": {
-    "@babel/core": "7.4.3",
+    "@babel/core": "7.16.7",
     "antd": "^3.20.7",
     "css-animation": "1.5.0",
     "firebase": "^8.2.4",
