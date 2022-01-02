@@ -1,3 +1,4 @@
+import stylingParams_itemResolutionMode from './itemResolutionMode';
 import itemClick from './itemClick';
 import imageMargin from './imageMargin';
 import hoveringBehaviour from './hoveringBehaviour';
@@ -299,6 +300,8 @@ export default {
     layoutParams_navigationArrows_container_backgroundColor,
   [optionsMap.layoutParams.navigationArrows.container.borderRadius]:
     layoutParams_navigationArrows_container_borderRadius,
+  [optionsMap.stylingParams.temResolutionMode]:
+    stylingParams_itemResolutionMode,
 };
 // TODO = add the options:
 /*

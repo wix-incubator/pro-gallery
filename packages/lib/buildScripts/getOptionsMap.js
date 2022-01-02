@@ -28,6 +28,10 @@ function getOptionsMap(schema) {
 function definition(obj, schema) {
   return schema.definitions[obj.$ref.split('#/definitions/').pop()];
 }
+/**
+ * example input -> output
+ * assignByString({}, 'a_b_c', 'value') -> {a: {b: {c: 'value'}}}
+ */
 function assignByString(Obj, string, value) {
   // TODO: Figure out why I cannot import this from pro-gallery-lib
   let _obj = { ...Obj };
