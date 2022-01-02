@@ -1074,6 +1074,13 @@ class SlideshowView extends React.Component {
       ...galleryDimensions,
       ...galleryStyleForExternalArrows,
     };
+    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
+
+    if (isSlideshow) {
+      Object.assign(galleryStyle, {
+        paddingBottom: this.props.options.slideshowInfoSize,
+      });
+    }
 
     return (
       <div
