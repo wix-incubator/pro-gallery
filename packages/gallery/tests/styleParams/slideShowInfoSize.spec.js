@@ -42,7 +42,7 @@ describe('options - slideshowInfoSize', () => {
     const galleryContainer = driver.getContainer();
     const { height } = galleryContainer.props().style;
     //expect height to be container.height - slideshowInfoSize
-    expect(height).to.eq(initialProps.container.height - 250);
+    expect(height).to.eq(initialProps.container.height);
     driver.detach.proGallery();
   });
 });
