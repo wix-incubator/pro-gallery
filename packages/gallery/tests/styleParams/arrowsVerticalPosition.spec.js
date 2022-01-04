@@ -59,7 +59,8 @@ describe('styleParam - arrowsVerticalPosition', () => {
     const galleryContainer = driver.getContainer();
     const { height: galleryHeight } = galleryContainer.props().style;
     const { top } = navArrows.props().style;
-    const expectedInfoSpace = (-1 * galleryHeight) / 2;
+    const expectedInfoSpace =
+      (-1 * galleryHeight) / 2 + initialProps.options.slideshowInfoSize / 2;
     expect(top.replace(/\s/g, '')).to.eq(
       getExpectedCalcExpression(expectedInfoSpace)
     );

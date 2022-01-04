@@ -1034,17 +1034,11 @@ class SlideshowView extends React.Component {
         })
       );
     };
-    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
     return galleryStructure.columns.map((column, c) => {
       const columnStyle = {
         width: this.props.isPrerenderMode ? '100%' : column.width,
-        height: container.galleryHeight,
+        height: this.getDimensions().height 
       };
-      if (isSlideshow) {
-        Object.assign(columnStyle, {
-          paddingBottom: this.props.options.slideshowInfoSize,
-        });
-      }
       return (
         <div
           data-hook="gallery-column"
@@ -1063,6 +1057,21 @@ class SlideshowView extends React.Component {
     });
   }
 
+  getDimensions() {
+    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
+    const addition = isSlideshow ? this.props.options.slideshowInfoSize : 0
+    const height  = this.props.container.galleryHeight + addition
+    return this.props.isPrerenderMode
+      ? {
+        width: '100%',
+        height,
+      }
+      : {
+        height,
+        width: this.props.container.galleryWidth,
+      };
+}
+
   createGallery() {
     // When arrows are set outside of the gallery, gallery is resized (in dimensionsHelper -> getGalleryWidth) and needs to be positioned accordingly
     const galleryStyleForExternalArrows =
@@ -1079,27 +1088,11 @@ class SlideshowView extends React.Component {
           }
         : {};
 
-    const galleryDimensions = this.props.isPrerenderMode
-      ? {
-          width: '100%',
-          height: this.props.container.galleryHeight,
-        }
-      : {
-          height: this.props.container.galleryHeight,
-          width: this.props.container.galleryWidth,
-        };
-
+    const galleryDimensions = this.getDimensions()
     const galleryStyle = {
       ...galleryDimensions,
       ...galleryStyleForExternalArrows,
     };
-    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
-
-    if (isSlideshow) {
-      Object.assign(galleryStyle, {
-        paddingBottom: this.props.options.slideshowInfoSize,
-      });
-    }
 
     return (
       <div

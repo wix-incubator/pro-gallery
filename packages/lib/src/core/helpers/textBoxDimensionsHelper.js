@@ -43,19 +43,15 @@ function getTextBoxRightOrLeftWidth(options, customExternalInfoRendererExists) {
   if (!shouldShowTextRightOrLeft(options, customExternalInfoRendererExists)) {
     return 0;
   }
-  const {
-    targetItemSize,
-    calculateTextBoxWidthMode,
-    textBoxWidth,
-    textBoxWidthPercent,
-  } = options;
+  const { calculateTextBoxWidthMode, textBoxWidth, textBoxWidthPercent } =
+    options;
   let width = 0;
   if (
     calculateTextBoxWidthMode === TEXT_BOX_WIDTH_CALCULATION_OPTIONS.PERCENT
   ) {
     width = Math.min(100, Math.max(0, textBoxWidthPercent)) / 100;
   } else {
-    width = Math.min(targetItemSize, textBoxWidth);
+    width = textBoxWidth;
   }
   return width;
 }
