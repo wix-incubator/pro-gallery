@@ -227,7 +227,7 @@ export default {
   groupsPerStrip,
   [optionsMap.layoutParams.groups.numberOfGroupsPerRow]: groupsPerStrip,
   fixedColumns,
-  [[optionsMap.layoutParams.structure.numberOfColumns]]: fixedColumns,
+  [optionsMap.layoutParams.structure.numberOfColumns]: fixedColumns,
   arrowsPosition,
   [optionsMap.layoutParams.navigationArrows.position]: arrowsPosition,
   arrowsVerticalPosition,
