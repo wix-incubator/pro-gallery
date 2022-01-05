@@ -1,7 +1,7 @@
 const ARROWS_TYPE = {
-  DEFAULT_ARROW: 0,
-  ARROW1: 1,
-  ARROW2: 2,
+  DEFAULT_ARROW: 'DEFAULT_ARROW',
+  ARROW_2: 'ARROW_2',
+  ARROW_3: 'ARROW_3',
 };
 
 export default ARROWS_TYPE;

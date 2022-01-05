@@ -158,14 +158,14 @@ const getShouldRenderArrowsArgs = (props) => {
 const getArrowIconData = (
   arrowType = GALLERY_CONSTS.arrowsType.DEFAULT_ARROW
 ) => {
-  const { DEFAULT_ARROW, ARROW1, ARROW2 } = GALLERY_CONSTS.arrowsType;
+  const { DEFAULT_ARROW, ARROW_2, ARROW_3 } = GALLERY_CONSTS.arrowsType;
   let arrowData;
   switch (arrowType) {
-    case ARROW1:
-      arrowData = ARROWS_DATA.ARROW_1;
-      break;
-    case ARROW2:
+    case ARROW_2:
       arrowData = ARROWS_DATA.ARROW_2;
+      break;
+    case ARROW_3:
+      arrowData = ARROWS_DATA.ARROW_3;
       break;
     case DEFAULT_ARROW:
     default:
