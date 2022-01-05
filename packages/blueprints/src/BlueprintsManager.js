@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import blueprints from './Blueprints';
-import { viewModeWrapper } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, viewModeWrapper } from 'pro-gallery-lib';
 
 export default class BlueprintsManager {
   constructor({ id }) {
@@ -34,6 +34,8 @@ export default class BlueprintsManager {
       this.currentState.isUsingCustomInfoElements;
 
     params = { ...params, ...(await this.completeParams(params)) };
+
+    this.deuplicateItemsForSlideShowLoopIfNeeded(params);
 
     const _createBlueprint = async (args) => {
       if (this.api.createBlueprintImp) {
@@ -74,7 +76,7 @@ export default class BlueprintsManager {
         // work with the new items...
       }
     } else if (this.existingBlueprint.options.slideshowLoop) {
-      this.duplicateGalleryItems();
+      this.getMoreItemsByDuplicating();
     }
   }
 
@@ -137,12 +139,38 @@ export default class BlueprintsManager {
     return blueprint;
   }
 
-  duplicateGalleryItems() {
-    const items = this.currentState.items.concat(
-      ...this.currentState.items.slice(0, this.currentState.totalItemsCount)
-    );
+  duplicateGalleryItems( {items, duplicateFactor = 1}) {
+    items = items || this.currentState.items;
+    const uniqueItems = items.slice(0, this.currentState.totalItemsCount);
+    for (let i = 0; i < duplicateFactor; i++){      
+      items = items.concat(...uniqueItems);
+    }
     this.loopingItems = true;
-    this.createBlueprint({ items });
+    return items;
+  }
+
+  // Wrapper for the duplicateGalleryItems func, it duplicates, * and createBlueprint() *
+  getMoreItemsByDuplicating(){
+    const items = this.duplicateGalleryItems({});
+    this.createBlueprint({items})
+  }
+
+// The following function duplicates the items 
+  deuplicateItemsForSlideShowLoopIfNeeded(params){
+    const { items, options } = params;
+    const { slideshowLoop, scrollDirection } = options;
+    const { totalItemsCount } = this.currentState;
+    const loopThreshold = 30;
+
+    // If we've reached last items, and there are less items than the threshold
+    const numOfItemsCondition = items.length < loopThreshold && items.length === totalItemsCount;
+    // If the gallery is a horizontal scrolling gallery
+    const isHorizontalScrolling = scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
+    // If slideshowLoop is True and both conditions are True as well then we duplicate number of items
+    if (slideshowLoop && numOfItemsCondition && isHorizontalScrolling){
+      const duplicateFactor = Math.ceil(loopThreshold / items.length) - 1;
+      params.items = this.duplicateGalleryItems({items, duplicateFactor});
+    }
   }
 
   // ------------------ Get all the needed raw data ---------------------------- //
