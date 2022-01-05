@@ -207,7 +207,7 @@ class ImageItem extends React.Component {
 
       const shouldRenderHighResImages = !this.props.isPrerenderMode;
       let src = "";
-      if (options.stylingParams?.itemResolutionMode === 'FULL') {
+      if (options.stylingParams?.itemResolutionMode === GALLERY_CONSTS.itemResolutionMode.FULL) {
         src = createUrl(
             GALLERY_CONSTS.urlSizes.FULL,
             GALLERY_CONSTS.urlTypes.HIGH_RES
