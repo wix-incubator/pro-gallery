@@ -106,6 +106,7 @@ import layoutParams_navigationArrows_type from './layoutParams_navigationArrows_
 import layoutParams_navigationArrows_container_type from './layoutParams_navigationArrows_container_type';
 import layoutParams_navigationArrows_container_backgroundColor from './layoutParams_navigationArrows_container_backgroundColor';
 import layoutParams_navigationArrows_container_borderRadius from './layoutParams_navigationArrows_container_borderRadius';
+import layoutParams_crop_ratios from './layoutParams_crop_ratios';
 
 export default {
   [optionsMap.behaviourParams.gallery.vertical.loadMore.text]:
@@ -114,7 +115,7 @@ export default {
   [optionsMap.layoutParams.structure.gallerySpacing]:
     layoutParams_gallerySpacing,
   layoutParams_cropRatio,
-  [optionsMap.layoutParams.crop.ratios]: layoutParams_cropRatio,
+  [optionsMap.layoutParams.crop.ratios]: layoutParams_crop_ratios,
   layoutParams_repeatingGroupTypes,
   [optionsMap.layoutParams.groups.repeatingGroupTypes]:
     layoutParams_repeatingGroupTypes,
