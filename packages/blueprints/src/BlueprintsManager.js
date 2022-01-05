@@ -76,7 +76,7 @@ export default class BlueprintsManager {
         // work with the new items...
       }
     } else if (this.existingBlueprint.options.slideshowLoop) {
-      this.getMoreItemsByDuplicating();
+      this.duplicateItemsAndCreateBlueprint();
     }
   }
 
@@ -149,8 +149,8 @@ export default class BlueprintsManager {
     return items;
   }
 
-  // Wrapper for the duplicateGalleryItems func, it duplicates, * and createBlueprint() *
-  getMoreItemsByDuplicating(){
+  // Wrapper for the duplicateGalleryItems func, it duplicates, and createBlueprint with duplicated items *
+  duplicateItemsAndCreateBlueprint(){
     const items = this.duplicateGalleryItems({});
     this.createBlueprint({items})
   }
