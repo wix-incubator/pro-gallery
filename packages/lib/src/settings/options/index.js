@@ -160,7 +160,7 @@ export default {
   [optionsMap.layoutParams.info.border.width]: textBoxBorderWidth,
   textBoxWidth,
   textBoxWidthPercent,
-  [optionsMap.layoutParams.info.width]: textBoxWidthPercent, // check options for export textBoxWidthPercent, textBoxWidth,
+  [optionsMap.layoutParams.info.width]: textBoxWidthPercent,
   imageInfoType,
   [optionsMap.layoutParams.info.layout]: imageInfoType,
   groupSize,
@@ -227,7 +227,7 @@ export default {
   groupsPerStrip,
   [optionsMap.layoutParams.groups.numberOfGroupsPerRow]: groupsPerStrip,
   fixedColumns,
-  [[optionsMap.layoutParams.structure.numberOfColumns]]: fixedColumns, // check
+  [[optionsMap.layoutParams.structure.numberOfColumns]]: fixedColumns,
   arrowsPosition,
   [optionsMap.layoutParams.navigationArrows.position]: arrowsPosition,
   arrowsVerticalPosition,
@@ -258,7 +258,7 @@ export default {
   gallerySize,
   gallerySizePx,
   gallerySizeRatio,
-  [optionsMap.layoutParams.targetItemSize.value]: gallerySize, // options for export gallerySizePx, gallerySizeRatio,gallerySize
+  [optionsMap.layoutParams.targetItemSize.value]: gallerySize,
   allowContextMenu,
   [optionsMap.behaviourParams.gallery.blockContextMenu]: allowContextMenu,
   galleryLayout,
