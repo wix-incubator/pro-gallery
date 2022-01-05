@@ -4,7 +4,7 @@ import hoveringBehaviour from './hoveringBehaviour';
 import enableInfiniteScroll from './enableInfiniteScroll';
 import cubeType from './cubeType';
 import cubeImages from './cubeImages';
-import layoutParams_cropRatio from './cropRatio';
+import cropRatio from './cropRatio';
 import titlePlacement from './titlePlacement';
 import layoutParams_gallerySpacing from './gallerySpacing';
 import isVertical from './isVertical';
@@ -110,7 +110,8 @@ export default {
   layoutParams_gallerySpacing,
   [optionsMap.layoutParams.structure.gallerySpacing]:
     layoutParams_gallerySpacing,
-  layoutParams_cropRatio,
+  cropRatio,
+  [optionsMap.layoutParams.crop.ratios]: cropRatio,
   layoutParams_repeatingGroupTypes,
   itemClick,
   [optionsMap.behaviourParams.item.clickAction]: itemClick,
