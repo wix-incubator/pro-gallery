@@ -155,18 +155,18 @@ export default class BlueprintsManager {
     this.createBlueprint({items})
   }
 
-// The following function duplicates the items 
+// The following function duplicate the items if necessary for slideshowLoop
   deuplicateItemsForSlideShowLoopIfNeeded(params){
     const { items, options } = params;
     const { slideshowLoop, scrollDirection } = options;
     const { totalItemsCount } = this.currentState;
     const loopThreshold = 30;
 
-    // If we've reached last items, and there are less items than the threshold
+    // If we've reached last items (no more items in server), and there are less items than the threshold
     const numOfItemsCondition = items.length < loopThreshold && items.length === totalItemsCount;
     // If the gallery is a horizontal scrolling gallery
     const isHorizontalScrolling = scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
-    // If slideshowLoop is True and both conditions are True as well then we duplicate number of items
+    // If slideshowLoop is True and both conditions are True as well then we duplicate number of items to reach threshold
     if (slideshowLoop && numOfItemsCondition && isHorizontalScrolling){
       const duplicateFactor = Math.ceil(loopThreshold / items.length) - 1;
       params.items = this.duplicateGalleryItems({items, duplicateFactor});
