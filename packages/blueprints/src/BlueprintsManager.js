@@ -35,7 +35,7 @@ export default class BlueprintsManager {
 
     params = { ...params, ...(await this.completeParams(params)) };
 
-    this.deuplicateItemsForSlideShowLoopIfNeeded(params);
+    this.duplicateItemsForSlideshowLoopIfNeeded(params);
 
     const _createBlueprint = async (args) => {
       if (this.api.createBlueprintImp) {
@@ -156,7 +156,7 @@ export default class BlueprintsManager {
   }
 
 // The following function duplicate the items if necessary for slideshowLoop
-  deuplicateItemsForSlideShowLoopIfNeeded(params){
+  duplicateItemsForSlideshowLoopIfNeeded(params){
     const { items, options } = params;
     const { slideshowLoop, scrollDirection } = options;
     const { totalItemsCount } = this.currentState;
