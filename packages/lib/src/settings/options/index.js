@@ -101,18 +101,20 @@ import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
 import behaviourParams_item_content_magnificationValue from './magnificationValue';
 import arrowsColor from './arrowsColor';
 import optionsMap from '../../core/helpers/optionsMap';
+import loadMoreButtonText from './loadMoreButtonText';
 import layoutParams_navigationArrows_type from './layoutParams_navigationArrows_type';
 import layoutParams_navigationArrows_container_type from './layoutParams_navigationArrows_container_type';
 import layoutParams_navigationArrows_container_backgroundColor from './layoutParams_navigationArrows_container_backgroundColor';
 import layoutParams_navigationArrows_container_borderRadius from './layoutParams_navigationArrows_container_borderRadius';
 
-// comments ask yonatan or izhak crop.ratios, loadMoreButtonText
-
 export default {
+  [optionsMap.behaviourParams.gallery.vertical.loadMore.text]:
+    loadMoreButtonText,
   layoutParams_gallerySpacing,
   [optionsMap.layoutParams.structure.gallerySpacing]:
     layoutParams_gallerySpacing,
   layoutParams_cropRatio,
+  [optionsMap.layoutParams.crop.ratios]: layoutParams_cropRatio,
   layoutParams_repeatingGroupTypes,
   [optionsMap.layoutParams.groups.repeatingGroupTypes]:
     layoutParams_repeatingGroupTypes,
