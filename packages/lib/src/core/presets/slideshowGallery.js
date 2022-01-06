@@ -1,14 +1,12 @@
 import LAYOUTS from '../../common/constants/layout';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
-import IMAGE_PLACEMENT_ANIMATIONS from '../../common/constants/imagePlacementAnimations';
-import IMAGE_HOVER_ANIMATIONS from '../../common/constants/imageHoverAnimations';
-import OVERLAY_ANIMATIONS from '../../common/constants/overlayAnimations';
 import {
   calcTargetItemSize,
   removeBordersIfNeeded,
 } from '../helpers/layoutHelper';
 import { assignByString } from '../helpers/optionsUtils';
+import disableAnimationsForSlideshowLayouts from './disableAnimationsForSlideshowLayouts';
 
 const fixToSlideshow = (options) => {
   let presetOptions = { ...options };
@@ -35,9 +33,7 @@ const fixToSlideshow = (options) => {
   presetOptions.itemBorderColor = undefined;
   presetOptions.numberOfImagesPerCol = 1;
 
-  presetOptions.imagePlacementAnimation = IMAGE_PLACEMENT_ANIMATIONS.NO_EFFECT;
-  presetOptions.overlayAnimation = OVERLAY_ANIMATIONS.NO_EFFECT;
-  presetOptions.imageHoverAnimation = IMAGE_HOVER_ANIMATIONS.NO_EFFECT;
+  disableAnimationsForSlideshowLayouts(presetOptions);
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   presetOptions.smartCrop = false;
