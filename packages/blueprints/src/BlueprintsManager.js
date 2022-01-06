@@ -96,6 +96,8 @@ export default class BlueprintsManager {
         this.api.isUsingCustomInfoElements()) ||
       this.currentState.isUsingCustomInfoElements;
 
+    this.duplicateItemsForSlideshowLoopIfNeeded(params);
+
     const { blueprint, changedParams } = blueprints.createBlueprint({
       params,
       lastParams: this.currentState,
