@@ -21,7 +21,6 @@ import {
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
 import {getSlideAnimationStyles, getCustomInfoRendererProps, getLinkParams} from './pure'
-import { extractTextItemContent } from './itemHelper';
 class ItemView extends React.Component {
   constructor(props) {
     super(props);
@@ -782,10 +781,10 @@ class ItemView extends React.Component {
 
 
   getItemAriaLabel() {
-    const { type, calculatedAlt, options } = this.props;
+    const { type, calculatedAlt, htmlContent, options } = this.props;
     const mapTypeToLabel = {
       'dummy': '',
-      'text' : extractTextItemContent(this.props.html),
+      'text' : htmlContent,
       'video': calculatedAlt || 'Untitled video',
       'image': calculatedAlt || 'Untitled image',
     }

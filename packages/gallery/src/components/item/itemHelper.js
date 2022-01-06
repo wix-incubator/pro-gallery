@@ -83,7 +83,3 @@ export function shouldCreateVideoPlaceholder(options) {
       options.videoPlay !== GALLERY_CONSTS.videoPlay.AUTO)
   );
 }
-
-export function extractTextItemContent(html) {
-  return html?.replace(/<[^<>]*>/g, '').trim();
-}

@@ -89,6 +89,7 @@ class GalleryItem {
       url: this.url,
       alt: this.alt,
       calculatedAlt: this.calculatedAlt,
+      htmlContent: this.htmlContent,
       directLink: this.directLink,
       directShareLink: this.directShareLink,
       linkUrl: this.linkUrl,
@@ -652,6 +653,10 @@ class GalleryItem {
       this.fileName ||
       ''
     );
+  }
+
+  get htmlContent() {
+    return this.html?.replace(/<[^<>]*>/g, '').trim();
   }
 
   get alt() {
