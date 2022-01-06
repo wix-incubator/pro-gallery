@@ -770,10 +770,11 @@ class ItemView extends React.Component {
     styles.height = height + 'px';
     styles.width = width + 'px';
     styles.margin = -options.itemBorderWidth + 'px';
+    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(options)
 
     const itemWrapperStyles = {
       ...styles,
-      ...(getSlideAnimationStyles(this.props)),
+      ...(!isSlideshow && getSlideAnimationStyles(this.props)),
     };
 
     return itemWrapperStyles;

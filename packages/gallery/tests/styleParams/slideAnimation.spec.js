@@ -34,7 +34,7 @@ describe('options - slideAnimation', () => {
     afterEach(() => {
       driver.detach.proGallery();
     });
-    it.skip('should set the correct "Fade" animation styles to the items', async () => {
+    it('should set the correct "Fade" animation styles to the items', async () => {
       initialProps.options = mergeNestedObjects(initialProps.options, {
         galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
         slideAnimation: GALLERY_CONSTS.slideAnimations.FADE,
