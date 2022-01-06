@@ -35,7 +35,7 @@ export default class BlueprintsManager {
 
     params = { ...params, ...(await this.completeParams(params)) };
 
-    this.duplicateItemsForSlideshowLoopIfNeeded(params);
+    params = this.duplicateItemsForSlideshowLoopIfNeeded(params);
 
     const _createBlueprint = async (args) => {
       if (this.api.createBlueprintImp) {
@@ -96,7 +96,7 @@ export default class BlueprintsManager {
         this.api.isUsingCustomInfoElements()) ||
       this.currentState.isUsingCustomInfoElements;
 
-    this.duplicateItemsForSlideshowLoopIfNeeded(params);
+    params = this.duplicateItemsForSlideshowLoopIfNeeded(params);
 
     const { blueprint, changedParams } = blueprints.createBlueprint({
       params,
@@ -171,8 +171,9 @@ export default class BlueprintsManager {
     // If slideshowLoop is True and both conditions are True as well then we duplicate number of items to reach threshold
     if (slideshowLoop && numOfItemsCondition && isHorizontalScrolling){
       const duplicateFactor = Math.ceil(loopThreshold / items.length) - 1;
-      params.items = this.duplicateGalleryItems({items, duplicateFactor});
+      return {...params, items: this.duplicateGalleryItems({items, duplicateFactor})};
     }
+    return params;
   }
 
   // ------------------ Get all the needed raw data ---------------------------- //
