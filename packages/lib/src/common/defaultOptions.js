@@ -9,6 +9,14 @@ import {
 const defaultOptions = mergeNestedObjects(coreOptions, {
   layoutParams: {
     repeatingGroupTypes: '',
+    navigationArrows: {
+      type: GALLERY_CONSTS.arrowsType.DEFAULT_ARROW,
+      container: {
+        type: GALLERY_CONSTS.arrowsContainerStyleType.SHADOW,
+        backgroundColor: 'rgba(0,0,0,0)',
+        borderRadius: 0,
+      },
+    },
   },
   behaviourParams: {
     item: {
@@ -67,7 +75,6 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   overlaySizeType: GALLERY_CONSTS.overlaySizeType.PERCENT,
   overlayPadding: 0,
   cubeFitPosition: GALLERY_CONSTS.cubeFitPosition.MIDDLE,
-
   //migrated: keep here or it will still break users of this (no dependency on refactor)
   magnificationLevel: 2,
 });

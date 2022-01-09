@@ -206,11 +206,12 @@ class ImageItem extends React.Component {
       }
 
       const shouldRenderHighResImages = !this.props.isPrerenderMode;
-      const src =
-        createUrl(
-    GALLERY_CONSTS.urlSizes.MULTI,
+      const imageType = options.stylingParams?.itemResolutionMode === GALLERY_CONSTS.itemResolutionMode.FULL
+              ? GALLERY_CONSTS.urlSizes.FULL : GALLERY_CONSTS.urlSizes.MULTI;
+      const src = createUrl(
+            imageType,
             GALLERY_CONSTS.urlTypes.HIGH_RES
-          );
+        );
 
       const highres = (
         <ImageRenderer
@@ -221,6 +222,7 @@ class ImageItem extends React.Component {
           src={src}
           alt={calculatedAlt ? calculatedAlt : 'untitled image'}
           onLoad={this.handleHighResImageLoad}
+          loading={this.props.isPrerenderMode ? 'lazy' : 'eager'}
           style={{
             ...imageSizing,
             ...blockDownloadStyles,

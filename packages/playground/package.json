@@ -1,6 +1,6 @@
 {
   "name": "pro-playground",
-  "version": "4.0.15-beta.176",
+  "version": "4.0.15-beta.198",
   "private": true,
   "scripts": {
     "watch": "sleep 10 && node scripts/start.js",
@@ -14,18 +14,18 @@
     "start-playground": "node scripts/start.js"
   },
   "dependencies": {
-    "@babel/core": "7.4.3",
+    "@babel/core": "7.16.7",
     "antd": "^3.20.7",
     "css-animation": "1.5.0",
     "firebase": "^8.2.4",
     "image-client-api": "^1.3130.0",
-    "lean-gallery": "4.0.15-beta.176",
+    "lean-gallery": "4.0.15-beta.198",
     "lodash.clonedeep": "^4.5.0",
     "moment": "2.24.0",
-    "pro-gallery": "4.0.15-beta.176",
-    "pro-gallery-blueprints": "4.0.15-beta.176",
-    "pro-gallery-lib": "4.0.15-beta.176",
-    "pro-layouts": "4.0.15-beta.176",
+    "pro-gallery": "4.0.15-beta.198",
+    "pro-gallery-blueprints": "4.0.15-beta.198",
+    "pro-gallery-lib": "4.0.15-beta.198",
+    "pro-layouts": "4.0.15-beta.198",
     "re-resizable": "^6.8.0",
     "react": "^16.8.6",
     "react-color": "^2.17.3",

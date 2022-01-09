@@ -1,6 +1,6 @@
 {
   "name": "ssr-simulator",
-  "version": "4.0.15-beta.176",
+  "version": "4.0.15-beta.198",
   "private": true,
   "engines": {
     "node": ">=10.15"
@@ -20,7 +20,7 @@
     "docker": "npm run docker:build && npm run docker:start"
   },
   "dependencies": {
-    "@babel/core": "7.4.3",
+    "@babel/core": "7.16.7",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.5.5",
@@ -67,8 +67,8 @@
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
     "prettier": "^2.1.2",
-    "pro-gallery": "4.0.15-beta.176",
-    "pro-layouts": "4.0.15-beta.176",
+    "pro-gallery": "4.0.15-beta.198",
+    "pro-layouts": "4.0.15-beta.198",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dev-utils": "^11.0.0",

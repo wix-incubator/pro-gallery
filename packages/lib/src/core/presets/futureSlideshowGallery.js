@@ -6,6 +6,7 @@ import {
   removeBordersIfNeeded,
 } from '../helpers/layoutHelper';
 import { assignByString } from '../helpers/optionsUtils';
+import disableAnimationsForSlideshowLayouts from './disableAnimationsForSlideshowLayouts';
 
 const fixToSlideshow = (options) => {
   let presetOptions = { ...options };
@@ -26,11 +27,13 @@ const fixToSlideshow = (options) => {
   );
   presetOptions.isVertical = false;
   presetOptions.groupSize = 1;
+  presetOptions.titlePlacement = 'SHOW_BELOW';
   presetOptions.groupTypes = '1';
   presetOptions.itemBorderWidth = 0;
   presetOptions.itemBorderRadius = 0;
   presetOptions.itemBorderColor = undefined;
   presetOptions.numberOfImagesPerCol = 1;
+  disableAnimationsForSlideshowLayouts(presetOptions);
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   presetOptions.smartCrop = false;

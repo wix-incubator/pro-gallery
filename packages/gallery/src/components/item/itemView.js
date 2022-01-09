@@ -456,8 +456,7 @@ class ItemView extends React.Component {
 
     const itemStyles = { width: innerWidth, height: innerHeight, marginTop: innerTop, marginLeft: innerLeft };
     let itemHover = null;
-    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(options)
-    if (this.shouldHover() || isSlideshow) {
+    if (this.shouldHover()) {
       itemHover = this.getItemHover(itemStyles);
     }
 
@@ -481,7 +480,7 @@ class ItemView extends React.Component {
         }
     }
 
-    if (isSlideshow) {
+    if (GALLERY_CONSTS.isLayout('SLIDESHOW')(options)) {
       return this.getSlideshowItemInner({options, width, height, itemInner, customComponents: this.props.customComponents})
     }
 
@@ -771,11 +770,10 @@ class ItemView extends React.Component {
     styles.height = height + 'px';
     styles.width = width + 'px';
     styles.margin = -options.itemBorderWidth + 'px';
-    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(options)
 
     const itemWrapperStyles = {
       ...styles,
-      ...(!isSlideshow && getSlideAnimationStyles(this.props)),
+      ...(getSlideAnimationStyles(this.props)),
     };
 
     return itemWrapperStyles;
@@ -795,7 +793,6 @@ class ItemView extends React.Component {
 
   getItemContainerClass() {
     const { options } = this.props;
-    const isNOTslideshow = !GALLERY_CONSTS.isLayout('SLIDESHOW')(options);
     const imagePlacementAnimation = options.imagePlacementAnimation;
     const overlayAnimation = options.overlayAnimation;
     const imageHoverAnimation = options.imageHoverAnimation;
@@ -812,51 +809,37 @@ class ItemView extends React.Component {
 
       //animations
       'animation-slide':
-        isNOTslideshow &&
         imagePlacementAnimation ===
           GALLERY_CONSTS.imagePlacementAnimations.SLIDE,
 
       //overlay animations
       'hover-animation-fade-in':
-        isNOTslideshow &&
         overlayAnimation === GALLERY_CONSTS.overlayAnimations.FADE_IN,
       'hover-animation-expand':
-        isNOTslideshow &&
         overlayAnimation === GALLERY_CONSTS.overlayAnimations.EXPAND,
       'hover-animation-slide-up':
-        isNOTslideshow &&
         overlayAnimation === GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
       'hover-animation-slide-right':
-        isNOTslideshow &&
         overlayAnimation === GALLERY_CONSTS.overlayAnimations.SLIDE_RIGHT,
       'hover-animation-slide-down':
-        isNOTslideshow &&
         overlayAnimation === GALLERY_CONSTS.overlayAnimations.SLIDE_DOWN,
       'hover-animation-slide-left':
-        isNOTslideshow &&
         overlayAnimation === GALLERY_CONSTS.overlayAnimations.SLIDE_LEFT,
 
       //image hover animations
       'zoom-in-on-hover':
-        isNOTslideshow &&
         imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.ZOOM_IN,
       'blur-on-hover':
-        isNOTslideshow &&
         imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.BLUR,
       'grayscale-on-hover':
-        isNOTslideshow &&
         imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.GRAYSCALE,
       'shrink-on-hover':
-        isNOTslideshow &&
         imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.SHRINK,
       'invert-on-hover':
-        isNOTslideshow &&
         imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.INVERT,
       'color-in-on-hover':
-        isNOTslideshow &&
         imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.COLOR_IN,
       'darkened-on-hover':
-        isNOTslideshow &&
         imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.DARKENED,
 
       'pro-gallery-mobile-indicator': utils.isMobile(),
@@ -1000,7 +983,7 @@ class ItemView extends React.Component {
         {this.getLeftInfoElementIfNeeded()}
         <div
           style={{
-            ...(!this.props.options.isSlideshow &&
+            ...(
               getImageStyle(this.props.options)),
             ...(GALLERY_CONSTS.hasExternalRightPlacement(
               this.props.options.titlePlacement,

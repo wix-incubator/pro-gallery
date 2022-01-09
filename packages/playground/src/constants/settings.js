@@ -119,6 +119,10 @@ export const optionsBySection = {
     'arrowsPosition',
     'arrowsPadding',
     'arrowsVerticalPosition',
+    'layoutParams_navigationArrows_type',
+    'layoutParams_navigationArrows_container_type',
+    'layoutParams_navigationArrows_container_backgroundColor',
+    'layoutParams_navigationArrows_container_borderRadius',
 
     'overlayBackground',
     'overlayPosition',
@@ -157,6 +161,7 @@ export const optionsBySection = {
     'slideTransition',
   ],
   [SECTIONS.IMAGE]: [
+    'stylingParams_itemResolutionMode',
     // 'imageQuality',
     // 'usmToggle',
     // 'usm_a',
