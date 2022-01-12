@@ -55,9 +55,11 @@ import overlaySizeType from './overlaySizeType';
 import autoSlideshowTypes from './autoSlideshowTypes';
 import arrowsType from './arrowsType';
 import arrowsContainerStyleType from './arrowsContainerStyleType';
+import itemResolutionMode from './itemResolutionMode';
 
 export default {
   arrowsPosition,
+  itemResolutionMode,
   arrowsVerticalPosition,
   cubeType,
   dimensions,

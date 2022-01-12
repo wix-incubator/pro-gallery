@@ -161,6 +161,7 @@ export const optionsBySection = {
     'slideTransition',
   ],
   [SECTIONS.IMAGE]: [
+    'stylingParams_itemResolutionMode',
     // 'imageQuality',
     // 'usmToggle',
     // 'usm_a',

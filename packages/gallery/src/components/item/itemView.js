@@ -21,7 +21,6 @@ import {
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
 import {getSlideAnimationStyles, getCustomInfoRendererProps, getLinkParams} from './pure'
-import { extractTextItemContent } from './itemHelper';
 class ItemView extends React.Component {
   constructor(props) {
     super(props);
@@ -35,7 +34,6 @@ class ItemView extends React.Component {
     this.state = {
       isCurrentHover: false,
       itemWasHovered: false,
-      ariaLabel: '',
     };
 
     this.activeElement = '';
@@ -770,11 +768,10 @@ class ItemView extends React.Component {
     styles.height = height + 'px';
     styles.width = width + 'px';
     styles.margin = -options.itemBorderWidth + 'px';
-    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(options)
 
     const itemWrapperStyles = {
       ...styles,
-      ...(!isSlideshow && getSlideAnimationStyles(this.props)),
+      ...(getSlideAnimationStyles(this.props)),
     };
 
     return itemWrapperStyles;
@@ -782,19 +779,19 @@ class ItemView extends React.Component {
 
 
   getItemAriaLabel() {
-    const { type, alt, options } = this.props;
+    const { type, calculatedAlt, htmlContent, options } = this.props;
     const mapTypeToLabel = {
       'dummy': '',
-      'text' : extractTextItemContent(this.props.html),
-      'video': alt || 'Untitled video',
+      'text' : htmlContent,
+      'video': calculatedAlt || 'Untitled video',
+      'image': calculatedAlt || 'Untitled image',
     }
-    const label = mapTypeToLabel[type] || alt || 'Untitled image';
+    const label = mapTypeToLabel[type];
     return label + (options.isStoreGallery ? ', Buy Now' : '');
   }
 
   getItemContainerClass() {
     const { options } = this.props;
-    const isNOTslideshow = !GALLERY_CONSTS.isLayout('SLIDESHOW')(options);
     const imagePlacementAnimation = options.imagePlacementAnimation;
     const overlayAnimation = options.overlayAnimation;
     const imageHoverAnimation = options.imageHoverAnimation;
@@ -811,51 +808,37 @@ class ItemView extends React.Component {
 
       //animations
       'animation-slide':
-        isNOTslideshow &&
         imagePlacementAnimation ===
           GALLERY_CONSTS.imagePlacementAnimations.SLIDE,
 
       //overlay animations
       'hover-animation-fade-in':
-        isNOTslideshow &&
         overlayAnimation === GALLERY_CONSTS.overlayAnimations.FADE_IN,
       'hover-animation-expand':
-        isNOTslideshow &&
         overlayAnimation === GALLERY_CONSTS.overlayAnimations.EXPAND,
       'hover-animation-slide-up':
-        isNOTslideshow &&
         overlayAnimation === GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
       'hover-animation-slide-right':
-        isNOTslideshow &&
         overlayAnimation === GALLERY_CONSTS.overlayAnimations.SLIDE_RIGHT,
       'hover-animation-slide-down':
-        isNOTslideshow &&
         overlayAnimation === GALLERY_CONSTS.overlayAnimations.SLIDE_DOWN,
       'hover-animation-slide-left':
-        isNOTslideshow &&
         overlayAnimation === GALLERY_CONSTS.overlayAnimations.SLIDE_LEFT,
 
       //image hover animations
       'zoom-in-on-hover':
-        isNOTslideshow &&
         imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.ZOOM_IN,
       'blur-on-hover':
-        isNOTslideshow &&
         imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.BLUR,
       'grayscale-on-hover':
-        isNOTslideshow &&
         imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.GRAYSCALE,
       'shrink-on-hover':
-        isNOTslideshow &&
         imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.SHRINK,
       'invert-on-hover':
-        isNOTslideshow &&
         imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.INVERT,
       'color-in-on-hover':
-        isNOTslideshow &&
         imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.COLOR_IN,
       'darkened-on-hover':
-        isNOTslideshow &&
         imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.DARKENED,
 
       'pro-gallery-mobile-indicator': utils.isMobile(),
@@ -905,10 +888,6 @@ class ItemView extends React.Component {
       'current_hover_change',
       this.checkIfCurrentHoverChanged
     );
-
-    this.setState({
-      ariaLabel: this.getItemAriaLabel(),
-    });
 
   }
 
@@ -986,7 +965,7 @@ class ItemView extends React.Component {
         onBlur={this.onBlur} // The onblur event is the opposite of the onfocus event.
         onKeyDown={this.onContainerKeyDown}
         tabIndex={this.getItemContainerTabIndex()}
-        aria-label={this.state.ariaLabel}
+        aria-label={this.getItemAriaLabel()}
         data-hash={hash}
         data-id={photoId}
         data-idx={idx}

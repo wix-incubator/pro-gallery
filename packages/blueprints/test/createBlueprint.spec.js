@@ -1112,5 +1112,7 @@ function getExpected() {
       containerChanged: true,
     },
     blueprintManagerId: "pgStore comp-ko6zmnby's blueprintsManager",
+    reasons:
+      'items: old items do not exist., itemsAdded: old items do not exist., options: no old options., container: ',
   };
 }

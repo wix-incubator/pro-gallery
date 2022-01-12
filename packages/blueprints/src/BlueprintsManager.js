@@ -7,6 +7,7 @@ export default class BlueprintsManager {
     this.id = id + `'s blueprintsManager`;
     this.currentState = {};
     this.existingBlueprint = {};
+    this.lastBlueprintId = 0;
     this.cache = {};
     this.api = {};
     this.currentState.totalItemsCount = Infinity;
@@ -21,7 +22,13 @@ export default class BlueprintsManager {
     viewModeWrapper.setDeviceType(config.deviceType);
   }
 
+  setCurrentBlueprint(id) {
+    this.lastBlueprintId = id;
+  }
+
   async createBlueprint(params = {}) {
+    const lastBlueprintId = Math.floor(Math.random() * 1000);
+
     this.currentState.totalItemsCount =
       params.totalItemsCount ||
       (this.api.getTotalItemsCount && this.api.getTotalItemsCount()) ||
@@ -38,19 +45,22 @@ export default class BlueprintsManager {
     params = this.duplicateItemsForSlideshowLoopIfNeeded(params);
 
     const _createBlueprint = async (args) => {
+      this.setCurrentBlueprint(args.blueprintManagerId);
       if (this.api.createBlueprintImp) {
         return await this.api.createBlueprintImp(args);
       } else {
         return await blueprints.createBlueprint(args);
       }
     };
-    const { blueprint, changedParams } = await _createBlueprint({
+    const { blueprintManagerId, blueprint, changedParams, reasons } = await _createBlueprint({
       params,
       lastParams: this.currentState,
       existingBlueprint: this.existingBlueprint,
-      blueprintManagerId: this.id,
+      blueprintManagerId: this.id + lastBlueprintId,
       isUsingCustomInfoElements: this.currentState.isUsingCustomInfoElements,
     });
+
+    if (blueprintManagerId !== (this.id + this.lastBlueprintId)) return;
 
     const blueprintChanged = Object.values(changedParams).some(
       (changedParam) => !!changedParam
@@ -62,7 +72,7 @@ export default class BlueprintsManager {
 
     blueprintCreated &&
       this.api.onBlueprintReady &&
-      this.api.onBlueprintReady({ blueprint, blueprintChanged });
+      this.api.onBlueprintReady({ blueprint, blueprintChanged, reasons });
     return (this.cache[params] = this.existingBlueprint = blueprint); // still returning for awaits... event is !blueprintCreated
   }
 
@@ -98,7 +108,7 @@ export default class BlueprintsManager {
 
     params = this.duplicateItemsForSlideshowLoopIfNeeded(params);
 
-    const { blueprint, changedParams } = blueprints.createBlueprint({
+    const { blueprint, changedParams, reasons } = blueprints.createBlueprint({
       params,
       lastParams: this.currentState,
       existingBlueprint: this.existingBlueprint,
@@ -119,6 +129,7 @@ export default class BlueprintsManager {
       this.api.onBlueprintReady({
         blueprint,
         blueprintChanged,
+        reasons,
         initialBlueprint: true,
       });
     return (
