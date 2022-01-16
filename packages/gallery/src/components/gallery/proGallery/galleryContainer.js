@@ -19,6 +19,7 @@ import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper';
 import findNeighborItem from '../../helpers/layoutUtils';
 import ImageRenderer from '../../item/imageRenderer';
+import { isGalleryInViewport } from './galleryHelpers';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -55,6 +56,7 @@ export class GalleryContainer extends React.Component {
       viewComponent: null,
       firstUserInteractionExecuted: false,
       isInHover: false,
+      isVisible: this.isVisible(),
     };
 
     this.state = initialState;
@@ -534,6 +536,25 @@ export class GalleryContainer extends React.Component {
       top,
       left,
     });
+    this.updateVisibility();
+  }
+
+  isVisible = () => {
+    return isGalleryInViewport(this.props.container);
+  }
+
+  updateVisibility = () => {
+    const isVisible = this.isVisible();
+    if (this.state.isVisible !== isVisible) {
+      this.setState({
+        isVisible,
+      });
+    }
+  }
+
+  componentDidUpdate() {
+   // in order to update when container is available
+   this.updateVisibility();
   }
 
   createDynamicStyles({ overlayBackground }, isPrerenderMode) {
@@ -784,6 +805,7 @@ export class GalleryContainer extends React.Component {
         />
         <ViewComponent
           isInDisplay={this.props.isInDisplay}
+          isVisible={this.state.isVisible}
           isPrerenderMode={this.props.isPrerenderMode}
           scrollingElement={this._scrollingElement}
           totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items

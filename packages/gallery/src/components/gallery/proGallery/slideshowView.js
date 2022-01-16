@@ -33,8 +33,6 @@ class SlideshowView extends React.Component {
   constructor(props) {
     super(props);
 
-    this.navigationOutHandler = this.navigationOutHandler.bind(this);
-    this.navigationInHandler = this.navigationInHandler.bind(this);
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
     this.clearAutoSlideshowInterval = this.clearAutoSlideshowInterval.bind(this);
     this.onFocus = this.onFocus.bind(this);
@@ -1326,7 +1324,7 @@ class SlideshowView extends React.Component {
 
   //-----------------------------------------| REACT |--------------------------------------------//
 
-  blockAutoSlideshowIfNeeded(props = this.props) {
+  blockAutoSlideshowIfNeeded(props = this.props, forceStartAutoSlideshowIfNeeded = false) {
     const { isGalleryInHover, options, settings } = props;
     const { pauseAutoSlideshowClicked, shouldBlockAutoSlideshow, isInView, isInFocus } =
       this.state;
@@ -1348,8 +1346,8 @@ class SlideshowView extends React.Component {
       this.setState({ shouldBlockAutoSlideshow: should }, () => {
         this.startAutoSlideshowIfNeeded(options);
       });
-    } else {
-      return;
+    } else if (forceStartAutoSlideshowIfNeeded) {
+      this.startAutoSlideshowIfNeeded(options);
     }
   }
 
@@ -1375,12 +1373,12 @@ class SlideshowView extends React.Component {
     if (props.items) {
       this.ItemsForSlideshowLoopThumbnails = false;
     }
-    if (this.props.isInDisplay !== props.isInDisplay) {
-      this.setState({ isInView: props.isInDisplay }, () =>
-        this.blockAutoSlideshowIfNeeded(props)
+    if (this.props.isVisible !== props.isVisible) {
+      this.setState({ isInView: props.isVisible }, () => {
+          this.blockAutoSlideshowIfNeeded(props, true);
+        }
       );
-    }
-    if (this.props.isGalleryInHover !== props.isGalleryInHover) {
+    } else if (this.props.isGalleryInHover !== props.isGalleryInHover) {
       this.blockAutoSlideshowIfNeeded(props);
     }
     if (this.props.activeIndex !== props.activeIndex) {
@@ -1441,28 +1439,8 @@ class SlideshowView extends React.Component {
       }
   }
 
-  navigationOutHandler() {
-    //TODO remove after full refactor release
-    utils.setStateAndLog(this, 'Next Item', {
-      isInView: false,
-    });
-    this.clearAutoSlideshowInterval();
-  }
-
-  navigationInHandler() {
-    //TODO remove after full refactor release
-    utils.setStateAndLog(this, 'Next Item', {
-      isInView: true,
-    });
-    this.startAutoSlideshowIfNeeded(this.props.options);
-  }
 
   componentDidMount() {
-    window.addEventListener(
-      'gallery_navigation_out',
-      this.navigationOutHandler
-    );
-    window.addEventListener('gallery_navigation_in', this.navigationInHandler);
 
     this.scrollElement = window.document.querySelector(
       `#pro-gallery-${this.props.id} #gallery-horizontal-scroll`
@@ -1480,14 +1458,6 @@ class SlideshowView extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener(
-      'gallery_navigation_out',
-      this.navigationOutHandler
-    );
-    window.removeEventListener(
-      'gallery_navigation_in',
-      this.navigationInHandler
-    );
 
     if (this.scrollElement) {
       this.scrollElement.removeEventListener(
