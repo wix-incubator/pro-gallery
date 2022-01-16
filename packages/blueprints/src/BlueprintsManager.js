@@ -1,12 +1,13 @@
 /* eslint-disable prettier/prettier */
 import blueprints from './Blueprints';
-import { viewModeWrapper } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, viewModeWrapper } from 'pro-gallery-lib';
 
 export default class BlueprintsManager {
   constructor({ id }) {
     this.id = id + `'s blueprintsManager`;
     this.currentState = {};
     this.existingBlueprint = {};
+    this.lastBlueprintId = 0;
     this.cache = {};
     this.api = {};
     this.currentState.totalItemsCount = Infinity;
@@ -21,7 +22,13 @@ export default class BlueprintsManager {
     viewModeWrapper.setDeviceType(config.deviceType);
   }
 
+  setCurrentBlueprint(id) {
+    this.lastBlueprintId = id;
+  }
+
   async createBlueprint(params = {}) {
+    const lastBlueprintId = Math.floor(Math.random() * 1000);
+
     this.currentState.totalItemsCount =
       params.totalItemsCount ||
       (this.api.getTotalItemsCount && this.api.getTotalItemsCount()) ||
@@ -35,20 +42,25 @@ export default class BlueprintsManager {
 
     params = { ...params, ...(await this.completeParams(params)) };
 
+    params = this.duplicateItemsForSlideshowLoopIfNeeded(params);
+
     const _createBlueprint = async (args) => {
+      this.setCurrentBlueprint(args.blueprintManagerId);
       if (this.api.createBlueprintImp) {
         return await this.api.createBlueprintImp(args);
       } else {
         return await blueprints.createBlueprint(args);
       }
     };
-    const { blueprint, changedParams } = await _createBlueprint({
+    const { blueprintManagerId, blueprint, changedParams, reasons } = await _createBlueprint({
       params,
       lastParams: this.currentState,
       existingBlueprint: this.existingBlueprint,
-      blueprintManagerId: this.id,
+      blueprintManagerId: this.id + lastBlueprintId,
       isUsingCustomInfoElements: this.currentState.isUsingCustomInfoElements,
     });
+
+    if (blueprintManagerId !== (this.id + this.lastBlueprintId)) return;
 
     const blueprintChanged = Object.values(changedParams).some(
       (changedParam) => !!changedParam
@@ -60,7 +72,7 @@ export default class BlueprintsManager {
 
     blueprintCreated &&
       this.api.onBlueprintReady &&
-      this.api.onBlueprintReady({ blueprint, blueprintChanged });
+      this.api.onBlueprintReady({ blueprint, blueprintChanged, reasons });
     return (this.cache[params] = this.existingBlueprint = blueprint); // still returning for awaits... event is !blueprintCreated
   }
 
@@ -74,7 +86,7 @@ export default class BlueprintsManager {
         // work with the new items...
       }
     } else if (this.existingBlueprint.options.slideshowLoop) {
-      this.duplicateGalleryItems();
+      this.duplicateItemsAndCreateBlueprint();
     }
   }
 
@@ -94,7 +106,9 @@ export default class BlueprintsManager {
         this.api.isUsingCustomInfoElements()) ||
       this.currentState.isUsingCustomInfoElements;
 
-    const { blueprint, changedParams } = blueprints.createBlueprint({
+    params = this.duplicateItemsForSlideshowLoopIfNeeded(params);
+
+    const { blueprint, changedParams, reasons } = blueprints.createBlueprint({
       params,
       lastParams: this.currentState,
       existingBlueprint: this.existingBlueprint,
@@ -115,6 +129,7 @@ export default class BlueprintsManager {
       this.api.onBlueprintReady({
         blueprint,
         blueprintChanged,
+        reasons,
         initialBlueprint: true,
       });
     return (
@@ -137,12 +152,39 @@ export default class BlueprintsManager {
     return blueprint;
   }
 
-  duplicateGalleryItems() {
-    const items = this.currentState.items.concat(
-      ...this.currentState.items.slice(0, this.currentState.totalItemsCount)
-    );
+  duplicateGalleryItems( {items, duplicateFactor = 1}) {
+    items = items || this.currentState.items;
+    const uniqueItems = items.slice(0, this.currentState.totalItemsCount);
+    for (let i = 0; i < duplicateFactor; i++){      
+      items = items.concat(...uniqueItems);
+    }
     this.loopingItems = true;
-    this.createBlueprint({ items });
+    return items;
+  }
+
+  // Wrapper for the duplicateGalleryItems func, it duplicates, and createBlueprint with duplicated items *
+  duplicateItemsAndCreateBlueprint(){
+    const items = this.duplicateGalleryItems({});
+    this.createBlueprint({items})
+  }
+
+// The following function duplicate the items if necessary for slideshowLoop
+  duplicateItemsForSlideshowLoopIfNeeded(params){
+    const { items, options } = params;
+    const { slideshowLoop, scrollDirection } = options;
+    const { totalItemsCount } = this.currentState;
+    const loopThreshold = 30;
+
+    // If we've reached last items (no more items in server), and there are less items than the threshold
+    const numOfItemsCondition = items.length < loopThreshold && items.length === totalItemsCount;
+    // If the gallery is a horizontal scrolling gallery
+    const isHorizontalScrolling = scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
+    // If slideshowLoop is True and both conditions are True as well then we duplicate number of items to reach threshold
+    if (slideshowLoop && numOfItemsCondition && isHorizontalScrolling){
+      const duplicateFactor = Math.ceil(loopThreshold / items.length) - 1;
+      return {...params, items: this.duplicateGalleryItems({items, duplicateFactor})};
+    }
+    return params;
   }
 
   // ------------------ Get all the needed raw data ---------------------------- //

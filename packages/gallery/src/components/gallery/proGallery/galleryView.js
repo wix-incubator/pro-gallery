@@ -143,6 +143,8 @@ class GalleryView extends React.Component {
     } else {
       galleryHeight = galleryStructure.height + 'px';
     }
+    const galleryWidth = this.props.isPrerenderMode ? 'auto' : this.props.container.galleryWidth - options.imageMargin;
+    
     const galleryStructureItems = getVisibleItems(
       galleryStructure.galleryItems,
       container
@@ -182,7 +184,7 @@ class GalleryView extends React.Component {
           style={{
             margin: options.layoutParams.gallerySpacing + 'px',
             height: galleryHeight,
-            width: this.props.container.galleryWidth - options.imageMargin,
+            width: galleryWidth,
             overflow: 'visible',
             position: 'relative',
           }}

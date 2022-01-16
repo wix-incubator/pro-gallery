@@ -1,3 +1,4 @@
+import stylingParams_itemResolutionMode from './itemResolutionMode';
 import itemClick from './itemClick';
 import imageMargin from './imageMargin';
 import hoveringBehaviour from './hoveringBehaviour';
@@ -101,17 +102,24 @@ import autoSlideshowContinuousSpeed from './autoSlideshowContinuousSpeed';
 import behaviourParams_item_content_magnificationValue from './magnificationValue';
 import arrowsColor from './arrowsColor';
 import optionsMap from '../../core/helpers/optionsMap';
+import loadMoreButtonText from './loadMoreButtonText';
 import layoutParams_navigationArrows_type from './layoutParams_navigationArrows_type';
 import layoutParams_navigationArrows_container_type from './layoutParams_navigationArrows_container_type';
 import layoutParams_navigationArrows_container_backgroundColor from './layoutParams_navigationArrows_container_backgroundColor';
 import layoutParams_navigationArrows_container_borderRadius from './layoutParams_navigationArrows_container_borderRadius';
+import layoutParams_crop_ratios from './layoutParams_crop_ratios';
 
 export default {
+  [optionsMap.behaviourParams.gallery.vertical.loadMore.text]:
+    loadMoreButtonText,
   layoutParams_gallerySpacing,
   [optionsMap.layoutParams.structure.gallerySpacing]:
     layoutParams_gallerySpacing,
   layoutParams_cropRatio,
+  [optionsMap.layoutParams.crop.ratios]: layoutParams_crop_ratios,
   layoutParams_repeatingGroupTypes,
+  [optionsMap.layoutParams.groups.repeatingGroupTypes]:
+    layoutParams_repeatingGroupTypes,
   itemClick,
   [optionsMap.behaviourParams.item.clickAction]: itemClick,
   imageMargin,
@@ -132,6 +140,7 @@ export default {
   [optionsMap.layoutParams.structure.layoutOrientation]: isVertical,
   numberOfImagesPerRow,
   numberOfImagesPerCol,
+  [optionsMap.layoutParams.structure.numberOfGridRows]: numberOfImagesPerCol,
   layoutParams_structure_numberOfGridRows,
   galleryTextAlign,
   [optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
@@ -152,14 +161,19 @@ export default {
   [optionsMap.layoutParams.info.border.width]: textBoxBorderWidth,
   textBoxWidth,
   textBoxWidthPercent,
+  [optionsMap.layoutParams.info.width]: textBoxWidthPercent,
   imageInfoType,
+  [optionsMap.layoutParams.info.layout]: imageInfoType,
   groupSize,
+  [optionsMap.layoutParams.groups.groupSize]: groupSize,
   collageDensity,
   [optionsMap.layoutParams.groups.density]: collageDensity,
   gridStyle,
   [optionsMap.layoutParams.structure.responsiveMode]: gridStyle,
   hasThumbnails,
+  [optionsMap.layoutParams.thumbnails.enable]: hasThumbnails,
   groupTypes,
+  [optionsMap.layoutParams.groups.allowedGroupTypes]: groupTypes,
   thumbnailSize,
   [optionsMap.layoutParams.thumbnails.size]: thumbnailSize,
   galleryThumbnailsAlignment,
@@ -167,6 +181,7 @@ export default {
   isRTL,
   [optionsMap.behaviourParams.gallery.layoutDirection]: isRTL,
   scrollSnap,
+  [optionsMap.behaviourParams.gallery.horizontal.enableScrollSnap]: scrollSnap,
   itemBorderWidth,
   [optionsMap.stylingParams.itemBorderWidth]: itemBorderWidth,
   itemBorderRadius,
@@ -174,18 +189,23 @@ export default {
   itemBorderColor,
   rotatingCropRatios,
   columnWidths,
+  [optionsMap.layoutParams.structure.columnRatios]: columnWidths,
   autoSlideshowInterval,
   [optionsMap.behaviourParams.gallery.horizontal.autoSlide.interval]:
     autoSlideshowInterval,
   smartCrop,
+  [optionsMap.layoutParams.crop.enableSmartCrop]: smartCrop,
   minItemSize,
+  [optionsMap.layoutParams.targetItemSize.minimum]: minItemSize,
   scrollAnimation,
   [optionsMap.behaviourParams.gallery.scrollAnimation]: scrollAnimation,
   slideAnimation,
   [optionsMap.behaviourParams.gallery.horizontal.slideAnimation]:
     slideAnimation,
   scatter,
+  [optionsMap.layoutParams.structure.scatter.randomScatter]: scatter,
   rotatingScatter,
+  [optionsMap.layoutParams.structure.scatter.manualScatter]: rotatingScatter,
   thumbnailSpacings,
   [optionsMap.layoutParams.thumbnails.spacing]: thumbnailSpacings,
   slideshowLoop,
@@ -200,11 +220,15 @@ export default {
   calculateTextBoxWidthMode,
   [optionsMap.layoutParams.info.sizeUnits]: calculateTextBoxWidthMode,
   chooseBestGroup,
+  [optionsMap.layoutParams.groups.groupByOrientation]: chooseBestGroup,
   imageLoadingMode,
   [optionsMap.behaviourParams.item.content.loader]: imageLoadingMode,
   cropOnlyFill,
+  [optionsMap.layoutParams.crop.cropOnlyFill]: cropOnlyFill,
   groupsPerStrip,
+  [optionsMap.layoutParams.groups.numberOfGroupsPerRow]: groupsPerStrip,
   fixedColumns,
+  [optionsMap.layoutParams.structure.numberOfColumns]: fixedColumns,
   arrowsPosition,
   [optionsMap.layoutParams.navigationArrows.position]: arrowsPosition,
   arrowsVerticalPosition,
@@ -231,10 +255,13 @@ export default {
   [optionsMap.behaviourParams.item.content.placementAnimation]:
     imagePlacementAnimation,
   gallerySizeType,
+  [optionsMap.layoutParams.targetItemSize.unit]: gallerySizeType,
   gallerySize,
   gallerySizePx,
   gallerySizeRatio,
+  [optionsMap.layoutParams.targetItemSize.value]: gallerySize,
   allowContextMenu,
+  [optionsMap.behaviourParams.gallery.blockContextMenu]: allowContextMenu,
   galleryLayout,
   [optionsMap.layoutParams.structure.galleryLayout]: galleryLayout,
   scrollDirection,
@@ -260,6 +287,7 @@ export default {
   overlayBackground,
   allowLeanGallery,
   placeGroupsLtr,
+  [optionsMap.layoutParams.structure.groupsOrder]: placeGroupsLtr,
   showVideoControls,
   [optionsMap.behaviourParams.item.video.enableControls]: showVideoControls,
   pauseAutoSlideshowOnHover,
@@ -272,7 +300,9 @@ export default {
   [optionsMap.behaviourParams.gallery.horizontal.slideTransition]:
     slideTransition,
   useMaxDimensions,
+  [optionsMap.layoutParams.structure.enableStreching]: useMaxDimensions,
   cubeFitPosition,
+  [optionsMap.layoutParams.crop.alignment]: cubeFitPosition,
   enableVideoPlaceholder,
   [optionsMap.behaviourParams.item.video.enablePlaceholder]:
     enableVideoPlaceholder,
@@ -288,7 +318,11 @@ export default {
   [optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour]:
     autoSlideshowType,
   autoSlideshowContinuousSpeed,
+  [optionsMap.behaviourParams.gallery.horizontal.autoSlide.speed]:
+    autoSlideshowContinuousSpeed,
   behaviourParams_item_content_magnificationValue,
+  [optionsMap.behaviourParams.item.content.magnificationValue]:
+    behaviourParams_item_content_magnificationValue,
   arrowsColor,
   [optionsMap.stylingParams.arrowsColor]: arrowsColor,
   [optionsMap.layoutParams.navigationArrows.type]:
@@ -299,6 +333,8 @@ export default {
     layoutParams_navigationArrows_container_backgroundColor,
   [optionsMap.layoutParams.navigationArrows.container.borderRadius]:
     layoutParams_navigationArrows_container_borderRadius,
+  [optionsMap.stylingParams.temResolutionMode]:
+    stylingParams_itemResolutionMode,
 };
 // TODO = add the options:
 /*
