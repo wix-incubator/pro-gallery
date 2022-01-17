@@ -1373,8 +1373,10 @@ class SlideshowView extends React.Component {
     if (props.items) {
       this.ItemsForSlideshowLoopThumbnails = false;
     }
-    if (this.props.isVisible !== props.isVisible) {
-      this.setState({ isInView: props.isVisible }, () => {
+    const isInView = props.isVisible && (props.isInDisplay ?? true);
+    const oldIsInView = this.props.isVisible && (this.props.isInDisplay ?? true);
+    if (isInView !== oldIsInView) {
+      this.setState({ isInView }, () => {
           this.blockAutoSlideshowIfNeeded(props, true);
         }
       );
