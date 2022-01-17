@@ -60,7 +60,7 @@ export default class BlueprintsManager {
       isUsingCustomInfoElements: this.currentState.isUsingCustomInfoElements,
     });
 
-    if (blueprintManagerId !== (this.id + this.lastBlueprintId)) return;
+    if (blueprintManagerId !== (this.id + lastBlueprintId)) return;
 
     const blueprintChanged = Object.values(changedParams).some(
       (changedParam) => !!changedParam
