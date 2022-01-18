@@ -56,7 +56,7 @@ export class GalleryContainer extends React.Component {
       viewComponent: null,
       firstUserInteractionExecuted: false,
       isInHover: false,
-      isInViewport: this.isInViewport(),
+      isInViewport: true,
     };
 
     this.state = initialState;
