@@ -56,7 +56,7 @@ export class GalleryContainer extends React.Component {
       viewComponent: null,
       firstUserInteractionExecuted: false,
       isInHover: false,
-      isVisible: this.isVisible(),
+      isInViewport: this.isInViewport(),
     };
 
     this.state = initialState;
@@ -539,15 +539,15 @@ export class GalleryContainer extends React.Component {
     this.updateVisibility();
   }
 
-  isVisible = () => {
+  isInViewport = () => {
     return isGalleryInViewport(this.props.container);
   }
 
   updateVisibility = () => {
-    const isVisible = this.isVisible();
-    if (this.state.isVisible !== isVisible) {
+    const isInViewport = this.isInViewport();
+    if (this.state.isInViewport !== isInViewport) {
       this.setState({
-        isVisible,
+        isInViewport,
       });
     }
   }
@@ -805,7 +805,7 @@ export class GalleryContainer extends React.Component {
         />
         <ViewComponent
           isInDisplay={this.props.isInDisplay}
-          isVisible={this.state.isVisible}
+          isInViewport={this.state.isInViewport}
           isPrerenderMode={this.props.isPrerenderMode}
           scrollingElement={this._scrollingElement}
           totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
