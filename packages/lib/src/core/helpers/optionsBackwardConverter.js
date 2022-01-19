@@ -249,7 +249,19 @@ function process_new_to_old_VideoPlayTrigger(obj) {
     optionsMap.behaviourParams.item.video.playTrigger,
     'videoPlay'
   );
-  _obj['videoPlay'] = _obj['videoPlay']?.toLowerCase();
+  switch (_obj['videoPlay']) {
+    case 'CLICK':
+      _obj['videoPlay'] = 'onClick';
+      break;
+    case 'HOVER':
+      _obj['videoPlay'] = 'hover';
+      break;
+    case 'AUTO':
+      _obj['videoPlay'] = 'auto';
+      break;
+    default:
+      break;
+  }
   return _obj;
 }
 // function process_old_to_new_targetItemSizeMode(obj) {
