@@ -41,8 +41,8 @@ class SlideshowView extends React.Component {
       this.onAutoSlideShowButtonClick.bind(this);
     this.startAutoSlideshowIfNeeded =
       this.startAutoSlideshowIfNeeded.bind(this);
-    this.blockAutoSlideshowIfNeeded =
-      this.blockAutoSlideshowIfNeeded.bind(this);
+    this.updateAutoSlideShowState =
+      this.updateAutoSlideShowState.bind(this);
     this.canStartAutoSlideshow = this.canStartAutoSlideshow.bind(this);
     this.handleSlideshowKeyPress = this.handleSlideshowKeyPress.bind(this);
     this.onAutoSlideshowAutoPlayKeyPress =
@@ -1122,7 +1122,7 @@ class SlideshowView extends React.Component {
     this.setState(
       { pauseAutoSlideshowClicked: !this.state.pauseAutoSlideshowClicked },
       () => {
-        this.blockAutoSlideshowIfNeeded(this.props);
+        this.updateAutoSlideShowState(this.props);
       }
     );
   }
@@ -1324,30 +1324,28 @@ class SlideshowView extends React.Component {
 
   //-----------------------------------------| REACT |--------------------------------------------//
 
-  blockAutoSlideshowIfNeeded(props = this.props, forceStartAutoSlideshowIfNeeded = false) {
+  updateAutoSlideShowState(
+    props = this.props,
+  ) {
     const { isGalleryInHover, options, settings } = props;
-    const { pauseAutoSlideshowClicked, shouldBlockAutoSlideshow, isInView, isInFocus } =
-      this.state;
-    let should = false;
-    if (!isInView || pauseAutoSlideshowClicked) {
-      should = true;
-    } else if (
-      isGalleryInHover &&
-      options.pauseAutoSlideshowOnHover
-    ) {
-      should = true;
-    } else if (
-      isInFocus &&
-      settings?.isAccessible
-    ) {
-      should = true;
-    }
-    if (shouldBlockAutoSlideshow !== should) {
-      this.setState({ shouldBlockAutoSlideshow: should }, () => {
+    const {
+      pauseAutoSlideshowClicked,
+      shouldBlockAutoSlideshow,
+      isInView,
+      isInFocus,
+    } = this.state;
+    const shouldPauseDueToHover =
+      isGalleryInHover && options.pauseAutoSlideshowOnHover;
+    const shouldPauseDueToFocus = isInFocus && settings?.isAccessible;
+    let shouldBlock =
+      !isInView ||
+      pauseAutoSlideshowClicked ||
+      shouldPauseDueToFocus ||
+      shouldPauseDueToHover;
+    if (shouldBlockAutoSlideshow !== shouldBlock) {
+      this.setState({ shouldBlockAutoSlideshow: shouldBlock }, () => {
         this.startAutoSlideshowIfNeeded(options);
       });
-    } else if (forceStartAutoSlideshowIfNeeded) {
-      this.startAutoSlideshowIfNeeded(options);
     }
   }
 
@@ -1355,7 +1353,7 @@ class SlideshowView extends React.Component {
     this.setState(
       { isInFocus: true },
       () => {
-        this.blockAutoSlideshowIfNeeded(this.props);
+        this.updateAutoSlideShowState(this.props);
       }
     );
   }
@@ -1364,7 +1362,7 @@ class SlideshowView extends React.Component {
     this.setState(
       { isInFocus: false },
       () => {
-        this.blockAutoSlideshowIfNeeded(this.props);
+        this.updateAutoSlideShowState(this.props);
       }
     );
   }
@@ -1377,11 +1375,15 @@ class SlideshowView extends React.Component {
     const oldIsInView = this.props.isInViewport && (this.props.isInDisplay ?? true);
     if (isInView !== oldIsInView) {
       this.setState({ isInView }, () => {
-          this.blockAutoSlideshowIfNeeded(props, true);
+          this.updateAutoSlideShowState(props);
         }
       );
     } else if (this.props.isGalleryInHover !== props.isGalleryInHover) {
-      this.blockAutoSlideshowIfNeeded(props);
+      this.updateAutoSlideShowState(props);
+    } else if (this.props.container.scrollBase != props.container.scrollBase) {
+      this.forceUpdate(() => {
+        this.startAutoSlideshowIfNeeded(props.options);
+      });
     }
     if (this.props.activeIndex !== props.activeIndex) {
       utils.setStateAndLog(
