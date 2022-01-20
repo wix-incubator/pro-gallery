@@ -18,7 +18,6 @@ const fixToGrid = (options) => {
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   presetOptions.smartCrop = false;
   presetOptions.galleryType = 'Columns';
-  presetOptions.fixedColumns = 0;
   presetOptions.targetItemSize = 0;
   presetOptions.enableScroll = true;
   presetOptions.cropOnlyFill = false;
