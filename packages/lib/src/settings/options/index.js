@@ -108,6 +108,9 @@ import layoutParams_navigationArrows_container_type from './layoutParams_navigat
 import layoutParams_navigationArrows_container_backgroundColor from './layoutParams_navigationArrows_container_backgroundColor';
 import layoutParams_navigationArrows_container_borderRadius from './layoutParams_navigationArrows_container_borderRadius';
 import layoutParams_crop_ratios from './layoutParams_crop_ratios';
+import behaviourParams_gallery_horizontal_autoSlide_behaviour from './behaviourParams_gallery_horizontal_autoSlide_behaviour';
+import behaviourParams_gallery_horizontal_autoSlide_interval from './behaviourParams_gallery_horizontal_autoSlide_interval';
+import behaviourParams_gallery_horizontal_autoSlide_speed from './behaviourParams_gallery_horizontal_autoSlide_speed';
 
 export default {
   [optionsMap.behaviourParams.gallery.vertical.loadMore.text]:
@@ -192,7 +195,7 @@ export default {
   [optionsMap.layoutParams.structure.columnRatios]: columnWidths,
   autoSlideshowInterval,
   [optionsMap.behaviourParams.gallery.horizontal.autoSlide.interval]:
-    autoSlideshowInterval,
+    behaviourParams_gallery_horizontal_autoSlide_interval,
   smartCrop,
   [optionsMap.layoutParams.crop.enableSmartCrop]: smartCrop,
   minItemSize,
@@ -316,10 +319,10 @@ export default {
   [optionsMap.behaviourParams.item.overlay.padding]: overlayPadding,
   autoSlideshowType,
   [optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour]:
-    autoSlideshowType,
+    behaviourParams_gallery_horizontal_autoSlide_behaviour,
   autoSlideshowContinuousSpeed,
   [optionsMap.behaviourParams.gallery.horizontal.autoSlide.speed]:
-    autoSlideshowContinuousSpeed,
+    behaviourParams_gallery_horizontal_autoSlide_speed,
   behaviourParams_item_content_magnificationValue,
   [optionsMap.behaviourParams.item.content.magnificationValue]:
     behaviourParams_item_content_magnificationValue,
