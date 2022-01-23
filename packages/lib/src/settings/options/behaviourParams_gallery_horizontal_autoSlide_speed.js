@@ -1,6 +1,5 @@
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
-import optionsMap from '../../core/helpers/optionsMap';
 
 export default {
   title: 'Slide speed',
@@ -9,9 +8,8 @@ export default {
   max: 1000,
   isRelevant: (options) =>
     options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-    options[
-      optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-    ] === GALLERY_CONSTS.autoSlideBehaviour.CONTINUOUS,
+    options.behaviourParams.gallery.horizontal.autoSlide.behaviour ===
+      GALLERY_CONSTS.autoSlideBehaviour.CONTINUOUS,
   type: INPUT_TYPES.NUMBER,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Auto slide Behaviour" to "CONTINUOUS".',
