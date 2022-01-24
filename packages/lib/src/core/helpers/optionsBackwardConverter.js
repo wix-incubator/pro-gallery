@@ -63,6 +63,7 @@ function reverseMigrateOptions(flatOptionsObject) {
   oldOptions = process_new_to_old_VideoPlayTrigger(oldOptions);
   oldOptions = process_new_to_old_VideoVolume(oldOptions);
   oldOptions = process_new_to_old_VideoSpeed(oldOptions);
+  oldOptions = process_new_to_old_EnablePlayButton(oldOptions);
   oldOptions = process_new_to_old_OverlayHoveringBehaviour(oldOptions);
   oldOptions = process_new_to_old_InfoPlacement(oldOptions);
   oldOptions = process_new_to_old_layoutDirection(oldOptions);
@@ -287,6 +288,21 @@ function process_new_to_old_VideoSpeed(obj) {
     _obj['videoSpeed'] >= 0 ? String(_obj['videoSpeed']) : undefined;
   return _obj;
 }
+
+function process_new_to_old_EnablePlayButton(obj) {
+  let _obj = obj;
+  _obj = namingChange(
+    _obj,
+    optionsMap.behaviourParams.item.video.enablePlayButton,
+    'showVideoPlayButton'
+  );
+  _obj['showVideoPlayButton'] =
+    typeof _obj['showVideoPlayButton'] === 'boolean'
+      ? _obj['showVideoPlayButton']
+      : true;
+  return _obj;
+}
+
 function process_new_to_old_gallerySpacing(obj) {
   let _obj = obj;
   _obj['layoutParams_gallerySpacing'] = _obj['galleryMargin'] =
