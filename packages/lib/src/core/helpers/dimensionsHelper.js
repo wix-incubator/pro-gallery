@@ -44,7 +44,7 @@ class DimensionsHelper {
         const fixedThumbnailSize =
           this.options.thumbnailSize +
           this.options.layoutParams.gallerySpacing +
-          3 * this.options.thumbnailSpacings;
+          2 * this.options.thumbnailSpacings;
         switch (this.options.galleryThumbnailsAlignment) {
           case 'top':
           case 'bottom':
