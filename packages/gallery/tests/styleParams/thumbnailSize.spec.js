@@ -52,7 +52,7 @@ describe('options - thumbnailSize', () => {
     const galleryContainer = driver.getContainer();
     const { height } = galleryContainer.props().style;
     // expect to galleryContainer height without the thumbnails to be container.height - thumbnails and margins
-    expect(initialProps.container.height - 300 - 3 * 10).to.eq(height);
+    expect(initialProps.container.height - 300 - 2 * 10).to.eq(height);
     driver.detach.proGallery();
   });
 
@@ -68,7 +68,7 @@ describe('options - thumbnailSize', () => {
     const galleryContainer = driver.getContainer();
     const { width } = galleryContainer.props().style;
     // expect to galleryContainer width without the thumbnails to be container.width - thumbnails and margins
-    expect(initialProps.container.width - 300 - 3 * 10).to.eq(width);
+    expect(initialProps.container.width - 300 - 2 * 10).to.eq(width);
     driver.detach.proGallery();
   });
 });
