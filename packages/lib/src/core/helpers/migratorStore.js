@@ -44,6 +44,10 @@ export const nameChangedBehaviourParams = [
     optionsMap.behaviourParams.item.content.magnificationValue,
   ],
   ['videoLoop', optionsMap.behaviourParams.item.video.loop],
+  [
+    'showVideoPlayButton',
+    optionsMap.behaviourParams.item.video.enablePlayButton,
+  ],
   ['showVideoControls', optionsMap.behaviourParams.item.video.enableControls],
   [
     'enableVideoPlaceholder',
