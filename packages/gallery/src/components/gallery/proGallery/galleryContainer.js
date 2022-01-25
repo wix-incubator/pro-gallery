@@ -763,6 +763,7 @@ export class GalleryContainer extends React.Component {
     const displayShowMore = this.containerInfiniteGrowthDirection() === 'none';
     return (
       <div
+      style={{width:this.state.container.width, height:this.state.container.height}}
         data-key="pro-gallery-inner-container"
         key="pro-gallery-inner-container"
         className={this.props.isPrerenderMode ? 'pro-gallery-prerender' : ''}
