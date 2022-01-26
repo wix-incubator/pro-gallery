@@ -181,6 +181,7 @@ class GalleryView extends React.Component {
       >
         <div
           id={'pro-gallery-margin-container-' + this.props.id}
+          class={'pro-gallery-margin-container'}
           style={{
             margin: options.layoutParams.gallerySpacing + 'px',
             height: galleryHeight,
