@@ -24,6 +24,10 @@ export default class ItemHover extends React.Component {
       hoverClass.push('hide-hover');
     }
 
+    if (options.backgroundPattern !== 'COLOR') {
+      hoverClass.push(options.backgroundPattern);
+    }
+
     return hoverClass.join(' ');
   }
 

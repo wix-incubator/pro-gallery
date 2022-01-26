@@ -125,6 +125,7 @@ export const optionsBySection = {
     'layoutParams_navigationArrows_container_borderRadius',
 
     'overlayBackground',
+    'overlayPattern',
     'overlayPosition',
     'overlaySize',
     'overlaySizeType',

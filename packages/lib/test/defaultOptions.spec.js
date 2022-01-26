@@ -148,6 +148,7 @@ function expectedOptions() {
     useMaxDimensions: false,
     enableVideoPlaceholder: true,
     overlayPosition: 'LEFT',
+    overlayPattern: 'COLOR',
     overlaySize: 100,
     overlaySizeType: 'PERCENT',
     overlayPadding: 0,
