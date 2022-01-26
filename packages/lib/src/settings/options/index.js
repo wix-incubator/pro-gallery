@@ -93,6 +93,7 @@ import slideTransition from './slideTransition';
 import useMaxDimensions from './useMaxDimensions';
 import cubeFitPosition from './cubeFitPosition';
 import enableVideoPlaceholder from './enableVideoPlaceholder ';
+import overlayPattern from './overlayPattern';
 import overlayPosition from './overlayPosition';
 import overlaySize from './overlaySize';
 import overlaySizeType from './overlaySizeType';
@@ -310,6 +311,7 @@ export default {
   [optionsMap.behaviourParams.item.video.enablePlaceholder]:
     enableVideoPlaceholder,
   overlayPosition,
+  overlayPattern,
   [optionsMap.behaviourParams.item.overlay.position]: overlayPosition,
   overlaySize,
   [optionsMap.behaviourParams.item.overlay.size]: overlaySize,

@@ -50,6 +50,7 @@ import videoPlay from './videoPlay';
 import viewMode from './viewMode';
 import imagePlacementAnimations from './imagePlacementAnimations';
 import slideTransition from './slideTransition';
+import overlayPatterns from './overlayPatterns';
 import overlayPositions from './overlayPositions';
 import overlaySizeType from './overlaySizeType';
 import autoSlideshowTypes from './autoSlideshowTypes';
@@ -113,6 +114,7 @@ export default {
   viewMode,
   imagePlacementAnimations,
   slideTransition,
+  overlayPatterns,
   overlayPositions,
   overlaySizeType,
   autoSlideshowTypes,

@@ -71,6 +71,7 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   useMaxDimensions: false,
   enableVideoPlaceholder: true,
   overlayPosition: GALLERY_CONSTS.overlayPositions.LEFT,
+  overlayPattern: GALLERY_CONSTS.overlayPatterns.COLOR,
   overlaySize: 100,
   overlaySizeType: GALLERY_CONSTS.overlaySizeType.PERCENT,
   overlayPadding: 0,

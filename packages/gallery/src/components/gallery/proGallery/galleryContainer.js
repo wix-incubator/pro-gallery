@@ -557,7 +557,7 @@ export class GalleryContainer extends React.Component {
    this.updateVisibility();
   }
 
-  createDynamicStyles({ overlayBackground }, isPrerenderMode) {
+  createDynamicStyles({ overlayBackground, overlayPattern }, isPrerenderMode) {
     const useSSROpacity =
       isPrerenderMode && !this.props.settings.disableSSROpacity;
     this.dynamicStyles = `
@@ -567,7 +567,7 @@ export class GalleryContainer extends React.Component {
           : `#pro-gallery-${this.props.id} .gallery-item-container { opacity: 0 }`
       }
       ${
-        !overlayBackground
+        overlayPattern !== 'COLOR' || !overlayBackground
           ? ''
           : `#pro-gallery-${this.props.id} .gallery-item-hover::before { background: ${overlayBackground} !important}`
       }
