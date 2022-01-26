@@ -460,7 +460,7 @@ class SlideshowView extends React.Component {
   autoScrollToNextItem = () => {
     if (
       !isEditMode() &&
-      (isGalleryInViewport(this.props.container) || isPreviewMode())
+      (isGalleryInViewport(this.scrollElement) || isPreviewMode())
     ) {
       const { options } = this.props;
       const direction = options.isRTL ? -1 : 1;
