@@ -84,7 +84,7 @@ const defaultOptions = {
         volume: 0,
         enableControls: false,
         speed: 1,
-        enablePlayButton: true,
+        enablePlayButton: false,
         enablePlaceholder: true,
       },
       overlay: {
