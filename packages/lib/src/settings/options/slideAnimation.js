@@ -7,7 +7,8 @@ export default {
   isRelevant: (sp) =>
     sp.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
     sp.groupSize === 1 &&
-    sp.cubeImages,
+    sp.cubeImages &&
+    sp.layoutParams.cropRatio === '100%/100%',
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal"), set "Max Group Size" to "1" and set "Crop Images" to true.',
   type: INPUT_TYPES.OPTIONS,
