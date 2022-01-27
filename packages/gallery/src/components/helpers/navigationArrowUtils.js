@@ -24,19 +24,12 @@ const getArrowsSizeData = ({
       navArrowsContainerHeight: arrowsSize,
     };
   }
-  const scalePercentage = isLandscape
-    ? arrowsSize / svgData.height
-    : arrowsSize / svgData.width;
-  const navArrowsContainerWidth = isLandscape
-    ? svgData.width * scalePercentage
-    : arrowsSize;
-  const navArrowsContainerHeight = isLandscape
-    ? arrowsSize
-    : svgData.height * scalePercentage;
+
+  const scalePercentage = arrowsSize / svgData.width;
   return {
-    navArrowsContainerWidth,
-    navArrowsContainerHeight,
     scalePercentage,
+    navArrowsContainerWidth: arrowsSize,
+    navArrowsContainerHeight: svgData.height * scalePercentage,
   };
 };
 
