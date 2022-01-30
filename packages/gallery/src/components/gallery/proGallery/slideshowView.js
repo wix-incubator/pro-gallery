@@ -1040,7 +1040,7 @@ class SlideshowView extends React.Component {
       return (
         <div
           data-hook="gallery-column"
-          id="gallery-horizontal-scroll"
+          id={`gallery-horizontal-scroll-${this.props.id}`}
           className={`gallery-horizontal-scroll gallery-column hide-scrollbars ${
             this.props.options.isRTL ? ' rtl ' : ' ltr '
           } ${this.props.options.scrollSnap ? ' scroll-snap ' : ''} `}
@@ -1447,7 +1447,7 @@ class SlideshowView extends React.Component {
   componentDidMount() {
 
     this.scrollElement = window.document.querySelector(
-      `#pro-gallery-${this.props.id} #gallery-horizontal-scroll`
+      `#pro-gallery-${this.props.id} #gallery-horizontal-scroll-${this.props.id}`
     );
     if (this.scrollElement) {
       this.scrollElement.addEventListener('scroll', this._setCurrentItemByScroll);
