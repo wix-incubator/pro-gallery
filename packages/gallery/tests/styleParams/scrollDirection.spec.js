@@ -28,14 +28,14 @@ describe('options - scrollDirection', () => {
     expect(elem).to.have.lengthOf(1);
     driver.detach.proGallery();
   });
-  it('should render element "#pro-gallery-margin-container" when "scrollDirection" is vertical', async () => {
+  it('should render element ".pro-gallery-margin-container" when "scrollDirection" is vertical', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       galleryLayout: 2,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const elem = driver.find.selector('#pro-gallery-margin-container');
+    const elem = driver.find.selector('.pro-gallery-margin-container');
     expect(elem).to.have.lengthOf(1);
     driver.detach.proGallery();
   });
