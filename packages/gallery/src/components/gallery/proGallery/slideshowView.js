@@ -554,17 +554,16 @@ class SlideshowView extends React.Component {
       case 'top':
       case 'bottom':
         width =
-          this.props.container.galleryWidth +
-          this.props.options.thumbnailSpacings;
+          this.props.container.galleryWidth;
         height =
           this.props.options.thumbnailSize +
-          this.props.options.thumbnailSpacings;
+          2* this.props.options.thumbnailSpacings;
         horizontalThumbnails = true;
         numOfThumbnails = Math.ceil(
           width / this.props.options.thumbnailSize
         );
         numOfWholeThumbnails = Math.floor(
-          (width + this.props.options.thumbnailSpacings) /
+          width  /
             (this.props.options.thumbnailSize +
               this.props.options.thumbnailSpacings * 2)
         );
@@ -572,8 +571,7 @@ class SlideshowView extends React.Component {
       case 'left':
       case 'right':
         height =
-          this.props.container.galleryHeight +
-          2 * this.props.options.thumbnailSpacings;
+          this.props.container.galleryHeight
         width =
           this.props.options.thumbnailSize +
           2 * this.props.options.thumbnailSpacings;
