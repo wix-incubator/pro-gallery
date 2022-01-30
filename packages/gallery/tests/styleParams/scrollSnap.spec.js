@@ -24,7 +24,7 @@ describe('options - scrollSnap', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const galleryContainer = driver.find.selector('.gallery-horizontal-scroll');
+    const galleryContainer = driver.find.selector('#gallery-horizontal-scroll');
     expect(galleryContainer.hasClass('scroll-snap')).to.be.true;
     driver.detach.proGallery();
   });
@@ -37,7 +37,7 @@ describe('options - scrollSnap', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const galleryContainer = driver.find.selector('.gallery-horizontal-scroll');
+    const galleryContainer = driver.find.selector('#gallery-horizontal-scroll');
     expect(galleryContainer.hasClass('scroll-snap')).to.be.false;
     driver.detach.proGallery();
   });

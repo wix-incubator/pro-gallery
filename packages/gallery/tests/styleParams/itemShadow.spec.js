@@ -83,7 +83,7 @@ describe('options - overlayAnimation', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const item = driver.find.selector('.pro-gallery-margin-container');
+    const item = driver.find.selector('#pro-gallery-margin-container');
     const { margin } = item.props().style;
     expect(margin).to.equal('30px');
     driver.detach.proGallery();
