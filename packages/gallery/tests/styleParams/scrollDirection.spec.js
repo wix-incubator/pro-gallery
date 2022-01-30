@@ -17,14 +17,14 @@ describe('options - scrollDirection', () => {
     };
   });
 
-  it('should render element "#gallery-horizontal-scroll" when "scrollDirection" is horizontal', async () => {
+  it('should render element ".gallery-horizontal-scroll" when "scrollDirection" is horizontal', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
       galleryLayout: 2,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const elem = driver.find.selector('#gallery-horizontal-scroll');
+    const elem = driver.find.selector('.gallery-horizontal-scroll');
     expect(elem).to.have.lengthOf(1);
     driver.detach.proGallery();
   });

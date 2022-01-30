@@ -1447,7 +1447,7 @@ class SlideshowView extends React.Component {
   componentDidMount() {
 
     this.scrollElement = window.document.querySelector(
-      `#pro-gallery-${this.props.id} #gallery-horizontal-scroll`
+      `#pro-gallery-${this.props.id} #gallery-horizontal-scroll-${this.props.id}`
     );
     if (this.scrollElement) {
       this.scrollElement.addEventListener('scroll', this._setCurrentItemByScroll);
