@@ -28,7 +28,7 @@ describe('options - gallerySpacing', () => {
     driver.mount.proGallery(initialProps);
     await driver.update();
     const marginContainer = driver.find
-      .selector('#pro-gallery-margin-container')
+      .selector('.pro-gallery-margin-container')
       .getDOMNode();
     const margin = getComputedStyle(marginContainer).margin;
     expect(margin).to.eq('20px');
