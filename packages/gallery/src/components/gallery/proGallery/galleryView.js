@@ -180,8 +180,7 @@ class GalleryView extends React.Component {
         onKeyDown={this.handleKeys}
       >
         <div
-          id= {`pro-gallery-margin-container-${this.props.id}`}
-          className={'pro-gallery-margin-container'}
+          id="pro-gallery-margin-container"
           style={{
             margin: options.layoutParams.gallerySpacing + 'px',
             height: galleryHeight,
