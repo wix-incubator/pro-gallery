@@ -1040,7 +1040,7 @@ class SlideshowView extends React.Component {
       return (
         <div
           data-hook="gallery-column"
-          id="gallery-horizontal-scroll"
+          id={`gallery-horizontal-scroll-${this.props.id}`}
           className={`gallery-horizontal-scroll gallery-column hide-scrollbars ${
             this.props.options.isRTL ? ' rtl ' : ' ltr '
           } ${this.props.options.scrollSnap ? ' scroll-snap ' : ''} `}
