@@ -168,7 +168,10 @@ export default class ItemHover extends React.Component {
     const overlayStyle = this.getOverlayStyle();
     const overlayPositionCalc = this.getOverlayPositionByFlex();
     return (
-      <div className={'item-hover-flex-container'} style={overlayPositionCalc}>
+      <div
+        className={'item-hover-flex-container flip-box-back'}
+        style={overlayPositionCalc}
+      >
         <div
           key={'item-hover-' + idx}
           data-hook={'item-hover-' + idx}

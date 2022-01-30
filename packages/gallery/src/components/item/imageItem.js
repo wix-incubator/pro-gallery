@@ -43,6 +43,7 @@ class ImageItem extends React.Component {
 
     const imageContainerClassNames = [
       'gallery-item-content',
+      'flip-box-front',
       'image-item',
       'gallery-item-visible',
       'gallery-item',

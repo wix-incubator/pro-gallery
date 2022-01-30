@@ -672,7 +672,9 @@ class ItemView extends React.Component {
     const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
 
     const itemStyles = {
-      overflowY: isSlideshow ? 'visible' : 'hidden',
+      overflowY: isSlideshow || this.state.isCurrentHover ? 'visible' : 'hidden',
+      zIndex: this.state.isCurrentHover ? '1' : '',
+      // overflowX: 'hidden',
       position: 'absolute',
       bottom: 'auto',
       margin:
@@ -853,7 +855,7 @@ class ItemView extends React.Component {
 
   getItemWrapperClass() {
     const { options, type } = this.props;
-    const classes = ['gallery-item-wrapper', 'visible'];
+    const classes = ['gallery-item-wrapper', 'visible', 'flip-box-inner'];
 
     if (options.cubeImages) {
       classes.push('cube-type-' + options.cubeType);
@@ -977,6 +979,7 @@ class ItemView extends React.Component {
         {this.getTopInfoElementIfNeeded()}
         {this.getLeftInfoElementIfNeeded()}
         <div
+        className={'flip-box'}
           style={{
             ...(
               getImageStyle(this.props.options)),

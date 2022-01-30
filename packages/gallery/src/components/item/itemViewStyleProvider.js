@@ -49,7 +49,7 @@ export function getImageStyle(options) {
 
 function getBorderStyle(borderRadius, borderWidth, borderColor) {
   return {
-    overflow: 'hidden',
+    // overflow: 'hidden',
     ...(borderRadius > 0 && { borderRadius }),
     ...(borderWidth > 0 && {
       borderWidth: borderWidth + 'px',
