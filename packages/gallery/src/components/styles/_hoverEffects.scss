@@ -7,13 +7,16 @@ div.pro-gallery {
     //image hover animations
 
     &.zoom-in-on-hover:not(.hide-hover) {
-      .gallery-item-content {
-        transition: transform 2.2s cubic-bezier(.14, .4, .09, .99) !important;
-      }
 
+      .gallery-item-hover:not(.hide-hover), .gallery-item-content {
+        transition: transform 2.2s cubic-bezier(.14, .4, .09, .99) !important;
+    }
       &.simulate-hover,
       &:hover {
         .gallery-item-content {
+          transform: scale(1.1);
+        }
+        .gallery-item-hover:not(.hide-hover) {
           transform: scale(1.1);
         }
       }
@@ -148,6 +151,8 @@ div.pro-gallery {
     &:hover .gallery-item-hover:not(.hide-hover) {
 
       transition: none;
+      // transform: scale(1.1);
+      // transition: transform 2.2s cubic-bezier(.14, .4, .09, .99) !important;
 
       &:before {
         opacity: 1;
@@ -159,6 +164,25 @@ div.pro-gallery {
         opacity: 1 !important;
       }
     }
+
+  //================TESTING===============================================
+  
+    // .zoom-in-on-hover:not(.hide-hover) {
+    //   .gallery-item-content {
+    //     transition: transform 2.2s cubic-bezier(.14, .4, .09, .99) !important;
+    //   }
+
+    //   .gallery-item-hover.force-hover{
+    //     transform: scale(1.1);
+    //   }
+    // }
+
+ 
+
+
+
+
+
 
     //===================================================================
     //overlay animations
