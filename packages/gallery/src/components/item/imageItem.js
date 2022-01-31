@@ -123,7 +123,6 @@ class ImageItem extends React.Component {
       idx,
       settings = {},
       options,
-      gotFirstScrollEvent,
       isTransparent
     } = this.props;
     const { isHighResImageLoaded } = this.state;
@@ -154,7 +153,7 @@ class ImageItem extends React.Component {
           }
         : {};
 
-      if (!isHighResImageLoaded && gotFirstScrollEvent && !isTransparent) {
+      if (!isHighResImageLoaded && !isTransparent) {
         let preload = null;
         const preloadProps = {
           className: 'gallery-item-visible gallery-item gallery-item-preloaded',

@@ -38,6 +38,7 @@ export const calcTargetItemSize = (options, smartCalc = false) => {
 export const processNumberOfImagesPerRow = (options) => {
   //This will be used in the masonry and grid presets
   let res = {...options}
+  res.fixedColumns = 0;
   if (
     options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL || //relevant for grid, in Masonry its fixed to !oneRow
       options.isVertical //relevant for masonry, in grid its fixed to true.
