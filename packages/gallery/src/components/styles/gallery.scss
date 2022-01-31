@@ -6,7 +6,13 @@
 *[data-hidden="true"] .pro-gallery-parent-container .gallery-item {
   background-image: none !important;
 }
-
+.pro-gallery-parent-container::after{
+  clear:both;
+  content:"";
+  display:block;
+  height:0;
+  visibility:hidden;
+}
 html.pro-gallery {
   width: 100%;
   height: auto;

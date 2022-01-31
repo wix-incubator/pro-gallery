@@ -540,7 +540,7 @@ export class GalleryContainer extends React.Component {
   }
 
   isInViewport = () => {
-    return isGalleryInViewport(this.props.container);
+    return isGalleryInViewport(this.galleryContainerRef);
   }
 
   updateVisibility = () => {
