@@ -374,7 +374,7 @@ export class GalleryContainer extends React.Component {
   getScrollingElement() {
     const horizontal = () =>
       window.document.querySelector(
-        `#pro-gallery-${this.props.id} #gallery-horizontal-scroll`
+        `#pro-gallery-${this.props.id} #gallery-horizontal-scroll-${this.props.id}`
       );
     const vertical = this.props.scrollingElement
       ? () => this.props.scrollingElement
