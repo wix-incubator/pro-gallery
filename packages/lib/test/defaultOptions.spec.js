@@ -117,7 +117,7 @@ function expectedOptions() {
     arrowsColor: '',
     textBoxBorderColor: '',
     allowContextMenu: false,
-    hidePlay: false,
+    showVideoPlayButton: false,
     gallerySize: 30,
     cropOnlyFill: false,
     rotatingCropRatios: '',

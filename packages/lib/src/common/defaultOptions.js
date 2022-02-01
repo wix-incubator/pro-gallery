@@ -34,7 +34,7 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   arrowsColor: '',
   textBoxBorderColor: '',
   allowContextMenu: false,
-  hidePlay: false,
+  showVideoPlayButton: false,
   // ----
   gallerySize: 30,
   cropOnlyFill: false,

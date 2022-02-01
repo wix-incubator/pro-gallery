@@ -33,8 +33,6 @@ class SlideshowView extends React.Component {
   constructor(props) {
     super(props);
 
-    this.navigationOutHandler = this.navigationOutHandler.bind(this);
-    this.navigationInHandler = this.navigationInHandler.bind(this);
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
     this.clearAutoSlideshowInterval = this.clearAutoSlideshowInterval.bind(this);
     this.onFocus = this.onFocus.bind(this);
@@ -43,8 +41,8 @@ class SlideshowView extends React.Component {
       this.onAutoSlideShowButtonClick.bind(this);
     this.startAutoSlideshowIfNeeded =
       this.startAutoSlideshowIfNeeded.bind(this);
-    this.blockAutoSlideshowIfNeeded =
-      this.blockAutoSlideshowIfNeeded.bind(this);
+    this.updateAutoSlideShowState =
+      this.updateAutoSlideShowState.bind(this);
     this.canStartAutoSlideshow = this.canStartAutoSlideshow.bind(this);
     this.handleSlideshowKeyPress = this.handleSlideshowKeyPress.bind(this);
     this.onAutoSlideshowAutoPlayKeyPress =
@@ -556,17 +554,16 @@ class SlideshowView extends React.Component {
       case 'top':
       case 'bottom':
         width =
-          this.props.container.galleryWidth +
-          this.props.options.thumbnailSpacings;
+          this.props.container.galleryWidth;
         height =
           this.props.options.thumbnailSize +
-          this.props.options.thumbnailSpacings;
+          2* this.props.options.thumbnailSpacings;
         horizontalThumbnails = true;
         numOfThumbnails = Math.ceil(
           width / this.props.options.thumbnailSize
         );
         numOfWholeThumbnails = Math.floor(
-          (width + this.props.options.thumbnailSpacings) /
+          width  /
             (this.props.options.thumbnailSize +
               this.props.options.thumbnailSpacings * 2)
         );
@@ -574,8 +571,7 @@ class SlideshowView extends React.Component {
       case 'left':
       case 'right':
         height =
-          this.props.container.galleryHeight +
-          2 * this.props.options.thumbnailSpacings;
+          this.props.container.galleryHeight
         width =
           this.props.options.thumbnailSize +
           2 * this.props.options.thumbnailSpacings;
@@ -1042,7 +1038,7 @@ class SlideshowView extends React.Component {
       return (
         <div
           data-hook="gallery-column"
-          id="gallery-horizontal-scroll"
+          id={`gallery-horizontal-scroll-${this.props.id}`}
           className={`gallery-horizontal-scroll gallery-column hide-scrollbars ${
             this.props.options.isRTL ? ' rtl ' : ' ltr '
           } ${this.props.options.scrollSnap ? ' scroll-snap ' : ''} `}
@@ -1124,7 +1120,7 @@ class SlideshowView extends React.Component {
     this.setState(
       { pauseAutoSlideshowClicked: !this.state.pauseAutoSlideshowClicked },
       () => {
-        this.blockAutoSlideshowIfNeeded(this.props);
+        this.updateAutoSlideShowState(this.props);
       }
     );
   }
@@ -1326,30 +1322,28 @@ class SlideshowView extends React.Component {
 
   //-----------------------------------------| REACT |--------------------------------------------//
 
-  blockAutoSlideshowIfNeeded(props = this.props) {
+  updateAutoSlideShowState(
+    props = this.props,
+  ) {
     const { isGalleryInHover, options, settings } = props;
-    const { pauseAutoSlideshowClicked, shouldBlockAutoSlideshow, isInView, isInFocus } =
-      this.state;
-    let should = false;
-    if (!isInView || pauseAutoSlideshowClicked) {
-      should = true;
-    } else if (
-      isGalleryInHover &&
-      options.pauseAutoSlideshowOnHover
-    ) {
-      should = true;
-    } else if (
-      isInFocus &&
-      settings?.isAccessible
-    ) {
-      should = true;
-    }
-    if (shouldBlockAutoSlideshow !== should) {
-      this.setState({ shouldBlockAutoSlideshow: should }, () => {
+    const {
+      pauseAutoSlideshowClicked,
+      shouldBlockAutoSlideshow,
+      isInView,
+      isInFocus,
+    } = this.state;
+    const shouldPauseDueToHover =
+      isGalleryInHover && options.pauseAutoSlideshowOnHover;
+    const shouldPauseDueToFocus = isInFocus && settings?.isAccessible;
+    let shouldBlock =
+      !isInView ||
+      pauseAutoSlideshowClicked ||
+      shouldPauseDueToFocus ||
+      shouldPauseDueToHover;
+    if (shouldBlockAutoSlideshow !== shouldBlock) {
+      this.setState({ shouldBlockAutoSlideshow: shouldBlock }, () => {
         this.startAutoSlideshowIfNeeded(options);
       });
-    } else {
-      return;
     }
   }
 
@@ -1357,7 +1351,7 @@ class SlideshowView extends React.Component {
     this.setState(
       { isInFocus: true },
       () => {
-        this.blockAutoSlideshowIfNeeded(this.props);
+        this.updateAutoSlideShowState(this.props);
       }
     );
   }
@@ -1366,7 +1360,7 @@ class SlideshowView extends React.Component {
     this.setState(
       { isInFocus: false },
       () => {
-        this.blockAutoSlideshowIfNeeded(this.props);
+        this.updateAutoSlideShowState(this.props);
       }
     );
   }
@@ -1375,13 +1369,19 @@ class SlideshowView extends React.Component {
     if (props.items) {
       this.ItemsForSlideshowLoopThumbnails = false;
     }
-    if (this.props.isInDisplay !== props.isInDisplay) {
-      this.setState({ isInView: props.isInDisplay }, () =>
-        this.blockAutoSlideshowIfNeeded(props)
+    const isInView = props.isInViewport && (props.isInDisplay ?? true);
+    const oldIsInView = this.props.isInViewport && (this.props.isInDisplay ?? true);
+    if (isInView !== oldIsInView) {
+      this.setState({ isInView }, () => {
+          this.updateAutoSlideShowState(props);
+        }
       );
-    }
-    if (this.props.isGalleryInHover !== props.isGalleryInHover) {
-      this.blockAutoSlideshowIfNeeded(props);
+    } else if (this.props.isGalleryInHover !== props.isGalleryInHover) {
+      this.updateAutoSlideShowState(props);
+    } else if (this.props.container.scrollBase != props.container.scrollBase) {
+      this.forceUpdate(() => {
+        this.startAutoSlideshowIfNeeded(props.options);
+      });
     }
     if (this.props.activeIndex !== props.activeIndex) {
       utils.setStateAndLog(
@@ -1441,31 +1441,11 @@ class SlideshowView extends React.Component {
       }
   }
 
-  navigationOutHandler() {
-    //TODO remove after full refactor release
-    utils.setStateAndLog(this, 'Next Item', {
-      isInView: false,
-    });
-    this.clearAutoSlideshowInterval();
-  }
-
-  navigationInHandler() {
-    //TODO remove after full refactor release
-    utils.setStateAndLog(this, 'Next Item', {
-      isInView: true,
-    });
-    this.startAutoSlideshowIfNeeded(this.props.options);
-  }
 
   componentDidMount() {
-    window.addEventListener(
-      'gallery_navigation_out',
-      this.navigationOutHandler
-    );
-    window.addEventListener('gallery_navigation_in', this.navigationInHandler);
 
     this.scrollElement = window.document.querySelector(
-      `#pro-gallery-${this.props.id} #gallery-horizontal-scroll`
+      `#pro-gallery-${this.props.id} #gallery-horizontal-scroll-${this.props.id}`
     );
     if (this.scrollElement) {
       this.scrollElement.addEventListener('scroll', this._setCurrentItemByScroll);
@@ -1480,14 +1460,6 @@ class SlideshowView extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener(
-      'gallery_navigation_out',
-      this.navigationOutHandler
-    );
-    window.removeEventListener(
-      'gallery_navigation_in',
-      this.navigationInHandler
-    );
 
     if (this.scrollElement) {
       this.scrollElement.removeEventListener(
