@@ -46,6 +46,7 @@ export class GalleryContainer extends React.Component {
     this.videoScrollHelper = new VideoScrollHelperWrapper(
       this.setPlayingIdxState
     );
+    this.debouncedUpdateVisibility = utils.debounce(this.updateVisibility, 200)
     const initialState = {
       pgScroll: 0,
       showMoreClickedAtLeastOnce: false,
@@ -536,7 +537,7 @@ export class GalleryContainer extends React.Component {
       top,
       left,
     });
-    this.updateVisibility();
+    this.debouncedUpdateVisibility();
   }
 
   isInViewport = () => {
@@ -554,7 +555,7 @@ export class GalleryContainer extends React.Component {
 
   componentDidUpdate() {
    // in order to update when container is available
-   this.updateVisibility();
+   this.debouncedUpdateVisibility();
   }
 
   createDynamicStyles({ overlayBackground }, isPrerenderMode) {
