@@ -8,7 +8,7 @@ div.pro-gallery {
 
     &.zoom-in-on-hover:not(.hide-hover) {
 
-      .gallery-item-hover:not(.hide-hover), .gallery-item-content {
+      .gallery-item-hover:not(.hide-hover), .gallery-item-content, .hover-info-element {
         transition: transform 2.2s cubic-bezier(.14, .4, .09, .99) !important;
     }
       &.simulate-hover,
@@ -19,6 +19,10 @@ div.pro-gallery {
         .gallery-item-hover:not(.hide-hover) {
           transform: scale(1.1);
         }
+        .gallery-item-hover:not(.hide-hover) .hover-info-element {
+          transform: scale(0.9);
+        }
+
       }
     }
 
