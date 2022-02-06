@@ -23,7 +23,7 @@ const fixToMix = (options) => {
   presetOptions.collageDensity = 0.48;
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  presetOptions.targetItemSize = 86;
+  presetOptions.gallerySize = 86;
   presetOptions.minItemSize = 50;
   presetOptions.chooseBestGroup = true;
   presetOptions = assignByString(
