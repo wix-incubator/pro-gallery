@@ -20,7 +20,7 @@ div.pro-gallery {
           transform: scale(1.1);
         }
         .gallery-item-hover:not(.hide-hover) .hover-info-element {
-          transform: scale(0.9);
+          transform: scale(calc(1/1.1));
         }
 
       }
