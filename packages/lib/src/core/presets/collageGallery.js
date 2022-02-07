@@ -12,6 +12,7 @@ const fixToCollage = (options) => {
   presetOptions.hasThumbnails = false;
   presetOptions.groupTypes = '1,2h,2v,3t,3b,3l,3r';
   presetOptions.slideshowLoop = false;
+  presetOptions.numberOfImagesPerCol = 1;
   presetOptions.gridStyle = GRID_STYLE.FIT_TO_SCREEN;
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
