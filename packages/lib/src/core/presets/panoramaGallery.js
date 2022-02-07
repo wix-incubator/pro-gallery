@@ -10,6 +10,7 @@ const fixToPanorama = (options) => {
   presetOptions.isVertical = true;
   presetOptions.groupSize = 1;
   presetOptions.groupTypes = '1';
+  presetOptions.gridStyle = 0;
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
 
   presetOptions.galleryType = 'Columns';

@@ -12,6 +12,7 @@ const fixToMix = (options) => {
   presetOptions = assignByString(presetOptions, 'layoutParams_cropRatio', 1);
   presetOptions.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   presetOptions.scrollDirection = SCROLL_DIRECTION.VERTICAL;
+  presetOptions.gridStyle = 0;
   presetOptions = assignByString(
     presetOptions,
     'layoutParams_gallerySpacing',
