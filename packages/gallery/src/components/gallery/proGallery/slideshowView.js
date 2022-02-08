@@ -1035,7 +1035,8 @@ class SlideshowView extends React.Component {
     return galleryStructure.columns.map((column, c) => {
       const columnStyle = {
         width: this.props.isPrerenderMode ? '100%' : column.width,
-        height: this.getDimensions().height 
+        height: this.getDimensions().height,
+        overflow: 'visible',
       };
       return (
         <div
