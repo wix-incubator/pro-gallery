@@ -3,6 +3,7 @@ import PLACEMENTS from '../../common/constants/placements';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
 import { assignByString } from '../helpers/optionsUtils';
+import GRID_STYLE from '../../common/constants/gridStyle';
 
 const fixToMix = (options) => {
   let presetOptions = { ...options };
@@ -12,6 +13,7 @@ const fixToMix = (options) => {
   presetOptions = assignByString(presetOptions, 'layoutParams_cropRatio', 1);
   presetOptions.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   presetOptions.scrollDirection = SCROLL_DIRECTION.VERTICAL;
+  presetOptions.gridStyle = GRID_STYLE.FIT_TO_SCREEN;
   presetOptions = assignByString(
     presetOptions,
     'layoutParams_gallerySpacing',
@@ -23,7 +25,7 @@ const fixToMix = (options) => {
   presetOptions.collageDensity = 0.48;
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  presetOptions.targetItemSize = 86;
+  presetOptions.gallerySize = 86;
   presetOptions.minItemSize = 50;
   presetOptions.chooseBestGroup = true;
   presetOptions = assignByString(

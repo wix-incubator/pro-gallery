@@ -20,6 +20,7 @@ const fixToFullsize = (options) => {
   presetOptions.isVertical = false;
   presetOptions.groupSize = 1;
   presetOptions.groupTypes = '1';
+  presetOptions.numberOfImagesPerCol = 1;
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   presetOptions.smartCrop = false;

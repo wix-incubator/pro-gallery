@@ -1,6 +1,7 @@
 import LAYOUTS from '../../common/constants/layout';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
+import GRID_STYLE from '../../common/constants/gridStyle';
 
 const fixToPanorama = (options) => {
   let presetOptions = { ...options };
@@ -10,6 +11,7 @@ const fixToPanorama = (options) => {
   presetOptions.isVertical = true;
   presetOptions.groupSize = 1;
   presetOptions.groupTypes = '1';
+  presetOptions.gridStyle = GRID_STYLE.SET_ITEMS_PER_ROW;
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
 
   presetOptions.galleryType = 'Columns';

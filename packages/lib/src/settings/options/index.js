@@ -111,6 +111,8 @@ import layoutParams_crop_ratios from './layoutParams_crop_ratios';
 import behaviourParams_gallery_horizontal_autoSlide_behaviour from './behaviourParams_gallery_horizontal_autoSlide_behaviour';
 import behaviourParams_gallery_horizontal_autoSlide_interval from './behaviourParams_gallery_horizontal_autoSlide_interval';
 import behaviourParams_gallery_horizontal_autoSlide_speed from './behaviourParams_gallery_horizontal_autoSlide_speed';
+import layoutParams_structure_responsiveMode from './layoutParams_structure_responsiveMode';
+import layoutParams_targetItemSize_value from './layoutParams_targetItemSize_value';
 
 export default {
   [optionsMap.behaviourParams.gallery.vertical.loadMore.text]:
@@ -172,7 +174,8 @@ export default {
   collageDensity,
   [optionsMap.layoutParams.groups.density]: collageDensity,
   gridStyle,
-  [optionsMap.layoutParams.structure.responsiveMode]: gridStyle,
+  [optionsMap.layoutParams.structure.responsiveMode]:
+    layoutParams_structure_responsiveMode,
   hasThumbnails,
   [optionsMap.layoutParams.thumbnails.enable]: hasThumbnails,
   groupTypes,
@@ -262,7 +265,8 @@ export default {
   gallerySize,
   gallerySizePx,
   gallerySizeRatio,
-  [optionsMap.layoutParams.targetItemSize.value]: gallerySize,
+  [optionsMap.layoutParams.targetItemSize.value]:
+    layoutParams_targetItemSize_value,
   allowContextMenu,
   [optionsMap.behaviourParams.gallery.blockContextMenu]: allowContextMenu,
   galleryLayout,
