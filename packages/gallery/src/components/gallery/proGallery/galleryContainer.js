@@ -87,8 +87,42 @@ export class GalleryContainer extends React.Component {
     }
   }
 
+  getMoreItemsIfScrollIsDisabled() {
+    const body = document.body;
+    const html = document.documentElement;
+    const viewportHeight = window.innerHeight;
+    const height = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
+    // if(height === lastHeight) return; //been there, no more items
+
+    // var pageHeight = 0;
+
+    // function findHighestNode(nodesList) {
+    //     for (var i = nodesList.length - 1; i >= 0; i--) {
+    //         if (nodesList[i].scrollHeight && nodesList[i].clientHeight) {
+    //             var elHeight = Math.max(nodesList[i].scrollHeight, nodesList[i].clientHeight);
+    //             pageHeight = Math.max(elHeight, pageHeight);
+    //         }
+    //         if (nodesList[i].childNodes.length) findHighestNode(nodesList[i].childNodes);
+    //     }
+    // }
+
+    // findHighestNode(document.documentElement.childNodes);
+
+    // The entire page height is found
+    // console.log('Page height is', pageHeight);
+
+    if(height <= viewportHeight) { //there can be no scroll to trigger getMoreItems, but there could be more items
+      console.log('looks like im getting more')
+        this.getMoreItemsIfNeeded(0);
+        setTimeout(()=>{this.getMoreItemsIfScrollIsDisabled()},2000)
+      } else {
+        console.log('im done ', height, viewportHeight);
+      }
+  }
+
   componentDidMount() {
-    this.initializeScrollPosition()
+    this.initializeScrollPosition();
+    this.getMoreItemsIfScrollIsDisabled();
     this.handleNewGalleryStructure();
     this.eventsListener(GALLERY_CONSTS.events.APP_LOADED, {});
     this.videoScrollHelper.initializePlayState();
