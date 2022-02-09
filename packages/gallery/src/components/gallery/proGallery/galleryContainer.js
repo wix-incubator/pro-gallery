@@ -105,7 +105,7 @@ export class GalleryContainer extends React.Component {
       while (nextHeight === height && i < 15){
         // Wait 100 ms for the body to update
         await new Promise((res) => setTimeout(res, 100));
-        
+
         // Calculate current height of body and recheck the condition
         nextHeight = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
         i++;
@@ -113,10 +113,10 @@ export class GalleryContainer extends React.Component {
 
       // entering this clause --> the height changed
       if (i < 15){
-        setTimeout(()=>{this.getMoreItemsIfScrollIsDisabled()},2000)
-      }
+        this.getMoreItemsIfScrollIsDisabled();
     }
   }
+}
 
   componentDidMount() {
     this.initializeScrollPosition();
