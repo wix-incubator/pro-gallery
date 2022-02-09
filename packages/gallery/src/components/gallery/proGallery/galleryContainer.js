@@ -87,7 +87,7 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  // This function gets items until all items are fetched, or the height of the 
+  // This function runs if site is scroll-less and fetches gallery's items
   async getMoreItemsIfScrollIsDisabled() {
     const { body, documentElement: html } = document;
     const viewportHeight = window.innerHeight;
