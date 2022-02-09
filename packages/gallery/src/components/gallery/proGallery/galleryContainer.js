@@ -76,7 +76,7 @@ export class GalleryContainer extends React.Component {
       ...initialState,
       ...this.initialGalleryState,
     };
-    // setTimeout(()=>{this.getMoreItemsIfScrollIsDisabled()},2000);
+
     //not sure if there needs to be a handleNEwGalleryStructure here with the intial state. currently looks like not
   }
   initializeScrollPosition() {
