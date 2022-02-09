@@ -76,7 +76,7 @@ export class GalleryContainer extends React.Component {
       ...initialState,
       ...this.initialGalleryState,
     };
-
+    // setTimeout(()=>{this.getMoreItemsIfScrollIsDisabled()},2000);
     //not sure if there needs to be a handleNEwGalleryStructure here with the intial state. currently looks like not
   }
   initializeScrollPosition() {
@@ -87,37 +87,35 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  getMoreItemsIfScrollIsDisabled() {
-    const body = document.body;
-    const html = document.documentElement;
+  // This function gets items until all items are fetched, or the height of the 
+  async getMoreItemsIfScrollIsDisabled() {
+    const { body, documentElement: html } = document;
     const viewportHeight = window.innerHeight;
-    const height = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
-    // if(height === lastHeight) return; //been there, no more items
+    const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
+    const padding = 100; // Wix Platform adds padding to body height
+    
+    //there can be no scroll to trigger getMoreItems, but there could be more items
+    if(height <= viewportHeight + padding) { 
+      // Trying to get more items
+      this.getMoreItemsIfNeeded(0);
 
-    // var pageHeight = 0;
-
-    // function findHighestNode(nodesList) {
-    //     for (var i = nodesList.length - 1; i >= 0; i--) {
-    //         if (nodesList[i].scrollHeight && nodesList[i].clientHeight) {
-    //             var elHeight = Math.max(nodesList[i].scrollHeight, nodesList[i].clientHeight);
-    //             pageHeight = Math.max(elHeight, pageHeight);
-    //         }
-    //         if (nodesList[i].childNodes.length) findHighestNode(nodesList[i].childNodes);
-    //     }
-    // }
-
-    // findHighestNode(document.documentElement.childNodes);
-
-    // The entire page height is found
-    // console.log('Page height is', pageHeight);
-
-    if(height <= viewportHeight) { //there can be no scroll to trigger getMoreItems, but there could be more items
-      console.log('looks like im getting more')
-        this.getMoreItemsIfNeeded(0);
-        setTimeout(()=>{this.getMoreItemsIfScrollIsDisabled()},2000)
-      } else {
-        console.log('im done ', height, viewportHeight);
+      // Loop initiation
+      let nextHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+      let i = 0
+      while (nextHeight === height && i < 15){
+        // Wait 100 ms for the body to update
+        await new Promise((res) => setTimeout(res, 100));
+        
+        // Calculate current height of body and recheck the condition
+        nextHeight = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+        i++;
       }
+
+      // entering this clause --> the height changed
+      if (i < 15){
+        setTimeout(()=>{this.getMoreItemsIfScrollIsDisabled()},2000)
+      }
+    }
   }
 
   componentDidMount() {
