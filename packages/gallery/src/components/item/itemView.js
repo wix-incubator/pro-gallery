@@ -667,7 +667,6 @@ class ItemView extends React.Component {
     const { scrollDirection, imageMargin, itemClick, isRTL, slideAnimation } =
       options;
 
-    const containerStyleByoptions = getContainerStyle(options);
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
     const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
 
@@ -743,7 +742,6 @@ class ItemView extends React.Component {
     const itemContainerStyles = {
       ...itemStyles,
       ...layoutStyles,
-      ...containerStyleByoptions,
       ...transitionStyles,
       ...opacityStyles,
       ...slideAnimationStyles,
@@ -974,38 +972,40 @@ class ItemView extends React.Component {
         key={'item-container-' + id}
         style={this.getItemContainerStyles()}
       >
-        {this.getTopInfoElementIfNeeded()}
-        {this.getLeftInfoElementIfNeeded()}
-        <div
-          style={{
-            ...(
-              getImageStyle(this.props.options)),
-            ...(GALLERY_CONSTS.hasExternalRightPlacement(
-              this.props.options.titlePlacement,
-              this.props.idx
-            ) && { float: 'left' }),
-            ...(GALLERY_CONSTS.hasExternalLeftPlacement(
-              this.props.options.titlePlacement,
-              this.props.idx
-            ) && { float: 'right' }),
-          }}
-        >
-          {!isItemWrapperEmpty && (
-            <div
-              data-hook="item-wrapper"
-              className={this.getItemWrapperClass()}
-              key={'item-wrapper-' + id}
-              id={'item-wrapper-' + id}
-              style={this.getItemWrapperStyles()}
-              onClick={this.onItemWrapperClick}
-            >
-              {this.getItemInner()}
-            </div>
-          )}
+        <div className='scroll-animations' style={getContainerStyle(this.props.options)}>
+          {this.getTopInfoElementIfNeeded()}
+          {this.getLeftInfoElementIfNeeded()}
+          <div
+            style={{
+              ...(
+                getImageStyle(this.props.options)),
+              ...(GALLERY_CONSTS.hasExternalRightPlacement(
+                this.props.options.titlePlacement,
+                this.props.idx
+              ) && { float: 'left' }),
+              ...(GALLERY_CONSTS.hasExternalLeftPlacement(
+                this.props.options.titlePlacement,
+                this.props.idx
+              ) && { float: 'right' }),
+            }}
+          >
+            {!isItemWrapperEmpty && (
+              <div
+                data-hook="item-wrapper"
+                className={this.getItemWrapperClass()}
+                key={'item-wrapper-' + id}
+                id={'item-wrapper-' + id}
+                style={this.getItemWrapperStyles()}
+                onClick={this.onItemWrapperClick}
+              >
+                {this.getItemInner()}
+              </div>
+            )}
+          </div>
+          {this.getRightInfoElementIfNeeded()}
+          {this.getBottomInfoElementIfNeeded()}
+          </div>
         </div>
-        {this.getRightInfoElementIfNeeded()}
-        {this.getBottomInfoElementIfNeeded()}
-      </div>
     );
     const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(options)
 

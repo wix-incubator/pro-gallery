@@ -246,13 +246,13 @@ class CssScrollHelper {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
-          ' .gallery-item-wrapper'
+          ' > div'
         ) +
         `{filter: opacity(0); transition: filter 1.${_randomDuration}s ease-in !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(
           animationActivePadding,
-          ' .gallery-item-wrapper'
+          ' > div'
         ) + `{filter: opacity(1) !important;}`;
     }
 
@@ -260,7 +260,7 @@ class CssScrollHelper {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
-          ' .gallery-item-wrapper'
+          ' > div'
         ) +
         `{filter: grayscale(100%); transition: filter 1.${
           200 + _randomDuration
@@ -268,7 +268,7 @@ class CssScrollHelper {
       scrollAnimationCss +=
         createScrollSelectors(
           animationActivePadding,
-          ' .gallery-item-wrapper'
+          ' > div'
         ) + `{filter: grayscale(0) !important;}`;
     }
 
@@ -312,13 +312,13 @@ class CssScrollHelper {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
-          ' .gallery-item-wrapper'
+          ' > div'
         ) +
         `{transform: scale(1.1); transition: transform 1.2s cubic-bezier(.13,.78,.53,.92) ${_randomDelay}ms !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(
           animationActivePadding,
-          ' .gallery-item-wrapper'
+          ' > div'
         ) + `{transform: scale(1) !important;}`;
     }
 
@@ -335,7 +335,7 @@ class CssScrollHelper {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
-          ' .gallery-item-wrapper'
+          ' > div'
         ) +
         `{filter: opacity(0); transition: filter 0.${
           600 + _randomDuration
@@ -343,7 +343,7 @@ class CssScrollHelper {
       scrollAnimationCss +=
         createScrollSelectors(
           animationActivePadding,
-          ' .gallery-item-wrapper'
+          ' > div'
         ) + `{filter: opacity(1) !important;}`;
     }
 
