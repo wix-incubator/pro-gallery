@@ -22,6 +22,7 @@ const fixToGrid = (options) => {
   presetOptions.enableScroll = true;
   presetOptions.cropOnlyFill = false;
   presetOptions.minItemSize = 50;
+  presetOptions.collageDensity = 0;
   return presetOptions;
 };
 
