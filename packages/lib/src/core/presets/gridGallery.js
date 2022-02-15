@@ -5,7 +5,7 @@ import {
   processNumberOfImagesPerCol,
   removeBordersIfNeeded,
 } from '../helpers/layoutHelper';
-
+import SLIDE_ANIMATIONS from '../../common/constants/slideAnimations';
 const fixToGrid = (options) => {
   let presetOptions = { ...options };
   presetOptions.galleryLayout = LAYOUTS.GRID;
@@ -22,6 +22,8 @@ const fixToGrid = (options) => {
   presetOptions.enableScroll = true;
   presetOptions.cropOnlyFill = false;
   presetOptions.minItemSize = 50;
+  presetOptions.slideAnimation = SLIDE_ANIMATIONS.SCROLL;
+  presetOptions.collageDensity = 0;
   return presetOptions;
 };
 
