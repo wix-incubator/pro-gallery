@@ -1,5 +1,15 @@
 import { window } from 'pro-gallery-lib';
 
+// Promise-wrapping class
+export class Deferred {
+  constructor() {
+    this.promise = new Promise((resolve, reject) => {
+      this.reject = reject;
+      this.resolve = resolve;
+    });
+  }
+}
+
 export function isGalleryInViewport(container) {
   try {
     const haveAllVariablesForViewPortCalc = !!(

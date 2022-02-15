@@ -19,7 +19,7 @@ import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper';
 import findNeighborItem from '../../helpers/layoutUtils';
 import ImageRenderer from '../../item/imageRenderer';
-import { isGalleryInViewport } from './galleryHelpers';
+import { isGalleryInViewport, Deferred } from './galleryHelpers';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -87,34 +87,20 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  // This function runs if site is scroll-less and fetches gallery's items
+  // This function runs if site is scroll-less => tries to fetch gallery's items
   async getMoreItemsIfScrollIsDisabled() {
     const { body, documentElement: html } = document;
     const viewportHeight = window.innerHeight;
-    const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
-    const padding = 100; // Wix Platform adds padding to body height
-    
+    const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+    const extraPadding = 100;
     //there can be no scroll to trigger getMoreItems, but there could be more items
-    if(height <= viewportHeight + padding) { 
+    if(height <= viewportHeight + extraPadding) { 
       // Trying to get more items
-      this.getMoreItemsIfNeeded(0);
-
-      // Loop initiation
-      let nextHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-      let i = 0
-      while (nextHeight === height && i < 15){
-        // Wait 100 ms for the body to update
-        await new Promise((res) => setTimeout(res, 100));
-
-        // Calculate current height of body and recheck the condition
-        nextHeight = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-        i++;
-      }
-
-      // entering this clause --> the height changed
-      if (i < 15){
+      this.getMoreItemsIfNeeded(0).then(()=> {
         this.getMoreItemsIfScrollIsDisabled();
-    }
+      }).catch(e => {
+        console.error('Problem with getting more items when scroll is disabled', e)
+      });
   }
 }
 
@@ -718,54 +704,70 @@ export class GalleryContainer extends React.Component {
     }
   }
 
+  // Resolves\rejects when got more items
+  handleDeferredItemsGettingOutcome(isResolved){
+    this.gettingMoreItems = false;
+    isResolved ? 
+    this.deferredGettingMoreItems.resolve() :
+    this.deferredGettingMoreItems.reject(); 
+  }
+  
   getMoreItemsIfNeeded(scrollPos) {
-    if (
-      this.galleryStructure &&
-      this.galleryStructure.galleryItems &&
-      this.galleryStructure.galleryItems.length > 0 &&
-      !this.gettingMoreItems &&
-      this.state.items &&
-      this.state.options &&
-      this.state.container
-    ) {
-      //more items can be fetched from the server
-      //TODO - add support for horizontal galleries
-      const { scrollDirection, isRTL } = this.state.options;
-
-      const galleryEnd =
-        this.galleryStructure[
-          scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
-            ? 'width'
-            : 'height'
-        ] +
-        (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
-          ? 0
-          : this.state.container.scrollBase);
-      const screenSize =
-        window.screen[
-          scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
-            ? 'width'
-            : 'height'
-        ];
-      const scrollEnd =
-        scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && isRTL
-          ? scrollPos - galleryEnd + screenSize
-          : scrollPos + screenSize;
-      const getItemsDistance = scrollPos ? 3 * screenSize : 0; //first scrollPos is 0 falsy. dont load before a scroll happened.
-
-      if (galleryEnd < getItemsDistance + scrollEnd) {
-        //only when the last item turns visible we should try getting more items
-        this.gettingMoreItems = true;
-        this.eventsListener(
-          GALLERY_CONSTS.events.NEED_MORE_ITEMS,
-          this.state.items.length
-        );
-        setTimeout(() => {
-          //wait a bit before allowing more items to be fetched - ugly hack before promises still not working
-          this.gettingMoreItems = false;
-        }, 2000);
+    if (this.gettingMoreItems) { 
+      // Already getting more items so do nothing
+    } else {
+      this.gettingMoreItems = true;
+      this.deferredGettingMoreItems = new Deferred();
+      if (
+        this.galleryStructure &&
+        this.galleryStructure.galleryItems &&
+        this.galleryStructure.galleryItems.length > 0 &&
+        this.state.items &&
+        this.state.options &&
+        this.state.container
+      ) {
+        //more items can be fetched from the server
+        //TODO - add support for horizontal galleries
+        const { scrollDirection, isRTL } = this.state.options;
+        const galleryEnd =
+          this.galleryStructure[
+            scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+              ? 'width'
+              : 'height'
+          ] +
+          (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+            ? 0
+            : this.state.container.scrollBase);
+        const screenSize =
+          window.screen[
+            scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+              ? 'width'
+              : 'height'
+          ];
+        const scrollEnd =
+          scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && isRTL
+            ? scrollPos - galleryEnd + screenSize
+            : scrollPos + screenSize;
+        const getItemsDistance = scrollPos ? 3 * screenSize : 0; //first scrollPos is 0 falsy. dont load before a scroll happened.
+  
+        if (galleryEnd < getItemsDistance + scrollEnd) {
+          //only when the last item turns visible we should try getting more items
+          this.eventsListener(
+            GALLERY_CONSTS.events.NEED_MORE_ITEMS,
+            this.state.items.length
+          );
+          setTimeout(() => {
+            //wait a bit before allowing more items to be fetched - ugly hack before promises still not working
+            this.handleDeferredItemsGettingOutcome(true);
+          }, 2000);
+        } else {
+          this.handleDeferredItemsGettingOutcome(false);
+        }
+      } else {
+        this.handleDeferredItemsGettingOutcome(false);
       }
     }
+    return this.deferredGettingMoreItems.promise;
   }
 
   canRender() {
