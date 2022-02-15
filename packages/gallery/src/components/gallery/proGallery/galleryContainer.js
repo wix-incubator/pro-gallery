@@ -718,14 +718,19 @@ export class GalleryContainer extends React.Component {
     } else {
       this.gettingMoreItems = true;
       this.deferredGettingMoreItems = new Deferred();
+      
       if (
-        this.galleryStructure &&
+        !(this.galleryStructure &&
         this.galleryStructure.galleryItems &&
         this.galleryStructure.galleryItems.length > 0 &&
         this.state.items &&
         this.state.options &&
-        this.state.container
+        this.state.container)
       ) {
+        // No items are fetched -> reject
+        this.handleDeferredItemsGettingOutcome(false);
+      }
+      else {
         //more items can be fetched from the server
         //TODO - add support for horizontal galleries
         const { scrollDirection, isRTL } = this.state.options;
@@ -761,11 +766,10 @@ export class GalleryContainer extends React.Component {
             this.handleDeferredItemsGettingOutcome(true);
           }, 2000);
         } else {
+          // No items are fetched -> reject
           this.handleDeferredItemsGettingOutcome(false);
         }
-      } else {
-        this.handleDeferredItemsGettingOutcome(false);
-      }
+      } 
     }
     return this.deferredGettingMoreItems.promise;
   }
