@@ -1,5 +1,6 @@
 import LAYOUTS from '../../common/constants/layout';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
+import SLIDE_ANIMATIONS from '../../common/constants/slideAnimations';
 import {
   calcTargetItemSize,
   removeBordersIfNeeded,
@@ -23,6 +24,7 @@ const fixToSlider = (options) => {
   presetOptions.enableScroll = true;
   presetOptions.scrollSnap = true;
   presetOptions.cropOnlyFill = true;
+  presetOptions.slideAnimation = SLIDE_ANIMATIONS.SCROLL;
   return presetOptions;
 };
 export const fixedOptions = fixToSlider({});
