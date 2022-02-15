@@ -62,6 +62,7 @@ import {
 } from './emptyGallery';
 import { createOptions as jsonFixedOptions } from './designedPresetGallery';
 import { addMigratedOptions } from '../helpers/optionsConverter';
+import { flattenObject } from '../helpers/optionsUtils';
 
 //#endregion Imports
 
@@ -175,9 +176,9 @@ const getLayoutName = (galleryLayout) => {
 // returns true if the given param is in the current layout preset
 const isInPreset = (galleryLayout, paramToCheck) => {
   const layoutName = getLayoutName(galleryLayout) || 'empty'; // empty for when there is no layout given
-  return Object.keys(addMigratedOptions(NEW_PRESETS[layoutName])).includes(
-    paramToCheck
-  );
+  return Object.keys(
+    addMigratedOptions(flattenObject(NEW_PRESETS[layoutName]))
+  ).includes(paramToCheck);
 };
 
 export { addPresetOptions, NEW_PRESETS, getLayoutName, isInPreset };
