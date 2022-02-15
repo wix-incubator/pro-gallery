@@ -23,6 +23,7 @@ const fixToGrid = (options) => {
   presetOptions.cropOnlyFill = false;
   presetOptions.minItemSize = 50;
   presetOptions.slideAnimation = SLIDE_ANIMATIONS.SCROLL;
+  presetOptions.collageDensity = 0;
   return presetOptions;
 };
 
