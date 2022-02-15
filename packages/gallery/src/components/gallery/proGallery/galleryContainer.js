@@ -95,11 +95,11 @@ export class GalleryContainer extends React.Component {
     const extraPadding = 100;
     //there can be no scroll to trigger getMoreItems, but there could be more items
     if(height <= viewportHeight + extraPadding) { 
+      const lastItemsCount = this.state.items.length;
       // Trying to get more items
       this.getMoreItemsIfNeeded(0).then(()=> {
-        const currentHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-        // Avoiding infinite loop in case no more items to fetch
-        if (currentHeight != height){
+        // No need to continue calling if no items are left to fetch
+        if (this.state.items.length > lastItemsCount){
           this.getMoreItemsIfScrollIsDisabled();
         }
       }).catch(e => {
