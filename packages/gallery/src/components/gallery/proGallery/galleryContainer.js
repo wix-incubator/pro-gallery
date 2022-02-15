@@ -97,7 +97,11 @@ export class GalleryContainer extends React.Component {
     if(height <= viewportHeight + extraPadding) { 
       // Trying to get more items
       this.getMoreItemsIfNeeded(0).then(()=> {
-        this.getMoreItemsIfScrollIsDisabled();
+        const currentHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+        // Avoiding infinite loop in case no more items to fetch
+        if (currentHeight != height){
+          this.getMoreItemsIfScrollIsDisabled();
+        }
       }).catch(e => {
         console.error('Problem with getting more items when scroll is disabled', e)
       });
