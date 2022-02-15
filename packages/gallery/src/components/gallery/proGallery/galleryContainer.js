@@ -704,7 +704,6 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  // Resolves\rejects when got more items
   handleDeferredItemsGettingOutcome(isResolved){
     this.gettingMoreItems = false;
     isResolved ? 
