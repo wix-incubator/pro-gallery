@@ -102,8 +102,6 @@ export class GalleryContainer extends React.Component {
         if (this.state.items.length > lastItemsCount){
           this.getMoreItemsIfScrollIsDisabled();
         }
-      }).catch(e => {
-        console.error('Problem with getting more items when scroll is disabled', e)
       });
   }
 }
@@ -708,18 +706,11 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  handleDeferredItemsGettingOutcome(isResolved){
-    this.gettingMoreItems = false;
-    isResolved ? 
-    this.deferredGettingMoreItems.resolve() :
-    this.deferredGettingMoreItems.reject(); 
-  }
   
   getMoreItemsIfNeeded(scrollPos) {
-    if (this.gettingMoreItems) { 
+    if (this.deferredGettingMoreItems?.pending) { 
       // Already getting more items so do nothing
     } else {
-      this.gettingMoreItems = true;
       this.deferredGettingMoreItems = new Deferred();
       
       if (
@@ -731,7 +722,7 @@ export class GalleryContainer extends React.Component {
         this.state.container)
       ) {
         // No items are fetched -> reject
-        this.handleDeferredItemsGettingOutcome(false);
+        this.deferredGettingMoreItems.reject();
       }
       else {
         //more items can be fetched from the server
@@ -766,15 +757,15 @@ export class GalleryContainer extends React.Component {
           );
           setTimeout(() => {
             //wait a bit before allowing more items to be fetched - ugly hack before promises still not working
-            this.handleDeferredItemsGettingOutcome(true);
+            this.deferredGettingMoreItems.resolve();
           }, 2000);
         } else {
           // No items are fetched -> reject
-          this.handleDeferredItemsGettingOutcome(false);
+          this.deferredGettingMoreItems.reject();
         }
       } 
     }
-    return this.deferredGettingMoreItems.promise;
+    return this.deferredGettingMoreItems.promise.catch(() => {});
   }
 
   canRender() {
