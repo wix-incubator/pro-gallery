@@ -246,13 +246,13 @@ class CssScrollHelper {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
-          ' .gallery-item-wrapper'
+          ''
         ) +
         `{filter: opacity(0); transition: filter 1.${_randomDuration}s ease-in !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(
           animationActivePadding,
-          ' .gallery-item-wrapper'
+          ''
         ) + `{filter: opacity(1) !important;}`;
     }
 
