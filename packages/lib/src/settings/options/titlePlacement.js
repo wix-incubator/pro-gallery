@@ -19,7 +19,7 @@ export default {
       return {
         0: options['isVertical'] && options['groupSize'] === 1,
         1: options['groupSize'] === 1,
-      }[options];
+      }[options['scrollDirection']];
     };
     // Distribution of the specific isRelevant functions
     const placementOptions = {
