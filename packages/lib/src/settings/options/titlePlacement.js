@@ -6,7 +6,7 @@ export default {
   title: 'Texts Placement',
   isRelevantDescription:
     'Set "Layout Orientation" to "Columns" and set "Max Group Size" to "1".',
-  isRelevant: (options, context, option) => {
+  isRelevant: (options, option) => {
     // specific isRelevant functions
     const isHorizontalInfoCompatibleLayout = (options) => {
       return (

@@ -164,9 +164,6 @@ class JsonEditor extends React.Component {
 
   render() {
     const {section, subSection, options, allOptions, option, expandIcon} = this.props;
-    const context = {
-      isMobile: false,
-    }
     // const selectedProps = LayoutProps[selectedLayout];
     // let json = selectedProps ?
     //   Object.keys(selectedProps).reduce((acc, key) => {
@@ -182,7 +179,7 @@ class JsonEditor extends React.Component {
     ([key, settings]) =>
       (!section || settings.section === section) &&
       (!subSection || settings.subSection === subSection) &&
-      (this.props.showAllOptions || settings.isRelevant(allOptions, context))
+      (this.props.showAllOptions || settings.isRelevant(allOptions))
 
     const activeKey = option ? {activeKey: 'collapse' + option} : {defaultActiveKey: []};
 
