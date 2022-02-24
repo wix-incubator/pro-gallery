@@ -17,7 +17,7 @@ div.pro-gallery {
           transform: scale(1.1);
         }
         .gallery-item-hover:not(.hide-hover) {
-          transform: scale(1.1);
+          transform: scale(1.101); //make sure overlay cover all edges of an image.
         }
         .gallery-item-hover:not(.hide-hover) .hover-info-element {
           transform: scale(calc(1/1.1));
