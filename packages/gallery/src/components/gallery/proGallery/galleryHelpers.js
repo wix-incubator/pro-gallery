@@ -4,15 +4,15 @@ import { window } from 'pro-gallery-lib';
 export class Deferred {
   constructor() {
     this.promise = new Promise((resolve, reject) => {
-      this.reject = () => {
-        this.pending = false;
-        reject();
+      this.reject = (...args) => {
+        this.isPending = false;
+        reject(...args);
       };
-      this.resolve = () => {
-        this.pending = false;
-        resolve();
+      this.resolve = (...args) => {
+        this.isPending = false;
+        resolve(...args);
       };
-      this.pending = true;
+      this.isPending = true;
     });
   }
 }
