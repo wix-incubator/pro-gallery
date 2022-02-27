@@ -1,4 +1,5 @@
 import LAYOUTS from '../../common/constants/layout';
+import PLACEMENTS from '../../common/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import {
@@ -19,6 +20,7 @@ const fixToSlideshow = (options) => {
   );
   presetOptions.cubeImages = true;
   presetOptions.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW;
+  presetOptions.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   presetOptions.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
   presetOptions = assignByString(
     presetOptions,
