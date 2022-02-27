@@ -3,6 +3,7 @@ import PLACEMENTS from '../../common/constants/placements';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
 import { assignByString } from '../helpers/optionsUtils';
+import GRID_STYLE from '../../common/constants/gridStyle';
 
 const fixToAlternate = (options) => {
   let presetOptions = { ...options };
@@ -12,6 +13,7 @@ const fixToAlternate = (options) => {
   presetOptions = assignByString(presetOptions, 'layoutParams_cropRatio', 1);
   presetOptions.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   presetOptions.scrollDirection = SCROLL_DIRECTION.VERTICAL;
+  presetOptions.gridStyle = GRID_STYLE.SET_ITEMS_PER_ROW;
   presetOptions = assignByString(
     presetOptions,
     'layoutParams_gallerySpacing',
