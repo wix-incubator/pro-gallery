@@ -17,10 +17,10 @@ div.pro-gallery {
           transform: scale(1.1);
         }
         .gallery-item-hover:not(.hide-hover) {
-          transform: scale(1.105); //make sure overlay cover all edges of an image.
+          transform: scale(1.110); //make sure overlay cover all edges of an image.
         }
         .gallery-item-hover:not(.hide-hover) .hover-info-element {
-          transform: scale(calc(1/1.105));
+          transform: scale(calc(1/1.110));
         }
 
       }
