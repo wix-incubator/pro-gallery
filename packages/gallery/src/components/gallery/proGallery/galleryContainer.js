@@ -708,7 +708,7 @@ export class GalleryContainer extends React.Component {
 
   
   getMoreItemsIfNeeded(scrollPos) {
-    if (this.deferredGettingMoreItems?.pending) { 
+    if (this.deferredGettingMoreItems?.isPending) { 
       // Already getting more items so do nothing
     } else {
       this.deferredGettingMoreItems = new Deferred();
