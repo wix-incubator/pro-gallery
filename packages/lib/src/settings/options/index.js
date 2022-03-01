@@ -51,6 +51,7 @@ import arrowsSize from './arrowsSize';
 import slideshowInfoSize from './slideshowInfoSize';
 import textBoxHeight from './textBoxHeight';
 import calculateTextBoxWidthMode from './calculateTextBoxWidthMode';
+import layoutParams_info_sizeUntis from './layoutParams_info_sizeUnits';
 import chooseBestGroup from './chooseBestGroup';
 import imageLoadingMode from './imageLoadingMode';
 import cropOnlyFill from './cropOnlyFill';
@@ -113,6 +114,8 @@ import behaviourParams_gallery_horizontal_autoSlide_interval from './behaviourPa
 import behaviourParams_gallery_horizontal_autoSlide_speed from './behaviourParams_gallery_horizontal_autoSlide_speed';
 import layoutParams_structure_responsiveMode from './layoutParams_structure_responsiveMode';
 import layoutParams_targetItemSize_value from './layoutParams_targetItemSize_value';
+import layoutParams_info_width from './layoutParams_info_width';
+import layoutParams_info_height from './layoutParams_info_height';
 
 export default {
   [optionsMap.behaviourParams.gallery.vertical.loadMore.text]:
@@ -166,7 +169,7 @@ export default {
   [optionsMap.layoutParams.info.border.width]: textBoxBorderWidth,
   textBoxWidth,
   textBoxWidthPercent,
-  [optionsMap.layoutParams.info.width]: textBoxWidthPercent,
+  [optionsMap.layoutParams.info.width]: layoutParams_info_width,
   imageInfoType,
   [optionsMap.layoutParams.info.layout]: imageInfoType,
   groupSize,
@@ -222,9 +225,9 @@ export default {
   [optionsMap.layoutParams.navigationArrows.size]: arrowsSize,
   slideshowInfoSize,
   textBoxHeight,
-  [optionsMap.layoutParams.info.height]: textBoxHeight,
+  [optionsMap.layoutParams.info.height]: layoutParams_info_height,
   calculateTextBoxWidthMode,
-  [optionsMap.layoutParams.info.sizeUnits]: calculateTextBoxWidthMode,
+  [optionsMap.layoutParams.info.sizeUnits]: layoutParams_info_sizeUntis,
   chooseBestGroup,
   [optionsMap.layoutParams.groups.groupByOrientation]: chooseBestGroup,
   imageLoadingMode,
