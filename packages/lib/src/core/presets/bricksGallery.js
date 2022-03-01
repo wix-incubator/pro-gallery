@@ -3,6 +3,7 @@ import PLACEMENTS from '../../common/constants/placements';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
 import { assignByString } from '../helpers/optionsUtils';
+import GRID_STYLE from '../../common/constants/gridStyle';
 
 const fixToBricks = (options) => {
   let presetOptions = { ...options };
@@ -22,6 +23,7 @@ const fixToBricks = (options) => {
   presetOptions.collageDensity = 0.8;
   presetOptions.groupTypes = '1,2h,2v,3t,3b,3l,3r,3v,3h';
   presetOptions.slideshowLoop = false;
+  presetOptions.gridStyle = GRID_STYLE.SET_ITEMS_PER_ROW;
 
   // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   presetOptions.gallerySize = 400;

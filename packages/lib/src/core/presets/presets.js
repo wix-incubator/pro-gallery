@@ -166,8 +166,8 @@ const getLayoutName = (galleryLayout) => {
     'magic', // 8
     'fullsize', // 9
     'bricks', // 10
-    'alternate', // 11
-    'mix', // 12,
+    'mix', // 11,
+    'alternate', // 12
     'futureSlideshow', // 13,
   ];
   return galleyLayoutList[galleryLayout + 1];
