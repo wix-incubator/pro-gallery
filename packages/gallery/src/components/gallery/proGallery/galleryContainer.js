@@ -552,19 +552,14 @@ export class GalleryContainer extends React.Component {
       GALLERY_CONSTS.events.GALLERY_SCROLLED,
       { top, left }
     );
-    this.videoScrollHelper.trigger.SCROLL({
-      top,
-      left,
-    });
-    this.updateVisibility();
   }
 
-  isInViewport = () => {
-    return isGalleryInViewport(this.props.container);
-  }
 
   updateVisibility = () => {
-    const isInViewport = this.isInViewport();
+    const isInViewport = isGalleryInViewport({
+      container: this.props.container,
+      scrollTop: this.state.pgScroll
+    });
     if (this.state.isInViewport !== isInViewport) {
       this.setState({
         isInViewport,
@@ -572,9 +567,16 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
    // in order to update when container is available
-   this.updateVisibility();
+   const { container } = this.props;
+   const { pgScroll } = this.state;
+   if (
+     container.scrollBase !== prevProps.container.scrollBase ||
+     pgScroll !== prevState.pgScroll
+     ) {
+      this.updateVisibility();
+   }
   }
 
   createDynamicStyles({ overlayBackground }, isPrerenderMode) {
@@ -703,6 +705,17 @@ export class GalleryContainer extends React.Component {
     }
     if (typeof this.props.eventsListener === 'function') {
       this.props.eventsListener(eventName, eventData, event);
+    }
+
+    if (eventName === GALLERY_CONSTS.events.GALLERY_SCROLLED) {
+      const { top, left } = eventData;
+      this.videoScrollHelper.trigger.SCROLL({
+        top,
+        left,
+      });
+      this.setState({
+        pgScroll: top || this.state.pgScroll, // incase of horizontal scroll there is no top
+      })
     }
   }
 
