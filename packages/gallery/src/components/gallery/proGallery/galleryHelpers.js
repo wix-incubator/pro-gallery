@@ -22,7 +22,6 @@ export function isGalleryInViewport({ container, scrollTop }) {
     const isTopVisible = container.scrollBase < scrollTop + window.innerHeight;
     const isBottomVisible =
       container.scrollBase + container.galleryHeight > scrollTop;
-    console.log(isBottomVisible && isTopVisible);
     return isTopVisible && isBottomVisible;
   } catch (e) {
     console.warn('Could not calculate viewport', e);
