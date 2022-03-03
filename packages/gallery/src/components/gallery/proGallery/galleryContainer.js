@@ -47,7 +47,7 @@ export class GalleryContainer extends React.Component {
       this.setPlayingIdxState
     );
     const initialState = {
-      pgScroll: 0,
+      scrollTop: 0,
       showMoreClickedAtLeastOnce: false,
       initialGalleryHeight: undefined,
       needToHandleShowMoreClick: false,
@@ -558,7 +558,7 @@ export class GalleryContainer extends React.Component {
   updateVisibility = () => {
     const isInViewport = isGalleryInViewport({
       container: this.props.container,
-      scrollTop: this.state.pgScroll
+      scrollTop: this.state.scrollTop
     });
     if (this.state.isInViewport !== isInViewport) {
       this.setState({
@@ -570,10 +570,10 @@ export class GalleryContainer extends React.Component {
   componentDidUpdate(prevProps, prevState) {
    // in order to update when container is available
    const { container } = this.props;
-   const { pgScroll } = this.state;
+   const { scrollTop } = this.state;
    if (
      container.scrollBase !== prevProps.container.scrollBase ||
-     pgScroll !== prevState.pgScroll
+     scrollTop !== prevState.scrollTop
      ) {
       this.updateVisibility();
    }
@@ -679,6 +679,14 @@ export class GalleryContainer extends React.Component {
     item?.offset && this.onGalleryScroll(item.offset);
   }
 
+  setScrollTop = (top) => {
+    if (top >= 0) {
+      this.setState({
+        scrollTop: top,
+      })
+    }
+    
+  }
   eventsListener(eventName, eventData, event) {
     this.videoScrollHelper.handleEvent({
       eventName,
@@ -713,9 +721,7 @@ export class GalleryContainer extends React.Component {
         top,
         left,
       });
-      this.setState({
-        pgScroll: top || this.state.pgScroll, // incase of horizontal scroll there is no top
-      })
+      this.setScrollTop(top)
     }
   }
 
