@@ -23,7 +23,7 @@ export default {
     };
     // Distribution of the specific isRelevant functions
     const placementOptions = {
-      OVERLAY: () => {
+      SHOW_ON_HOVER: () => {
         return true;
       },
       SHOW_BELOW: isVerticalInfoCompatibleLayout,
