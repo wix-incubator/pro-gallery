@@ -14,8 +14,6 @@ const fixToMasonry = (options) => {
   presetOptions.groupSize = 1;
   presetOptions.groupTypes = '1';
   presetOptions.slideshowLoop = false;
-
-  // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   presetOptions.enableScroll = true;
   presetOptions.cropOnlyFill = false;
   return presetOptions;

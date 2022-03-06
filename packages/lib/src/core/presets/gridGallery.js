@@ -15,7 +15,6 @@ const fixToGrid = (options) => {
   presetOptions.hasThumbnails = false;
   presetOptions.groupTypes = '1';
   presetOptions.slideshowLoop = false;
-  // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   presetOptions.smartCrop = false;
   presetOptions.galleryType = 'Columns';
   presetOptions.targetItemSize = 0;

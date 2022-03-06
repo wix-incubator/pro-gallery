@@ -12,8 +12,6 @@ const fixToPanorama = (options) => {
   presetOptions.groupSize = 1;
   presetOptions.groupTypes = '1';
   presetOptions.gridStyle = GRID_STYLE.SET_ITEMS_PER_ROW;
-  // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-
   presetOptions.galleryType = 'Columns';
   presetOptions.fixedColumns = 1;
   presetOptions.enableScroll = true;
