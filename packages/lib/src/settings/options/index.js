@@ -116,6 +116,7 @@ import layoutParams_structure_responsiveMode from './layoutParams_structure_resp
 import layoutParams_targetItemSize_value from './layoutParams_targetItemSize_value';
 import layoutParams_info_width from './layoutParams_info_width';
 import layoutParams_info_height from './layoutParams_info_height';
+import layoutParams_info_placement from './layoutParams_info_placement';
 
 export default {
   [optionsMap.behaviourParams.gallery.vertical.loadMore.text]:
@@ -143,7 +144,7 @@ export default {
   cubeImages,
   [optionsMap.layoutParams.crop.enable]: cubeImages,
   titlePlacement,
-  [optionsMap.layoutParams.info.placement]: titlePlacement,
+  [optionsMap.layoutParams.info.placement]: layoutParams_info_placement,
   isVertical,
   [optionsMap.layoutParams.structure.layoutOrientation]: isVertical,
   numberOfImagesPerRow,

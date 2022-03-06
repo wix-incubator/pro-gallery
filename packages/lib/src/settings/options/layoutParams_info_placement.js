@@ -26,12 +26,12 @@ export default {
       OVERLAY: () => {
         return true;
       },
-      SHOW_BELOW: isVerticalInfoCompatibleLayout,
-      SHOW_ABOVE: isVerticalInfoCompatibleLayout,
-      SHOW_ON_THE_RIGHT: isHorizontalInfoCompatibleLayout,
-      SHOW_ON_THE_LEFT: isHorizontalInfoCompatibleLayout,
-      ALTERNATE_HORIZONTAL: isHorizontalInfoCompatibleLayout,
-      ALTERNATE_VERTICAL: isVerticalInfoCompatibleLayout,
+      BELOW: isVerticalInfoCompatibleLayout,
+      ABOVE: isVerticalInfoCompatibleLayout,
+      RIGHT: isHorizontalInfoCompatibleLayout,
+      LEFT: isHorizontalInfoCompatibleLayout,
+      ALTERNATE_HORIZONTALLY: isHorizontalInfoCompatibleLayout,
+      ALTERNATE_VERTICALLY: isVerticalInfoCompatibleLayout,
     };
     // specific option isRelevant : general titlePlacement isRelevant (Hover always true)
     return option ? placementOptions[option](options) : true;
