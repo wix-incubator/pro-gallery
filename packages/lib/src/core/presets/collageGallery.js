@@ -15,8 +15,6 @@ const fixToCollage = (options) => {
   presetOptions.slideshowLoop = false;
   presetOptions.numberOfImagesPerCol = 1;
   presetOptions.gridStyle = GRID_STYLE.FIT_TO_SCREEN;
-
-  // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   presetOptions.targetItemSize = 0;
   presetOptions.fixedColumns = 0;
   presetOptions.enableScroll = true;

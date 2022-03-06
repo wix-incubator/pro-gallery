@@ -23,8 +23,6 @@ const fixToAlternate = (options) => {
   presetOptions.groupSize = 3;
   presetOptions.collageDensity = 0.48;
   presetOptions.groupTypes = '1,2h,2v,3t,3b,3l,3r,3v,3h';
-  // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-
   presetOptions.gallerySize = 86;
   presetOptions.minItemSize = 50;
   presetOptions.chooseBestGroup = true;

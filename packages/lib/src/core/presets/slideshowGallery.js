@@ -34,10 +34,7 @@ const fixToSlideshow = (options) => {
   presetOptions.itemBorderRadius = 0;
   presetOptions.itemBorderColor = undefined;
   presetOptions.numberOfImagesPerCol = 1;
-
   disableAnimationsForSlideshowLayouts(presetOptions);
-
-  // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   presetOptions.smartCrop = false;
   presetOptions.targetItemSize = 550;
   presetOptions.galleryType = 'Strips';

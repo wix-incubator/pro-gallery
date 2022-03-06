@@ -15,8 +15,6 @@ const fixToColumn = (options) => {
   presetOptions.groupTypes = '1';
   presetOptions.slideshowLoop = false;
   presetOptions.numberOfImagesPerCol = 1;
-
-  // this params were moved from the presets in layoutHelper and were not tested and checked yet.
   presetOptions.smartCrop = false;
   presetOptions.galleryType = 'Strips';
   presetOptions.fixedColumns = 0;
