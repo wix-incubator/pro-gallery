@@ -34,7 +34,9 @@ export default {
       ALTERNATE_VERTICAL: isVerticalInfoCompatibleLayout,
     };
     // specific option isRelevant : general titlePlacement isRelevant (Hover always true)
-    return option ? placementOptions[option](options) : true;
+    return option
+      ? placementOptions[option](options)
+      : Object.values(placementOptions).some((val) => val(options));
   },
   type: INPUT_TYPES.MULTISELECT,
   default: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
