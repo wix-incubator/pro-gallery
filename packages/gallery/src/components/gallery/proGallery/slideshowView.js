@@ -544,8 +544,9 @@ class SlideshowView extends React.Component {
       console.log('creating thumbnails for idx', activeIndex);
     }
 
-    let width = this.props.options.thumbnailSize;
-    let height = this.props.options.thumbnailSize;
+    const { thumbnailSize } = this.props.options;
+    let width = thumbnailSize;
+    let height = thumbnailSize;
     let horizontalThumbnails;
     let numOfThumbnails;
     let numOfWholeThumbnails;
@@ -646,7 +647,7 @@ class SlideshowView extends React.Component {
         case 'top':
         case 'bottom':
           thumbnailsStyle.width = thumbnailsContainerSize + 'px';
-          thumbnailsStyle.left = (width - thumbnailsContainerSize) / 2 + 'px';
+          thumbnailsStyle.left = (thumbnailSize - thumbnailsContainerSize) / 2 + 'px';
           break;
         case 'left':
         case 'right':
@@ -706,7 +707,6 @@ class SlideshowView extends React.Component {
         this.lastItemIdx + 1
       );
     }
-    const { thumbnailSize } = this.props.options;
     return (
       <div
         className={
