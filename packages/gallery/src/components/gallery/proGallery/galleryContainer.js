@@ -87,14 +87,24 @@ export class GalleryContainer extends React.Component {
     }
   }
 
+  isScrollingDisabledSituation() {
+    const extraPadding = 100;
+    if(this.isVerticalGallery()) {
+      // If here then the vertical scrolling is what matters
+      const { body, documentElement: html } = document;
+      const viewportHeight = window.innerHeight;
+      const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+      return height <= viewportHeight + extraPadding;
+    } else {
+      // If here it's the horizontal scrolling that matters
+      return this.state.structure.width < this.state.container.width + extraPadding;
+    }
+  }
+
   // This function runs if site is scroll-less => tries to fetch gallery's items
   async getMoreItemsIfScrollIsDisabled() {
-    const { body, documentElement: html } = document;
-    const viewportHeight = window.innerHeight;
-    const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-    const extraPadding = 100;
     //there can be no scroll to trigger getMoreItems, but there could be more items
-    if(height <= viewportHeight + extraPadding) { 
+    if(this.isScrollingDisabledSituation()) { 
       const lastItemsCount = this.state.items.length;
       // Trying to get more items
       this.getMoreItemsIfNeeded(0).then(()=> {
