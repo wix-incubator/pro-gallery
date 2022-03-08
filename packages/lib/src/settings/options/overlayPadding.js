@@ -4,7 +4,7 @@ import { default as GALLERY_CONSTS } from '../../common/constants';
 export default {
   title: 'Overlay Padding',
   description: `Padding`,
-  isRelevantDescription: 'Set "Texts Placement" to "Show On Hover".',
+  isRelevantDescription: 'Set "Hover Effect" to anything but "Never Show".',
   isRelevant: (options) =>
     options.hoveringBehaviour !==
     GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW,

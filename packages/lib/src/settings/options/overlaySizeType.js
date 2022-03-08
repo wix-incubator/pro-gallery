@@ -5,7 +5,7 @@ import { createOptions } from '../utils/utils';
 export default {
   title: 'Overlay Size Type',
   description: `choose pixel or percent`,
-  isRelevantDescription: 'Set "Texts Placement" to "Show On Hover".',
+  isRelevantDescription: 'Set "Hover Effect" to anything but "Never Show".',
   isRelevant: (options) =>
     options.hoveringBehaviour !==
     GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW,
