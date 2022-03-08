@@ -43,7 +43,7 @@
     "core-js": "^3.2.1",
     "css-loader": "^2.1.1",
     "dotenv": "^6.0.0",
-    "error-overlay-webpack-plugin": "^0.4.1",
+    "error-overlay-webpack-plugin": "^1.1.0",
     "eslint": "^7.13.0",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-flowtype": "^5.2.0",
