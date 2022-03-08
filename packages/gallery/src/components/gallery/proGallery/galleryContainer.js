@@ -47,7 +47,10 @@ export class GalleryContainer extends React.Component {
       this.setPlayingIdxState
     );
     const initialState = {
-      scrollTop: 0,
+      scrollPosition: {
+        top: 0,
+        left: 0
+      },
       showMoreClickedAtLeastOnce: false,
       initialGalleryHeight: undefined,
       needToHandleShowMoreClick: false,
@@ -547,10 +550,10 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  onGalleryScroll({ top, left }) {
+  onGalleryScroll(scrollPosition) {
     this.eventsListener(
       GALLERY_CONSTS.events.GALLERY_SCROLLED,
-      { top, left }
+      scrollPosition
     );
   }
 
@@ -558,7 +561,7 @@ export class GalleryContainer extends React.Component {
   updateVisibility = () => {
     const isInViewport = isGalleryInViewport({
       container: this.props.container,
-      scrollTop: this.state.scrollTop
+      scrollTop: this.state.scrollPosition.top
     });
     if (this.state.isInViewport !== isInViewport) {
       this.setState({
@@ -566,17 +569,19 @@ export class GalleryContainer extends React.Component {
       });
     }
   }
-
+  setVisibilityIfNeeded = (prevProps, prevState) => {
+    const { container } = this.props;
+    const { scrollPosition } = this.state;
+    if (
+      container.scrollBase !== prevProps.container.scrollBase ||
+      scrollPosition.top !== prevState.scrollPosition.top
+      ) {
+       this.updateVisibility();
+    }
+  }
   componentDidUpdate(prevProps, prevState) {
    // in order to update when container is available
-   const { container } = this.props;
-   const { scrollTop } = this.state;
-   if (
-     container.scrollBase !== prevProps.container.scrollBase ||
-     scrollTop !== prevState.scrollTop
-     ) {
-      this.updateVisibility();
-   }
+    this.setVisibilityIfNeeded(prevProps, prevState)
   }
 
   createDynamicStyles({ overlayBackground }, isPrerenderMode) {
@@ -679,14 +684,6 @@ export class GalleryContainer extends React.Component {
     item?.offset && this.onGalleryScroll(item.offset);
   }
 
-  setScrollTop = (top) => {
-    if (top >= 0) {
-      this.setState({
-        scrollTop: top,
-      })
-    }
-    
-  }
   eventsListener(eventName, eventData, event) {
     this.videoScrollHelper.handleEvent({
       eventName,
@@ -716,12 +713,13 @@ export class GalleryContainer extends React.Component {
     }
 
     if (eventName === GALLERY_CONSTS.events.GALLERY_SCROLLED) {
-      const { top, left } = eventData;
-      this.videoScrollHelper.trigger.SCROLL({
-        top,
-        left,
-      });
-      this.setScrollTop(top)
+      this.videoScrollHelper.trigger.SCROLL(eventData);
+      const newScrollPosition = {
+        ...this.state.scrollPosition,
+        ...eventData,
+      };
+      console.log(newScrollPosition);
+      this.setState({scrollPosition: newScrollPosition})
     }
   }
 
