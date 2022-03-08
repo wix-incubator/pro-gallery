@@ -6,7 +6,9 @@ export default {
   title: 'Overlay Size Type',
   description: `choose pixel or percent`,
   isRelevantDescription: 'Set "Texts Placement" to "Show On Hover".',
-  isRelevant: (sp) => GALLERY_CONSTS.hasHoverPlacement(sp.titlePlacement),
+  isRelevant: (options) =>
+    options.hoveringBehaviour !==
+    GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW,
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.overlaySizeType.PERCENT,
   options: createOptions('overlaySizeType'),

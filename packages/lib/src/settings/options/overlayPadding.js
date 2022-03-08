@@ -5,7 +5,9 @@ export default {
   title: 'Overlay Padding',
   description: `Padding`,
   isRelevantDescription: 'Set "Texts Placement" to "Show On Hover".',
-  isRelevant: (sp) => GALLERY_CONSTS.hasHoverPlacement(sp.titlePlacement),
+  isRelevant: (options) =>
+    options.hoveringBehaviour !==
+    GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW,
   type: INPUT_TYPES.NUMBER,
   min: 0,
   default: 0,
