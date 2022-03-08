@@ -718,7 +718,6 @@ export class GalleryContainer extends React.Component {
         ...this.state.scrollPosition,
         ...eventData,
       };
-      console.log(newScrollPosition);
       this.setState({scrollPosition: newScrollPosition})
     }
   }
