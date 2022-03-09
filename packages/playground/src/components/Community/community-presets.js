@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Icon, Card, Button } from 'antd';
-import { ArrowUpOutline, ArrowDownOutline } from '@ant-design/icons';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { Card, Button } from 'antd';
+import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import { GalleryPreview } from './galleryPreview';
 import { getAll, like } from '../../data';
 import { formatValue } from "../../utils/utils";
@@ -54,9 +55,9 @@ function CommunityPresets() {
       <Card
         cover={<a href={item.href}><GalleryPreview item={item} /></a>}
         actions={[
-          <Button type="link" disabled={isDownvoted(item)} size="large" onClick={() => onClickLike(item, -1)} icon={ArrowDownOutline.name}></Button>,
-          <Button type="link" disabled={isUpvoted(item)} size="large" onClick={() => onClickLike(item, 1)} icon={ArrowUpOutline.name}></Button>,
-          <Button type="link" size="large"><Icon type="star" theme={isLiked(item) ? 'filled' : 'outlined'}/>  {item.likes}</Button>,
+          <Button type="link" disabled={isDownvoted(item)} size="large" onClick={() => onClickLike(item, -1)} icon={<LegacyIcon type={ArrowDownOutlined.name} />}></Button>,
+          <Button type="link" disabled={isUpvoted(item)} size="large" onClick={() => onClickLike(item, 1)} icon={<LegacyIcon type={ArrowUpOutlined.name} />}></Button>,
+          <Button type="link" size="large"><LegacyIcon type="star" theme={isLiked(item) ? 'filled' : 'outlined'}/>  {item.likes}</Button>,
         ]}
         style={{
           margin: '20px 0',
@@ -69,8 +70,7 @@ function CommunityPresets() {
           description={item.description}
         />
       </Card>
-  ))
-    ;
+  ));
   // return (
   //   <List
   //     itemLayout='vertical'

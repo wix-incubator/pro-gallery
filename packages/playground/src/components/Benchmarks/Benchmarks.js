@@ -1,15 +1,7 @@
 import React from "react";
-import {
-  Divider,
-  Button,
-  InputNumber,
-  Radio,
-  Form,
-  Card,
-  Row,
-  Col,
-  Slider
-} from "antd";
+import { Form } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import { Divider, Button, InputNumber, Radio, Card, Row, Col, Slider } from "antd";
 import s from "./Benchmarks.module.scss";
 import { useGalleryContext } from "../../hooks/useGalleryContext";
 import { createLayout } from "pro-layouts";
