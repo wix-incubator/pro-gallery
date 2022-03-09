@@ -9,7 +9,6 @@ import {
   BugOutlined,
   CloseOutlined,
   DeleteOutlined,
-  SearchOutlined,
 } from '@ant-design/icons';
 import { Form } from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
