@@ -959,7 +959,7 @@ class GalleryItem {
   }
 
   get directLink() {
-    return this.dto.directLink || this.webLinkObject || {};
+    return this.dto.directLink || this.webLink || {};
   }
   get directShareLink() {
     return this.dto.directShareLink || '';
