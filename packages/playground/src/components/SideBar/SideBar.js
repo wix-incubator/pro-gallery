@@ -72,9 +72,10 @@ function SideBar({ items, blueprintsManager, visible }) {
   const dataSource = Object.entries(settingsManager)
     .filter(([styleParam]) => createSearchString(styleParam, searchTerm).indexOf(searchTerm.toLowerCase().replace(/ /g, '')) >= 0)
     .sort(([styleParam, props], [styleParam2, props2]) => props.title > props2.title ? 1 : -1)
-    .map(([styleParam, props]) => (
-      <AutoComplete.Option key={styleParam}>{props.title}</AutoComplete.Option>
-    )); //`(${styleParam}) ${props.title}`);
+    .map(([styleParam, props]) => ({
+      value: styleParam,
+      label: (<span>{props.title}</span>)
+    })); //`(${styleParam}) ${props.title}`);
 
   const resetSearch = () => {
     setSearchResult('');
@@ -87,26 +88,13 @@ function SideBar({ items, blueprintsManager, visible }) {
   return <>
     <div className="global-search-wrapper" style={{ width: 'calc(100% - 16px)', margin: '0 8px' }}>
       <AutoComplete
-        size="large"
         style={{ width: '100%', margin: '10px 1px' }}
-        dataSource={dataSource}
+        options={dataSource}
         onSelect={setSearchResult}
         onSearch={setSearchTerm}
-        placeholder="Search Style Params"
         value={searchTerm}
       >
-        <Input
-          suffix={
-            <Button
-              className="search-btn"
-              style={{ marginRight: -12 }}
-              size="large"
-              type="primary"
-            >
-              <SearchOutlined />
-            </Button>
-          }
-        />
+        <Input.Search size="large" placeholder="Search Style Param" enterButton />
       </AutoComplete>
       {searchResult &&
         <Card style={{
