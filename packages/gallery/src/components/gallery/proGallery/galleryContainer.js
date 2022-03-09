@@ -88,7 +88,7 @@ export class GalleryContainer extends React.Component {
   }
 
   isScrollingUnavailable(height, viewportHeight) {
-    const extraPadding = 100;
+    const extraPadding = 300;
     if(this.isVerticalGallery()) {
       // If here then the vertical scrolling is what matters
       return height <= viewportHeight + extraPadding;
