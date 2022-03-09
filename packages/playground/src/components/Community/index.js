@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { Form } from '@ant-design/compatible';
-import '@ant-design/compatible/assets/index.css';
+import { Form } from 'antd';
 import { Modal, Button, Input, message } from 'antd';
 import { getAll, save } from '../../data';
 import { CommunityPresets } from './community-presets';
