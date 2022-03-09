@@ -1,4 +1,5 @@
 import React from 'react';
+import { BarsOutlined } from '@ant-design/icons';
 import {Table, Modal, Button} from 'antd';
 import {settingsManager } from '../../constants/settings';
 
@@ -44,24 +45,24 @@ function StylesList() {
   ];
   
     return (
-    <div>
-      <Modal
-        title="Pro Gallery Styles List"
-        centered
-        width={window.innerWidth > 600 ? window.innerWidth - 200 : window.innerWidth}
-        height={window.innerHeight - 200}
-        visible={modalVisible}
-        onOk={() => set_modalVisible(false)}
-        onCancel={() => set_modalVisible(false)}
-      >
-          <Table dataSource={dataSource} columns={columns} pagination={{
-            current: 1,
-            pageSize: 100,
-          }}
-/>
-      </Modal>
-      <Button shape="circle" icon="bars" disabled={modalVisible} onClick={() => set_modalVisible(true)}/>
-    </div>
-  );
+      <div>
+        <Modal
+          title="Pro Gallery Styles List"
+          centered
+          width={window.innerWidth > 600 ? window.innerWidth - 200 : window.innerWidth}
+          height={window.innerHeight - 200}
+          visible={modalVisible}
+          onOk={() => set_modalVisible(false)}
+          onCancel={() => set_modalVisible(false)}
+        >
+            <Table dataSource={dataSource} columns={columns} pagination={{
+              current: 1,
+              pageSize: 100,
+            }}
+  />
+        </Modal>
+        <Button shape="circle" icon={<BarsOutlined />} disabled={modalVisible} onClick={() => set_modalVisible(true)}/>
+      </div>
+    );
 }
 export {StylesList};
