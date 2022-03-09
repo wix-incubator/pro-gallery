@@ -101,7 +101,7 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  // This function runs if site is scroll-less => tries to fetch gallery's items
+  // This function runs if site is scroll-less => tries to fetch gallery's items, -- called from didMount only! --
   async getMoreItemsIfScrollIsDisabled(height, viewportHeight) {
     //there can be no scroll to trigger getMoreItems, but there could be more items
     if(this.isScrollingUnavailable(height, viewportHeight)) { 
@@ -110,32 +110,20 @@ export class GalleryContainer extends React.Component {
       this.getMoreItemsIfNeeded(0).then(()=> {
         // No need to continue calling if no items are left to fetch
         if (this.state.items.length > lastItemsCount){
-          const {
-            height,
-            viewportHeight
-          } = this.getHeightAndViewportHeight();
+          const { body, documentElement: html } = document;
+          const viewportHeight = window.innerHeight;
+          const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
           this.getMoreItemsIfScrollIsDisabled(height, viewportHeight);
         }
       });
   }
 }
 
-  getHeightAndViewportHeight = () => {
+  componentDidMount() {
     const { body, documentElement: html } = document;
     const viewportHeight = window.innerHeight;
     const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-    return {
-      height,
-      viewportHeight
-    };
-  }
-  componentDidMount() {
     this.initializeScrollPosition();
-    // Measuring height measures for getMoreItemsIfScrollIsDisabled on didMount phase
-    const {
-      height,
-      viewportHeight
-    } = this.getHeightAndViewportHeight();
     this.getMoreItemsIfScrollIsDisabled(height, viewportHeight);
     this.handleNewGalleryStructure();
     this.eventsListener(GALLERY_CONSTS.events.APP_LOADED, {});
