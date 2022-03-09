@@ -279,8 +279,6 @@ class CssScrollHelper {
           : 'Y';
       const direction = isRTL ? '-' : '';
       scrollAnimationCss +=
-        createScrollSelectors(animationPreparationPadding, '') +
-        '{overflow: visible !important;}' +
         createScrollSelectors(animationPreparationPadding, ' > div') +
         `{transform: translate${axis}(${direction}100px); transition: transform 0.8s cubic-bezier(.13,.78,.53,.92) !important;}`;
       scrollAnimationCss +=
