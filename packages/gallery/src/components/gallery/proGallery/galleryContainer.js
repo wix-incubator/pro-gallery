@@ -98,7 +98,7 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  // This function runs if site is scroll-less => tries to fetch gallery's items
+  // This function runs if site is scroll-less => tries to fetch gallery's items, -- called from didMount only! --
   async getMoreItemsIfScrollIsDisabled(height, viewportHeight) {
     //there can be no scroll to trigger getMoreItems, but there could be more items
     if(this.isScrollingUnavailable(height, viewportHeight)) { 
@@ -107,7 +107,10 @@ export class GalleryContainer extends React.Component {
       this.getMoreItemsIfNeeded(0).then(()=> {
         // No need to continue calling if no items are left to fetch
         if (this.state.items.length > lastItemsCount){
-          this.getMoreItemsIfScrollIsDisabled();
+          const { body, documentElement: html } = document;
+          const viewportHeight = window.innerHeight;
+          const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+          this.getMoreItemsIfScrollIsDisabled(height, viewportHeight);
         }
       });
   }
