@@ -950,8 +950,16 @@ class GalleryItem {
     );
   }
 
+  get webLink() {
+    if (this.linkUrl?.length > 0 && this.linkType === 'web') {
+      return { url: this.linkUrl, target: this.linkOpenType };
+    } else {
+      return {};
+    }
+  }
+
   get directLink() {
-    return this.dto.directLink || '';
+    return this.dto.directLink || this.webLink || {};
   }
   get directShareLink() {
     return this.dto.directShareLink || '';
