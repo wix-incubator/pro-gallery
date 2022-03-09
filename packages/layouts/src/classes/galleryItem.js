@@ -952,7 +952,7 @@ class GalleryItem {
 
   get webLink() {
     if (this.linkUrl?.length > 0 && this.linkType === 'web') {
-      return { url: this.linkUrl };
+      return { url: this.linkUrl, target: this.linkOpenType };
     } else {
       return {};
     }
