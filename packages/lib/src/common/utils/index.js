@@ -436,6 +436,14 @@ class Utils {
     }
   }
 
+  awaitStateChange(that, state) {
+    return new Promise((resolve) => {
+      that.setState(state, () => {
+        resolve();
+      });
+    });
+  }
+
   printableObjectsDiff(obj1, obj2, prefix = '') {
     const _toString = (v) => {
       if (v === '') {

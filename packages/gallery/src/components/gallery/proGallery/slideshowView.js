@@ -49,11 +49,12 @@ class SlideshowView extends React.Component {
       this.onAutoSlideshowAutoPlayKeyPress.bind(this);
     this.setCurrentItemByScroll = this.setCurrentItemByScroll.bind(this);
     this._setCurrentItemByScroll = utils
-      .throttle(this.setCurrentItemByScroll, 600)
-      .bind(this);
+    .throttle(this.setCurrentItemByScroll, 600)
+    .bind(this);
     this._next = utils.throttle(this.next.bind(this), 400).bind(this);
     this.state = {
       activeIndex: props.activeIndex || 0,
+      itemInView: props.activeIndex || 0,
       isInView: true,
       pauseAutoSlideshowClicked: false,
       hideLeftArrow: !props.isRTL,
@@ -73,9 +74,7 @@ class SlideshowView extends React.Component {
   }
 
   isScrollStart() {
-    const { slideAnimation } = this.props.options;
-
-    if (slideAnimation !== GALLERY_CONSTS.slideAnimations.SCROLL || !this.scrollElement) {
+    if (!this.isScrollable || !this.scrollElement) {
       return false;
     }
     return this.scrollPosition() <= 1;
@@ -159,11 +158,24 @@ class SlideshowView extends React.Component {
     this.numOfThumbnails = numOfThumbnails;
   }
 
+  get isScrollable() {
+    return this.props.options.slideAnimation ===
+  GALLERY_CONSTS.slideAnimations.SCROLL;
+  }
+
   //__________________________________end of slide show loop functions__________________________
+  isManualyScrolling() {
+    if (this.isAutoScrolling || !this.isScrollable) {
+      return false;
+    }
+    return !this.isInABreakpoint(this.scrollElement.scrollLeft);
+  }
+  
   shouldBlockNext({ scrollingUpTheGallery }) {
     return (
       (scrollingUpTheGallery && this.isLastItem()) ||
-      (!scrollingUpTheGallery && this.isFirstItem())
+      (!scrollingUpTheGallery && this.isFirstItem()) ||
+      this.isManualyScrolling()
     );
   }
 
@@ -202,8 +214,7 @@ class SlideshowView extends React.Component {
     let ignoreScrollPosition = false;
 
     if (
-      this.props.options.slideAnimation !==
-      GALLERY_CONSTS.slideAnimations.SCROLL
+      !this.isScrollable
     ) {
       scrollDuration = 0;
       ignoreScrollPosition = true;
@@ -268,7 +279,6 @@ class SlideshowView extends React.Component {
         nextIndex = Math.max(0, nextIndex);
       }
     }
-    this.isAutoScrolling = true;
     return nextIndex;
   }
 
@@ -359,6 +369,10 @@ class SlideshowView extends React.Component {
     scrollDuration,
     scrollingUpTheGallery
   ) {
+    this.isAutoScrolling = true;
+    await utils.awaitStateChange(this, {
+      activeIndex: indexToScroll,
+    });
     const shouldAllowScroll = !this.shouldNotAllowScroll({ scrollingUpTheGallery });
     const { scrollMarginCorrection, _scrollDuration } = this.getScrollParameters(scrollDuration);
     shouldAllowScroll &&
@@ -370,6 +384,7 @@ class SlideshowView extends React.Component {
         scrollMarginCorrection,
         isContinuousScrolling
       ));
+    this.isAutoScrolling = false;
   }
 
   onThrowScrollError(massage, e) {
@@ -383,6 +398,7 @@ class SlideshowView extends React.Component {
       'Next Item',
       {
         activeIndex: nextItem,
+        itemInView: nextItem,
       },
       () => {
         this.onCurrentItemChanged();
@@ -532,7 +548,7 @@ class SlideshowView extends React.Component {
 
   createThumbnails(thumbnailPosition) {
     let items = this.props.items;
-    let activeIndex = this.state.activeIndex;
+    let activeIndex = this.state.itemInView;
     if (this.props.options.slideshowLoop) {
       if (!this.ItemsForSlideshowLoopThumbnails) {
         this.createNewItemsForSlideshowLoopThumbnails();
@@ -820,42 +836,53 @@ class SlideshowView extends React.Component {
   }
 
   setCurrentItemByScroll() {
-    if (utils.isVerbose()) {
-      console.log('Setting current Idx by scroll', this.isAutoScrolling);
-    }
-
+    const {activeIndex: currentActiveIndex, itemInView: currentItemInView} = this.state;
     if (this.isAutoScrolling) {
       //avoid this function if the scroll was originated by us (arrows or thumbnails)
-      this.isAutoScrolling = false;
-      return;
+      return currentActiveIndex;
     }
-
     const isScrolling =
       (this.scrollElement && this.scrollElement.getAttribute('data-scrolling')) ===
       'true';
 
     if (isScrolling) {
-      this.clearAutoSlideshowInterval();
-
       //while the scroll is animating, prevent the reaction to this event
-      return;
+      this.clearAutoSlideshowInterval();
+      return currentActiveIndex;
     }
-    this.startAutoSlideshowIfNeeded(this.props.options);
-
     const activeIndex = this.getCenteredItemOrGroupIdxByScroll('galleryItems');
-
-    if (!utils.isUndefined(activeIndex)) {
+    if (activeIndex === undefined) {
+      return activeIndex;
+    }
+    if (currentActiveIndex === activeIndex && activeIndex === currentItemInView) {
+      return activeIndex;
+    }
+    if (utils.isVerbose()) {
+      console.log('Setting active Idx by scroll', this.isAutoScrolling);
+    }
+    if (!this.isManualyScrolling()) {
       utils.setStateAndLog(
         this,
         'Set Current Item',
         {
           activeIndex,
+          itemInView: activeIndex,
         },
         () => {
           this.onCurrentItemChanged();
         }
       );
+      this.startAutoSlideshowIfNeeded(this.props.options);
+      return activeIndex;
     }
+    utils.setStateAndLog(
+      this,
+      'Set Item In View',
+      {
+        itemInView: activeIndex,
+      },
+    );
+
     return activeIndex;
   }
 
@@ -984,8 +1011,31 @@ class SlideshowView extends React.Component {
     ];
   }
 
+  getBufferedItems(galleryGroups, container) {
+    const groups = this.props.getVisibleItems(galleryGroups, container);
+    const BACK_RENDER_BUFFER = 3;
+    const FORWARD_RENDER_BUFFER = 3;
+    const BACK_RENDER_BUFFER_ON_SCROLLABLE = 10;
+    const FORWARD_RENDER_BUFFER_ON_SCROLLABLE = 10;
+    const scrollable = this.isScrollable;
+    const backRenderBuffer = scrollable ? BACK_RENDER_BUFFER_ON_SCROLLABLE : BACK_RENDER_BUFFER;
+    const forwardRenderBuffer = scrollable ? FORWARD_RENDER_BUFFER_ON_SCROLLABLE : FORWARD_RENDER_BUFFER;
+    const { activeIndex } = this.state;
+    return groups.filter((group) => {
+      const { items } = group;
+      const first = items[0];
+      const last = items[items.length - 1];
+      const firstIndex = first.idx ?? first.fullscreenIdx;
+      const lastIndex = last.idx ?? last.fullscreenIdx;
+      const startBuffer = activeIndex - backRenderBuffer - items.length;
+      const endBuffer = activeIndex + forwardRenderBuffer + items.length;
+      const shouldRender = firstIndex >= startBuffer && lastIndex <= endBuffer;
+      return shouldRender;
+    });
+  }
+
   createLayout() {
-    const { getVisibleItems, galleryStructure, container } =
+    const { container, galleryStructure } =
       this.props;
 
     const galleryConfig = {
@@ -1013,23 +1063,25 @@ class SlideshowView extends React.Component {
     const renderGroups = (column) => {
       const layoutGroupView =
         !!column.galleryGroups.length &&
-        getVisibleItems(column.galleryGroups, container);
-      return (
-        layoutGroupView &&
-        layoutGroupView.map((group) => {
-          return group.rendered
-            ? React.createElement(GroupView, {
-                allowLoop:
-                  this.props.options.slideshowLoop &&
-                  this.props.galleryStructure.width >
-                    this.props.container.width,
-                ...group.renderProps(galleryConfig),
-                ariaHidden: group.idx > this.skipFromSlide,
-              })
-            : false;
-        })
-      );
-    };
+        this.getBufferedItems(column.galleryGroups, container);
+      if (layoutGroupView) {
+        return (
+          layoutGroupView.map((group) => {
+            return group.rendered
+              ? React.createElement(GroupView, {
+                  allowLoop:
+                    this.props.options.slideshowLoop &&
+                    this.props.galleryStructure.width >
+                      this.props.container.width,
+                  ...group.renderProps(galleryConfig),
+                  ariaHidden: group.idx > this.skipFromSlide,
+                  key: group.idx,
+              }): false})
+          );
+        }
+      
+    }
+ 
     return galleryStructure.columns.map((column, c) => {
       const columnStyle = {
         width: this.props.isPrerenderMode ? '100%' : column.width,
@@ -1067,7 +1119,7 @@ class SlideshowView extends React.Component {
         height,
         width: this.props.container.galleryWidth,
       };
-}
+  }
 
   createGallery() {
     // When arrows are set outside of the gallery, gallery is resized (in dimensionsHelper -> getGalleryWidth) and needs to be positioned accordingly
@@ -1240,7 +1292,7 @@ class SlideshowView extends React.Component {
         }}
       >
         <div>
-          {(this.state.activeIndex % totalItemsCount) +
+          {(this.state.itemInView % totalItemsCount) +
             1 +
             '/' +
             totalItemsCount}
@@ -1390,6 +1442,7 @@ class SlideshowView extends React.Component {
         'Next Item',
         {
           activeIndex: props.activeIndex,
+          itemInView: props.activeIndex,
         },
         () => {
           this.onCurrentItemChanged();
@@ -1415,6 +1468,11 @@ class SlideshowView extends React.Component {
       props.options.isAutoSlideshow && props.options.playButtonForAutoSlideShow;
 
   }
+
+  isInABreakpoint(point) {
+    const { groups } = this.props.galleryStructure;
+    return !!groups.find(group => group.left === point);
+  };
 
   removeArrowsIfNeeded() {
       const { isRTL } = this.props.options;
