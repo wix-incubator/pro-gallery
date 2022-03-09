@@ -14,7 +14,6 @@
     "start-playground": "node scripts/start.js"
   },
   "dependencies": {
-    "@ant-design/compatible": "^1.1.0",
     "@ant-design/icons": "^4.7.0",
     "@babel/core": "7.16.7",
     "antd": "^4.19.1",
