@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig-esm.json",
+  "compilerOptions": {
+    "target": "ES2017",
+    "declarationDir": "dist/esm-types"
+  }
+}
