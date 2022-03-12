@@ -8,7 +8,6 @@ export interface IAnimation {
 }
 
 export interface IAnimationData {
-  element: string;
   frames: IAnimationFrame[];
   keep: boolean;
 }
@@ -16,6 +15,7 @@ export interface IAnimationData {
 export interface IAnimationSpring {
   mass: number;
   stiffness: number;
+  duration: number;
   damping: number;
   bounce: number;
   velocity: number;
@@ -28,6 +28,6 @@ export interface INamedAnimationData extends IAnimationData {
 }
 
 export interface IAnimationFrame {
-  duration: number;
+  after: number;
   css: IItemCss;
 }

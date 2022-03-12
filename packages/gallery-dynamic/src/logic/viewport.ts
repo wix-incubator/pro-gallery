@@ -4,8 +4,8 @@ import { useSettings } from './gallery';
 export function useDistanceToViewport(
   props: Pick<ItemProps, 'container' | 'location' | 'galleryStructure'>
 ) {
-  const { container, location, galleryStructure } = props;
-  const isVertical = galleryStructure.direction === 'VERTICAL';
+  const { container, location } = props;
+  const isVertical = true;
   const itemLocation = isVertical ? location.top : location.left;
   const containerSize = isVertical
     ? container.clientHeight
@@ -14,12 +14,21 @@ export function useDistanceToViewport(
     ? container.scrollTop
     : container.scrollLeft;
   const containerBottom = containerScroll + containerSize;
-  return itemLocation - containerBottom;
+  if (containerBottom > itemLocation && containerScroll < itemLocation) {
+    return 0;
+  }
+  if (containerBottom <= itemLocation) {
+    return itemLocation - containerBottom;
+  }
+  if (containerScroll >= itemLocation) {
+    return containerScroll - itemLocation;
+  }
+  return 0;
 }
 
 export function useInViewport(distanceToViewport: number) {
   const settings = useSettings();
   const { layoutParams } = settings;
   const { viewportThreshold } = layoutParams;
-  return distanceToViewport <= viewportThreshold;
+  return Math.abs(distanceToViewport) <= viewportThreshold;
 }

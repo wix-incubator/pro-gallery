@@ -1,4 +1,5 @@
 import { IItem } from '../types/gallery';
+import { ItemLocation } from '../types/item';
 import { useSettings } from './gallery';
 
 const loadSteps = {
@@ -10,29 +11,25 @@ const loadSteps = {
 export function useImageState(distanceToViewport: number) {
   const settings = useSettings();
   const { imageLoadThreshold, imageForceLoadThreshold } = settings.layoutParams;
-  const isLoaded = distanceToViewport <= imageLoadThreshold;
-  const lazyLoad = distanceToViewport <= imageForceLoadThreshold;
+  const isLoaded = distanceToViewport < imageLoadThreshold;
+  const lazyLoad = distanceToViewport > imageForceLoadThreshold;
   let loadStep = loadSteps.initial;
-  let previusLoadStep: number | undefined;
   if (isLoaded) {
     if (lazyLoad) {
       loadStep = loadSteps.lazy;
-      previusLoadStep = loadSteps.initial;
     } else {
       loadStep = loadSteps.full;
-      previusLoadStep = loadSteps.lazy;
     }
   }
   return {
-    backgroundLoadStep: previusLoadStep,
+    backgroundLoadStep: loadSteps.initial,
     imageLoadStep: loadStep,
     isLazy: lazyLoad,
   };
 }
 
-export function generateImageResolution(item: IItem, res: number) {
-  const { metaData } = item;
-  const { width, height } = metaData;
+export function generateImageResolution(location: ItemLocation, res: number) {
+  const { width, height } = location;
   const loadWidth = Math.round(width * res);
   const loadHeight = Math.round(height * res);
   return {
@@ -42,8 +39,13 @@ export function generateImageResolution(item: IItem, res: number) {
 }
 
 // TO DO Replace with real image src
-export function createImageSource(item: IItem, res: number): string {
-  const { id } = item;
-  const { width, height } = generateImageResolution(item, res);
-  return `https://picsum.photos/${id}/${width}/${height}`;
+export function createImageSource(
+  _item: IItem,
+  res: number,
+  location: ItemLocation
+): string {
+  // const { id } = item;
+  const { width, height } = generateImageResolution(location, res);
+  // return `https://picsum.photos/id/${id}/${width}/${height}`;
+  return `https://placekitten.com/${width}/${height}`;
 }

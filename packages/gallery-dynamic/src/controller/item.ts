@@ -14,12 +14,13 @@ export function useItem(props: ItemProps) {
   const { backgroundLoadStep, imageLoadStep, isLazy } =
     useImageState(distanceToViewport);
   const backgroundImageSrc =
-    backgroundLoadStep && createImageSource(item, backgroundLoadStep);
-  const imageSrc = createImageSource(item, imageLoadStep);
+    backgroundLoadStep && createImageSource(item, backgroundLoadStep, location);
+  const imageSrc = createImageSource(item, imageLoadStep, location);
 
   const { contentMotion, containerMotion } = useItemMotion({
-    styling,
+    itemStyling: styling,
     distanceToViewport,
+    location,
   });
   return {
     isInViewport,

@@ -34,6 +34,8 @@ export interface IGalleryStructureParams {
     id: string;
     width: number;
     height: number;
+    maxWidth: number;
+    maxHeight: number;
   }[];
 }
 

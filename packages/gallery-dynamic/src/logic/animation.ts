@@ -2,12 +2,12 @@ import { IAnimationData, IAnimationSpring } from '../types/animations';
 import { IColor, IItemCss } from '../types/css';
 import _ from 'lodash';
 import { sleep } from '../utils/time';
-import { ItemProps } from '../types/item';
 import { useEffect, useMemo, useState } from 'react';
-import { useSettings } from './gallery';
+import { useGallery, useSettings } from './gallery';
 import { IItemElement, IItemStyling } from '../types/gallery';
 import { MotionStyle, Transition } from 'framer-motion';
 import { TransformProperties } from 'framer-motion/types/motion/types';
+import { ItemLocation } from '../types/item';
 
 export function styleMerger(...styles: IItemCss[]): IItemCss {
   return styles.reduce((acc, style) => {
@@ -127,7 +127,7 @@ export function animator() {
       css[index - 1] = currentCss;
       const calcCss = styleMerger(...css);
       cssUpdateListners.forEach((listner) => listner(calcCss));
-      await sleep(frame.duration);
+      await sleep(frame.after);
     }
     if (!animation.keep) {
       css[index - 1] = {};
@@ -172,7 +172,7 @@ export function useElementMotion(props: {
   }, [shoudldLoad]);
 
   return {
-    css,
+    css: _.merge({}, elementStyling.intialStyle, css),
     spring: spring,
   };
 }
@@ -203,33 +203,43 @@ export function cssToMotion({
       }px ${css.boxShadow?.spread}px ${colorToCss(css.boxShadow?.color)}`,
       backgroundColor: colorToCss(css.backgroundColor),
       opacity: css.opacity,
-      filter: `blur(${css.filter?.blur || 0}px) brightness(${
-        css.filter?.brightness || 0
-      }%) contrast(${css.filter?.contrast || 0}%) grayscale(${
-        css.filter?.grayscale || 0
-      }%) hue-rotate(${css.filter?.hueRotate || 0}deg) invert(${
-        css.filter?.invert || 0
-      }%) opacity(${css.filter?.opacity || 0}%) saturate(${
-        css.filter?.saturate || 0
-      }%) sepia(${css.filter?.sepia || 0}%)`,
+      filter: `${css.filter?.blur ? `blur(${css.filter?.blur}px)` : ''} ${
+        css.filter?.brightness ? `brightness(${css.filter?.brightness}%)` : ''
+      } ${
+        css.filter?.grayscale ? `grayscale(${css.filter?.grayscale}%)` : ''
+      } ${
+        css.filter?.hueRotate ? `hue-rotate(${css.filter?.hueRotate}deg)` : ''
+      } ${css.filter?.invert ? `invert(${css.filter?.invert}%)` : ''} ${
+        css.filter?.saturate ? `saturate(${css.filter?.saturate}%)` : ''
+      } ${css.filter?.sepia ? `sepia(${css.filter?.sepia}%)` : ''}`,
     },
     transform: css.transform || {},
     transition: {
       type: 'spring',
-      mass: spring.mass,
-      damping: spring.damping,
-      velocity: spring.velocity,
-      bounce: spring.bounce,
-      stiffness: spring.stiffness,
+      ...spring,
     },
   };
 }
 
+export function extendStyling(...styling: IItemStyling[]) {
+  function customizer(objValue, srcValue) {
+    if (_.isArray(objValue)) {
+      return objValue.concat(srcValue);
+    }
+  }
+
+  return _.mergeWith(...styling, customizer) as IItemStyling;
+}
+
 export function useItemMotion(props: {
-  styling: IItemStyling;
+  itemStyling: IItemStyling;
   distanceToViewport: number;
+  location: ItemLocation;
 }) {
-  const { styling, distanceToViewport } = props;
+  const { baseItemStyling } = useGallery();
+  const { itemStyling, distanceToViewport, location } = props;
+  const styling = extendStyling(baseItemStyling, itemStyling);
+
   const { elements } = styling;
   const { content, container } = elements;
   const contentMotion = cssToMotion(
@@ -244,6 +254,21 @@ export function useItemMotion(props: {
       elementStyling: container,
     })
   );
+  containerMotion.style = {
+    ...containerMotion.style,
+    position: 'absolute',
+    overflow: 'hidden',
+    top: location.top,
+    left: location.left,
+    width: location.width,
+    height: location.height,
+  };
+  contentMotion.style = {
+    ...contentMotion.style,
+    width: location.width,
+    height: location.height,
+  };
+
   return {
     contentMotion,
     containerMotion,

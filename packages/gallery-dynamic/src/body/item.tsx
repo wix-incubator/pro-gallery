@@ -5,25 +5,42 @@ import { motion } from 'framer-motion';
 
 export function Item(props: ItemProps): JSX.Element {
   const item = useItem(props);
-  const { isInViewport, containerMotion, contentMotion, image } = item;
+  const { containerMotion, contentMotion, image } = item;
 
   return (
     <motion.div
-      style={{ ...containerMotion.style, ...containerMotion.transform }}
-      transition={containerMotion.transition}
+      style={{
+        ...containerMotion.transform,
+        ...containerMotion.style,
+      }}
+      animate={{
+        ...containerMotion.transform,
+        ...(containerMotion.style as any),
+      }}
+      // transition={containerMotion.transition}
+      transition={{
+        type: 'keyframes',
+        duration: 0.1,
+      }}
     >
-      {isInViewport && (
-        <motion.img
-          src={image.src}
-          loading={image.isLazy ? 'lazy' : 'eager'}
-          style={{
-            ...contentMotion.style,
-            ...contentMotion.transform,
-            backgroundImage: `url(${image.backgroundSrc})`,
-          }}
-          transition={contentMotion.transition}
-        />
-      )}
+      <motion.img
+        src={image.src}
+        loading={image.isLazy ? 'lazy' : 'eager'}
+        style={{
+          ...contentMotion.transform,
+          ...contentMotion.style,
+          backgroundImage: `url(${image.backgroundSrc})`,
+          backgroundSize: 'cover',
+        }}
+        animate={{
+          ...(contentMotion.style as any),
+          ...contentMotion.transform,
+        }}
+        transition={{
+          type: 'keyframes',
+          duration: 0.1,
+        }}
+      />
     </motion.div>
   );
 }

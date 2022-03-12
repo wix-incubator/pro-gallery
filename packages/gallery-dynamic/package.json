@@ -14,9 +14,8 @@
   ],
   "scripts": {
     "watch": "npm run start",
-    "build": " tsc && tsc -p tsconfig-esm.json && npm run css-compile",
-    "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css src/components/styles/gallery.scss:dist/statics/main.css",
-    "start": "concurrently \"npm run css-watch\" \"npm run code-watch\"",
+    "build": " tsc && tsc -p tsconfig-esm.json",
+    "start": "npm run code-watch",
     "code-watch": "tsc && tsc -w -p tsconfig-esm-dev.json",
     "unit": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
     "test": "echo 'no test in wix CI'",
