@@ -32,6 +32,7 @@ export interface IItemCss {
     saturate?: number;
     sepia?: number;
   };
+  zIndex?: number;
 }
 
 export interface IColor {
