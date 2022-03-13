@@ -58,7 +58,7 @@ function ItemBody(props: ItemProps): JSX.Element {
       : {
           style: {
             ...containerStyle,
-            transition: `all ${containerTransitionDuration}ms linear`,
+            transition: `all ${containerTransitionDuration}ms linear, z-index 0s`,
           },
         };
   const contentProps =
@@ -74,7 +74,7 @@ function ItemBody(props: ItemProps): JSX.Element {
       : {
           style: {
             ...contentStyle,
-            transition: `all ${contentTransitionDuration}ms linear`,
+            transition: `all ${contentTransitionDuration}ms linear, z-index 0s`,
           },
         };
 

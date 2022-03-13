@@ -225,7 +225,10 @@ export function useElementMotion(props: {
       {},
       elementStyling.intialStyle,
       shoudldLoad ? elementStyling.inViewStyle : {},
-      css
+      css,
+      {
+        zIndex: isHover ? 2 : 1,
+      }
     ),
     spring: spring,
   };
@@ -320,6 +323,7 @@ export function cssToMotion({
           ? `perspective(${css.transform?.perspective}px)`
           : ''
       }`,
+      zIndex: css.zIndex,
     },
     transform: css.transform || {},
     transition: {
