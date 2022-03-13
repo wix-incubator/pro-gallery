@@ -984,15 +984,20 @@ class SlideshowView extends React.Component {
     ];
   }
 
+  get isScrollable() {
+    return this.props.options.slideAnimation ===
+  GALLERY_CONSTS.slideAnimations.SCROLL;
+  }
+
   getBufferedItems(galleryGroups, container) {
     const groups = this.props.getVisibleItems(galleryGroups, container);
-    const BACK_RENDER_BUFFER = 3;
-    const FORWARD_RENDER_BUFFER = 3;
-    const BACK_RENDER_BUFFER_ON_SCROLLABLE = 10;
-    const FORWARD_RENDER_BUFFER_ON_SCROLLABLE = 10;
+    const { enabled = false, rightItemMargin = 3, leftItemMargin = 3, rightItemScrollMargin = 10, leftItemScrollMargin = 10 } = this.props.options.behaviourParams?.gallery?.horizontal?.itemVirtualization || {};
+    if (!enabled) {
+      return groups.map((group) => ({ group, shouldRender: true }));
+    }
     const scrollable = this.isScrollable;
-    const backRenderBuffer = scrollable ? BACK_RENDER_BUFFER_ON_SCROLLABLE : BACK_RENDER_BUFFER;
-    const forwardRenderBuffer = scrollable ? FORWARD_RENDER_BUFFER_ON_SCROLLABLE : FORWARD_RENDER_BUFFER;
+    const backRenderBuffer = scrollable ? rightItemScrollMargin : rightItemMargin;
+    const forwardRenderBuffer = scrollable ? leftItemScrollMargin : leftItemMargin;
     const { activeIndex } = this.state;
     const gallerySize = this.props.galleryContainerRef?.clientWidth || 0;
     return groups.map((group) => {

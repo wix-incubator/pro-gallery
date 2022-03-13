@@ -90,6 +90,7 @@ export interface Horizontal {
   loop?: boolean;
   autoSlide?: AutoSlide;
   slideshowInfo?: SlideshowInfo;
+  itemVirtualization?: ItemVirtualization;
 }
 
 export interface AutoSlide {
@@ -109,4 +110,38 @@ export interface LoadMore {
   enable?: boolean;
   amount?: 'PARTIAL' | 'ALL';
   text?: string;
+}
+
+export interface ItemVirtualization {
+  /**
+   * @description enable item virtualization and only load items that are visible on the screen or in the screen margin
+   * @default false
+   */
+  enabled?: boolean;
+  /**
+   * @description how many items to load as a buffer to the right
+   * @default 3
+   */
+  rightItemMargin?: number;
+  /**
+   * @description how many items to load as a buffer to the left
+   * @default 3
+   * */
+  leftItemMargin?: number;
+  /**
+   * @description how many items to load as a buffer to the right when in scroll slideshow mode
+   * @default 10
+   */
+  rightItemScrollMargin?: number;
+  /**
+   * @description how many items to load as a buffer to the left when in scroll slideshow mode
+   * @default 10
+   */
+  leftItemScrollMargin?: number;
+  /**
+   * @description should load dummy items until the real items are loaded
+   * @default true
+   * @ignore not implemented - always true
+   * */
+  useDummyItems?: boolean;
 }
