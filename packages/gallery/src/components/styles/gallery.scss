@@ -155,6 +155,10 @@ div.gallery-slideshow {
       }
     }
 
+    
+    
+
+
     .gallery-item-container {
 
       .gallery-slideshow-info {
@@ -725,4 +729,18 @@ div.pro-gallery {
   100% {
     background-color: rgba(241, 241, 241, 0.2);
   }
+}
+
+[data-hook="group-view"] {
+      > :before {
+      content: "''";
+      position: absolute;
+      scroll-snap-align: center;
+      top: var(--group-top);
+      left: var(--group-left);
+      width: var(--group-width);
+      }
+      .gallery-item-container {
+        scroll-snap-align: none !important;
+      }
 }
