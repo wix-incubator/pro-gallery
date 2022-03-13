@@ -4,10 +4,14 @@ import _ from 'lodash';
 import { sleep } from '../utils/time';
 import { useEffect, useMemo, useState } from 'react';
 import { useGallery, useSettings } from './gallery';
-import { IItemElement, IItemStyling } from '../types/gallery';
+import {
+  AnimationMergeStrategy,
+  IItemElement,
+  IItemStyling,
+} from '../types/gallery';
 import { MotionStyle, Transition } from 'framer-motion';
 import { TransformProperties } from 'framer-motion/types/motion/types';
-import { ItemLocation } from '../types/item';
+import { ItemLocation, RelationToViewport } from '../types/item';
 
 export function styleMerger(...styles: IItemCss[]): IItemCss {
   return styles.reduce((acc, style) => {
@@ -116,26 +120,45 @@ export function avrage(
   return merge(one, two)((one, two) => (one + two) / 2);
 }
 
-export function animator() {
+export function animator(animationMergeStrategy: AnimationMergeStrategy) {
   const css: IItemCss[] = [];
   const cssUpdateListners: ((css: IItemCss) => void)[] = [];
-  async function runAnimation(animation: IAnimationData) {
-    let currentCss: IItemCss = {};
-    const index = css.push(currentCss);
-    for (const frame of animation.frames) {
-      currentCss = frame.css;
-      css[index - 1] = currentCss;
-      const calcCss = styleMerger(...css);
-      cssUpdateListners.forEach((listner) => listner(calcCss));
-      await sleep(frame.after);
-    }
-    if (!animation.keep) {
-      css[index - 1] = {};
-    }
+  async function update() {
+    const calcCss =
+      animationMergeStrategy === 'merge'
+        ? styleMerger(...css)
+        : css[css.length - 1];
+    cssUpdateListners.forEach((listner) => listner(calcCss));
+  }
+  function runAnimation(animation: IAnimationData) {
+    let canceled = false;
+    const index = css.push({}) - 1;
+    (async () => {
+      for (const frame of animation.frames) {
+        await sleep(frame.after);
+        if (canceled) {
+          break;
+        }
+        css[index] = frame.css;
+        update();
+      }
+      if (!animation.keep) {
+        css[index] = {};
+        update();
+      }
+    })();
+    return () => {
+      css[index] = {};
+      update();
+      canceled = true;
+    };
   }
   function listen(listner: (css: IItemCss) => void) {
     cssUpdateListners.push(listner);
-    const calcCss = styleMerger(...css);
+    const calcCss =
+      animationMergeStrategy === 'merge'
+        ? styleMerger(...css)
+        : css[css.length - 1];
     listner(calcCss);
     return () => {
       cssUpdateListners.splice(cssUpdateListners.indexOf(listner), 1);
@@ -151,12 +174,20 @@ export function animator() {
 export function useElementMotion(props: {
   distanceToViewport: number;
   elementStyling: IItemElement;
+  animationMergeStrategy: AnimationMergeStrategy;
+  placement: RelationToViewport;
+  isHover: boolean;
 }) {
-  const { distanceToViewport, elementStyling } = props;
+  const {
+    distanceToViewport,
+    elementStyling,
+    animationMergeStrategy,
+    isHover,
+  } = props;
   const { animations, spring } = elementStyling;
   const settings = useSettings();
   const [css, setCss] = useState<IItemCss>({});
-  const animation = useMemo(() => animator(), []);
+  const animation = useMemo(() => animator(animationMergeStrategy), []);
   useEffect(() => {
     return animation.listen(setCss);
   }, []);
@@ -164,15 +195,38 @@ export function useElementMotion(props: {
     distanceToViewport <
     settings.animationParams.loadAnimationDistanceFromViewport;
   useEffect(() => {
-    animations.forEach((currentAnimation) => {
-      if (currentAnimation.on === (shoudldLoad ? 'enter' : 'leave')) {
-        animation.runAnimation(currentAnimation.data);
+    const cancel = animations.map((currentAnimation) => {
+      if (currentAnimation.on === 'enter' && shoudldLoad) {
+        return animation.runAnimation(currentAnimation.data);
       }
+      if (currentAnimation.on === 'leave' && !shoudldLoad) {
+        return animation.runAnimation(currentAnimation.data);
+      }
+      return;
     });
+    return () => {
+      cancel.forEach((cancel) => cancel && cancel());
+    };
   }, [shoudldLoad]);
+  useEffect(() => {
+    const cancel = animations.map((currentAnimation) => {
+      if (currentAnimation.on === 'hover' && isHover) {
+        return animation.runAnimation(currentAnimation.data);
+      }
+      return;
+    });
+    return () => {
+      cancel.forEach((cancel) => cancel && cancel());
+    };
+  }, [isHover]);
 
   return {
-    css: _.merge({}, elementStyling.intialStyle, css),
+    css: _.merge(
+      {},
+      elementStyling.intialStyle,
+      shoudldLoad ? elementStyling.inViewStyle : {},
+      css
+    ),
     spring: spring,
   };
 }
@@ -203,15 +257,66 @@ export function cssToMotion({
       }px ${css.boxShadow?.spread}px ${colorToCss(css.boxShadow?.color)}`,
       backgroundColor: colorToCss(css.backgroundColor),
       opacity: css.opacity,
-      filter: `${css.filter?.blur ? `blur(${css.filter?.blur}px)` : ''} ${
-        css.filter?.brightness ? `brightness(${css.filter?.brightness}%)` : ''
+      filter: `${
+        css.filter?.blur ?? false ? `blur(${css.filter?.blur}px)` : ''
       } ${
-        css.filter?.grayscale ? `grayscale(${css.filter?.grayscale}%)` : ''
+        css.filter?.brightness ?? false
+          ? `brightness(${css.filter?.brightness}%)`
+          : ''
       } ${
-        css.filter?.hueRotate ? `hue-rotate(${css.filter?.hueRotate}deg)` : ''
-      } ${css.filter?.invert ? `invert(${css.filter?.invert}%)` : ''} ${
-        css.filter?.saturate ? `saturate(${css.filter?.saturate}%)` : ''
-      } ${css.filter?.sepia ? `sepia(${css.filter?.sepia}%)` : ''}`,
+        css.filter?.grayscale ?? false
+          ? `grayscale(${css.filter?.grayscale}%)`
+          : ''
+      } ${
+        css.filter?.hueRotate ?? false
+          ? `hue-rotate(${css.filter?.hueRotate}deg)`
+          : ''
+      } ${
+        css.filter?.invert ?? false ? `invert(${css.filter?.invert}%)` : ''
+      } ${
+        css.filter?.saturate ?? false
+          ? `saturate(${css.filter?.saturate}%)`
+          : ''
+      } ${css.filter?.sepia ?? false ? `sepia(${css.filter?.sepia}%)` : ''}`,
+      transform: `${
+        css.transform?.translateX ?? false
+          ? `translateX(${css.transform?.translateX}px)`
+          : ''
+      } ${
+        css.transform?.translateY ?? false
+          ? `translateY(${css.transform?.translateY}px)`
+          : ''
+      } ${
+        css.transform?.translateZ ?? false
+          ? `translateZ(${css.transform?.translateZ}px)`
+          : ''
+      } ${
+        css.transform?.scale ?? false ? `scale(${css.transform?.scale})` : ''
+      } ${
+        css.transform?.scaleX ?? false ? `scaleX(${css.transform?.scaleX})` : ''
+      } ${
+        css.transform?.scaleY ?? false ? `scaleY(${css.transform?.scaleY})` : ''
+      } ${
+        css.transform?.rotate ?? false
+          ? `rotate(${css.transform?.rotate}deg)`
+          : ''
+      } ${
+        css.transform?.rotateX ?? false
+          ? `rotateX(${css.transform?.rotateX}deg)`
+          : ''
+      } ${
+        css.transform?.rotateY ?? false
+          ? `rotateY(${css.transform?.rotateY}deg)`
+          : ''
+      } ${
+        css.transform?.skewX ?? false ? `skewX(${css.transform?.skewX}deg)` : ''
+      } ${
+        css.transform?.skewY ?? false ? `skewY(${css.transform?.skewY}deg)` : ''
+      } ${
+        css.transform?.perspective ?? false
+          ? `perspective(${css.transform?.perspective}px)`
+          : ''
+      }`,
     },
     transform: css.transform || {},
     transition: {
@@ -235,9 +340,12 @@ export function useItemMotion(props: {
   itemStyling: IItemStyling;
   distanceToViewport: number;
   location: ItemLocation;
+  placement: RelationToViewport;
+  isHover: boolean;
 }) {
   const { baseItemStyling } = useGallery();
-  const { itemStyling, distanceToViewport, location } = props;
+  const { itemStyling, distanceToViewport, location, placement, isHover } =
+    props;
   const styling = extendStyling(baseItemStyling, itemStyling);
 
   const { elements } = styling;
@@ -245,13 +353,19 @@ export function useItemMotion(props: {
   const contentMotion = cssToMotion(
     useElementMotion({
       distanceToViewport,
+      placement,
       elementStyling: content,
+      animationMergeStrategy: styling.animationMergeStrategy,
+      isHover,
     })
   );
   const containerMotion = cssToMotion(
     useElementMotion({
       distanceToViewport,
+      placement,
       elementStyling: container,
+      animationMergeStrategy: styling.animationMergeStrategy,
+      isHover,
     })
   );
   containerMotion.style = {

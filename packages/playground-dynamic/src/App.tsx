@@ -1,4 +1,9 @@
-import { Gallery } from "pro-gallery-dynamic";
+import { Gallery, SizeProvider, Types } from "pro-gallery-dynamic";
+import { useEffect, useState } from "react";
+import { Editor } from "./editor";
+import { deepDiff } from "./utils/diff";
+// @ts-ignore
+import _ from "lodash";
 
 const items = Array(500)
   .fill(0)
@@ -11,111 +16,95 @@ const items = Array(500)
     order: i,
   }));
 
+const baseStyle: Types.Gallery.IItemStyling = {
+  elements: {
+    container: {
+      animations: [],
+      intialStyle: {},
+      inViewStyle: {},
+      spring: {
+        stiffness: 10,
+        velocity: 1,
+        mass: 1,
+        duration: 0.3,
+      },
+      engine: "transition",
+      transitionDuration: 200,
+    },
+    content: {
+      animations: [],
+      intialStyle: {},
+      inViewStyle: {},
+      spring: {},
+      engine: "transition",
+      transitionDuration: 200,
+    },
+  },
+  animationMergeStrategy: "replace",
+};
+
 function App() {
+  const queryParams = new URLSearchParams(window.location.search);
+  const exisitingStyling = queryParams.get("styling");
+  const [styling, setStyling] = useState<Types.Gallery.IItemStyling>(() =>
+    exisitingStyling
+      ? _.merge({}, baseStyle, JSON.parse(exisitingStyling))
+      : { ...baseStyle }
+  );
+  useEffect(() => {
+    queryParams.set("styling", JSON.stringify(deepDiff(baseStyle, styling)));
+    history.pushState(null, "", "?" + queryParams.toString());
+  }, [styling]);
+
   return (
-    <Gallery
-      items={items}
-      settings={{
-        layoutParams: {
-          viewportThreshold: 400,
-          imageForceLoadThreshold: 600,
-          imageLoadThreshold: 5000,
-        },
-        animationParams: {
-          loadAnimationDistanceFromViewport: 150,
-        },
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        height: "100%",
+        width: "100%",
       }}
-      baseItemStyling={{
-        elements: {
-          container: {
-            animations: [
-              {
-                on: "enter",
-                data: {
-                  keep: true,
-                  frames: [
-                    {
-                      after: 0,
-                      css: {
-                        transform: {
-                          scale: 1,
-                        },
-                        // opacity: 1,
-                      },
-                    },
-                  ],
+    >
+      <div style={{ width: "calc(100% - 400px)", height: "100%" }}>
+        <SizeProvider>
+          {({ width, height }) => (
+            <Gallery
+              items={items}
+              settings={{
+                layoutParams: {
+                  viewportThreshold: 3600,
+                  imageForceLoadThreshold: 1500,
+                  imageLoadThreshold: 2500,
                 },
-              },
-            ],
-            intialStyle: {
-              borderRadius: {
-                bottomLeft: 5,
-                bottomRight: 5,
-                topLeft: 5,
-                topRight: 5,
-              },
-              transform: {
-                scale: 0.5,
-              },
-            },
-            spring: {
-              stiffness: 10,
-              velocity: 1,
-              mass: 1,
-              duration: 0.3,
-            },
-          },
-          content: {
-            animations: [
-              {
-                on: "enter",
-                data: {
-                  keep: true,
-                  frames: [
-                    {
-                      after: 0,
-                      css: {
-                        transform: {
-                          scale: 2,
-                        },
-                      },
-                    },
-                    {
-                      after: 100,
-                      css: {
-                        transform: {
-                          scale: 1,
-                        },
-                      },
-                    },
-                  ],
+                animationParams: {
+                  loadAnimationDistanceFromViewport: 450,
                 },
-              },
-            ],
-            intialStyle: {
-              transform: {
-                scale: 1,
-              },
-            },
-            spring: {},
-          },
-        },
-      }}
-      layoutParams={{
-        container: {
-          width: 1920,
-          height: 1050,
-        },
-        items: items.map((item) => ({
-          height: item.metaData.height,
-          width: item.metaData.width,
-          maxHeight: 700,
-          maxWidth: 700,
-          id: item.id,
-        })),
-        styleParams: {},
-      }}
-    />
+              }}
+              baseItemStyling={styling}
+              layoutParams={{
+                container: {
+                  width,
+                  height,
+                },
+                items: items.map((item) => ({
+                  height: item.metaData.height,
+                  width: item.metaData.width,
+                  maxHeight: 700,
+                  maxWidth: 700,
+                  id: item.id,
+                })),
+                styleParams: {
+                  
+                },
+              }}
+            />
+          )}
+        </SizeProvider>
+      </div>
+      <div style={{ width: "350px", height: "100%" }}>
+        <Editor onChange={setStyling} styling={styling} />
+      </div>
+    </div>
   );
 }
 

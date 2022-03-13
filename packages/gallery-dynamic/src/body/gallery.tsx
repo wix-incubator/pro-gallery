@@ -8,8 +8,8 @@ import _ from 'lodash';
 const baseLayoutParams = {
   styleParams: {
     isVerticalScroll: false,
-    isColumnsLayout: true,
-    columnSize: 2000,
+    isColumnsLayout: false,
+    columnSize: 200,
     minItemSize: 200,
     cropItems: false,
     itemSpacing: 25,
@@ -28,15 +28,32 @@ export function Gallery(props: IGallery) {
   const layouterParams = _.merge({}, baseLayoutParams, layoutParams);
   const galleryStructure = useMemo(() => {
     return new Layouter(layouterParams).createLayout();
-  }, [layoutParams]);
+  }, [
+    layoutParams,
+    layoutParams.container.width,
+    layoutParams.container.height,
+  ]);
   useRerenderOnScroll(5, containerRef || undefined);
 
-  const itemsRecord = useMemo(() => {
-    return items.reduce((acc, item) => {
+  const itemsAndLocations = useMemo(() => {
+    const itemsMap = items.reduce((acc, item) => {
       acc[item.id] = item;
       return acc;
     }, {} as { [id: string]: IItem });
-  }, [items]);
+    return galleryStructure.groups
+      .map((group) => {
+        return group.items.map((item) => {
+          return {
+            location: {
+              ...item,
+              ...item.offset,
+            },
+            item: itemsMap[item.id],
+          };
+        });
+      })
+      .flat();
+  }, [items, galleryStructure]);
 
   return (
     <GalleryContext.Provider value={props}>
@@ -54,29 +71,21 @@ export function Gallery(props: IGallery) {
       >
         {containerRef &&
           galleryStructure &&
-          galleryStructure.groups
-            .map((group) => {
-              return group.items.map((item) => {
-                return {
-                  ...item,
-                  ...item.offset,
-                };
-              });
-            })
-            .flat()
-            .map(({ top, left, id, width, height, right, bottom }) => {
-              const item = itemsRecord[id];
+          itemsAndLocations.map(
+            ({ location: { top, left, id, width, height }, item }) => {
               return (
                 <Item
+                  settings={props.settings}
                   key={id}
                   item={item}
                   container={containerRef!}
                   galleryStructure={galleryStructure}
-                  location={{ left, top, width, height, right, bottom }}
+                  location={{ left, top, width, height }}
                   styling={baseItemStyling}
                 />
               );
-            })}
+            }
+          )}
       </div>
     </GalleryContext.Provider>
   );

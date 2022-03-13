@@ -17,10 +17,7 @@ export function useRerenderOnScroll(
     let lastScrollPosition = container.scrollTop;
     const handleScroll = () => {
       const currentScrollPosition = container.scrollTop;
-      if (
-        Math.abs(currentScrollPosition) - Math.abs(lastScrollPosition) >
-        everyPx
-      ) {
+      if (Math.abs(currentScrollPosition - lastScrollPosition) > everyPx) {
         update();
         lastScrollPosition = currentScrollPosition;
       }

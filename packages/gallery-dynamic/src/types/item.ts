@@ -1,4 +1,4 @@
-import { IItem, IItemStyling } from './gallery';
+import { IGallerySettings, IItem, IItemStyling } from './gallery';
 
 export interface ItemProps {
   item: IItem;
@@ -6,13 +6,14 @@ export interface ItemProps {
   location: ItemLocation;
   galleryStructure: any;
   container: HTMLDivElement;
+  settings: IGallerySettings;
 }
 
 export interface ItemLocation {
   top: number;
   left: number;
-  right: number;
-  bottom: number;
   width: number;
   height: number;
 }
+
+export type RelationToViewport = 'above' | 'inside' | 'below';

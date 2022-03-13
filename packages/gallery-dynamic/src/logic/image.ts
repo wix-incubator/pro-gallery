@@ -1,18 +1,22 @@
 import { IItem } from '../types/gallery';
-import { ItemLocation } from '../types/item';
+import { ItemLocation, RelationToViewport } from '../types/item';
 import { useSettings } from './gallery';
 
 const loadSteps = {
-  initial: 0.2,
+  initial: 0.005,
   lazy: 0.8,
   full: 1,
 };
 
-export function useImageState(distanceToViewport: number) {
+export function useImageState(
+  distanceToViewport: number,
+  placement: RelationToViewport
+) {
   const settings = useSettings();
   const { imageLoadThreshold, imageForceLoadThreshold } = settings.layoutParams;
   const isLoaded = distanceToViewport < imageLoadThreshold;
-  const lazyLoad = distanceToViewport > imageForceLoadThreshold;
+  const lazyLoad =
+    distanceToViewport > imageForceLoadThreshold && placement !== 'above';
   let loadStep = loadSteps.initial;
   if (isLoaded) {
     if (lazyLoad) {
@@ -44,8 +48,8 @@ export function createImageSource(
   res: number,
   location: ItemLocation
 ): string {
-  // const { id } = item;
+  // const { id } = _item;
   const { width, height } = generateImageResolution(location, res);
-  // return `https://picsum.photos/id/${id}/${width}/${height}`;
+  // return `https://picsum.photos/id/${id}/${width}/${height}.webp`;
   return `https://placekitten.com/${width}/${height}`;
 }

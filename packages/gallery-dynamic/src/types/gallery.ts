@@ -3,8 +3,11 @@ import { IItemCss } from './css';
 
 export interface IItemElement {
   intialStyle: IItemCss;
+  inViewStyle: IItemCss;
   animations: IAnimation[];
   spring: Partial<IAnimationSpring>;
+  engine: AnimationEngine;
+  transitionDuration: number;
 }
 
 export interface IItemStyling {
@@ -12,7 +15,12 @@ export interface IItemStyling {
     content: IItemElement;
     container: IItemElement;
   };
+  animationMergeStrategy: AnimationMergeStrategy;
 }
+
+export type AnimationMergeStrategy = 'merge' | 'replace';
+
+export type AnimationEngine = 'transition' | 'framer-motion';
 
 export interface IItem {
   //styling?: IItemStyling;

@@ -1,6 +1,10 @@
 import { IItemCss } from './css';
 
-export type AnimationTrigerEvents = 'enter' | 'leave' | 'resoultionChange';
+export type AnimationTrigerEvents =
+  | 'enter'
+  | 'leave'
+  | 'resoultionChange'
+  | 'hover';
 
 export interface IAnimation {
   on: AnimationTrigerEvents;
