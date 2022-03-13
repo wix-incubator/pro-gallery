@@ -8,11 +8,12 @@ import _ from 'lodash';
 const baseLayoutParams = {
   styleParams: {
     isVerticalScroll: false,
-    isColumnsLayout: false,
-    columnSize: 200,
+    isColumnsLayout: true,
+    columnSize: 2000,
     minItemSize: 200,
     cropItems: false,
-    itemSpacing: 25,
+    itemSpacing: 250,
+    allowedGroupTypes: ['1', '2v', '3v'],
     randomSpacings: 0,
     externalInfoHeight: 0,
     itemsPerGroup: 4,
@@ -27,7 +28,7 @@ export function Gallery(props: IGallery) {
   const { container } = layoutParams;
   const layouterParams = _.merge({}, baseLayoutParams, layoutParams);
   const galleryStructure = useMemo(() => {
-    return new Layouter(layouterParams).createLayout();
+    return new Layouter(layouterParams).createLayout(layouterParams);
   }, [
     layoutParams,
     layoutParams.container.width,

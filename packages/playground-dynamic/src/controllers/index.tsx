@@ -45,7 +45,7 @@ export const handlers: Handlers = {
         min={0}
         max={360}
         value={props.value}
-        onChange={(value) => props.onChange(value)}
+        onChange={(value: number) => props.onChange(value)}
         key={props.title}
       />
     );
@@ -139,6 +139,53 @@ export const handlers: Handlers = {
       </div>
     );
   },
+  [Types.Options.StyleType.COLOR]: ({ title, onChange, value }) => {
+    const { a, b, g, r } = value || {};
+    return (
+      <div key={title}>
+        <Row gutter={8}>
+          <Col span={12}>
+            R:
+            <Slider
+              min={0}
+              max={255}
+              value={r}
+              onChange={(value: number) => onChange({ r: value, g, b, a })}
+            />
+          </Col>
+          <Col span={12}>
+            G:
+            <Slider
+              min={0}
+              max={255}
+              value={g}
+              onChange={(value: number) => onChange({ r, g: value, b, a })}
+            />
+          </Col>
+        </Row>
+        <Row gutter={8}>
+          <Col span={12}>
+            B:
+            <Slider
+              min={0}
+              max={255}
+              value={b}
+              onChange={(value: number) => onChange({ r, g, b: value, a })}
+            />
+          </Col>
+          <Col span={12}>
+            A:
+            <Slider
+              min={0}
+              max={1}
+              value={a}
+              onChange={(value: number) => onChange({ r, g, b, a: value })}
+            />
+          </Col>
+        </Row>
+      </div>
+    );
+  },
 } as Handlers;
 
 export type Controller<
@@ -214,5 +261,15 @@ export const controllers: Controller<any>[] = [
     logic: Options.locationOption,
     title: "Location",
     description: "location the element",
+  },
+  {
+    logic: Options.borderColorOption,
+    title: "Border Color",
+    description: "border color the element",
+  },
+  {
+    logic: Options.borderWidthOption,
+    title: "Border Width",
+    description: "border width the element",
   },
 ];

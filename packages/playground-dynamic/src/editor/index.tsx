@@ -74,7 +74,7 @@ export function Editor(props: EditorProps) {
     props.onChange(itemStyling);
   };
   return (
-    <div>
+    <div style={{ height: "100%", width: "100%", overflow: "auto" }}>
       <div>
         <Tabs
           title="Element"
@@ -86,6 +86,46 @@ export function Editor(props: EditorProps) {
           ))}
         </Tabs>
       </div>
+      <Form key="duration">
+        <Form.Item label="Duration">
+          <InputNumber
+            min={0}
+            max={1500}
+            value={props.styling.elements[element].transitionDuration}
+            onChange={(value) => {
+              props.onChange({
+                ...props.styling,
+                elements: {
+                  ...props.styling.elements,
+                  [element]: {
+                    ...props.styling.elements[element],
+                    transitionDuration: value as number,
+                  },
+                },
+              });
+            }}
+          />
+        </Form.Item>
+      </Form>
+      <Form key="engine">
+        <Form.Item label="Use JS Animations">
+          <Switch
+            checked={props.styling.elements[element].engine === "framer-motion"}
+            onChange={(value) => {
+              props.onChange({
+                ...props.styling,
+                elements: {
+                  ...props.styling.elements,
+                  [element]: {
+                    ...props.styling.elements[element],
+                    engine: value ? "framer-motion" : "transition",
+                  },
+                },
+              });
+            }}
+          />
+        </Form.Item>
+      </Form>
       <div>
         <Tabs
           title="Animation"
@@ -99,48 +139,6 @@ export function Editor(props: EditorProps) {
       </div>
       <div>
         <CssEditor css={css || {}} onChange={onChange} />
-        <Form key="duration">
-          <Form.Item label="Duration">
-            <InputNumber
-              min={0}
-              max={1500}
-              value={props.styling.elements[element].transitionDuration}
-              onChange={(value) => {
-                props.onChange({
-                  ...props.styling,
-                  elements: {
-                    ...props.styling.elements,
-                    [element]: {
-                      ...props.styling.elements[element],
-                      transitionDuration: value as number,
-                    },
-                  },
-                });
-              }}
-            />
-          </Form.Item>
-        </Form>
-        <Form key="engine">
-          <Form.Item label="Use JS Animations">
-            <Switch
-              checked={
-                props.styling.elements[element].engine === "framer-motion"
-              }
-              onChange={(value) => {
-                props.onChange({
-                  ...props.styling,
-                  elements: {
-                    ...props.styling.elements,
-                    [element]: {
-                      ...props.styling.elements[element],
-                      engine: value ? "framer-motion" : "transition",
-                    },
-                  },
-                });
-              }}
-            />
-          </Form.Item>
-        </Form>
       </div>
     </div>
   );

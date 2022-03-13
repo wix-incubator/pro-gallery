@@ -77,7 +77,7 @@ function App() {
                   imageLoadThreshold: 2500,
                 },
                 animationParams: {
-                  loadAnimationDistanceFromViewport: 450,
+                  loadAnimationDistanceFromViewport: 650,
                 },
               }}
               baseItemStyling={styling}
@@ -94,7 +94,7 @@ function App() {
                   id: item.id,
                 })),
                 styleParams: {
-                  
+
                 },
               }}
             />

@@ -232,7 +232,8 @@ export function useElementMotion(props: {
 }
 
 const colorToCss = (color: IColor | undefined) =>
-  color && `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+  color &&
+  `rgba(${color.r ?? 0}, ${color.g ?? 0}, ${color.b ?? 0}, ${color.a ?? 0})`;
 
 export function cssToMotion({
   css,
@@ -247,7 +248,9 @@ export function cssToMotion({
 } {
   return {
     style: {
-      border: `${css.border?.width}px solid ${colorToCss(css.border?.color)}`,
+      border: css.border?.width
+        ? `${css.border?.width}px solid ${colorToCss(css.border?.color)}`
+        : '',
       borderTopRightRadius: css.borderRadius?.topRight,
       borderTopLeftRadius: css.borderRadius?.topLeft,
       borderBottomRightRadius: css.borderRadius?.bottomRight,
