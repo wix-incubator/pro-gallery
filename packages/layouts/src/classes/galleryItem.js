@@ -676,7 +676,7 @@ class GalleryItem {
   }
 
   get fileName() {
-    return this.metadata.fileName || 'file';
+    return this.metadata.fileName || '';
   }
 
   set fileName(value) {
