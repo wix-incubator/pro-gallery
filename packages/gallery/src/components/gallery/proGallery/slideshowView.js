@@ -49,8 +49,8 @@ class SlideshowView extends React.Component {
       this.onAutoSlideshowAutoPlayKeyPress.bind(this);
     this.setCurrentItemByScroll = this.setCurrentItemByScroll.bind(this);
     this._setCurrentItemByScroll = utils
-    .throttle(this.setCurrentItemByScroll, 600)
-    .bind(this);
+      .throttle(this.setCurrentItemByScroll, 600)
+      .bind(this);
     this._next = utils.throttle(this.next.bind(this), 400).bind(this);
     this.state = {
       activeIndex: props.activeIndex || 0,
@@ -204,7 +204,7 @@ class SlideshowView extends React.Component {
     if (
       this.props.options.slideAnimation !==
       GALLERY_CONSTS.slideAnimations.SCROLL
-      ) {
+    ) {
       scrollDuration = 0;
       ignoreScrollPosition = true;
     }
@@ -1104,7 +1104,7 @@ class SlideshowView extends React.Component {
         height,
         width: this.props.container.galleryWidth,
       };
-  }
+}
 
   createGallery() {
     // When arrows are set outside of the gallery, gallery is resized (in dimensionsHelper -> getGalleryWidth) and needs to be positioned accordingly
