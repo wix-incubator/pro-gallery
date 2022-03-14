@@ -18,7 +18,7 @@ import {
   shouldRenderNavArrows,
   getArrowBoxStyle
 } from '../../helpers/navigationArrowUtils'
-import { getItemsInViewportOrMargin } from '../../helpers/slideshowVirtualization.js';
+import { getItemsInViewportOrMargin } from '../../helpers/slideshowVirtualization';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
