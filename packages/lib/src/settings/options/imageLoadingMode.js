@@ -6,7 +6,8 @@ export default {
   title: 'Loading Placeholder',
   description: `Determines what is shown until the image is loaded.`,
   isRelevant: () => true,
+  isRelevantDescription: 'Always relevant.',
   options: createOptions('loadingMode'),
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.loadingMode.BLUR,
-}
+};

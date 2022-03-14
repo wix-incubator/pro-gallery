@@ -1,5 +1,5 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
@@ -7,27 +7,29 @@ expect.extend({ toMatchImageSnapshot });
 describe('imageHoverAnimation - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll(async () => {
+    await driver.closePage();
   });
 
-  Object.values(GALLERY_CONSTS.imageHoverAnimations).forEach( animationType => {
-    it(`should have "${animationType}" animation`, async () => {
-      await driver.openPage({
-        galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
-        imageHoverAnimation: animationType,
-        hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW
+  Object.values(GALLERY_CONSTS.imageHoverAnimations).forEach(
+    (animationType) => {
+      it(`should have "${animationType}" animation`, async () => {
+        await driver.navigate({
+          galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
+          imageHoverAnimation: animationType,
+          hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW,
+        });
+        await driver.waitFor.hookToBeVisible('item-container');
+        await driver.actions.hover('item-container')[0];
+        await driver.waitFor.timer(3000);
+        const page = await driver.grab.elemScreenshot('.pro-gallery');
+        expect(page).toMatchImageSnapshot();
       });
-      await driver.waitFor.hookToBeVisible('item-container');
-      await driver.actions.hover('item-container')[0];
-      await driver.waitFor.timer(500);
-      const page = await driver.grab.elemScreenshot('.pro-gallery');
-      expect(page).toMatchImageSnapshot();
-    });
-  })
-})
+    }
+  );
+});

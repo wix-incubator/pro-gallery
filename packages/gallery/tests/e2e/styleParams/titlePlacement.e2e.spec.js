@@ -1,38 +1,38 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
 describe('titlePlacement - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll(async () => {
+    await driver.closePage();
   });
   it('should place texts on the bottom of the items', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
-      titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW
+      titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
   it('should place texts on top of the items', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
-      titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE
+      titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-})
+});

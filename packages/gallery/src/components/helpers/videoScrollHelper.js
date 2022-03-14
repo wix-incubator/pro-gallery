@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS, dimensionsHelper, window } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, window } from 'pro-gallery-lib';
 import {
   isWithinPaddingVertically,
   isWithinPaddingHorizontally,
@@ -17,8 +17,7 @@ class VideoScrollHelper {
     this.scrollBase = 0;
     this.videoItems = [];
     this.currentPlayingIdx = -1;
-    this.nextInLineIdx = -1;
-    this.lastItemCount = 0;
+    this.currentItemCount = 0;
     this.playing = false;
     this.updateGalleryStructure = this.updateGalleryStructure.bind(this);
     this.initializePlayState = this.initializePlayState.bind(this);
@@ -27,44 +26,50 @@ class VideoScrollHelper {
     this.play = this.play.bind(this);
     this.stop = this.stop.bind(this);
     this.isVisible = this.isVisible.bind(this);
-    this.top = 0;
-    this.left = 0;
     this.videoPlay = undefined;
     this.itemClick = undefined;
     this.setPlayingVideos = config.setPlayingVideos;
     this.lastVideoPlayed = -1;
+    this.videoRatingMap = new Map();
     this.trigger = Object.assign(
       {},
-      ...Object.keys(VIDEO_EVENTS).map(key => ({
-        [key]: args => this.handleEvent({ eventName: key, eventData: args }),
-      })),
+      ...Object.keys(VIDEO_EVENTS).map((key) => ({
+        [key]: (args) => this.handleEvent({ eventName: key, eventData: args }),
+      }))
     );
   }
 
   //--------------------------updates----------------------------------//
-  updateGalleryStructure({ galleryStructure, scrollBase, videoPlay, videoLoop, itemClick, oneRow }) {
-    this.galleryWidth = dimensionsHelper.getGalleryDimensions().galleryWidth;
+  updateGalleryStructure({
+    galleryStructure,
+    galleryWidth,
+    scrollBase,
+    videoPlay,
+    videoLoop,
+    itemClick,
+    scrollDirection,
+  }) {
+    this.galleryWidth = galleryWidth;
     this.scrollBase = scrollBase;
     this.videoPlay = videoPlay;
     this.videoLoop = videoLoop;
     this.itemClick = itemClick;
-    this.oneRow = oneRow;
-    const lastItemCount = this.lastItemCount;
-    const newItemCount = galleryStructure.galleryItems.length;
-    this.lastItemCount = newItemCount;
-    if (lastItemCount === newItemCount) {
-      return;
-    } else {
-      const newItems = galleryStructure.galleryItems.slice(
-        lastItemCount, //make sure this is the right way
-        newItemCount,
-      );
-      newItems.forEach(item => {
-        if (item.type === 'video' || (item.type === 'image' && (item.id.includes('_placeholder') || item.isVideoPlaceholder))) { // either video or a placeholder for video files (both need to be included in the list)
-          this.videoItems.push({ ...item, videoPlayRating: item.idx });
+    this.scrollDirection = scrollDirection;
+    this.currentItemCount = galleryStructure.galleryItems.length;
+    this.videoItems = [];
+    galleryStructure.galleryItems.forEach((item) => {
+      if (
+        item.type === 'video' ||
+        (item.type === 'image' &&
+          (item.id.includes('_placeholder') || item.isVideoPlaceholder))
+      ) {
+        // either video or a placeholder for video files (both need to be included in the list)
+        if (!this.videoRatingMap.has(item.id)) {
+          this.videoRatingMap.set(item.id, item.idx);
         }
-      });
-    }
+        this.videoItems.push(item);
+      }
+    });
   }
 
   //--------------------------triggers--------------------------------//
@@ -77,6 +82,11 @@ class VideoScrollHelper {
       case GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED:
         //case VIDEO_EVENTS.clicked:
         this.itemClicked(eventData.idx);
+        break;
+      case GALLERY_CONSTS.events.VIDEO_PAUSED:
+        if (this.currentPlayingIdx === eventData.idx) {
+          this.stop(eventData.idx);
+        }
         break;
       case GALLERY_CONSTS.events.HOVER_SET:
         //case VIDEO_EVENTS.hovered:
@@ -95,7 +105,6 @@ class VideoScrollHelper {
         this.videoErrorReported();
         break;
       case VIDEO_EVENTS.INIT_SCROLL:
-        this.ScrollializePlayState();
         break;
       default:
     }
@@ -104,7 +113,7 @@ class VideoScrollHelper {
   itemHovered(idx) {
     if (this.videoPlay !== 'hover') return;
     if (this.IdxExistsInVideoItems(idx)) {
-      this.play(idx, -1);
+      this.play(idx);
     } else {
       //do nothing
     }
@@ -117,7 +126,7 @@ class VideoScrollHelper {
       if (this.currentPlayingIdx === idx) {
         this.stop();
       } else {
-        this.play(idx, -1);
+        this.play(idx);
       }
     } else {
       //do nothing
@@ -125,8 +134,8 @@ class VideoScrollHelper {
   }
 
   onScroll({ top, left }) {
-    this.top = top ? top : this.top;
-    this.left = left ? left : this.left;
+    this.top = top >= 0 ? top : this.top;
+    this.left = left >= 0 ? left : this.left;
     if (this.currentPlayingIdx === -1) {
       this.autoPlayNextVideoByRating({ top: this.top, left: this.left });
     } else {
@@ -135,8 +144,8 @@ class VideoScrollHelper {
       ) {
         this.stop(
           this.videoItems.findIndex(
-            item => item.idx === this.currentPlayingIdx,
-          ),
+            (item) => item.idx === this.currentPlayingIdx
+          )
         );
       }
       this.autoPlayNextVideoByRating({ top: this.top, left: this.left });
@@ -145,7 +154,7 @@ class VideoScrollHelper {
 
   videoEnded(idx) {
     const indexInVideoItems = this.videoItems.findIndex(
-      item => item.idx === idx,
+      (item) => item.idx === idx
     );
     this.stop(indexInVideoItems);
     const scroll = { top: this.top, left: this.left };
@@ -153,14 +162,17 @@ class VideoScrollHelper {
   }
 
   videoPlayed(idx) {
+    if (this.currentPlayingIdx !== idx) {
+      this.play(idx);
+    }
     this.lastVideoPlayed = idx;
   }
-  videoErrorReported( ) {
+  videoErrorReported() {
     this.stop();
   }
 
   initializePlayState() {
-      this.autoPlayNextVideoByRating({ top: this.top, left: this.left });
+    this.autoPlayNextVideoByRating({ top: this.top, left: this.left });
   }
 
   //-------------------------------controls------------------------------------//
@@ -178,16 +190,17 @@ class VideoScrollHelper {
       idx: -1,
       rating: Infinity,
     };
-    this.videoItems.some(item => {
+    this.videoItems.some((item) => {
       if (this.isVisible(item, { top, left })) {
-        if (item.videoPlayRating <= bestRating.rating) {
+        const itemRating = this.videoRatingMap.get(item.id);
+        if (itemRating <= bestRating.rating) {
           secondBestRating.idx = bestRating.idx;
           secondBestRating.rating = bestRating.rating;
           bestRating.idx = item.idx;
-          bestRating.rating = item.videoPlayRating;
-        } else if (item.videoPlayRating <= secondBestRating.rating) {
+          bestRating.rating = itemRating;
+        } else if (itemRating <= secondBestRating.rating) {
           secondBestRating.idx = item.idx;
-          secondBestRating.rating = item.videoPlayRating;
+          secondBestRating.rating = itemRating;
         }
         return false;
       } else {
@@ -197,39 +210,45 @@ class VideoScrollHelper {
         return false;
       }
     });
-    if(!this.allowedLoop() && bestRating.idx === this.lastVideoPlayed){
-      if((secondBestRating.idx >= 0)) {
-        this.play(secondBestRating.idx, bestRating.idx); //play 2nd in line instead. keep best rating for next by the score he got...
+    if (bestRating.idx >= 0) {
+      if (!this.allowedLoop() && bestRating.idx === this.lastVideoPlayed) {
+        if (secondBestRating.idx >= 0) {
+          this.play(secondBestRating.idx); //play 2nd in line instead. keep best rating for next by the score he got...
+        } else {
+          return; //cant play same video twice.
+        }
       } else {
-        return; //cant play same video twice.
+        this.play(bestRating.idx);
       }
     } else {
-      this.play(bestRating.idx, secondBestRating.idx);
+      this.lastVideoPlayed = -2; //if there are no videos to play. we can reset this mechanism so that one-video galleries can keep playing the same video
     }
   }
 
   calculateCurrentItemPlacement() {
     return this.videoItems.findIndex(
-      item => item.idx === this.currentPlayingIdx,
+      (item) => item.idx === this.currentPlayingIdx
     );
   }
 
-  play(idx, nextIdx) {
-    this.setNextInLineIdx(nextIdx);
+  play(idx) {
     this.setPlayingIdx(idx);
     this.playing = true;
   }
 
   stop(indexInVideoItems) {
     if (indexInVideoItems >= 0) {
-      this.videoItems[indexInVideoItems].videoPlayRating += 1337;
+      const newRating =
+        this.videoRatingMap.get(this.videoItems[indexInVideoItems].id) +
+        this.currentItemCount;
+      this.videoRatingMap.set(this.videoItems[indexInVideoItems].id, newRating);
     }
     this.setPlayingIdx(-1);
     this.playing = false;
   }
 
   onPlayingIdxChange() {
-    this.setPlayingVideos(this.currentPlayingIdx, this.nextInLineIdx);
+    this.setPlayingVideos(this.currentPlayingIdx);
   }
   //-------------------------------get/set----------------------------------------//
 
@@ -240,12 +259,6 @@ class VideoScrollHelper {
     }
   }
 
-  setNextInLineIdx(idx) {
-    if (this.nextInLineIdx !== idx) {
-      this.nextInLineIdx = idx;
-      this.onPlayingIdxChange();
-    }
-  }
   //-----------------------------Utils--------------------------------------------//
 
   isCurrentVideoStillVisible({ top, left }) {
@@ -272,14 +285,14 @@ class VideoScrollHelper {
       padding: videoPlayVerticalTolerance,
     });
     let visibleHorizontally;
-    if (!this.oneRow) {
+    if (this.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) {
       visibleHorizontally = true;
     } else {
       visibleHorizontally = isWithinPaddingHorizontally({
         target,
         left: item.offset.left,
         right: item.offset.left + item.style.width,
-        screenWidth: this.galleryWidth || window && window.innerWidth,
+        screenWidth: this.galleryWidth || (window && window.innerWidth),
         padding: videoPlayHorizontalTolerance,
       });
     }
@@ -294,7 +307,7 @@ class VideoScrollHelper {
   }
 
   IdxExistsInVideoItems(idx) {
-    return this.videoItems.some(item => item.idx === idx);
+    return this.videoItems.some((item) => item.idx === idx);
   }
 }
 

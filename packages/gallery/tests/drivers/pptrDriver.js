@@ -1,11 +1,12 @@
 import puppeteer from 'puppeteer';
 
+const config = require('../environment-setup.js');
 const devices = require('puppeteer/DeviceDescriptors');
-
+import { flattenObject } from 'pro-gallery-lib';
 export default class galleryDriver {
   constructor() {
     this.timeout = 60000;
-    jest.setTimeout(40000)
+    jest.setTimeout(40000);
     this.browser = {};
     this.windowSize = {
       width: 1920,
@@ -23,14 +24,12 @@ export default class galleryDriver {
     this.browser = await puppeteer.launch({
       args,
       headless: true,
-    })
+    });
     return this.browser;
   }
 
-  async openPage(styleParams, device) {
-    if (!this.browser) {
-      await this.launchBrowser();
-    }
+  async openPage(device) {
+    await this.launchBrowser();
     const page = await this.browser.newPage();
     switch (device) {
       case 'Android':
@@ -42,23 +41,27 @@ export default class galleryDriver {
       default:
         await page.setViewport(this.windowSize);
     }
-    const pageUrl = this.getPageUrl(styleParams);
-    console.log('Testing page at: ', pageUrl);
-    await page.goto(pageUrl, { waitUntil: 'networkidle2' });
     this.page = page;
-    await this.scrollInteraction();
-    await page.waitFor(2500);
     return page;
   }
 
-  async scrollInteraction(){
-    await this.page.evaluate(() => { // scroll the gallery down and back up to make the items load
+  async navigate(options) {
+    const pageUrl = this.getPageUrl(options);
+    await this.page.goto(pageUrl, { waitUntil: 'networkidle2' });
+    await this.scrollInteraction();
+    await this.page.waitFor(500);
+    return this.page;
+  }
+
+  async scrollInteraction() {
+    await this.page.evaluate(() => {
+      // scroll the gallery down and back up to make the items load
       window.scrollBy(0, 200);
       window.scrollBy(0, 0);
     });
   }
 
-  async closeBrowser() {
+  async closePage() {
     try {
       await this.browser.close();
     } catch (e) {
@@ -68,33 +71,35 @@ export default class galleryDriver {
 
   get find() {
     return {
-      hook: async str => await this.page.$$(`[data-hook="${str}"]`),
+      hook: async (str) => await this.page.$$(`[data-hook="${str}"]`),
       items: async () => await this.page.$$('.gallery-item-container'),
     };
   }
 
   get actions() {
     return {
-      hover: async str => await this.page.hover(`[data-hook="${str}"]`),
-      click: async str => await this.page.click(`[data-hook="${str}"]`),
-      scroll: async (x, y) => await this.page.evaluate(() => {
-        window.scrollBy(x, y);
-      })
+      hover: async (str) => await this.page.hover(`[data-hook="${str}"]`),
+      click: async (str) => await this.page.click(`[data-hook="${str}"]`),
+      scroll: async (x, y) =>
+        await this.page.evaluate(() => {
+          window.scrollBy(x, y);
+        }),
     };
   }
-  getPageUrl(styleParams) {
-    let urlParam = ''
-    Object.keys(styleParams).map(sp => urlParam += `${sp}=${styleParams[sp]}&`);
-    const url = `http://localhost:3000/?${urlParam}isTestEnvironment=true`;
-    console.log('Openning URL:', url);
+  getPageUrl(options) {
+    let urlParam = '';
+    let flatSP = flattenObject(options);
+    Object.keys(flatSP).map((sp) => (urlParam += `${sp}=${flatSP[sp]}&`));
+    const localhost = config.baseUrl;
+    const url = `${localhost}/?${urlParam}isTestEnvironment=true`;
     return url;
   }
   get grab() {
     return {
       screenshot: async () => {
-        return await this.page.screenshot()
+        return await this.page.screenshot();
       },
-      elemScreenshot: async str => {
+      elemScreenshot: async (str) => {
         const rootEl = await this.page.$(str);
         return rootEl.screenshot();
       },
@@ -104,28 +109,28 @@ export default class galleryDriver {
             x: 0,
             y: 0,
             height: 5000,
-            width: this.windowSize.width
-          }
-        })
+            width: this.windowSize.width,
+          },
+        });
       },
-    }
+    };
   }
 
   get waitFor() {
     return {
-      hookToExist: async str =>
+      hookToExist: async (str) =>
         await this.page.waitForSelector(`[data-hook="${str}"]`, {
           timeout: 3000,
         }),
-      hookToBeVisible: async str =>
+      hookToBeVisible: async (str) =>
         await this.page.waitForSelector(`[data-hook="${str}"]`, {
           visible: true,
         }),
-      hookToBeHidden: async str =>
+      hookToBeHidden: async (str) =>
         await this.page.waitForSelector(`[data-hook="${str}"]`, {
           hidden: true,
         }),
-      timer: async time => await this.page.waitFor(time),
+      timer: async (time) => await this.page.waitFor(time),
       newPage: async (timeoutSec = 5000) => {
         return new Promise((resolve, reject) => {
           this.browser.on('targetcreated', resolve);

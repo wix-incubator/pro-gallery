@@ -1,6 +1,11 @@
 import { GALLERY_CONSTS as Consts } from 'pro-gallery';
 
-export const defaultStyleParams = {
+export const defaultOptions = {
+  layoutParams: {
+    gallerySpacing: 0,
+    cropRatio: 1,
+    repeatingGroupTypes: '',
+  },
   isRTL: false,
   isVertical: 0,
   gallerySize: 30,
@@ -8,45 +13,31 @@ export const defaultStyleParams = {
   chooseBestGroup: true,
   groupSize: 3,
   groupTypes: '1,2h,2v,3t,3b,3l,3r',
-  rotatingGroupTypes: '',
   collageDensity: 0.8, //80, // should be 0.8 after
   cubeImages: false,
   cubeType: 'fill',
-  cubeRatio: 1,
   cropOnlyFill: false,
   smartCrop: false,
-  rotatingCubeRatio: '',
-  gallerySliderImageRatio: 16 / 9,
+  rotatingCropRatio: '',
   galleryImageRatioFromWix: 1, //galleryImageRatio translates to galleryImageRatioFromWix
   fixedColumns: 0,
   numberOfImagesPerRow: 3,
   numberOfImagesPerCol: 1,
   groupsPerStrip: 0,
-  borderRadius: 0,
-  boxShadow: 0,
   imageMargin: 10,
-  galleryMargin: 0,
   scatter: 0,
+  rotatingScatter: '',
   gridStyle: 0,
-  mobilePanorama: false,
   placeGroupsLtr: false,
-  viewMode: 'preview',
-  oneRow: false,
   showArrows: false,
   enableInfiniteScroll: true,
   thumbnailSpacings: 4,
   galleryThumbnailsAlignment: Consts.thumbnailsAlignment.bottom,
   enableScroll: true,
   hasThumbnails: false,
-  isGrid: false,
-  isSlider: false,
-  isColumns: false,
-  isMasonry: false,
-  isSlideshow: false,
   isAutoSlideshow: false,
   slideshowLoop: false,
   autoSlideshowInterval: 4,
-  bottomInfoHeight: 0,
   titlePlacement: Consts.placements.SHOW_ON_HOVER,
   galleryTextAlign: 'center',
   scrollSnap: false,
@@ -54,33 +45,23 @@ export const defaultStyleParams = {
   fullscreen: true,
   videoPlay: Consts.videoPlay.HOVER,
   scrollAnimation: Consts.scrollAnimations.NO_EFFECT,
-  scrollDirection: 0,
+  scrollDirection: Consts.scrollDirection.VERTICAL,
   overlayAnimation: Consts.overlayAnimations.NO_EFFECT,
   arrowsPosition: 0,
+  arrowsVerticalPosition: Consts.arrowsVerticalPosition.ITEM_CENTER,
   arrowsSize: 23,
-  watermarkOpacity: 40,
-  watermarkSize: 40,
-  useWatermark: true,
-  watermarkDock: Consts.watermarkDock.RIGHT_DOWN,
+  arrowsPadding: 23,
   loadMoreAmount: Consts.loadMoreAmount.ALL,
-  defaultShowInfoExpand: 1,
-  allowLinkExpand: true,
-  expandInfoPosition: 0,
-  allowFullscreenExpand: true,
-  fullscreenLoop: false,
   // bgColorExpand: color-1
   // actionsColorExpand: color-5
   // titleFontExpand: font_5
   // titleColorExpand: color-5
   // descriptionFontExpand: font_8
   // descriptionColorExpand: color-5,
-  galleryAlignExpand: 'left',
   // addToCartBackColorExpand: color-5,
   // addToCartFontExpand: font-8
   // addToCartColorExpand: color-1
-  addToCartBorderWidth: 1,
   //addToCartBorderColor: color-5,
-  addToCartButtonText: '',
   slideshowInfoSize: 200,
   playButtonForAutoSlideShow: false,
   allowSlideshowCounter: false,
@@ -109,9 +90,7 @@ export const defaultStyleParams = {
   //loadMoreButtonFont: font_8
   // loadMoreButtonFontColor: color-5
   // loadMoreButtonColor: startWithOpacity: '1', startWithColor: 'color-1'
-  loadMoreButtonBorderWidth: 1,
   // loadMoreButtonBorderColor:  startWithColor: 'color-5'
-  loadMoreButtonBorderRadius: 0,
   imageInfoType: Consts.infoType.NO_BACKGROUND,
   itemBorderWidth: 0,
   // itemBorderColor: 'color-5'
@@ -123,20 +102,14 @@ export const defaultStyleParams = {
   itemShadowSize: 10,
   imageLoadingMode: Consts.loadingMode.BLUR,
   // imageLoadingColor: startWithColor: 'color-3'
-  expandAnimation: Consts.expandAnimations.NO_EFFECT,
   // oneColorAnimationColor: startWithColor: 'color-1',
-  imageQuality: 90,
-  usmToggle: false,
-  usm_a: 0,
-  usm_r: 0,
-  usm_t: 0,
   videoSound: false,
   videoSpeed: '1',
-  videoLoop: true
+  videoLoop: true,
 };
 
 export function formatValue(val) {
-  if (Number(val) === parseInt(val)) {
+  if (!isNaN(Number(val))) {
     return Number(val);
   } else if (val === 'true') {
     return true;
@@ -150,25 +123,25 @@ export function formatValue(val) {
   }
 }
 
-export function getStyleParamsFromUrl(searchString) {
+export function getOptionsFromUrl(searchString) {
   try {
-    const styleParams = searchString
+    const options = searchString
       .replace('?', '')
       .split('&')
-      .map(styleParam => styleParam.split('='))
+      .map((option) => option.split('='))
       .reduce(
-        (obj, [styleParam, value]) =>
-          Object.assign(obj, { [styleParam]: formatValue(value) }),
+        (obj, [option, value]) =>
+          Object.assign(obj, { [option]: formatValue(value) }),
         {}
       );
-    return styleParams;
+    return options;
   } catch (e) {
     return {};
   }
 }
 
 export function mixAndSlice(array, length, seed) {
-  const numFromId = id => Number(id.replace(/\D/g, '')) % Number(seed || 1);
+  const numFromId = (id) => Number(id.replace(/\D/g, '')) % Number(seed || 1);
 
   return array
     .sort((itm1, itm2) => numFromId(itm1.itemId) - numFromId(itm2.itemId))
@@ -177,7 +150,7 @@ export function mixAndSlice(array, length, seed) {
       ...item,
       metadata: {
         ...item.metadata,
-        title: `Item #${idx}`
-      }
+        title: `Item #${idx}`,
+      },
     }));
 }

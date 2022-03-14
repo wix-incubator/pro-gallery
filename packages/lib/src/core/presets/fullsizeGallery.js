@@ -1,41 +1,42 @@
 import LAYOUTS from '../../common/constants/layout';
 import PLACEMENTS from '../../common/constants/placements';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
-import {calcTargetItemSize} from '../helpers/layoutHelper';
+import { calcTargetItemSize } from '../helpers/layoutHelper';
+import { assignByString } from '../helpers/optionsUtils';
 
-export const fixedStyles = {
-  galleryLayout: LAYOUTS.FULLSIZE,
-  cubeImages: true,
-  cubeRatio: '100%/100%',
-  cubeType: 'fill',
-  oneRow: true,
-  titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
-  scrollDirection: SCROLL_DIRECTION.HORIZONTAL,
-  galleryMargin: 0,
-  isVertical: false,
-  groupSize: 1,
-  groupTypes: '1',
+const fixToFullsize = (options) => {
+  let presetOptions = { ...options };
+  presetOptions.galleryLayout = LAYOUTS.FULLSIZE;
+  presetOptions.cubeImages = true;
+  presetOptions = assignByString(
+    presetOptions,
+    'layoutParams_cropRatio',
+    '100%/100%'
+  );
+  presetOptions.cubeType = 'fill';
+  presetOptions.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
+  presetOptions.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
+  presetOptions.galleryMargin = 0;
+  presetOptions.isVertical = false;
+  presetOptions.groupSize = 1;
+  presetOptions.groupTypes = '1';
+  presetOptions.numberOfImagesPerCol = 1;
+  presetOptions.smartCrop = false;
+  presetOptions.galleryType = 'Strips';
+  presetOptions.hasThumbnails = false;
+  presetOptions.enableScroll = true;
+  presetOptions.scrollSnap = true;
+  presetOptions.cropOnlyFill = false;
+  presetOptions.scatter = 0;
+  presetOptions.rotatingScatter = '';
+  presetOptions.imageMargin = 0;
+  return presetOptions;
+};
+export const fixedOptions = fixToFullsize({});
 
-  // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  smartCrop: false,
-  galleryType: 'Strips',
-  hasThumbnails: false,
-  enableScroll: true,
-  scrollSnap: true,
-  isGrid: false,
-  isSlider: false,
-  isColumns: false,
-  isMasonry: false,
-  isSlideshow: false,
-  cropOnlyFill: false,
-  scatter: 0,
-  imageMargin: 0,
-}
-
-export const createStyles = styles => {
-  return {
-    ...styles,
-    ...fixedStyles,
-    targetItemSize: calcTargetItemSize(styles),
-  }
-}
+export const createOptions = (options) => {
+  let res = { ...options };
+  res = fixToFullsize(res);
+  res.targetItemSize = calcTargetItemSize(res);
+  return res;
+};

@@ -42,7 +42,7 @@ export const get = (obj, path, defaultValue) => {
     .filter(Boolean)
     .reduce(
       (res, key) => (res !== null && res !== undefined ? res[key] : res),
-      obj,
+      obj
     );
   return result === undefined || result === obj ? defaultValue : result;
 };

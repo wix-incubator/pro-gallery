@@ -1,32 +1,34 @@
 import LAYOUTS from '../../common/constants/layout';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
-import {calcTargetItemSize} from '../helpers/layoutHelper';
+import {
+  calcTargetItemSize,
+  processNumberOfImagesPerRow,
+} from '../helpers/layoutHelper';
+import { featureManager } from '../helpers/versionsHelper';
 
-export const fixedStyles = {
-  galleryLayout: LAYOUTS.MASONRY,
-  cubeImages: false,
-  scrollDirection: SCROLL_DIRECTION.VERTICAL,
-  groupSize: 1,
-  groupTypes: '1',
-  slideshowLoop: false,
+const fixToMasonry = (options) => {
+  let presetOptions = { ...options };
+  presetOptions.galleryLayout = LAYOUTS.MASONRY;
+  presetOptions.cubeImages = false;
+  presetOptions.scrollDirection = SCROLL_DIRECTION.VERTICAL;
+  presetOptions.groupSize = 1;
+  presetOptions.groupTypes = '1';
+  presetOptions.slideshowLoop = false;
+  presetOptions.enableScroll = true;
+  presetOptions.cropOnlyFill = false;
+  return presetOptions;
+};
+export const fixedOptions = fixToMasonry({});
 
-  // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  fixedColumns: 0,
-  enableScroll: true,
-  isGrid: false,
-  isSlider: false,
-  isMasonry: true,
-  isColumns: false,
-  isSlideshow: false,
-  cropOnlyFill: false,
-  oneRow: false,
-}
-
-export const createStyles = styles => {
-  return {
-    ...styles,
-    ...fixedStyles,
-    targetItemSize: calcTargetItemSize(styles, (styles.isVertical ? (styles.gallerySize * 8 + 200) : (styles.gallerySize * 5 + 200))),
+export const createOptions = (options) => {
+  let res = { ...options };
+  res = fixToMasonry(res);
+  res.targetItemSize = calcTargetItemSize(
+    res,
+    res.isVertical ? res.gallerySize * 8 + 200 : res.gallerySize * 5 + 200
+  );
+  if (featureManager.supports.fixedColumnsInMasonry) {
+    res = processNumberOfImagesPerRow(res);
   }
-}
-
+  return res;
+};

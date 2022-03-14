@@ -1,37 +1,37 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
 describe('imageMargin - e2e', () => {
   let driver;
-  
-  beforeEach(async () => {
+
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll(async () => {
+    await driver.closePage();
   });
   it('should create a margin between items ', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
-      imageMargin: 20
+      imageMargin: 20,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(2000);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
   it('should not create a margin between items when "imageMargin" is "0"', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
-      imageMargin: 0
+      imageMargin: 0,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(2000);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-})
+});

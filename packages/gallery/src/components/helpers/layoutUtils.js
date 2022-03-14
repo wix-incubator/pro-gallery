@@ -12,11 +12,11 @@ function findNeighborItem(itemIdx, dir, layoutItems) {
     let distance;
 
     // each(slice(layoutItems, itemIdx - 50, itemIdx + 50), (item) => {
-    layoutItems.forEach(item => {
+    layoutItems.forEach((item) => {
       itemY = item.offset.top + item.height / 2;
       itemX = item.offset.left + item.width / 2;
       distance = Math.sqrt(
-        Math.pow(itemY - currentItemY, 2) + Math.pow(itemX - currentItemX, 2),
+        Math.pow(itemY - currentItemY, 2) + Math.pow(itemX - currentItemX, 2)
       );
       if (
         (minDistance === null || (distance > 0 && distance < minDistance)) &&
@@ -34,7 +34,7 @@ function findNeighborItem(itemIdx, dir, layoutItems) {
       neighborItem = findClosestItem(
         currentItem.offset.left + currentItem.width / 2,
         currentItem.offset.top,
-        (curX, curY, itmX, itmY) => itmY < curY,
+        (curX, curY, itmX, itmY) => itmY < curY
       );
       break;
 
@@ -42,7 +42,7 @@ function findNeighborItem(itemIdx, dir, layoutItems) {
       neighborItem = findClosestItem(
         currentItem.offset.left,
         currentItem.offset.top + currentItem.height / 2,
-        (curX, curY, itmX) => itmX < curX,
+        (curX, curY, itmX) => itmX < curX
       );
       break;
 
@@ -50,7 +50,7 @@ function findNeighborItem(itemIdx, dir, layoutItems) {
       neighborItem = findClosestItem(
         currentItem.offset.left + currentItem.width / 2,
         currentItem.offset.bottom,
-        (curX, curY, itmX, itmY) => itmY > curY,
+        (curX, curY, itmX, itmY) => itmY > curY
       );
       break;
 
@@ -59,7 +59,7 @@ function findNeighborItem(itemIdx, dir, layoutItems) {
       neighborItem = findClosestItem(
         currentItem.offset.right,
         currentItem.offset.top + currentItem.height / 2,
-        (curX, curY, itmX) => itmX > curX,
+        (curX, curY, itmX) => itmX > curX
       );
       break;
   }

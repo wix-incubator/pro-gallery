@@ -1,51 +1,57 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
 describe('cubeImages - e2e', () => {
   let driver;
-  
-  beforeEach(async () => {
+
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll(async () => {
+    await driver.closePage();
   });
-  
+
   it('should fit images inside the containers', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: -1,
       cubeImages: true,
       cubeType: 'fit',
-      cubeRatio: 1
+      layoutParams: {
+        cropRatio: 1,
+      },
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container'); 
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
   it('should crop the images and fill the containers', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: -1,
       cubeImages: true,
       cubeType: 'fill',
-      cubeRatio: 1
+      layoutParams: {
+        cropRatio: 1,
+      },
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should have a "cubeRatio" of "2"', async () => {
-    await driver.openPage({
+  it('should have a "cropRatio" of "2"', async () => {
+    await driver.navigate({
       galleryLayout: -1,
       cubeImages: true,
       cubeType: 'fill',
-      cubeRatio: 2
+      layoutParams: {
+        cropRatio: 2,
+      },
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-})
+});

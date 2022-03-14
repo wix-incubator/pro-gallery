@@ -1,113 +1,142 @@
-import {useContext} from 'react';
-import {GalleryContext} from './GalleryContext';
-import {getInitialStyleParams, getStyleParamsFromUrl} from '../constants/styleParams';
-import { addPresetStyles } from 'pro-gallery';
-import {SIDEBAR_WIDTH} from '../constants/consts';
-import {utils} from 'pro-gallery-lib';
+import { useContext } from 'react';
+import { GalleryContext } from './GalleryContext';
+import {
+  getInitialOptions,
+  getOptionsFromUrl,
+} from '../constants/options';
+import { addPresetOptions } from 'pro-gallery';
+import { SIDEBAR_WIDTH } from '../constants/consts';
+import {
+  utils,
+  flatToNested,
+} from 'pro-gallery-lib';
 
-export function useGalleryContext(blueprintsManager, shouldUseBlueprintsFromServer) {
+
+export function useGalleryContext(
+  blueprintsManager,
+) {
   const [context, setContext] = useContext(GalleryContext);
 
   const setShowSide = (newShowSide) => {
-    setGallerySettings({showSide: newShowSide});
-//    const widthChange = SIDEBAR_WIDTH * (newShowSide ? -1 : 1)
+    setGallerySettings({ showSide: newShowSide });
+    //    const widthChange = SIDEBAR_WIDTH * (newShowSide ? -1 : 1)
 
-  //  setDimensions({width: calcGalleryDimensions().width + widthChange});
-    setDimensions()
+    //  setDimensions({width: calcGalleryContainer().width + widthChange});
+    setContainer();
   };
 
-
   const getBlueprintFromServer = async (params) => {
-      let {styleParams, dimensions} = params;
+    let { items, options, container } = params;
 
-    dimensions = JSON.stringify(dimensions || context.dimensions || calcGalleryDimensions());
-    const styles = JSON.stringify(styleParams || context.styleParams || getInitialStyleParams());
-    const url = `http://localhost:3000/getBlueprint?useDemoItems=true&dimensions=${dimensions}&styles=${styles}`;
+    container = container || context.container || calcGalleryContainer();
+    const _options = options || context.options || flatToNested(getInitialOptions());
+    const url = `https://www.wix.com/_serverless/pro-gallery-blueprints-server/createBlueprint`;
+
+    if (!items || !container || !_options) {
+      return;
+    }
+
     const response = await fetch(url, {
-      method: 'GET',
+      method: 'POST',
+      credentials: 'omit', // include, *same-origin, omit
       headers: {
+        'Content-Type': 'application/json'
       },
+      body: JSON.stringify({
+        items,
+        options,
+        container
+      }) // body data type must match "Content-Type" header
     });
     const data = await response.json();
     setBlueprint(data.blueprint);
-  }
+  };
 
-  const requestNewBlueprint = (newContext, settingNewItems)=> {
-    if(shouldUseBlueprintsFromServer) {
-      getBlueprintFromServer({...context, ...newContext})
+  const requestNewBlueprint = (newContext, settingNewItems) => {
+    if (getGallerySettings().shouldUseBlueprintsFromServer) {
+      getBlueprintFromServer({ ...context, ...newContext });
     } else {
-      if(settingNewItems) {blueprintsManager.resetItemLooping();}
-      blueprintsManager.createBlueprint({...newContext})
-    }
-  }
-
-  const setDimensions = (config = {}) => {
-    const {width, height} = config;
-    const newContext = { 
-      dimensions: {
-        ...calcGalleryDimensions(),
-        ...(width && {width}),
-        ...(height && {height}),
+      if (settingNewItems) {
+        blueprintsManager.resetItemLooping();
       }
+      blueprintsManager.createBlueprint({ ...newContext });
+    }
+  };
+
+  const setContainer = (config = {}) => {
+    const { width, height } = config;
+    const newContext = {
+      container: {
+        ...calcGalleryContainer(),
+        ...(width && { width }),
+        ...(height && { height }),
+      },
     };
 
-    if (JSON.stringify(newContext.dimensions) !== JSON.stringify({...context.dimensions})) {
-      if(getGallerySettings().useBlueprints) {
+    if (
+      JSON.stringify(newContext.container) !==
+      JSON.stringify({ ...context.container })
+    ) {
+      if (getGallerySettings().useBlueprints) {
         requestNewBlueprint(newContext);
       }
-  
+
       setContext(newContext);
-      }
+    }
   };
 
-  const setPreset = newPreset => {
+  const setPreset = (newPreset) => {
     const newContext = {
       preset: newPreset,
-      styleParams: getInitialStyleParams(newPreset)
+      options: flatToNested(getInitialOptions(newPreset)),
     };
 
-    if(getGallerySettings().useBlueprints) {
+    if (getGallerySettings().useBlueprints) {
       requestNewBlueprint(newContext);
     }
 
     setContext(newContext);
   };
 
-
-  const setStyleParams = (newProp, value) => {
-    // console.log(`[STYLE PARAMS - VALIDATION] settings styleParam in the context`, newProp, value, context.styleParams);
-    const newContext = {styleParams: {...getInitialStyleParams(), ...getStyleParamsFromUrl(), [newProp]: value}}
-    if(getGallerySettings().useBlueprints) {
+  const setOptions = (newProp, value) => {
+    // console.log(`[OPTIONS - VALIDATION] settings options in the context`, newProp, value, context.options);
+    const options = flatToNested({
+      ...getInitialOptions(),
+      ...getOptionsFromUrl(window.location.search),
+      [newProp]: value,
+    })
+    console.log('setting new context and requesting BP', options.layoutParams)
+    const newContext = {
+      options,
+    };
+    if (getGallerySettings().useBlueprints) {
       requestNewBlueprint(newContext);
     }
-    // console.log(`[STYLE PARAMS - VALIDATION] settings styleParams in the context`, newContext.styleParams);
+    // console.log(`[OPTIONS - VALIDATION] settings options in the context`, newContext.options);
 
     setContext(newContext);
   };
 
-
-  const setItems = items => {
-
-    const newContext = {items};
-    if(getGallerySettings().useBlueprints) {
+  const setItems = (items) => {
+    const newContext = { items };
+    if (getGallerySettings().useBlueprints) {
       requestNewBlueprint(newContext, true);
     }
 
     setContext(newContext);
   };
 
-
-  const setBlueprint = blueprint => {
-    setContext({blueprint});
+  const setBlueprint = (blueprint) => {
+    setContext({ blueprint });
   };
 
-  const setGalleryReady = galleryReady => {
-    setContext({galleryReady});
+  const setGalleryReady = (galleryReady) => {
+    setContext({ galleryReady });
   };
 
-  const setGallerySettings = _gallerySettings => {
-    const gallerySettings = {...getGallerySettings(), ..._gallerySettings};
-    const newContext = {gallerySettings}
+  const setGallerySettings = (_gallerySettings) => {
+    const gallerySettings = { ...getGallerySettings(), ..._gallerySettings };
+    const newContext = { gallerySettings };
     setContext(newContext);
     try {
       localStorage.gallerySettings = JSON.stringify(gallerySettings);
@@ -118,46 +147,50 @@ export function useGalleryContext(blueprintsManager, shouldUseBlueprintsFromServ
 
   const getGallerySettings = () => {
     if (typeof context.gallerySettings === 'object') {
-      return context.gallerySettings
+      return context.gallerySettings;
     } else {
       try {
-        console.log('Getting gallerySettings from localStorage', localStorage.gallerySettings)
         return JSON.parse(localStorage.gallerySettings) || {};
       } catch (e) {
         // console.error('Could not get gallerySettings', e);
         return {};
       }
     }
-  }
+  };
 
-  const calcGalleryDimensions = () => {
-    let dimensions = {};
+  const calcGalleryContainer = () => {
+    let container = {};
     const showSide = !!getGallerySettings().showSide && !utils.isMobile();
+    // eslint-disable-next-line no-extra-boolean-cast
     if (!!getGallerySettings().isUnknownDimensions) {
-      dimensions = !utils.isMobile() ? {
-        width: 500,
-        height: 500,
-      } : {
-        width: 320,
-        height: 500,
-      }
+      container = !utils.isMobile()
+        ? {
+            width: 500,
+            height: 500,
+          }
+        : {
+            width: 320,
+            height: 500,
+          };
     } else {
-      dimensions.width = !showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
-      dimensions.height = window.innerHeight;
+      container.width = !showSide
+        ? window.innerWidth
+        : window.innerWidth - SIDEBAR_WIDTH;
+      container.height = window.innerHeight;
     }
 
-    return dimensions;
+    return container;
   };
-  
-  
 
   const res = {
     showSide: context.showSide,
     setShowSide,
     preset: context.preset,
     setPreset,
-    styleParams: addPresetStyles(context.styleParams || getInitialStyleParams()), //TODO - this is a double even for the normal flow - maybe used for the sidebar somehow?
-    setStyleParams,
+    options: addPresetOptions(
+      context.options || flatToNested(getInitialOptions())
+    ), //TODO - this is a double even for the normal flow - maybe used for the sidebar somehow?
+    setOptions,
     items: context.items,
     setItems,
     blueprint: context.blueprint,
@@ -166,8 +199,8 @@ export function useGalleryContext(blueprintsManager, shouldUseBlueprintsFromServ
     setGalleryReady,
     gallerySettings: getGallerySettings(),
     setGallerySettings,
-    dimensions: context.dimensions || calcGalleryDimensions(),
-    setDimensions,
+    container: context.container || calcGalleryContainer(),
+    setContainer,
     getBlueprintFromServer,
   };
 

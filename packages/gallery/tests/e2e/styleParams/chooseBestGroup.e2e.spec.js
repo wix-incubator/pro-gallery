@@ -1,39 +1,39 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
 describe('chooseBestGroup - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll(async () => {
+    await driver.closePage();
   });
 
   it('should choose best group', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.COLLAGE,
       chooseBestGroup: true,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
   it('should not choose best group', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.COLLAGE,
       chooseBestGroup: false,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-})
+});

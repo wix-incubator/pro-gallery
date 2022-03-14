@@ -1,39 +1,39 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
 describe('slideshowInfoSize - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll(async () => {
+    await driver.closePage();
   });
 
   it('should set "slideshowInfoSize"(400)', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      slideshowInfoSize:400,
+      slideshowInfoSize: 400,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
   it('should set "slideshowInfoSize"(250)', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      slideshowInfoSize:250,
+      slideshowInfoSize: 250,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-})
+});

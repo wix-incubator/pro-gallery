@@ -1,12 +1,12 @@
 import React from 'react';
-import { GALLERY_CONSTS, ProGallery, ProBlueprintsGallery } from 'pro-gallery';
-import { testItems } from './images';
-import { resizeMediaUrl } from './itemResizer';
+import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
+import { testItems, monochromeImages } from './images';
+import { createMediaUrl } from './itemResizer';
 import * as utils from './utils';
 
 const UNKNOWN_CONTAINER = {
   width: 980,
-  height: 500
+  height: 500,
 };
 export default class Gallery extends React.PureComponent {
   constructor(props) {
@@ -17,8 +17,10 @@ export default class Gallery extends React.PureComponent {
     this.handleResize = this.handleResize.bind(this);
 
     this.state = {
-      knownContainer: (container.width > 0 || container.height > 0) && container !== UNKNOWN_CONTAINER,
-      container: container
+      knownContainer:
+        (container.width > 0 || container.height > 0) &&
+        container !== UNKNOWN_CONTAINER,
+      container: container,
     };
   }
 
@@ -29,7 +31,7 @@ export default class Gallery extends React.PureComponent {
     if (containerWidth !== undefined && containerHeight !== undefined) {
       container = {
         width: containerWidth,
-        height: containerHeight
+        height: containerHeight,
       };
     }
 
@@ -39,7 +41,7 @@ export default class Gallery extends React.PureComponent {
   getContainerFromWindowDimensions() {
     return {
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight,
     };
   }
 
@@ -47,7 +49,7 @@ export default class Gallery extends React.PureComponent {
     const container = this.getContainerFromWindowDimensions();
 
     this.setState({
-      container
+      container,
     });
   };
 
@@ -94,14 +96,16 @@ export default class Gallery extends React.PureComponent {
       !knownContainer || this.isSSR()
         ? GALLERY_CONSTS.viewMode.PRERENDER
         : GALLERY_CONSTS.viewMode.SITE;
-    
+
     const containerClassName =
       viewMode === GALLERY_CONSTS.viewMode.PRERENDER ? 'no-transition' : '';
 
-    const hasUrlStyles = Object.keys(urlParams).length > 0;
-    const styles = hasUrlStyles ? urlParams : utils.defaultStyleParams;
+    const hasUrlOptions = Object.keys(urlParams).length > 0;
+    const options = hasUrlOptions ? urlParams : utils.defaultOptions;
 
-    const items = testItems.slice(0,50);//utils.mixAndSlice(testItems, 50, styles.seed || 1);
+    const items = urlParams.isTestEnvironment ?
+      monochromeImages.slice(0, 20) :
+      testItems.slice(0, 50); //utils.mixAndSlice(testItems, 50, styles.seed || 1);
     // The eventsListener will notify you anytime something has happened in the gallery.
     const eventsListener = (eventName, eventData) => {
       // console.log({eventName, eventData});
@@ -110,21 +114,25 @@ export default class Gallery extends React.PureComponent {
     // if (typeof nothing !== 'undefined') {
     //   import ('./layoutFixer').then(console.warn);
     // }
-
-    const Gallery = (this.isSSR() || !urlParams.useBlueprints) ? ProGallery : ProBlueprintsGallery
+    const Gallery =
+      this.isSSR() || !urlParams.useBlueprints
+        ? ProGallery
+        : ProGalleryRenderer;
     return (
       <div className={containerClassName}>
         <Gallery
-          domId="ssr-simulator"
+          id="ssr-simulator"
           items={items}
-          styles={styles}
-          settings={{disableSSROpacity: !!urlParams.disableSSROpacity, avoidInlineStyles: !urlParams.useLayoutFixer}}
+          options={options}
+          settings={{
+            disableSSROpacity: !!urlParams.disableSSROpacity,
+            avoidInlineStyles: !urlParams.useLayoutFixer,
+          }}
           container={container}
           viewMode={viewMode}
+          isPrerenderMode={true}
           eventsListener={eventsListener}
-          resizeMediaUrl={resizeMediaUrl}
-          useBlueprints={true}
-          layoutFixerBundleUrl={urlParams.useLayoutFixer && "http://localhost:3001/layoutFixer.bundle.js"}
+          createMediaUrl={createMediaUrl}
         />
       </div>
     );

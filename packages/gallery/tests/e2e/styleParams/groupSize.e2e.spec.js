@@ -1,5 +1,5 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
@@ -7,16 +7,16 @@ expect.extend({ toMatchImageSnapshot });
 describe('groupSize - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll(async () => {
+    await driver.closePage();
   });
   it('should have max group size of 3 (groupSize=3)', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       collageDensity: 0.8,
       groupSize: 3,
@@ -27,7 +27,7 @@ describe('groupSize - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should have max group size of 1 (groupSize=1)', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       collageDensity: 0.8,
       groupSize: 1,
@@ -38,7 +38,7 @@ describe('groupSize - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should have groups of 1 item (restricted by collageDensity)', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       collageDensity: 0,
       groupSize: 3,
@@ -49,7 +49,7 @@ describe('groupSize - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should have groups of 1 item (restricted by groupsPerStrip)', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       groupsPerStrip: 1,
       gridStyle: 1,
@@ -60,4 +60,4 @@ describe('groupSize - e2e', () => {
     //expect to have groups of 1 despite groupSize = 3 (because of collageDensity)
     expect(page).toMatchImageSnapshot();
   });
-})
+});

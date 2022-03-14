@@ -3,9 +3,10 @@ import Head from './Head';
 import Gallery from './gallery';
 import * as utils from './gallery/utils';
 
+// //dummy commit
 const App = ({ location }) => {
   const searchString = location || window.location.search;
-  const urlParams = utils.getStyleParamsFromUrl(searchString);
+  const urlParams = utils.getOptionsFromUrl(searchString);
 
   return (
     <div className="app">

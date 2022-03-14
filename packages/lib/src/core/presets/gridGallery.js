@@ -1,34 +1,42 @@
 import LAYOUTS from '../../common/constants/layout';
-import {calcTargetItemSize} from '../helpers/layoutHelper';
+import {
+  calcTargetItemSize,
+  processNumberOfImagesPerRow,
+  processNumberOfImagesPerCol,
+  removeBordersIfNeeded,
+} from '../helpers/layoutHelper';
+import SLIDE_ANIMATIONS from '../../common/constants/slideAnimations';
+const fixToGrid = (options) => {
+  let presetOptions = { ...options };
+  presetOptions.galleryLayout = LAYOUTS.GRID;
+  presetOptions.cubeImages = true;
+  presetOptions.isVertical = true;
+  presetOptions.groupSize = 1;
+  presetOptions.hasThumbnails = false;
+  presetOptions.groupTypes = '1';
+  presetOptions.slideshowLoop = false;
+  presetOptions.smartCrop = false;
+  presetOptions.galleryType = 'Columns';
+  presetOptions.targetItemSize = 0;
+  presetOptions.enableScroll = true;
+  presetOptions.cropOnlyFill = false;
+  presetOptions.minItemSize = 50;
+  presetOptions.slideAnimation = SLIDE_ANIMATIONS.SCROLL;
+  presetOptions.collageDensity = 0;
+  return presetOptions;
+};
 
-export const fixedStyles = {
-  galleryLayout: LAYOUTS.GRID,
-  cubeImages: true,
-  isVertical: true,
-  groupSize: 1,
-  hasThumbnails: false,
-  groupTypes: '1',
-  slideshowLoop: false,
-  // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  smartCrop: false,
-  galleryType: 'Columns',
-  fixedColumns: 0,
-  targetItemSize: 0,
-  enableScroll: true,
-  cropOnlyFill: false,
-  isSlider: false,
-  isColumns: false,
-  isGrid: true,
-  isMasonry: false,
-  isSlideshow: false,
-  minItemSize: 50,
-}
+export const fixedOptions = fixToGrid({});
 
-export const createStyles = styles => {
-  return {
-    ...styles,
-    ...fixedStyles,
-    targetItemSize: calcTargetItemSize(styles, Math.round(styles.gallerySize * 8.5 + 150)),
-  }
-}
-
+export const createOptions = (options) => {
+  let res = { ...options };
+  res = fixToGrid(res);
+  res.targetItemSize = calcTargetItemSize(
+    res,
+    Math.round(res.gallerySize * 8.5 + 150)
+  );
+  res = processNumberOfImagesPerRow(res);
+  res = processNumberOfImagesPerCol(res);
+  res = removeBordersIfNeeded(res);
+  return res;
+};

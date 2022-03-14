@@ -1,20 +1,20 @@
 import arrowsPosition from './arrowsPosition';
+import arrowsVerticalPosition from './arrowsVerticalPosition';
 import cubeType from './cubeType';
 import dimensions from './dimensions';
 import events from './events';
-import expandAnimations from './expandAnimations';
-import expandInfoPositions from './expandInfoPositions';
-import formFactor from './formFactor';
+import deviceType from './deviceType';
 import gallerySizeType from './gallerySizeType';
 import galleryTextAlign from './galleryTextAlign.js';
 import gridStyle from './gridStyle';
+import cubeFitPosition from './cubeFitPosition';
 import groupTypes from './groupTypes';
 import imageHoverAnimations from './imageHoverAnimations';
 import infoBehaviourOnHover from './infoBehaviourOnHover';
 import infoType from './infoType';
 import isVertical from './isVertical';
 import itemClick from './itemClick';
-import layout from './layout';
+import layout, { isLayout } from './layout';
 import layoutDirection from './layoutDirection';
 import loadingMode from './loadingMode';
 import loadingWithColorMode from './loadingWithColorMode';
@@ -22,20 +22,21 @@ import loadMoreAmount from './loadMoreAmount';
 import mobileSwipeAnimations from './mobileSwipeAnimations';
 import overlayAnimations from './overlayAnimations';
 import placements, {
-  hasAbovePlacement,
-  hasBelowPlacement,
+  hasExternalAbovePlacement,
+  hasExternalBelowPlacement,
   hasHoverPlacement,
-  hasRightPlacement,
-  hasLeftPlacement,
-  hasVerticalPlacement,
-  hasHorizontalPlacement,
-  isAbovePlacement,
-  isBelowPlacement,
+  hasExternalRightPlacement,
+  hasExternalLeftPlacement,
+  hasExternalVerticalPlacement,
+  hasExternalHorizontalPlacement,
+  isExternalAbovePlacement,
+  isExternalBelowPlacement,
   isHoverPlacement,
-  isRightPlacement,
-  isLeftPlacement,
-  isVerticalPlacement,
-  isHorizontalPlacement,
+  isExternalRightPlacement,
+  isExternalLeftPlacement,
+  isExternalVerticalPlacement,
+  isExternalHorizontalPlacement,
+  isConstantVerticalPlacement,
 } from './placements';
 import resizeMethods from './resizeMethods';
 import scrollAnimations from './scrollAnimations';
@@ -47,20 +48,28 @@ import thumbnailsAlignment from './thumbnailsAlignment';
 import { URL_SIZES as urlSizes, URL_TYPES as urlTypes } from './urlTypes';
 import videoPlay from './videoPlay';
 import viewMode from './viewMode';
-import watermarkDock from './watermarkDock';
 import imagePlacementAnimations from './imagePlacementAnimations';
+import slideTransition from './slideTransition';
+import overlayPositions from './overlayPositions';
+import overlaySizeType from './overlaySizeType';
+import autoSlideshowTypes from './autoSlideshowTypes';
+import arrowsType from './arrowsType';
+import arrowsContainerStyleType from './arrowsContainerStyleType';
+import itemResolutionMode from './itemResolutionMode';
+import autoSlideBehaviour from './autoSlideBehaviour';
 
 export default {
   arrowsPosition,
+  itemResolutionMode,
+  arrowsVerticalPosition,
   cubeType,
   dimensions,
   events,
-  expandAnimations,
-  expandInfoPositions,
-  formFactor,
+  deviceType,
   gallerySizeType,
   galleryTextAlign,
   gridStyle,
+  cubeFitPosition,
   groupTypes,
   imageHoverAnimations,
   infoBehaviourOnHover,
@@ -68,6 +77,7 @@ export default {
   isVertical,
   itemClick,
   layout,
+  isLayout,
   layoutDirection,
   loadingMode,
   loadingWithColorMode,
@@ -75,20 +85,21 @@ export default {
   mobileSwipeAnimations,
   overlayAnimations,
   placements,
-  hasAbovePlacement,
-  hasBelowPlacement,
+  hasExternalAbovePlacement,
+  hasExternalBelowPlacement,
   hasHoverPlacement,
-  hasRightPlacement,
-  hasLeftPlacement,
-  hasVerticalPlacement,
-  hasHorizontalPlacement,
-  isAbovePlacement,
-  isBelowPlacement,
+  hasExternalRightPlacement,
+  hasExternalLeftPlacement,
+  hasExternalVerticalPlacement,
+  hasExternalHorizontalPlacement,
+  isExternalAbovePlacement,
+  isExternalBelowPlacement,
   isHoverPlacement,
-  isRightPlacement,
-  isLeftPlacement,
-  isVerticalPlacement,
-  isHorizontalPlacement,
+  isExternalRightPlacement,
+  isExternalLeftPlacement,
+  isExternalVerticalPlacement,
+  isExternalHorizontalPlacement,
+  isConstantVerticalPlacement,
   resizeMethods,
   scrollAnimations,
   slideAnimations,
@@ -100,6 +111,12 @@ export default {
   urlTypes,
   videoPlay,
   viewMode,
-  watermarkDock,
   imagePlacementAnimations,
+  slideTransition,
+  overlayPositions,
+  overlaySizeType,
+  autoSlideshowTypes,
+  arrowsType,
+  arrowsContainerStyleType,
+  autoSlideBehaviour,
 };

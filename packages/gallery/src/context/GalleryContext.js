@@ -7,7 +7,6 @@ try {
   GalleryContext = null;
 }
 
-
 export class GalleryProvider extends React.Component {
   render() {
     if (GalleryContext) {

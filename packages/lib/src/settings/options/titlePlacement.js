@@ -4,9 +4,40 @@ import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Texts Placement',
-  isRelevant: (styleParams) => (styleParams.isVertical &&
-    styleParams.groupSize === 1 && 
-    !styleParams.oneRow),
+  isRelevantDescription:
+    'Set "Layout Orientation" to "Columns" and set "Max Group Size" to "1".',
+  isRelevant: (options, option) => {
+    // specific isRelevant functions
+    const isHorizontalInfoCompatibleLayout = (options) => {
+      return (
+        options['isVertical'] &&
+        options['groupSize'] === 1 &&
+        options['scrollDirection'] === 0
+      );
+    };
+    const isVerticalInfoCompatibleLayout = (options) => {
+      return {
+        0: options['isVertical'] && options['groupSize'] === 1,
+        1: options['groupSize'] === 1,
+      }[options['scrollDirection']];
+    };
+    // Distribution of the specific isRelevant functions
+    const placementOptions = {
+      SHOW_ON_HOVER: () => {
+        return true;
+      },
+      SHOW_BELOW: isVerticalInfoCompatibleLayout,
+      SHOW_ABOVE: isVerticalInfoCompatibleLayout,
+      SHOW_ON_THE_RIGHT: isHorizontalInfoCompatibleLayout,
+      SHOW_ON_THE_LEFT: isHorizontalInfoCompatibleLayout,
+      ALTERNATE_HORIZONTAL: isHorizontalInfoCompatibleLayout,
+      ALTERNATE_VERTICAL: isVerticalInfoCompatibleLayout,
+    };
+    // specific option isRelevant : general titlePlacement isRelevant (Hover always true)
+    return option
+      ? placementOptions[option](options)
+      : Object.values(placementOptions).some((val) => val(options));
+  },
   type: INPUT_TYPES.MULTISELECT,
   default: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
   options: createOptions('placements'),
@@ -15,4 +46,4 @@ export default {
    - this option also deals with the hover effects and may overide "hoveringBehaviour" when set to anything but "SHOW_ON_HOVER". 
    - you can select multiple values, but only one of each direction (ABOVE / BELOW, RIGHT / LEFT)
   `,
-}
+};

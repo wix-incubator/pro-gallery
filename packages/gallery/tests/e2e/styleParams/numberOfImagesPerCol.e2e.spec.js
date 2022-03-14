@@ -1,25 +1,25 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
 describe('numberOfImagesPerCol - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll(async () => {
+    await driver.closePage();
   });
   it('should set 1 images per a column', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
-      numberOfImagesPerCol:1,
-      oneRow: true,
+      numberOfImagesPerCol: 1,
+      oneRow: true, // deprecated but left here to make sure we are not breaking for those who still use it
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -28,10 +28,10 @@ describe('numberOfImagesPerCol - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should set 2 images per a column', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
-      numberOfImagesPerCol:2,
-      oneRow: true,
+      numberOfImagesPerCol: 2,
+      oneRow: true, // deprecated but left here to make sure we are not breaking for those who still use it
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -40,10 +40,10 @@ describe('numberOfImagesPerCol - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should set 3 images per a column', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
-      numberOfImagesPerCol:3,
-      oneRow: true,
+      numberOfImagesPerCol: 3,
+      oneRow: true, // deprecated but left here to make sure we are not breaking for those who still use it
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -51,4 +51,4 @@ describe('numberOfImagesPerCol - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-})
+});

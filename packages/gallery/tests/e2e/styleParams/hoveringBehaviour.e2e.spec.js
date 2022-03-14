@@ -1,5 +1,5 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
@@ -7,45 +7,45 @@ expect.extend({ toMatchImageSnapshot });
 describe('hoveringBehaviour - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll(async () => {
+    await driver.closePage();
   });
   it('should show hover container on hover event when "hoveringBehaviour" is "APPEAR', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
-      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS
+      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    await driver.actions.hover('item-container')[0]
+    await driver.actions.hover('item-container')[0];
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
   it('should make hover state disapear on hover (reverse-hover) when "hoveringBehaviour" is "DISAPPEARS', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
-      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.DISAPPEARS
+      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.DISAPPEARS,
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    await driver.actions.hover('item-container')[0]
+    await driver.actions.hover('item-container')[0];
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
   it('should set all items in constant hover state when "hoveringBehaviour" is "NO_CHANGE"', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: 2,
-      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE
+      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE,
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    await driver.actions.hover('item-container')[0]
+    await driver.actions.hover('item-container')[0];
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-})
+});

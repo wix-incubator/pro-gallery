@@ -35,11 +35,9 @@ module.exports = function(envType) {
         0: 'webpack-hot-middleware/client?path=/__webpack_hmr&reload=true',
         polyfills: resolvePath('../src/polyfills.js'),
         main: resolvePath('../src/index.js'),
-        layoutFixer: resolvePath('../src/components/gallery/layoutFixer.js')
     } : {
         polyfills: resolvePath('../src/polyfills.js'),
         main: resolvePath('../src/index.js'),
-        layoutFixer: resolvePath('../src/components/gallery/layoutFixer.js')
       };
 
   config.output = IS_DEV
@@ -141,22 +139,22 @@ module.exports = function(envType) {
     ].filter(Boolean)
   };
 
-  config.optimization = IS_DEV
-    ? {}
-    : {
-        minimizer: [
-          new UglifyJsPlugin({
-            parallel: true,
-            sourceMap: true,
-            uglifyOptions: {
-              output: {
-                comments: false
-              }
-            }
-          }),
-          new OptimizeCSSAssetsPlugin({})
-        ]
-      };
+  // config.optimization = IS_DEV
+  //   ? {}
+  //   : {
+  //       minimizer: [
+  //         new UglifyJsPlugin({
+  //           parallel: true,
+  //           sourceMap: true,
+  //           uglifyOptions: {
+  //             output: {
+  //               comments: false
+  //             }
+  //           }
+  //         }),
+  //         new OptimizeCSSAssetsPlugin({})
+  //       ]
+  //     };
 
   config.plugins = [
     new webpack.DefinePlugin(env.forWebpackDefinePlugin),

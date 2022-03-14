@@ -1,5 +1,5 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
@@ -7,19 +7,19 @@ expect.extend({ toMatchImageSnapshot });
 describe('hasThumbnails - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll(async () => {
+    await driver.closePage();
   });
   it('should not have thumbnails when "hasThumbnails" is "false" and gallery is horizontal scroll', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       hasThumbnails: false,
-      oneRow:true,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -27,9 +27,10 @@ describe('hasThumbnails - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should not have thumbnails when "hasThumbnails" is "true" and gallery is vertical scroll', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       hasThumbnails: false,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -37,14 +38,14 @@ describe('hasThumbnails - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should have thumbnails when "hasThumbnails" is "true" and gallery is horizontal scroll', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       hasThumbnails: true,
-      oneRow:true,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-})
+});

@@ -23,6 +23,7 @@ const PROJECTS = {
     LAYOUTS: 'layouts',
     FULLSCREEN: 'fullscreen',
     PLAYGROUND: 'playground',
+    LEAN_GALLERY: 'lean-gallery',
 };
 const CHANGELOG = 'changelog.md';
 const VERSION_LOGGER = 'packages/gallery/src/versionLogger.js';
@@ -75,7 +76,7 @@ function editChangelogAndUpdateVersion(bump) {
         try {
             if (result.yesno === 'yes' || result.yesno === 'y') {
                 // child.on('exit', function (e, code) {
-                execSync(`rm **/package-lock.json || true`, { // do not fail if file does not exist
+                execSync(`rm packages/*/package-lock.json || true`, { // do not fail if file does not exist
                     stdio: 'pipe'
                 });
                 execSync(`git commit -am "[main] update ${CHANGELOG}"`, {
@@ -123,7 +124,7 @@ function writeToChangelog(str) {
 }
 
 function writeVersion(version) {
-    const writeCommand = `> ${VERSION_LOGGER} && echo "try {console.debug('Pro Gallery Version: ${version}'); } catch (e) {}" >> ${VERSION_LOGGER}`;
+    const writeCommand = `> ${VERSION_LOGGER} && echo "try {\\n  console.debug('Pro Gallery Version: ${version}');\\n  // eslint-disable-next-line no-empty\\n} catch (e) {}" >> ${VERSION_LOGGER}`;
     execSync(writeCommand);
 }
 

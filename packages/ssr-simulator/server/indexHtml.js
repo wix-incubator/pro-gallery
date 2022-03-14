@@ -9,7 +9,6 @@ if (NODE_ENV === 'production') {
 } else {
   assetManifest = {
     'main.js': '/main.bundle.js',
-    'layoutFixer.js': '/layoutFixer.bundle.js',
   };
 }
 
@@ -94,6 +93,8 @@ export const indexHtml = ({ helmet, serverData, markup, bundles }) => {
         ${helmet.noscript.toString()}
         ${helmet.script.toString()}
         ${jsScripts(bundles)}
+        <script src="https://unpkg.com/@webcomponents/custom-elements"></script>
+        <script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.0.3/custom-elements-es5-adapter.js"></script>
       </head>
       <body ${bodyAttrs}>
         <div id="root">${markup}</div>

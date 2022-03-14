@@ -1,15 +1,16 @@
 import React from 'react';
+import { CodeOutlined } from '@ant-design/icons';
 import {Modal, Button} from 'antd';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 // choose highlighter style here: https://conorhastings.github.io/react-syntax-highlighter/demo/
 import {tomorrowNightEighties} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import s from './CodePanel.module.scss';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
-import { getStyleParamsFromUrl } from '../../constants/styleParams'
+import { getOptionsFromUrl } from '../../constants/options'
 
 function CodePanel() {
 
-  const {styleParams} = useGalleryContext();
+  const {options} = useGalleryContext();
 
   const [hasCopied, setHasCopied] = React.useState(false);
   const [modalVisible, set_modalVisible] = React.useState(false);
@@ -25,8 +26,8 @@ function CodePanel() {
   };
 
   const getStyleParams = () => {
-    const {galleryLayout} = styleParams;
-    return Object.entries({galleryLayout, ...getStyleParamsFromUrl()})
+    const {galleryLayout} = options;
+    return Object.entries({galleryLayout, ...getOptionsFromUrl(window.location.search)})
       .reduce((acc, [key, value]) => {
         const val = typeof value === 'string' ? `'${value}'` : value;
         return acc.concat(`      ${key}: ${val},`);
@@ -58,8 +59,8 @@ function CodePanel() {
           {code}
         </SyntaxHighlighter>
       </Modal>
-      <Button type="primary" icon="code" shape="round" size="large" disabled={modalVisible} onClick={() => set_modalVisible(true)} block>
-        Generate Gallery Code 
+      <Button type="primary" icon={<CodeOutlined />} shape="round" size="large" disabled={modalVisible} onClick={() => set_modalVisible(true)} block>
+        Generate Gallery Code
       </Button>
     </div>
   );
@@ -73,7 +74,54 @@ function getCode(options) {
   export function Gallery() {
 
     // Add your images here...
-    const items = [];
+    const items = [
+            { // Image item:
+                    itemId: 'sample-id',
+                    mediaUrl: 'https://i.picsum.photos/id/674/200/300.jpg?hmac=kS3VQkm7AuZdYJGUABZGmnNj_3KtZ6Twgb5Qb9ITssY',
+                    metaData: {
+                            type: 'image',
+                            height: 200,
+                            width: 100,
+                            title: 'sample-title',
+                            description: 'sample-description',
+                            focalPoint: [0, 0],
+                            link: {
+                                    url: 'http://example.com',
+                                    target: '_blank'
+                            },
+                    }
+            },
+            { // Another Image item:
+                    itemId: 'differentItem',
+                    mediaUrl: 'https://i.picsum.photos/id/1003/1181/1772.jpg?hmac=oN9fHMXiqe9Zq2RM6XT-RVZkojgPnECWwyEF1RvvTZk',
+                    metaData: {
+                            type: 'image',
+                            height: 200,
+                            width: 100,
+                            title: 'sample-title',
+                            description: 'sample-description',
+                            focalPoint: [0, 0],
+                            link: {
+                                    url: 'http://example.com',
+                                    target: '_blank'
+                            },
+                    }
+            },
+            { // HTML item:
+                    itemId: 'htmlItem',
+                    html: "<div style='width: 300px; height: 200px; background:pink;'>I am a text block</div>",
+                    metadata: {
+                            type: "text",
+                            height: 200,
+                            width: 300,
+                            title: 'sample-title',
+                            description: 'sample-description',
+                            backgroundColor: 'pink'
+                    },
+
+            },
+    ]
+
 
     // The options of the gallery (from the playground current state)
     const options = {

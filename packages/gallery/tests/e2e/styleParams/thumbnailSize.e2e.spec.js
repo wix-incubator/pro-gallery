@@ -1,24 +1,24 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
-import {toMatchImageSnapshot} from '../../drivers/matchers';
+import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
 describe('thumbnailSize - e2e', () => {
   let driver;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     driver = new GalleryDriver();
-    await driver.launchBrowser();
+    await driver.openPage();
   });
 
-  afterEach(() => {
-    driver.closeBrowser();
+  afterAll(async () => {
+    await driver.closePage();
   });
   it('should set thumbnailSize to 100', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
-      thumbnailSize: 100
+      thumbnailSize: 100,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -26,13 +26,13 @@ describe('thumbnailSize - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
   it('should set thumbnailSize to 300', async () => {
-    await driver.openPage({
+    await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
-      thumbnailSize: 300
+      thumbnailSize: 300,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-})
+});

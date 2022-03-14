@@ -1,19 +1,19 @@
 export default class PlaygroundsBlueprintsApi {
 
-  constructor({addItems, getItems, getContainer, getStyles, onBlueprintReady, getTotalItemsCount}){
+  constructor({addItems, getItems, getContainer, getOptions, onBlueprintReady, getTotalItemsCount}){
     this.addItems = addItems || (()=>{});
     this.getItems = getItems || (()=>{});
-    this.getStyles = getStyles || (()=>{});
+    this.getOptions = getOptions || (()=>{});
     this.getContainer = getContainer || (()=>{});
     this.getTotalItemsCount = getTotalItemsCount || (()=>{});
     this.onBlueprintReadyCallback = onBlueprintReady || (()=>{});
     // this.setDimensionsHeight = this.setDimensionsHeight || (()=>{});
   }
 
-  updateFunctions({addItems, getItems, getContainer, getStyles, onBlueprintReady, getTotalItemsCount}){
+  updateFunctions({addItems, getItems, getContainer, getOptions, onBlueprintReady, getTotalItemsCount}){
     this.addItems = addItems || this.addItems;
     this.getItems = getItems || this.getItems;
-    this.getStyles = getStyles || this.getStyles;
+    this.getOptions = getOptions || this.getOptions;
     this.getContainer = getContainer || this.getContainer;
     this.getTotalItemsCount = getTotalItemsCount || this.getTotalItemsCount;
     this.onBlueprintReadyCallback = onBlueprintReady || this.onBlueprintReadyCallback;
@@ -28,11 +28,11 @@ export default class PlaygroundsBlueprintsApi {
     return this.getItems();
   }
 
-  fetchStyles() {
-    return this.getStyles();
+  fetchOptions() {
+    return this.getOptions();
   }
 
-  fetchDimensions() {
+  fetchContainer() {
     return this.getContainer();
   }
 
@@ -43,28 +43,5 @@ export default class PlaygroundsBlueprintsApi {
   isUsingCustomInfoElements(){
     return true;
   }
-
-  // finalizeHeightByStructure({
-  //   styleParams,
-  //   isInfinite,
-  //   updatedHeight,
-  //   layoutHeight,
-  //   container,
-  // }) {
-  //   let newHeight = container.height;
-    
-  //   if (styleParams.oneRow) {
-  //     newHeight = window.innerHeight;
-  //   } else {
-  //     if(isInfinite || updatedHeight === Infinity) {
-  //       newHeight = layoutHeight;
-  //     } else if (updatedHeight > 0) {
-  //       newHeight = updatedHeight;
-  //     } 
-  //   }
-  //   if (!(container.height === newHeight) && newHeight){
-  //     // this.setDimensionsHeight(newHeight);
-  //   }
-// }
 
 }

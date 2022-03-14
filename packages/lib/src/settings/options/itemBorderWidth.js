@@ -4,7 +4,8 @@ import { default as GALLERY_CONSTS } from '../../common/constants';
 export default {
   title: 'Item Border Width',
   description: `Set the border width for each item in the gallery .`,
-  isRelevant: (styleParams) => styleParams.cubeType !== GALLERY_CONSTS.cubeType.FIT,
+  isRelevantDescription: 'Set "Crop Type" to anything but "Fit".',
+  isRelevant: (options) => options.cubeType !== GALLERY_CONSTS.cubeType.FIT,
   type: INPUT_TYPES.NUMBER,
   default: 0,
-}
+};

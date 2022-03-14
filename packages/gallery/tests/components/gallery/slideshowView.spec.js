@@ -1,5 +1,5 @@
 import { GALLERY_CONSTS, viewModeWrapper } from 'pro-gallery-lib';
-import GalleryDriver from '../../drivers/reactDriver'
+import GalleryDriver from '../../drivers/reactDriver';
 import SlideshowView from '../../../src/components/gallery/proGallery/slideshowView';
 import { expect } from 'chai';
 import sinon from 'sinon';
@@ -9,13 +9,12 @@ describe('Slideshow View', () => {
   let initialGalleryViewProps;
   let galleryViewProps;
   let clock;
-  let helpers;
 
   beforeEach(() => {
     driver = new GalleryDriver();
     initialGalleryViewProps = driver.props.galleryView();
-    Object.assign(initialGalleryViewProps.styleParams, {
-      oneRow: true,
+    Object.assign(initialGalleryViewProps.options, {
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     clock = sinon.useFakeTimers();
   });
@@ -76,7 +75,7 @@ describe('Slideshow View', () => {
       const stubFirst = sinon
         .stub(SlideshowView.prototype, 'isFirstItem')
         .returns(true);
-      expect(driver.get.state('currentIdx')).to.equal(0);
+      expect(driver.get.state('activeIndex')).to.equal(0);
       //nextItem - forward
       driver.get.instance().handleSlideshowKeyPress({
         keyCode: 39,
@@ -85,7 +84,7 @@ describe('Slideshow View', () => {
         stopPropagation() {},
       });
       setTimeout(() => {
-        expect(driver.get.state('currentIdx')).to.equal(1);
+        expect(driver.get.state('activeIndex')).to.equal(1);
         stubFirst.returns(false);
         driver.get.instance().handleSlideshowKeyPress({
           keyCode: 40,
@@ -94,7 +93,7 @@ describe('Slideshow View', () => {
           stopPropagation() {},
         });
         setTimeout(() => {
-          expect(driver.get.state('currentIdx')).to.equal(2);
+          expect(driver.get.state('activeIndex')).to.equal(2);
           driver.get.instance().handleSlideshowKeyPress({
             keyCode: null,
             charCode: 32,
@@ -102,7 +101,7 @@ describe('Slideshow View', () => {
             stopPropagation() {},
           });
           setTimeout(() => {
-            expect(driver.get.state('currentIdx')).to.equal(3);
+            expect(driver.get.state('activeIndex')).to.equal(3);
             driver.get.instance().handleSlideshowKeyPress({
               keyCode: null,
               charCode: 34,
@@ -110,7 +109,7 @@ describe('Slideshow View', () => {
               stopPropagation() {},
             });
             setTimeout(() => {
-              expect(driver.get.state('currentIdx')).to.equal(4);
+              expect(driver.get.state('activeIndex')).to.equal(4);
               driver.get.instance().handleSlideshowKeyPress({
                 keyCode: 38,
                 charCode: null,
@@ -118,7 +117,7 @@ describe('Slideshow View', () => {
                 stopPropagation() {},
               });
               setTimeout(() => {
-                expect(driver.get.state('currentIdx')).to.equal(3);
+                expect(driver.get.state('activeIndex')).to.equal(3);
                 driver.get.instance().handleSlideshowKeyPress({
                   keyCode: 37,
                   charCode: null,
@@ -126,7 +125,7 @@ describe('Slideshow View', () => {
                   stopPropagation() {},
                 });
                 setTimeout(() => {
-                  expect(driver.get.state('currentIdx')).to.equal(2);
+                  expect(driver.get.state('activeIndex')).to.equal(2);
                   driver.get.instance().handleSlideshowKeyPress({
                     keyCode: null,
                     charCode: 33,
@@ -134,7 +133,7 @@ describe('Slideshow View', () => {
                     stopPropagation() {},
                   });
                   setTimeout(() => {
-                    expect(driver.get.state('currentIdx')).to.equal(1);
+                    expect(driver.get.state('activeIndex')).to.equal(1);
                     driver.get.instance().handleSlideshowKeyPress({
                       keyCode: null,
                       charCode: 33,
@@ -142,7 +141,7 @@ describe('Slideshow View', () => {
                       stopPropagation() {},
                     });
                     setTimeout(() => {
-                      expect(driver.get.state('currentIdx')).to.equal(0);
+                      expect(driver.get.state('activeIndex')).to.equal(0);
                       stubFirst.returns(true);
                       driver.get.instance().handleSlideshowKeyPress({
                         keyCode: null,
@@ -151,7 +150,7 @@ describe('Slideshow View', () => {
                         stopPropagation() {},
                       });
                       setTimeout(() => {
-                        expect(driver.get.state('currentIdx')).to.equal(0);
+                        expect(driver.get.state('activeIndex')).to.equal(0);
                         stubLast.restore();
                         stubFirst.restore();
                       }, 450);
@@ -170,15 +169,22 @@ describe('Slideshow View', () => {
         top: 1,
         left: 1,
       });
+      // constants determining the gallery's height
+      const galleryHeight = initialGalleryViewProps.container.galleryHeight;
+      const imageMargin = initialGalleryViewProps.options.imageMargin;
+      // assigning the height parameter as in this.props.container to gallery's height
+      Object.assign(initialGalleryViewProps.container, {
+        height: galleryHeight - imageMargin,
+      });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
-      expect(driver.get.state('currentIdx')).to.equal(0);
+      expect(driver.get.state('activeIndex')).to.equal(0);
       driver.find.hook('nav-arrow-next').simulate('click');
       setTimeout(() => {
-        expect(driver.get.state('currentIdx')).to.equal(1); //navigates
+        expect(driver.get.state('activeIndex')).to.equal(1); //navigates
         driver.find.hook('nav-arrow-next').simulate('click');
         setTimeout(() => {
-          expect(driver.get.state('currentIdx')).to.equal(2);
+          expect(driver.get.state('activeIndex')).to.equal(2);
         }, 450);
       }, 450);
     });
@@ -186,14 +192,14 @@ describe('Slideshow View', () => {
 
   describe('Thumbnails', () => {
     it('Thumbnails are created if layout is Thumbnails', () => {
-      Object.assign(initialGalleryViewProps.styleParams, {
+      Object.assign(initialGalleryViewProps.options, {
         hasThumbnails: true,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
       expect(driver.find.hook('gallery-thumbnails').length).to.equal(1);
       expect(driver.find.hook('gallery-thumbnails-column').length).to.not.equal(
-        0,
+        0
       );
     });
   });
@@ -205,9 +211,10 @@ describe('Slideshow View', () => {
     //In this test i use 900 + 300 ms timers but in fact the test run for about 240 ms in total.
     //To use fake timers you need to set them up. preferably in the beforeEact and afterEach. you can see how to do it in this file.
     it('startAutoSlideshow is called if needed', () => {
-      Object.assign(initialGalleryViewProps.styleParams, {
+      Object.assign(initialGalleryViewProps.options, {
         isAutoSlideshow: true,
         autoSlideshowInterval: 1,
+        autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
         galleryLayout: 4,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
@@ -222,6 +229,5 @@ describe('Slideshow View', () => {
       stub.restore();
       viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.SITE);
     });
-
   });
 });

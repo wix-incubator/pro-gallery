@@ -1,8 +1,9 @@
 import React from 'react';
 import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
-import { GalleryComponent } from '../../galleryComponent';
+import { shouldCreateVideoPlaceholder } from '../itemHelper';
+import getStyle from './getStyle';
 
-class VideoItem extends GalleryComponent {
+class VideoItem extends React.Component {
   constructor(props) {
     super(props);
 
@@ -12,7 +13,9 @@ class VideoItem extends GalleryComponent {
 
     this.state = {
       playedOnce: false,
-      playing: false,
+      loadVideo: props.loadVideo || props.shouldPlay,
+      isPlaying: false,
+      shouldPlay: props.shouldPlay,
       reactPlayerLoaded: false,
       vimeoPlayerLoaded: false,
       hlsPlayerLoaded: false,
@@ -25,7 +28,9 @@ class VideoItem extends GalleryComponent {
 
   dynamiclyImportVideoPlayers() {
     if (!(window && window.ReactPlayer)) {
-      import( /* webpackChunkName: "reactPlayer" */ 'react-player').then(ReactPlayer => {
+      import(
+        /* webpackChunkName: "proGallery_reactPlayer" */ 'react-player'
+      ).then((ReactPlayer) => {
         window.ReactPlayer = ReactPlayer.default;
         this.setState({ reactPlayerLoaded: true });
         this.playVideoIfNeeded();
@@ -37,7 +42,9 @@ class VideoItem extends GalleryComponent {
       this.props.videoUrl &&
       this.props.videoUrl.includes('vimeo.com')
     ) {
-      import( /* webpackChunkName: "vimeoPlayer" */ '@vimeo/player').then(Player => {
+      import(
+        /* webpackChunkName: "proGallery_vimeoPlayer" */ '@vimeo/player'
+      ).then((Player) => {
         window.Vimeo = { Player: Player.default };
         this.setState({ vimeoPlayerLoaded: true });
         this.playVideoIfNeeded();
@@ -48,40 +55,50 @@ class VideoItem extends GalleryComponent {
       !(window && window.Hls) &&
       this.isHLSVideo()
     ) {
-      import( /* webpackChunkName: "HlsPlayer" */ 'hls.js').then(Player => {
-        window.Hls = Player.default;
-        this.setState({ hlsPlayerLoaded: true });
-        this.playVideoIfNeeded();
-      });
+      import(/* webpackChunkName: "proGallery_HlsPlayer" */ 'hls.js').then(
+        (Player) => {
+          window.Hls = Player.default;
+          this.setState({ hlsPlayerLoaded: true });
+          this.playVideoIfNeeded();
+        }
+      );
     }
   }
 
   isHLSVideo() {
-    return this.props.videoUrl && (this.props.videoUrl.includes('/hls') || this.props.videoUrl.includes('.m3u8'));
+    return (
+      this.props.videoUrl &&
+      (this.props.videoUrl.includes('/hls') ||
+        this.props.videoUrl.includes('.m3u8'))
+    );
   }
+
   shouldUseHlsPlayer() {
-    return this.isHLSVideo() && !utils.isiOS()
+    return this.isHLSVideo() && !utils.isiOS();
   }
 
   shouldForceVideoForHLS() {
     return this.isHLSVideo() && utils.isiOS();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.playing) {
-      this.setState({ playedOnce: true });
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.shouldPlay || nextProps.firstUserInteractionExecuted) {
+      this.setState({ loadVideo: true });
+    }
+
+    if (nextProps.shouldPlay) {
+      this.setState({ shouldPlay: true });
     }
 
     this.playVideoIfNeeded(nextProps);
-
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.currentIdx !== this.props.currentIdx) {
+    if (prevProps.activeIndex !== this.props.activeIndex) {
       this.fixIFrameTabIndexIfNeeded();
     }
 
-    if (prevProps.type === 'image' && this.props.type === "video") {
+    if (prevProps.type === 'image' && this.props.type === 'video') {
       this.dynamiclyImportVideoPlayers();
     }
 
@@ -100,79 +117,110 @@ class VideoItem extends GalleryComponent {
     try {
       const { playingVideoIdx } = props;
       if (playingVideoIdx === this.props.idx && !this.isPlaying) {
-        this.videoElement = this.videoElement || window.document.querySelector(`#video-${this.props.id} video`);
+        this.videoElement =
+          this.videoElement ||
+          window.document.querySelector(`#video-${this.props.id} video`);
         if (this.videoElement) {
           this.isPlaying = true;
           this.videoElement.play();
-          utils.isVerbose() && console.log('[VIDEO] Playing video #' + this.props.idx, this.videoElement)
+          utils.isVerbose() &&
+            console.log(
+              '[VIDEO] Playing video #' + this.props.idx,
+              this.videoElement
+            );
         }
       }
     } catch (e) {
-      console.error('[VIDEO] Could not play video #' + this.props.idx, this.videoElement, e);
+      console.error(
+        '[VIDEO] Could not play video #' + this.props.idx,
+        this.videoElement,
+        e
+      );
     }
   }
   //-----------------------------------------| UTILS |--------------------------------------------//
   createPlayerElement() {
     //video dimensions are for videos in grid fill - placing the video with negative margins to crop into a square
-    if (!(window && window.ReactPlayer)) {
+    if (
+      !(
+        window &&
+        window.ReactPlayer &&
+        (this.state.loadVideo || this.props.playing)
+      )
+    ) {
       return null;
     }
     const PlayerElement = window.ReactPlayer;
-    const isWiderThenContainer = this.props.style.ratio >= this.props.cubeRatio;
+    const isWiderThenContainer = this.props.style.ratio >= this.props.cropRatio;
 
-    const videoDimensionsCss = {
-      width: isWiderThenContainer ? '100%' : 'auto',
-      height: isWiderThenContainer ? 'auto' : '100%',
+    // adding 1 pixel to compensate for the difference we have sometimes from layouter in grid fill
+    const isCrop =
+      this.props.options.cubeImages && this.props.options.cubeType === 'fill';
+
+    const url = this.props.videoUrl
+      ? this.props.videoUrl
+      : this.props.createUrl(
+          GALLERY_CONSTS.urlSizes.RESIZED,
+          GALLERY_CONSTS.urlTypes.VIDEO
+        );
+
+    const attributes = {
+      controlsList: 'nodownload',
+      disablePictureInPicture: 'true',
+      muted: !this.props.options.videoSound,
+      preload: 'metadata',
+      style: getStyle(isCrop, isWiderThenContainer),
+      type: 'video/mp4',
     };
 
-    if (
-      this.props.styleParams.cubeImages &&
-      this.props.styleParams.cubeType === 'fill'
-    ) {
-      //grid crop mode
-      [videoDimensionsCss.width, videoDimensionsCss.height] = [
-        videoDimensionsCss.height,
-        videoDimensionsCss.width,
-      ];
-      videoDimensionsCss.position = 'absolute';
-      videoDimensionsCss.margin = 'auto';
-      videoDimensionsCss.minHeight = '100%';
-      videoDimensionsCss.minWidth = '100%';
-      videoDimensionsCss.left = '-100%';
-      videoDimensionsCss.right = '-100%';
-      videoDimensionsCss.top = '-100%';
-      videoDimensionsCss.bottom = '-100%';
+    if (shouldCreateVideoPlaceholder(this.props.options)) {
+      attributes.poster = this.props.createUrl(
+        GALLERY_CONSTS.urlSizes.SCALED,
+        GALLERY_CONSTS.urlTypes.HIGH_RES
+      );
     }
-    const url = this.props.videoUrl ?
-      this.props.videoUrl :
-      this.props.createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.VIDEO);
+
     return (
       <PlayerElement
+        playsinline
         className={'gallery-item-visible video gallery-item'}
         id={`video-${this.props.id}`}
         width="100%"
         height="100%"
         url={url}
         alt={this.props.alt ? this.props.alt : 'untitled video'}
-        loop={!!this.props.styleParams.videoLoop}
-        ref={player => (this.video = player)}
-        volume={this.props.styleParams.videoSound ? 0.8 : 0}
-        playing={this.props.playing}
+        loop={!!this.props.options.videoLoop}
+        ref={(player) => (this.video = player)}
+        volume={this.props.options.videoSound ? 0.8 : 0}
+        playing={this.state.shouldPlay}
         onEnded={() => {
-          this.setState({ playing: false });
-          this.props.actions.eventsListener(GALLERY_CONSTS.events.VIDEO_ENDED, this.props);
+          this.setState({ isPlaying: false });
+          this.props.actions.eventsListener(
+            GALLERY_CONSTS.events.VIDEO_ENDED,
+            this.props
+          );
         }}
         onPause={() => {
-          this.setState({ playing: false });
+          this.setState({ isPlaying: false });
         }}
         onError={(e) => {
-          this.props.actions.eventsListener(GALLERY_CONSTS.events.VIDEO_ERROR, {...this.props, videoError: e});
+          this.props.actions.eventsListener(GALLERY_CONSTS.events.VIDEO_ERROR, {
+            ...this.props,
+            videoError: e,
+          });
         }}
-        
-        playbackRate={Number(this.props.styleParams.videoSpeed) || 1}
+        playbackRate={Number(this.props.options.videoSpeed) || 1}
+        onStart={() => {
+          if (!this.state.playedOnce) {
+            this.setState({ playedOnce: true });
+          }
+        }}
         onPlay={() => {
-          this.props.actions.eventsListener(GALLERY_CONSTS.events.VIDEO_PLAYED, this.props);
-          this.setState({ playing: true });
+          this.props.actions.eventsListener(
+            GALLERY_CONSTS.events.VIDEO_PLAYED,
+            this.props
+          );
+          this.setState({ isPlaying: true });
         }}
         onReady={() => {
           this.playVideoIfNeeded();
@@ -180,28 +228,23 @@ class VideoItem extends GalleryComponent {
           this.props.actions.setItemLoaded();
           this.setState({ ready: true });
         }}
+        onProgress={() => {
+          if (!this.props.shouldPlay) {
+            this.setState({ shouldPlay: false });
+          }
+        }}
+        controls={this.props.options.showVideoControls}
         config={{
           file: {
-            attributes: {
-              muted: !this.props.styleParams.videoSound,
-              preload: 'metadata',
-              poster: this.props.createUrl(
-                GALLERY_CONSTS.urlSizes.RESIZED,
-                GALLERY_CONSTS.urlTypes.HIGH_RES,
-              ),
-              style: videoDimensionsCss,
-              type: 'video/mp4',
-            },
-              forceHLS: this.shouldUseHlsPlayer(),
-              forceVideo: this.shouldForceVideoForHLS(),
+            attributes,
+            forceHLS: this.shouldUseHlsPlayer(),
+            forceVideo: this.shouldForceVideoForHLS(),
           },
         }}
         key={'video-' + this.props.id}
       />
     );
   }
-
-
 
   fixIFrameTabIndexIfNeeded() {
     if (this.props.isExternalVideo) {
@@ -212,7 +255,7 @@ class VideoItem extends GalleryComponent {
         videoGalleryItem && videoGalleryItem.getElementsByTagName('iframe');
       const videoIFrame = videoIFrames && videoIFrames[0];
       if (videoIFrame) {
-        if (this.props.currentIdx === this.props.idx) {
+        if (this.props.activeIndex === this.props.idx) {
           videoIFrame.setAttribute('tabIndex', '0');
         } else {
           videoIFrame.setAttribute('tabIndex', '-1');
@@ -221,54 +264,59 @@ class VideoItem extends GalleryComponent {
     }
   }
 
+  getVideoContainerStyles() {
+    const videoContainerStyle = {
+      ...this.props.imageDimensions,
+    };
+    if (
+      utils.deviceHasMemoryIssues() ||
+      this.state.ready ||
+      !shouldCreateVideoPlaceholder(this.props.options)
+    ) {
+      // videoContainerStyle.backgroundColor = 'black';
+    } else {
+      videoContainerStyle.backgroundImage = `url(${this.props.createUrl(
+        GALLERY_CONSTS.urlSizes.RESIZED,
+        GALLERY_CONSTS.urlTypes.HIGH_RES
+      )})`;
+    }
+    return videoContainerStyle;
+  }
+
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
-    const hover = this.props.hover;
-
+    const { videoPlaceholder, hover } = this.props;
     let baseClassName =
       'gallery-item-content gallery-item-visible gallery-item-preloaded gallery-item-video gallery-item video-item' +
       (utils.isiPhone() ? ' ios' : '');
-    if (this.state.playing) {
+    if (this.state.isPlaying) {
       baseClassName += ' playing';
     }
-    const videoPreloader = (
+    if (this.state.playedOnce && this.state.ready) {
+      baseClassName += ' playedOnce';
+    }
+    // eslint-disable-next-line no-unused-vars
+
+    const video = (
       <div
-      className="pro-circle-preloader"
-        key={'video-preloader-' + this.props.idx}
-      />
+        className={baseClassName}
+        data-hook="video_container-video-player-element"
+        key={'video_container-' + this.props.id}
+        style={this.getVideoContainerStyles()}
+      >
+        {this.createPlayerElement()}
+        {this.props.videoPlayButton}
+      </div>
     );
-    const { marginLeft, marginTop, ...restOfDimensions } =
-    this.props.imageDimensions || {};
-    const video =
-      (
-        <div
-          className={baseClassName + ' animated fadeIn '}
-          data-hook="video_container-video-player-element"
-          key={'video_container-' + this.props.id}
-          style={
-            utils.deviceHasMemoryIssues() || this.state.ready
-              ? {backgroundColor: 'black'}
-              : {
-                  backgroundImage: `url(${this.props.createUrl(
-                    GALLERY_CONSTS.urlSizes.RESIZED,
-                    GALLERY_CONSTS.urlTypes.HIGH_RES,
-                  )})`,
-                  ...restOfDimensions,
-                }
-          }
-        >
-          {this.createPlayerElement()}
-          {this.props.videoControls}
-          {videoPreloader}
-        </div>
-      );
 
     return (
       <div key={'video-and-hover-container' + this.props.idx}>
-        {[video, hover]}
+        {video}
+        {shouldCreateVideoPlaceholder(this.props.options) && videoPlaceholder}
+        {hover}
       </div>
-    )
+    );
   }
 }
 

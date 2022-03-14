@@ -38,7 +38,7 @@ class FeatureManager {
       (obj, [feature, { releaseDate }]) => ({
         ...obj,
         [feature]: this.freezeDate >= releaseDate,
-      }),
+      })
     );
   }
 }

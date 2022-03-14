@@ -12,21 +12,25 @@ const getImageStyle = (item) => ({
   innerHeight: item.height,
 });
 
-const createItemId = (domId, item) => {
-  return `#pro-gallery-${domId} #${cssScrollHelper.getSellectorDomId(item)}`;
-}
-const createExactCssForItems = (domId = '', galleryItems, styleParams) => {
-  const {isRTL} = styleParams;
+const createItemId = ({ galleryId, item }) => {
+  return `#pro-gallery-${galleryId} #${cssScrollHelper.getSellectorDomId(
+    item
+  )}`;
+};
+const createExactCssForItems = (id = '', galleryItems, styleParams) => {
+  const { isRTL } = styleParams;
 
   let cssStr = '';
-  galleryItems.forEach(item => {
-    const id = createItemId(domId, item);
+  galleryItems.forEach((item) => {
+    const itemId = createItemId({ galleryId: id, item });
     const style = getImageStyle(item, styleParams);
     const T = `top:${style.top}px;`;
-    const L = isRTL ? `right:${style.left}px;left:auto;` : `left:${style.left}px;`;
+    const L = isRTL
+      ? `right:${style.left}px;left:auto;`
+      : `left:${style.left}px;`;
     const W = `width:${style.width}px;`;
     const H = `height:${style.height}px;`;
-    cssStr += `${id} {${T}${L}${W}${H}}`;
+    cssStr += `${itemId} {${T}${L}${W}${H}}`;
     // cssStr += `${id} .gallery-item-wrapper, ${id} .gallery-item-hover, ${id} .gallery-item {${Wvw}${Hvw}}`;
   });
   return cssStr;
@@ -77,12 +81,10 @@ const createExactCssForItems = (domId = '', galleryItems, styleParams) => {
 //   return cssStrs;
 // };
 
-export const createCssLayouts = ({
-  galleryItems,
-  layoutParams,
-  domId
-}) => {
+export const createCssLayouts = ({ galleryItems, layoutParams, id }) => {
   const exactCss = [];
-    exactCss.push(createExactCssForItems(domId, galleryItems, layoutParams.styleParams));
-    return exactCss;
+  exactCss.push(
+    createExactCssForItems(id, galleryItems, layoutParams.styleParams)
+  );
+  return exactCss;
 };
