@@ -3,6 +3,7 @@ import GalleryDriver from '../../drivers/reactDriver';
 import SlideshowView from '../../../src/components/gallery/proGallery/slideshowView';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import _ from 'lodash';
 
 describe('Slideshow View', () => {
   let driver;
@@ -13,6 +14,9 @@ describe('Slideshow View', () => {
   beforeEach(() => {
     driver = new GalleryDriver();
     initialGalleryViewProps = driver.props.galleryView();
+    initialGalleryViewProps.options = _.cloneDeep(
+      initialGalleryViewProps.options
+    );
     Object.assign(initialGalleryViewProps.options, {
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
@@ -201,6 +205,54 @@ describe('Slideshow View', () => {
       expect(driver.find.hook('gallery-thumbnails-column').length).to.not.equal(
         0
       );
+    });
+  });
+
+  describe('Virtual Item Loading', () => {
+    it('only load items that are visible', () => {
+      Object.assign(initialGalleryViewProps.options, {
+        behaviourParams: {
+          gallery: {
+            horizontal: {
+              itemVirtualization: {
+                enabled: true,
+                rightItemMargin: 0,
+                leftItemMargin: 0,
+              },
+            },
+          },
+        },
+        slideAnimation: GALLERY_CONSTS.slideAnimations.FADE,
+      });
+      galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
+      driver.mount(SlideshowView, galleryViewProps);
+      expect(driver.images.length).to.equal(1);
+    });
+    it('also load imags in margin', () => {
+      Object.assign(initialGalleryViewProps.options, {
+        behaviourParams: {
+          gallery: {
+            horizontal: {
+              itemVirtualization: {
+                enabled: true,
+                rightItemMargin: 3,
+                leftItemMargin: 0,
+              },
+            },
+          },
+        },
+        slideAnimation: GALLERY_CONSTS.slideAnimations.FADE,
+      });
+      galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
+      driver.mount(SlideshowView, galleryViewProps);
+      const imagesWithoutFirst = driver.images.slice(1, driver.images.length);
+      const imagesSize = imagesWithoutFirst.reduce(
+        (acc, image) => acc + image.props.style.width,
+        0
+      );
+      const buffer =
+        imagesSize / initialGalleryViewProps.container.galleryWidth;
+      expect(Math.floor(buffer)).to.equal(3);
     });
   });
 

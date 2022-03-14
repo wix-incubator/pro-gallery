@@ -996,24 +996,34 @@ class SlideshowView extends React.Component {
       return groups.map((group) => ({ group, shouldRender: true }));
     }
     const scrollable = this.isScrollable;
-    const backRenderBuffer = scrollable ? rightItemScrollMargin : rightItemMargin;
-    const forwardRenderBuffer = scrollable ? leftItemScrollMargin : leftItemMargin;
+    const rightRenderBuffer = scrollable ? rightItemScrollMargin : rightItemMargin;
+    const leftRenderBuffer = scrollable ? leftItemScrollMargin : leftItemMargin;
     const { activeIndex } = this.state;
-    const gallerySize = this.props.galleryContainerRef?.clientWidth || 0;
+    const gallerySize = this.props.galleryContainerRef?.clientWidth || container.galleryWidth || 0;
+    let accoumilatedRightMargin = 0;
+    let accoumilatedLeftMargin = 0;
     return groups.map((group) => {
       const { items } = group;
       const first = items[0];
       const last = items[items.length - 1];
       const firstIndex = first.idx ?? first.fullscreenIdx;
       const lastIndex = last.idx ?? last.fullscreenIdx;
-      const groupPrecOfScreen = gallerySize / group.width;
-      const bufferSizeMultiplier = groupPrecOfScreen * items.length;
-      const startBuffer = activeIndex - (backRenderBuffer * bufferSizeMultiplier);
-      const endBuffer = activeIndex + (forwardRenderBuffer * bufferSizeMultiplier);
-      const shouldRender = firstIndex >= startBuffer && lastIndex <= endBuffer;
+      const groupPrecOfScreen = group.width / gallerySize;
+      if (firstIndex > activeIndex) {
+        accoumilatedRightMargin += groupPrecOfScreen;
+        if (accoumilatedRightMargin > rightRenderBuffer) {
+          return { group, shouldRender: false };
+        }
+      }
+      if (lastIndex < activeIndex) {
+        accoumilatedLeftMargin += groupPrecOfScreen;
+        if (accoumilatedLeftMargin > leftRenderBuffer) {
+          return { group, shouldRender: false };
+        }
+      }
       return {
         group,
-        shouldRender,
+        shouldRender: true,
       };
     });
   }

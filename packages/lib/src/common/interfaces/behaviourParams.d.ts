@@ -119,22 +119,22 @@ export interface ItemVirtualization {
    */
   enabled?: boolean;
   /**
-   * @description how many items to load as a buffer to the right
+   * @description how many item margins (item / gallery-width) to load as a buffer to the right
    * @default 3
    */
   rightItemMargin?: number;
   /**
-   * @description how many items to load as a buffer to the left
+   * @description how many item margins (item / gallery-width) to load as a buffer to the left
    * @default 3
    * */
   leftItemMargin?: number;
   /**
-   * @description how many items to load as a buffer to the right when in scroll slideshow mode
+   * @description how many item margins (item / gallery-width) to load as a buffer to the right when in scroll slideshow mode
    * @default 10
    */
   rightItemScrollMargin?: number;
   /**
-   * @description how many items to load as a buffer to the left when in scroll slideshow mode
+   * @description how many item margins (item / gallery-width) to load as a buffer to the left when in scroll slideshow mode
    * @default 10
    */
   leftItemScrollMargin?: number;

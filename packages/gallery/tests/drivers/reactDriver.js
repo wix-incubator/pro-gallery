@@ -6,6 +6,7 @@ import { GalleryContainer } from '../../src/components/gallery/proGallery/galler
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import ProGallery from '../../src/components/gallery';
+import _ from 'lodash';
 
 configure({ adapter: new Adapter() });
 
@@ -176,6 +177,13 @@ class galleryDriver {
         return this.wrapper.find(str);
       },
     };
+  }
+
+  get images() {
+    return _.uniqBy(
+      Array.from(this.find.hook('gallery-item-image-img')),
+      ({ props }) => props.src
+    );
   }
 
   getContainer() {
