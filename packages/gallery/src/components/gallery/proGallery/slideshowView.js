@@ -18,8 +18,11 @@ import {
   shouldRenderNavArrows,
   getArrowBoxStyle
 } from '../../helpers/navigationArrowUtils'
+import { getItemsInViewportOrMargin } from '../../helpers/slideshowVirtualization.js';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
+
+
 
 function getDirection(code) {
   const reverse = [33, 37, 38]
@@ -984,48 +987,20 @@ class SlideshowView extends React.Component {
     ];
   }
 
-  get isScrollable() {
-    return this.props.options.slideAnimation ===
-  GALLERY_CONSTS.slideAnimations.SCROLL;
-  }
 
   getBufferedItems(galleryGroups, container) {
+    const { state, props } = this;
+    const { options } = props;
+    const { activeIndex } = state;
     const groups = this.props.getVisibleItems(galleryGroups, container);
-    const { enabled = false, rightItemMargin = 3, leftItemMargin = 3, rightItemScrollMargin = 10, leftItemScrollMargin = 10 } = this.props.options.behaviourParams?.gallery?.horizontal?.itemVirtualization || {};
-    if (!enabled) {
-      return groups.map((group) => ({ group, shouldRender: true }));
-    }
-    const scrollable = this.isScrollable;
-    const rightRenderBuffer = scrollable ? rightItemScrollMargin : rightItemMargin;
-    const leftRenderBuffer = scrollable ? leftItemScrollMargin : leftItemMargin;
-    const { activeIndex } = this.state;
-    const gallerySize = this.props.galleryContainerRef?.clientWidth || container.galleryWidth || 0;
-    let accoumilatedRightMargin = 0;
-    let accoumilatedLeftMargin = 0;
-    return groups.map((group) => {
-      const { items } = group;
-      const first = items[0];
-      const last = items[items.length - 1];
-      const firstIndex = first.idx ?? first.fullscreenIdx;
-      const lastIndex = last.idx ?? last.fullscreenIdx;
-      const groupPrecOfScreen = group.width / gallerySize;
-      if (firstIndex > activeIndex) {
-        accoumilatedRightMargin += groupPrecOfScreen;
-        if (accoumilatedRightMargin > rightRenderBuffer) {
-          return { group, shouldRender: false };
-        }
-      }
-      if (lastIndex < activeIndex) {
-        accoumilatedLeftMargin += groupPrecOfScreen;
-        if (accoumilatedLeftMargin > leftRenderBuffer) {
-          return { group, shouldRender: false };
-        }
-      }
-      return {
-        group,
-        shouldRender: true,
-      };
-    });
+    const galleryWidth = this.props.galleryContainerRef?.clientWidth || container.galleryWidth || 0;
+  
+    return getItemsInViewportOrMargin({
+      groups,
+      activeIndex,
+      galleryWidth,
+      options,
+    })
   }
 
   createLayout() {
