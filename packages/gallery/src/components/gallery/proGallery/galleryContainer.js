@@ -595,6 +595,14 @@ export class GalleryContainer extends React.Component {
   componentDidUpdate(prevProps, prevState) {
    // in order to update when container is available
     this.setVisibilityIfNeeded(prevProps, prevState)
+    // Runs only if container's width changes
+    if (this.state.container.width !== prevState.container.width){
+      const { body, documentElement: html } = document;
+      const viewportHeight = window.innerHeight;
+      const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+      this.getMoreItemsIfScrollIsDisabled(height, viewportHeight);
+
+  }
   }
 
   createDynamicStyles({ overlayBackground }, isPrerenderMode) {
@@ -767,10 +775,10 @@ export class GalleryContainer extends React.Component {
             ? 0
             : this.state.container.scrollBase);
         const screenSize =
-          window.screen[
+          window[
             scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
-              ? 'width'
-              : 'height'
+              ? 'innerWidth'
+              : 'innerHeight'
           ];
         const scrollEnd =
           scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && isRTL
