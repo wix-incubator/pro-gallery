@@ -766,12 +766,12 @@ export class GalleryContainer extends React.Component {
           (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
             ? 0
             : this.state.container.scrollBase);
-        const screenSize =
-          window.screen[
-            scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
-              ? 'width'
-              : 'height'
-          ];
+            const screenSize =
+            window[
+              scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+                ? 'innerWidth'
+                : 'innerHeight'
+            ];
         const scrollEnd =
           scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && isRTL
             ? scrollPos - galleryEnd + screenSize
