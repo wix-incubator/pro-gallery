@@ -729,7 +729,7 @@ div.pro-gallery {
 
 [data-hook="group-view"] {
       > :before {
-      content: "''";
+      content: '';
       position: absolute;
       scroll-snap-align: center;
       top: var(--group-top);
