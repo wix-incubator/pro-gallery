@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Modal, Button, Form, Input, message } from 'antd';
+import { Form } from 'antd';
+import { Modal, Button, Input, message } from 'antd';
 import { getAll, save } from '../../data';
 import { CommunityPresets } from './community-presets';
 

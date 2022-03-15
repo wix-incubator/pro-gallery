@@ -1,5 +1,20 @@
 import React from 'react';
-import {Alert, Popover, Select, Menu, Icon, Collapse, Switch, Input, Slider, InputNumber, Row, Col, Button, Divider} from 'antd';
+import { CheckOutlined, CloseOutlined, InfoCircleTwoTone, WarningOutlined } from '@ant-design/icons';
+import {
+  Alert,
+  Popover,
+  Select,
+  Menu,
+  Collapse,
+  Switch,
+  Input,
+  Slider,
+  InputNumber,
+  Row,
+  Col,
+  Button,
+  Divider,
+} from 'antd';
 import {INPUT_TYPES, isInPreset} from 'pro-gallery-lib';
 import ColorPicker from '../ColorPicker/ColorPicker';
 import { settingsManager } from '../../constants/settings';
@@ -42,17 +57,17 @@ class JsonEditor extends React.Component {
     switch (settings.type) {
       case INPUT_TYPES.BOOLEAN:
         return (
-          <Switch
-          checkedChildren={<Icon type="check" />}
-          unCheckedChildren={<Icon type="close" />}
-          checked={key === 'enableInfiniteScroll'  ? !theValue : theValue }
-          onChange={e => this.onFieldChanged(key, e)}
-          />
           //     <Checkbox
           // style={{float: 'right'}}
           // checked={theValue}
           //   onChange={e => this.onFieldChanged(key, e.target.checked)}
           // />
+          <Switch
+          checkedChildren={<CheckOutlined />}
+          unCheckedChildren={<CloseOutlined />}
+          checked={key === 'enableInfiniteScroll'  ? !theValue : theValue }
+          onChange={e => this.onFieldChanged(key, e)}
+          />
         );
       case INPUT_TYPES.OPTIONS:
         return (
@@ -202,9 +217,9 @@ class JsonEditor extends React.Component {
         return null; //<Icon type="check" style={{fontSize: 10, color: '#52c41a'}} />
       } else {
         if (settings.missing) {
-          return <Icon type="warning" style={{fontSize: 14, color: 'red'}} />
+          return <WarningOutlined style={{fontSize: 14, color: 'red'}} />;
         } else {
-          return <Popover placement="right" title="Not Relevant" content={<p>This param is not relevant in current scope: <br/><br/><pre>{settings.isRelevantDescription}</pre></p>}><Icon theme="twoTone" twoToneColor="#faad14" type="info-circle" /></Popover>
+          return <Popover placement="right" title="Not Relevant" content={<p>This param is not relevant in current scope: <br/><br/><pre>{settings.isRelevantDescription}</pre></p>}><InfoCircleTwoTone twoToneColor="#faad14" /></Popover>;
         }
       }
     }
