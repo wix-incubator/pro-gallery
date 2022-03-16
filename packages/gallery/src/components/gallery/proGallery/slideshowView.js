@@ -18,6 +18,7 @@ import {
   shouldRenderNavArrows,
   getArrowBoxStyle
 } from '../../helpers/navigationArrowUtils'
+import { getThumbnailsData } from '../../helpers/thumbnailsLogic.js';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
@@ -29,165 +30,6 @@ function getDirection(code) {
   throw new Error(`no direction is defined for charCode: ${code}`)
 }
 
-function getThumbnailsContainerSize({ horizontalThumbnails, galleryWidth, galleryHeight, thumbnailSizeWithSpacing }) {
-  if (horizontalThumbnails) {
-    return {
-      width: galleryWidth,
-      height: thumbnailSizeWithSpacing,
-    };
-  } else {
-    return {
-      width: thumbnailSizeWithSpacing,
-      height: galleryHeight,
-    };
-  }
-}
-
-function getNumberOfThumbnails({ width, height, horizontalThumbnails }) {
-  if (horizontalThumbnails) {
-    return Math.ceil(width / height);
-  } else {
-    return Math.ceil(height / width);
-  }
-}
-
-function sliceArrayWithRange(array, start, end) {
-  return Array(end - start).fill(0).map((_, i) => {
-    let index = start + i;
-    if (index >= array.length) {
-      index = index % array.length;
-    }
-    if (index < 0) {
-      index = array.length + index;
-    }
-    return array[index];
-  });
-}
-
-function getThumbnailsStyles({
-  horizontalThumbnails,
-  width,
-  height,
-  activeIndex,
-  thumbnailSizeWithSpacing,
-}) {
-  const baseStyle = {
-    overflow: 'visible',
-    width,
-    height,
-  };
-  const initialCenter = (width / 2) - (thumbnailSizeWithSpacing / 2);
-  if (horizontalThumbnails) {
-    return {
-      ...baseStyle,
-      left: initialCenter - (thumbnailSizeWithSpacing * activeIndex),
-    };
-  }
-  return {
-    ...baseStyle,
-    top: initialCenter - (thumbnailSizeWithSpacing * activeIndex),
-  };
-}
-
-function getThumbnailsContainerMargin({ thumbnailPosition, thumbnailSpacings }) {
-  const horizontalThumbnails = thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM || thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.TOP;
-  if (horizontalThumbnails) {
-    const isTop = thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.TOP;
-    return {
-      marginTop: isTop ? 0 : thumbnailSpacings,
-      marginBottom: isTop ? thumbnailSpacings : 0,
-    };
-  }
-  const isLeft = thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.LEFT;
-  return {
-    marginLeft: isLeft ? 0 : thumbnailSpacings,
-    marginRight: isLeft ? thumbnailSpacings : 0,
-  };
-}
-
-function getThumbnailLocation({
-  thumbnailPosition,
-  thumbnailSizeWithSpacing,
-  offset,
-  isRTL
-}) {
-  const horizontalThumbnails = thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM || thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.TOP;
-  const offsetSize = offset * thumbnailSizeWithSpacing;
-  if (horizontalThumbnails) {
-    return {
-      [isRTL ? "right" : "left"]: offsetSize,
-    }
-  }
-  return {
-    [isRTL ? "bottom" : "top"]: offsetSize,
-  }
-}
-
-function getThumbnailsData({ options, activeIndex, items, thumbnailPosition, galleryStructure, galleryWidth, galleryHeight }) {
-  const { thumbnailSize, isRTL, thumbnailSpacings } = options;
-  
-  if (utils.isVerbose()) {
-    console.log('creating thumbnails for idx', activeIndex);
-  }
-
-  
-  const thumbnailSizeWithSpacing = thumbnailSize + (thumbnailSpacings * 2);
-  const horizontalThumbnails = thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM || thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.TOP;
-  const { width, height } = getThumbnailsContainerSize({ horizontalThumbnails, galleryWidth, galleryHeight, thumbnailSizeWithSpacing });
-  const minNumOfThumbnails = getNumberOfThumbnails({ width, height, horizontalThumbnails });
-
-  const numberOfThumbnails = minNumOfThumbnails % 2 === 1 ? minNumOfThumbnails : minNumOfThumbnails + 1;
-  const thumbnailsInEachSide = (numberOfThumbnails - 1) / 2;
-
-  const itemRangeStart = activeIndex - thumbnailsInEachSide;
-  const itemRangeEnd = activeIndex + thumbnailsInEachSide + 1;
-
-  // const firstItemIdx = itemRangeStart < 0 ? 0 : itemRangeStart;
-  // const lastItemIdx = itemRangeEnd > items.length ? items.length : (itemRangeStart < 0 ? itemRangeEnd - itemRangeStart : itemRangeEnd);
-
-
-  // remove end spacing because it does not exist
-  const thumbnailsContainerSize = (thumbnailSizeWithSpacing * numberOfThumbnails) - (thumbnailSpacings * 2);
-
-
-  const itemToDisplay = sliceArrayWithRange(galleryStructure.galleryItems.sort((a, b) => a.idx -b.idx), itemRangeStart, itemRangeEnd);
-
-
-  const thumbnailsStyle = getThumbnailsStyles({
-    horizontalThumbnails,
-    width,
-    height,
-    thumbnailSizeWithSpacing,
-    activeIndex,
-  });
-
-
-  const thumbnailsStyleWithRTLCalc = isRTL ? {
-    ...thumbnailsStyle,
-    left: undefined,
-    top: undefined,
-    right: thumbnailsStyle.left,
-    bottom: thumbnailsStyle.top,
-  } : thumbnailsStyle;
-
-  const  thumbnailsMargins = getThumbnailsContainerMargin({
-    thumbnailPosition,
-    galleryWidth,
-    galleryHeight,
-    thumbnailSpacings,
-    thumbnailsContainerSizeWithoutSpacing: thumbnailsContainerSize,
-  });
-  return {
-    items: itemToDisplay.map((item, index) => {
-      const offset = index + itemRangeStart;
-      const idx = galleryStructure.galleryItems.indexOf(item);
-      return { thumbnailItem: item, item: items[idx], location: getThumbnailLocation({ thumbnailPosition, offset, isRTL, thumbnailSizeWithSpacing }), idx }
-    }),
-    thumbnailsMargins,
-    horizontalThumbnails,
-    thumbnailsStyle: thumbnailsStyleWithRTLCalc,
-  };
-};
 
 class SlideshowView extends React.Component {
   constructor(props) {
@@ -287,37 +129,6 @@ class SlideshowView extends React.Component {
   }
 
   //__________________________________Slide show loop functions_____________________________________________
-
-  // createNewItemsForSlideshowLoopThumbnails() {
-  //   const items = this.props.items;
-  //   const biasedItems = [];
-  //   const numOfThumbnails = Math.ceil(
-  //     this.props.container.galleryWidth / this.props.options.thumbnailSize
-  //   );
-  //   // need to create new item ! not just to copy the last once - the react view refferce one of them
-  //   Object.keys(items).forEach((idx) => {
-  //     const _idx = Number(idx);
-  //     let biasIdx;
-  //     //bias all items idx by the number of added items
-  //     biasIdx = _idx + numOfThumbnails;
-  //     biasedItems[biasIdx] = { ...items[idx] };
-  //     //create the first copy of items
-  //     if (_idx > items.length - numOfThumbnails - 1) {
-  //       biasIdx = _idx - items.length + numOfThumbnails;
-  //       biasedItems[biasIdx] = { ...items[idx] };
-  //     }
-  //     //create the end items
-  //     if (_idx < numOfThumbnails) {
-  //       biasIdx = _idx + numOfThumbnails + items.length;
-  //       biasedItems[biasIdx] = { ...items[idx] };
-  //     }
-  //   });
-  //   biasedItems.forEach((item, index) => {
-  //     item.loopIndex = index;
-  //   });
-  //   this.itemsForSlideshowLoopThumbnails = biasedItems;
-  //   this.numOfThumbnails = numOfThumbnails;
-  // }
 
   //__________________________________end of slide show loop functions__________________________
   shouldBlockNext({ scrollingUpTheGallery }) {
@@ -432,21 +243,6 @@ class SlideshowView extends React.Component {
     return nextIndex;
   }
 
-  getSnapshotBeforeUpdate(_ , prevState) {
-    const nextIndex = this.state.activeIndex;
-    const prevIndex = prevState.activeIndex;
-    if (nextIndex === prevIndex) {
-      return;
-    }
-    const indexesLength = this.props.galleryStructure.items.length;
-    const prevCloseToTheStart = prevIndex < (indexesLength /2);
-    const nextCloseToTheStart = nextIndex < (indexesLength /2);
-    const prevBiggerThanNext = prevIndex > nextIndex;
-    if (prevCloseToTheStart === nextCloseToTheStart) {
-      return;
-    }
-    this.thumbnailOffset = (prevBiggerThanNext ? - indexesLength : indexesLength) + (this.thumbnailOffset || 0);
-  }
 
   async nextItem({
     direction,
@@ -659,6 +455,9 @@ class SlideshowView extends React.Component {
     }
   };
 
+  get clearedGalleryItems() {
+    return utils.uniqueBy(this.props.galleryStructure.galleryItems, "id");
+  }
   scrollToThumbnail(itemIdx, scrollDuration) {
     //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
 
@@ -669,11 +468,12 @@ class SlideshowView extends React.Component {
 
     this.props.setGotFirstScrollIfNeeded(); //load all the images in the thumbnails bar
 
-    const realIdx = [...new Set(this.props.galleryStructure.galleryItems.map((item) => item.id))].indexOf(
-      this.props.galleryStructure.galleryItems[itemIdx].id
+    const realIdx = this.clearedGalleryItems.indexOf(
+      this.props.galleryStructure.galleryItems[itemIdx]
     );
+    const direction = realIdx - this.state.activeIndex;
     this.next({
-      direction: realIdx - this.state.activeIndex,
+      direction,
       isAutoTrigger: false,
       scrollDuration,
       isKeyboardNavigation: false,
@@ -709,22 +509,13 @@ class SlideshowView extends React.Component {
     return false;
   }
 
-  noCommitInit = false;
-  get noCommit() {
-    if (!this.noCommitInit) {
-      this.noCommitInit = true;
-      setTimeout(() =>this.forceUpdate(), 0);
-      return <span key={Math.random()} />
-    }
-    return false;
-  } // NO COMMIT
 
   createThumbnails(thumbnailPosition) {
-    const activeIndex = this.state.activeIndex + (this.thumbnailOffset || 0);
     const { options, galleryStructure, settings } = this.props;
-    const { thumbnailSize, slideshowLoop, thumbnailSpacings } = options;
+    const activeIndex = utils.inRange(this.state.activeIndex, this.clearedGalleryItems.length);
+    const { thumbnailSize, thumbnailSpacings } = options;
 
-    const { horizontalThumbnails, items, thumbnailsMargins, thumbnailsStyle } = getThumbnailsData({
+    const { horizontalThumbnails, items, thumbnailsMargins, thumbnailsStyle, activeIndexOffsetMemory } = getThumbnailsData({
       items: this.props.items,
       activeIndex,
       options,
@@ -732,10 +523,14 @@ class SlideshowView extends React.Component {
       thumbnailPosition,
       galleryHeight: this.props.container.galleryHeight,
       galleryWidth: this.props.container.galleryWidth,
-      slideshowLoop
+      activeIndexOffsetMemory: this.activeIndexOffsetMemory,
+      prevActiveIndex: this.prevActiveIndex,
     });
 
-    return this.noCommit || (
+    this.prevActiveIndex = activeIndex;
+    this.activeIndexOffsetMemory = activeIndexOffsetMemory;
+
+    return (
       <div
         className={
           'pro-gallery inline-styles thumbnails-gallery ' +

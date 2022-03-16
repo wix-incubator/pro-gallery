@@ -25,6 +25,22 @@ class Utils {
     return typeof something === 'undefined';
   }
 
+  uniqueBy(array, key) {
+    return array.filter((obj, pos, arr) => {
+      return arr.map((mapObj) => mapObj[key]).indexOf(obj[key]) === pos;
+    });
+  }
+
+  inRange(value, range) {
+    while (value < 0) {
+      value += range;
+    }
+    while (value > range) {
+      value -= range;
+    }
+    return value;
+  }
+
   dumpCache() {
     this._cache = {};
   }
