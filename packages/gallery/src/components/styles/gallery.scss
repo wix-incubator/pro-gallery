@@ -576,6 +576,7 @@ div.pro-gallery {
     .galleryColumn {
       position: relative;
       overflow: visible;
+      transition: left 200ms ease, right 200ms ease, top 200ms ease, bottom 200ms ease;
     }
 
     .thumbnailItem {

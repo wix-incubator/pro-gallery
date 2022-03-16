@@ -29,6 +29,166 @@ function getDirection(code) {
   throw new Error(`no direction is defined for charCode: ${code}`)
 }
 
+function getThumbnailsContainerSize({ horizontalThumbnails, galleryWidth, galleryHeight, thumbnailSizeWithSpacing }) {
+  if (horizontalThumbnails) {
+    return {
+      width: galleryWidth,
+      height: thumbnailSizeWithSpacing,
+    };
+  } else {
+    return {
+      width: thumbnailSizeWithSpacing,
+      height: galleryHeight,
+    };
+  }
+}
+
+function getNumberOfThumbnails({ width, height, horizontalThumbnails }) {
+  if (horizontalThumbnails) {
+    return Math.ceil(width / height);
+  } else {
+    return Math.ceil(height / width);
+  }
+}
+
+function sliceArrayWithRange(array, start, end) {
+  return Array(end - start).fill(0).map((_, i) => {
+    let index = start + i;
+    if (index >= array.length) {
+      index = index % array.length;
+    }
+    if (index < 0) {
+      index = array.length + index;
+    }
+    return array[index];
+  });
+}
+
+function getThumbnailsStyles({
+  horizontalThumbnails,
+  width,
+  height,
+  activeIndex,
+  thumbnailSizeWithSpacing,
+}) {
+  const baseStyle = {
+    overflow: 'visible',
+    width,
+    height,
+  };
+  const initialCenter = (width / 2) - (thumbnailSizeWithSpacing / 2);
+  if (horizontalThumbnails) {
+    return {
+      ...baseStyle,
+      left: initialCenter - (thumbnailSizeWithSpacing * activeIndex),
+    };
+  }
+  return {
+    ...baseStyle,
+    top: initialCenter - (thumbnailSizeWithSpacing * activeIndex),
+  };
+}
+
+function getThumbnailsContainerMargin({ thumbnailPosition, thumbnailSpacings }) {
+  const horizontalThumbnails = thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM || thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.TOP;
+  if (horizontalThumbnails) {
+    const isTop = thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.TOP;
+    return {
+      marginTop: isTop ? 0 : thumbnailSpacings,
+      marginBottom: isTop ? thumbnailSpacings : 0,
+    };
+  }
+  const isLeft = thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.LEFT;
+  return {
+    marginLeft: isLeft ? 0 : thumbnailSpacings,
+    marginRight: isLeft ? thumbnailSpacings : 0,
+  };
+}
+
+function getThumbnailLocation({
+  thumbnailPosition,
+  thumbnailSizeWithSpacing,
+  offset,
+  isRTL
+}) {
+  const horizontalThumbnails = thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM || thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.TOP;
+  const offsetSize = offset * thumbnailSizeWithSpacing;
+  if (horizontalThumbnails) {
+    return {
+      [isRTL ? "right" : "left"]: offsetSize,
+    }
+  }
+  return {
+    [isRTL ? "bottom" : "top"]: offsetSize,
+  }
+}
+
+function getThumbnailsData({ options, activeIndex, items, thumbnailPosition, galleryStructure, galleryWidth, galleryHeight }) {
+  const { thumbnailSize, isRTL, thumbnailSpacings } = options;
+  
+  if (utils.isVerbose()) {
+    console.log('creating thumbnails for idx', activeIndex);
+  }
+
+  
+  const thumbnailSizeWithSpacing = thumbnailSize + (thumbnailSpacings * 2);
+  const horizontalThumbnails = thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM || thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.TOP;
+  const { width, height } = getThumbnailsContainerSize({ horizontalThumbnails, galleryWidth, galleryHeight, thumbnailSizeWithSpacing });
+  const minNumOfThumbnails = getNumberOfThumbnails({ width, height, horizontalThumbnails });
+
+  const numberOfThumbnails = minNumOfThumbnails % 2 === 1 ? minNumOfThumbnails : minNumOfThumbnails + 1;
+  const thumbnailsInEachSide = (numberOfThumbnails - 1) / 2;
+
+  const itemRangeStart = activeIndex - thumbnailsInEachSide;
+  const itemRangeEnd = activeIndex + thumbnailsInEachSide + 1;
+
+  // const firstItemIdx = itemRangeStart < 0 ? 0 : itemRangeStart;
+  // const lastItemIdx = itemRangeEnd > items.length ? items.length : (itemRangeStart < 0 ? itemRangeEnd - itemRangeStart : itemRangeEnd);
+
+
+  // remove end spacing because it does not exist
+  const thumbnailsContainerSize = (thumbnailSizeWithSpacing * numberOfThumbnails) - (thumbnailSpacings * 2);
+
+
+  const itemToDisplay = sliceArrayWithRange(galleryStructure.galleryItems.sort((a, b) => a.idx -b.idx), itemRangeStart, itemRangeEnd);
+
+
+  const thumbnailsStyle = getThumbnailsStyles({
+    horizontalThumbnails,
+    width,
+    height,
+    thumbnailSizeWithSpacing,
+    activeIndex,
+  });
+
+
+  const thumbnailsStyleWithRTLCalc = isRTL ? {
+    ...thumbnailsStyle,
+    left: undefined,
+    top: undefined,
+    right: thumbnailsStyle.left,
+    bottom: thumbnailsStyle.top,
+  } : thumbnailsStyle;
+
+  const  thumbnailsMargins = getThumbnailsContainerMargin({
+    thumbnailPosition,
+    galleryWidth,
+    galleryHeight,
+    thumbnailSpacings,
+    thumbnailsContainerSizeWithoutSpacing: thumbnailsContainerSize,
+  });
+  return {
+    items: itemToDisplay.map((item, index) => {
+      const offset = index + itemRangeStart;
+      const idx = galleryStructure.galleryItems.indexOf(item);
+      return { thumbnailItem: item, item: items[idx], location: getThumbnailLocation({ thumbnailPosition, offset, isRTL, thumbnailSizeWithSpacing }), idx }
+    }),
+    thumbnailsMargins,
+    horizontalThumbnails,
+    thumbnailsStyle: thumbnailsStyleWithRTLCalc,
+  };
+};
+
 class SlideshowView extends React.Component {
   constructor(props) {
     super(props);
@@ -128,36 +288,36 @@ class SlideshowView extends React.Component {
 
   //__________________________________Slide show loop functions_____________________________________________
 
-  createNewItemsForSlideshowLoopThumbnails() {
-    const items = this.props.items;
-    const biasedItems = [];
-    const numOfThumbnails = Math.ceil(
-      this.props.container.galleryWidth / this.props.options.thumbnailSize
-    );
-    // need to create new item ! not just to copy the last once - the react view refferce one of them
-    Object.keys(items).forEach((idx) => {
-      const _idx = Number(idx);
-      let biasIdx;
-      //bias all items idx by the number of added items
-      biasIdx = _idx + numOfThumbnails;
-      biasedItems[biasIdx] = { ...items[idx] };
-      //create the first copy of items
-      if (_idx > items.length - numOfThumbnails - 1) {
-        biasIdx = _idx - items.length + numOfThumbnails;
-        biasedItems[biasIdx] = { ...items[idx] };
-      }
-      //create the end items
-      if (_idx < numOfThumbnails) {
-        biasIdx = _idx + numOfThumbnails + items.length;
-        biasedItems[biasIdx] = { ...items[idx] };
-      }
-    });
-    biasedItems.forEach((item, index) => {
-      item.loopIndex = index;
-    });
-    this.ItemsForSlideshowLoopThumbnails = biasedItems;
-    this.numOfThumbnails = numOfThumbnails;
-  }
+  // createNewItemsForSlideshowLoopThumbnails() {
+  //   const items = this.props.items;
+  //   const biasedItems = [];
+  //   const numOfThumbnails = Math.ceil(
+  //     this.props.container.galleryWidth / this.props.options.thumbnailSize
+  //   );
+  //   // need to create new item ! not just to copy the last once - the react view refferce one of them
+  //   Object.keys(items).forEach((idx) => {
+  //     const _idx = Number(idx);
+  //     let biasIdx;
+  //     //bias all items idx by the number of added items
+  //     biasIdx = _idx + numOfThumbnails;
+  //     biasedItems[biasIdx] = { ...items[idx] };
+  //     //create the first copy of items
+  //     if (_idx > items.length - numOfThumbnails - 1) {
+  //       biasIdx = _idx - items.length + numOfThumbnails;
+  //       biasedItems[biasIdx] = { ...items[idx] };
+  //     }
+  //     //create the end items
+  //     if (_idx < numOfThumbnails) {
+  //       biasIdx = _idx + numOfThumbnails + items.length;
+  //       biasedItems[biasIdx] = { ...items[idx] };
+  //     }
+  //   });
+  //   biasedItems.forEach((item, index) => {
+  //     item.loopIndex = index;
+  //   });
+  //   this.itemsForSlideshowLoopThumbnails = biasedItems;
+  //   this.numOfThumbnails = numOfThumbnails;
+  // }
 
   //__________________________________end of slide show loop functions__________________________
   shouldBlockNext({ scrollingUpTheGallery }) {
@@ -270,6 +430,22 @@ class SlideshowView extends React.Component {
     }
     this.isAutoScrolling = true;
     return nextIndex;
+  }
+
+  getSnapshotBeforeUpdate(_ , prevState) {
+    const nextIndex = this.state.activeIndex;
+    const prevIndex = prevState.activeIndex;
+    if (nextIndex === prevIndex) {
+      return;
+    }
+    const indexesLength = this.props.galleryStructure.items.length;
+    const prevCloseToTheStart = prevIndex < (indexesLength /2);
+    const nextCloseToTheStart = nextIndex < (indexesLength /2);
+    const prevBiggerThanNext = prevIndex > nextIndex;
+    if (prevCloseToTheStart === nextCloseToTheStart) {
+      return;
+    }
+    this.thumbnailOffset = (prevBiggerThanNext ? - indexesLength : indexesLength) + (this.thumbnailOffset || 0);
   }
 
   async nextItem({
@@ -493,8 +669,11 @@ class SlideshowView extends React.Component {
 
     this.props.setGotFirstScrollIfNeeded(); //load all the images in the thumbnails bar
 
+    const realIdx = [...new Set(this.props.galleryStructure.galleryItems.map((item) => item.id))].indexOf(
+      this.props.galleryStructure.galleryItems[itemIdx].id
+    );
     this.next({
-      direction: itemIdx - this.state.activeIndex,
+      direction: realIdx - this.state.activeIndex,
       isAutoTrigger: false,
       scrollDuration,
       isKeyboardNavigation: false,
@@ -530,195 +709,44 @@ class SlideshowView extends React.Component {
     return false;
   }
 
+  noCommitInit = false;
+  get noCommit() {
+    if (!this.noCommitInit) {
+      this.noCommitInit = true;
+      setTimeout(() =>this.forceUpdate(), 0);
+      return <span key={Math.random()} />
+    }
+    return false;
+  } // NO COMMIT
+
   createThumbnails(thumbnailPosition) {
-    let items = this.props.items;
-    let activeIndex = this.state.activeIndex;
-    if (this.props.options.slideshowLoop) {
-      if (!this.ItemsForSlideshowLoopThumbnails) {
-        this.createNewItemsForSlideshowLoopThumbnails();
-      }
-      activeIndex += this.numOfThumbnails;
-      items = this.ItemsForSlideshowLoopThumbnails;
-    }
-    if (utils.isVerbose()) {
-      console.log('creating thumbnails for idx', activeIndex);
-    }
+    const activeIndex = this.state.activeIndex + (this.thumbnailOffset || 0);
+    const { options, galleryStructure, settings } = this.props;
+    const { thumbnailSize, slideshowLoop, thumbnailSpacings } = options;
 
-    const { thumbnailSize } = this.props.options;
-    let width = thumbnailSize;
-    let height = thumbnailSize;
-    let horizontalThumbnails;
-    let numOfThumbnails;
-    let numOfWholeThumbnails;
+    const { horizontalThumbnails, items, thumbnailsMargins, thumbnailsStyle } = getThumbnailsData({
+      items: this.props.items,
+      activeIndex,
+      options,
+      galleryStructure,
+      thumbnailPosition,
+      galleryHeight: this.props.container.galleryHeight,
+      galleryWidth: this.props.container.galleryWidth,
+      slideshowLoop
+    });
 
-    switch (thumbnailPosition) {
-      case 'top':
-      case 'bottom':
-        width =
-          this.props.container.galleryWidth;
-        height =
-          this.props.options.thumbnailSize +
-          2* this.props.options.thumbnailSpacings;
-        horizontalThumbnails = true;
-        numOfThumbnails = Math.ceil(
-          width / this.props.options.thumbnailSize
-        );
-        numOfWholeThumbnails = Math.floor(
-          width  /
-            (this.props.options.thumbnailSize +
-              this.props.options.thumbnailSpacings * 2)
-        );
-        break;
-      case 'left':
-      case 'right':
-        height =
-          this.props.container.galleryHeight
-        width =
-          this.props.options.thumbnailSize +
-          2 * this.props.options.thumbnailSpacings;
-        horizontalThumbnails = false;
-        numOfThumbnails = Math.ceil(
-          height / this.props.options.thumbnailSize
-        );
-        numOfWholeThumbnails = Math.floor(
-          height /
-            (this.props.options.thumbnailSize +
-              this.props.options.thumbnailSpacings * 2)
-        );
-        break;
-    }
-
-    this.firstItemIdx = activeIndex - Math.floor(numOfThumbnails / 2) - 1;
-    this.lastItemIdx = this.firstItemIdx + numOfThumbnails;
-
-    if (this.firstItemIdx < 0) {
-      this.lastItemIdx -= this.firstItemIdx;
-      this.firstItemIdx = 0;
-    }
-
-    if (this.lastItemIdx > items.length - 1) {
-      this.firstItemIdx -= this.lastItemIdx - (items.length - 1);
-      if (this.firstItemIdx < 0) {
-        this.firstItemIdx = 0;
-      }
-      this.lastItemIdx = items.length - 1;
-    }
-
-    numOfThumbnails = this.lastItemIdx - this.firstItemIdx + 1;
-    if (
-      numOfThumbnails % 2 === 0 &&
-      items.length > numOfThumbnails &&
-      this.lastItemIdx < items.length - 1
-    ) {
-      // keep an odd number of thumbnails if there are more thumbnails than items and if the thumbnails haven't reach the last item yet
-      numOfThumbnails += 1;
-      this.lastItemIdx += 1;
-    }
-
-    const thumbnailsContainerSize =
-      numOfThumbnails * this.props.options.thumbnailSize +
-      ((numOfThumbnails - 1) * 2 + 1) *
-        this.props.options.thumbnailSpacings;
-    const thumbnailsStyle = { width, height };
-
-    if (
-      items.length <= numOfWholeThumbnails ||
-      activeIndex < numOfThumbnails / 2 - 1
-    ) {
-      //there are less thumbnails than available thumbnails spots || one of the first thumbnails
-      switch (thumbnailPosition) {
-        case 'top':
-        case 'bottom':
-          thumbnailsStyle.width = thumbnailsContainerSize + 'px';
-          thumbnailsStyle.left = 0;
-          break;
-        case 'left':
-        case 'right':
-          thumbnailsStyle.height = thumbnailsContainerSize + 'px';
-          thumbnailsStyle.marginTop = 0;
-          break;
-      }
-    } else if (
-      activeIndex > numOfThumbnails / 2 - 1 &&
-      activeIndex < items.length - numOfThumbnails / 2
-    ) {
-      //set selected to center only if neeeded
-      switch (thumbnailPosition) {
-        case 'top':
-        case 'bottom':
-          thumbnailsStyle.width = thumbnailsContainerSize + 'px';
-          thumbnailsStyle.left = (thumbnailSize - thumbnailsContainerSize) / 2 + 'px';
-          break;
-        case 'left':
-        case 'right':
-          thumbnailsStyle.height = thumbnailsContainerSize + 'px';
-          thumbnailsStyle.marginTop =
-            (height - thumbnailsContainerSize) / 2 + 'px';
-          break;
-      }
-    } else if (activeIndex >= items.length - numOfThumbnails / 2) {
-      //one of the last thumbnails
-      switch (thumbnailPosition) {
-        case 'top':
-        case 'bottom':
-          thumbnailsStyle.left = width - thumbnailsContainerSize + 'px';
-          thumbnailsStyle.overflow = 'visible';
-          break;
-        case 'left':
-        case 'right':
-          thumbnailsStyle.top = height - thumbnailsContainerSize + 'px';
-          thumbnailsStyle.overflow = 'visible';
-          break;
-      }
-    }
-
-    if (this.props.options.isRTL) {
-      thumbnailsStyle.right = thumbnailsStyle.left;
-      delete thumbnailsStyle.left;
-    }
-
-    let thumbnailsMargin;
-    const thumbnailSpacings = this.props.options.thumbnailSpacings;
-    switch (this.props.options.galleryThumbnailsAlignment) {
-      case 'bottom':
-        thumbnailsMargin = `${thumbnailSpacings}px -${thumbnailSpacings}px 0 -${thumbnailSpacings}px`;
-        break;
-      case 'left':
-        thumbnailsMargin = `-${thumbnailSpacings}px ${thumbnailSpacings}px -${thumbnailSpacings}px 0`;
-        break;
-      case 'top':
-        thumbnailsMargin = `0 -${thumbnailSpacings}px ${thumbnailSpacings}px -${thumbnailSpacings}px`;
-        break;
-      case 'right':
-        thumbnailsMargin = `-${thumbnailSpacings}px 0 -${thumbnailSpacings}px ${thumbnailSpacings}px`;
-        break;
-    }
-    const getThumbnailItemForSlideshowLoop = (itemId) =>
-      this.props.galleryStructure.galleryItems.find(
-        (item) => item.id === itemId
-      );
-    const highlighledIdxForSlideshowLoop = Math.floor(numOfThumbnails / 2);
-    let thumbnailItems;
-    if (this.props.options.slideshowLoop) {
-      thumbnailItems = items.slice(this.firstItemIdx, this.lastItemIdx + 1);
-    } else {
-      thumbnailItems = this.props.galleryStructure.galleryItems.slice(
-        this.firstItemIdx,
-        this.lastItemIdx + 1
-      );
-    }
-    return (
+    return this.noCommit || (
       <div
         className={
           'pro-gallery inline-styles thumbnails-gallery ' +
           (horizontalThumbnails ? ' one-row hide-scrollbars ' : '') +
-          (this.props.options.isRTL ? ' rtl ' : ' ltr ') +
-          (this.props.settings?.isAccessible ? ' accessible ' : '')
+          (options.isRTL ? ' rtl ' : ' ltr ') +
+          (settings?.isAccessible ? ' accessible ' : '')
         }
         style={{
-          width,
-          height,
-          margin: thumbnailsMargin,
+          width: thumbnailsStyle.width,
+          height: thumbnailsStyle.height,
+          ...thumbnailsMargins,
         }}
         data-hook="gallery-thumbnails"
       >
@@ -726,15 +754,10 @@ class SlideshowView extends React.Component {
           data-hook="gallery-thumbnails-column"
           className={'galleryColumn'}
           key={'thumbnails-column'}
-          style={Object.assign(thumbnailsStyle, { width, height })}
+          style={{ ...thumbnailsStyle }}
         >
-          {thumbnailItems.map((item, idx) => {
-            const thumbnailItem = this.props.options.slideshowLoop
-              ? getThumbnailItemForSlideshowLoop(item.itemId || item.photoId)
-              : item;
-            const highlighted = this.props.options.slideshowLoop
-              ? idx === highlighledIdxForSlideshowLoop
-              : thumbnailItem.idx === activeIndex;
+          {items.map(({ item, thumbnailItem, location }) => {
+            const highlighted = thumbnailItem.idx === activeIndex;
             const itemStyle = {
               width: thumbnailSize,
               height: thumbnailSize,
@@ -745,20 +768,14 @@ class SlideshowView extends React.Component {
                 GALLERY_CONSTS.urlSizes.THUMBNAIL,
                 GALLERY_CONSTS.urlTypes.HIGH_RES
               )})`,
+              ...location,
             };
-            const thumbnailOffset = horizontalThumbnails
-              ? {
-                  [this.props.options.isRTL ? 'right' : 'left']:
-                    thumbnailSize * idx + 2 * idx * thumbnailSpacings,
-                }
-              : { top: thumbnailSize * idx + 2 * idx * thumbnailSpacings };
-            Object.assign(itemStyle, thumbnailOffset);
             return (
               <div
                 key={
                   'thumbnail-' +
                   thumbnailItem.id +
-                  (Number.isInteger(item.loopIndex) ? '-' + item.loopIndex : '')
+                  (Number.isInteger(thumbnailItem.idx) ? '-' + thumbnailItem.idx : '')
                 }
                 className={
                   'thumbnailItem' +
@@ -774,14 +791,18 @@ class SlideshowView extends React.Component {
                 {item.type === 'text' ? (
                   <TextItem
                     {...this.props}
-                    {...thumbnailItem.renderProps()}
+                    {...item.renderProps()}
                     options={{
-                      ...this.props.options,
+                      ...options,
                       cubeType: 'fill',
-                      cubeImages: true
+                      cubeImages: true,
                     }}
                     actions={{}}
-                    imageDimensions={{...itemStyle, marginTop: 0, marginLeft: 0}}
+                    imageDimensions={{
+                      ...itemStyle,
+                      marginTop: 0,
+                      marginLeft: 0,
+                    }}
                     style={{
                       ...thumbnailItem.renderProps().style,
                       ...itemStyle,
@@ -1368,7 +1389,7 @@ class SlideshowView extends React.Component {
 
   UNSAFE_componentWillReceiveProps(props) {
     if (props.items) {
-      this.ItemsForSlideshowLoopThumbnails = false;
+      this.itemsForSlideshowLoopThumbnails = false;
     }
     const isInView = props.isInViewport && (props.isInDisplay ?? true);
     const oldIsInView = this.props.isInViewport && (this.props.isInDisplay ?? true);
