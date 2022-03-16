@@ -288,21 +288,19 @@ class CssScrollHelper {
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.EXPAND) {
       scrollAnimationCss +=
-        createScrollSelectors(animationPreparationPadding, ' > div') +
+        createScrollSelectors(animationPreparationPadding, '') +
         `{transform: scale(0.95); transition: transform 1s cubic-bezier(.13,.78,.53,.92) ${_randomDelay}ms !important;}`;
       scrollAnimationCss +=
-        createScrollSelectors(animationActivePadding, ' > div') +
+        createScrollSelectors(animationActivePadding, '') +
         `{transform: scale(1) !important;}`;
     }
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.SHRINK) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
-        '{overflow: visible !important;}' +
-        createScrollSelectors(animationPreparationPadding, ' > div') +
         `{transform: scale(1.05); transition: transform 1s cubic-bezier(.13,.78,.53,.92) ${_randomDelay}ms !important;}`;
       scrollAnimationCss +=
-        createScrollSelectors(animationActivePadding, ' > div') +
+        createScrollSelectors(animationActivePadding, '') +
         `{transform: scale(1) !important;}`;
     }
 
