@@ -1,3 +1,5 @@
+import optionsMap from '../../core/helpers/optionsMap';
+
 const LAYOUTS = {
   JSON_FIXED: -3,
   DESIGNED_PRESET: -2,
@@ -19,7 +21,11 @@ const LAYOUTS = {
 };
 
 const isLayout = (layoutName) => (options) => {
-  return options.galleryLayout === LAYOUTS[layoutName];
+  return (
+    options.galleryLayout === LAYOUTS[layoutName] ||
+    options[optionsMap.layoutParams.structure.galleryLayout] ===
+      LAYOUTS[layoutName]
+  );
 };
 
 export default LAYOUTS;
