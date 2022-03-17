@@ -31,11 +31,11 @@ class Utils {
     });
   }
 
-  inRange(value, range) {
+  inRange(value, range, max = range) {
     while (value < 0) {
       value += range;
     }
-    while (value > range) {
+    while (value > max) {
       value -= range;
     }
     return value;
@@ -50,7 +50,7 @@ class Utils {
       .fill(0)
       .map((_, i) => {
         const index = start + i;
-        return array[this.inRange(index, array.length - 1)];
+        return array[this.inRange(index, array.length, array.length - 1)];
       });
   }
 

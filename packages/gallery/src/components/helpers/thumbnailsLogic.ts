@@ -89,7 +89,7 @@ export function getThumbnailsData({
   const thumbnailsInEachSide = (numberOfThumbnails - 1) / 2;
 
   const itemRangeStart = activeIndexWithOffset - thumbnailsInEachSide;
-  const itemRangeEnd = activeIndexWithOffset + thumbnailsInEachSide + 1;
+  const itemRangeEnd = itemRangeStart + numberOfThumbnails;
 
   const itemToDisplay = utils.sliceArrayWithRange(
     galleryItems,
