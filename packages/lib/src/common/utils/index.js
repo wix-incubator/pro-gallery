@@ -50,7 +50,7 @@ class Utils {
       .fill(0)
       .map((_, i) => {
         const index = start + i;
-        return array[this.inRange(index, array.length)];
+        return array[this.inRange(index, array.length - 1)];
       });
   }
 
