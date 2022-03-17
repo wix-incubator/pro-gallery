@@ -595,7 +595,6 @@ export class GalleryContainer extends React.Component {
   componentDidUpdate(prevProps, prevState) {
    // in order to update when container is available
     this.setVisibilityIfNeeded(prevProps, prevState)
-     // Runs only if container's width changes
     if (this.props.isPrerenderMode !== prevState.isPrerenderMode){
       const { body, documentElement: html } = document;
       const viewportHeight = window.innerHeight;
