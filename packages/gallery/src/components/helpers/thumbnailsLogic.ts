@@ -52,14 +52,15 @@ export function getThumbnailsData({
   activeIndexOffsetMemory?: number;
   prevActiveIndex?: number;
 }) {
-  const galleryItems = utils.uniqueBy(galleryStructure.galleryItems, 'id');
+  const galleryItems = utils
+    .uniqueBy(galleryStructure.galleryItems, 'idx')
+    .filter((item) => item.idx !== undefined);
   activeIndexOffsetMemory = calculateActiveIndexOffset({
     activeIndex,
     activeIndexOffsetMemory,
     items: galleryItems,
     prevActiveIndex,
   });
-  console.log(activeIndexOffsetMemory);
   const activeIndexWithOffset = activeIndexOffsetMemory! + activeIndex;
   const { thumbnailSize, isRTL, thumbnailSpacings } = options;
 
@@ -199,13 +200,14 @@ function getThumbnailsStyles({
     width,
     height,
   };
-  const initialCenter = width / 2 - thumbnailSizeWithSpacing / 2;
   if (horizontalThumbnails) {
+    const initialCenter = width / 2 - thumbnailSizeWithSpacing / 2;
     return {
       ...baseStyle,
       left: initialCenter - thumbnailSizeWithSpacing * activeIndex,
     };
   }
+  const initialCenter = height / 2 - thumbnailSizeWithSpacing / 2;
   return {
     ...baseStyle,
     top: initialCenter - thumbnailSizeWithSpacing * activeIndex,
