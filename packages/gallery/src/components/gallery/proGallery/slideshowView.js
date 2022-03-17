@@ -18,7 +18,7 @@ import {
   shouldRenderNavArrows,
   getArrowBoxStyle
 } from '../../helpers/navigationArrowUtils'
-import { getThumbnailsData } from '../../helpers/thumbnailsLogic.js';
+import { getThumbnailsData } from '../../helpers/thumbnailsLogic';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
