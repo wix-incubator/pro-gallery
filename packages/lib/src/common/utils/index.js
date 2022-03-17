@@ -41,6 +41,19 @@ class Utils {
     return value;
   }
 
+  sliceArrayWithRange(
+    array,
+    start,
+    end
+  ) {
+    return Array(end - start)
+      .fill(0)
+      .map((_, i) => {
+        const index = start + i;
+        return array[this.inRange(index, array.length)];
+      });
+  }
+
   dumpCache() {
     this._cache = {};
   }

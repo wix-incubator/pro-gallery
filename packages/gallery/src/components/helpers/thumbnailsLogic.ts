@@ -90,7 +90,7 @@ export function getThumbnailsData({
   const itemRangeStart = activeIndexWithOffset - thumbnailsInEachSide;
   const itemRangeEnd = activeIndexWithOffset + thumbnailsInEachSide + 1;
 
-  const itemToDisplay = sliceArrayWithRange(
+  const itemToDisplay = utils.sliceArrayWithRange(
     galleryItems,
     itemRangeStart,
     itemRangeEnd
@@ -179,19 +179,6 @@ function getNumberOfThumbnails({
   } else {
     return Math.ceil(height / width);
   }
-}
-
-function sliceArrayWithRange<T extends any[]>(
-  array: T,
-  start: number,
-  end: number
-): T {
-  return Array(end - start)
-    .fill(0)
-    .map((_, i) => {
-      const index = start + i;
-      return array[utils.inRange(index, array.length)];
-    }) as T;
 }
 
 function getThumbnailsStyles({
