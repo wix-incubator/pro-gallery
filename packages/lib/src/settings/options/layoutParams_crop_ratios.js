@@ -1,3 +1,4 @@
+import { default as GALLERY_CONSTS } from '../../common/constants';
 import { INPUT_TYPES } from '../utils/constants';
 
 // Hi, I'm adding this comment because it's a bit aki to what I did here. this option expect an array that contains a number.
@@ -7,7 +8,11 @@ export default {
   title: 'Crop Ratios',
   description: `Crop each image according to the corresponding crop ratio as indicated in this string. This will create a pattern of cropped images`,
   isRelevantDescription: 'Set "Crop Images" to "true".',
-  isRelevant: (options) => options.cubeImages,
+  isRelevant: (options) =>
+    options.cubeImages &&
+    (!options.cropOnlyFill ||
+      (options.cropOnlyFill &&
+        options.cubeType === GALLERY_CONSTS.cubeType.CROP)),
   type: INPUT_TYPES.NUMBER,
   default: [1],
 };

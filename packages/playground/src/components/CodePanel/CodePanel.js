@@ -1,4 +1,5 @@
 import React from 'react';
+import { CodeOutlined } from '@ant-design/icons';
 import {Modal, Button} from 'antd';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 // choose highlighter style here: https://conorhastings.github.io/react-syntax-highlighter/demo/
@@ -58,7 +59,7 @@ function CodePanel() {
           {code}
         </SyntaxHighlighter>
       </Modal>
-      <Button type="primary" icon="code" shape="round" size="large" disabled={modalVisible} onClick={() => set_modalVisible(true)} block>
+      <Button type="primary" icon={<CodeOutlined />} shape="round" size="large" disabled={modalVisible} onClick={() => set_modalVisible(true)} block>
         Generate Gallery Code
       </Button>
     </div>

@@ -9,7 +9,6 @@ import {
 } from 'pro-gallery-lib';
 import GroupView from '../../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
-import { isGalleryInViewport } from './galleryHelpers.js';
 import PlayIcon from '../../svgs/components/play';
 import PauseIcon from '../../svgs/components/pause';
 import TextItem from '../../item/textItem.js';
@@ -430,7 +429,7 @@ class SlideshowView extends React.Component {
   autoScrollToNextItem = () => {
     if (
       !isEditMode() &&
-      (isGalleryInViewport(this.props.container) || isPreviewMode())
+      (this.props.isInViewport || isPreviewMode())
     ) {
       const { options } = this.props;
       const direction = options.isRTL ? -1 : 1;
