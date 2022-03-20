@@ -210,37 +210,29 @@ describe('Slideshow View', () => {
 
   describe('Virtual Item Loading', () => {
     it('only load items that are visible', () => {
-      Object.assign(initialGalleryViewProps.options, {
-        behaviourParams: {
-          gallery: {
-            horizontal: {
-              itemVirtualization: {
-                enabled: true,
-                rightItemMargin: 0,
-                leftItemMargin: 0,
-              },
-            },
-          },
+      Object.assign(initialGalleryViewProps, {
+        virtualizationSettings: {
+          enabled: true,
+          forwardItemScrollMargin: 0,
+          backwardItemScrollMargin: 0,
         },
-        slideAnimation: GALLERY_CONSTS.slideAnimations.FADE,
+      });
+      Object.assign(initialGalleryViewProps.options, {
+        slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
       expect(driver.images.length).to.equal(1);
     });
     it('also load imags in margin', () => {
-      Object.assign(initialGalleryViewProps.options, {
-        behaviourParams: {
-          gallery: {
-            horizontal: {
-              itemVirtualization: {
-                enabled: true,
-                rightItemMargin: 3,
-                leftItemMargin: 0,
-              },
-            },
-          },
+      Object.assign(initialGalleryViewProps, {
+        virtualizationSettings: {
+          enabled: true,
+          forwardItemMargin: 3,
+          backwardItemMargin: 0,
         },
+      });
+      Object.assign(initialGalleryViewProps.options, {
         slideAnimation: GALLERY_CONSTS.slideAnimations.FADE,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);

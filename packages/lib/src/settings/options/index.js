@@ -117,25 +117,8 @@ import layoutParams_targetItemSize_value from './layoutParams_targetItemSize_val
 import layoutParams_info_width from './layoutParams_info_width';
 import layoutParams_info_height from './layoutParams_info_height';
 import layoutParams_info_placement from './layoutParams_info_placement';
-import {
-  behaviourParams_gallery_horizontal_itemVirtualization_enabled,
-  behaviourParams_gallery_horizontal_itemVirtualization_leftItemMargin,
-  behaviourParams_gallery_horizontal_itemVirtualization_leftItemScrollMargin,
-  behaviourParams_gallery_horizontal_itemVirtualization_rightItemMargin,
-  behaviourParams_gallery_horizontal_itemVirtualization_rightItemScrollMargin,
-} from './behaviourParams_horizontal_itemVirtualization';
 
 export default {
-  [optionsMap.behaviourParams.gallery.horizontal.itemVirtualization.enabled]:
-    behaviourParams_gallery_horizontal_itemVirtualization_enabled,
-  [optionsMap.behaviourParams.gallery.horizontal.itemVirtualization
-    .leftItemMargin]: behaviourParams_gallery_horizontal_itemVirtualization_leftItemMargin,
-  [optionsMap.behaviourParams.gallery.horizontal.itemVirtualization
-    .leftItemScrollMargin]: behaviourParams_gallery_horizontal_itemVirtualization_leftItemScrollMargin,
-  [optionsMap.behaviourParams.gallery.horizontal.itemVirtualization
-    .rightItemMargin]: behaviourParams_gallery_horizontal_itemVirtualization_rightItemMargin,
-  [optionsMap.behaviourParams.gallery.horizontal.itemVirtualization
-    .rightItemScrollMargin]: behaviourParams_gallery_horizontal_itemVirtualization_rightItemScrollMargin,
   [optionsMap.behaviourParams.gallery.vertical.loadMore.text]:
     loadMoreButtonText,
   layoutParams_gallerySpacing,

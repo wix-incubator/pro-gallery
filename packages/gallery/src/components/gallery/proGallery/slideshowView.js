@@ -17,7 +17,7 @@ import {
   shouldRenderNavArrows,
   getArrowBoxStyle
 } from '../../helpers/navigationArrowUtils'
-import { getItemsInViewportOrMargin } from '../../helpers/slideshowVirtualization';
+import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
@@ -989,16 +989,17 @@ class SlideshowView extends React.Component {
 
   getBufferedItems(galleryGroups, container) {
     const { state, props } = this;
-    const { options } = props;
+    const { options, virtualizationSettings } = props;
     const { activeIndex } = state;
     const groups = this.props.getVisibleItems(galleryGroups, container);
     const galleryWidth = this.props.galleryContainerRef?.clientWidth || container.galleryWidth || 0;
   
-    return getItemsInViewportOrMargin({
+    return getItemsInViewportOrMarginByActiveGroup({
       groups,
       activeIndex,
       galleryWidth,
       options,
+      virtualizationSettings,
     })
   }
 
