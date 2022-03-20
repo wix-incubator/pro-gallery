@@ -273,7 +273,7 @@ class VideoItem extends React.Component {
       this.state.ready ||
       !shouldCreateVideoPlaceholder(this.props.options)
     ) {
-      videoContainerStyle.backgroundColor = 'black';
+      // videoContainerStyle.backgroundColor = 'black';
     } else {
       videoContainerStyle.backgroundImage = `url(${this.props.createUrl(
         GALLERY_CONSTS.urlSizes.RESIZED,

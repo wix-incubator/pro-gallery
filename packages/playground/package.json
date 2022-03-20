@@ -1,6 +1,6 @@
 {
   "name": "pro-playground",
-  "version": "4.0.15-beta.244",
+  "version": "4.0.15-beta.260",
   "private": true,
   "scripts": {
     "watch": "sleep 10 && node scripts/start.js",
@@ -14,23 +14,24 @@
     "start-playground": "node scripts/start.js"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@babel/core": "7.16.7",
-    "antd": "^3.20.7",
+    "antd": "^4.19.1",
     "css-animation": "1.5.0",
     "firebase": "^8.2.4",
     "image-client-api": "^1.3130.0",
-    "lean-gallery": "4.0.15-beta.244",
+    "lean-gallery": "4.0.15-beta.260",
     "lodash.clonedeep": "^4.5.0",
     "moment": "2.24.0",
-    "pro-gallery": "4.0.15-beta.244",
-    "pro-gallery-blueprints": "4.0.15-beta.244",
-    "pro-gallery-lib": "4.0.15-beta.244",
-    "pro-layouts": "4.0.15-beta.244",
+    "pro-gallery": "4.0.15-beta.260",
+    "pro-gallery-blueprints": "4.0.15-beta.260",
+    "pro-gallery-lib": "4.0.15-beta.260",
+    "pro-layouts": "4.0.15-beta.260",
     "re-resizable": "^6.8.0",
     "react": "^16.8.6",
     "react-color": "^2.17.3",
     "react-dom": "^16.8.6",
-    "react-syntax-highlighter": "^10.3.0"
+    "react-syntax-highlighter": "^15.4.5"
   },
   "devDependencies": {
     "@svgr/webpack": "^4.3.2",
@@ -66,7 +67,7 @@
     "postcss-preset-env": "^6.7.0",
     "postcss-safe-parser": "^4.0.1",
     "react-app-polyfill": "^1.0.1",
-    "react-dev-utils": "^11.0.0",
+    "react-dev-utils": "^12.0.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^1.0.0",
     "url-loader": "^2.1.0",

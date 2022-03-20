@@ -1,6 +1,6 @@
 {
   "name": "ssr-simulator",
-  "version": "4.0.15-beta.244",
+  "version": "4.0.15-beta.260",
   "private": true,
   "engines": {
     "node": ">=10.15"
@@ -43,7 +43,7 @@
     "core-js": "^3.2.1",
     "css-loader": "^2.1.1",
     "dotenv": "^6.0.0",
-    "error-overlay-webpack-plugin": "^0.4.1",
+    "error-overlay-webpack-plugin": "^1.1.0",
     "eslint": "^7.13.0",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-flowtype": "^5.2.0",
@@ -67,11 +67,11 @@
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
     "prettier": "^2.1.2",
-    "pro-gallery": "4.0.15-beta.244",
-    "pro-layouts": "4.0.15-beta.244",
+    "pro-gallery": "4.0.15-beta.260",
+    "pro-layouts": "4.0.15-beta.260",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
-    "react-dev-utils": "^11.0.0",
+    "react-dev-utils": "^12.0.0",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
     "react-loadable": "^5.5.0",
