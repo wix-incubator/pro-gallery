@@ -580,7 +580,7 @@ class SlideshowView extends React.Component {
                 style={itemStyle}
                 onClick={() => this.scrollToThumbnail(idx)}
               >
-                {item.type === 'text' ? (
+                {(item || thumbnailItem).type === 'text' ? (
                   <TextItem
                     {...this.props}
                     {...item.renderProps()}
