@@ -31,6 +31,23 @@ function calculateActiveIndexOffset({
   return activeIndexOffsetMemory;
 }
 
+export function clearGalleryItems(items: any[], galleryItems: any[]): any[] {
+  const clear = (list) =>
+    utils
+      .uniqueBy(list, 'idx')
+      .filter((item) => item.idx !== undefined)
+      .sort((a, b) => a.idx - b.idx);
+  const clearedGalleryItems = clear(galleryItems);
+  return clearedGalleryItems.map((item) => {
+    const realItem = items.find((clearedItem) => clearedItem.id === item.id);
+    return {
+      item: realItem,
+      thumbnailItem: item,
+      idx: item.idx,
+    };
+  });
+}
+
 export function getThumbnailsData({
   options,
   activeIndex,
@@ -52,9 +69,7 @@ export function getThumbnailsData({
   activeIndexOffsetMemory?: number;
   prevActiveIndex?: number;
 }) {
-  const galleryItems = utils
-    .uniqueBy(galleryStructure.galleryItems, 'idx')
-    .filter((item) => item.idx !== undefined);
+  const galleryItems = clearGalleryItems(items, galleryStructure.galleryItems);
   activeIndexOffsetMemory = calculateActiveIndexOffset({
     activeIndex,
     activeIndexOffsetMemory,
@@ -120,19 +135,18 @@ export function getThumbnailsData({
     thumbnailSpacings,
   });
   return {
-    items: itemToDisplay.map((item, index) => {
+    items: itemToDisplay.map(({ item, thumbnailItem, idx }, index) => {
       const offset = index + itemRangeStart;
-      const idx = galleryItems.indexOf(item);
       return {
-        thumbnailItem: item,
-        item: items[idx],
+        thumbnailItem: thumbnailItem,
+        item: item,
         location: getThumbnailLocation({
           thumbnailPosition,
           offset,
           isRTL,
           thumbnailSizeWithSpacing,
         }),
-        idx,
+        idx: idx,
       };
     }),
     thumbnailsMargins,

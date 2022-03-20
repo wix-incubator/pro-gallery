@@ -17,7 +17,7 @@ import {
   shouldRenderNavArrows,
   getArrowBoxStyle
 } from '../../helpers/navigationArrowUtils'
-import { getThumbnailsData } from '../../helpers/thumbnailsLogic';
+import { getThumbnailsData, clearGalleryItems } from '../../helpers/thumbnailsLogic';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
@@ -455,7 +455,7 @@ class SlideshowView extends React.Component {
   };
 
   get clearedGalleryItems() {
-    return utils.uniqueBy(this.props.galleryStructure.galleryItems, "id");
+    return clearGalleryItems(this.props.items, this.props.galleryStructure.galleryItems);
   }
   scrollToThumbnail(itemIdx, scrollDuration) {
     //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
@@ -467,10 +467,7 @@ class SlideshowView extends React.Component {
 
     this.props.setGotFirstScrollIfNeeded(); //load all the images in the thumbnails bar
 
-    const realIdx = this.clearedGalleryItems.indexOf(
-      this.props.galleryStructure.galleryItems[itemIdx]
-    );
-    const direction = realIdx - this.state.activeIndex;
+    const direction = itemIdx - this.state.activeIndex;
     this.next({
       direction,
       isAutoTrigger: false,
@@ -511,7 +508,8 @@ class SlideshowView extends React.Component {
 
   createThumbnails(thumbnailPosition) {
     const { options, galleryStructure, settings } = this.props;
-    const activeIndex = utils.inRange(this.state.activeIndex, this.clearedGalleryItems.length);
+    const { clearedGalleryItems } = this;
+    const activeIndex = utils.inRange(this.state.activeIndex, clearedGalleryItems.length);
     const { thumbnailSize, thumbnailSpacings } = options;
 
     const { horizontalThumbnails, items, thumbnailsMargins, thumbnailsStyle, activeIndexOffsetMemory } = getThumbnailsData({
@@ -550,8 +548,8 @@ class SlideshowView extends React.Component {
           key={'thumbnails-column'}
           style={{ ...thumbnailsStyle }}
         >
-          {items.map(({ item, thumbnailItem, location }) => {
-            const highlighted = thumbnailItem.idx === activeIndex;
+          {items.map(({ item, thumbnailItem, location, idx }) => {
+            const highlighted = idx === activeIndex;
             const itemStyle = {
               width: thumbnailSize,
               height: thumbnailSize,
@@ -569,7 +567,7 @@ class SlideshowView extends React.Component {
                 key={
                   'thumbnail-' +
                   thumbnailItem.id +
-                  (Number.isInteger(thumbnailItem.idx) ? '-' + thumbnailItem.idx : '')
+                  (Number.isInteger(idx) ? '-' + idx : '')
                 }
                 className={
                   'thumbnailItem' +
@@ -580,7 +578,7 @@ class SlideshowView extends React.Component {
                 }
                 data-key={thumbnailItem.id}
                 style={itemStyle}
-                onClick={() => this.scrollToThumbnail(thumbnailItem.idx)}
+                onClick={() => this.scrollToThumbnail(idx)}
               >
                 {item.type === 'text' ? (
                   <TextItem

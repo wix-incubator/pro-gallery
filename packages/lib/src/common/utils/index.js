@@ -32,6 +32,9 @@ class Utils {
   }
 
   inRange(value, range, max = range) {
+    if (range === 0) {
+      throw new Error('Range cannot be 0');
+    }
     while (value < 0) {
       value += range;
     }
