@@ -256,6 +256,7 @@ class galleryDriver {
           convertToGalleryItems: ItemsHelper.convertToGalleryItems,
           convertDtoToLayoutItem: ItemsHelper.convertDtoToLayoutItem,
           customComponents: galleryViewProps.customComponents,
+          virtualizationSettings: galleryViewProps.virtualizationSettings,
         };
       },
 
