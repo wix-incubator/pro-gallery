@@ -595,6 +595,12 @@ export class GalleryContainer extends React.Component {
   componentDidUpdate(prevProps, prevState) {
    // in order to update when container is available
     this.setVisibilityIfNeeded(prevProps, prevState)
+    if (this.props.isPrerenderMode !== prevState.isPrerenderMode){
+      const { body, documentElement: html } = document;
+      const viewportHeight = window.innerHeight;
+      const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+      this.getMoreItemsIfScrollIsDisabled(height, viewportHeight);
+    }
   }
 
   createDynamicStyles({ overlayBackground }, isPrerenderMode) {
