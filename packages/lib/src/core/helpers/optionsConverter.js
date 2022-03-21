@@ -27,8 +27,8 @@ function extendNestedOptionsToIncludeOldAndNew(nestedOptions) {
 function addMigratedOptions(flatOptions) {
   const flat_migrated = migrateOptions(flatOptions);
   let flat_combinedOptions = {
-    ...trimUndefinedValues_flat(flat_migrated),
     ...trimUndefinedValues_flat(flatOptions),
+    ...trimUndefinedValues_flat(flat_migrated),
   };
   delete flat_combinedOptions.oldRefactoredOptionInCore;
   return flat_combinedOptions;
