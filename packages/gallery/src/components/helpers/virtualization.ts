@@ -46,9 +46,11 @@ export function getItemsInViewportOrMarginByActiveGroup({
   const leftRenderBuffer = isScrollable
     ? backwardItemScrollMargin
     : backwardItemMargin;
+
   let accoumilatedRightMargin = 0;
   let accoumilatedLeftMargin = 0;
-  return groups.map((group) => {
+
+  function shouldRenderGroup(group) {
     const { items } = group;
     const first = items[0];
     const last = items[items.length - 1];
@@ -58,19 +60,20 @@ export function getItemsInViewportOrMarginByActiveGroup({
     if (firstIndex > activeIndex) {
       accoumilatedRightMargin += groupPrecOfScreen;
       if (accoumilatedRightMargin > rightRenderBuffer) {
-        return { group, shouldRender: false };
+        return false;
       }
     }
     if (lastIndex < activeIndex) {
       accoumilatedLeftMargin += groupPrecOfScreen;
       if (accoumilatedLeftMargin > leftRenderBuffer) {
-        return { group, shouldRender: false };
+        return false;
       }
     }
-    return {
-      group,
-      shouldRender: true,
-    };
+    return true;
+  }
+  return groups.map((group) => {
+    const shouldRender = shouldRenderGroup(group);
+    return { group, shouldRender };
   });
 }
 
@@ -105,19 +108,18 @@ export function getItemsInViewportOrMarginByScrollLocation({
     options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
   const size = isHorizontal ? galleryWidth : galleryHeight;
   const unit = isHorizontal ? 'width' : 'height';
-  return items.map((item) => {
+
+  function shouldRenderItem(item) {
     const group = item.group;
     const locationUnit = unit === 'height' ? 'top' : 'left';
     const location = group[locationUnit];
     const locationEnd = location + group[unit];
     const viewportStart = scrollPosition - size * backwardItemScrollMargin;
     const viewportEnd = scrollPosition + size * forwardItemScrollMargin;
-    if (location < viewportStart || locationEnd > viewportEnd) {
-      return { item, shouldRender: false };
-    }
-    return {
-      item,
-      shouldRender: true,
-    };
-  });
+    return location > viewportStart && locationEnd < viewportEnd;
+  }
+  return items.map((item) => ({
+    item,
+    shouldRender: shouldRenderItem(item),
+  }));
 }
