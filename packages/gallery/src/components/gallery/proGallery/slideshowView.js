@@ -989,9 +989,9 @@ class SlideshowView extends React.Component {
 
   getBufferedItems(galleryGroups, container) {
     const { state, props } = this;
-    const { options, virtualizationSettings } = props;
+    const { options, virtualizationSettings, getVisibleItems } = props;
     const { activeIndex } = state;
-    const groups = this.props.getVisibleItems(galleryGroups, container);
+    const groups = getVisibleItems(galleryGroups, container);
     const galleryWidth = this.props.galleryContainerRef?.clientWidth || container.galleryWidth || 0;
   
     return getItemsInViewportOrMarginByActiveGroup({
