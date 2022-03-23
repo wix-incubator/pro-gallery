@@ -548,7 +548,7 @@ class SlideshowView extends React.Component {
           key={'thumbnails-column'}
           style={{ ...thumbnailsStyle }}
         >
-          {items.map(({ item, thumbnailItem, location, idx }) => {
+          {items.map(({ thumbnailItem, location, idx }) => {
             const highlighted = idx === activeIndex;
             const itemStyle = {
               width: thumbnailSize,
@@ -580,10 +580,10 @@ class SlideshowView extends React.Component {
                 style={itemStyle}
                 onClick={() => this.scrollToThumbnail(idx)}
               >
-                {(item || thumbnailItem).type === 'text' ? (
+                {thumbnailItem.type === 'text' ? (
                   <TextItem
                     {...this.props}
-                    {...item.renderProps()}
+                    {...thumbnailItem.renderProps()}
                     options={{
                       ...options,
                       cubeType: 'fill',
