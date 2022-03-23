@@ -47,33 +47,41 @@ export function getItemsInViewportOrMarginByActiveGroup({
     ? backwardItemScrollMargin
     : backwardItemMargin;
 
-  let accoumilatedRightMargin = 0;
-  let accoumilatedLeftMargin = 0;
-
-  function shouldRenderGroup(group) {
+  const activeGroupIndex = groups.findIndex((group) => {
     const { items } = group;
     const first = items[0];
     const last = items[items.length - 1];
     const firstIndex = first.idx ?? first.fullscreenIdx;
     const lastIndex = last.idx ?? last.fullscreenIdx;
-    const groupPrecOfScreen = group[unit] / size;
-    if (firstIndex > activeIndex) {
+    return firstIndex <= activeIndex && lastIndex >= activeIndex;
+  });
+
+  const activeGroup = groups[activeGroupIndex];
+  const activeGroupPrecOfScreen = activeGroup[unit] / size;
+  let accoumilatedRightMargin = activeGroupPrecOfScreen;
+  let accoumilatedLeftMargin = activeGroupPrecOfScreen;
+  const groupsToRender: any[] = [activeGroup];
+  for (
+    let index = 1;
+    accoumilatedRightMargin < rightRenderBuffer ||
+    accoumilatedLeftMargin < leftRenderBuffer;
+    index++
+  ) {
+    const groupToRight = groups[activeGroupIndex + index];
+    const groupToLeft = groups[activeGroupIndex - index];
+    if (groupToRight && accoumilatedRightMargin < rightRenderBuffer) {
+      const groupPrecOfScreen = groupToRight[unit] / size;
       accoumilatedRightMargin += groupPrecOfScreen;
-      if (accoumilatedRightMargin > rightRenderBuffer) {
-        return false;
-      }
+      groupsToRender.push(groupToRight);
     }
-    if (lastIndex < activeIndex) {
+    if (groupToLeft && accoumilatedLeftMargin < leftRenderBuffer) {
+      const groupPrecOfScreen = groupToLeft[unit] / size;
       accoumilatedLeftMargin += groupPrecOfScreen;
-      if (accoumilatedLeftMargin > leftRenderBuffer) {
-        return false;
-      }
+      groupsToRender.push(groupToLeft);
     }
-    return true;
   }
   return groups.map((group) => {
-    const shouldRender = shouldRenderGroup(group);
-    return { group, shouldRender };
+    return { group, shouldRender: groupsToRender.includes(group) };
   });
 }
 
