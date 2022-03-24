@@ -155,10 +155,7 @@ export function reverseBooleans(obj, pairsArray) {
   return _obj;
 }
 export function namingChange(obj, oldName, newName) {
-  if (
-    typeof obj[newName] === 'undefined' &&
-    typeof obj[oldName] !== 'undefined'
-  ) {
+  if (typeof obj[oldName] !== 'undefined') {
     obj[newName] = obj[oldName];
   }
   delete obj[oldName];
