@@ -49,11 +49,6 @@ class GroupView extends React.Component {
       <div
         key={`group_${this.props.idx}_${this.props.items[0].id}`}
         data-hook={'group-view'}
-        style={{
-          '--group-top': this.props.top + 'px',
-          '--group-left': this.props.left + 'px',
-          '--group-width': this.props.width + 'px',
-        }}
         aria-hidden={this.props.ariaHidden}
       >
         {this.createDom(this.isVisible(), this.props.shouldRenderEmpty)}
