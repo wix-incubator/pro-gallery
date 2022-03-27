@@ -9,12 +9,14 @@ class GroupView extends React.Component {
     this.state = {};
   }
 
-  createDom(visible) {
-    return this.props.items.map((item) =>
-      React.createElement(itemView, {
-        ...item.renderProps({ ...this.props.galleryConfig, visible }),
-      })
-    );
+  createDom(visible, empty) {
+    return this.props.items.map((item) => {
+      const props = item.renderProps({ ...this.props.galleryConfig, visible });
+      return React.createElement(itemView, {
+        ...props,
+        type: empty ?? false ? 'dummy' : props.type,
+      });
+    });
   }
 
   shouldRender() {
@@ -49,7 +51,7 @@ class GroupView extends React.Component {
         data-hook={'group-view'}
         aria-hidden={this.props.ariaHidden}
       >
-        {this.createDom(this.isVisible())}
+        {this.createDom(this.isVisible(), this.props.shouldRenderEmpty)}
       </div>
     ) : null;
   }

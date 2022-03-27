@@ -3,6 +3,7 @@ import React from 'react';
 import { window, utils, GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDebugMessage from './galleryDebugMessage';
 import itemView from '../../item/itemView.js';
+import { getItemsInViewportOrMarginByScrollLocation } from '../../helpers/virtualization';
 
 class GalleryView extends React.Component {
   constructor(props) {
@@ -132,6 +133,8 @@ class GalleryView extends React.Component {
       container,
       galleryStructure,
       getVisibleItems,
+      virtualizationSettings,
+      scrollTop,
     } = this.props;
     const galleryConfig = this.createGalleryConfig();
     const showMoreContainerHeight = 138; //according to the scss
@@ -145,20 +148,28 @@ class GalleryView extends React.Component {
     }
     const galleryWidth = this.props.isPrerenderMode ? 'auto' : this.props.container.galleryWidth - options.imageMargin;
     
-    const galleryStructureItems = getVisibleItems(
+    const items = getVisibleItems(
       galleryStructure.galleryItems,
       container
     );
-    const layout = galleryStructureItems.map((item, index) =>
-      React.createElement(
-        itemView,
-        item.renderProps({
-          ...galleryConfig,
-          visible: item.isVisible,
-          key: `itemView-${item.id}-${index}`,
-        })
-      )
-    );
+    const itemsWithVirtualizationData = getItemsInViewportOrMarginByScrollLocation({
+      items,
+      options,
+      virtualizationSettings,
+      galleryHeight: Math.min(galleryStructure.height, container.screen?.height || galleryStructure.height),
+      scrollPosition: scrollTop || 0,
+    });
+    const layout = itemsWithVirtualizationData.map(({ item, shouldRender }, index) => {
+      const itemProps = item.renderProps({
+        ...galleryConfig,
+        visible: item.isVisible,
+        key: `itemView-${item.id}-${index}`,
+      });
+      return React.createElement(itemView, {
+        ...itemProps,
+        type: shouldRender ? itemProps.type : 'dummy',
+      });
+    });
 
     return (
       <div

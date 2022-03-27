@@ -17,9 +17,12 @@ import {
   shouldRenderNavArrows,
   getArrowBoxStyle
 } from '../../helpers/navigationArrowUtils'
+import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
 import { getThumbnailsData, clearGalleryItems } from '../../helpers/thumbnailsLogic';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
+
+
 
 function getDirection(code) {
   const reverse = [33, 37, 38]
@@ -797,8 +800,25 @@ class SlideshowView extends React.Component {
     ];
   }
 
+
+  getBufferedItems(galleryGroups, container) {
+    const { state, props } = this;
+    const { options, virtualizationSettings, getVisibleItems } = props;
+    const { activeIndex } = state;
+    const groups = getVisibleItems(galleryGroups, container);
+    const galleryWidth = this.props.galleryContainerRef?.clientWidth || container.galleryWidth || 0;
+  
+    return getItemsInViewportOrMarginByActiveGroup({
+      groups,
+      activeIndex,
+      galleryWidth,
+      options,
+      virtualizationSettings,
+    })
+  }
+
   createLayout() {
-    const { getVisibleItems, galleryStructure, container } =
+    const { container, galleryStructure } =
       this.props;
 
     const galleryConfig = {
@@ -826,23 +846,26 @@ class SlideshowView extends React.Component {
     const renderGroups = (column) => {
       const layoutGroupView =
         !!column.galleryGroups.length &&
-        getVisibleItems(column.galleryGroups, container);
-      return (
-        layoutGroupView &&
-        layoutGroupView.map((group) => {
-          return group.rendered
-            ? React.createElement(GroupView, {
-                allowLoop:
-                  this.props.options.slideshowLoop &&
-                  this.props.galleryStructure.width >
-                    this.props.container.width,
-                ...group.renderProps(galleryConfig),
-                ariaHidden: group.idx > this.skipFromSlide,
-              })
-            : false;
-        })
-      );
-    };
+        this.getBufferedItems(column.galleryGroups, container);
+      if (layoutGroupView) {
+        return (
+          layoutGroupView.map(({group, shouldRender}) => {
+            return group.rendered
+              ? React.createElement(GroupView, {
+                  allowLoop:
+                    this.props.options.slideshowLoop &&
+                    this.props.galleryStructure.width >
+                      this.props.container.width,
+                  ...group.renderProps(galleryConfig),
+                  ariaHidden: group.idx > this.skipFromSlide,
+                  shouldRenderEmpty: !shouldRender,
+                  key: group.idx,
+              }): false})
+          );
+        }
+      
+    }
+ 
     return galleryStructure.columns.map((column, c) => {
       const columnStyle = {
         width: this.props.isPrerenderMode ? '100%' : column.width,
