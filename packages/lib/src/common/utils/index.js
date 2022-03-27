@@ -25,6 +25,38 @@ class Utils {
     return typeof something === 'undefined';
   }
 
+  uniqueBy(array, key) {
+    return array.filter((obj, pos, arr) => {
+      return arr.map((mapObj) => mapObj[key]).indexOf(obj[key]) === pos;
+    });
+  }
+
+  inRange(value, range, max = range) {
+    if (range === 0) {
+      throw new Error('Range cannot be 0');
+    }
+    while (value < 0) {
+      value += range;
+    }
+    while (value > max) {
+      value -= range;
+    }
+    return value;
+  }
+
+  sliceArrayWithRange(
+    array,
+    start,
+    end
+  ) {
+    return Array(end - start)
+      .fill(0)
+      .map((_, i) => {
+        const index = start + i;
+        return array[this.inRange(index, array.length, array.length - 1)];
+      });
+  }
+
   dumpCache() {
     this._cache = {};
   }
