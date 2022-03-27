@@ -749,9 +749,7 @@ div.pro-gallery {
     content: '';
     position: absolute;
     scroll-snap-align: center;
-    bottom: var(--group-bottom);
     right: var(--group-right);
-    width: var(--group-width);
     }
     .gallery-item-container {
       scroll-snap-align: none !important; 
