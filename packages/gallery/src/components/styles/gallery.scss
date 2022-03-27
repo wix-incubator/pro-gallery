@@ -750,6 +750,7 @@ div.pro-gallery {
     position: absolute;
     scroll-snap-align: center;
     right: var(--group-right);
+    width: var(--group-width);
     }
     .gallery-item-container {
       scroll-snap-align: none !important; 
