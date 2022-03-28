@@ -79,6 +79,9 @@ export function getItemsInViewportOrMarginByActiveGroup({
       accoumilatedLeftMargin += groupPrecOfScreen;
       groupsToRender.push(groupToLeft);
     }
+    if (!groupToLeft && !groupToRight) {
+      break;
+    }
   }
   return groups.map((group) => {
     return { group, shouldRender: groupsToRender.includes(group) };
