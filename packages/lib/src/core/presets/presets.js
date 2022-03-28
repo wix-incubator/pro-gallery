@@ -62,7 +62,11 @@ import {
 } from './emptyGallery';
 import { createOptions as jsonFixedOptions } from './designedPresetGallery';
 import { addMigratedOptions } from '../helpers/optionsConverter';
-import { flattenObject } from '../helpers/optionsUtils';
+
+import {
+  flattenObject,
+  mergeNestedObjects,
+} from '../src/core/helpers/optionsUtils';
 
 //#endregion Imports
 
@@ -181,4 +185,19 @@ const isInPreset = (galleryLayout, paramToCheck) => {
   ).includes(paramToCheck);
 };
 
-export { addPresetOptions, NEW_PRESETS, getLayoutName, isInPreset };
+const addMigratedPresetOptions = (options) => {
+  const { galleryLayout } = options;
+  const layoutName = getLayoutName(galleryLayout) || 'empty'; // empty for when there is no layout given
+  const migratedFixedOptions = addMigratedOptions(
+    flattenObject(NEW_PRESETS[layoutName])
+  );
+  return addPresetOptions(mergeNestedObjects(options, migratedFixedOptions));
+};
+
+export {
+  addPresetOptions,
+  addMigratedPresetOptions,
+  NEW_PRESETS,
+  getLayoutName,
+  isInPreset,
+};
