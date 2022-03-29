@@ -63,10 +63,7 @@ import {
 import { createOptions as jsonFixedOptions } from './designedPresetGallery';
 import { addMigratedOptions } from '../helpers/optionsConverter';
 
-import {
-  flattenObject,
-  mergeNestedObjects,
-} from '../src/core/helpers/optionsUtils';
+import { flattenObject, mergeNestedObjects } from '../helpers/optionsUtils';
 
 //#endregion Imports
 
