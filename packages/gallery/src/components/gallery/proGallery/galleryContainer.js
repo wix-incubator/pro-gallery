@@ -595,6 +595,12 @@ export class GalleryContainer extends React.Component {
   componentDidUpdate(prevProps, prevState) {
    // in order to update when container is available
     this.setVisibilityIfNeeded(prevProps, prevState)
+    if (this.props.isPrerenderMode !== prevProps.isPrerenderMode){
+      const { body, documentElement: html } = document;
+      const viewportHeight = window.innerHeight;
+      const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+      this.getMoreItemsIfScrollIsDisabled(height, viewportHeight);
+    }
   }
 
   createDynamicStyles({ overlayBackground }, isPrerenderMode) {
@@ -767,10 +773,10 @@ export class GalleryContainer extends React.Component {
             ? 0
             : this.state.container.scrollBase);
         const screenSize =
-          window.screen[
+          window[
             scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
-              ? 'width'
-              : 'height'
+              ? 'innerWidth'
+              : 'innerHeight'
           ];
         const scrollEnd =
           scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && isRTL
@@ -893,7 +899,9 @@ export class GalleryContainer extends React.Component {
           enableExperimentalFeatures={this.props.enableExperimentalFeatures}
           galleryContainerRef={this.galleryContainerRef}
           outOfViewComponent={this.outOfViewComponent}
+          virtualizationSettings={this.props.virtualizationSettings}
           galleryContainerId={`pro-gallery-container-${this.props.id}`}
+          scrollTop={this.state?.scrollPosition?.top}
           actions={{
             ...this.props.actions,
             findNeighborItem: this.findNeighborItem,

@@ -6,6 +6,7 @@ import { CustomComponents } from './CustomComponents';
 import { ScrollingElement } from './ScrollingElement';
 import { Settings } from './Settings';
 import { Options } from './options';
+import { VirtualizationSettings } from './virtualization';
 
 type ViewMode = 'SITE' | 'EDIT' | 'PREVIEW' | 'SEO';
 type DeviceType = 'desktop' | 'mobile' | 'tablet';
@@ -30,6 +31,7 @@ export interface GalleryProps {
   scrollingElement?: ScrollingElement;
   isInDisplay?: boolean;
   enableExperimentalFeatures?: boolean;
+  virtualizationSettings?: VirtualizationSettings;
 }
 
 export interface GalleryState {

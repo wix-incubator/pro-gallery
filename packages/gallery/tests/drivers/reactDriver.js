@@ -6,6 +6,7 @@ import { GalleryContainer } from '../../src/components/gallery/proGallery/galler
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import ProGallery from '../../src/components/gallery';
+import _ from 'lodash';
 
 configure({ adapter: new Adapter() });
 
@@ -178,6 +179,13 @@ class galleryDriver {
     };
   }
 
+  get images() {
+    return _.uniqBy(
+      Array.from(this.find.hook('gallery-item-image-img')),
+      ({ props }) => props.src
+    );
+  }
+
   getContainer() {
     const id = this.wrapper.props().id || 'default-dom-id';
     return this.find.selector(`#pro-gallery-container-${id}`);
@@ -248,6 +256,7 @@ class galleryDriver {
           convertToGalleryItems: ItemsHelper.convertToGalleryItems,
           convertDtoToLayoutItem: ItemsHelper.convertDtoToLayoutItem,
           customComponents: galleryViewProps.customComponents,
+          virtualizationSettings: galleryViewProps.virtualizationSettings,
         };
       },
 
