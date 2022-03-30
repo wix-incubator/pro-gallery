@@ -727,7 +727,6 @@ div.pro-gallery {
   }
 }
 
-.ltr {
   [data-hook="group-view"] {
       > :before {
       content: '';
@@ -736,24 +735,9 @@ div.pro-gallery {
       top: var(--group-top);
       left: var(--group-left);
       width: var(--group-width);
+      right: var(--group-right);
       }
       .gallery-item-container {
         scroll-snap-align: none !important;
       }
   }
-}
-
-.rtl {
-  [data-hook="group-view"] {
-    > :before {
-    content: '';
-    position: absolute;
-    scroll-snap-align: center;
-    right: var(--group-right);
-    width: var(--group-width);
-    }
-    .gallery-item-container {
-      scroll-snap-align: none !important; 
-    }
-  }
-}

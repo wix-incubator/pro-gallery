@@ -43,15 +43,16 @@ class GroupView extends React.Component {
   }
 
   render() {
+    const { isRTL } = this.props.galleryConfig.options;
     return this.shouldRender() ? (
       <div
         key={`group_${this.props.idx}_${this.props.items[0].id}`}
         data-hook={'group-view'}
         style={{
           '--group-top': this.props.top + 'px',
-          '--group-left': this.props.left + 'px',
+          '--group-left': isRTL ? 'auto' : this.props.left + 'px',
           '--group-width': this.props.width + 'px',
-          '--group-right': this.props.right + 'px',
+          '--group-right': !isRTL ? 'auto' : this.props.right + 'px',
         }}
         aria-hidden={this.props.ariaHidden}
       >
