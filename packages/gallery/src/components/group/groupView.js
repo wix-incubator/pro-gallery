@@ -52,7 +52,7 @@ class GroupView extends React.Component {
           '--group-top': this.props.top + 'px',
           '--group-left': isRTL ? 'auto' : this.props.left + 'px',
           '--group-width': this.props.width + 'px',
-          '--group-right': !isRTL ? 'auto' : this.props.right + 'px',
+          '--group-right': !isRTL ? 'auto' : this.props.left + 'px',
         }}
         aria-hidden={this.props.ariaHidden}
       >
