@@ -1,8 +1,7 @@
 {
-  "publishScoped": false,
   "private": false,
   "name": "pro-gallery",
-  "version": "3.1.21",
+  "version": "4.0.15-beta.267",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
@@ -16,30 +15,33 @@
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
+  "types": "dist/esm-types/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
     "watch": "npm run start",
-    "build": "tsc && tsc -p tsconfig-esm.json && npm run css-compile",
+    "build": " tsc && tsc -p tsconfig-esm.json && npm run css-compile",
     "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css src/components/styles/gallery.scss:dist/statics/main.css",
     "start": "concurrently \"npm run css-watch\" \"npm run code-watch\"",
     "code-watch": "tsc && tsc -w -p tsconfig-esm-dev.json",
     "css-watch": "sass --watch src/components/styles/gallery.scss:dist/statics/main.css",
-    "test": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
+    "unit": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
+    "test": "echo 'no test in wix CI'",
     "test:e2e-all": "jest --testPathPattern='.*/e2e/.*.e2e.spec.js'",
     "test:e2e-layouts": "jest --testPathPattern='.*/e2e/layouts/.*.e2e.spec.js'",
     "test:e2e-styleParams": "jest --testPathPattern='.*/e2e/styleParams/.*.e2e.spec.js'",
     "test:e2e-integration": "jest --testPathPattern='.*/e2e/integration/.*.e2e.spec.js'",
     "test:e2e-ssr": "jest --setupFiles=./tests/ssr-config.js --testPathPattern='.*/e2e/ssr/.*.e2e.spec.js'",
-    "lint": "eslint \"{src,tests}/**/*.{js,jsx,ts}\"",
+    "lint": "eslint \"{src,tests}/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",
-    "hls.js": "^0.14.12",
-    "pro-gallery-lib": "3.1.21",
-    "pro-layouts": "3.1.17",
+    "hls.js": "^1.1.5",
+    "pro-gallery-blueprints": "4.0.15-beta.267",
+    "pro-gallery-lib": "4.0.15-beta.267",
+    "pro-layouts": "4.0.15-beta.267",
     "react-player": "^2.6.2"
   },
   "peerDependencies": {
@@ -47,19 +49,22 @@
     "react-dom": "^16.8.6"
   },
   "devDependencies": {
+    "@babel/core": "7.16.7",
+    "@babel/preset-env": "^7.5.5",
+    "@types/react": "^16.14.6",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
-    "chai": "^4.1.2",
+    "babelify": "^10.0.0",
+    "chai": "^4.2.0",
     "chai-spies": "^0.7.1",
     "concurrently": "^6.1.0",
     "enzyme": "^3.0.0",
-    "enzyme-adapter-react-15.4": "^1.0.4",
     "enzyme-adapter-react-16": "^1.7.1",
     "eslint": "^7.13.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "jest": "^26.6.3",
-    "jest-image-snapshot": "^2.11.1",
+    "jest": "^26.0.0",
+    "jest-image-snapshot": "^4.5.1",
     "jest-stare": "^2.2.0",
     "prettier": "^2.1.2",
     "puppeteer": "^1.5.0",

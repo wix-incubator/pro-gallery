@@ -24,15 +24,18 @@ export class Item {
       const { styleParams } = config;
       this.cubeType = styleParams.cubeType;
       this.cubeImages = styleParams.cubeImages;
-      this._cubeRatio = styleParams.cubeRatio;
+      this._cropRatio = styleParams.layoutParams.cropRatio;
       this.rotatingCropRatios = styleParams.rotatingCropRatios;
       this.smartCrop = styleParams.smartCrop;
       this.cropOnlyFill = styleParams.cropOnlyFill;
       this.imageMargin = styleParams.imageMargin;
-      this.galleryMargin = styleParams.galleryMargin;
+      this.gallerySpacing = styleParams.layoutParams.gallerySpacing;
       this.scatter = styleParams.scatter;
       this.rotatingScatter = styleParams.rotatingScatter;
       this.smartCrop = styleParams.smartCrop;
+      this.useMaxDimensions =
+        styleParams.useMaxDimensions && this.itemType !== 'text';
+      this.cubeFitPosition = styleParams.cubeFitPosition;
     }
 
     this._groupOffset = {
@@ -126,7 +129,7 @@ export class Item {
 
   calcScatter(offset) {
     const m = this.imageMargin / 2;
-    const g = this.galleryMargin;
+    const g = this.gallerySpacing;
 
     const spaceLeft = offset.left > 0 ? m : g;
     const spaceRight =
@@ -228,6 +231,18 @@ export class Item {
             ? this.calcPinOffset(this._group.width, 'left')
             : this._group.width - this.outerWidth) || 0,
     };
+    const {
+      fixTop = 0,
+      fixLeft = 0,
+      fixRight = 0,
+      fixBottom = 0,
+    } = this.dimensions;
+
+    offset.innerTop = fixTop;
+    offset.innerLeft = fixLeft;
+    offset.innerRight = fixRight;
+    offset.innerBottom = fixBottom;
+
     offset.right = offset.left + this.width;
     offset.bottom = offset.top + this.height;
 
@@ -258,6 +273,14 @@ export class Item {
     return this.dto.seed || utils.hashToInt(this.hash);
   }
 
+  get metadata() {
+    return this.dto.metadata || this.dto.metaData || {};
+  }
+
+  get itemType() {
+    return this.metadata.type || 'image';
+  }
+
   get maxWidth() {
     return this.dto.width || this.dto.w;
   }
@@ -274,13 +297,13 @@ export class Item {
   }
 
   get orgWidth() {
-    return this.style.width || this.dto.width || this.dto.w || 1; //make sure the width / height is not undefined (crashes the gallery)
+    return this.style.orgWidth || this.dto.width || this.dto.w || 1; //make sure the width / height is not undefined (crashes the gallery)
   }
 
   get width() {
     let width;
-    if (this.cubeImages && this.ratio >= this.cubeRatio) {
-      width = this.style.cubedWidth || this.orgHeight * this.cubeRatio;
+    if (this.cubeImages && this.ratio >= this.cropRatio) {
+      width = this.style.cubedWidth || this.orgHeight * this.cropRatio;
     } else {
       width = this.orgWidth;
     }
@@ -288,7 +311,17 @@ export class Item {
   }
 
   set width(w) {
-    this.style.cubedWidth = this.style.width = Math.max(1, w);
+    // prettier-ignore
+    this.style.cubedWidth =
+    // prettier-ignore
+      this.style.orgWidth =
+    // prettier-ignore
+      this.style.width =
+    // prettier-ignore
+        Math.max(1, w);
+
+    const { fixLeft = 0, fixRight = 0 } = this.dimensions;
+    this.style.innerWidth = this.style.width - fixLeft - fixRight;
   }
 
   get outerHeight() {
@@ -296,13 +329,13 @@ export class Item {
   }
 
   get orgHeight() {
-    return this.style.height || this.dto.height || this.dto.h || 1; //make sure the width / height is not undefined (creashes the gallery)
+    return this.style.orgHeight || this.dto.height || this.dto.h || 1; //make sure the width / height is not undefined (creashes the gallery)
   }
 
   get height() {
     let height;
-    if (this.cubeImages && this.ratio < this.cubeRatio) {
-      height = this.style.cubedHeight || this.orgWidth / this.cubeRatio;
+    if (this.cubeImages && this.ratio < this.cropRatio) {
+      height = this.style.cubedHeight || this.orgWidth / this.cropRatio;
     } else {
       height = this.orgHeight;
     }
@@ -310,7 +343,17 @@ export class Item {
   }
 
   set height(h) {
-    this.style.cubedHeight = this.style.height = Math.max(1, h);
+    // prettier-ignore
+    this.style.cubedHeight =
+    // prettier-ignore
+      this.style.orgHeight =
+    // prettier-ignore
+      this.style.height =
+    // prettier-ignore
+        Math.max(1, h);
+
+    const { fixTop = 0, fixBottom = 0 } = this.dimensions;
+    this.style.innerHeight = this.style.height - fixBottom - fixTop;
   }
 
   get maxHeight() {
@@ -330,7 +373,70 @@ export class Item {
     this.imageMargin = m;
   }
 
-  get cubeRatio() {
+  get dimensions() {
+    const isGridFit = this.cubeImages && this.cubeType === 'fit';
+
+    let targetWidth = this.width;
+    let targetHeight = this.height;
+
+    const setTargetDimensions = (setByWidth, ratio) => {
+      if (setByWidth) {
+        targetWidth = this.useMaxDimensions
+          ? Math.min(this.width, this.maxWidth)
+          : this.width;
+        targetHeight = targetWidth / ratio;
+      } else {
+        targetHeight = this.useMaxDimensions
+          ? Math.min(this.height, this.maxHeight)
+          : this.height;
+        targetWidth = targetHeight * ratio;
+      }
+    };
+
+    const isLandscape = this.ratio >= this.cropRatio; //relative to container size
+    if (isGridFit) {
+      setTargetDimensions(isLandscape, this.ratio);
+    } else if (
+      this.useMaxDimensions &&
+      (this.width > this.maxWidth || this.height > this.maxHeight)
+    ) {
+      if (this.cubeImages) {
+        setTargetDimensions(!isLandscape, this.cropRatio);
+      } else {
+        setTargetDimensions(!isLandscape, this.ratio);
+      }
+    }
+
+    let fixVals = {
+      fixTop: (this.height - targetHeight) / 2,
+      fixLeft: (this.width - targetWidth) / 2,
+      fixRight: (this.width - targetWidth) / 2,
+      fixBottom: (this.height - targetHeight) / 2,
+    };
+
+    switch (this.cubeFitPosition) {
+      case 'TOP':
+        fixVals.fixTop = 0;
+        fixVals.fixBottom *= 2;
+        break;
+      case 'BOTTOM':
+        fixVals.fixTop *= 2;
+        fixVals.fixBottom = 0;
+        break;
+      case 'LEFT':
+        fixVals.fixLeft = 0;
+        fixVals.fixRight *= 2;
+        break;
+      case 'RIGHT':
+        fixVals.fixLeft *= 2;
+        fixVals.fixRight = 0;
+        break;
+    }
+
+    return fixVals;
+  }
+
+  get cropRatio() {
     let ratio;
     if (this.rotatingCropRatio) {
       ratio = this.rotatingCropRatio;
@@ -339,15 +445,15 @@ export class Item {
       ratio = this.rotatingCropRatio =
         cropRatiosArr[this.idx % cropRatiosArr.length];
     }
-    if (!ratio && typeof this._cubeRatio === 'function') {
-      ratio = this._cubeRatio();
+    if (!ratio && typeof this._cropRatio === 'function') {
+      ratio = this._cropRatio();
     }
     if (!ratio && this.cropOnlyFill && this.cubeType === 'fit') {
       ratio = this.ratio;
     }
 
     if (!ratio) {
-      ratio = this._cubeRatio || this.ratio;
+      ratio = this._cropRatio || this.ratio;
     }
 
     if (this.dynamicCropRatios !== null && typeof ratio === 'string') {
@@ -408,9 +514,9 @@ export class Item {
     return ratio;
   }
 
-  set cubeRatio(ratio) {
-    if (typeof this._cubeRatio === 'number') {
-      this._cubeRatio = ratio;
+  set cropRatio(ratio) {
+    if (typeof this._cropRatio === 'number') {
+      this._cropRatio = ratio;
       this.style.cubedHeight = this.style.cubedWidth = 0;
     }
   }
@@ -461,7 +567,8 @@ export class Item {
       infoWidth: this.infoWidth,
       margins: this.margins,
       ratio: this.ratio,
-      cropRatio: this.cubeRatio,
+      dimensions: this.dimensions,
+      cropRatio: this.cropRatio,
       isCropped: this.cubeImages,
       cropType: this.cubeType,
       height: this.height,

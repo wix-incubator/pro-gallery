@@ -1,3 +1,121 @@
+## [v3.1.38](https://pro-gallery-3-1-38.surge.sh) (07/07/2021)
+ 
+#### GALLERY
+ -  fix: use imageDimensions in video item and text item
+
+---
+## [v3.1.37](https://pro-gallery-3-1-37.surge.sh) (07/07/2021)
+ 
+#### GALLERY
+ -  fix: Navigation Arrows Missing When Navigating to Page with Slider Gallery
+
+#### OTHER
+ -  feat:added alt text 
+
+---
+## [v3.1.36](https://pro-gallery-3-1-36.surge.sh) (06/07/2021)
+ 
+#### OTHER
+ -  improve: refactor image dimensions to layouter and added useMaxDImensions styleParam
+
+---
+## [v3.1.35](https://pro-gallery-3-1-35.surge.sh) (04/07/2021)
+ 
+#### GALLERY
+ - fix: destruct arrowsColor from styleParams and not props
+
+---
+## [v3.1.34](https://pro-gallery-3-1-34.surge.sh) (04/07/2021)
+ 
+#### OTHER
+ -  slideshowView: arrows -> fix container size to be same as svg size (to support arrowsPadding correctly) 
+
+---
+## [v3.1.33](https://pro-gallery-3-1-33.surge.sh) (04/07/2021)
+ 
+#### GALLERY
+ - fix: fix behaviour of what happens on the first tap when hovering behaviour set to NO_CHANGE
+
+---
+## [v3.1.32](https://pro-gallery-4-0-5.surge.sh) (01/07/2021)
+ 
+#### GALLERY
+ -  fix: Increasing removeArrowsIfNeeded setTimeOut call
+
+---
+## [v3.1.31](https://pro-gallery-3-1-31.surge.sh) (30/06/2021)
+
+#### GALLERY
+ -  added slideTransition styleParam
+
+---
+## [v4.0.4](https://pro-gallery-4-0-4.surge.sh) (29/06/2021)
+
+---
+## [v3.1.30](https://pro-gallery-3-1-30.surge.sh) (29/06/2021)
+ 
+#### GALLERY
+ -  fix: remove video poster and background when needed
+ -  fix: grid cropped video styles (black margins) 
+
+---
+## [v3.1.29](https://pro-gallery-3-1-29.surge.sh) (23/06/2021)
+ 
+#### LIB
+ -  galleryItem: url '' when not defined
+
+#### GALLERY
+ -  fix (videoItem): grid cropped video styles (black margins) 
+
+---
+## [v3.1.28](https://pro-gallery-3-1-28.surge.sh) (22/06/2021)
+ 
+#### LAYOUTS
+ -  improve: add dimensions to item scheme
+
+---
+## [v3.1.27](https://pro-gallery-3-1-27.surge.sh) (22/06/2021)
+
+#### GALLERY
+ -  fix: dont initializeTouchEvents if its undefined(desktop mobile sim)
+ -  fix: accessibility translation
+
+---
+## [v3.1.26](https://pro-gallery-3-1-26.surge.sh) (15/06/2021)
+ 
+#### gallery
+ -  feat: A11Y added an option to focus outside the gallery when we are in application mode
+
+---
+## [v3.1.25](https://pro-gallery-3-1-25.surge.sh) (13/06/2021)
+ 
+#### GALLERY
+ -  fix: add formFactor to main flow 
+
+#### PLAYGROUND
+ -  fix: correct poster objects
+
+---
+## [v3.1.24](https://pro-gallery-3-1-24.surge.sh) (08/06/2021)
+
+#### GALLERY
+ -  fix: focus when navigating on the accessibility tree and refactor changeActiveElementIfNedded
+ -  fix: added default value to the aria role
+ -  improve: small gallery/index refactor.
+
+---
+## [v3.1.23](https://pro-gallery-3-1-23.surge.sh) (30/05/2021)
+ 
+#### GALLERY
+ -  fix: Video item - youtube button appears under the play button
+
+---
+## [v3.1.22](https://pro-gallery-3-1-22.surge.sh) (27/05/2021)
+ 
+#### GALLERY
+ -  improve: added class indication for loaded image
+
+---
 ## [v3.1.21](https://pro-gallery-3-1-21.surge.sh) (26/05/2021)
 
 #### GALLERY

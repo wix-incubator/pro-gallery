@@ -23,12 +23,11 @@ describe('textBoxBorder - e2e', () => {
       textBoxBorderWidth: 2,
       textBoxBorderRadius: 2,
       textBoxBorderColor: 'rgba(24, 144, 255, 1)',
-      oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
 
@@ -39,12 +38,11 @@ describe('textBoxBorder - e2e', () => {
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       textBoxBorderWidth: 20,
       textBoxBorderRadius: 20,
-      oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
 
@@ -55,12 +53,11 @@ describe('textBoxBorder - e2e', () => {
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       textBoxBorderWidth: 40,
       textBoxBorderRadius: 40,
-      oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
 
@@ -71,12 +68,11 @@ describe('textBoxBorder - e2e', () => {
       titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
       textBoxBorderWidth: 40,
       textBoxBorderRadius: 40,
-      oneRow: false,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
-    const page = await driver.grab.elemScreenshot('#pro-gallery-container');
+    const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
 });

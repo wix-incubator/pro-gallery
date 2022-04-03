@@ -1,35 +1,35 @@
 import LAYOUTS from '../../common/constants/layout';
 import PLACEMENTS from '../../common/constants/placements';
 import { calcTargetItemSize } from '../helpers/layoutHelper';
+import GRID_STYLE from '../../common/constants/gridStyle';
+import SLIDE_ANIMATIONS from '../../common/constants/slideAnimations';
 
-export const fixedStyles = {
-  galleryLayout: LAYOUTS.COLLAGE,
-  cubeImages: false,
-  titlePlacement: PLACEMENTS.SHOW_ON_HOVER,
-  groupSize: 3,
-  hasThumbnails: false,
-  groupTypes: '1,2h,2v,3t,3b,3l,3r',
-  slideshowLoop: false,
-
-  // this params were moved from the presets in layoutHelper and were not tested and checked yet.
-  targetItemSize: 0,
-  fixedColumns: 0,
-  enableScroll: true,
-  isGrid: false,
-  isSlider: false,
-  isMasonry: false,
-  isColumns: false,
-  isSlideshow: false,
-  cropOnlyFill: false,
+const fixToCollage = (options) => {
+  let presetOptions = { ...options };
+  presetOptions.galleryLayout = LAYOUTS.COLLAGE;
+  presetOptions.cubeImages = false;
+  presetOptions.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
+  presetOptions.groupSize = 3;
+  presetOptions.hasThumbnails = false;
+  presetOptions.groupTypes = '1,2h,2v,3t,3b,3l,3r';
+  presetOptions.slideshowLoop = false;
+  presetOptions.numberOfImagesPerCol = 1;
+  presetOptions.gridStyle = GRID_STYLE.FIT_TO_SCREEN;
+  presetOptions.targetItemSize = 0;
+  presetOptions.fixedColumns = 0;
+  presetOptions.enableScroll = true;
+  presetOptions.cropOnlyFill = false;
+  presetOptions.slideAnimation = SLIDE_ANIMATIONS.SCROLL;
+  return presetOptions;
 };
+export const fixedOptions = fixToCollage({});
 
-export const createStyles = (styles) => {
-  return {
-    ...styles,
-    ...fixedStyles,
-    targetItemSize: calcTargetItemSize(
-      styles,
-      Math.round(styles.gallerySize * 5 + 500)
-    ),
-  };
+export const createOptions = (options) => {
+  let res = { ...options };
+  res = fixToCollage(res);
+  res.targetItemSize = calcTargetItemSize(
+    res,
+    Math.round(res.gallerySize * 5 + 500)
+  );
+  return res;
 };

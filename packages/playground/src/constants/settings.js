@@ -37,7 +37,7 @@ export const SECTIONS_ORDER = {
   STORE: 10,
 };
 
-export const stylesBySection = {
+export const optionsBySection = {
   [SECTIONS.PRESET]: ['galleryLayout'],
   [SECTIONS.LAYOUT]: [
     // 'allowLeanGallery',
@@ -52,7 +52,8 @@ export const stylesBySection = {
 
     'cubeImages',
     'cubeType',
-    'cubeRatio',
+    'layoutParams_cropRatio',
+    'cubeFitPosition',
 
     'gallerySizeType',
     'gallerySize',
@@ -62,15 +63,15 @@ export const stylesBySection = {
   ],
   [SECTIONS.ADVANCED]: [
     'gridStyle',
-    'fixedColumns',
+    'numberOfImagesPerRow',
     'groupsPerStrip',
     'placeGroupsLtr',
 
     'groupTypes',
-    'rotatingGroupTypes',
+    'layoutParams_repeatingGroupTypes',
     'rotatingCropRatios',
     'columnWidths',
-    'galleryMargin',
+    'layoutParams_gallerySpacing',
     'scatter',
     'rotatingScatter',
     'smartCrop',
@@ -78,6 +79,7 @@ export const stylesBySection = {
     'galleryThumbnailsAlignment',
     'thumbnailSize',
     'thumbnailSpacings',
+    'useMaxDimensions'
   ],
   [SECTIONS.INFO]: [
     'titlePlacement',
@@ -100,21 +102,33 @@ export const stylesBySection = {
     'scrollDuration',
     'slideshowLoop',
     'isAutoSlideshow',
+    'autoSlideshowType',
     'autoSlideshowInterval',
+    'autoSlideshowContinuousSpeed',
     'playButtonForAutoSlideShow',
     'scrollSnap',
     'allowContextMenu',
     'pauseAutoSlideshowOnHover',
+    'itemClick',
+    'behaviourParams_item_content_magnificationValue',
   ],
   [SECTIONS.DESIGN]: [
     'showArrows',
     'arrowsSize',
     'arrowsColor',
     'arrowsPosition',
+    'arrowsPadding',
     'arrowsVerticalPosition',
+    'layoutParams_navigationArrows_type',
+    'layoutParams_navigationArrows_container_type',
+    'layoutParams_navigationArrows_container_backgroundColor',
+    'layoutParams_navigationArrows_container_borderRadius',
 
     'overlayBackground',
-
+    'overlayPosition',
+    'overlaySize',
+    'overlaySizeType',
+    'overlayPadding',
     // 'itemIconColorSlideshow',
     // 'itemIconColor',
     // 'textBoxFillColor',
@@ -144,8 +158,10 @@ export const stylesBySection = {
     'scrollAnimation',
     'slideAnimation',
     'oneColorAnimationColor',
+    'slideTransition',
   ],
   [SECTIONS.IMAGE]: [
+    'stylingParams_itemResolutionMode',
     // 'imageQuality',
     // 'usmToggle',
     // 'usm_a',
@@ -158,40 +174,41 @@ export const stylesBySection = {
     'videoSpeed',
     'videoSound',
     'videoLoop',
+    'enableVideoPlaceholder',
   ],
 };
 
-export const stylesList = [].concat(...Object.values(stylesBySection));
-export const sectionByStyle = Object.assign(
+export const optionsList = [].concat(...Object.values(optionsBySection));
+export const sectionByOption = Object.assign(
   {},
-  ...Object.entries(stylesBySection).map(([section, styleParams]) =>
-    styleParams.reduce(
-      (obj, styleParam) => ({
+  ...Object.entries(optionsBySection).map(([section, options]) =>
+    options.reduce(
+      (obj, option) => ({
         ...obj,
-        [styleParam]: section,
+        [option]: section,
       }),
       {}
     )
   )
 );
 
-export const settingsManager = stylesList.reduce((obj, styleParam) => {
-  const settingsData = galleryOptions[styleParam];
+export const settingsManager = optionsList.reduce((obj, option) => {
+  const settingsData = galleryOptions[option];
 
   return settingsData
     ? {
         ...obj,
-        [styleParam]: {
+        [option]: {
           ...settingsData,
-          section: sectionByStyle[styleParam],
+          section: sectionByOption[option],
         },
       }
     : {
         ...obj,
-        [styleParam]: {
+        [option]: {
           missing: true,
-          title: styleParam,
-          section: sectionByStyle[styleParam],
+          title: option,
+          section: sectionByOption[option],
           isRelevant: () => false,
         },
       };

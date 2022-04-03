@@ -1,41 +1,43 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 
-describe('styleParam - scrollSnap', () => {
+describe('options - scrollSnap', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      options,
+    };
   });
   it('should set class "scroll-snap"', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       scrollSnap: true,
-      oneRow: true,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const galleryContainer = driver.find.selector('#gallery-horizontal-scroll');
+    const galleryContainer = driver.find.selector('.gallery-horizontal-scroll');
     expect(galleryContainer.hasClass('scroll-snap')).to.be.true;
     driver.detach.proGallery();
   });
 
   it('should not set class "scroll-snap"', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.EMPTY,
       scrollSnap: false,
-      oneRow: true,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const galleryContainer = driver.find.selector('#gallery-horizontal-scroll');
+    const galleryContainer = driver.find.selector('.gallery-horizontal-scroll');
     expect(galleryContainer.hasClass('scroll-snap')).to.be.false;
     driver.detach.proGallery();
   });

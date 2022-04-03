@@ -1,387 +1,379 @@
 /* eslint-disable prettier/prettier */
 import utils from '../../common/utils';
 import window from '../../common/window/windowWrapper';
-import { featureManager } from './versionsHelper';
-import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import PLACEMENTS, {
-  hasVerticalPlacement,
+  hasExternalVerticalPlacement,
   hasHoverPlacement,
-  hasHorizontalPlacement,
+  isConstantVerticalPlacement,
+  isHoverPlacement,
 } from '../../common/constants/placements';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import LOADING_MODE from '../../common/constants/loadingMode';
 import LOADING_WITH_COLOR_MODE from '../../common/constants/loadingWithColorMode';
 import SLIDE_ANIMATIONS from '../../common/constants/slideAnimations';
 import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
-import INFO_TYPE from '../../common/constants/infoType';
-import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWidthCalculationOptions';
-import LAYOUTS from '../../common/constants/layout';
 import ARROWS_POSITION from '../../common/constants/arrowsPosition';
+import { default as GALLERY_CONSTS } from '../../common/constants/index';
+import {assignByString} from './optionsUtils'
+import processTextDimensions from './textBoxDimensionsHelper'
 
-export const calcTargetItemSize = (styles, smartCalc = false) => {
+export const calcTargetItemSize = (options, smartCalc = false) => {
   if (
-    styles.gallerySizeType === GALLERY_SIZE_TYPE.PIXELS &&
-    styles.gallerySizePx > 0
+    options.gallerySizeType === GALLERY_SIZE_TYPE.PIXELS &&
+    options.gallerySizePx > 0
   ) {
-    return styles.gallerySizePx;
+    return options.gallerySizePx;
   } else if (
-    styles.gallerySizeType === GALLERY_SIZE_TYPE.RATIO &&
-    styles.gallerySizeRatio > 0
+    options.gallerySizeType === GALLERY_SIZE_TYPE.RATIO &&
+    options.gallerySizeRatio > 0
   ) {
     return (
-      ((window && window.innerWidth) || 980) * (styles.gallerySizeRatio / 100)
+      ((window && window.innerWidth) || 980) * (options.gallerySizeRatio / 100)
     );
   } else {
-    return smartCalc ? smartCalc : styles.gallerySize;
+    return smartCalc ? smartCalc : options.gallerySize;
   }
 };
 
-function processLayouts(styles, customExternalInfoRendererExists) {
-  const processedStyles = styles;
-  processedStyles.oneRow =
-    processedStyles.oneRow ||
-    processedStyles.scrollDirection === SCROLL_DIRECTION.HORIZONTAL;
-
-  const isDesignedPreset =
-    processedStyles.galleryLayout === LAYOUTS.DESIGNED_PRESET;
-
-  const setTextUnderline = (itemFontStyleParam, textDecorationType) => {
-    /* itemFontStyleParam: itemFontSlideshow / itemDescriptionFontSlideshow / itemFont / itemDescriptionFont
-    textDecorationType: textDecorationTitle / textDecorationDesc */
-    processedStyles[itemFontStyleParam].value = processedStyles[
-      itemFontStyleParam
-    ].value.replace(/^font\s*:\s*/, '');
-    processedStyles[itemFontStyleParam].value = processedStyles[
-      itemFontStyleParam
-    ].value.replace(/;$/, '');
-    if (
-      processedStyles[itemFontStyleParam].value.indexOf('underline') > -1 ||
-      processedStyles[itemFontStyleParam].style.underline === true
-    ) {
-      processedStyles[itemFontStyleParam].value = processedStyles[
-        itemFontStyleParam
-      ].value.replace('underline', '');
-      processedStyles[textDecorationType] = 'underline';
-    } else if (processedStyles[itemFontStyleParam].style.underline === false) {
-      processedStyles[textDecorationType] = 'none';
-    }
-  };
-
-  if (utils.isMobile()) {
-    if (isSlideshowFont(processedStyles)) {
-      if (!utils.isUndefined(processedStyles.itemFontSlideshow)) {
-        setTextUnderline('itemFontSlideshow', 'textDecorationTitle');
-      }
-      if (!utils.isUndefined(processedStyles.itemDescriptionFontSlideshow)) {
-        setTextUnderline('itemDescriptionFontSlideshow', 'textDecorationDesc');
-      }
-    } else {
-      if (!utils.isUndefined(processedStyles.itemFont)) {
-        setTextUnderline('itemFont', 'textDecorationTitle');
-      }
-      if (!utils.isUndefined(processedStyles.itemDescriptionFont)) {
-        setTextUnderline('itemDescriptionFont', 'textDecorationDesc');
-      }
-    }
-  }
-
+export const processNumberOfImagesPerRow = (options) => {
+  //This will be used in the masonry and grid presets
+  let res = {...options}
+  res.fixedColumns = 0;
   if (
-    (!processedStyles.isVertical ||
-      processedStyles.groupSize > 1 ||
-      (processedStyles.oneRow === true && !isDesignedPreset)) &&
-    !processedStyles.isSlider &&
-    !processedStyles.isColumns
+    options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL || //relevant for grid, in Masonry its fixed to !oneRow
+      options.isVertical //relevant for masonry, in grid its fixed to true.
   ) {
-    // Dont allow titlePlacement to be above / below / left / right
-    processedStyles.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
-  }
-
-  // to_wrapper
-  if (
-    !hasHoverPlacement(processedStyles.titlePlacement) &&
-    processedStyles.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
-  ) {
-    processedStyles.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.APPEARS;
-  }
-
-  if (
-    processedStyles.imageLoadingMode === LOADING_MODE.COLOR &&
-    processedStyles.imageLoadingWithColorMode ===
-      LOADING_WITH_COLOR_MODE.MAIN_COLOR
-  ) {
-    processedStyles.imageLoadingMode = LOADING_MODE.MAIN_COLOR;
-  }
-
-  if (
-    processedStyles.cubeType === 'fit' &&
-    (processedStyles.isGrid ||
-      processedStyles.hasThumbnails ||
-      processedStyles.isSlider ||
-      processedStyles.isSlideshow)
-  ) {
-    processedStyles.itemBorderWidth = 0;
-    processedStyles.itemBorderRadius = 0;
-    processedStyles.itemEnableShadow = false;
-  }
-
-  if (processedStyles.itemEnableShadow) {
-    if (processedStyles.oneRow) {
-      processedStyles.itemEnableShadow = false;
-    } else {
-      // add galleryMargin to allow the shadow to be seen
-      processedStyles.galleryMargin = Math.max(
-        processedStyles.galleryMargin,
-        (processedStyles.itemShadowSize || 0) +
-          (processedStyles.itemShadowBlur || 0)
-      );
-    }
-  }
-
-  if (processedStyles.arrowsPosition === ARROWS_POSITION.OUTSIDE_GALLERY) {
-    processedStyles.arrowsPadding = 0;
-  }
-
-  if (processedStyles.oneRow) {
-    // if oneRow is true, use horizontal layouts only
-    processedStyles.isVertical = false;
-    // processedStyles.scrollAnimation = SCROLL_ANIMATIONS.NO_EFFECT;
-  } else {
-    processedStyles.slideshowLoop = false; // allow slideshowLoop only for horizontal layouts
-  }
-
-  if (
-    !processedStyles.oneRow ||
-    processedStyles.groupSize > 1 ||
-    !processedStyles.cubeImages
-  ) {
-    processedStyles.slideAnimation = SLIDE_ANIMATIONS.SCROLL;
-  }
-
-  if (processedStyles.imageMargin > 0) {
-    if (utils.isMobile()) {
-      processedStyles.imageMargin = Math.min(processedStyles.imageMargin, 50); // limit mobile spacing to 50px (25 on each side)
-    }
-    // processedStyles.imageMargin /= 2;
-  }
-
-  if (processedStyles.loadMoreButtonFont && utils.isMobile()) {
-    processedStyles.loadMoreButtonFont.value =
-      processedStyles.loadMoreButtonFont.value.replace(/^font\s*:\s*/, '');
-    processedStyles.loadMoreButtonFont.value =
-      processedStyles.loadMoreButtonFont.value.replace(/;$/, '');
-    if (processedStyles.loadMoreButtonFont.value.indexOf('underline') > -1) {
-      processedStyles.loadMoreButtonFont.value =
-        processedStyles.loadMoreButtonFont.value.replace('underline', '');
-      processedStyles.textDecorationLoadMore = 'underline';
-    } else {
-      processedStyles.textDecorationLoadMore = 'none';
-    }
-  }
-
-  if (
-    (processedStyles.isGrid && !processedStyles.oneRow) ||
-    (featureManager.supports.fixedColumnsInMasonry &&
-      processedStyles.isMasonry &&
-      processedStyles.isVertical)
-  ) {
-    // if (canSet('numberOfImagesPerRow', 'fixedColumns')) {
-    // If toggle is for Items per row, fill the fixedColumns with the number of items
-    // If toggle is responsive, make fixedColumns to be 0 or undefined;
-    // Show the new controls only on Vertical scroll (one ow is false)
-    processedStyles.fixedColumns =
-      String(processedStyles.gridStyle) === '1'
-        ? Number(processedStyles.numberOfImagesPerRow)
+    res.fixedColumns =
+      String(options.gridStyle) === '1'
+        ? Number(options.numberOfImagesPerRow)
         : 0;
-    processedStyles.groupTypes = '1';
-    processedStyles.groupSize = 1;
-    processedStyles.collageAmount = 0;
-    processedStyles.collageDensity = 0;
-    // }
+    res.groupTypes = '1';
+    res.groupSize = 1;
+    res.collageAmount = 0;
+    res.collageDensity = 0;
   }
+  return res;
+}
 
-  // TODO this needs to split, need to leave the wixStyles assign in the statics section
+export const processNumberOfImagesPerCol = (options) => {
+  //This will be used in the grid preset
+  let res = {...options}
   if (
-    !utils.isUndefined(processedStyles.numberOfImagesPerCol) &&
-    processedStyles.isGrid &&
-    processedStyles.oneRow
+    !utils.isUndefined(options.numberOfImagesPerCol) &&
+    options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
   ) {
-    processedStyles.fixedColumns = 0;
-    switch (processedStyles.numberOfImagesPerCol) {
+    res.fixedColumns = 0;
+    switch (options.numberOfImagesPerCol) {
       case 1:
       default:
-        processedStyles.groupTypes = '1';
-        processedStyles.groupSize = 1;
-        processedStyles.collageAmount = 0;
-        processedStyles.collageDensity = 0;
+        res.groupTypes = '1';
+        res.groupSize = 1;
+        res.collageAmount = 0;
+        res.collageDensity = 0;
         break;
       case 2:
-        processedStyles.groupTypes = '2v';
-        processedStyles.groupSize = 2;
-        processedStyles.collageAmount = 1;
-        processedStyles.collageDensity = 1;
+        res.groupTypes = '2v';
+        res.groupSize = 2;
+        res.collageAmount = 1;
+        res.collageDensity = 1;
         break;
       case 3:
-        processedStyles.groupTypes = '3v';
-        processedStyles.groupSize = 3;
-        processedStyles.collageAmount = 1;
-        processedStyles.collageDensity = 1;
+        res.groupTypes = '3v';
+        res.groupSize = 3;
+        res.collageAmount = 1;
+        res.collageDensity = 1;
         break;
     }
   }
+  return res
+}
 
-  // returned to the statics because it was the definition of the object.
-  // processedStyles.sharpParams = {
-  //   quality: 90,
-  //   usm: {}
-  // };
-
-  if (processedStyles.forceMobileCustomButton) {
-    processedStyles.targetItemSize = Math.round(30 * 8.5 + 150);
-    processedStyles.titlePlacement = PLACEMENTS.SHOW_BELOW;
-    processedStyles.galleryLayout = 2;
-    processedStyles.fixedColumns = 1;
-    processedStyles.numberOfImagesPerRow = 1;
-  }
-
-  if (
-    processedStyles.fixedColumns > 0 &&
-    utils.isMobile() &&
-    typeof processedStyles.m_numberOfImagesPerRow === 'undefined'
+const forceInfoOnHoverWhenNeeded = (options) =>{
+  let _options = {...options}
+if (    
+  !GALLERY_CONSTS.isLayout('SLIDER')(_options) && //not slider
+  !GALLERY_CONSTS.isLayout('COLUMN')(_options) &&  //not columns
+  !GALLERY_CONSTS.isLayout('FUTURE_SLIDESHOW')(_options) //not columns
   ) {
-    processedStyles.fixedColumns = 1;
+    if (
+      (!_options.isVertical || //layout orientation is horizontal
+        _options.groupSize > 1) //groups are larger than one (items can be on top or right left of eachother)
+    ) {
+      // Dont allow titlePlacement to be above / below / left / right
+      _options.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
+    }
   }
 
+  return _options;
+}
+
+const setMobileFonts = (options) => {
+  let _options = {...options}
+  if (isSlideshowFont(_options)) {
+    if (!utils.isUndefined(_options.itemFontSlideshow)) {
+      _options = setTextUnderline('itemFontSlideshow', 'textDecorationTitle', _options);
+    }
+    if (!utils.isUndefined(_options.itemDescriptionFontSlideshow)) {
+      _options = setTextUnderline('itemDescriptionFontSlideshow', 'textDecorationDesc', _options);
+    }
+  } else {
+    if (!utils.isUndefined(_options.itemFont)) {
+      _options = setTextUnderline('itemFont', 'textDecorationTitle', _options);
+    }
+    if (!utils.isUndefined(_options.itemDescriptionFont)) {
+      _options = setTextUnderline('itemDescriptionFont', 'textDecorationDesc', _options);
+    }
+  }
+
+  return _options;
+}
+
+const forceHoverToShowTextsIfNeeded = (options) =>{
+  let _options = {...options}
+  if (
+    !hasHoverPlacement(_options.titlePlacement) &&
+    _options.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
+  ) {
+    _options.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.APPEARS;
+  }
+
+  return _options
+}
+
+const processImageLoadingWithColorMode = (options) => {
+  let _options = {...options}
+  if (
+    _options.imageLoadingMode === LOADING_MODE.COLOR &&
+    _options.imageLoadingWithColorMode ===
+      LOADING_WITH_COLOR_MODE.MAIN_COLOR
+  ) {
+    _options.imageLoadingMode = LOADING_MODE.MAIN_COLOR;
+  }
+  return _options;
+}
+
+const removeShadowOnHorizontalGalleries = (options) => {
+  let _options = {...options}
+  if(_options.itemEnableShadow && _options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+    _options.itemEnableShadow = false;
+  }
+  return _options;
+}
+
+const forceHorizontalOrientationInHorizontalGalleries = (options) => {
+  let _options = {...options}
+  if (_options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+    // in horizontal galleries allow only horizontal orientation
+    _options.isVertical = false;
+  }
+  return _options;
+}
+
+const removeLoopOnVerticalGalleries = (options) => {
+  let _options = {...options}
+  if (_options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) {
+    _options.slideshowLoop = false; // allow slideshowLoop only for horizontal layouts
+  }
+  return _options;
+}
+
+const limitImageMargin = (options) => {
+  let _options = {...options}
+  if (_options.imageMargin > 0) {
+    _options.imageMargin = Math.min(_options.imageMargin, 50); // limit mobile spacing to 50px (25 on each side)
+  }
+  return _options;
+}
+
+const forceScrollAnimationOnSingleImageInViewGalleries = (options) => {
+  let _options = {...options}
+  if (
+    _options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL ||
+    _options.groupSize > 1 ||
+    !_options.cubeImages
+  ) {
+    _options.slideAnimation = SLIDE_ANIMATIONS.SCROLL;
+  }
+  return _options;
+}
+
+const removeArrowPaddingIfOutsideTheGallery = (options) => {
+  let _options = {...options}
+  if (_options.arrowsPosition === ARROWS_POSITION.OUTSIDE_GALLERY) {
+    _options.arrowsPadding = 0;
+  }
+  return _options;
+}
+
+const processForceMobileCustomButton = (options) => {
+  let _options = {...options}
+  if (_options.forceMobileCustomButton) {
+    _options.targetItemSize = Math.round(30 * 8.5 + 150);
+    _options.titlePlacement = PLACEMENTS.SHOW_BELOW;
+    _options.galleryLayout = 2;
+    _options.fixedColumns = 1;
+    _options.numberOfImagesPerRow = 1;
+  }
+  return _options;
+}
+
+const processSpecialGallerySize = (options) => {
+  let _options = {...options}
   // in case a special gallery size was specified, use it
   if (
-    processedStyles.gallerySizeType === GALLERY_SIZE_TYPE.PIXELS &&
-    processedStyles.gallerySizePx > 0
+    _options.gallerySizeType === GALLERY_SIZE_TYPE.PIXELS &&
+    _options.gallerySizePx > 0
   ) {
-    processedStyles.targetItemSize = processedStyles.gallerySizePx;
+    _options.targetItemSize = _options.gallerySizePx;
   } else if (
-    processedStyles.gallerySizeType === GALLERY_SIZE_TYPE.RATIO &&
-    processedStyles.gallerySizeRatio > 0
+    _options.gallerySizeType === GALLERY_SIZE_TYPE.RATIO &&
+    _options.gallerySizeRatio > 0
   ) {
-    processedStyles.targetItemSize =
+    _options.targetItemSize =
       ((window && window.innerWidth) || 980) *
-      (processedStyles.gallerySizeRatio / 100);
+      (_options.gallerySizeRatio / 100);
+  }
+  return _options;
+}
+
+const processLoadMoreButtonFont = (options) => {
+  let _options = {...options}
+  if (_options.loadMoreButtonFont && utils.isMobile()) {
+    _options.loadMoreButtonFont.value =
+      _options.loadMoreButtonFont.value.replace(/^font\s*:\s*/, '');
+    _options.loadMoreButtonFont.value =
+      _options.loadMoreButtonFont.value.replace(/;$/, '');
+    if (_options.loadMoreButtonFont.value.indexOf('underline') > -1) {
+      _options.loadMoreButtonFont.value =
+        _options.loadMoreButtonFont.value.replace('underline', '');
+      _options.textDecorationLoadMore = 'underline';
+    } else {
+      _options.textDecorationLoadMore = 'none';
+    }
+  }
+  return _options;
+}
+const blockCounterByProduct = (options) => {
+  let _options = {...options}
+  if(!_options.allowSlideshowCounter) {
+    return _options
   }
 
-  processedStyles.textBoxHeight = getTextBoxAboveOrBelowHeight(
-    processedStyles,
-    customExternalInfoRendererExists
-  );
-  processedStyles.externalInfoHeight = getHeightFromStyleParams(
-    processedStyles,
-    processedStyles.textBoxHeight
-  );
+  if(!_options.isAutoSlideshow) {
+    _options.allowSlideshowCounter = false
+  }
 
-  processedStyles.externalInfoWidth = getTextBoxRightOrLeftWidth(
-    processedStyles,
-    customExternalInfoRendererExists
-  );
+  if ((GALLERY_CONSTS.isLayout('SLIDESHOW')(options)|| GALLERY_CONSTS.isLayout('FUTURE_SLIDESHOW')(options)) === false) {
+    _options.allowSlideshowCounter = false;
+  }
+  return _options;
+}
 
-  // Handle case of autoplay on ios devices
+const addMarginsToSupportShadows = (options) => {
+  let _options = {...options}
+
+  if (_options.itemEnableShadow && _options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) {
+    // add gallerySpacing to allow the shadow to be seen
+    let _gallerySpacing = Math.max(
+      _options.layoutParams.gallerySpacing,
+      (_options.itemShadowSize || 0) +
+        (_options.itemShadowBlur || 0)
+    );
+    _options = assignByString(_options, 'layoutParams_gallerySpacing', _gallerySpacing)
+  }
+  return _options;
+}
+
+const centerArrowsWhenNeeded = (options) => {  
+  let _options = {...options}
+  const isSingleVerticalItemRendered =  _options.layoutParams.repeatingGroupTypes ? 
+  _options.layoutParams.repeatingGroupTypes == "1" :  _options.groupTypes == "1"; // only one item is being rendered vertically?
+  const filteredPlacement = _options.titlePlacement // filtering hover since it doesn't affect this product
+  .split(',')
+  .filter(placement => !isHoverPlacement(placement))
+  .join(',')
+  if (!isConstantVerticalPlacement(filteredPlacement, GALLERY_CONSTS.isLayout('SLIDESHOW')(options)) || 
+      !isSingleVerticalItemRendered)
+    {
+    // if text (info) placement is not above/below placement or more then 1 images per col, arrows are gallery("item") centered
+    _options.arrowsVerticalPosition = GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER;
+  }
+  return _options;
+}
+
+export const removeBordersIfNeeded = (options) => {
+  //TODO this can go into the _optionspective 4 layouts.
+  let _options = {...options}
+
+  if (_options.cubeType === 'fit' ) {
+    _options.itemBorderWidth = 0;
+    _options.itemBorderRadius = 0;
+    _options.itemEnableShadow = false;
+  }
+
+  return _options
+}
+
+const setTextUnderline = (itemFontOption, textDecorationType, options) => {
+  /* itemFontOption: itemFontSlideshow / itemDescriptionFontSlideshow / itemFont / itemDescriptionFont
+  textDecorationType: textDecorationTitle / textDecorationDesc */
+
+  let _options = {...options}
+  _options[itemFontOption].value = _options[
+    itemFontOption
+  ].value.replace(/^font\s*:\s*/, '');
+  _options[itemFontOption].value = _options[
+    itemFontOption
+  ].value.replace(/;$/, '');
   if (
-    processedStyles.videoPlay === 'auto' &&
-    processedStyles.itemClick === 'nothing' &&
-    utils.isiOS()
+    _options[itemFontOption].value.indexOf('underline') > -1 ||
+    _options[itemFontOption].style.underline === true
   ) {
-    processedStyles.videoPlay = 'onClick';
+    _options[itemFontOption].value = _options[
+      itemFontOption
+    ].value.replace('underline', '');
+    _options[textDecorationType] = 'underline';
+  } else if (_options[itemFontOption].style.underline === false) {
+    _options[textDecorationType] = 'none';
   }
+  return _options;
+};
 
-  return processedStyles;
-}
-
-function getHeightFromStyleParams(styleParams, textBoxHeight) {
-  let additionalHeight = textBoxHeight;
-  if (
-    textBoxHeight > 0 &&
-    hasVerticalPlacement(styleParams.titlePlacement) &&
-    styleParams.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND
-  ) {
-    additionalHeight += styleParams.textImageSpace;
-    additionalHeight += styleParams.textBoxBorderWidth * 2;
+function processLayouts(options, customExternalInfoRendererExists) {
+  let processedOptions = {...options};
+  if (utils.isMobile()) {
+    processedOptions = setMobileFonts(processedOptions);
+    processedOptions = limitImageMargin(processedOptions);
   }
-  return additionalHeight;
+    processedOptions = forceInfoOnHoverWhenNeeded(processedOptions);
+    processedOptions = forceHoverToShowTextsIfNeeded(processedOptions);
+    processedOptions = processImageLoadingWithColorMode(processedOptions);
+    processedOptions = removeShadowOnHorizontalGalleries(processedOptions);
+    processedOptions = addMarginsToSupportShadows(processedOptions);
+    processedOptions = removeArrowPaddingIfOutsideTheGallery(processedOptions);
+    processedOptions = forceHorizontalOrientationInHorizontalGalleries(processedOptions);
+    processedOptions = removeLoopOnVerticalGalleries(processedOptions);
+    processedOptions = forceScrollAnimationOnSingleImageInViewGalleries(processedOptions);
+    processedOptions = processLoadMoreButtonFont(processedOptions); //contains if isMobile, but also has an else.
+    processedOptions = processForceMobileCustomButton(processedOptions); //TODO this seems like it doesnt really exists. consider deleting support.
+    processedOptions = processSpecialGallerySize(processedOptions);
+    processedOptions = processTextDimensions(processedOptions, customExternalInfoRendererExists);
+    processedOptions = centerArrowsWhenNeeded(processedOptions); 
+    processedOptions = blockCounterByProduct(processedOptions); 
+
+  return processedOptions;
 }
 
-function getTextBoxRightOrLeftWidth(
-  styleParams,
-  customExternalInfoRendererExists
-) {
-  if (
-    !shouldShowTextRightOrLeft(styleParams, customExternalInfoRendererExists)
-  ) {
-    return 0;
-  }
-  const {
-    targetItemSize,
-    calculateTextBoxWidthMode,
-    textBoxWidth,
-    textBoxWidthPercent,
-  } = styleParams;
-  let width = 0;
-  if (
-    calculateTextBoxWidthMode === TEXT_BOX_WIDTH_CALCULATION_OPTIONS.PERCENT
-  ) {
-    width = Math.min(100, Math.max(0, textBoxWidthPercent)) / 100;
-  } else {
-    width = Math.min(targetItemSize, textBoxWidth);
-  }
-  return width;
-}
-
-function shouldShowTextRightOrLeft(
-  styleParams,
-  customExternalInfoRendererExists
-) {
-  const { oneRow, isVertical, groupSize, titlePlacement } = styleParams;
-
-  const allowedByLayoutConfig = !oneRow && isVertical && groupSize === 1;
-
-  return (
-    allowedByLayoutConfig &&
-    hasHorizontalPlacement(titlePlacement) &&
-    customExternalInfoRendererExists
-  );
-}
-
-function getTextBoxAboveOrBelowHeight(
-  styleParams,
-  customExternalInfoRendererExists
-) {
-  if (
-    !shouldShowTextBoxAboveOrBelow(
-      styleParams,
-      customExternalInfoRendererExists
-    )
-  ) {
-    return 0;
-  }
-  return styleParams.textBoxHeight;
-}
-
-function shouldShowTextBoxAboveOrBelow(
-  styleParams,
-  customExternalInfoRendererExists
-) {
-  return (
-    hasVerticalPlacement(styleParams.titlePlacement) &&
-    customExternalInfoRendererExists
-  );
-}
-
-function isSlideshowFont(styles) {
-  const galleryLayout = styles.galleryLayout;
-  if (galleryLayout === LAYOUTS.SLIDESHOW) {
+function isSlideshowFont(options) {
+  if (GALLERY_CONSTS.isLayout('SLIDESHOW')(options)) {
     return true;
   }
-  if (hasVerticalPlacement(styles.titlePlacement)) {
-    if (galleryLayout === 4 || galleryLayout === 6 || galleryLayout === 7) {
+  if (hasExternalVerticalPlacement(options.titlePlacement)) {
+    if (GALLERY_CONSTS.isLayout('SLIDER')(options) ||GALLERY_CONSTS.isLayout('PANORAMA')(options) || GALLERY_CONSTS.isLayout('COLUMN')(options)) {
       return true;
-    } else if (galleryLayout === 1 && styles.isVertical) {
+    } else if (GALLERY_CONSTS.isLayout('MASONRY')(options) && options.isVertical) {
       return true;
-    } else if (galleryLayout === 2 && styles.scrollDirection !== 1) {
+    } else if (GALLERY_CONSTS.isLayout('GRID')(options) && options.scrollDirection !== 1) {
       return true;
     }
   }

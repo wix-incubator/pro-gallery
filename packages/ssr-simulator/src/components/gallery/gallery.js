@@ -1,7 +1,7 @@
 import React from 'react';
 import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
 import { testItems, monochromeImages } from './images';
-import { resizeMediaUrl } from './itemResizer';
+import { createMediaUrl } from './itemResizer';
 import * as utils from './utils';
 
 const UNKNOWN_CONTAINER = {
@@ -100,8 +100,8 @@ export default class Gallery extends React.PureComponent {
     const containerClassName =
       viewMode === GALLERY_CONSTS.viewMode.PRERENDER ? 'no-transition' : '';
 
-    const hasUrlStyles = Object.keys(urlParams).length > 0;
-    const styles = hasUrlStyles ? urlParams : utils.defaultStyleParams;
+    const hasUrlOptions = Object.keys(urlParams).length > 0;
+    const options = hasUrlOptions ? urlParams : utils.defaultOptions;
 
     const items = urlParams.isTestEnvironment ?
       monochromeImages.slice(0, 20) :
@@ -121,9 +121,9 @@ export default class Gallery extends React.PureComponent {
     return (
       <div className={containerClassName}>
         <Gallery
-          domId="ssr-simulator"
+          id="ssr-simulator"
           items={items}
-          styles={styles}
+          options={options}
           settings={{
             disableSSROpacity: !!urlParams.disableSSROpacity,
             avoidInlineStyles: !urlParams.useLayoutFixer,
@@ -132,8 +132,7 @@ export default class Gallery extends React.PureComponent {
           viewMode={viewMode}
           isPrerenderMode={true}
           eventsListener={eventsListener}
-          resizeMediaUrl={resizeMediaUrl}
-          useBlueprints={true}
+          createMediaUrl={createMediaUrl}
         />
       </div>
     );

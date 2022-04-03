@@ -38,20 +38,20 @@ class CssScrollHelper {
     return `pgi${shortId}_${idx}`;
   }
 
-  buildScrollClassName(domId, idx, val) {
-    const shortId = String(domId).replace(/[\W]+/g, '').slice(-8);
+  buildScrollClassName(id, idx, val) {
+    const shortId = String(id).replace(/[\W]+/g, '').slice(-8);
     return `${this.pgScrollClassName}_${shortId}_${val}-${
       this.pgScrollSteps[idx] + Number(val)
     }`;
   }
 
-  calcScrollClasses(domId, scrollTop) {
+  calcScrollClasses(id, scrollTop) {
     return (
       `${this.pgScrollClassName}-${scrollTop} ` +
       this.pgScrollSteps
         .map((step, idx) =>
           this.buildScrollClassName(
-            domId,
+            id,
             idx,
             Math.floor(scrollTop / step) * step
           )
@@ -60,22 +60,30 @@ class CssScrollHelper {
     );
   }
 
-  calcScrollCss({ domId, items, styleParams, container }) {
+  calcScrollCss({ id, items, options, container }) {
     utils.isVerbose() && console.time('CSS Scroll');
     if (!(items && items.length)) {
       return [];
     }
-    const scrollAnimation = styleParams.scrollAnimation;
+    const scrollAnimation = options.scrollAnimation;
     if (
       !scrollAnimation ||
       scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT
     ) {
       return [];
     }
-    this.screenSize = styleParams.oneRow
-      ? Math.min(window.outerWidth, window.screen.width, container.galleryWidth)
-      : Math.min(window.outerHeight, window.screen.height);
-    if (!styleParams.oneRow && utils.isMobile()) {
+    this.screenSize =
+      options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+        ? Math.min(
+            window.outerWidth,
+            window.screen.width,
+            container.galleryWidth
+          )
+        : Math.min(window.outerHeight, window.screen.height);
+    if (
+      options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
+      utils.isMobile()
+    ) {
       this.screenSize += 50;
     }
     this.calcScrollPaddings();
@@ -86,13 +94,18 @@ class CssScrollHelper {
     this.minHeight = 0 - maxStep;
     this.maxHeight =
       (Math.ceil(
-        ((styleParams.oneRow ? right : top) + this.screenSize) / maxStep
+        ((options.scrollDirection ===
+        GALLERY_CONSTS.scrollDirection.HORIZONTAL
+          ? right
+          : top) +
+          this.screenSize) /
+          maxStep
       ) +
         1) *
       maxStep;
 
     const cssScroll = items.map((item) =>
-      this.calcScrollCssForItem({ domId, item, styleParams })
+      this.calcScrollCssForItem({ id, item, options })
     );
     utils.isVerbose() && console.timeEnd('CSS Scroll');
 
@@ -106,13 +119,15 @@ class CssScrollHelper {
     return true;
   }
 
-  createScrollSelectorsFunction({ domId, item, styleParams }) {
-    const imageTop = styleParams.oneRow
-      ? item.offset.left - this.screenSize
-      : item.offset.top - this.screenSize;
-    const imageBottom = styleParams.oneRow
-      ? item.offset.left + item.width
-      : item.offset.top + item.height;
+  createScrollSelectorsFunction({ id, item, options }) {
+    const imageTop =
+      options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+        ? item.offset.left - this.screenSize
+        : item.offset.top - this.screenSize;
+    const imageBottom =
+      options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+        ? item.offset.left + item.width
+        : item.offset.top + item.height;
     const minStep = this.pgScrollSteps[this.pgScrollSteps.length - 1];
     const ceil = (num, step) =>
       Math.ceil(Math.min(this.maxHeight, num) / step) * step;
@@ -122,7 +137,7 @@ class CssScrollHelper {
     return (padding, suffix) => {
       const [before, after] = padding;
       if (before === Infinity && after === Infinity) {
-        return `#pro-gallery-${domId} #${sellectorDomId} ${suffix}`;
+        return `#pro-gallery-${id} #${sellectorDomId} ${suffix}`;
       }
       let from = floor(imageTop - before, minStep);
       const to = ceil(imageBottom + after, minStep);
@@ -149,7 +164,7 @@ class CssScrollHelper {
         }
         scrollClasses.push(
           `.${this.buildScrollClassName(
-            domId,
+            id,
             largestDividerIdx,
             from
           )} ~ div #${sellectorDomId} ${suffix}`
@@ -161,20 +176,20 @@ class CssScrollHelper {
     };
   }
 
-  calcScrollCssForItem({ domId, item, styleParams }) {
+  calcScrollCssForItem({ id, item, options }) {
     const { idx } = item;
     let scrollCss = '';
     const createScrollSelectors = this.createScrollSelectorsFunction({
-      domId,
+      id,
       item,
-      styleParams,
+      options,
     });
 
     //scrollAnimation
     scrollCss += this.createScrollAnimationsIfNeeded({
       idx,
       item,
-      styleParams,
+      options,
       createScrollSelectors,
     });
 
@@ -192,8 +207,8 @@ class CssScrollHelper {
     // console.count('pgScroll item created');
   }
 
-  createScrollAnimationsIfNeeded({ idx, styleParams, createScrollSelectors }) {
-    const { isRTL, oneRow, scrollAnimation } = styleParams;
+  createScrollAnimationsIfNeeded({ idx, options, createScrollSelectors }) {
+    const { isRTL, scrollDirection, scrollAnimation } = options;
 
     if (
       !scrollAnimation ||
@@ -231,13 +246,13 @@ class CssScrollHelper {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
-          ' .gallery-item-wrapper'
+          ''
         ) +
         `{filter: opacity(0); transition: filter 1.${_randomDuration}s ease-in !important;}`;
       scrollAnimationCss +=
         createScrollSelectors(
           animationActivePadding,
-          ' .gallery-item-wrapper'
+          ''
         ) + `{filter: opacity(1) !important;}`;
     }
 
@@ -258,7 +273,10 @@ class CssScrollHelper {
     }
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.SLIDE_UP) {
-      const axis = oneRow ? 'X' : 'Y';
+      const axis =
+        scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+          ? 'X'
+          : 'Y';
       const direction = isRTL ? '-' : '';
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
@@ -306,9 +324,9 @@ class CssScrollHelper {
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.ONE_COLOR) {
       const oneColorAnimationColor =
-        styleParams.oneColorAnimationColor &&
-        styleParams.oneColorAnimationColor.value
-          ? styleParams.oneColorAnimationColor.value
+        options.oneColorAnimationColor &&
+        options.oneColorAnimationColor.value
+          ? options.oneColorAnimationColor.value
           : 'transparent';
 
       scrollAnimationCss +=

@@ -29,7 +29,7 @@ const removeResizeParams = (originalUrl) => {
   }
 };
 
-const createResizedVideoUrl = ({ item, originalUrl, requiredHeight }) => {
+const createProcessedVideoUrl = ({ item, originalUrl, requiredHeight }) => {
   let videoUrl = originalUrl;
 
   if (item.qualities && item.qualities.length) {
@@ -70,7 +70,7 @@ const createResizedVideoUrl = ({ item, originalUrl, requiredHeight }) => {
   }
 };
 
-const createResizedImageUrl = ({
+const createProcessedImageUrl = ({
   item,
   originalUrl,
   resizeMethod,
@@ -205,18 +205,17 @@ const createResizedImageUrl = ({
   return retUrl;
 };
 
-const resizeMediaUrl = (
-  item,
-  originalUrl,
-  resizeMethod,
-  requiredWidth,
-  requiredHeight,
-  sharpParams,
-  focalPoint,
-  createMultiple,
-  imageToken,
-) => {
-  const hasImageToken = item.dto.imageToken || item.dto.token || imageToken;
+const createMediaUrl = ({
+                          item,
+                          originalUrl,
+                          resizeMethod,
+                          requiredWidth,
+                          requiredHeight,
+                          sharpParams,
+                          focalPoint,
+                          createMultiple,
+                        }) => {
+  const hasImageToken = item.dto.imageToken || item.dto.token;
 
   originalUrl = removeResizeParams(originalUrl);
 
@@ -230,7 +229,7 @@ const resizeMediaUrl = (
     focalPoint,
   };
   if (resizeMethod === 'video') {
-    return createResizedVideoUrl(params);
+    return createProcessedVideoUrl(params);
   } else if (isExternalUrl(originalUrl)) {
     return originalUrl;
   } else if (resizeMethod === 'full' && !hasImageToken) {
@@ -239,7 +238,7 @@ const resizeMediaUrl = (
     return [
       {
         type: originalUrl.match(/[^.]\w*$/)[0],
-        url: createResizedImageUrl({
+        url: createProcessedImageUrl({
           ...params,
           useWebp: false,
           devicePixelRatio: 1,
@@ -247,7 +246,7 @@ const resizeMediaUrl = (
         dpr: [1, 2]
           .map(
             (dpr) =>
-              createResizedImageUrl({
+              createProcessedImageUrl({
                 ...params,
                 useWebp: false,
                 devicePixelRatio: dpr,
@@ -257,7 +256,7 @@ const resizeMediaUrl = (
       },
       {
         type: 'webp',
-        url: createResizedImageUrl({
+        url: createProcessedImageUrl({
           ...params,
           useWebp: true,
           devicePixelRatio: 1,
@@ -265,7 +264,7 @@ const resizeMediaUrl = (
         dpr: [1, 2]
           .map(
             (dpr) =>
-              createResizedImageUrl({
+              createProcessedImageUrl({
                 ...params,
                 useWebp: true,
                 devicePixelRatio: dpr,
@@ -275,8 +274,8 @@ const resizeMediaUrl = (
       },
     ];
   } else {
-    return createResizedImageUrl(params);
+    return createProcessedImageUrl(params);
   }
 };
 
-export { resizeMediaUrl };
+export { createMediaUrl };

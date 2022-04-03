@@ -1,14 +1,11 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 
-describe('styleParam - slideAnimation', () => {
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+describe('options - slideAnimation', () => {
+  let initialProps;
   const notCurrentFadeAnimationStylesMock = {
     opacity: 0,
     display: 'block',
@@ -26,6 +23,11 @@ describe('styleParam - slideAnimation', () => {
   describe('Slideshow', () => {
     let driver;
     beforeEach(() => {
+      initialProps = {
+        container,
+        items: images2,
+        options,
+      };
       driver = new GalleryDriver();
     });
 
@@ -33,7 +35,7 @@ describe('styleParam - slideAnimation', () => {
       driver.detach.proGallery();
     });
     it('should set the correct "Fade" animation styles to the items', async () => {
-      Object.assign(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
         slideAnimation: GALLERY_CONSTS.slideAnimations.FADE,
       });
@@ -57,7 +59,7 @@ describe('styleParam - slideAnimation', () => {
       expect(1).toEqual(1);
     });
     it('should not have Fade animation styles when "slideAnimations" is "Scroll"', async () => {
-      Object.assign(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
         slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
       });
@@ -71,6 +73,11 @@ describe('styleParam - slideAnimation', () => {
   describe('Thumbnails', () => {
     let driver;
     beforeEach(() => {
+      initialProps = {
+        container,
+        items: images2,
+        options,
+      };
       driver = new GalleryDriver();
     });
 
@@ -78,7 +85,7 @@ describe('styleParam - slideAnimation', () => {
       driver.detach.proGallery();
     });
     it('should set the correct "Fade" animation styles to the items', async () => {
-      Object.assign(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
         slideAnimation: GALLERY_CONSTS.slideAnimations.FADE,
       });
@@ -101,7 +108,7 @@ describe('styleParam - slideAnimation', () => {
       );
     });
     it('should not have Fade animation styles when "slideAnimations" is "Scroll"', async () => {
-      Object.assign(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
         slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
       });

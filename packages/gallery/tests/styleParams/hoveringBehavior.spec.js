@@ -1,23 +1,25 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 
-describe('styleParam - hoveringBehaviour', () => {
+describe('options - hoveringBehaviour', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      options,
+    };
   });
 
   it('should not have class "force-hover" when there is no hover event (when "hoveringBehaviour" is "APPEARS")', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       // titlePlacement also deals with the hover on items. when it's value is 'SHOW_ON_HOVER', hoveringBehaviour takes controll.
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
@@ -31,7 +33,7 @@ describe('styleParam - hoveringBehaviour', () => {
   });
 
   it('should not have class "force-hover" when there is no hover event (when "hoveringBehaviour" is "DISAPPEARS")', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       // titlePlacement also deals with the hover on items. when it's value is 'SHOW_ON_HOVER', hoveringBehaviour takes controll.
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.DISAPPEARS,
@@ -44,7 +46,7 @@ describe('styleParam - hoveringBehaviour', () => {
     driver.detach.proGallery();
   });
   it('should have class invert-hover when "hoveringBehaviour" is "DISAPPEARS"', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.DISAPPEARS,
     });
@@ -56,7 +58,7 @@ describe('styleParam - hoveringBehaviour', () => {
     driver.detach.proGallery();
   });
   it('should have default class force-hover when "hoveringBehaviour" is "NO_CHANGE"', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
       hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE,
     });

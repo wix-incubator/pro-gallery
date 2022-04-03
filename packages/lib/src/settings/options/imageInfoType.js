@@ -8,10 +8,10 @@ export default {
   so you can style them separately.`,
   isRelevantDescription:
     'Set "Max Group Size" to "1", set "Layout Orientation" to "Columns" and set "Texts Placement" to anything but "Show On Hover".',
-  isRelevant: (styleParams) =>
-    styleParams.groupSize === 1 &&
-    styleParams.isVertical &&
-    styleParams.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER,
+  isRelevant: (options) =>
+    options.groupSize === 1 &&
+    options.isVertical &&
+    options.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER,
   options: createOptions('infoType'),
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.infoType.NO_BACKGROUND,

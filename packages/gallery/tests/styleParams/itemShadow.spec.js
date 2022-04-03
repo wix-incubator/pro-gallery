@@ -1,26 +1,27 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 
-describe('styleParam - overlayAnimation', () => {
+describe('options - overlayAnimation', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      options,
+    };
   });
 
   it('should have box shadow when "itemEnableShadow" is "true"', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      oneRow: false,
       itemShadowBlur: 20,
       itemShadowSize: 10,
       itemShadowDirection: 135,
@@ -36,10 +37,9 @@ describe('styleParam - overlayAnimation', () => {
     driver.detach.proGallery();
   });
   it('should not have box shadow when "itemEnableShadow" is "false"', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      oneRow: false,
       itemShadowBlur: 20,
       itemShadowSize: 10,
       itemShadowDirection: 135,
@@ -53,11 +53,10 @@ describe('styleParam - overlayAnimation', () => {
     expect(boxShadow).to.equal(undefined);
     driver.detach.proGallery();
   });
-  it('should not have box shadow in a "oneRow" gallery', async () => {
-    Object.assign(initialProps.styles, {
+  it('should not have box shadow in a horizontal gallery', async () => {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
-      oneRow: true,
       itemShadowBlur: 20,
       itemShadowSize: 10,
       itemShadowDirection: 135,
@@ -72,11 +71,10 @@ describe('styleParam - overlayAnimation', () => {
     driver.detach.proGallery();
   });
 
-  it('should set the right "galleryMargin"', async () => {
-    Object.assign(initialProps.styles, {
+  it('should set the right "gallerySpacing"', async () => {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      oneRow: false,
       itemShadowBlur: 20,
       itemShadowSize: 10,
       itemShadowDirection: 135,
@@ -85,14 +83,14 @@ describe('styleParam - overlayAnimation', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const item = driver.find.selector('#pro-gallery-margin-container');
+    const item = driver.find.selector('.pro-gallery-margin-container');
     const { margin } = item.props().style;
     expect(margin).to.equal('30px');
     driver.detach.proGallery();
   });
 
   it('should set the correct box-shadow style to the items', async () => {
-    Object.assign(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.GRID,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       itemEnableShadow: true,

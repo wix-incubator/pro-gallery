@@ -1,4 +1,5 @@
 const LAYOUTS = {
+  JSON_FIXED: -3,
   DESIGNED_PRESET: -2,
   EMPTY: -1,
   COLLAGE: 0,
@@ -14,6 +15,12 @@ const LAYOUTS = {
   BRICKS: 10,
   MIX: 11,
   ALTERNATE: 12,
+  FUTURE_SLIDESHOW: 13,
+};
+
+const isLayout = (layoutName) => (options) => {
+  return options.galleryLayout === LAYOUTS[layoutName];
 };
 
 export default LAYOUTS;
+export { isLayout };

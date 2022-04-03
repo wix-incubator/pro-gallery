@@ -8,7 +8,7 @@ export class Strip {
 
     this.idx = config.idx;
     this.groupsPerStrip = config.groupsPerStrip;
-    this.oneRow = config.oneRow;
+    this.scrollDirection = config.scrollDirection;
     this.targetItemSize = config.targetItemSize;
     this.container = config.container;
   }
@@ -66,7 +66,7 @@ export class Strip {
       return false;
     }
 
-    const { groupsPerStrip, oneRow, targetItemSize } = this;
+    const { groupsPerStrip, scrollDirection, targetItemSize } = this;
 
     if (groupsPerStrip > 0) {
       return this.groups.length >= groupsPerStrip;
@@ -75,8 +75,8 @@ export class Strip {
     const { galleryWidth } = this.container;
 
     let isStripSmallEnough;
-    if (oneRow) {
-      isStripSmallEnough = false; //onerow layout is one long strip
+    if (scrollDirection === 1) {
+      isStripSmallEnough = false; //horizontal layout is one long strip
     } else {
       const withNewGroup =
         galleryWidth / (this.ratio + newGroup.ratio) - targetItemSize; //start a new strip BEFORE adding the current group

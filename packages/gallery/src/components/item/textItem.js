@@ -1,8 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import { GalleryComponent } from '../galleryComponent';
 
-export default class TextItem extends GalleryComponent {
+export default class TextItem extends React.Component {
   constructor(props) {
     super(props);
     if (typeof this.props.actions.setItemLoaded === 'function') {
@@ -11,8 +10,9 @@ export default class TextItem extends GalleryComponent {
   }
 
   getTextDimensions() {
-    const { style, styleParams, cubeRatio } = this.props;
-    const isVerticalItem = style.ratio < cubeRatio - 0.01;
+  const { style, options, cropRatio, imageDimensions } = this.props;
+    const isVerticalItem = style.ratio < cropRatio - 0.01;
+    const { marginLeft, marginTop } = imageDimensions;
     //text dimensions include scaling
     const textHeight =
       (isVerticalItem
@@ -23,7 +23,7 @@ export default class TextItem extends GalleryComponent {
         ? style.width / style.maxWidth
         : style.height / style.maxHeight) * style.maxWidth;
     const translate =
-      styleParams.cubeType === 'fit'
+      options.cubeType === 'fit'
         ? '0, 0'
         : `${Math.round((style.width - textWidth) / 2)}px, ${Math.round(
             (style.height - textHeight) / 2
@@ -31,11 +31,15 @@ export default class TextItem extends GalleryComponent {
     const scale = isVerticalItem
       ? style.height / style.maxHeight
       : style.width / style.maxWidth;
-    const transform = `translate(${translate}) scale(${scale})`;
+      const transform = `translate(${translate}) scale(${scale})`;
+    const scaledMarginLeft = Math.round(marginLeft / scale);
+    const scaledMarginTop = Math.round(marginTop / scale);
     return {
       width: style.maxWidth + 'px',
       height: style.maxHeight + 'px',
-      transformOrigin: '0 0',
+      marginLeft: scaledMarginLeft,
+      marginTop: scaledMarginTop,
+      transformOrigin: `${-scaledMarginLeft}px ${-scaledMarginTop}px`,
       WebkitTransform: transform,
       MsTransform: transform,
       OTransform: transform,
@@ -54,7 +58,7 @@ export default class TextItem extends GalleryComponent {
   }
 
   render() {
-    const { id, styleParams, html, style, actions, imageDimensions } =
+    const { id, options, html, style, actions, imageDimensions } =
       this.props;
     const processedHtml = this.processInnerhtml(html);
     const dimensions = this.getTextDimensions();
@@ -62,7 +66,7 @@ export default class TextItem extends GalleryComponent {
     const changeBgColor = {
       style: Object.assign(
         dimensions,
-        styleParams.cubeType === 'fit' ? { backgroundColor: style.bgColor } : {}
+        options.cubeType === 'fit' ? { backgroundColor: style.bgColor } : {}
       ),
     };
     const attributes = {
@@ -75,7 +79,7 @@ export default class TextItem extends GalleryComponent {
           ? imageDimensions.height
           : 'inherit',
       backgroundColor:
-        styleParams.cubeType !== 'fit' ? style.bgColor : 'inherit',
+        options.cubeType !== 'fit' ? style.bgColor : 'inherit',
     };
 
     if (imageDimensions && imageDimensions.borderRadius) {

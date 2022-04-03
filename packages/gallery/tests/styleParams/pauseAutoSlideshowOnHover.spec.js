@@ -4,7 +4,7 @@ import SlideshowView from '../../src/components/gallery/proGallery/slideshowView
 import GalleryDriver from '../drivers/reactDriver';
 import sinon from 'sinon';
 
-describe('styleParam - pauseAutoSlideshowOnHover', () => {
+describe('options - pauseAutoSlideshowOnHover', () => {
   let driver;
   let galleryViewProps;
   let clock;
@@ -20,8 +20,8 @@ describe('styleParam - pauseAutoSlideshowOnHover', () => {
     clock.restore();
   });
   it('should not auto slide when Hovering over the gallery', () => {
-    Object.assign(initialProps.styleParams, {
-      oneRow: true,
+    Object.assign(initialProps.options, {
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
       isAutoSlideshow: true,
       autoSlideshowInterval: 1,
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,

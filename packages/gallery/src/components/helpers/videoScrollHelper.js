@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS, dimensionsHelper, window } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, window } from 'pro-gallery-lib';
 import {
   isWithinPaddingVertically,
   isWithinPaddingHorizontally,
@@ -42,18 +42,19 @@ class VideoScrollHelper {
   //--------------------------updates----------------------------------//
   updateGalleryStructure({
     galleryStructure,
+    galleryWidth,
     scrollBase,
     videoPlay,
     videoLoop,
     itemClick,
-    oneRow,
+    scrollDirection,
   }) {
-    this.galleryWidth = dimensionsHelper.getGalleryDimensions().galleryWidth;
+    this.galleryWidth = galleryWidth;
     this.scrollBase = scrollBase;
     this.videoPlay = videoPlay;
     this.videoLoop = videoLoop;
     this.itemClick = itemClick;
-    this.oneRow = oneRow;
+    this.scrollDirection = scrollDirection;
     this.currentItemCount = galleryStructure.galleryItems.length;
     this.videoItems = [];
     galleryStructure.galleryItems.forEach((item) => {
@@ -81,6 +82,11 @@ class VideoScrollHelper {
       case GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED:
         //case VIDEO_EVENTS.clicked:
         this.itemClicked(eventData.idx);
+        break;
+      case GALLERY_CONSTS.events.VIDEO_PAUSED:
+        if (this.currentPlayingIdx === eventData.idx) {
+          this.stop(eventData.idx);
+        }
         break;
       case GALLERY_CONSTS.events.HOVER_SET:
         //case VIDEO_EVENTS.hovered:
@@ -156,6 +162,9 @@ class VideoScrollHelper {
   }
 
   videoPlayed(idx) {
+    if (this.currentPlayingIdx !== idx) {
+      this.play(idx);
+    }
     this.lastVideoPlayed = idx;
   }
   videoErrorReported() {
@@ -276,7 +285,7 @@ class VideoScrollHelper {
       padding: videoPlayVerticalTolerance,
     });
     let visibleHorizontally;
-    if (!this.oneRow) {
+    if (this.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) {
       visibleHorizontally = true;
     } else {
       visibleHorizontally = isWithinPaddingHorizontally({

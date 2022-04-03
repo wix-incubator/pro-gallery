@@ -1,23 +1,26 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2, videoItems } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
-describe('styleParam - itemClick', () => {
+describe('options - itemClick', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      options,
+    };
   });
 
   describe('should set the correct role for each "itemClick" value', () => {
     it('expect "role" to be "link" when "itemClick" is "link"', async () => {
-      Object.assign(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'link',
       });
       driver.mount.proGallery(initialProps);
@@ -27,7 +30,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect "role" to be "button" when "itemClick" is "expand"', async () => {
-      Object.assign(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'expand',
       });
       driver.mount.proGallery(initialProps);
@@ -37,7 +40,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect "role" to be "button" when "itemClick" is "fullscreen"', async () => {
-      Object.assign(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'fullscreen',
       });
       driver.mount.proGallery(initialProps);
@@ -47,7 +50,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect "role" to be "" when "itemClick" is "nothing"', async () => {
-      Object.assign(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'nothing',
       });
       driver.mount.proGallery(initialProps);
@@ -59,8 +62,16 @@ describe('styleParam - itemClick', () => {
   });
 
   describe('should set className "clickable" when "itemClick" is "expand/fullscreen/link"', () => {
+    beforeEach(() => {
+      driver = new GalleryDriver();
+      initialProps = {
+        container,
+        items: images2,
+        options,
+      };
+    });
     it('expect item to have className "clickable" when "itemClick" is "link"', async () => {
-      Object.assign(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'link',
       });
       driver.mount.proGallery(initialProps);
@@ -70,7 +81,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect item to have className "clickable" when "itemClick" is "expand"', async () => {
-      Object.assign(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'expand',
       });
       driver.mount.proGallery(initialProps);
@@ -80,7 +91,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect item to have className "clickable" when "itemClick" is "fullscreen"', async () => {
-      Object.assign(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'fullscreen',
       });
       driver.mount.proGallery(initialProps);
@@ -90,7 +101,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect item to not have className "clickable" when "itemClick" is "nothing"', async () => {
-      Object.assign(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'nothing',
       });
       driver.mount.proGallery(initialProps);
@@ -102,34 +113,51 @@ describe('styleParam - itemClick', () => {
   });
 
   describe('should set href link only when "itemClick" is set to "link"', () => {
+    beforeEach(() => {
+      driver = new GalleryDriver();
+      initialProps = {
+        container,
+        items: images2,
+        options,
+      };
+    });
     it('check href when itemClick = link', async () => {
-      Object.assign(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'link',
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
-      const item = driver.find.selector('#pro-gallery-container a').at(0);
+      const item = driver.find
+        .selector('#pro-gallery-container-default-dom-id a')
+        .at(0);
       expect(item.props().href).to.not.be.undefined;
       driver.detach.proGallery();
     });
     it('check href when itemClick = expand', async () => {
-      Object.assign(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'expand',
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
-      const item = driver.find.selector('#pro-gallery-container a').at(0);
+      const item = driver.find
+        .selector('#pro-gallery-container-default-dom-id a')
+        .at(0);
       expect(item.props().href).to.be.undefined;
       driver.detach.proGallery();
     });
   });
-
   describe('should play video onClick in gallery only when itemClick is nothing and videoPlay is onClick', () => {
-    it('expect to find video element', async () => {
-      Object.assign(initialProps, {
+    beforeEach(() => {
+      driver = new GalleryDriver();
+      initialProps = {
+        container,
         items: videoItems,
-      });
-      Object.assign(initialProps.styles, {
+        options,
+      };
+    });
+
+    it('expect to find video element', async () => {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'nothing',
         videoPlay: 'onClick',
       });
@@ -143,10 +171,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect not to find video element when "itemClick" is "expand"', async () => {
-      Object.assign(initialProps, {
-        items: videoItems,
-      });
-      Object.assign(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'expand',
         videoPlay: 'onClick',
       });
@@ -159,10 +184,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect not to find video element when "itemClick" is "fullscreen"', async () => {
-      Object.assign(initialProps, {
-        items: videoItems,
-      });
-      Object.assign(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'fullscreen',
         videoPlay: 'onClick',
       });
@@ -176,10 +198,7 @@ describe('styleParam - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect not to find video element when "itemClick" is "link"', async () => {
-      Object.assign(initialProps, {
-        items: videoItems,
-      });
-      Object.assign(initialProps.styles, {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'link',
         videoPlay: 'onClick',
       });
@@ -190,6 +209,50 @@ describe('styleParam - itemClick', () => {
       item.simulate('click');
       expect(driver.find.tag('video').length).to.eq(0);
 
+      driver.detach.proGallery();
+    });
+  });
+
+  describe('itemClick = "MAGNIFY"', async () => {
+    const mountAndGetMagnifiedItems = async (
+      galleryDriver,
+      selector = '.magnified-item-container'
+    ) => {
+      initialProps.options = mergeNestedObjects(initialProps.options, {
+        itemClick: GALLERY_CONSTS.itemClick.MAGNIFY,
+      });
+      galleryDriver.mount.proGallery(initialProps);
+      await galleryDriver.update();
+      return galleryDriver.find.selector(selector);
+    };
+    it('should have magnification container', async () => {
+      const items = await mountAndGetMagnifiedItems(driver);
+      expect(items.length).to.not.eq(0);
+      driver.detach.proGallery();
+    });
+
+    it('should render magnified images', async () => {
+      const items = await mountAndGetMagnifiedItems(driver);
+      const item = items.at(0);
+      item.simulate('mouseup');
+      expect(
+        driver.find.selector('.magnified-images').length
+      ).to.be.greaterThan(0);
+      driver.detach.proGallery();
+    });
+    it('should have default styles', async () => {
+      const items = await mountAndGetMagnifiedItems(driver);
+      const magnificationContainer = items.at(0);
+      console.log(magnificationContainer.props().style);
+      expect(magnificationContainer.props().style).to.deep.equal({
+        width: 420,
+        height: 420,
+        position: 'relative',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        cursor: 'zoom-in',
+      });
       driver.detach.proGallery();
     });
   });

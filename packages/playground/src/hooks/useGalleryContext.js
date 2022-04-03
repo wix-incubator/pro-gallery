@@ -1,12 +1,16 @@
 import { useContext } from 'react';
 import { GalleryContext } from './GalleryContext';
 import {
-  getInitialStyleParams,
-  getStyleParamsFromUrl,
-} from '../constants/styleParams';
-import { addPresetStyles } from 'pro-gallery';
+  getInitialOptions,
+  getOptionsFromUrl,
+} from '../constants/options';
+import { addPresetOptions } from 'pro-gallery';
 import { SIDEBAR_WIDTH } from '../constants/consts';
-import { utils } from 'pro-gallery-lib';
+import {
+  utils,
+  flatToNested,
+} from 'pro-gallery-lib';
+
 
 export function useGalleryContext(
   blueprintsManager,
@@ -17,21 +21,21 @@ export function useGalleryContext(
     setGallerySettings({ showSide: newShowSide });
     //    const widthChange = SIDEBAR_WIDTH * (newShowSide ? -1 : 1)
 
-    //  setDimensions({width: calcGalleryDimensions().width + widthChange});
-    setDimensions();
+    //  setDimensions({width: calcGalleryContainer().width + widthChange});
+    setContainer();
   };
 
   const getBlueprintFromServer = async (params) => {
-    let { items, styleParams, dimensions } = params;
+    let { items, options, container } = params;
 
-    dimensions = dimensions || context.dimensions || calcGalleryDimensions();
-    const styles = styleParams || context.styleParams || getInitialStyleParams();
+    container = container || context.container || calcGalleryContainer();
+    const _options = options || context.options || flatToNested(getInitialOptions());
     const url = `https://www.wix.com/_serverless/pro-gallery-blueprints-server/createBlueprint`;
 
-    if (!items || !dimensions || !styles) {
+    if (!items || !container || !_options) {
       return;
     }
-    
+
     const response = await fetch(url, {
       method: 'POST',
       credentials: 'omit', // include, *same-origin, omit
@@ -40,8 +44,8 @@ export function useGalleryContext(
       },
       body: JSON.stringify({
         items,
-        styles,
-        dimensions
+        options,
+        container
       }) // body data type must match "Content-Type" header
     });
     const data = await response.json();
@@ -59,19 +63,19 @@ export function useGalleryContext(
     }
   };
 
-  const setDimensions = (config = {}) => {
+  const setContainer = (config = {}) => {
     const { width, height } = config;
     const newContext = {
-      dimensions: {
-        ...calcGalleryDimensions(),
+      container: {
+        ...calcGalleryContainer(),
         ...(width && { width }),
         ...(height && { height }),
       },
     };
 
     if (
-      JSON.stringify(newContext.dimensions) !==
-      JSON.stringify({ ...context.dimensions })
+      JSON.stringify(newContext.container) !==
+      JSON.stringify({ ...context.container })
     ) {
       if (getGallerySettings().useBlueprints) {
         requestNewBlueprint(newContext);
@@ -84,7 +88,7 @@ export function useGalleryContext(
   const setPreset = (newPreset) => {
     const newContext = {
       preset: newPreset,
-      styleParams: getInitialStyleParams(newPreset),
+      options: flatToNested(getInitialOptions(newPreset)),
     };
 
     if (getGallerySettings().useBlueprints) {
@@ -94,19 +98,21 @@ export function useGalleryContext(
     setContext(newContext);
   };
 
-  const setStyleParams = (newProp, value) => {
-    // console.log(`[STYLE PARAMS - VALIDATION] settings styleParam in the context`, newProp, value, context.styleParams);
+  const setOptions = (newProp, value) => {
+    // console.log(`[OPTIONS - VALIDATION] settings options in the context`, newProp, value, context.options);
+    const options = flatToNested({
+      ...getInitialOptions(),
+      ...getOptionsFromUrl(window.location.search),
+      [newProp]: value,
+    })
+    console.log('setting new context and requesting BP', options.layoutParams)
     const newContext = {
-      styleParams: {
-        ...getInitialStyleParams(),
-        ...getStyleParamsFromUrl(),
-        [newProp]: value,
-      },
+      options,
     };
     if (getGallerySettings().useBlueprints) {
       requestNewBlueprint(newContext);
     }
-    // console.log(`[STYLE PARAMS - VALIDATION] settings styleParams in the context`, newContext.styleParams);
+    // console.log(`[OPTIONS - VALIDATION] settings options in the context`, newContext.options);
 
     setContext(newContext);
   };
@@ -152,12 +158,12 @@ export function useGalleryContext(
     }
   };
 
-  const calcGalleryDimensions = () => {
-    let dimensions = {};
+  const calcGalleryContainer = () => {
+    let container = {};
     const showSide = !!getGallerySettings().showSide && !utils.isMobile();
     // eslint-disable-next-line no-extra-boolean-cast
     if (!!getGallerySettings().isUnknownDimensions) {
-      dimensions = !utils.isMobile()
+      container = !utils.isMobile()
         ? {
             width: 500,
             height: 500,
@@ -167,13 +173,13 @@ export function useGalleryContext(
             height: 500,
           };
     } else {
-      dimensions.width = !showSide
+      container.width = !showSide
         ? window.innerWidth
         : window.innerWidth - SIDEBAR_WIDTH;
-      dimensions.height = window.innerHeight;
+      container.height = window.innerHeight;
     }
 
-    return dimensions;
+    return container;
   };
 
   const res = {
@@ -181,10 +187,10 @@ export function useGalleryContext(
     setShowSide,
     preset: context.preset,
     setPreset,
-    styleParams: addPresetStyles(
-      context.styleParams || getInitialStyleParams()
+    options: addPresetOptions(
+      context.options || flatToNested(getInitialOptions())
     ), //TODO - this is a double even for the normal flow - maybe used for the sidebar somehow?
-    setStyleParams,
+    setOptions,
     items: context.items,
     setItems,
     blueprint: context.blueprint,
@@ -193,8 +199,8 @@ export function useGalleryContext(
     setGalleryReady,
     gallerySettings: getGallerySettings(),
     setGallerySettings,
-    dimensions: context.dimensions || calcGalleryDimensions(),
-    setDimensions,
+    container: context.container || calcGalleryContainer(),
+    setContainer,
     getBlueprintFromServer,
   };
 

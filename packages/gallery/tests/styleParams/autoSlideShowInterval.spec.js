@@ -4,7 +4,7 @@ import SlideshowView from '../../src/components/gallery/proGallery/slideshowView
 import GalleryDriver from '../drivers/reactDriver';
 import sinon from 'sinon';
 
-describe('styleParam - autoSlideShowInterval', () => {
+describe('options - autoSlideShowInterval', () => {
   let driver;
   let galleryViewProps;
   let clock;
@@ -13,8 +13,8 @@ describe('styleParam - autoSlideShowInterval', () => {
   beforeEach(() => {
     driver = new GalleryDriver();
     initialProps = driver.props.galleryView();
-    Object.assign(initialProps.styleParams, {
-      oneRow: true,
+    Object.assign(initialProps.options, {
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     clock = sinon.useFakeTimers();
   });
@@ -23,9 +23,10 @@ describe('styleParam - autoSlideShowInterval', () => {
     clock.restore();
   });
   it('startAutoSlideshow is called if needed', () => {
-    Object.assign(initialProps.styleParams, {
+    Object.assign(initialProps.options, {
       isAutoSlideshow: true,
       autoSlideshowInterval: 1,
+      autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
       galleryLayout: 4,
     });
     galleryViewProps = driver.props.galleryView(initialProps);

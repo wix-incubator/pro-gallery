@@ -4,22 +4,24 @@ import {useGalleryContext} from '../../hooks/useGalleryContext';
 import {testMedia, testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
 import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
-import { resizeMediaUrl } from '../../utils/itemResizer';
-import {setStyleParamsInUrl} from '../../constants/styleParams'
+import { createMediaUrl } from '../../utils/itemResizer';
+import {setOptionsInUrl} from '../../constants/options'
 import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
 import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
-import { BlueprintsManager } from 'pro-gallery-lib'
+import { BlueprintsManager } from 'pro-gallery-blueprints'
 import BlueprintsApi from './PlaygroundBlueprintsApi'
+import getFutureSlideshowSupportedOptions from './getFutureSlideshowSupportedOptions'
 import {utils} from 'pro-gallery-lib';
 import { Resizable } from 're-resizable';
 
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
-import { LeanGallery, isEligibleForLeanGallery } from 'lean-gallery';
+// import { LeanGallery, isEligibleForLeanGallery } from 'lean-gallery';
 import 'lean-gallery/dist/styles/leanGallery.css';
 
+// //dummy commit
 const SideBar = React.lazy(() => import('../SideBar'));
 
 const pJson = require('../../../package.json');
@@ -32,7 +34,7 @@ let sideShownOnce = false;
 let totalItems = 0;
 
 export function App() {
-  const {getBlueprintFromServer, setDimensions, styleParams, setItems, items, gallerySettings, setBlueprint, blueprint, dimensions, setShowSide} = useGalleryContext(blueprintsManager);
+  const {getBlueprintFromServer, setContainer, options, setItems, items, gallerySettings, setBlueprint, blueprint, container, setShowSide} = useGalleryContext(blueprintsManager);
   const {showSide} = gallerySettings;
   sideShownOnce = sideShownOnce || showSide;
 
@@ -72,7 +74,7 @@ export function App() {
         break;
       case GALLERY_EVENTS.GALLERY_CHANGE: //TODO split to an event named "PARTIALY_GROW_GALLERY_PRETTY_PLEASE"
         if(eventData.updatedHeight){
-          setDimensions({height: eventData.updatedHeight});
+          setContainer({height: eventData.updatedHeight});
         }
         break;
       case GALLERY_EVENTS.NEED_MORE_ITEMS:
@@ -150,15 +152,15 @@ export function App() {
       return blueprint;
     } else if (gallerySettings.shouldUseBlueprintsFromServer) {
       const params = {
-        dimensions: getContainer(),
-        styleParams: getStyles(),
+        container: getContainer(),
+        options: getOptions(),
         items: getItems()
       }
       getBlueprintFromServer(params);
     } else {
-      const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getStyles, onBlueprintReady: setBlueprint, getTotalItemsCount});
+      const playgroundBlueprintsApi = new BlueprintsApi({addItems, getItems, getContainer, getOptions, onBlueprintReady: setBlueprint, getTotalItemsCount});
       blueprintsManager.init({api: playgroundBlueprintsApi})
-      blueprintsManager.createBlueprint({items: getItems(), styles: getStyles(), dimensions: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
+      blueprintsManager.createBlueprint({items: getItems(), options: getOptions(), container: getContainer(), totalItemsCount: getTotalItemsCount()}, true);
     }
   }
 
@@ -173,7 +175,7 @@ export function App() {
       </div>
     </div>);
 
-    const { titlePlacement } = pgItemProps.styleParams;
+    const { titlePlacement } = pgItemProps.options;
 
     switch (type) {
       case 'HOVER':
@@ -182,7 +184,7 @@ export function App() {
         }
         break;
       case 'EXTERNAL':
-        if (GALLERY_CONSTS.hasVerticalPlacement(titlePlacement) || GALLERY_CONSTS.hasHorizontalPlacement(titlePlacement)) {
+        if (GALLERY_CONSTS.hasExternalVerticalPlacement(titlePlacement) || GALLERY_CONSTS.hasExternalHorizontalPlacement(titlePlacement)) {
           return infoElement;
         }
         break;
@@ -204,8 +206,8 @@ export function App() {
   const slideshowInfoElement = (pgItemProps) => {
     return renderInfoElement('SLIDESHOW', pgItemProps);
   };
-  
-  const getExternalInfoRenderers = () => {
+
+  const getCustomComponents = () => {
     return {
       customHoverRenderer: hoverInfoElement,
       customInfoRenderer: externalInfoElement,
@@ -214,11 +216,11 @@ export function App() {
   }
 
   const getContainer = () => {
-    return {scrollBase: 0, ...dimensions, ...(gallerySettings.responsivePreview && resizedDims)};
+    return {scrollBase: 0, ...container, ...(gallerySettings.responsivePreview && resizedDims)};
   }
 
-  const getStyles = () => {
-    return styleParams;
+  const getOptions = () => {
+    return options;
   }
 
   const canRender = ()=> {
@@ -230,45 +232,45 @@ export function App() {
   }
 
   useEffect(() => {
-    window.addEventListener('resize', setDimensions);
+    window.addEventListener('resize', setContainer);
     return () => {
-      window.removeEventListener('resize', setDimensions);
+      window.removeEventListener('resize', setContainer);
     };
-  }, [setDimensions]);
+  }, [setContainer]);
 
-  if (!isTestingEnv) { // isTestingEnvironment is not a valid style param and would be removed from the url if we use setStyleParamsInUrl. this removed this protection for testing environment as well
-    setStyleParamsInUrl(styleParams);
+  if (!isTestingEnv) { // isTestingEnvironment is not a valid option and would be removed from the url if we use setOptionsInUrl. this removed this protection for testing environment as well
+    setOptionsInUrl(options);
   }
 
   const blueprintProps = gallerySettings.useBlueprints ? getOrInitBlueprint() :
   {
     items: getItems(),
-    options: styleParams,
+    options: getFutureSlideshowSupportedOptions(options),
     container: getContainer()
   };
 
-  // console.log('Rendering App: ', {styleParams, items, dimensions, showSide, blueprint, blueprintProps})
+  // console.log('Rendering App: ', {options, items, dimensions, showSide, blueprint, blueprintProps})
   const getKeySettings = () => {
     const { mediaType, numberOfItems, isUnknownDimensions, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand} = gallerySettings;
     return { mediaType, numberOfItems, isUnknownDimensions, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
   }
 
-  let GalleryComponent;
+  let GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProGalleryRenderer : ProGallery);
 
-  const shouldRenderLeanGallery = isEligibleForLeanGallery({
-    items: getItems(),
-    styles: styleParams,
-    totalItemsCount: getTotalItemsCount()
-  });
+  // const shouldRenderLeanGallery = isEligibleForLeanGallery({
+  //   items: getItems(),
+  //   styles: options,
+  //   totalItemsCount: getTotalItemsCount()
+  // });
 
-  if(!shouldRenderLeanGallery) {
-    GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProGalleryRenderer : ProGallery);
-  } else {
-    GalleryComponent = LeanGallery;
-  };
+  // if(!shouldRenderLeanGallery) {
+  //   GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProGalleryRenderer : ProGallery);
+  // } else {
+  //   GalleryComponent = LeanGallery;
+  // };
 
   window.playgroundItems = getItems();
-  
+
   return (
     <main id="sidebar_main" className={s.main}>
       {/* <Loader/> */}
@@ -288,25 +290,24 @@ export function App() {
       <section className={s.gallery} style={{paddingLeft: showSide && !utils.isMobile() ? SIDEBAR_WIDTH : 0}}>
         {!canRender() ? <div>Waiting for blueprint...</div> : addResizable(GalleryComponent, {
           key: `pro-gallery-${JSON.stringify(getKeySettings())}-${getItems()[0].itemId}`,
-          domId: 'pro-gallery-playground',
-          scrollingElement: () => (gallerySettings.responsivePreview ? document.getElementById('resizable') : window),
+          id: 'pro-gallery-playground',
+          scrollingElement: gallerySettings.responsivePreview ? document.getElementById('resizable') : window,
           viewMode: gallerySettings.viewMode,
           eventsListener: eventListener,
           totalItemsCount: getTotalItemsCount(),
-          resizeMediaUrl: resizeMediaUrl,
+          createMediaUrl: createMediaUrl,
           settings: {avoidInlineStyles: !gallerySettings.useInlineStyles, disableSSROpacity: gallerySettings.viewMode === 'PRERENDER'},
-          currentIdx: gallerySettings.initialIdx,
-          useBlueprints: gallerySettings.useBlueprints,
-          useLayoutFixer: gallerySettings.useLayoutFixer,
-          ...getExternalInfoRenderers(),
+          activeIndex: gallerySettings.initialIdx,
+          customComponents: getCustomComponents(),
           ...blueprintProps
-        }, resizedDims, dims => {setDimensions(dims); setResizedDims(dims)}, gallerySettings)}
+        }, resizedDims, dims => {setContainer(dims); setResizedDims(dims)}, gallerySettings)}
       </section>
     </main>
   );
 }
 
 const addResizable = (Component, props, resizedDims, setResizedDims, gallerySettings) => {
+  props.shouldValidateTypes = false
   return gallerySettings.responsivePreview ? (<div style={{
     background: '#666',
     width: '100%',

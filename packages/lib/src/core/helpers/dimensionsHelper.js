@@ -2,9 +2,9 @@ import { default as GALLERY_CONSTS } from '../../common/constants/index';
 
 class DimensionsHelper {
   constructor() {
-    this.styles = {};
+    this.options = {};
     this.container = {};
-    this.domId = '';
+    this.id = '';
     this._cache = {};
   }
 
@@ -18,10 +18,10 @@ class DimensionsHelper {
     this._cache = {};
   }
 
-  updateParams({ styles, container, domId }) {
+  updateParams({ options, container, id }) {
     this.dumpCache();
-    this.domId = domId || this.domId;
-    this.styles = styles || this.styles;
+    this.id = id || this.id;
+    this.options = options || this.options;
     this.container = container || this.container;
   }
 
@@ -40,12 +40,12 @@ class DimensionsHelper {
         //if was provided from the wrapper
         res.scrollBase += this.container.externalScrollBase;
       }
-      if (this.styles.hasThumbnails) {
+      if (this.options.hasThumbnails) {
         const fixedThumbnailSize =
-          this.styles.thumbnailSize +
-          this.styles.galleryMargin +
-          3 * this.styles.thumbnailSpacings;
-        switch (this.styles.galleryThumbnailsAlignment) {
+          this.options.thumbnailSize +
+          this.options.layoutParams.gallerySpacing +
+          3 * this.options.thumbnailSpacings;
+        switch (this.options.galleryThumbnailsAlignment) {
           case 'top':
           case 'bottom':
             res.galleryHeight -= fixedThumbnailSize;
@@ -57,8 +57,8 @@ class DimensionsHelper {
           default:
             break;
         }
-      } else if (this.styles.isSlideshow) {
-        res.galleryHeight -= this.styles.slideshowInfoSize;
+      } else if (GALLERY_CONSTS.isLayout('SLIDESHOW')(this.options)) {
+        res.galleryHeight -= this.options.slideshowInfoSize;
       }
       return res;
     });
@@ -68,12 +68,13 @@ class DimensionsHelper {
     return this.getOrPutInCache('galleryWidth', () => {
       let width = Math.floor(this.container.width) + this.getDimensionFix() * 2; //add margins to width and then remove them in css negative margins
       if (
-        this.styles.arrowsPosition ===
+        this.options.arrowsPosition ===
           GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY &&
-        this.styles.oneRow
+        this.options.scrollDirection ===
+          GALLERY_CONSTS.scrollDirection.HORIZONTAL
       ) {
         width -=
-          2 * (this.styles.arrowsSize + 40 + this.styles.imageMargin / 2);
+          2 * (this.options.arrowsSize + 40 + this.options.imageMargin / 2);
       }
       return width;
     });
@@ -81,9 +82,12 @@ class DimensionsHelper {
 
   getGalleryHeight() {
     return this.getOrPutInCache('galleryHeight', () => {
-      //const offsetTop = this.styles.oneRow ? this.container.offsetTop : 0;
+      //const offsetTop = this.options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL ? this.container.offsetTop : 0;
       const dimensionFix = () =>
-        this.styles.oneRow ? this.getDimensionFix() : 0;
+        this.options.scrollDirection ===
+        GALLERY_CONSTS.scrollDirection.HORIZONTAL
+          ? this.getDimensionFix()
+          : 0;
       const res = Math.floor(
         (this.container.height > 0 ? this.container.height : 0) + dimensionFix()
       );
@@ -94,7 +98,8 @@ class DimensionsHelper {
   getDimensionFix() {
     return this.getOrPutInCache('dimensionFix', () => {
       return (
-        Number(this.styles.imageMargin / 2) - Number(this.styles.galleryMargin)
+        Number(this.options.imageMargin / 2) -
+        Number(this.options.layoutParams.gallerySpacing)
       );
     });
   }
