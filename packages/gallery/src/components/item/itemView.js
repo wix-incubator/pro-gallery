@@ -1007,11 +1007,11 @@ class ItemView extends React.Component {
         {this.getBottomInfoElementIfNeeded()}
       </div>
     );
-    // const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(options)
+    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(options)
 
-    // if (isSlideshow) {
-    //   return <a>{innerDiv}</a>;
-    // } else {
+    if (isSlideshow) {
+      return <a>{innerDiv}</a>;
+    } else {
       return (
         <a
           ref={(e) => (this.itemAnchor = e)}
@@ -1039,7 +1039,7 @@ class ItemView extends React.Component {
           {innerDiv}
         </a>
       );
-    // }
+    }
   }
 
   //-----------------------------------------| RENDER |--------------------------------------------//
