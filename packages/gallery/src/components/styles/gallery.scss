@@ -742,7 +742,7 @@ div.pro-gallery {
 }  
 
 [data-hook="group-view"] a::before {   
-      @include element;
+    @include element;
 }
 
 .gallery-item-container {
