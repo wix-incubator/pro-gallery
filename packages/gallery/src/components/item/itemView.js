@@ -1010,7 +1010,7 @@ class ItemView extends React.Component {
     const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(options)
 
     if (isSlideshow) {
-      return <a>{innerDiv}</a>;
+      return innerDiv;
     } else {
       return (
         <a
