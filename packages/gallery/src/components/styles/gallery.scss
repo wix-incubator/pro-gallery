@@ -728,7 +728,6 @@ div.pro-gallery {
 }
 
 @mixin element {
-  content: '';
   position: absolute;
   scroll-snap-align: center;
   top: var(--group-top);
@@ -737,14 +736,22 @@ div.pro-gallery {
   right: var(--group-right);
 }
 
-.gallery-slideshow [data-hook="group-view"]::before {   
+.pro-gallery-parent-container.gallery-slideshow [data-hook="group-view"]::before {   
+  content: 'slideshow';
     @include element;
 }  
 
-.gallery:not(.gallery-slideshow) [data-hook="group-view"] a::before {   
-    @include element;
+.pro-gallery-parent-container:not(.gallery-slideshow) {
+  & [data-hook="group-view"] a::before { 
+  content: 'regular';
+  @include element;
+  }
 }
 
 .gallery-item-container {
     scroll-snap-align: none !important;
 }
+
+
+
+
