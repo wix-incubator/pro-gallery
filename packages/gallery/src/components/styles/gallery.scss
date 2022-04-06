@@ -728,6 +728,7 @@ div.pro-gallery {
 }
 
 @mixin element {
+  content: '';
   position: absolute;
   scroll-snap-align: center;
   top: var(--group-top);
@@ -736,17 +737,18 @@ div.pro-gallery {
   right: var(--group-right);
 }
 
-.pro-gallery-parent-container.gallery-slideshow [data-hook="group-view"]::before {   
-  content: 'slideshow';
-    @include element;
-}  
+$group-view: '[data-hook="group-view"]';
 
-.pro-gallery-parent-container:not(.gallery-slideshow) {
-  & [data-hook="group-view"] a::before { 
-  content: 'regular';
-  @include element;
+.pro-gallery-parent-container{
+  &.gallery-slideshow #{$group-view}::before {   
+      @include element;
   }
-}
+  &:not(.gallery-slideshow) {
+    & #{$group-view} a::before { 
+    @include element;
+    }
+  }
+} 
 
 .gallery-item-container {
     scroll-snap-align: none !important;
