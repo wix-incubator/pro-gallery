@@ -727,7 +727,7 @@ div.pro-gallery {
   }
 }
 
-@mixin element {
+@mixin scroll-snap-element {
   content:'';
   position: absolute;
   scroll-snap-align: center;
@@ -741,11 +741,11 @@ $group-view: '[data-hook="group-view"]';
 
 .pro-gallery-parent-container{
   &.gallery-slideshow #{$group-view}::before {   
-      @include element;
+      @include scroll-snap-element;
   }
   &:not(.gallery-slideshow) {
     & #{$group-view} a::before { 
-      @include element;
+      @include scroll-snap-element;
     }
   }
 } 
