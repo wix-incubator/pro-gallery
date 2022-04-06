@@ -74,6 +74,7 @@ export default class ScrollIndicator extends React.Component {
           GALLERY_CONSTS.scrollDirection.HORIZONTAL
         ) {
           this.setState({
+            scrollTop: left,
             scrollLeft: left,
           });
           this.props.getMoreItemsIfNeeded(left);
@@ -81,6 +82,7 @@ export default class ScrollIndicator extends React.Component {
         }
       }
     };
+
     if (
       this.props.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
     ) {
@@ -114,6 +116,7 @@ export default class ScrollIndicator extends React.Component {
         ) {
           this.props.getMoreItemsIfNeeded(top);
         }
+        this.debouncedOnScroll({ top });
       }
     };
     try {
