@@ -745,7 +745,7 @@ $group-view: '[data-hook="group-view"]';
   }
   &:not(.gallery-slideshow) {
     & #{$group-view} a::before { 
-    @include element;
+      @include element;
     }
   }
 } 
