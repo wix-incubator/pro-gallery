@@ -741,7 +741,7 @@ div.pro-gallery {
     @include element;
 }  
 
-[data-hook="group-view"] a::before {   
+.gallery:not(.gallery-slideshow) [data-hook="group-view"] a::before {   
     @include element;
 }
 
