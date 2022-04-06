@@ -728,7 +728,7 @@ div.pro-gallery {
 }
 
 @mixin element {
-  content: '';
+  content:'';
   position: absolute;
   scroll-snap-align: center;
   top: var(--group-top);
