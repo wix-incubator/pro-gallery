@@ -726,3 +726,34 @@ div.pro-gallery {
     background-color: rgba(241, 241, 241, 0.2);
   }
 }
+
+@mixin scroll-snap-element {
+  content:'';
+  position: absolute;
+  scroll-snap-align: center;
+  top: var(--group-top);
+  left: var(--group-left);
+  width: var(--group-width);
+  right: var(--group-right);
+}
+
+$group-view: '[data-hook="group-view"]';
+
+.pro-gallery-parent-container{
+  &.gallery-slideshow #{$group-view}::before {   
+      @include scroll-snap-element;
+  }
+  &:not(.gallery-slideshow) {
+    & #{$group-view} a::before { 
+      @include scroll-snap-element;
+    }
+  }
+} 
+
+.gallery-item-container {
+    scroll-snap-align: none !important;
+}
+
+
+
+
