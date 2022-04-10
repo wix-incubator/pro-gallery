@@ -7,6 +7,7 @@ import {tomorrowNightEighties} from 'react-syntax-highlighter/dist/esm/styles/hl
 import s from './CodePanel.module.scss';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
 import { getOptionsFromUrl } from '../../constants/options'
+import { addMigratedOptions, flatToNested } from 'pro-gallery-lib'
 
 function CodePanel() {
 
@@ -27,11 +28,10 @@ function CodePanel() {
 
   const getStyleParams = () => {
     const {galleryLayout} = options;
-    return Object.entries({galleryLayout, ...getOptionsFromUrl(window.location.search)})
-      .reduce((acc, [key, value]) => {
-        const val = typeof value === 'string' ? `'${value}'` : value;
-        return acc.concat(`      ${key}: ${val},`);
-    }, []).join(`\n`);
+    const migratedOptions = flatToNested(addMigratedOptions({galleryLayout, ...getOptionsFromUrl(window.location.search)}));
+    let {layoutParams, behaviourParams, stylingParams } = migratedOptions;
+    const v4Options = {layoutParams, behaviourParams, stylingParams }
+    return JSON.stringify(v4Options, null, 4);
   }
 
   const code = getCode(getStyleParams());
