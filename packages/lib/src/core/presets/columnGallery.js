@@ -13,7 +13,6 @@ const fixToColumn = (options) => {
   presetOptions.isVertical = false;
   presetOptions.groupSize = 1;
   presetOptions.groupTypes = '1';
-  presetOptions.slideshowLoop = false;
   presetOptions.numberOfImagesPerCol = 1;
   presetOptions.smartCrop = false;
   presetOptions.galleryType = 'Strips';
