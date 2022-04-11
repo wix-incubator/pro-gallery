@@ -590,7 +590,7 @@ div.pro-gallery {
       &.highlight {
         &:before {
           content: '';
-          z-index: 40;
+          z-index: 0;
           display: block;
           height: 100%;
           position: absolute;
