@@ -22,7 +22,7 @@
     "image-client-api": "^1.3130.0",
     "lean-gallery": "4.0.15-beta.258",
     "lodash.clonedeep": "^4.5.0",
-    "moment": "2.24.0",
+    "moment": "2.29.2",
     "pro-gallery": "4.0.15-beta.258",
     "pro-gallery-blueprints": "4.0.15-beta.258",
     "pro-gallery-lib": "4.0.15-beta.258",
