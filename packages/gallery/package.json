@@ -93,8 +93,7 @@
       "<rootDir>/target"
     ],
     "setupFilesAfterEnv": [
-      "<rootDir>/tests/drivers/mocks/jest-setup.js",
-      "<rootDir>/tests/environment-setup.js"
+      "<rootDir>/tests/drivers/mocks/jest-setup.js"
     ]
   }
 }
