@@ -870,7 +870,7 @@ class SlideshowView extends React.Component {
       const columnStyle = {
         width: this.props.isPrerenderMode ? '100%' : column.width,
         height: this.getDimensions().height,
-        overflowY: 'visible',
+        overflowY: this.props.isPrerenderMode ? 'visible' : 'hidden',
       };
       return (
         <div
