@@ -575,7 +575,7 @@ class SlideshowView extends React.Component {
                 className={
                   'thumbnailItem' +
                   (highlighted
-                    ? ' pro-gallery-thumbnails-highlighted highlight' +
+                    ? ' pro-gallery-thumbnails-highlighted pro-gallery-highlight' +
                       (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')
                     : '')
                 }

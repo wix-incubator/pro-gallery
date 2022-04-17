@@ -798,7 +798,7 @@ class ItemView extends React.Component {
     const classNames = {
       'gallery-item-container': true,
       visible: true,
-      highlight: this.isHighlight(),
+      'pro-gallery-highlight': this.isHighlight(),
       clickable: options.itemClick !== 'nothing',
       'simulate-hover': this.simulateHover(),
       'hide-hover': !this.simulateHover() && utils.isMobile(),

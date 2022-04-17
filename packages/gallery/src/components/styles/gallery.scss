@@ -587,7 +587,7 @@ div.pro-gallery {
       border-radius: 0px;
       cursor: pointer;
       
-      &.highlight {
+      &.pro-gallery-highlight {
         &:before {
           content: '';
           z-index: 1;
@@ -639,7 +639,7 @@ div.pro-gallery {
     }
 
 
-    .thumbnailItem.highlight::before {
+    .thumbnailItem.pro-gallery-highlight::before {
       box-shadow: inset 0 0 1px 2px $wix-blue, inset 0 0 7px 0 $white, 0 0 10px -5px $wix-blue;
     }
 
