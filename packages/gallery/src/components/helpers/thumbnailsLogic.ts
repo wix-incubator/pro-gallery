@@ -83,6 +83,7 @@ export function getThumbnailsData({
     console.log('creating thumbnails for idx', activeIndex);
   }
 
+  const withInfiniteScroll = false; // this is not supported yet
   const thumbnailSizeWithSpacing = thumbnailSize + thumbnailSpacings * 2;
   const horizontalThumbnails =
     thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM ||
@@ -106,11 +107,9 @@ export function getThumbnailsData({
   const itemRangeStart = activeIndexWithOffset - thumbnailsInEachSide;
   const itemRangeEnd = itemRangeStart + numberOfThumbnails;
 
-  const itemToDisplay = utils.sliceArrayWithRange(
-    galleryItems,
-    itemRangeStart,
-    itemRangeEnd
-  );
+  const itemToDisplay = withInfiniteScroll
+    ? utils.sliceArrayWithRange(galleryItems, itemRangeStart, itemRangeEnd)
+    : utils.sliceArrayIfAvailable(galleryItems, itemRangeStart, itemRangeEnd);
 
   const thumbnailsStyle = getThumbnailsStyles({
     horizontalThumbnails,
@@ -136,7 +135,7 @@ export function getThumbnailsData({
   });
   return {
     items: itemToDisplay.map(({ item, thumbnailItem, idx }, index) => {
-      const offset = index + itemRangeStart;
+      const offset = index + itemToDisplay[0].idx;
       return {
         thumbnailItem: thumbnailItem,
         item: item,
@@ -214,17 +213,14 @@ function getThumbnailsStyles({
     width,
     height,
   };
-  if (horizontalThumbnails) {
-    const initialCenter = width / 2 - thumbnailSizeWithSpacing / 2;
-    return {
-      ...baseStyle,
-      left: initialCenter - thumbnailSizeWithSpacing * activeIndex,
-    };
-  }
-  const initialCenter = height / 2 - thumbnailSizeWithSpacing / 2;
+  const size = horizontalThumbnails ? width : height;
+  const unit = horizontalThumbnails ? 'left' : 'top';
+  const distance = thumbnailSizeWithSpacing * activeIndex;
+  const initialCenter = size / 2 - thumbnailSizeWithSpacing / 2;
+
   return {
     ...baseStyle,
-    top: initialCenter - thumbnailSizeWithSpacing * activeIndex,
+    [unit]: distance < initialCenter ? 0 : initialCenter - distance,
   };
 }
 

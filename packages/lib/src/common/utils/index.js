@@ -57,6 +57,22 @@ class Utils {
       });
   }
 
+  sliceArrayIfAvailable(
+    array,
+    start,
+    end
+  ) {
+    let maxStart = Math.max(start, 0);
+    let minEnd = Math.min(end, array.length);
+    if (maxStart > start) {
+      minEnd = Math.min(minEnd + (maxStart - start), array.length);
+    }
+    if (minEnd < end) {
+      maxStart = Math.max(maxStart - (end - minEnd), 0);
+    }
+    return this.sliceArrayWithRange(array, maxStart, minEnd);
+  }
+
   dumpCache() {
     this._cache = {};
   }
