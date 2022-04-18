@@ -331,6 +331,7 @@ export class GalleryContainer extends React.Component {
     createMediaUrl,
     isPrerenderMode,
     customComponents,
+    isInDisplay,
   }) {
     items = items || this.props.items;
     options = options || this.props.options;
@@ -374,6 +375,7 @@ export class GalleryContainer extends React.Component {
       itemClick: options.itemClick,
       scrollDirection: options.scrollDirection,
       cb: this.setPlayingIdxState,
+      isInDisplay,
     };
 
     this.videoScrollHelper.updateGalleryStructure(
