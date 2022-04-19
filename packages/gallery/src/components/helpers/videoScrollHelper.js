@@ -14,7 +14,6 @@ const VIDEO_EVENTS = {
 
 class VideoScrollHelper {
   constructor(config) {
-    this.isInDisplay = true;
     this.scrollBase = 0;
     this.videoItems = [];
     this.currentPlayingIdx = -1;
@@ -49,14 +48,12 @@ class VideoScrollHelper {
     videoLoop,
     itemClick,
     scrollDirection,
-    isInDisplay,
   }) {
     this.galleryWidth = galleryWidth;
     this.scrollBase = scrollBase;
     this.videoPlay = videoPlay;
     this.videoLoop = videoLoop;
     this.itemClick = itemClick;
-    this.isInDisplay = isInDisplay;
     this.scrollDirection = scrollDirection;
     this.currentItemCount = galleryStructure.galleryItems.length;
     this.videoItems = [];
@@ -235,10 +232,8 @@ class VideoScrollHelper {
   }
 
   play(idx) {
-    if (this.isInDisplay) {
-      this.setPlayingIdx(idx);
-      this.playing = true;
-    }
+    this.setPlayingIdx(idx);
+    this.playing = true;
   }
 
   stop(indexInVideoItems) {
