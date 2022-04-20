@@ -1031,7 +1031,7 @@ class ItemView extends React.Component {
         ref: (e) => (this.itemAnchor = e),
         'data-id': photoId,
         'data-idx': idx,
-        key: 'item-container-link-' + id,
+        'data-hook': 'item-link-wrapper',
         onFocus: handleFocus,
         tabIndex: -1,
         onKeyDown: handleKeyDown,
@@ -1039,8 +1039,9 @@ class ItemView extends React.Component {
       if (linkParams?.href?.length>0) {
         return (
           <a
-            {...elementProps}
-            {...linkParams}
+          key={ 'item-container-link-' + id}
+          {...elementProps}
+          {...linkParams}
           >
             {innerDiv}
           </a>
@@ -1048,7 +1049,8 @@ class ItemView extends React.Component {
       } else {
         return (
           <div
-            {...elementProps}
+          key={ 'item-container-div-' + id}
+          {...elementProps}
           >
             {innerDiv}
           </div>

@@ -19,7 +19,9 @@ describe('options - shouldIndexDirectShareLinkInSEO', () => {
   async function mountUpdateAndGetLinkProps(sample) {
     driver.mount(ItemView, sample);
     await driver.update();
-    const linkProps = driver.find.selector('a').props();
+    const linkProps = driver.find
+      .selector('[data-hook="item-link-wrapper"]')
+      .props();
     return linkProps;
   }
   it('should use "rel" attribute for preventing seo indexing - itemClick = expand', async () => {
