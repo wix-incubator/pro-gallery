@@ -1028,32 +1028,32 @@ class ItemView extends React.Component {
     } else {
       const linkParams = getLinkParams(this.props)
       const elementProps = {
-        ref:(e) => (this.itemAnchor = e),
-        'data-id':photoId,
-        'data-idx':idx,
-        key:'item-container-link-' + id,
-        onFocus:handleFocus,
-        tabIndex:-1,
-        onKeyDown:handleKeyDown,
+        ref: (e) => (this.itemAnchor = e),
+        'data-id': photoId,
+        'data-idx': idx,
+        key: 'item-container-link-' + id,
+        onFocus: handleFocus,
+        tabIndex: -1,
+        onKeyDown: handleKeyDown,
       }
-      if(linkParams?.href?.length>0) {
-      return (
-        <a
-          {...elementProps}
-          {...linkParams}
-        >
-          {innerDiv}
-        </a>
-      );
-        } else {
-          return (
-            <div
+      if (linkParams?.href?.length>0) {
+        return (
+          <a
             {...elementProps}
-            >
-              {innerDiv}
-            </div>
-          );
-        }
+            {...linkParams}
+          >
+            {innerDiv}
+          </a>
+        );
+      } else {
+        return (
+          <div
+            {...elementProps}
+          >
+            {innerDiv}
+          </div>
+        );
+      }
     }
   }
 
