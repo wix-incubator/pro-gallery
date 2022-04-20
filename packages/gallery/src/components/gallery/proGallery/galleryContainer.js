@@ -564,10 +564,12 @@ export class GalleryContainer extends React.Component {
   }
 
   onGalleryScroll(scrollPosition) {
-    this.eventsListener(
-      GALLERY_CONSTS.events.GALLERY_SCROLLED,
-      scrollPosition
-    );
+    if(this.props.isInDisplay){
+      this.eventsListener(
+        GALLERY_CONSTS.events.GALLERY_SCROLLED,
+        scrollPosition
+      );
+    }
   }
 
 

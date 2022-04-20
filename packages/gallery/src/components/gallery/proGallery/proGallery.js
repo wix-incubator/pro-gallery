@@ -42,6 +42,7 @@ export default class ProGallery extends React.Component {
       settings: this.props.settings || {},
       offsetTop: this.props.offsetTop,
       proGalleryRegionLabel: this.props.proGalleryRegionLabel,
+      isInDisplay: this.props.isInDisplay ?? true,
     };
   }
 
