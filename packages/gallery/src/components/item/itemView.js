@@ -1008,37 +1008,55 @@ class ItemView extends React.Component {
       </div>
     );
     const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(options)
-
+    const handleKeyDown = (e) => {
+      /* Relvenat only for Screen-Reader case:
+      Screen-Reader ignores the tabIdex={-1} and therefore stops and focuses on the <a> tag keyDown event,
+      so it will not go deeper to the item-container keyDown event.
+      */
+      this.onAnchorKeyDown(e);
+    }
+    const handleFocus = () => {
+      onAnchorFocus({
+        itemAnchor: this.itemAnchor,
+        enableExperimentalFeatures:
+          this.props.enableExperimentalFeatures,
+        itemContainer: this.itemContainer,
+      });
+    }
     if (isSlideshow) {
       return innerDiv;
     } else {
+      const linkParams = getLinkParams(this.props)
+      if(linkParams?.href?.length>0) {
       return (
         <a
           ref={(e) => (this.itemAnchor = e)}
           data-id={photoId}
           data-idx={idx}
           key={'item-container-link-' + id}
-          onFocus={() => {
-            onAnchorFocus({
-              itemAnchor: this.itemAnchor,
-              enableExperimentalFeatures:
-                this.props.enableExperimentalFeatures,
-              itemContainer: this.itemContainer,
-            });
-          }}
-          {...getLinkParams(this.props)}
+          onFocus={handleFocus}
+          {...linkParams}
           tabIndex={-1}
-          onKeyDown={(e) => {
-            /* Relvenat only for Screen-Reader case:
-            Screen-Reader ignores the tabIdex={-1} and therefore stops and focuses on the <a> tag keyDown event,
-            so it will not go deeper to the item-container keyDown event.
-            */
-            this.onAnchorKeyDown(e);
-          }}
+          onKeyDown={handleKeyDown}
         >
           {innerDiv}
         </a>
       );
+        } else {
+          return (
+            <div
+              ref={(e) => (this.itemAnchor = e)}
+              data-id={photoId}
+              data-idx={idx}
+              key={'item-container-div-' + id}
+              onFocus={handleFocus}
+              tabIndex={-1}
+              onKeyDown={handleKeyDown}
+            >
+              {innerDiv}
+            </div>
+          );
+        }
     }
   }
 
@@ -1051,3 +1069,4 @@ class ItemView extends React.Component {
 
 export default ItemView;
 /* eslint-enable prettier/prettier */
+console.log('LOCAL');
