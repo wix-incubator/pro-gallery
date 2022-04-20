@@ -1027,17 +1027,20 @@ class ItemView extends React.Component {
       return innerDiv;
     } else {
       const linkParams = getLinkParams(this.props)
+      const elementProps = {
+        ref:(e) => (this.itemAnchor = e),
+        'data-id':photoId,
+        'data-idx':idx,
+        key:'item-container-link-' + id,
+        onFocus:handleFocus,
+        tabIndex:-1,
+        onKeyDown:handleKeyDown,
+      }
       if(linkParams?.href?.length>0) {
       return (
         <a
-          ref={(e) => (this.itemAnchor = e)}
-          data-id={photoId}
-          data-idx={idx}
-          key={'item-container-link-' + id}
-          onFocus={handleFocus}
+          {...elementProps}
           {...linkParams}
-          tabIndex={-1}
-          onKeyDown={handleKeyDown}
         >
           {innerDiv}
         </a>
@@ -1045,13 +1048,7 @@ class ItemView extends React.Component {
         } else {
           return (
             <div
-              ref={(e) => (this.itemAnchor = e)}
-              data-id={photoId}
-              data-idx={idx}
-              key={'item-container-div-' + id}
-              onFocus={handleFocus}
-              tabIndex={-1}
-              onKeyDown={handleKeyDown}
+            {...elementProps}
             >
               {innerDiv}
             </div>
@@ -1069,4 +1066,3 @@ class ItemView extends React.Component {
 
 export default ItemView;
 /* eslint-enable prettier/prettier */
-console.log('LOCAL');
