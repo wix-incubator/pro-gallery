@@ -20,6 +20,7 @@ import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper';
 import findNeighborItem from '../../helpers/layoutUtils';
 import ImageRenderer from '../../item/imageRenderer';
 import { isGalleryInViewport, Deferred } from './galleryHelpers';
+import { ProGalleryContext } from '../../base';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -852,98 +853,104 @@ export class GalleryContainer extends React.Component {
 
     const displayShowMore = this.containerInfiniteGrowthDirection() === 'none';
     return (
-      <div
-        data-key="pro-gallery-inner-container"
-        key="pro-gallery-inner-container"
-        className={this.props.isPrerenderMode ? 'pro-gallery-prerender' : ''}
-        onMouseEnter={this.onMouseEnter}
-        onMouseLeave={this.onMouseLeave}
-        ref={e => this.galleryContainerRef = e}
-        tabIndex={-1}
-      >
-        <ScrollIndicator
-          id={this.props.id}
-          scrollDirection={this.props.options.scrollDirection}
-          isRTL={this.props.options.isRTL}
-          totalWidth={this.galleryStructure.width}
-          scrollBase={this.props.container.scrollBase}
-          scrollingElement={this._scrollingElement}
-          getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
-          setGotFirstScrollIfNeeded={this.setGotFirstScrollIfNeeded}
-          onScroll={this.onGalleryScroll}
-        />
-        <ViewComponent
-          isInDisplay={this.props.isInDisplay}
-          isInViewport={this.state.isInViewport}
-          isPrerenderMode={this.props.isPrerenderMode}
-          scrollingElement={this._scrollingElement}
-          totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
-          renderedItemsCount={this.props.renderedItemsCount}
-          getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
-          gotFirstScrollEvent={this.state.gotFirstScrollEvent}
-          setGotFirstScrollIfNeeded={this.setGotFirstScrollIfNeeded}
-          items={this.state.items}
-          getVisibleItems={this.getVisibleItems}
-          galleryStructure={this.galleryStructure}
-          options={this.props.options}
-          container={this.props.container}
-          settings={this.props.settings}
-          displayShowMore={displayShowMore}
-          id={this.props.id}
-          activeIndex={this.props.activeIndex || 0}
-          customComponents={this.props.customComponents}
-          playingVideoIdx={this.state.playingVideoIdx}
-          noFollowForSEO={this.props.noFollowForSEO}
-          proGalleryRegionLabel={this.props.proGalleryRegionLabel}
-          proGalleryRole={this.props.proGalleryRole}
-          firstUserInteractionExecuted={this.state.firstUserInteractionExecuted}
-          isGalleryInHover={this.state.isInHover}
-          enableExperimentalFeatures={this.props.enableExperimentalFeatures}
-          galleryContainerRef={this.galleryContainerRef}
-          outOfViewComponent={this.outOfViewComponent}
-          virtualizationSettings={this.props.virtualizationSettings}
-          galleryContainerId={`pro-gallery-container-${this.props.id}`}
-          scrollTop={this.state?.scrollPosition?.top}
-          actions={{
-            ...this.props.actions,
-            findNeighborItem: this.findNeighborItem,
-            toggleLoadMoreItems: this.toggleLoadMoreItems,
-            eventsListener: this.eventsListener,
-            setWixHeight: () => {},
-            scrollToItem: this.scrollToItem,
-            scrollToGroup: this.scrollToGroup,
-          }}
-          {...this.props.gallery}
-        />
+      <ProGalleryContext.Provider value={{
+        ...this.props,
+        containerRef: this.gallery,
+        galleryStructure: this.galleryStructure,
+      }}>
         <div
-          data-key="items-styles"
-          key="items-styles"
-          style={{ display: 'none' }}
+          data-key="pro-gallery-inner-container"
+          key="pro-gallery-inner-container"
+          className={this.props.isPrerenderMode ? 'pro-gallery-prerender' : ''}
+          onMouseEnter={this.onMouseEnter}
+          onMouseLeave={this.onMouseLeave}
+          ref={e => this.galleryContainerRef = e}
+          tabIndex={-1}
         >
-          {(this.layoutCss || []).filter(Boolean).map((css, idx) => (
-            <style
-              id={`layoutCss-${idx}`}
-              key={`layoutCss-${idx}`}
-              dangerouslySetInnerHTML={{ __html: css }}
-            />
-          ))}
-          {(this.scrollCss || []).filter(Boolean).map((css, idx) => (
-            <style
-              id={`scrollCss_${idx}`}
-              key={`scrollCss_${idx}`}
-              dangerouslySetInnerHTML={{ __html: css }}
-            />
-          ))}
-          {!!this.dynamicStyles && (
-            <style dangerouslySetInnerHTML={{ __html: this.dynamicStyles }} />
-          )}
+          <ScrollIndicator
+            id={this.props.id}
+            scrollDirection={this.props.options.scrollDirection}
+            isRTL={this.props.options.isRTL}
+            totalWidth={this.galleryStructure.width}
+            scrollBase={this.props.container.scrollBase}
+            scrollingElement={this._scrollingElement}
+            getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
+            setGotFirstScrollIfNeeded={this.setGotFirstScrollIfNeeded}
+            onScroll={this.onGalleryScroll}
+          />
+          <ViewComponent
+            isInDisplay={this.props.isInDisplay}
+            isInViewport={this.state.isInViewport}
+            isPrerenderMode={this.props.isPrerenderMode}
+            scrollingElement={this._scrollingElement}
+            totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
+            renderedItemsCount={this.props.renderedItemsCount}
+            getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
+            gotFirstScrollEvent={this.state.gotFirstScrollEvent}
+            setGotFirstScrollIfNeeded={this.setGotFirstScrollIfNeeded}
+            items={this.state.items}
+            getVisibleItems={this.getVisibleItems}
+            galleryStructure={this.galleryStructure}
+            options={this.props.options}
+            container={this.props.container}
+            settings={this.props.settings}
+            displayShowMore={displayShowMore}
+            id={this.props.id}
+            activeIndex={this.props.activeIndex || 0}
+            customComponents={this.props.customComponents}
+            playingVideoIdx={this.state.playingVideoIdx}
+            noFollowForSEO={this.props.noFollowForSEO}
+            proGalleryRegionLabel={this.props.proGalleryRegionLabel}
+            proGalleryRole={this.props.proGalleryRole}
+            firstUserInteractionExecuted={this.state.firstUserInteractionExecuted}
+            isGalleryInHover={this.state.isInHover}
+            enableExperimentalFeatures={this.props.enableExperimentalFeatures}
+            galleryContainerRef={this.galleryContainerRef}
+            outOfViewComponent={this.outOfViewComponent}
+            virtualizationSettings={this.props.virtualizationSettings}
+            galleryContainerId={`pro-gallery-container-${this.props.id}`}
+            scrollTop={this.state?.scrollPosition?.top}
+            actions={{
+              ...this.props.actions,
+              findNeighborItem: this.findNeighborItem,
+              toggleLoadMoreItems: this.toggleLoadMoreItems,
+              eventsListener: this.eventsListener,
+              setWixHeight: () => {},
+              scrollToItem: this.scrollToItem,
+              scrollToGroup: this.scrollToGroup,
+            }}
+            {...this.props.gallery}
+          />
+          <div
+            data-key="items-styles"
+            key="items-styles"
+            style={{ display: 'none' }}
+          >
+            {(this.layoutCss || []).filter(Boolean).map((css, idx) => (
+              <style
+                id={`layoutCss-${idx}`}
+                key={`layoutCss-${idx}`}
+                dangerouslySetInnerHTML={{ __html: css }}
+              />
+            ))}
+            {(this.scrollCss || []).filter(Boolean).map((css, idx) => (
+              <style
+                id={`scrollCss_${idx}`}
+                key={`scrollCss_${idx}`}
+                dangerouslySetInnerHTML={{ __html: css }}
+              />
+            ))}
+            {!!this.dynamicStyles && (
+              <style dangerouslySetInnerHTML={{ __html: this.dynamicStyles }} />
+            )}
+          </div>
+            {this.props.proGalleryRole === 'application' && (
+              <span ref={(e) => this.outOfViewComponent = e} tabIndex={-1} className="sr-only out-of-view-component">
+                {this.props.translations?.Accessibility_Left_Gallery}
+              </span>
+            )}
         </div>
-          {this.props.proGalleryRole === 'application' && (
-            <span ref={(e) => this.outOfViewComponent = e} tabIndex={-1} className="sr-only out-of-view-component">
-              {this.props.translations?.Accessibility_Left_Gallery}
-            </span>
-          )}
-      </div>
+      </ProGalleryContext.Provider>
     );
   }
 }

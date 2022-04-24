@@ -1,9 +1,6 @@
 /* eslint-disable */
 export interface EventsListener {
-  (eventName: string, eventData: EventData): void;
+  (eventName: string, eventData: any, event?: any): void;
 }
 
-interface EventData {
-  [key: string]: any;
-}
 /* eslint-enable */
