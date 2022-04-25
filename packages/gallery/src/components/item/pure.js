@@ -5,7 +5,6 @@ import { GALLERY_CONSTS, utils, isSEOMode } from 'pro-gallery-lib';
 function getSlideAnimationStyles({ idx, activeIndex, options, container }) {
   const { isRTL, slideAnimation } = options;
   const baseStyles = {
-    position: 'absolute',
     display: 'block',
   };
   switch (slideAnimation) {
