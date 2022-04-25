@@ -41,8 +41,12 @@ describe('options - slideAnimation', () => {
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
-      const currentItem = driver.find.selector('.gallery-item-wrapper a').at(0);
-      const nextItem = driver.find.selector('.gallery-item-wrapper a').at(1);
+      const currentItem = driver.find
+        .selector('.gallery-item-wrapper a', '.gallery-item-wrapper div')
+        .at(0);
+      const nextItem = driver.find
+        .selector('.gallery-item-wrapper a', '.gallery-item-wrapper div')
+        .at(1);
       expect(getRelevantStylesForCompare(currentItem.props().style)).toEqual(
         currentFadeAnimationStylesMock
       );
@@ -52,7 +56,9 @@ describe('options - slideAnimation', () => {
       const button = driver.find.hook('nav-arrow-next');
       button.simulate('click');
       await driver.update(400);
-      const prevItem = driver.find.selector('.gallery-item-wrapper a').at(0);
+      const prevItem = driver.find
+        .selector('.gallery-item-wrapper a', '.gallery-item-wrapper div')
+        .at(0);
       expect(getRelevantStylesForCompare(prevItem.props().style)).toEqual(
         notCurrentFadeAnimationStylesMock
       );
@@ -65,7 +71,9 @@ describe('options - slideAnimation', () => {
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
-      const item = driver.find.selector('.gallery-item-wrapper a').at(0);
+      const item = driver.find
+        .selector('.gallery-item-wrapper a', '.gallery-item-wrapper div')
+        .at(0);
       expect(getRelevantStylesForCompare(item.props().style)).toEqual({});
     });
   });
