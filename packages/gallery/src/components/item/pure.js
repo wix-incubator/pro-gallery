@@ -8,6 +8,9 @@ function getSlideAnimationStyles({ idx, activeIndex, options, container }) {
     position: 'absolute',
     display: 'block',
   };
+  if (GALLERY_CONSTS.isLayout('FUTURE_SLIDESHOW')(options)) {
+    delete baseStyles.position;
+  }
   switch (slideAnimation) {
     case GALLERY_CONSTS.slideAnimations.FADE:
       return {
