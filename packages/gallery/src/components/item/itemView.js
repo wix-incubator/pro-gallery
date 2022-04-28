@@ -709,6 +709,7 @@ class ItemView extends React.Component {
         };
 
     let slideAnimationStyles;
+    const opacity =  activeIndex === idx ? 1 : 0
     switch (slideAnimation) {
       case GALLERY_CONSTS.slideAnimations.FADE:
         slideAnimationStyles = {
@@ -716,6 +717,7 @@ class ItemView extends React.Component {
           right: !isRTL ? 'auto' : 0,
           pointerEvents: activeIndex === idx ? 'auto' : 'none',
           zIndex: activeIndex === idx ? 0 : 1,
+          opacity,
         };
         break;
       case GALLERY_CONSTS.slideAnimations.DECK:
@@ -724,6 +726,7 @@ class ItemView extends React.Component {
           right: !isRTL ? 'auto' : 0,
           pointerEvents: activeIndex === idx ? 'auto' : 'none',
           zIndex: Math.sign(activeIndex - idx),
+          opacity,
         };
         break;
       default:
