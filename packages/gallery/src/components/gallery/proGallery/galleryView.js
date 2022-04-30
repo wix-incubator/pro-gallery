@@ -152,23 +152,23 @@ class GalleryView extends React.Component {
       galleryStructure.galleryItems,
       container
     );
-    const itemsWithVirtualizationData = getItemsInViewportOrMarginByScrollLocation({
+    const layout = getItemsInViewportOrMarginByScrollLocation({
       items,
       options,
       virtualizationSettings,
       galleryHeight: Math.min(galleryStructure.height, container.screen?.height || galleryStructure.height),
       scrollPosition: scrollTop || 0,
-    });
-    const layout = itemsWithVirtualizationData.map(({ item, shouldRender }, index) => {
-      const itemProps = item.renderProps({
-        ...galleryConfig,
-        visible: item.isVisible,
-        key: `itemView-${item.id}-${index}`,
-      });
-      return React.createElement(itemView, {
-        ...itemProps,
-        type: shouldRender ? itemProps.type : 'dummy',
-      });
+      render: ({ item, shouldRender }) => {
+        const itemProps = item.renderProps({
+          ...galleryConfig,
+          visible: item.isVisible,
+          key: item.id,
+        });
+        return React.createElement(itemView, {
+          ...itemProps,
+          type: shouldRender ? itemProps.type : 'dummy',
+        });
+      }
     });
 
     return (

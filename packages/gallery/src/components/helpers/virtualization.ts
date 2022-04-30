@@ -95,6 +95,7 @@ export function getItemsInViewportOrMarginByScrollLocation({
   galleryWidth,
   galleryHeight,
   scrollPosition,
+  render,
 }: {
   items: any[];
   options: Options;
@@ -102,25 +103,18 @@ export function getItemsInViewportOrMarginByScrollLocation({
   galleryWidth: number;
   galleryHeight: number;
   scrollPosition: number;
-}): { item: any; shouldRender: boolean }[] {
-  const {
-    enabled = false,
-    forwardItemScrollMargin = 10,
-    backwardItemScrollMargin = 10,
-  } = virtualizationSettings || {};
-
-  if (!enabled) {
-    return items.map((item) => ({
-      item,
-      shouldRender: true,
-    }));
-  }
+  render: (props: { item: string; shouldRender: boolean }) => JSX.Element;
+}): JSX.Element[] {
   const isHorizontal =
     options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
   const size = isHorizontal ? galleryWidth : galleryHeight;
   const unit = isHorizontal ? 'width' : 'height';
 
-  function shouldRenderItem(item) {
+  function shouldRenderItem(
+    item,
+    backwardItemScrollMargin,
+    forwardItemScrollMargin
+  ) {
     const group = item.group;
     const locationUnit = unit === 'height' ? 'top' : 'left';
     const location = group[locationUnit];
@@ -129,8 +123,24 @@ export function getItemsInViewportOrMarginByScrollLocation({
     const viewportEnd = scrollPosition + size * forwardItemScrollMargin;
     return location > viewportStart && locationEnd < viewportEnd;
   }
-  return items.map((item) => ({
-    item,
-    shouldRender: shouldRenderItem(item),
-  }));
+  const { forwardItemScrollMargin = 10, backwardItemScrollMargin = 10 } =
+    virtualizationSettings || {};
+  return items
+    .filter((item) =>
+      shouldRenderItem(
+        item,
+        backwardItemScrollMargin * 1.5,
+        forwardItemScrollMargin * 1.5
+      )
+    )
+    .map((item) =>
+      render({
+        item,
+        shouldRender: shouldRenderItem(
+          item,
+          backwardItemScrollMargin * 0.5,
+          forwardItemScrollMargin * 0.5
+        ),
+      })
+    );
 }

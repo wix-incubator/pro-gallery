@@ -459,9 +459,6 @@ class ItemView extends React.Component {
     }
 
     switch (type) {
-      case 'dummy':
-        itemInner = <div />;
-        break;
       case 'video':
         itemInner = this.getVideoItem(itemStyles, itemHover);
         break;
@@ -655,12 +652,36 @@ class ItemView extends React.Component {
     return !itemDoesntHaveLink;
   }
 
+  getItemPositionStyles(){
+    const {
+      offset,
+      style,
+      settings: {
+        avoidInlineStyles,
+      },
+      options: {
+        isRTL,
+      },
+    } = this.props;
+    const layoutStyles = avoidInlineStyles
+      ? {}
+      : {
+          top: offset.top,
+          left: isRTL ? 'auto' : offset.left,
+          right: !isRTL ? 'auto' : offset.left,
+          width: style.width + style.infoWidth,
+          height: style.height + style.infoHeight,
+        };
+    return {
+      position: 'absolute',
+      ...layoutStyles,
+    }
+  }
+
   getItemContainerStyles() {
     const {
       idx,
       activeIndex,
-      offset,
-      style,
       options,
       settings = {},
     } = this.props;
@@ -673,7 +694,6 @@ class ItemView extends React.Component {
 
     const itemStyles = {
       overflowY: isSlideshow ? 'visible' : 'hidden',
-      position: 'absolute',
       bottom: 'auto',
       margin:
         scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
@@ -698,15 +718,7 @@ class ItemView extends React.Component {
           transition: 'opacity .2s ease',
         };
 
-    const layoutStyles = avoidInlineStyles
-      ? {}
-      : {
-          top: offset.top,
-          left: isRTL ? 'auto' : offset.left,
-          right: !isRTL ? 'auto' : offset.left,
-          width: style.width + style.infoWidth,
-          height: style.height + style.infoHeight,
-        };
+    
 
     let slideAnimationStyles;
     switch (slideAnimation) {
@@ -742,7 +754,7 @@ class ItemView extends React.Component {
 
     const itemContainerStyles = {
       ...itemStyles,
-      ...layoutStyles,
+      ...this.getItemPositionStyles(),
       ...containerStyleByoptions,
       ...transitionStyles,
       ...opacityStyles,
@@ -1049,5 +1061,23 @@ class ItemView extends React.Component {
   }
 }
 
-export default ItemView;
+const withSimpleDummyItem = (Component) => {
+  return class extends Component {
+    render() {
+      const { type, photoId, id, idx } = this.props;
+      if (type === 'dummy') {
+        return (
+          <a data-id={photoId} data-idx={idx} key={'item-container-link-' + id}>
+            <div style={this.getItemPositionStyles()} />
+          </a>
+        );
+      } else {
+        return super.render();
+      }
+    }
+  };
+};
+
+
+export default withSimpleDummyItem(ItemView);
 /* eslint-enable prettier/prettier */
