@@ -128,7 +128,10 @@ describe('options - itemClick', () => {
       driver.mount.proGallery(initialProps);
       await driver.update();
       const item = driver.find
-        .selector('#pro-gallery-container-default-dom-id a')
+        .selector(
+          '#pro-gallery-container-default-dom-id a',
+          '#pro-gallery-container-default-dom-id div'
+        )
         .at(0);
       expect(item.props().href).to.not.be.undefined;
       driver.detach.proGallery();
@@ -140,7 +143,10 @@ describe('options - itemClick', () => {
       driver.mount.proGallery(initialProps);
       await driver.update();
       const item = driver.find
-        .selector('#pro-gallery-container-default-dom-id a')
+        .selector(
+          '#pro-gallery-container-default-dom-id a',
+          '#pro-gallery-container-default-dom-id div'
+        )
         .at(0);
       expect(item.props().href).to.be.undefined;
       driver.detach.proGallery();
