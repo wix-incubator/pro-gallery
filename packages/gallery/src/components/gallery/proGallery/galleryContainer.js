@@ -19,7 +19,7 @@ import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper';
 import findNeighborItem from '../../helpers/layoutUtils';
 import ImageRenderer from '../../item/imageRenderer';
-import { isGalleryInViewport, Deferred } from './galleryHelpers';
+import { isGalleryInViewport, Deferred, getIsScrollLessGallery } from './galleryHelpers';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
@@ -40,7 +40,6 @@ export class GalleryContainer extends React.Component {
     this.findNeighborItem = this.findNeighborItem.bind(this);
     this.setCurrentSlideshowViewIdx =
       this.setCurrentSlideshowViewIdx.bind(this);
-    this.getIsScrollLessGallery = this.getIsScrollLessGallery.bind(this);
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
     this.videoScrollHelper = new VideoScrollHelperWrapper(
@@ -268,13 +267,6 @@ export class GalleryContainer extends React.Component {
     );
   }
 
-  getIsScrollLessGallery(options) {
-    const { scrollDirection, slideAnimation } = options;
-    return (
-      scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-      slideAnimation !== GALLERY_CONSTS.slideAnimations.SCROLL
-    );
-  }
 
   getVisibleItems(items, container) {
     const { gotFirstScrollEvent } = this.state;
@@ -432,7 +424,7 @@ export class GalleryContainer extends React.Component {
           gotFirstScrollEvent:true,
         });
       }
-      if (this.getIsScrollLessGallery(this.state.options)) {
+      if (getIsScrollLessGallery(this.state.options)) {
         return;
       }
       const scrollingElement = this._scrollingElement;
@@ -716,7 +708,7 @@ export class GalleryContainer extends React.Component {
     }
     if (eventName === GALLERY_CONSTS.events.CURRENT_ITEM_CHANGED) {
       this.setCurrentSlideshowViewIdx(eventData.idx);
-      if (this.getIsScrollLessGallery(this.state.options)) {
+      if (getIsScrollLessGallery(this.state.options)) {
         this.simulateScrollToItem(this.galleryStructure.items[eventData.idx]);
       }
     }

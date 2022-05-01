@@ -1,4 +1,4 @@
-import { window } from 'pro-gallery-lib';
+import { window, GALLERY_CONSTS } from 'pro-gallery-lib';
 
 // Promise-wrapping class
 export class Deferred {
@@ -27,4 +27,11 @@ export function isGalleryInViewport({ container, scrollTop }) {
     console.warn('Could not calculate viewport', e);
     return true;
   }
+}
+export function getIsScrollLessGallery(options) {
+  const { scrollDirection, slideAnimation } = options;
+  return (
+    scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+    slideAnimation !== GALLERY_CONSTS.slideAnimations.SCROLL
+  );
 }
