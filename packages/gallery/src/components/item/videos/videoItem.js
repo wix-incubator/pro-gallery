@@ -188,7 +188,9 @@ class VideoItem extends React.Component {
         width="100%"
         height="100%"
         url={url}
-        alt={this.props.alt ? this.props.alt : 'untitled video'}
+        alt={
+          typeof this.props.alt === 'string' ? this.props.alt : 'untitled video'
+        }
         loop={!!this.props.options.videoLoop}
         ref={(player) => (this.video = player)}
         volume={this.props.options.videoSound ? 0.8 : 0}
