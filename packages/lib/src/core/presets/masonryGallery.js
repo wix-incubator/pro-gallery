@@ -3,6 +3,7 @@ import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import {
   calcTargetItemSize,
   processNumberOfImagesPerRow,
+  processGridStyle,
 } from '../helpers/layoutHelper';
 import { featureManager } from '../helpers/versionsHelper';
 
@@ -30,5 +31,6 @@ export const createOptions = (options) => {
   if (featureManager.supports.fixedColumnsInMasonry) {
     res = processNumberOfImagesPerRow(res);
   }
+  res = processGridStyle(res);
   return res;
 };

@@ -13,7 +13,6 @@ function getSlideAnimationStyles({
 }) {
   // const { isRTL, slideAnimation } = options;
   const baseStyles = {
-    position: 'absolute',
     display: 'block',
   };
   switch (slideAnimation) {

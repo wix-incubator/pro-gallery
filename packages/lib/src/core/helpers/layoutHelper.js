@@ -55,6 +55,13 @@ export const processNumberOfImagesPerRow = (options) => {
   return res;
 }
 
+export const processGridStyle = (options) => {
+  let res = {...options};
+  res.gridStyle =
+    res.isVertical ? options.gridStyle : GALLERY_CONSTS.gridStyle.FIT_TO_SCREEN;
+  return res;
+}
+
 export const processNumberOfImagesPerCol = (options) => {
   //This will be used in the grid preset
   let res = {...options}
