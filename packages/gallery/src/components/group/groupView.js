@@ -1,5 +1,6 @@
 import React from 'react';
 import itemView from '../item/itemView.js';
+import { getSlideAnimationStyles } from '../item/pure';
 
 class GroupView extends React.Component {
   constructor(props) {
@@ -45,17 +46,38 @@ class GroupView extends React.Component {
   }
 
   render() {
+    const { activeIndex, slideAnimation } = this.props;
+    const visible = this.props.items.some((item) => {
+      return item.idx === activeIndex;
+    });
+
+    // const isBefore = this.props.items[0].idx < activeIndex
+    // const isAfter = this.props.items[this.props.items.length - 1].idx > activeIndex
+    const opacity = visible ? 1 : 0;
+    console.log(`visible: ${visible}`);
     const { isRTL } = this.props.galleryConfig.options;
+    const baseStyles = {
+      opacity,
+      '--group-top': this.props.top + 'px',
+      '--group-left': isRTL ? 'auto' : this.props.left + 'px',
+      '--group-width': this.props.width + 'px',
+      '--group-right': !isRTL ? 'auto' : this.props.left + 'px',
+    };
+
+    const animationStyles = getSlideAnimationStyles({
+      slideAnimation,
+      isRTL,
+      visible,
+    });
+    const style = {
+      ...baseStyles,
+      ...animationStyles,
+    };
     return this.shouldRender() ? (
       <div
         key={`group_${this.props.idx}_${this.props.items[0].id}`}
         data-hook={'group-view'}
-        style={{
-          '--group-top': this.props.top + 'px',
-          '--group-left': isRTL ? 'auto' : this.props.left + 'px',
-          '--group-width': this.props.width + 'px',
-          '--group-right': !isRTL ? 'auto' : this.props.left + 'px',
-        }}
+        style={style}
         aria-hidden={this.props.ariaHidden}
       >
         {this.createDom(this.isVisible(), this.props.shouldRenderEmpty)}

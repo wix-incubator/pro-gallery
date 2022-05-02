@@ -20,7 +20,7 @@ import {
   getImageStyle,
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
-import {getSlideAnimationStyles, getCustomInfoRendererProps, getLinkParams} from './pure'
+import {getCustomInfoRendererProps, getLinkParams} from './pure'
 class ItemView extends React.Component {
   constructor(props) {
     super(props);
@@ -487,11 +487,9 @@ class ItemView extends React.Component {
 
   getSlideshowItemInner({options, width, height, itemInner, customComponents,  photoId, id }) {
       const { customSlideshowInfoRenderer } = customComponents;
-      const slideAnimationStyles = getSlideAnimationStyles(this.props);
       const infoStyle = {
         height: `${options.slideshowInfoSize}px`,
         bottom: `-${options.slideshowInfoSize}px`,
-        ...slideAnimationStyles,
         transition: 'none',
       };
       const slideshowInfo = customSlideshowInfoRenderer
@@ -508,7 +506,7 @@ class ItemView extends React.Component {
             key={'item-container-link-' + id}
             {...getLinkParams(this.props)}
             tabIndex={-1}
-            style={{ ...slideAnimationStyles, width, height }}
+            style={{ width, height }}
           >
             {itemInner}
           </a>
@@ -771,7 +769,6 @@ class ItemView extends React.Component {
 
     const itemWrapperStyles = {
       ...styles,
-      ...(getSlideAnimationStyles(this.props)),
     };
 
     return itemWrapperStyles;

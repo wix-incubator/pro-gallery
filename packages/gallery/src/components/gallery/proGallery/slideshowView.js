@@ -843,6 +843,7 @@ class SlideshowView extends React.Component {
       },
     };
 
+
     const renderGroups = (column) => {
       const layoutGroupView =
         !!column.galleryGroups.length &&
@@ -852,6 +853,8 @@ class SlideshowView extends React.Component {
           layoutGroupView.map(({group, shouldRender}) => {
             return group.rendered
               ? React.createElement(GroupView, {
+                activeIndex: this.state.activeIndex,
+                slideAnimation: this.props.options.slideAnimation,
                   allowLoop:
                     this.props.options.slideshowLoop &&
                     this.props.galleryStructure.width >
