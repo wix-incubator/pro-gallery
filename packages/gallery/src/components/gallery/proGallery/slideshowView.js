@@ -862,6 +862,7 @@ class SlideshowView extends React.Component {
                   ...group.renderProps(galleryConfig),
                   ariaHidden: group.idx > this.skipFromSlide,
                   shouldRenderEmpty: !shouldRender,
+                container: this.props.container,
                   key: group.idx,
               }): false})
           );

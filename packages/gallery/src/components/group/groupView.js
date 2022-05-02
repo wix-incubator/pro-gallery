@@ -51,10 +51,11 @@ class GroupView extends React.Component {
       return item.idx === activeIndex;
     });
 
-    // const isBefore = this.props.items[0].idx < activeIndex
-    // const isAfter = this.props.items[this.props.items.length - 1].idx > activeIndex
+    const isBefore = this.props.items[0].idx < activeIndex;
+    const isAfter =
+      this.props.items[this.props.items.length - 1].idx > activeIndex;
     const opacity = visible ? 1 : 0;
-    console.log(`visible: ${visible}`);
+    console.log(`groupview 1 visible: ${visible}`);
     const { isRTL } = this.props.galleryConfig.options;
     const baseStyles = {
       opacity,
@@ -64,10 +65,14 @@ class GroupView extends React.Component {
       '--group-right': !isRTL ? 'auto' : this.props.left + 'px',
     };
 
+    const container = this.props.container;
     const animationStyles = getSlideAnimationStyles({
       slideAnimation,
+      container,
       isRTL,
       visible,
+      isBefore,
+      isAfter,
     });
     const style = {
       ...baseStyles,
