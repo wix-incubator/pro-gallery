@@ -9,6 +9,7 @@ function getSlideAnimationStyles({
   visible,
   isBefore,
   isAfter,
+  groupId,
 }) {
   // const { isRTL, slideAnimation } = options;
   const baseStyles = {
@@ -24,7 +25,8 @@ function getSlideAnimationStyles({
       };
     case GALLERY_CONSTS.slideAnimations.DECK: {
       const rtlFix = isRTL ? 1 : -1;
-      if (isBefore) {
+      if (isAfter) {
+        console.log('local isAfter', groupId);
         //the slides behind the deck
         return {
           ...baseStyles,
@@ -33,13 +35,15 @@ function getSlideAnimationStyles({
           opacity: 0,
         };
       } else if (visible) {
+        console.log('local visible', groupId);
         return {
           ...baseStyles,
           zIndex: 0,
           transition: `transform 600ms ease`,
           transform: `translateX(0)`,
         };
-      } else if (isAfter) {
+      } else if (isBefore) {
+        console.log('local isBefore', groupId);
         return {
           ...baseStyles,
           zIndex: 1,

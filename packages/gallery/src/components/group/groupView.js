@@ -73,6 +73,7 @@ class GroupView extends React.Component {
       visible,
       isBefore,
       isAfter,
+      groupId: this.props.idx,
     });
     const style = {
       ...baseStyles,
