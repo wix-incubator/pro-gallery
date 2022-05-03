@@ -219,7 +219,7 @@ class ImageItem extends React.Component {
           data-hook="gallery-item-image-img"
           data-idx={idx}
           src={src}
-          alt={calculatedAlt ? calculatedAlt : 'untitled image'}
+          alt={typeof calculatedAlt === 'string' ? calculatedAlt : 'untitled image'}
           onLoad={this.handleHighResImageLoad}
           loading={this.props.isPrerenderMode ? 'lazy' : 'eager'}
           style={{
