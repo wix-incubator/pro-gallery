@@ -1008,37 +1008,54 @@ class ItemView extends React.Component {
       </div>
     );
     const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(options)
-
+    const handleKeyDown = (e) => {
+      /* Relvenat only for Screen-Reader case:
+      Screen-Reader ignores the tabIdex={-1} and therefore stops and focuses on the <a> tag keyDown event,
+      so it will not go deeper to the item-container keyDown event.
+      */
+      this.onAnchorKeyDown(e);
+    }
+    const handleFocus = () => {
+      onAnchorFocus({
+        itemAnchor: this.itemAnchor,
+        enableExperimentalFeatures:
+          this.props.enableExperimentalFeatures,
+        itemContainer: this.itemContainer,
+      });
+    }
     if (isSlideshow) {
       return innerDiv;
     } else {
-      return (
-        <a
-          ref={(e) => (this.itemAnchor = e)}
-          data-id={photoId}
-          data-idx={idx}
-          key={'item-container-link-' + id}
-          onFocus={() => {
-            onAnchorFocus({
-              itemAnchor: this.itemAnchor,
-              enableExperimentalFeatures:
-                this.props.enableExperimentalFeatures,
-              itemContainer: this.itemContainer,
-            });
-          }}
-          {...getLinkParams(this.props)}
-          tabIndex={-1}
-          onKeyDown={(e) => {
-            /* Relvenat only for Screen-Reader case:
-            Screen-Reader ignores the tabIdex={-1} and therefore stops and focuses on the <a> tag keyDown event,
-            so it will not go deeper to the item-container keyDown event.
-            */
-            this.onAnchorKeyDown(e);
-          }}
-        >
-          {innerDiv}
-        </a>
-      );
+      const linkParams = getLinkParams(this.props)
+      const elementProps = {
+        ref: (e) => (this.itemAnchor = e),
+        'data-id': photoId,
+        'data-idx': idx,
+        'data-hook': 'item-link-wrapper',
+        onFocus: handleFocus,
+        tabIndex: -1,
+        onKeyDown: handleKeyDown,
+      }
+      if (linkParams?.href?.length>0) {
+        return (
+          <a
+          key={ 'item-container-link-' + id}
+          {...elementProps}
+          {...linkParams}
+          >
+            {innerDiv}
+          </a>
+        );
+      } else {
+        return (
+          <div
+          key={ 'item-container-div-' + id}
+          {...elementProps}
+          >
+            {innerDiv}
+          </div>
+        );
+      }
     }
   }
 
