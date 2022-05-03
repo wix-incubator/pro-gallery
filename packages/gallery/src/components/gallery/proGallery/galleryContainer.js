@@ -47,10 +47,7 @@ export class GalleryContainer extends React.Component {
       this.setPlayingIdxState
     );
     const initialState = {
-      scrollPosition: {
-        top: 0,
-        left: 0
-      },
+      pgScroll: 0,
       showMoreClickedAtLeastOnce: false,
       initialGalleryHeight: undefined,
       needToHandleShowMoreClick: false,
@@ -563,44 +560,37 @@ export class GalleryContainer extends React.Component {
     });
   }
 
-  onGalleryScroll(scrollPosition) {
+  onGalleryScroll({ top, left }) {
     this.eventsListener(
       GALLERY_CONSTS.events.GALLERY_SCROLLED,
-      scrollPosition
-    );
+      { top, left }
+          );
+          this.videoScrollHelper.trigger.SCROLL({
+            top,
+            left,
+          });
+          this.updateVisibility();
+  }
+
+  isInViewport = () => {
+    return isGalleryInViewport(this.props.container);
   }
 
 
   updateVisibility = () => {
-    const isInViewport = isGalleryInViewport({
-      container: this.props.container,
-      scrollTop: this.state.scrollPosition.top
-    });
+    const isInViewport = this.isInViewport();
     if (this.state.isInViewport !== isInViewport) {
       this.setState({
         isInViewport,
       });
     }
   }
-  setVisibilityIfNeeded = (prevProps, prevState) => {
-    const { container } = this.props;
-    const { scrollPosition } = this.state;
-    if (
-      container.scrollBase !== prevProps.container.scrollBase ||
-      scrollPosition.top !== prevState.scrollPosition.top
-      ) {
-       this.updateVisibility();
-    }
-  }
-  componentDidUpdate(prevProps, prevState) {
+
+
+  componentDidUpdate() {
    // in order to update when container is available
-    this.setVisibilityIfNeeded(prevProps, prevState)
-    if (this.props.isPrerenderMode !== prevProps.isPrerenderMode){
-      const { body, documentElement: html } = document;
-      const viewportHeight = window.innerHeight;
-      const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-      this.getMoreItemsIfScrollIsDisabled(height, viewportHeight);
-    }
+   this.updateVisibility();
+    
   }
 
   createDynamicStyles({ overlayBackground }, isPrerenderMode) {
@@ -731,14 +721,14 @@ export class GalleryContainer extends React.Component {
       this.props.eventsListener(eventName, eventData, event);
     }
 
-    if (eventName === GALLERY_CONSTS.events.GALLERY_SCROLLED) {
-      this.videoScrollHelper.trigger.SCROLL(eventData);
-      const newScrollPosition = {
-        ...this.state.scrollPosition,
-        ...eventData,
-      };
-      this.setState({scrollPosition: newScrollPosition})
-    }
+    // if (eventName === GALLERY_CONSTS.events.GALLERY_SCROLLED) {
+    //   this.videoScrollHelper.trigger.SCROLL(eventData);
+    //   const newScrollPosition = {
+    //     ...this.state.scrollPosition,
+    //     ...eventData,
+    //   };
+    //   this.setState({scrollPosition: newScrollPosition})
+    // }
   }
 
   

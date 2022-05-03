@@ -19,6 +19,7 @@ import {
 } from '../../helpers/navigationArrowUtils'
 import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
 import { getThumbnailsData, clearGalleryItems } from '../../helpers/thumbnailsLogic';
+import { isGalleryInViewport } from './galleryHelpers.js';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
@@ -432,7 +433,7 @@ class SlideshowView extends React.Component {
   autoScrollToNextItem = () => {
     if (
       !isEditMode() &&
-      (this.props.isInViewport || isPreviewMode())
+      (isGalleryInViewport(this.props.container) || isPreviewMode())
     ) {
       const { options } = this.props;
       const direction = options.isRTL ? -1 : 1;
