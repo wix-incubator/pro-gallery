@@ -20,7 +20,7 @@ import {
   getImageStyle,
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
-import {getSlideAnimationStyles, getCustomInfoRendererProps, getLinkParams} from './pure'
+import {getSlideAnimationStyles, infoSlideAnimationStyles, getCustomInfoRendererProps, getLinkParams} from './pure'
 class ItemView extends React.Component {
   constructor(props) {
     super(props);
@@ -605,22 +605,26 @@ class ItemView extends React.Component {
       placement
     );
 
-    info = (
-      <div
-        style={getOuterInfoStyle(
+    const slideAnimationStyles = infoSlideAnimationStyles(this.props);
+    const outer = getOuterInfoStyle(
           placement,
           options,
           style.height,
           options.textBoxHeight
-        )}
-      >
-        <div
-          style={getInnerInfoStyle(
+        )
+    const inner = getInnerInfoStyle(
             placement,
             options,
             infoHeight,
             infoWidth
-          )}
+          )
+
+    info = (
+      <div
+        style={{...outer, ...slideAnimationStyles}}
+      >
+        <div
+          style={{...inner}}
           className={'gallery-item-common-info ' + elementName}
           onClick={this.onItemInfoClick}
         >

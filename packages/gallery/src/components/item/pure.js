@@ -1,4 +1,9 @@
-export { getSlideAnimationStyles, getCustomInfoRendererProps, getLinkParams };
+export {
+  getSlideAnimationStyles,
+  getCustomInfoRendererProps,
+  getLinkParams,
+  infoSlideAnimationStyles,
+};
 
 import { GALLERY_CONSTS, utils, isSEOMode } from 'pro-gallery-lib';
 
@@ -79,5 +84,48 @@ function getLinkParams({
       ? { href: url, 'data-cancel-link': true, ...seoLinkParams }
       : {};
     return linkParams;
+  }
+}
+function infoSlideAnimationStyles({ idx, activeIndex, options, container }) {
+  const { isRTL, slideAnimation } = options;
+  const baseStyles = {
+    display: 'block',
+  };
+  switch (slideAnimation) {
+    case GALLERY_CONSTS.slideAnimations.FADE:
+      return {
+        ...baseStyles,
+        transition: `opacity 600ms ease`,
+        opacity: activeIndex === idx ? 1 : 0,
+      };
+    case GALLERY_CONSTS.slideAnimations.DECK: {
+      const rtlFix = isRTL ? 1 : -1;
+      if (activeIndex < idx) {
+        //the slides behind the deck
+        return {
+          ...baseStyles,
+          transition: `opacity 0.1s ease 0s`,
+          zIndex: -1,
+          opacity: 0,
+        };
+      } else if (activeIndex === idx) {
+        return {
+          ...baseStyles,
+          zIndex: 0,
+          transition: `transform 600ms ease, opacity 0.1s ease 200ms`,
+          transform: `translateX(0)`,
+        };
+      } else if (activeIndex > idx) {
+        return {
+          ...baseStyles,
+          zIndex: 1,
+          transition: `transform 600ms ease`,
+          transform: `translateX(${rtlFix * Math.round(container.width)}px)`,
+        };
+      }
+      break;
+    }
+    default:
+      return {};
   }
 }
