@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "pro-gallery",
-  "version": "4.0.15-beta.286",
+  "version": "4.0.15-beta.287",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
@@ -38,9 +38,9 @@
   "dependencies": {
     "@vimeo/player": "2.8.2",
     "hls.js": "^1.1.5",
-    "pro-gallery-blueprints": "4.0.15-beta.286",
-    "pro-gallery-lib": "4.0.15-beta.286",
-    "pro-layouts": "4.0.15-beta.286",
+    "pro-gallery-blueprints": "4.0.15-beta.287",
+    "pro-gallery-lib": "4.0.15-beta.287",
+    "pro-layouts": "4.0.15-beta.287",
     "react-player": "^2.6.2"
   },
   "peerDependencies": {
