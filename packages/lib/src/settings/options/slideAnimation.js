@@ -12,7 +12,7 @@ export default {
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal"), set "Max Group Size" to "1" and set "Crop Images" to true.',
   type: INPUT_TYPES.OPTIONS,
-  default: GALLERY_CONSTS.slideAnimations.SCROLL,
+  default: GALLERY_CONSTS.slideAnimations.DECK,
   options: createOptions('slideAnimations'),
   description: `Choose the slide animation effect to be used when navigating between items in a slideshow`,
 };
