@@ -20,7 +20,7 @@ import {
   getImageStyle,
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
-import {getSlideAnimationStyles, infoSlideAnimationStyles, getCustomInfoRendererProps, getLinkParams} from './pure'
+import {getSlideAnimationStyles, getCustomInfoRendererProps, getLinkParams} from './pure'
 class ItemView extends React.Component {
   constructor(props) {
     super(props);
@@ -605,7 +605,8 @@ class ItemView extends React.Component {
       placement
     );
 
-    const slideAnimationStyles = infoSlideAnimationStyles(this.props);
+    const overrideDeckTransition = true
+    const slideAnimationStyles = getSlideAnimationStyles(this.props, overrideDeckTransition);
     const outer = getOuterInfoStyle(
           placement,
           options,
@@ -618,6 +619,7 @@ class ItemView extends React.Component {
             infoHeight,
             infoWidth
           )
+    console.log('local info')
 
     info = (
       <div
