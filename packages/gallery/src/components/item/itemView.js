@@ -607,26 +607,23 @@ class ItemView extends React.Component {
 
     const overrideDeckTransition = true
     const slideAnimationStyles = getSlideAnimationStyles(this.props, overrideDeckTransition);
-    const outer = getOuterInfoStyle(
+
+    info = (
+      <div
+        style={{...getOuterInfoStyle(
           placement,
           options,
           style.height,
           options.textBoxHeight
-        )
-    const inner = getInnerInfoStyle(
+        ), ...slideAnimationStyles}}
+      >
+        <div
+          style={getInnerInfoStyle(
             placement,
             options,
             infoHeight,
             infoWidth
-          )
-    console.log('local info')
-
-    info = (
-      <div
-        style={{...outer, ...slideAnimationStyles}}
-      >
-        <div
-          style={{...inner}}
+          )}
           className={'gallery-item-common-info ' + elementName}
           onClick={this.onItemInfoClick}
         >
