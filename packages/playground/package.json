@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "watch": "sleep 10 && node scripts/start.js",
-    "start": "node scripts/start.js",
+    "start": "PORT=3006 node scripts/start.js",
     "build": "node scripts/build.js",
     "unit": "node scripts/test.js",
     "test": "echo 'no test in wix CI'",
