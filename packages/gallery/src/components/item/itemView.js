@@ -605,7 +605,7 @@ class ItemView extends React.Component {
       placement
     );
 
-    const overrideDeckTransition = true
+    const overrideDeckTransition = GALLERY_CONSTS.isLayout('FUTURE_SLIDESHOW')(this.props.options)
     const slideAnimationStyles = getSlideAnimationStyles(this.props, overrideDeckTransition);
 
     info = (
@@ -1065,6 +1065,7 @@ class ItemView extends React.Component {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
+    console.log('local itemView2')
     return this.composeItem();
   }
 }
