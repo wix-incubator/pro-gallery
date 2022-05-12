@@ -1065,7 +1065,6 @@ class ItemView extends React.Component {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
-    console.log('local itemView2')
     return this.composeItem();
   }
 }
