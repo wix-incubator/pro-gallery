@@ -60,8 +60,8 @@ class SlideshowView extends React.Component {
       activeIndex: props.activeIndex || 0,
       isInView: true,
       pauseAutoSlideshowClicked: false,
-      hideLeftArrow: !props.isRTL,
-      hideRightArrow: props.isRTL,
+      hideLeftArrow: !props.options.isRTL,
+      hideRightArrow: props.options.isRTL,
       shouldBlockAutoSlideshow: false,
       isInFocus: false,
     };
@@ -843,6 +843,7 @@ class SlideshowView extends React.Component {
       },
     };
 
+
     const renderGroups = (column) => {
       const layoutGroupView =
         !!column.galleryGroups.length &&
@@ -852,6 +853,8 @@ class SlideshowView extends React.Component {
           layoutGroupView.map(({group, shouldRender}) => {
             return group.rendered
               ? React.createElement(GroupView, {
+                activeIndex: this.state.activeIndex,
+                slideAnimation: this.props.options.slideAnimation,
                   allowLoop:
                     this.props.options.slideshowLoop &&
                     this.props.galleryStructure.width >
@@ -859,6 +862,7 @@ class SlideshowView extends React.Component {
                   ...group.renderProps(galleryConfig),
                   ariaHidden: group.idx > this.skipFromSlide,
                   shouldRenderEmpty: !shouldRender,
+                container: this.props.container,
                   key: group.idx,
               }): false})
           );
