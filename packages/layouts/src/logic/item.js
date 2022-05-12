@@ -407,8 +407,6 @@ export class Item {
       }
     }
 
-    targetWidth = Math.floor(targetWidth);
-    targetHeight = Math.floor(targetHeight);
     let fixVals = {
       fixTop: (this.height - targetHeight) / 2,
       fixLeft: (this.width - targetWidth) / 2,
