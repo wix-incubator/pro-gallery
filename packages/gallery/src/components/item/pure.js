@@ -2,7 +2,10 @@ export { getSlideAnimationStyles, getCustomInfoRendererProps, getLinkParams };
 
 import { GALLERY_CONSTS, utils, isSEOMode } from 'pro-gallery-lib';
 
-function getSlideAnimationStyles({ idx, activeIndex, options, container }) {
+function getSlideAnimationStyles(
+  { idx, activeIndex, options, container },
+  overrideDeckTransition = false
+) {
   const { isRTL, slideAnimation } = options;
   const baseStyles = {
     display: 'block',
@@ -20,7 +23,9 @@ function getSlideAnimationStyles({ idx, activeIndex, options, container }) {
         //the slides behind the deck
         return {
           ...baseStyles,
-          transition: `opacity .2s ease 600ms`,
+          transition: overrideDeckTransition
+            ? `opacity 0.1s ease 0s`
+            : `opacity .2s ease 600ms`,
           zIndex: -1,
           opacity: 0,
         };
@@ -28,7 +33,9 @@ function getSlideAnimationStyles({ idx, activeIndex, options, container }) {
         return {
           ...baseStyles,
           zIndex: 0,
-          transition: `transform 600ms ease`,
+          transition: overrideDeckTransition
+            ? `transform 600ms ease, opacity 0.1s ease 200ms`
+            : `transform 600ms ease`,
           transform: `translateX(0)`,
         };
       } else if (activeIndex > idx) {

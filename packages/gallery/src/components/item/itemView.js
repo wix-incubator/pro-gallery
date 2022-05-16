@@ -605,14 +605,17 @@ class ItemView extends React.Component {
       placement
     );
 
+    const overrideDeckTransition = GALLERY_CONSTS.isLayout('FUTURE_SLIDESHOW')(this.props.options)
+    const slideAnimationStyles = getSlideAnimationStyles(this.props, overrideDeckTransition);
+
     info = (
       <div
-        style={getOuterInfoStyle(
+        style={{...getOuterInfoStyle(
           placement,
           options,
           style.height,
           options.textBoxHeight
-        )}
+        ), ...slideAnimationStyles}}
       >
         <div
           style={getInnerInfoStyle(
