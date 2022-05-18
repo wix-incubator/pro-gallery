@@ -751,6 +751,8 @@ $group-view: '[data-hook="group-view"]';
     scroll-snap-align: none !important;
 }
 
-
-
-
+.gallery-slideshow {
+  .gallery-item-container:not(.clickable) a {
+      cursor: default;
+  }
+}
