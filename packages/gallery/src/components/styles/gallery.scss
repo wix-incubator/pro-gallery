@@ -741,7 +741,7 @@ $group-view: '[data-hook="group-view"]';
       @include scroll-snap-element;
   }
   &:not(.gallery-slideshow) {
-    & #{$group-view} a::before { 
+    & #{$group-view} .item-link-wrapper::before { 
       @include scroll-snap-element;
     }
   }
