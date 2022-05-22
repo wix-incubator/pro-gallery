@@ -667,11 +667,10 @@ class ItemView extends React.Component {
       options,
       settings = {},
     } = this.props;
-    const { scrollDirection, imageMargin, itemClick, isRTL, slideAnimation } =
+    const { scrollDirection, imageMargin, isRTL, slideAnimation } =
       options;
 
     const containerStyleByoptions = getContainerStyle(options);
-    const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
     const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
 
     const itemStyles = {
@@ -682,11 +681,7 @@ class ItemView extends React.Component {
         scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
           ? imageMargin / 2 + 'px'
           : 0,
-      cursor:
-        itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
-        (itemClick === GALLERY_CONSTS.itemClick.LINK && itemDoesntHaveLink)
-          ? 'default'
-          : 'pointer',
+      cursor: this.isItemClickable(options),
     };
 
     const { avoidInlineStyles } = settings;
@@ -793,6 +788,15 @@ class ItemView extends React.Component {
     return label + (options.isStoreGallery ? ', Buy Now' : '');
   }
 
+  isItemClickable(options) {
+    const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
+
+    return (options.itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
+        (options.itemClick === GALLERY_CONSTS.itemClick.LINK && itemDoesntHaveLink)
+          ? false
+          : true)
+  }
+
   getItemContainerClass() {
     const { options } = this.props;
     const imagePlacementAnimation = options.imagePlacementAnimation;
@@ -802,7 +806,7 @@ class ItemView extends React.Component {
       'gallery-item-container': true,
       visible: true,
       'pro-gallery-highlight': this.isHighlight(),
-      clickable: options.itemClick !== 'nothing',
+      clickable: this.isItemClickable(options),
       'simulate-hover': this.simulateHover(),
       'hide-hover': !this.simulateHover() && utils.isMobile(),
       'invert-hover':
