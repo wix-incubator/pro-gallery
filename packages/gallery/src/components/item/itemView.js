@@ -505,6 +505,7 @@ class ItemView extends React.Component {
             ref={(e) => (this.itemAnchor = e)}
             data-id={photoId}
             data-idx={idx}
+            class='item-link-wrapper'
             key={'item-container-link-' + id}
             {...getLinkParams(this.props)}
             tabIndex={-1}
@@ -1033,6 +1034,7 @@ class ItemView extends React.Component {
       const elementProps = {
         ref: (e) => (this.itemAnchor = e),
         'data-id': photoId,
+        class: 'item-link-wrapper',
         'data-idx': idx,
         'data-hook': 'item-link-wrapper',
         onFocus: handleFocus,
