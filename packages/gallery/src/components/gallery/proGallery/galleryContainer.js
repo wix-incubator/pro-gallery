@@ -12,7 +12,7 @@ import {
 import { ItemsHelper } from 'pro-layouts';
 import GalleryView from './galleryView';
 import SlideshowView from './slideshowView';
-import { scrollToItemImp, scrollToGroupImp, completeCurrentHorizontalScrollFast } from '../../helpers/scrollHelper';
+import { scrollToItemImp, scrollToGroupImp, deadStopScroll } from '../../helpers/scrollHelper';
 import ScrollIndicator from './galleryScrollIndicator';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
@@ -459,21 +459,14 @@ export class GalleryContainer extends React.Component {
           imageMargin: this.state.options.imageMargin,
         };
         const currentScrollData = scrollToItemImp(scrollParams);
-        const fastStopDeffered = new Deferred();
         if(isContinuousScrolling && this.state.options.pauseAutoSlideshowOnHover) {
           this.completeCurrentScrollFastFunction = () => {
-            const params = {
-              ...currentScrollData, 
-              duration: 200,
-            }
-            completeCurrentHorizontalScrollFast(params).scrollDeffered.promise.then(()=>{fastStopDeffered.resolve()});
+            deadStopScroll(currentScrollData)
           }
-          return Promise.any([currentScrollData.scrollDeffered.promise, fastStopDeffered.promise]).then(()=>{
+        }
+          return currentScrollData.scrollDeffered.promise.then(()=>{
             this.completeCurrentScrollFastFunction = null;
           });
-        } else {
-          return currentScrollData.scrollDeffered.promise;
-        }
       } catch (e) {
         //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
         console.error(
@@ -529,21 +522,14 @@ export class GalleryContainer extends React.Component {
           imageMargin: this.state.options.imageMargin,
         };
         const currentScrollData = scrollToGroupImp(scrollParams);
-        const fastStopDeffered = new Deferred();
         if(isContinuousScrolling && this.state.options.pauseAutoSlideshowOnHover) {
-            this.completeCurrentScrollFastFunction = () => {
-            const params = {
-              ...currentScrollData, 
-              duration: 200,
-            }
-            completeCurrentHorizontalScrollFast(params).scrollDeffered.promise.then(()=>{fastStopDeffered.resolve()});
+          this.completeCurrentScrollFastFunction = () => {
+            deadStopScroll(currentScrollData)
           }
-          return Promise.any([currentScrollData.scrollDeffered.promise, fastStopDeffered.promise]).then(()=>{
+        }
+          return currentScrollData.scrollDeffered.promise.then(()=>{
             this.completeCurrentScrollFastFunction = null;
           });
-        } else {
-          return currentScrollData.scrollDeffered.promise;
-        }
       } catch (e) {
         //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
         console.error(

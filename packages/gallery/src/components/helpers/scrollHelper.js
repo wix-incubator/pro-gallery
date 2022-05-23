@@ -302,15 +302,40 @@ function horizontalCssScrollTo({
     currentScrollEndTimeout,
   };
 }
+function animateStopScroll({ scroller, at, isRTL }) {
+  Object.assign(scroller.style, {
+    'scroll-snap-type': 'none',
+  });
+  let scrollDeffered = new Deferred();
+  Object.assign(
+    scroller.firstChild.style,
+    {
+      transition: `none`,
+      '-webkit-transition': `none`,
+    },
+    isRTL
+      ? {
+          marginRight: 0,
+        }
+      : {
+          marginLeft: 0,
+        }
+  );
+  scroller.scrollLeft = at;
+  scrollDeffered.resolve(at);
 
-export function completeCurrentHorizontalScrollFast({
+  return {
+    scrollDeffered,
+    scroller,
+    isRTL,
+  };
+}
+export function deadStopScroll({
   scroller,
-  to,
   from,
-  duration,
   isRTL,
   currentScrollEndTimeout,
-  slideTransition,
+  scrollDeffered,
 }) {
   clearTimeout(currentScrollEndTimeout);
   const scrollerInner = scroller.firstChild;
@@ -321,17 +346,12 @@ export function completeCurrentHorizontalScrollFast({
   margins = Math.round(parseInt(margins, 10));
   from = from - margins;
 
-  return horizontalCssScrollTo({
+  animateStopScroll({
     scroller,
-    to,
-    from,
-    duration,
+    at: from,
     isRTL,
-    currentScrollEndTimeout,
-    slideTransition,
-
-    isContinuousScrolling: false,
   });
+  scrollDeffered.resolve(from);
 }
 
 export { isWithinPaddingHorizontally, isWithinPaddingVertically };
