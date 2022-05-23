@@ -330,7 +330,7 @@ function animateStopScroll({ scroller, at, isRTL }) {
     isRTL,
   };
 }
-export function deadStopScroll({
+export function haltScroll({
   scroller,
   from,
   isRTL,

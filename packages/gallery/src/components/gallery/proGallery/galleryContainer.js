@@ -12,7 +12,7 @@ import {
 import { ItemsHelper } from 'pro-layouts';
 import GalleryView from './galleryView';
 import SlideshowView from './slideshowView';
-import { scrollToItemImp, scrollToGroupImp, deadStopScroll } from '../../helpers/scrollHelper';
+import { scrollToItemImp, scrollToGroupImp, haltScroll } from '../../helpers/scrollHelper';
 import ScrollIndicator from './galleryScrollIndicator';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
@@ -461,7 +461,7 @@ export class GalleryContainer extends React.Component {
         const currentScrollData = scrollToItemImp(scrollParams);
         if(isContinuousScrolling && this.state.options.pauseAutoSlideshowOnHover) {
           this.completeCurrentScrollFastFunction = () => {
-            deadStopScroll(currentScrollData)
+            haltScroll(currentScrollData)
           }
         }
           return currentScrollData.scrollDeffered.promise.then(()=>{
@@ -524,7 +524,7 @@ export class GalleryContainer extends React.Component {
         const currentScrollData = scrollToGroupImp(scrollParams);
         if(isContinuousScrolling && this.state.options.pauseAutoSlideshowOnHover) {
           this.completeCurrentScrollFastFunction = () => {
-            deadStopScroll(currentScrollData)
+            haltScroll(currentScrollData)
           }
         }
           return currentScrollData.scrollDeffered.promise.then(()=>{
