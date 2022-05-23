@@ -460,7 +460,7 @@ export class GalleryContainer extends React.Component {
         };
         const currentScrollData = scrollToItemImp(scrollParams);
         const fastStopDeffered = new Deferred();
-        if(isContinuousScrolling) {
+        if(isContinuousScrolling && this.state.options.pauseAutoSlideshowOnHover) {
           this.completeCurrentScrollFastFunction = () => {
             const params = {
               ...currentScrollData, 
@@ -530,8 +530,8 @@ export class GalleryContainer extends React.Component {
         };
         const currentScrollData = scrollToGroupImp(scrollParams);
         const fastStopDeffered = new Deferred();
-        if(isContinuousScrolling) {
-          this.completeCurrentScrollFastFunction = () => {
+        if(isContinuousScrolling && this.state.options.pauseAutoSlideshowOnHover) {
+            this.completeCurrentScrollFastFunction = () => {
             const params = {
               ...currentScrollData, 
               duration: 200,
