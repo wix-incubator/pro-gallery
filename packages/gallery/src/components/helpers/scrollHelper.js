@@ -303,7 +303,7 @@ function horizontalCssScrollTo({
   };
 }
 
-export function completeCurrentScrollFast({
+export function completeCurrentHorizontalScrollFast({
   scroller,
   to,
   from,

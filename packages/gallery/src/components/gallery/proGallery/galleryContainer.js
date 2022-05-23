@@ -12,7 +12,7 @@ import {
 import { ItemsHelper } from 'pro-layouts';
 import GalleryView from './galleryView';
 import SlideshowView from './slideshowView';
-import { scrollToItemImp, scrollToGroupImp, completeCurrentScrollFast } from '../../helpers/scrollHelper';
+import { scrollToItemImp, scrollToGroupImp, completeCurrentHorizontalScrollFast } from '../../helpers/scrollHelper';
 import ScrollIndicator from './galleryScrollIndicator';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
@@ -466,7 +466,7 @@ export class GalleryContainer extends React.Component {
               ...currentScrollData, 
               duration: 200,
             }
-            completeCurrentScrollFast(params).scrollDeffered.promise.then(()=>{fastStopDeffered.resolve()});
+            completeCurrentHorizontalScrollFast(params).scrollDeffered.promise.then(()=>{fastStopDeffered.resolve()});
           }
           return Promise.any([currentScrollData.scrollDeffered.promise, fastStopDeffered.promise]).then(()=>{
             this.completeCurrentScrollFastFunction = null;
@@ -536,7 +536,7 @@ export class GalleryContainer extends React.Component {
               ...currentScrollData, 
               duration: 200,
             }
-            completeCurrentScrollFast(params).scrollDeffered.promise.then(()=>{fastStopDeffered.resolve()});
+            completeCurrentHorizontalScrollFast(params).scrollDeffered.promise.then(()=>{fastStopDeffered.resolve()});
           }
           return Promise.any([currentScrollData.scrollDeffered.promise, fastStopDeffered.promise]).then(()=>{
             this.completeCurrentScrollFastFunction = null;
