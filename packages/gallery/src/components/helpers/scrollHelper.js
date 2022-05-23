@@ -1,5 +1,6 @@
 import { utils } from 'pro-gallery-lib';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { Deferred } from '../gallery/proGallery/galleryHelpers';
 
 export function scrollToItemImp(scrollParams) {
   let to, from;
@@ -265,29 +266,71 @@ function horizontalCssScrollTo({
   const scrollTransitionInterval = setInterval(() => {
     scroller.dispatchEvent(scrollTransitionEvent);
   }, Math.round(duration / intervals));
+  let scrollDeffered = new Deferred();
+  const currentScrollEndTimeout = setTimeout(() => {
+    clearInterval(scrollTransitionInterval);
+    Object.assign(
+      scrollerInner.style,
+      {
+        transition: `none`,
+        '-webkit-transition': `none`,
+      },
+      isRTL
+        ? {
+            marginRight: 0,
+          }
+        : {
+            marginLeft: 0,
+          }
+    );
+    scroller.style.removeProperty('scroll-snap-type');
+    scroller.scrollLeft = to;
+    scroller.setAttribute('data-scrolling', '');
+    scrollDeffered.resolve(to);
+  }, duration);
 
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      clearInterval(scrollTransitionInterval);
-      Object.assign(
-        scrollerInner.style,
-        {
-          transition: `none`,
-          '-webkit-transition': `none`,
-        },
-        isRTL
-          ? {
-              marginRight: 0,
-            }
-          : {
-              marginLeft: 0,
-            }
-      );
-      scroller.style.removeProperty('scroll-snap-type');
-      scroller.scrollLeft = to;
-      scroller.setAttribute('data-scrolling', '');
-      resolve(to);
-    }, duration);
+  return {
+    scrollDeffered,
+    scroller,
+    from,
+    to,
+    duration,
+    isRTL,
+    slideTransition,
+    isContinuousScrolling,
+    autoSlideshowContinuousSpeed,
+    currentScrollEndTimeout,
+  };
+}
+
+export function completeCurrentScrollFast({
+  scroller,
+  to,
+  from,
+  duration,
+  isRTL,
+  currentScrollEndTimeout,
+  slideTransition,
+}) {
+  clearTimeout(currentScrollEndTimeout);
+  const scrollerInner = scroller.firstChild;
+  const computedStyle = getComputedStyle(scrollerInner);
+  let margins = isRTL
+    ? computedStyle.getPropertyValue('margin-right')
+    : computedStyle.getPropertyValue('margin-left');
+  margins = Math.round(parseInt(margins, 10));
+  from = from - margins;
+
+  return horizontalCssScrollTo({
+    scroller,
+    to,
+    from,
+    duration,
+    isRTL,
+    currentScrollEndTimeout,
+    slideTransition,
+
+    isContinuousScrolling: false,
   });
 }
 
