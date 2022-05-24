@@ -203,15 +203,11 @@ export function App() {
     return renderInfoElement('EXTERNAL', pgItemProps);
   };
 
-  const slideshowInfoElement = (pgItemProps) => {
-    return renderInfoElement('SLIDESHOW', pgItemProps);
-  };
 
   const getCustomComponents = () => {
     return {
       customHoverRenderer: hoverInfoElement,
       customInfoRenderer: externalInfoElement,
-      customSlideshowInfoRenderer: slideshowInfoElement,
     };
   }
 

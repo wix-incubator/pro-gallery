@@ -72,7 +72,6 @@ class galleryDriver {
     this.customComponents = {
       customHoverRenderer: () => {},
       customInfoRenderer: () => {},
-      customSlideshowInfoRenderer: () => {},
     };
 
     this.galleryConfig = {
