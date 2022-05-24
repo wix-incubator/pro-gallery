@@ -106,7 +106,7 @@ const addPresetOptions = (options) => {
       case LAYOUTS.SLIDER:
         return sliderOptions(options);
       case LAYOUTS.SLIDESHOW:
-        return slideshowOptions(options);
+        return futureSlideshowOptions(options);
       case LAYOUTS.PANORAMA:
         return panoramaOptions(options);
       case LAYOUTS.COLUMN:
