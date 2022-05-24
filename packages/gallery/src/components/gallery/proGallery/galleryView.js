@@ -119,7 +119,7 @@ class GalleryView extends React.Component {
           }
         );
       } catch (e) {
-        console.warn('Cannot find item to focus', e);
+        console.warn('showMoreItems: Cannot find item to focus', e);
       }
     } else {
       this.props.actions.toggleLoadMoreItems();
