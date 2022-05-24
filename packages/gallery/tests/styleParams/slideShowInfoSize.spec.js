@@ -19,7 +19,7 @@ describe('options - slideshowInfoSize', () => {
   it('should set style for "slideshowInfoSize=250"', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      slideshowInfoSize: 250,
+      textBoxHeight: 250,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -35,7 +35,7 @@ describe('options - slideshowInfoSize', () => {
   it('should set the right height for the gallery', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      slideshowInfoSize: 250,
+      textBoxHeight: 250,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

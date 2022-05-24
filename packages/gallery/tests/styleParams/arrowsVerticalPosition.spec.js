@@ -22,7 +22,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
     //base layout styles for entire test-suite
     initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      slideshowInfoSize: 39,
+      textBoxHeight: 39,
     });
   });
 
@@ -43,7 +43,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
   it('Should not render the arrows when not enough info space', async () => {
     // Exact style params relevant to this sub-test
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      slideshowInfoSize: 38, // info height is 39 when default, so slideshowInfoSize < arrowsSize
+      textBoxHeight: 38, // info height is 39 when default, so slideshowInfoSize < arrowsSize
       arrowsVerticalPosition: 'INFO_CENTER',
     });
     const navArrows = await mountGalleryAndGetArrows(initialProps);
@@ -60,7 +60,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
     const { height: galleryHeight } = galleryContainer.props().style;
     const { top } = navArrows.props().style;
     const expectedInfoSpace =
-      (-1 * galleryHeight) / 2 + initialProps.options.slideshowInfoSize / 2;
+      (-1 * galleryHeight) / 2 + initialProps.options.textBoxHeight / 2;
     expect(top.replace(/\s/g, '')).to.eq(
       getExpectedCalcExpression(expectedInfoSpace)
     );
@@ -83,7 +83,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
     });
     const navArrows = await mountGalleryAndGetArrows(initialProps);
     const { top } = navArrows.props().style;
-    const expectedInfoSpace = initialProps.options.slideshowInfoSize / 2;
+    const expectedInfoSpace = initialProps.options.textBoxHeight / 2;
     expect(top.replace(/\s/g, '')).to.eq(
       getExpectedCalcExpression(expectedInfoSpace)
     );

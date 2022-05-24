@@ -19,7 +19,7 @@ describe('slideshowInfoSize - e2e', () => {
   it('should set "slideshowInfoSize"(400)', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      slideshowInfoSize: 400,
+      textBoxHeight: 400,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -29,7 +29,7 @@ describe('slideshowInfoSize - e2e', () => {
   it('should set "slideshowInfoSize"(250)', async () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      slideshowInfoSize: 250,
+      textBoxHeight: 250,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
