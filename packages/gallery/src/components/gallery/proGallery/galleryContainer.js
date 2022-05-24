@@ -458,14 +458,9 @@ export class GalleryContainer extends React.Component {
           autoSlideshowContinuousSpeed: this.state.options.autoSlideshowContinuousSpeed,
           imageMargin: this.state.options.imageMargin,
         };
-        const currentScrollData = scrollToItemImp(scrollParams);
-        if(isContinuousScrolling && this.state.options.pauseAutoSlideshowOnHover) {
-          this.completeCurrentScrollFastFunction = () => {
-            haltScroll(currentScrollData)
-          }
-        }
-          return currentScrollData.scrollDeffered.promise.then(()=>{
-            this.completeCurrentScrollFastFunction = null;
+        this.currentScrollData = scrollToItemImp(scrollParams);
+          return this.currentScrollData.scrollDeffered.promise.then(()=>{
+            this.currentScrollData = null;
           });
       } catch (e) {
         //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
@@ -521,15 +516,10 @@ export class GalleryContainer extends React.Component {
           autoSlideshowContinuousSpeed: this.state.options.autoSlideshowContinuousSpeed,
           imageMargin: this.state.options.imageMargin,
         };
-        const currentScrollData = scrollToGroupImp(scrollParams);
-        if(isContinuousScrolling && this.state.options.pauseAutoSlideshowOnHover) {
-          this.completeCurrentScrollFastFunction = () => {
-            haltScroll(currentScrollData)
-          }
-        }
-          return currentScrollData.scrollDeffered.promise.then(()=>{
-            this.completeCurrentScrollFastFunction = null;
-          });
+        this.currentScrollData = scrollToGroupImp(scrollParams);
+        return this.currentScrollData.scrollDeffered.promise.then(()=>{
+          this.currentScrollData = null;
+        });
       } catch (e) {
         //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
         console.error(
@@ -836,7 +826,9 @@ export class GalleryContainer extends React.Component {
   }
 
   onMouseEnter() {
-    this.completeCurrentScrollFastFunction && this.completeCurrentScrollFastFunction();
+    if(this.currentScrollData?.isContinuousScrolling || this.state.options.pauseAutoSlideshowOnHover) {
+      haltScroll(this.currentScrollData);
+    }
     this.setState({ isInHover: true });
   }
 
