@@ -706,8 +706,7 @@ class Utils {
   getAriaAttributes({ proGalleryRole, proGalleryRegionLabel }) {
     return {
       role: proGalleryRole || 'region',
-      ['aria-label']: proGalleryRegionLabel ||
-        'Press the Enter key and then use the arrow keys to navigate the gallery items',
+      ['aria-label']: proGalleryRegionLabel,
       ['aria-roledescription']:
         proGalleryRole === 'application' ? 'gallery application' : 'region',
     };
