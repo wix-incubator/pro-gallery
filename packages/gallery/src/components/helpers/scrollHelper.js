@@ -1,5 +1,6 @@
 import { utils } from 'pro-gallery-lib';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { Deferred } from '../gallery/proGallery/galleryHelpers';
 
 export function scrollToItemImp(scrollParams) {
   let to, from;
@@ -265,30 +266,92 @@ function horizontalCssScrollTo({
   const scrollTransitionInterval = setInterval(() => {
     scroller.dispatchEvent(scrollTransitionEvent);
   }, Math.round(duration / intervals));
+  let scrollDeffered = new Deferred();
+  const currentScrollEndTimeout = setTimeout(() => {
+    clearInterval(scrollTransitionInterval);
+    Object.assign(
+      scrollerInner.style,
+      {
+        transition: `none`,
+        '-webkit-transition': `none`,
+      },
+      isRTL
+        ? {
+            marginRight: 0,
+          }
+        : {
+            marginLeft: 0,
+          }
+    );
+    scroller.style.removeProperty('scroll-snap-type');
+    scroller.scrollLeft = to;
+    scroller.setAttribute('data-scrolling', '');
+    scrollDeffered.resolve(to);
+  }, duration);
 
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      clearInterval(scrollTransitionInterval);
-      Object.assign(
-        scrollerInner.style,
-        {
-          transition: `none`,
-          '-webkit-transition': `none`,
-        },
-        isRTL
-          ? {
-              marginRight: 0,
-            }
-          : {
-              marginLeft: 0,
-            }
-      );
-      scroller.style.removeProperty('scroll-snap-type');
-      scroller.scrollLeft = to;
-      scroller.setAttribute('data-scrolling', '');
-      resolve(to);
-    }, duration);
+  return {
+    scrollDeffered,
+    scroller,
+    from,
+    to,
+    duration,
+    isRTL,
+    slideTransition,
+    isContinuousScrolling,
+    autoSlideshowContinuousSpeed,
+    currentScrollEndTimeout,
+  };
+}
+function animateStopScroll({ scroller, at, isRTL }) {
+  Object.assign(scroller.style, {
+    'scroll-snap-type': 'none',
   });
+  let scrollDeffered = new Deferred();
+  Object.assign(
+    scroller.firstChild.style,
+    {
+      transition: `none`,
+      '-webkit-transition': `none`,
+    },
+    isRTL
+      ? {
+          marginRight: 0,
+        }
+      : {
+          marginLeft: 0,
+        }
+  );
+  scroller.scrollLeft = at;
+  scrollDeffered.resolve(at);
+
+  return {
+    scrollDeffered,
+    scroller,
+    isRTL,
+  };
+}
+export function haltScroll({
+  scroller,
+  from,
+  isRTL,
+  currentScrollEndTimeout,
+  scrollDeffered,
+}) {
+  clearTimeout(currentScrollEndTimeout);
+  const scrollerInner = scroller.firstChild;
+  const computedStyle = getComputedStyle(scrollerInner);
+  let margins = isRTL
+    ? computedStyle.getPropertyValue('margin-right')
+    : computedStyle.getPropertyValue('margin-left');
+  margins = Math.round(parseInt(margins, 10));
+  from = from - margins;
+
+  animateStopScroll({
+    scroller,
+    at: from,
+    isRTL,
+  });
+  scrollDeffered.resolve(from);
 }
 
 export { isWithinPaddingHorizontally, isWithinPaddingVertically };

@@ -12,7 +12,7 @@ import {
 import { ItemsHelper } from 'pro-layouts';
 import GalleryView from './galleryView';
 import SlideshowView from './slideshowView';
-import { scrollToItemImp, scrollToGroupImp } from '../../helpers/scrollHelper';
+import { scrollToItemImp, scrollToGroupImp, haltScroll } from '../../helpers/scrollHelper';
 import ScrollIndicator from './galleryScrollIndicator';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
@@ -458,7 +458,10 @@ export class GalleryContainer extends React.Component {
           autoSlideshowContinuousSpeed: this.state.options.autoSlideshowContinuousSpeed,
           imageMargin: this.state.options.imageMargin,
         };
-        return scrollToItemImp(scrollParams);
+        this.currentScrollData = scrollToItemImp(scrollParams);
+          return this.currentScrollData.scrollDeffered.promise.then(()=>{
+            this.currentScrollData = null;
+          });
       } catch (e) {
         //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
         console.error(
@@ -513,7 +516,10 @@ export class GalleryContainer extends React.Component {
           autoSlideshowContinuousSpeed: this.state.options.autoSlideshowContinuousSpeed,
           imageMargin: this.state.options.imageMargin,
         };
-        return scrollToGroupImp(scrollParams);
+        this.currentScrollData = scrollToGroupImp(scrollParams);
+        return this.currentScrollData.scrollDeffered.promise.then(()=>{
+          this.currentScrollData = null;
+        });
       } catch (e) {
         //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
         console.error(
@@ -820,6 +826,9 @@ export class GalleryContainer extends React.Component {
   }
 
   onMouseEnter() {
+    if(this.currentScrollData?.isContinuousScrolling || this.state.options.pauseAutoSlideshowOnHover) {
+      haltScroll(this.currentScrollData);
+    }
     this.setState({ isInHover: true });
   }
 
