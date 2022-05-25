@@ -732,6 +732,8 @@ div.pro-gallery {
   left: var(--group-left);
   width: var(--group-width);
   right: var(--group-right);
+  height: 1px;
+  pointer-events: none;
 }
 
 $group-view: '[data-hook="group-view"]';
