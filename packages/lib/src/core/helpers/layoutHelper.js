@@ -299,7 +299,7 @@ const centerArrowsWhenNeeded = (options) => {
   .split(',')
   .filter(placement => !isHoverPlacement(placement))
   .join(',')
-  if (!isConstantVerticalPlacement(filteredPlacement, false) || 
+  if (!isConstantVerticalPlacement(filteredPlacement) || 
       !isSingleVerticalItemRendered)
     {
     // if text (info) placement is not above/below placement or more then 1 images per col, arrows are gallery("item") centered
