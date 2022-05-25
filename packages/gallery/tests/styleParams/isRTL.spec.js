@@ -62,7 +62,7 @@ describe('options - isRTL', () => {
 
   it('should set "rtl" class in slideShowView', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      galleryLayout: GALLERY_CONSTS.layout.FUTURE_SLIDESHOW,
       isRTL: GALLERY_CONSTS.layoutDirection.RIGHT_TO_LEFT,
     });
     driver.mount.proGallery(initialProps);
@@ -74,7 +74,7 @@ describe('options - isRTL', () => {
 
   it('should not set "rtl" class in slideShowView', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      galleryLayout: GALLERY_CONSTS.layout.FUTURE_SLIDESHOW,
       isRTL: GALLERY_CONSTS.layoutDirection.RIGHT_TO_LEFT,
     });
     driver.mount.proGallery(initialProps);
