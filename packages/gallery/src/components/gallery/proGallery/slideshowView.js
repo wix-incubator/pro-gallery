@@ -521,8 +521,8 @@ class SlideshowView extends React.Component {
       options,
       galleryStructure,
       thumbnailPosition,
-      galleryHeight: this.props.container.galleryHeight,
-      galleryWidth: this.props.container.galleryWidth,
+      containerHeight: this.props.container.height,
+      contianerWidth: this.props.container.width,
       activeIndexOffsetMemory: this.activeIndexOffsetMemory,
       prevActiveIndex: this.prevActiveIndex,
     });
