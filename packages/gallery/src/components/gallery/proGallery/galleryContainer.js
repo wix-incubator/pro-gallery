@@ -826,7 +826,7 @@ export class GalleryContainer extends React.Component {
   }
 
   onMouseEnter() {
-    if(this.currentScrollData?.isContinuousScrolling || this.state.options.pauseAutoSlideshowOnHover) {
+    if(this.currentScrollData?.isContinuousScrolling && this.state.options.pauseAutoSlideshowOnHover) {
       haltScroll(this.currentScrollData);
     }
     this.setState({ isInHover: true });
