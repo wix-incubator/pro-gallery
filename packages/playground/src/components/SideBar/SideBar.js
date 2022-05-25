@@ -241,7 +241,7 @@ function SideBar({ items, blueprintsManager, visible }) {
         <Collapse.Panel header="Develop" key="develop">
           <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
             <Form.Item label="Local Playground" labelAlign="left">
-              <Button shape="circle" icon={<ArrowRightOutlined />} target="_blank" href={`http://localhost:3000/${window.location.search}`} />
+              <Button shape="circle" icon={<ArrowRightOutlined />} target="_blank" href={`http://localhost:3006/${window.location.search}`} />
             </Form.Item>
             <Form.Item label="Master Playground" labelAlign="left">
               <Button shape="circle" icon={<ArrowRightOutlined />} target="_blank" href={`https://pro-gallery-master.surge.sh/${window.location.search}`} />
