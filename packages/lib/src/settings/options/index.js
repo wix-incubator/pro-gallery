@@ -48,7 +48,6 @@ import thumbnailSpacings from './thumbnailSpacings';
 import slideshowLoop from './slideshowLoop';
 import arrowsPadding from './arrowsPadding';
 import arrowsSize from './arrowsSize';
-import slideshowInfoSize from './slideshowInfoSize';
 import textBoxHeight from './textBoxHeight';
 import calculateTextBoxWidthMode from './calculateTextBoxWidthMode';
 import layoutParams_info_sizeUntis from './layoutParams_info_sizeUnits';
@@ -224,7 +223,6 @@ export default {
   [optionsMap.layoutParams.navigationArrows.padding]: arrowsPadding,
   arrowsSize,
   [optionsMap.layoutParams.navigationArrows.size]: arrowsSize,
-  slideshowInfoSize,
   textBoxHeight,
   [optionsMap.layoutParams.info.height]: layoutParams_info_height,
   calculateTextBoxWidthMode,

@@ -93,7 +93,6 @@ export const optionsBySection = {
     'textImageSpace',
 
     'allowSlideshowCounter',
-    'slideshowInfoSize',
   ],
   [SECTIONS.BEHAVIOR]: [
     'hoveringBehaviour',
