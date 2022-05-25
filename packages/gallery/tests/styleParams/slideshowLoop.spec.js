@@ -20,7 +20,7 @@ describe('options - slideshowLoop', () => {
   });
   it('should be able to to click next when reached last item', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      galleryLayout: GALLERY_CONSTS.layout.FUTURE_SLIDESHOW,
       slideshowLoop: true,
     });
     driver.mount.proGallery(initialProps);
@@ -32,7 +32,7 @@ describe('options - slideshowLoop', () => {
   });
   it('should not be able to to click next', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      galleryLayout: GALLERY_CONSTS.layout.FUTURE_SLIDESHOW,
       slideshowLoop: false,
     });
     driver.mount.proGallery(initialProps);

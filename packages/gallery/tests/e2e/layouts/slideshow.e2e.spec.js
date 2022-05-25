@@ -17,7 +17,7 @@ describe('slideshow - e2e', () => {
   });
   it('slideshow - scrollDirection = vertical', async () => {
     await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      galleryLayout: GALLERY_CONSTS.layout.FUTURE_SLIDESHOW,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -27,7 +27,7 @@ describe('slideshow - e2e', () => {
   });
   it('slideshow - scrollDirection = horizontal', async () => {
     await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      galleryLayout: GALLERY_CONSTS.layout.FUTURE_SLIDESHOW,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');

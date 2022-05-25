@@ -154,25 +154,7 @@ describe('Item View', () => {
       style = driver.find.hook('item-container').get(0).props.style;
       expect(style.boxShadow).to.equal(undefined);
     });
-    it('should toggle overflowY visible/inherit', () => {
-      sampleItemViewProps.options = mergeNestedObjects(
-        sampleItemViewProps.options,
-        {
-          galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-        }
-      );
-      driver.mount(ItemView, sampleItemViewProps);
-      let style = driver.find.hook('item-container').get(0).props.style;
-      expect(style.overflowY).to.equal('visible');
-      const updatedOptions = mergeNestedObjects(sampleItemViewProps.options, {
-        galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      });
-      driver.set.props({
-        options: updatedOptions,
-      });
-      style = driver.find.hook('item-container').get(0).props.style;
-      expect(style.overflowY).to.equal('hidden');
-    });
+
     it('item-Wrapper should have class based on cubeType', () => {
       sampleItemViewProps.options = mergeNestedObjects(
         sampleItemViewProps.options,

@@ -15,14 +15,20 @@ describe('styleParam - arrowsVerticalPosition', () => {
     container,
     items: images2,
     options,
+    customComponents: {
+      customHoverRenderer: () => {},
+      customInfoRenderer: () => {},
+      customSlideshowInfoRenderer: () => {},
+    },
   };
 
   beforeEach(() => {
     driver = new GalleryDriver();
     //base layout styles for entire test-suite
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      galleryLayout: GALLERY_CONSTS.layout.FUTURE_SLIDESHOW,
       slideshowInfoSize: 39,
+      textBoxHeight: 39,
     });
   });
 
@@ -44,6 +50,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
     // Exact style params relevant to this sub-test
     initialProps.options = mergeNestedObjects(initialProps.options, {
       slideshowInfoSize: 38, // info height is 39 when default, so slideshowInfoSize < arrowsSize
+      textBoxHeight: 38,
       arrowsVerticalPosition: 'INFO_CENTER',
     });
     const navArrows = await mountGalleryAndGetArrows(initialProps);
@@ -54,6 +61,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
     // Exact style params relevant to this sub-test
     initialProps.options = mergeNestedObjects(initialProps.options, {
       arrowsVerticalPosition: 'INFO_CENTER',
+      textBoxHeight: 39,
     });
     const navArrows = await mountGalleryAndGetArrows(initialProps);
     const galleryContainer = driver.getContainer();

@@ -89,7 +89,7 @@ export default class galleryDriver {
     let urlParam = '';
     let flatSP = flattenObject(options);
     Object.keys(flatSP).map((sp) => (urlParam += `${sp}=${flatSP[sp]}&`));
-    const url = `http://localhost:3000/?${urlParam}isTestEnvironment=true`;
+    const url = `http://localhost:3006/?${urlParam}isTestEnvironment=true`;
     return url;
   }
   get grab() {

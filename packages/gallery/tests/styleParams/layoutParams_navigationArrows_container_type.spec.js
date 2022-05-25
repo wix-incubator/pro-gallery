@@ -20,7 +20,7 @@ describe('options - layoutParams_navigationArrows_container_type', () => {
 
   const mountSlideshowGalleryAnGetArrow = async (containerStyleType) => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      galleryLayout: GALLERY_CONSTS.layout.FUTURE_SLIDESHOW,
       layoutParams: {
         navigationArrows: {
           container: {
