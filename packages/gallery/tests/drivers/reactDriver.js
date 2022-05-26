@@ -28,6 +28,8 @@ class galleryDriver {
       maxGalleryWidth: 1000,
       galleryWidth: 1000,
       galleryHeight: 500,
+      width: 1000,
+      height: 500,
       viewMode: 'site',
       bounds: {
         visibleTop: 0,
