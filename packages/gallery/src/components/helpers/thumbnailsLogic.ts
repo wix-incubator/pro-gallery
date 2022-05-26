@@ -54,8 +54,8 @@ export function getThumbnailsData({
   items,
   thumbnailPosition,
   galleryStructure,
-  galleryWidth,
-  galleryHeight,
+  containerWidth,
+  containerHeight,
   activeIndexOffsetMemory = activeIndex,
   prevActiveIndex = activeIndex,
 }: {
@@ -64,8 +64,8 @@ export function getThumbnailsData({
   items: GalleryProps['items'];
   thumbnailPosition: string;
   galleryStructure: any;
-  galleryWidth: number;
-  galleryHeight: number;
+  containerWidth: number;
+  containerHeight: number;
   activeIndexOffsetMemory?: number;
   prevActiveIndex?: number;
 }) {
@@ -90,8 +90,8 @@ export function getThumbnailsData({
     thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.TOP;
   const { width, height } = getThumbnailsContainerSize({
     horizontalThumbnails,
-    galleryWidth,
-    galleryHeight,
+    containerWidth,
+    containerHeight,
     thumbnailSizeWithSpacing,
   });
   const minNumOfThumbnails = getNumberOfThumbnails({
@@ -157,24 +157,24 @@ export function getThumbnailsData({
 
 function getThumbnailsContainerSize({
   horizontalThumbnails,
-  galleryWidth,
-  galleryHeight,
+  containerWidth,
+  containerHeight,
   thumbnailSizeWithSpacing,
 }: {
   horizontalThumbnails: boolean;
-  galleryWidth: number;
-  galleryHeight: number;
+  containerWidth: number;
+  containerHeight: number;
   thumbnailSizeWithSpacing: number;
 }) {
   if (horizontalThumbnails) {
     return {
-      width: galleryWidth,
+      width: containerWidth,
       height: thumbnailSizeWithSpacing,
     };
   } else {
     return {
       width: thumbnailSizeWithSpacing,
-      height: galleryHeight,
+      height: containerHeight,
     };
   }
 }

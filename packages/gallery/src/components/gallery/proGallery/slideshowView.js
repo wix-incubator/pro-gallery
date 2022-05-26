@@ -514,15 +514,14 @@ class SlideshowView extends React.Component {
     const { clearedGalleryItems } = this;
     const activeIndex = utils.inRange(this.state.activeIndex, clearedGalleryItems.length);
     const { thumbnailSize, thumbnailSpacings } = options;
-
     const { horizontalThumbnails, items, thumbnailsMargins, thumbnailsStyle, activeIndexOffsetMemory } = getThumbnailsData({
       items: this.props.items,
       activeIndex,
       options,
       galleryStructure,
       thumbnailPosition,
-      galleryHeight: this.props.container.galleryHeight,
-      galleryWidth: this.props.container.galleryWidth,
+      containerHeight: this.props.container.height,
+      containerWidth: this.props.container.width,
       activeIndexOffsetMemory: this.activeIndexOffsetMemory,
       prevActiveIndex: this.prevActiveIndex,
     });
