@@ -57,8 +57,6 @@ class DimensionsHelper {
           default:
             break;
         }
-      } else if (GALLERY_CONSTS.isLayout('SLIDESHOW')(this.options)) {
-        res.galleryHeight -= this.options.slideshowInfoSize;
       }
       return res;
     });

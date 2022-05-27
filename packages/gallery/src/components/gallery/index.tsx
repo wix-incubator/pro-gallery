@@ -57,8 +57,7 @@ export default class Gallery extends React.Component<
   isUsingCustomInfoElements() {
     return (
       !!this.galleryProps.customComponents.customHoverRenderer ||
-      !!this.galleryProps.customComponents.customInfoRenderer ||
-      !!this.galleryProps.customComponents.customSlideshowInfoRenderer
+      !!this.galleryProps.customComponents.customInfoRenderer
     );
   }
 

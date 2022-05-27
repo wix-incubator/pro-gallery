@@ -77,13 +77,12 @@ const isExternalLeftPlacement = (placement) =>
   String(placement) === PLACEMENTS.SHOW_ON_THE_LEFT ||
   String(placement) === NEW_PLACEMENTS.LEFT;
 
-const isConstantVerticalPlacement = (placement, isSlideshow) => {
+const isConstantVerticalPlacement = (placement) => {
   const placementArray = placement.split(',');
   const firstPlacement = placementArray.shift();
   return (
-    isSlideshow || // Either SlideShow OR all placements are above/below (the same as the first one)
-    (isExternalAboveOrBelowSinglePlacement(firstPlacement) &&
-      placementArray.every((placement) => placement === firstPlacement))
+    isExternalAboveOrBelowSinglePlacement(firstPlacement) &&
+    placementArray.every((placement) => placement === firstPlacement)
   );
 };
 

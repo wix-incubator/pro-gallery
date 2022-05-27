@@ -43,7 +43,6 @@ class ItemView extends React.Component {
 
   init() {
     this.onItemClick = this.onItemClick.bind(this);
-    this.getSlideshowItemInner = this.getSlideshowItemInner.bind(this);
     this.onItemWrapperClick = this.onItemWrapperClick.bind(this);
     this.onItemInfoClick = this.onItemInfoClick.bind(this);
     this.onContainerKeyDown = this.onContainerKeyDown.bind(this);
@@ -446,10 +445,10 @@ class ItemView extends React.Component {
   }
 
   getItemInner() {
-    const { options, type, style, offset } = this.props;
+    const { type, style, offset } = this.props;
     let itemInner;
 
-    const { width, height, innerWidth, innerHeight } = style;
+    const { innerWidth, innerHeight } = style;
     const { innerTop, innerLeft } = offset;
 
     const itemStyles = { width: innerWidth, height: innerHeight, marginTop: innerTop, marginLeft: innerLeft };
@@ -478,50 +477,7 @@ class ItemView extends React.Component {
         }
     }
 
-    if (GALLERY_CONSTS.isLayout('SLIDESHOW')(options)) {
-      return this.getSlideshowItemInner({options, width, height, itemInner, customComponents: this.props.customComponents})
-    }
-
     return itemInner;
-  }
-
-  getSlideshowItemInner({options, width, height, itemInner, customComponents,  photoId, id }) {
-      const { customSlideshowInfoRenderer } = customComponents;
-      const slideAnimationStyles = getSlideAnimationStyles(this.props);
-      const infoStyle = {
-        height: `${options.slideshowInfoSize}px`,
-        bottom: `-${options.slideshowInfoSize}px`,
-        ...slideAnimationStyles,
-        transition: 'none',
-      };
-      const slideshowInfo = customSlideshowInfoRenderer
-        ? customSlideshowInfoRenderer(getCustomInfoRendererProps(this.props))
-        : null;
-
-      const { idx } = this.props;
-      return (
-        <div>
-          <a
-            ref={(e) => (this.itemAnchor = e)}
-            data-id={photoId}
-            data-idx={idx}
-            class='item-link-wrapper'
-            key={'item-container-link-' + id}
-            {...getLinkParams(this.props)}
-            tabIndex={-1}
-            style={{ ...slideAnimationStyles, width, height }}
-          >
-            {itemInner}
-          </a>
-          <div
-            className="gallery-slideshow-info"
-            data-hook="gallery-slideshow-info-buttons"
-            style={infoStyle}
-          >
-            {slideshowInfo}
-          </div>
-        </div>
-      );
   }
 
   getRightInfoElementIfNeeded() {
@@ -672,10 +628,9 @@ class ItemView extends React.Component {
       options;
 
     const containerStyleByoptions = getContainerStyle(options);
-    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
 
     const itemStyles = {
-      overflowY: isSlideshow ? 'visible' : 'hidden',
+      overflowY: 'hidden',
       position: 'absolute',
       bottom: 'auto',
       margin:
@@ -1015,7 +970,6 @@ class ItemView extends React.Component {
         {this.getBottomInfoElementIfNeeded()}
       </div>
     );
-    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(options)
     const handleKeyDown = (e) => {
       /* Relvenat only for Screen-Reader case:
       Screen-Reader ignores the tabIdex={-1} and therefore stops and focuses on the <a> tag keyDown event,
@@ -1031,9 +985,6 @@ class ItemView extends React.Component {
         itemContainer: this.itemContainer,
       });
     }
-    if (isSlideshow) {
-      return innerDiv;
-    } else {
       const linkParams = getLinkParams(this.props)
       const elementProps = {
         ref: (e) => (this.itemAnchor = e),
@@ -1065,7 +1016,7 @@ class ItemView extends React.Component {
           </div>
         );
       }
-    }
+    
   }
 
   //-----------------------------------------| RENDER |--------------------------------------------//

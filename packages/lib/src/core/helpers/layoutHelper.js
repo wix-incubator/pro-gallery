@@ -270,7 +270,7 @@ const blockCounterByProduct = (options) => {
     _options.allowSlideshowCounter = false
   }
 
-  if ((GALLERY_CONSTS.isLayout('SLIDESHOW')(options)|| GALLERY_CONSTS.isLayout('FUTURE_SLIDESHOW')(options)) === false) {
+  if (GALLERY_CONSTS.isLayout('FUTURE_SLIDESHOW')(options) === false) {
     _options.allowSlideshowCounter = false;
   }
   return _options;
@@ -299,7 +299,7 @@ const centerArrowsWhenNeeded = (options) => {
   .split(',')
   .filter(placement => !isHoverPlacement(placement))
   .join(',')
-  if (!isConstantVerticalPlacement(filteredPlacement, GALLERY_CONSTS.isLayout('SLIDESHOW')(options)) || 
+  if (!isConstantVerticalPlacement(filteredPlacement) || 
       !isSingleVerticalItemRendered)
     {
     // if text (info) placement is not above/below placement or more then 1 images per col, arrows are gallery("item") centered
@@ -372,9 +372,6 @@ function processLayouts(options, customExternalInfoRendererExists) {
 }
 
 function isSlideshowFont(options) {
-  if (GALLERY_CONSTS.isLayout('SLIDESHOW')(options)) {
-    return true;
-  }
   if (hasExternalVerticalPlacement(options.titlePlacement)) {
     if (GALLERY_CONSTS.isLayout('SLIDER')(options) ||GALLERY_CONSTS.isLayout('PANORAMA')(options) || GALLERY_CONSTS.isLayout('COLUMN')(options)) {
       return true;

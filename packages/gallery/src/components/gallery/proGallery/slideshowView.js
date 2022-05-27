@@ -682,7 +682,6 @@ class SlideshowView extends React.Component {
     const {
       isRTL,
       scrollDirection,
-      slideshowInfoSize,
       imageMargin,
       arrowsPadding,
       arrowsPosition,
@@ -698,7 +697,6 @@ class SlideshowView extends React.Component {
         borderRadius,
       },
     } = layoutParams.navigationArrows;
-    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
     const { hideLeftArrow, hideRightArrow } = this.state;
     const {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight} = getArrowsRenderData({
       customNavArrowsRenderer: this.props.customComponents.customNavArrowsRenderer,
@@ -709,10 +707,8 @@ class SlideshowView extends React.Component {
     });
 
     const { galleryHeight } = this.props.container;
-    const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
-    const imageHeight = isSlideshow
-      ? galleryHeight
-      : galleryHeight - infoHeight;
+    const infoHeight = textBoxHeight;
+    const imageHeight = galleryHeight - infoHeight;
 
 
     // the nav arrows parent container top edge is imageMargin/2 ABOVE the actual view, that calculates the middle point of gallery
@@ -722,7 +718,7 @@ class SlideshowView extends React.Component {
     let directionFix;
     if (GALLERY_CONSTS.hasExternalAbovePlacement(titlePlacement)){
       directionFix = -1;
-    } else if (isSlideshow || GALLERY_CONSTS.hasExternalBelowPlacement(titlePlacement)){
+    } else if (GALLERY_CONSTS.hasExternalBelowPlacement(titlePlacement)){
       directionFix = 1;
     } else {
       // if we got here, we should be ITEM_CENTER, taken care of in layoutHelper.js
@@ -894,9 +890,7 @@ class SlideshowView extends React.Component {
   }
 
   getDimensions() {
-    const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
-    const addition = isSlideshow ? this.props.options.slideshowInfoSize : 0
-    const height  = this.props.container.galleryHeight + addition
+    const height  = this.props.container.galleryHeight;
     return this.props.isPrerenderMode
       ? {
         width: '100%',
@@ -1004,7 +998,7 @@ class SlideshowView extends React.Component {
       return false;
     }
     const {
-      options: { galleryTextAlign, slideshowInfoSize },
+      options: { galleryTextAlign, textBoxHeight },
     } = this.props;
 
     const imageMargin =
@@ -1034,7 +1028,7 @@ class SlideshowView extends React.Component {
         aria-pressed={this.state.pauseAutoSlideshowClicked}
         tabIndex={0}
         style={{
-          top: `calc(100% - ${slideshowInfoSize}px + 3px)`,
+          top: `calc(100% - ${textBoxHeight}px + 3px)`,
           ...side,
         }}
       >
@@ -1053,7 +1047,7 @@ class SlideshowView extends React.Component {
     }
     const {
       totalItemsCount,
-      options: { galleryTextAlign, slideshowInfoSize },
+      options: { galleryTextAlign, textBoxHeight },
     } = this.props;
 
     const imageMargin =
@@ -1074,7 +1068,7 @@ class SlideshowView extends React.Component {
         className={'auto-slideshow-counter'}
         data-hook="auto-slideshow-counter"
         style={{
-          top: `calc(100% - ${slideshowInfoSize}px + 3px)`,
+          top: `calc(100% - ${textBoxHeight}px + 3px)`,
           ...side,
         }}
       >
@@ -1113,12 +1107,10 @@ class SlideshowView extends React.Component {
     return thumbnails;
   }
 
-  getClassNames() {GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
+  getClassNames() {
 
     let classNames = 'pro-gallery-parent-container';
-    if (GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)) {
-      classNames += ' gallery-slideshow';
-    } else if (GALLERY_CONSTS.isLayout('SLIDER')(this.props.options)) {
+    if (GALLERY_CONSTS.isLayout('SLIDER')(this.props.options)) {
       classNames += ' gallery-slider';
     } else if (this.props.options.hasThumbnails) {
       classNames += ' gallery-thumbnails';

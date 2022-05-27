@@ -83,16 +83,8 @@ export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
 
 // Function that checks if the nav arrows parent-container is large enough for them
 const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
-  const {
-    slideshowInfoSize,
-    arrowsVerticalPosition,
-    textBoxHeight,
-    arrowsSize,
-    layoutParams,
-  } = arrowsWillFitPositionRelevantArgs.options;
-  const isSlideshow = GALLERY_CONSTS.isLayout('SLIDESHOW')(
-    arrowsWillFitPositionRelevantArgs.options
-  );
+  const { arrowsVerticalPosition, textBoxHeight, arrowsSize, layoutParams } =
+    arrowsWillFitPositionRelevantArgs.options;
   const { height } = arrowsWillFitPositionRelevantArgs.container;
   const { customNavArrowsRenderer } = arrowsWillFitPositionRelevantArgs;
   // Calc of Nav arrows container's height
@@ -104,7 +96,7 @@ const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
     containerStyleType:
       layoutParams.navigationArrows.container.containerStyleType,
   });
-  const infoHeight = isSlideshow ? slideshowInfoSize : textBoxHeight;
+  const infoHeight = textBoxHeight;
   const parentHeightByVerticalPosition = {
     INFO_CENTER: infoHeight,
     IMAGE_CENTER: height - infoHeight,

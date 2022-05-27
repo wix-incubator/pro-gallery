@@ -112,7 +112,6 @@ const container = {
 const customComponents = {
   customHoverRenderer: () => {},
   customInfoRenderer: () => {},
-  customSlideshowInfoRenderer: () => {},
 };
 
 export { container, options, customComponents };

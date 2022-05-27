@@ -68,7 +68,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
     const { height: galleryHeight } = galleryContainer.props().style;
     const { top } = navArrows.props().style;
     const expectedInfoSpace =
-      (-1 * galleryHeight) / 2 + initialProps.options.slideshowInfoSize / 2;
+      (-1 * galleryHeight) / 2 + initialProps.options.textBoxHeight / 2;
     expect(top.replace(/\s/g, '')).to.eq(
       getExpectedCalcExpression(expectedInfoSpace)
     );
@@ -91,7 +91,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
     });
     const navArrows = await mountGalleryAndGetArrows(initialProps);
     const { top } = navArrows.props().style;
-    const expectedInfoSpace = initialProps.options.slideshowInfoSize / 2;
+    const expectedInfoSpace = initialProps.options.textBoxHeight / 2;
     expect(top.replace(/\s/g, '')).to.eq(
       getExpectedCalcExpression(expectedInfoSpace)
     );

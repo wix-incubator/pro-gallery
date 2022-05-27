@@ -42,10 +42,6 @@ import {
   fixedOptions as slider,
   createOptions as sliderOptions,
 } from './sliderGallery';
-import {
-  fixedOptions as slideshow,
-  createOptions as slideshowOptions,
-} from './slideshowGallery';
 
 import {
   fixedOptions as futureSlideshow,
@@ -87,9 +83,9 @@ const addPresetOptions = (options) => {
       case '6': // one row
         return columnOptions(options);
       case '7': // slideshow
-        return slideshowOptions(options);
+        return futureSlideshowOptions(options);
       case '13': // slideshow
-        return slideshowOptions(options);
+        return futureSlideshowOptions(options);
       case '0': // vertical collage
       default:
         return collageOptions(options);
@@ -106,7 +102,7 @@ const addPresetOptions = (options) => {
       case LAYOUTS.SLIDER:
         return sliderOptions(options);
       case LAYOUTS.SLIDESHOW:
-        return slideshowOptions(options);
+        return futureSlideshowOptions(options);
       case LAYOUTS.PANORAMA:
         return panoramaOptions(options);
       case LAYOUTS.COLUMN:
@@ -146,7 +142,6 @@ const NEW_PRESETS = {
   mix,
   panorama,
   slider,
-  slideshow,
   futureSlideshow,
   thumbnails,
   empty,
