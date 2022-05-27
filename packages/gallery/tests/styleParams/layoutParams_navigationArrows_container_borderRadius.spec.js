@@ -20,7 +20,7 @@ describe('options - layoutParams_navigationArrows_container_borderRadius', () =>
 
   it('should set arrows border-radius', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.FUTURE_SLIDESHOW,
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       layoutParams: {
         navigationArrows: {
           container: {

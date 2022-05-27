@@ -44,9 +44,9 @@ import {
 } from './sliderGallery';
 
 import {
-  fixedOptions as futureSlideshow,
-  createOptions as futureSlideshowOptions,
-} from './futureSlideshowGallery';
+  fixedOptions as slideshow,
+  createOptions as slideshowOptions,
+} from './slideshowGallery';
 
 import {
   fixedOptions as thumbnails,
@@ -83,9 +83,9 @@ const addPresetOptions = (options) => {
       case '6': // one row
         return columnOptions(options);
       case '7': // slideshow
-        return futureSlideshowOptions(options);
+        return slideshowOptions(options);
       case '13': // slideshow
-        return futureSlideshowOptions(options);
+        return slideshowOptions(options);
       case '0': // vertical collage
       default:
         return collageOptions(options);
@@ -102,7 +102,7 @@ const addPresetOptions = (options) => {
       case LAYOUTS.SLIDER:
         return sliderOptions(options);
       case LAYOUTS.SLIDESHOW:
-        return futureSlideshowOptions(options);
+        return slideshowOptions(options);
       case LAYOUTS.PANORAMA:
         return panoramaOptions(options);
       case LAYOUTS.COLUMN:
@@ -121,8 +121,6 @@ const addPresetOptions = (options) => {
         return emptyOptions(options);
       case LAYOUTS.JSON_FIXED:
         return jsonFixedOptions(options);
-      case LAYOUTS.FUTURE_SLIDESHOW:
-        return futureSlideshowOptions(options);
       case LAYOUTS.COLLAGE:
       default:
         return collageOptions(options);
@@ -142,7 +140,7 @@ const NEW_PRESETS = {
   mix,
   panorama,
   slider,
-  futureSlideshow,
+  slideshow,
   thumbnails,
   empty,
 };
@@ -163,7 +161,6 @@ const getLayoutName = (galleryLayout) => {
     'bricks', // 10
     'mix', // 11,
     'alternate', // 12
-    'futureSlideshow', // 13,
   ];
   return galleyLayoutList[galleryLayout + 1];
 };

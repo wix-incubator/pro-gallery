@@ -11,7 +11,6 @@ import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
 import { BlueprintsManager } from 'pro-gallery-blueprints'
 import BlueprintsApi from './PlaygroundBlueprintsApi'
-import getFutureSlideshowSupportedOptions from './getFutureSlideshowSupportedOptions'
 import {utils} from 'pro-gallery-lib';
 import { Resizable } from 're-resizable';
 
@@ -241,7 +240,7 @@ export function App() {
   const blueprintProps = gallerySettings.useBlueprints ? getOrInitBlueprint() :
   {
     items: getItems(),
-    options: getFutureSlideshowSupportedOptions(options),
+    options,
     container: getContainer()
   };
 

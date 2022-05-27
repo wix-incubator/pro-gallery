@@ -26,7 +26,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
     driver = new GalleryDriver();
     //base layout styles for entire test-suite
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.FUTURE_SLIDESHOW,
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       slideshowInfoSize: 39,
       textBoxHeight: 39,
     });

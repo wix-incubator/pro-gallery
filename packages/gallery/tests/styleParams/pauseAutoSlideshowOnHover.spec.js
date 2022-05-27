@@ -24,7 +24,7 @@ describe('options - pauseAutoSlideshowOnHover', () => {
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
       isAutoSlideshow: true,
       autoSlideshowInterval: 1,
-      galleryLayout: GALLERY_CONSTS.layout.FUTURE_SLIDESHOW,
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       pauseAutoSlideshowOnHover: true,
     });
     galleryViewProps = driver.props.galleryView(initialProps);

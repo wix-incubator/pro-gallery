@@ -20,7 +20,7 @@ describe('options - arrowsSize', () => {
 
   it('should set the correct arrowsSize', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.FUTURE_SLIDESHOW,
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       arrowsSize: 50,
     });
     driver.mount.proGallery(initialProps);
@@ -35,7 +35,7 @@ describe('options - arrowsSize', () => {
   });
   it('should set the position of arrows according to arrowsSize', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.FUTURE_SLIDESHOW,
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       arrowsSize: 50,
       arrowsPosition: GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY,
     });

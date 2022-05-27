@@ -10,7 +10,7 @@ import disableAnimationsForSlideshowLayouts from './disableAnimationsForSlidesho
 
 const fixToSlideshow = (options) => {
   let presetOptions = { ...options };
-  presetOptions.galleryLayout = LAYOUTS.FUTURE_SLIDESHOW;
+  presetOptions.galleryLayout = LAYOUTS.SLIDESHOW;
   presetOptions.enableInfiniteScroll = true;
   presetOptions = assignByString(
     presetOptions,
