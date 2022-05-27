@@ -36,7 +36,7 @@ describe('options - slideAnimation', () => {
     });
     it('should set the correct "Fade" animation styles to the items', async () => {
       initialProps.options = mergeNestedObjects(initialProps.options, {
-        galleryLayout: GALLERY_CONSTS.layout.FUTURE_SLIDESHOW,
+        galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
         slideAnimation: GALLERY_CONSTS.slideAnimations.FADE,
       });
       driver.mount.proGallery(initialProps);
@@ -62,7 +62,7 @@ describe('options - slideAnimation', () => {
     });
     it('should not have Fade animation styles when "slideAnimations" is "Scroll"', async () => {
       initialProps.options = mergeNestedObjects(initialProps.options, {
-        galleryLayout: GALLERY_CONSTS.layout.FUTURE_SLIDESHOW,
+        galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
         slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
       });
       driver.mount.proGallery(initialProps);

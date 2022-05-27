@@ -17,7 +17,7 @@ describe('arrowsPosition - e2e', () => {
   });
   it('should have navigation arrows inside the gallery ', async () => {
     await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.FUTURE_SLIDESHOW,
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       arrowsPosition: GALLERY_CONSTS.arrowsPosition.ON_GALLERY,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -26,7 +26,7 @@ describe('arrowsPosition - e2e', () => {
   });
   it('should have navigation arrows outside the gallery ', async () => {
     await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.FUTURE_SLIDESHOW,
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       arrowsPosition: GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY,
     });
     await driver.waitFor.hookToBeVisible('item-container');
