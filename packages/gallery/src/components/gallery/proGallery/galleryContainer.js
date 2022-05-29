@@ -947,7 +947,7 @@ export class GalleryContainer extends React.Component {
             <style dangerouslySetInnerHTML={{ __html: this.dynamicStyles }} />
           )}
         </div>
-          {this.props.proGalleryRole === 'application' && (
+          {this.props.proGalleryRole && (
             <span ref={(e) => this.outOfViewComponent = e} tabIndex={-1} className="sr-only out-of-view-component">
               {this.props.translations?.Accessibility_Left_Gallery}
             </span>
