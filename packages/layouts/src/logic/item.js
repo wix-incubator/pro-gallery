@@ -44,6 +44,7 @@ export class Item {
       right: 0,
       bottom: 0,
     };
+
     this._group = {};
     this.calcPinOffset = () => 0;
 
