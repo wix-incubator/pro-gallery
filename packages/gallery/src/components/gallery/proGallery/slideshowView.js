@@ -19,7 +19,7 @@ import {
 } from '../../helpers/navigationArrowUtils'
 import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
 import { getThumbnailsData, clearGalleryItems } from '../../helpers/thumbnailsLogic';
-
+import MouseCursor from './mouseCursor'
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
 
@@ -1152,6 +1152,9 @@ class SlideshowView extends React.Component {
     return (this.props.options.isRTL ? -1 : 1) * this.scrollElement.scrollLeft;
   }
 
+  getMouseCursor(){
+    return <MouseCursor></MouseCursor>
+  }
   //-----------------------------------------| REACT |--------------------------------------------//
 
   updateAutoSlideShowState(
@@ -1312,6 +1315,7 @@ class SlideshowView extends React.Component {
 
     const gallery = this.createGallery();
     const thumbnails = this.getThumbnails();
+    const mouseCursor = this.getMouseCursor();
 
     if (utils.isVerbose()) {
       console.timeEnd('Rendering Gallery took ');
@@ -1330,6 +1334,7 @@ class SlideshowView extends React.Component {
         onBlur={this.onBlur}
       >
         {thumbnails[0]}
+        {mouseCursor}
         {gallery}
         {thumbnails[1]}
       </div>
