@@ -76,7 +76,7 @@ jobs:
       # run: echo "this is a push to master"
       run: |
         git checkout master
-        lerna publish --exact prerelease --dist-tag next --yes
+        lerna publish 4.1.0 --exact  --yes
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     - name: Push to pull request
