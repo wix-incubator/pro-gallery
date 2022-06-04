@@ -61,6 +61,7 @@ export interface Crop {
 
 export interface Structure {
   galleryLayout?: number;
+  galleryRatio?: number;
   enableStreching?: boolean;
   gallerySpacing?: number;
   itemSpacing?: number;

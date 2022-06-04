@@ -1,5 +1,4 @@
 import { default as GALLERY_CONSTS } from '../../common/constants/index';
-
 class DimensionsHelper {
   constructor() {
     this.options = {};
@@ -56,6 +55,28 @@ class DimensionsHelper {
             break;
           default:
             break;
+        }
+      }
+      if (
+        this.options.scrollDirection ===
+          GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+        this.options.layoutParams.structure.galleryRatio > 0
+      ) {
+        res.galleryHeight =
+          res.galleryWidth * this.options.layoutParams.structure.galleryRatio;
+        if (this.options.hasThumbnails) {
+          const fixedThumbnailSize =
+            this.options.thumbnailSize +
+            this.options.layoutParams.gallerySpacing +
+            3 * this.options.thumbnailSpacings;
+          switch (this.options.galleryThumbnailsAlignment) {
+            case 'top':
+            case 'bottom':
+              res.height = res.galleryHeight + fixedThumbnailSize;
+              break;
+            default:
+              break;
+          }
         }
       }
       return res;
