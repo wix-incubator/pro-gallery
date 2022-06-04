@@ -45,6 +45,7 @@ function getExpected() {
           },
           repeatingGroupTypes: '',
           structure: {
+            galleryRatio: 0,
             galleryLayout: 0,
             itemSpacing: 10,
             scrollDirection: 'VERTICAL',
