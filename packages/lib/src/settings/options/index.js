@@ -112,7 +112,7 @@ import behaviourParams_gallery_horizontal_autoSlide_behaviour from './behaviourP
 import behaviourParams_gallery_horizontal_autoSlide_interval from './behaviourParams_gallery_horizontal_autoSlide_interval';
 import behaviourParams_gallery_horizontal_autoSlide_speed from './behaviourParams_gallery_horizontal_autoSlide_speed';
 import layoutParams_structure_responsiveMode from './layoutParams_structure_responsiveMode';
-import layoutParams_structure_galleryRatio from './layoutParams_structure_galleryRatio';
+import layoutParams_structure_galleryRatio_value from './layoutParams_structure_galleryRatio_value';
 import layoutParams_targetItemSize_value from './layoutParams_targetItemSize_value';
 import layoutParams_info_width from './layoutParams_info_width';
 import layoutParams_info_height from './layoutParams_info_height';
@@ -333,9 +333,9 @@ export default {
   behaviourParams_item_content_magnificationValue,
   [optionsMap.behaviourParams.item.content.magnificationValue]:
     behaviourParams_item_content_magnificationValue,
-  layoutParams_structure_galleryRatio,
-  [optionsMap.layoutParams.structure.galleryRatio]:
-    layoutParams_structure_galleryRatio,
+  layoutParams_structure_galleryRatio_value,
+  [optionsMap.layoutParams.structure.galleryRatio.value]:
+    layoutParams_structure_galleryRatio_value,
   arrowsColor,
   [optionsMap.stylingParams.arrowsColor]: arrowsColor,
   [optionsMap.layoutParams.navigationArrows.type]:

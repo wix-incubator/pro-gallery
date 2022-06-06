@@ -60,10 +60,11 @@ class DimensionsHelper {
       if (
         this.options.scrollDirection ===
           GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-        this.options.layoutParams.structure.galleryRatio > 0
+        this.options.layoutParams.structure.galleryRatio.value > 0
       ) {
         res.galleryHeight =
-          res.galleryWidth * this.options.layoutParams.structure.galleryRatio;
+          res.galleryWidth *
+          this.options.layoutParams.structure.galleryRatio.value;
         if (this.options.hasThumbnails) {
           const fixedThumbnailSize =
             this.options.thumbnailSize +

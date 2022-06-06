@@ -44,7 +44,9 @@ function getExpected() {
             position: 'ON_GALLERY',
           },
           structure: {
-            galleryRatio: 0,
+            galleryRatio: {
+              value: 0,
+            },
             galleryLayout: 0,
             itemSpacing: 10,
             scrollDirection: 'VERTICAL',

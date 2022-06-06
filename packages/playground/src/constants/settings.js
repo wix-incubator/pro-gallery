@@ -43,7 +43,7 @@ export const optionsBySection = {
   [SECTIONS.LAYOUT]: [
     // 'allowLeanGallery',
     'scrollDirection',
-    optionsMap.layoutParams.structure.galleryRatio,
+    optionsMap.layoutParams.structure.galleryRatio.value,
     'isVertical',
     'isRTL',
     'imageMargin',

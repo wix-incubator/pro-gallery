@@ -61,7 +61,7 @@ export interface Crop {
 
 export interface Structure {
   galleryLayout?: number;
-  galleryRatio?: number;
+  ratio?: Ratio;
   enableStreching?: boolean;
   gallerySpacing?: number;
   itemSpacing?: number;
@@ -75,6 +75,9 @@ export interface Structure {
   groupsOrder?: 'LEFT_TO_RIGHT' | 'RIGHT_TO_LEFT' | 'BY_HEIGHT'; //use const? or is this the new const?
 }
 
+export interface Ratio {
+  value: number;
+}
 export interface TargetItemSize {
   unit?: 'PERCENT' | 'PIXEL' | 'SMART';
   value?: number;
