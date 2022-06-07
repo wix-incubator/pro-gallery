@@ -1,8 +1,6 @@
 import { default as galleryRatioValue } from './layoutParams_structure_galleryRatio_value';
-import optionsMap from '../../core/helpers/optionsMap';
 import { INPUT_TYPES } from '../utils/constants';
 
-console.log(optionsMap);
 import {
   isConstantVerticalPlacement,
   isHoverPlacement,
