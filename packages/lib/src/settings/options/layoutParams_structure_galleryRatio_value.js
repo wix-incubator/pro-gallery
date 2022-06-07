@@ -1,4 +1,5 @@
 import { default as GALLERY_CONSTS } from '../../common/constants';
+import { INPUT_TYPES } from '../utils/constants';
 
 export default {
   title: 'Gallery Ratio',
@@ -8,4 +9,5 @@ export default {
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal")',
   default: 0,
+  type: INPUT_TYPES.NUMBER,
 };

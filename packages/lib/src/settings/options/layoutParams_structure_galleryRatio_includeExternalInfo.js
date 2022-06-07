@@ -1,5 +1,8 @@
 import { default as galleryRatioValue } from './layoutParams_structure_galleryRatio_value';
-import { default as optionsMap } from '../../core/helpers/optionsMap';
+import optionsMap from '../../core/helpers/optionsMap';
+import { INPUT_TYPES } from '../utils/constants';
+
+console.log(optionsMap);
 import {
   isConstantVerticalPlacement,
   isHoverPlacement,
@@ -16,15 +19,20 @@ export default {
       .split(',')
       .filter((placement) => !isHoverPlacement(placement))
       .join(',');
-
+    console.log(
+      '>>>>>>>>>>>>',
+      options[optionsMap.layoutParams.structure.galleryRatio.value],
+      options[optionsMap.layoutParams.structure.galleryRatio.value] > 0
+    );
     return (
       isSingleVerticalItemRendered &&
       isConstantVerticalPlacement(filteredPlacement) &&
       galleryRatioValue.isRelevant(options) &&
-      options[optionsMap.structure.galleryRatio.value] > 0
+      options[optionsMap.layoutParams.structure.galleryRatio.value] > 0
     );
   },
   isRelevantDescription:
     'Must be a single row horizontal gallery with a provided galleryRatio value and a below/above info placement',
   default: false,
+  type: INPUT_TYPES.BOOLEAN,
 };
