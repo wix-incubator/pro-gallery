@@ -1,5 +1,5 @@
 import { default as galleryRatioValue } from './layoutParams_structure_galleryRatio_value';
-import { optionsMap } from '../../core/helpers/optionsMap';
+import { default as optionsMap } from '../../core/helpers/optionsMap';
 import {
   isConstantVerticalPlacement,
   isHoverPlacement,
