@@ -46,6 +46,7 @@ function getExpected() {
           structure: {
             galleryRatio: {
               value: 0,
+              includeExternalInfo: false,
             },
             galleryLayout: 0,
             itemSpacing: 10,

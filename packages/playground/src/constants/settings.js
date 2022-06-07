@@ -44,6 +44,7 @@ export const optionsBySection = {
     // 'allowLeanGallery',
     'scrollDirection',
     optionsMap.layoutParams.structure.galleryRatio.value,
+    optionsMap.layoutParams.structure.galleryRatio.includeExternalInfo,
     'isVertical',
     'isRTL',
     'imageMargin',

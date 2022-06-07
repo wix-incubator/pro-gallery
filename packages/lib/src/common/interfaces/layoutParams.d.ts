@@ -77,6 +77,7 @@ export interface Structure {
 
 export interface GalleryRatio {
   value: number;
+  includeExternalInfo: boolean;
 }
 export interface TargetItemSize {
   unit?: 'PERCENT' | 'PIXEL' | 'SMART';
