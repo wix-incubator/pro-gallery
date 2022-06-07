@@ -1,4 +1,5 @@
 import { default as GALLERY_CONSTS } from '../../common/constants/index';
+import { default as includeExternalInfo } from '../../settings/options/layoutParams_structure_galleryRatio_includeExternalInfo';
 class DimensionsHelper {
   constructor() {
     this.options = {};
@@ -80,7 +81,9 @@ class DimensionsHelper {
           }
         }
         if (
-          !this.options.layoutParams.structure.galleryRatio.includeExternalInfo
+          !this.options.layoutParams.structure.galleryRatio
+            .includeExternalInfo &&
+          includeExternalInfo.isRelevant(this.options)
         ) {
           res.galleryHeight += this.options.externalInfoHeight;
         }

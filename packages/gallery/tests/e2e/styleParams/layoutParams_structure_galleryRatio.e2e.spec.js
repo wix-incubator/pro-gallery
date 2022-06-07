@@ -19,6 +19,7 @@ describe('galleryRatio - e2e', () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       layoutParams_structure_galleryRatio_value: 0.5,
+      layoutParams_structure_galleryRatio_includeExternalInfo: true,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -29,6 +30,7 @@ describe('galleryRatio - e2e', () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
       layoutParams_structure_galleryRatio_value: 0.65,
+      layoutParams_structure_galleryRatio_includeExternalInfo: true,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -39,6 +41,17 @@ describe('galleryRatio - e2e', () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
       layoutParams_structure_galleryRatio_value: 0.5,
+    });
+    await driver.waitFor.hookToBeVisible('item-container');
+    await driver.waitFor.timer(200);
+    const page = await driver.grab.screenshot();
+    expect(page).toMatchImageSnapshot();
+  });
+  it('Should consider external info ', async () => {
+    await driver.navigate({
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      layoutParams_structure_galleryRatio_value: 0.65,
+      layoutParams_structure_galleryRatio_includeExternalInfo: false,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
