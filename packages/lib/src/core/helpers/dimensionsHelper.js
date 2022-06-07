@@ -79,6 +79,11 @@ class DimensionsHelper {
               break;
           }
         }
+        if (
+          !this.options.layoutParams.structure.galleryRatio.includeExternalInfo
+        ) {
+          res.galleryHeight += this.options.externalInfoHeight;
+        }
       }
       return res;
     });
