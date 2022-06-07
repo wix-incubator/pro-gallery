@@ -567,6 +567,7 @@ class ItemView extends React.Component {
 
     info = (
       <div
+        className={'gallery-item-common-info-outer '}
         style={{...getOuterInfoStyle(
           placement,
           options,
