@@ -1,4 +1,5 @@
 import { galleryOptions } from 'pro-gallery-lib';
+import {optionsMap} from 'pro-gallery-lib';
 
 export const INPUT_TYPES = {
   NUMBER: 'NUMBER',
@@ -42,6 +43,8 @@ export const optionsBySection = {
   [SECTIONS.LAYOUT]: [
     // 'allowLeanGallery',
     'scrollDirection',
+    optionsMap.layoutParams.structure.galleryRatio.value,
+    optionsMap.layoutParams.structure.galleryRatio.includeExternalInfo,
     'isVertical',
     'isRTL',
     'imageMargin',

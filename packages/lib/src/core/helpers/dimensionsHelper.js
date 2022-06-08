@@ -1,5 +1,5 @@
 import { default as GALLERY_CONSTS } from '../../common/constants/index';
-
+import { default as includeExternalInfo } from '../../settings/options/layoutParams_structure_galleryRatio_includeExternalInfo';
 class DimensionsHelper {
   constructor() {
     this.options = {};
@@ -56,6 +56,36 @@ class DimensionsHelper {
             break;
           default:
             break;
+        }
+      }
+      if (
+        this.options.scrollDirection ===
+          GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+        this.options.layoutParams.structure.galleryRatio.value > 0
+      ) {
+        res.galleryHeight =
+          res.galleryWidth *
+          this.options.layoutParams.structure.galleryRatio.value;
+        if (this.options.hasThumbnails) {
+          const fixedThumbnailSize =
+            this.options.thumbnailSize +
+            this.options.layoutParams.gallerySpacing +
+            3 * this.options.thumbnailSpacings;
+          switch (this.options.galleryThumbnailsAlignment) {
+            case 'top':
+            case 'bottom':
+              res.height = res.galleryHeight + fixedThumbnailSize;
+              break;
+            default:
+              break;
+          }
+        }
+        if (
+          !this.options.layoutParams.structure.galleryRatio
+            .includeExternalInfo &&
+          includeExternalInfo.isRelevant(this.options)
+        ) {
+          res.galleryHeight += this.options.externalInfoHeight;
         }
       }
       return res;

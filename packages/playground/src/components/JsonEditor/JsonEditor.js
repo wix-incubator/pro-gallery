@@ -15,7 +15,7 @@ import {
   Button,
   Divider,
 } from 'antd';
-import {INPUT_TYPES, isInPreset} from 'pro-gallery-lib';
+import {INPUT_TYPES, isInPreset, flatToNested} from 'pro-gallery-lib';
 import ColorPicker from '../ColorPicker/ColorPicker';
 import { settingsManager } from '../../constants/settings';
 
@@ -187,14 +187,14 @@ class JsonEditor extends React.Component {
     //     return acc;
     //   }, {}) :
     //   styleParams;
-
+    const flatAndNestedOptions = {...flatToNested(allOptions), ...allOptions}
     // json = removeFieldsNotNeeded(json, selectedLayout);
     const filterFunction = option ?
     ([key]) => key === option :
     ([key, settings]) =>
       (!section || settings.section === section) &&
       (!subSection || settings.subSection === subSection) &&
-      (this.props.showAllOptions || settings.isRelevant(allOptions))
+      (this.props.showAllOptions || settings.isRelevant(flatAndNestedOptions))
 
     const activeKey = option ? {activeKey: 'collapse' + option} : {defaultActiveKey: []};
 
@@ -213,7 +213,7 @@ class JsonEditor extends React.Component {
     const isSingleItem = !!option;
 
     const Extra = settings => {
-      if (settings.isRelevant(allOptions)) {
+      if (settings.isRelevant(flatAndNestedOptions)) {
         return null; //<Icon type="check" style={{fontSize: 10, color: '#52c41a'}} />
       } else {
         if (settings.missing) {

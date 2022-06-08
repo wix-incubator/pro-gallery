@@ -43,8 +43,11 @@ function getExpected() {
             size: 23,
             position: 'ON_GALLERY',
           },
-          repeatingGroupTypes: '',
           structure: {
+            galleryRatio: {
+              value: 0,
+              includeExternalInfo: false,
+            },
             galleryLayout: 0,
             itemSpacing: 10,
             scrollDirection: 'VERTICAL',
@@ -60,6 +63,7 @@ function getExpected() {
             groupsOrder: 'BY_HEIGHT',
             columnRatios: [],
           },
+          repeatingGroupTypes: '',
           crop: {
             enable: false,
             enableSmartCrop: false,

@@ -230,6 +230,7 @@ export class GalleryContainer extends React.Component {
     const layoutHeight = this.props.structure.height;
     const layoutItems = this.props.structure.items;
     const isInfinite = this.containerInfiniteGrowthDirection() === 'vertical';
+    const isFixedHorizontlaGalleryRatio =     (this.containerInfiniteGrowthDirection() === 'horizontal' && this.state.options.layoutParams.structure.galleryRatio.value > 0);
     let updatedHeight = false;
     const needToUpdateHeightNotInfinite =
       !isInfinite && needToHandleShowMoreClick;
@@ -246,6 +247,7 @@ export class GalleryContainer extends React.Component {
       layoutHeight,
       layoutItems,
       isInfinite,
+      isFixedHorizontlaGalleryRatio,
       updatedHeight,
     };
     if (utils.isVerbose()) {

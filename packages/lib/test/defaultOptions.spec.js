@@ -47,6 +47,7 @@ function expectedOptions() {
           borderRadius: 0,
         },
       },
+      structure: { galleryRatio: { value: 0, includeExternalInfo: false } },
     },
     behaviourParams: {
       item: {
