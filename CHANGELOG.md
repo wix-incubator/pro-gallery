@@ -1,2702 +1,2048 @@
-## [v3.1.38](https://pro-gallery-3-1-38.surge.sh) (07/07/2021)
- 
-#### GALLERY
- -  fix: use imageDimensions in video item and text item
-
----
-## [v3.1.37](https://pro-gallery-3-1-37.surge.sh) (07/07/2021)
- 
-#### GALLERY
- -  fix: Navigation Arrows Missing When Navigating to Page with Slider Gallery
-
-#### OTHER
- -  feat:added alt text 
-
----
-## [v3.1.36](https://pro-gallery-3-1-36.surge.sh) (06/07/2021)
- 
-#### OTHER
- -  improve: refactor image dimensions to layouter and added useMaxDImensions styleParam
-
----
-## [v3.1.35](https://pro-gallery-3-1-35.surge.sh) (04/07/2021)
- 
-#### GALLERY
- - fix: destruct arrowsColor from styleParams and not props
-
----
-## [v3.1.34](https://pro-gallery-3-1-34.surge.sh) (04/07/2021)
- 
-#### OTHER
- -  slideshowView: arrows -> fix container size to be same as svg size (to support arrowsPadding correctly) 
-
----
-## [v3.1.33](https://pro-gallery-3-1-33.surge.sh) (04/07/2021)
- 
-#### GALLERY
- - fix: fix behaviour of what happens on the first tap when hovering behaviour set to NO_CHANGE
-
----
-## [v3.1.32](https://pro-gallery-4-0-5.surge.sh) (01/07/2021)
- 
-#### GALLERY
- -  fix: Increasing removeArrowsIfNeeded setTimeOut call
-
----
-## [v3.1.31](https://pro-gallery-3-1-31.surge.sh) (30/06/2021)
-
-#### GALLERY
- -  added slideTransition styleParam
-
----
-## [v4.0.4](https://pro-gallery-4-0-4.surge.sh) (29/06/2021)
-
----
-## [v3.1.30](https://pro-gallery-3-1-30.surge.sh) (29/06/2021)
- 
-#### GALLERY
- -  fix: remove video poster and background when needed
- -  fix: grid cropped video styles (black margins) 
-
----
-## [v3.1.29](https://pro-gallery-3-1-29.surge.sh) (23/06/2021)
- 
-#### LIB
- -  galleryItem: url '' when not defined
-
-#### GALLERY
- -  fix (videoItem): grid cropped video styles (black margins) 
-
----
-## [v3.1.28](https://pro-gallery-3-1-28.surge.sh) (22/06/2021)
- 
-#### LAYOUTS
- -  improve: add dimensions to item scheme
-
----
-## [v3.1.27](https://pro-gallery-3-1-27.surge.sh) (22/06/2021)
-
-#### GALLERY
- -  fix: dont initializeTouchEvents if its undefined(desktop mobile sim)
- -  fix: accessibility translation
-
----
-## [v3.1.26](https://pro-gallery-3-1-26.surge.sh) (15/06/2021)
- 
-#### gallery
- -  feat: A11Y added an option to focus outside the gallery when we are in application mode
-
----
-## [v3.1.25](https://pro-gallery-3-1-25.surge.sh) (13/06/2021)
- 
-#### GALLERY
- -  fix: add formFactor to main flow 
-
-#### PLAYGROUND
- -  fix: correct poster objects
-
----
-## [v3.1.24](https://pro-gallery-3-1-24.surge.sh) (08/06/2021)
-
-#### GALLERY
- -  fix: focus when navigating on the accessibility tree and refactor changeActiveElementIfNedded
- -  fix: added default value to the aria role
- -  improve: small gallery/index refactor.
-
----
-## [v3.1.23](https://pro-gallery-3-1-23.surge.sh) (30/05/2021)
- 
-#### GALLERY
- -  fix: Video item - youtube button appears under the play button
-
----
-## [v3.1.22](https://pro-gallery-3-1-22.surge.sh) (27/05/2021)
- 
-#### GALLERY
- -  improve: added class indication for loaded image
-
----
-## [v3.1.21](https://pro-gallery-3-1-21.surge.sh) (26/05/2021)
-
-#### GALLERY
- -  improve: handle application region Modes
- -  improve: remove unnecessary check from blockAutoSlideShow + added listener to ESC keyCode  
-
----
-## [v3.1.20](https://pro-gallery-3-1-20.surge.sh) (23/05/2021)
- 
-#### GALLERY
- -  improve: render video placeholder when needed
-
----
-## [v3.1.19](https://pro-gallery-3-1-19.surge.sh) (20/05/2021)
- 
-#### GALLERY
- -  fix video center alignment when in a tall container
-
----
-## [v3.1.18](https://pro-gallery-3-1-18.surge.sh) (19/05/2021)
- 
-#### GALLERY
- -  feat: A11Y pause auto slide on accessibility focus
-
----
-## [v3.1.17](https://pro-gallery-3-1-17.surge.sh) (12/05/2021)
- 
-#### GALLERY
- -  fix: remove setTimeout in imageItem - transparent images bug
-
----
-## [v3.1.16](https://pro-gallery-3-1-16.surge.sh) (11/05/2021)
-
- #### MAIN
- - improve: upgrade to node 14.16.1
-
-#### GALLERY
- - improve: removed not relevant settings (renderVisibleItemsInSsr, forceImagePreload)
- 
----
-## [v3.1.15](https://pro-gallery-3-1-15.surge.sh) (11/05/2021)
-
----
-## [v3.1.14](https://pro-gallery-3-1-14.surge.sh) (06/05/2021)
- 
-#### GALLERY
- -  improve (events): remove depracated events
- -  fix: delete undefined function - ScrollializePlayState
-
----
-## [v3.1.13](https://pro-gallery-3-1-13.surge.sh) (04/05/2021)
- 
-#### GALLERY
- -  feat: added shouldIndexDirectShareLinkInSEO styleParam
- -  added isInDisplay to getSignificantProps 
- 
-
-
----
-## [v3.1.12](https://pro-gallery-3-1-12.surge.sh) (02/05/2021)
- 
-#### GALLERY
- -  improve: changed 'ITEM_FOCUS' and 'ITEM_LOST_FOCUS' parameters
- -  base ts behavior
-
-#### OTHER
- - v3.1.11
-
-#### MAIN
- -  update changelog.md
-
----
-## [v3.1.11](https://pro-gallery-3-1-11.surge.sh) (27/04/2021)
- 
-#### GALLERY
- -  fix: remove aria-hidden to make info element accessible
-
----
-## [v3.1.10](https://pro-gallery-3-1-10.surge.sh) (22/04/2021)
-
-#### OTHER
- -  fix (galleryItems): poster is the prioritized poster {url, width, height} and not only the poster url
-
----
-## [v3.1.9](https://pro-gallery-3-1-9.surge.sh) (20/04/2021)
- 
-#### OTHER
- -  feat: A11Y added new events ITEM_FOCUSED and ITEM_LOST_FOCUS
-
----
-## [v3.1.8](https://pro-gallery-3-1-8.surge.sh) (19/04/2021)
- 
-#### GALLERY
- -  fix: first video is playing when initial currentIdx is not 0 
- -  fix (imageRenderer): use the original file type as the default surl for images
- -  feature: add  arrowsVerticalPosition param to control to position of the arrows in slideshow galleries
-
----
-## [v3.1.7](https://pro-gallery-3-1-7.surge.sh) (07/04/2021)
- 
-#### LIB
- -  blueprints: added handling text item changes in itemsChanged.
-
----
-## [v3.1.6](https://pro-gallery-3-1-6.surge.sh) (06/04/2021)
- 
-#### GALLERY
- -  improve (slideshowView): make the arrowSize container responsive
-
----
-## [v3.1.5](https://pro-gallery-3-1-5.surge.sh) (05/04/2021)
- 
-#### GALLERY
- -  replaced render return array with div in videoItemWrapper
- -  Fix: video play queue in changing galleries 
-
-
----
-## [v3.1.4](https://pro-gallery-3-1-4.surge.sh) (24/03/2021)
-
-#### GALLERY
- -  feat : added  new SP PauseAutoSlideshowOnHover 
-
----
-## [v3.1.3](https://pro-gallery-3-1-3.surge.sh) (22/03/2021)
- 
-#### GALLERY
- -  slideshowView: if totalItemsCount changed, check if arrows status (hide/show) needs to be updated.
-
----
-## [v3.1.2](https://pro-gallery-3-1-2.surge.sh) (21/03/2021)
- 
-#### GALLERY
- -  fix: use transition for next item in FADE slide animation
-
----
-## [v3.1.1](https://pro-gallery-3-1-1.surge.sh) (17/03/2021)
- 
-#### GALLERY
- -  allow SSR with the v3 ProGallery
-
----
-## [v3.1.0](https://pro-gallery-3-1-0.surge.sh) (16/03/2021)
- 
-#### GALLERY
- -  feature: add Deck animation for slideshow galleries
- -  improve (imageRenderer): add a multi url picture element support
- -  feature: new styleParam - showVideoControls
-
----
-## [v3.0.14](https://pro-gallery-3-0-14.surge.sh) (11/03/2021)
- 
-#### OTHER
- -  added new styleParam - showVideoControls
-
----
-## [v3.0.13](https://pro-gallery-3-0-13.surge.sh) (09/03/2021)
- 
-#### GALLERY
- -  feat : Support hover on focus and key navigation 
-
----
-## [v3.0.12](https://pro-gallery-3-0-12.surge.sh) (09/03/2021)
- 
-#### GALLERY
- -  fix: videos autoPlay for slideAnimation
-
----
-## [v3.0.11](https://pro-gallery-3-0-11.surge.sh) (08/03/2021)
- 
-#### GALLERY
- -  fixed nav arrows when there is customNavArrowsRenderer.
-
- #### LIB
- -  added arrowsPadding SP (relevant only when arrowsPosition is ON_GALLERY)
-
----
-## [v3.0.10](https://pro-gallery-3-0-10.surge.sh) (04/03/2021)
- 
-#### LIB
- -  blueprints feat, recalc container if styles changed
-
-#### GALLERY
- -  fix support uppercase in color hex
-
----
-## [v3.0.9](https://pro-gallery-3-0-9.surge.sh) (02/03/2021)
- 
-#### GALLERY
- -  fix: check if item is not undefined in onCurrentItemChange
- -  fix: dont send functions with eventData on CURREnT_ITEM_CHANGED
- -  added tslib
-
----
-## [v3.0.7](https://pro-gallery-3-0-7.surge.sh) (23/02/2021)
- 
-#### GALLERY
- -  fix: prevented additional scrolling on prop change
-
----
-## [v3.0.6](https://pro-gallery-3-0-6.surge.sh) (23/02/2021)
- 
-#### GALLERY
- -  fix: make the slideshow info full width in fit layout
-
----
-## [v3.0.5](https://pro-gallery-3-0-5.surge.sh) (23/02/2021)
-
-## [v3.0.4](https://pro-gallery-3-0-4.surge.sh) (23/02/2021)
- 
-#### GALLERY
- -  remove arrows in prerenderMode
- -  Fix: Arrow are not showing before first scroll in slider galleries in preview mode
- -  remove arrows in prerenderMode
- -  improve (imageItem): remove native lazy loading of images:
- -  added ItemView to index.ts exports
-
-#### OTHER
- - v3.0.4
- - This reverts commit 7bc2929d8f5a783e1570a07dd912125fb8b8530e.
- - This reverts commit 69fd324c3a281d8007cd9f03be2fad4a24f9c0d6.
- - causeshorizontal galleries and animations to be jumpy
- - It should not hurt performance as the fist load does not render these items
-
-#### MAIN
- -  update changelog.md
- -  update changelog
-
----
-## [v3.0.4](https://pro-gallery-3-0-4.surge.sh) (23/02/2021)
- 
-#### GALLERY
- -  Fix: Remove arrows in prerenderMode
- -  Fix: Arrow are not showing before first scroll in slider galleries in preview mode
- -  Improve (imageItem): remove native lazy loading of images
-
----
-## [v3.0.3](https://pro-gallery-3-0-3.surge.sh) (17/02/2021)
-
-## [v3.0.2](https://pro-gallery-3-0-2.surge.sh) (16/02/2021)
- 
-#### GALLERY
- -  fix: set currentIdx on prop.currentIdx change
-
-#### PLAYGROUND
- -  improve: add the placeGroupsLtr params to the sidebar
-
----
-## [v3.0.1](https://pro-gallery-3-0-1.surge.sh) (11/02/2021)
-
-#### GALLERY
- -  allow for picture element with url object for different device pixel ratio
-
----
-## [v3.0.0](https://pro-gallery-3-0-0.surge.sh) (08/02/2021)
- 
-#### V3
- -  Version 3 introduces blueprints and a clear split between logic and UI. Read more in the [Readme](https://github.com/wix/pro-gallery#version-3).
-
----
-## [v2.4.17](https://pro-gallery-2-4-17.surge.sh) (04/02/2021)
- 
-#### GALLERY
- -  blueprints - use formatted styles for height change check
-
----
-## [v2.4.16](https://pro-gallery-2-4-16.surge.sh) (31/01/2021)
- 
-#### GALLERY
- -  Handle oneRow styleParam with designedPreset selected
- -  improve (item): allow setting an external seed
-
----
-## [v2.4.15](https://pro-gallery-2-4-15.surge.sh) (25/01/2021)
- 
-#### GALLERY
- -  improve: pass gallery item on CURRENT_ITEM_CHANGED event 
-
----
-## [v2.4.14](https://pro-gallery-2-4-14.surge.sh) (24/01/2021)
- 
-#### GALLERY
- -  fix: use galleryWidth when calculating cssScroll for horizontal animations
- -  fix: wrap console.log
-
-#### OTHER
- - Update README.md
-
----
-## [v2.4.13](https://pro-gallery-2-4-13.surge.sh) (17/01/2021)
- 
-#### GALLERY
- -  (galleryContainerNew): in debouncedReCreateGallery, call reCreateGalleryExpensively with the correct params.
-
----
-## [v2.4.12](https://pro-gallery-2-4-12.surge.sh) (14/01/2021)
- 
-#### GALLERY
- -  fix blueprints: height change between layouts
-
----
-## [v2.4.11](https://pro-gallery-2-4-11.surge.sh) (14/01/2021)
- 
-#### GALLERY
- -  layoutingIndex fix: allow looping on items using the blueprintsManager
- -  feature (overlayBackgroundGradient): add the option to set the gradient of the overlay
-
----
-## [v2.4.10](https://pro-gallery-2-4-10.surge.sh) (13/01/2021)
- 
-#### GALLERY
- -  Presets: Handle designed presets with new 'jsonStyleParams'
-
----
-## [v2.4.9](https://pro-gallery-2-4-9.surge.sh) (07/01/2021)
- 
-#### GALLERY
- -  fix: black stripes in videos in grid fill
-
----
-## [v2.4.8](https://pro-gallery-2-4-8.surge.sh) (07/01/2021)
- 
-#### OTHER
- - Added new designed presets
- - Added rotatingScatter
- - Added alternate placement
-
-#### LAYOUTS
- -  fix (strip): do not allow incomplete strips with fixed groups per row
-
----
-## [v2.4.7](https://pro-gallery-2-4-7.surge.sh) (04/01/2021)
- 
-#### GALLERY
- -  fix: jumpy animations with scrollSnap in slider
- -  fix (galleryContainer): add the customNavArrowsRenderer to the non-blueprints flow
- -  fix (galleryContainer): do not create layoutCss if avoidingInlineStyles
- -  feature (overlayBackgroundGradient): add the option to set the gradient of the overlay
- -  improve (galleryContainer): allow gradient overlay background
-
----
-## [v2.4.6](https://pro-gallery-2-4-6.surge.sh) (29/12/2020)
- 
-#### GALLERY
- -  fix (imageItem): remove opacity:0 when image is not loaded
- -  improve (horizontalScroll): dispatch an event to the scrollIndicator while scrolling horizontally
-
----
-## [v2.4.5](https://pro-gallery-2-4-5.surge.sh) (23/12/2020)
- 
-#### GALLERY
- -  fix: remove extra play button in placeholder
-
----
-## [v2.4.4](https://pro-gallery-2-4-4.surge.sh) (23/12/2020)
- 
-#### GALLERY
- -  fix: video play button doesn't show when needed
-
----
-## [v2.4.3](https://pro-gallery-2-4-3.surge.sh) (22/12/2020)
- 
-#### GALLERY
- -  feature (imageItem): add the option to pass a customImageRenderer as a prop
-
----
-## [v2.4.2](https://pro-gallery-2-4-2.surge.sh) (21/12/2020)
- 
-#### OTHER
- -  improve: added description to isRelevant in settings
- -  improve: add docs for the isPrerenderMode to the readme
- -  improve: update enableInfinitScroll settings and changed behavior in the playground
-
-#### GALLERY
- -  improve (layoutFixer): remove deprecated layoutFixer code
-
----
-## [v2.4.1](https://pro-gallery-2-4-1.surge.sh) (17/12/2020)
- 
-#### GALLERY
- -  improve (prerender): render highres image on prerender and set a prerender class
-
----
-## [v2.4.0](https://pro-gallery-2-4-0.surge.sh) (16/12/2020)
--  bump node version
----
-## [v2.3.11](https://pro-gallery-2-3-11.surge.sh) (16/12/2020)
- 
-#### GALLERY
- -  feature (slideshowView): add the option to pass navArrows render function
-
-#### OTHER
- -  fix (layoutFixer): use react class instead of function
- - This reverts commit 7f6bd4ccd42d37b0c15291b7f818e36c6e3a6953.
- -  bump node version in .nvmrc files
- -  fix (loadMoreAmount): fix functionality in the playground
- -  fix (layoutFixer): use react class instead of function
-
----
-## [v2.3.10](https://pro-gallery-2-3-10.surge.sh) (15/12/2020)
- 
-#### GALLERY
- -  videos will load after first interaction. fix streched posters
-
----
-## [v2.3.9](https://pro-gallery-2-3-9.surge.sh) (14/12/2020)
- 
-#### GALLERY
- -  fix (layoutFixer): make the createLayout async (to be remote)
-
----
-## [v2.3.8](https://pro-gallery-2-3-8.surge.sh) (14/12/2020)
- 
-#### LAYOUTS
- -  fix (layouter): fix columnsWidth logic when more columns are defined
-
-#### GALLERY
- -  loadMoreButton mobile styles will be set via Wix dynamic css, as the rest of font & color styles.
-
----
-## [v2.3.7](https://pro-gallery-2-3-7.surge.sh) (13/12/2020)
- 
-#### GALLERY
- -  loadMoreButton mobile styles will be set via Wix dynamic css, as the rest of font & color styles.
-
-#### OTHER
- - reverted video changes in 2.3.6
-
-#### PLAYGROUND
- -  fix (settings): remove itemClick from playground and fix isRelevant for loopImages
-
----
-## [v2.3.6](https://pro-gallery-2-3-6.surge.sh) (10/12/2020)
- 
-#### GALLERY
- -  improve (video): improve video loading flow for smoother play start
-
----
-## [v2.3.5](https://pro-gallery-2-3-5.surge.sh) (09/12/2020)
- 
-#### GALLERY
- -  Remove leanGallery usage and imports from Gallery package
-
----
-## [v2.3.4](https://pro-gallery-2-3-4.surge.sh) (08/12/2020) 
-
-#### LEAN_GALLERY
- -  Initial commit for new lean-gallery pacakge
-
----
-## [v2.3.3](https://pro-gallery-2-3-3.surge.sh) (07/12/2020)
- 
-#### OTHER
- -  fix wrap createBlueprints function
-
----
-## [v2.3.2]--broken(https://pro-gallery-2-3-2.surge.sh) (07/12/2020)
-
-#### OTHER
- -  correct export for blueprints
- -  exporting blueprint and allowing for passing a createBlueprintsImp
- -  delete old settings
-
-#### LAYOUTS
- -  feature: add (and fix) the columnsWidths feature to the playground
-
-#### MAIN
- -  delete tests script before patch/minor/major
-
-#### PLAYGROUND
- -  fix: do not create blueprint if one param is missing
- -  fix: fix request for blueprint on server - when cors is disables credentials must be omitted
- -  feature: add the option to use blueprints server
-
----
-## [v2.3.1](https://pro-gallery-2-3-1.surge.sh) (02/12/2020)
- 
-#### GALLERY
- -  itemClick will default to 'nothing'
-
----
-## [v2.3.0](https://pro-gallery-2-3-0.surge.sh) (30/11/2020)
- 
-#### GALLERY
- -  prerender changed from viewMode to prop (isPrerenderMode boolean)
-
-
-
----
-## [v2.2.28](https://pro-gallery-2-2-28.surge.sh) (25/11/2020)
- 
-#### GALLERY
- -  improve (galleryContainer): allow using getVisibleItems in ssr
-
----
-## [v2.2.27](https://pro-gallery-2-2-27.surge.sh) (24/11/2020)
- 
-#### MAIN
- -  improve: separate Travis ci build to stages
-
-#### PLAYGROUND
- -  added lint script.
-
----
-## [v2.2.26](https://pro-gallery-2-2-26.surge.sh) (24/11/2020)
- 
-#### GALLERY
- -  removed yoshi from packages/gallery.
-
----
-## [v2.2.24](https://pro-gallery-2-2-24.surge.sh) (23/11/2020)
- 
-#### GALLERY
- -  fix (slideshowView): pin  autoSlideshow scroll duration to 800ms
-
----
-## [v2.2.23](https://pro-gallery-2-2-23.surge.sh) (23/11/2020)
- 
-#### GALLERY
- -  improve (slideshowView): add support for scrollDuration param
- -  fix: add UNSAFE to componentWillReceiveProps
-
----
-## [v2.2.22](https://pro-gallery-2-2-22.surge.sh) (18/11/2020)
- 
-#### GALLERY
- -  feature (imageItem): avoid using preload image until first scroll event
-
----
-## [v2.2.21](https://pro-gallery-2-2-21.surge.sh) (17/11/2020)
- 
-#### LAYOUTS
- -  removed yoshi from layouts.
-
----
-## [v2.2.20](https://pro-gallery-2-2-20.surge.sh) (17/11/2020)
- 
-#### LIB
- - removed yoshi from lib.
-
----
-## [v2.2.19](https://pro-gallery-2-2-19.surge.sh) (11/11/2020)
- 
-#### GALLERY
- -  fix (videoItem): add namespace webpack chunk names (to avoid react-player imports collisions)
- 
----
-## [v2.2.18](https://pro-gallery-2-2-18.surge.sh) (11/11/2020)
- 
-#### LAYOUTS
- -  fix: keep old hashToInt logic for grouping
-
-#### MAIN
- -  moved CI to travis-ci.com
-
----
-## [v2.2.17](https://pro-gallery-2-2-17.surge.sh) (11/11/2020)
- 
-#### GALLERY
- -  fix (slideshowview): load non-visible items before thumbnail navigation
- -  fix (itemView): remove double borderRadius for attached background
- -  improve (scrollAnimations): enable and fix scroll animations in horizontal galleries
-
-#### LAYOUTS
- -  improve: better scatter calculation
-
----
-## [v2.2.16](https://pro-gallery-2-2-16.surge.sh) (09/11/2020)
- 
-#### GALLERY
- -  improve (layoutFixer): remove default preload option
-
----
-## [v2.2.15](https://pro-gallery-2-2-15.surge.sh) (08/11/2020)
- 
-#### GALLERY
- -  Fixed condition to preview the hover element.
-
-#### PLAYGROUND
- -  improve: add scroll animations for horizontal galleries
-
----
-## [v2.2.14](https://pro-gallery-2-2-14.surge.sh) (05/11/2020)
- 
-#### GALLERY
- -  fix fade animation and thumbnail layout for text item
- -  add special handling for fadeAnimation for slideshow
-
----
-## [v2.2.13](https://pro-gallery-2-2-13.surge.sh) (02/11/2020)
- 
-#### GALLERY
- -  fix (layoutFixer): fix the element creation for multiple galleries
-
----
-## [v2.2.12](https://pro-gallery-2-2-12.surge.sh) (01/11/2020)
- 
-#### GALLERY
- -  improve (layoutFixer): hide elements that are not in view in the layoutFixer
-
----
-## [v2.2.11](https://pro-gallery-2-2-11.surge.sh) (01/11/2020)
- 
-#### GALLERY
- -  improve (layoutFixer): merge disableAfterMount and add nopreload experiment
- -  fix (slideshowView): fix prerender mode in horizontal galleries
-
----
-## [v2.2.10](https://pro-gallery-2-2-10.surge.sh) (28/10/2020)
- 
-#### GALLERY
- -  improve (layoutFixer): add url toggles to layoutFixer (to test in production)
-
----
-## [v2.2.9](https://pro-gallery-2-2-9.surge.sh) (28/10/2020)
- 
-#### GALLERY
- -  Fix: Added 'aria-hidden' to hidden items in slider infinite loop
-
-#### LAYOUTS
- -  fix (item): return the roundedStyles as a seperate key. roundedStyles cause a blank 1px strip sometimes
-
----
-## [v2.2.8](https://pro-gallery-2-2-8.surge.sh) (27/10/2020)
- 
-#### LAYOUTS
- -  fix (item): round the item's style instead of flooring it
-
-#### GALLERY
- -  improve (layoutFixer): fix existing media url instead of creating a new one
- -  improve (imageItem): remove the opacity transition on the high res image
-
----
-## [v2.2.7](https://pro-gallery-2-2-7.surge.sh) (26/10/2020)
- 
-#### GALLERY
- -  improve (layoutFixer): render high-res images on fix + get blueprint data before first render
-
----
-## [v2.2.6](https://pro-gallery-2-2-6.surge.sh) (25/10/2020)
- 
-#### GALLERY
- -  fix (galleryContainer): set the avoidInlineStyles default to false
- -  fix (layoutFixer): disable any dom effect when the layoutFixer is off
-
----
-## [v2.2.5](https://pro-gallery-2-2-5.surge.sh) (25/10/2020)
- 
-#### GALLERY
- -  fix (layoutFixer): render the layoutFixer in prerenderMode (ssr and csr) to avoid ssr mismatches
-
----
-## [v2.2.4](https://pro-gallery-2-2-4.surge.sh) (25/10/2020)
- 
-#### OTHER
- -  fix (yoshi): fix the version of ab-translate to avoid trying to import a private module
- -  fix (yoshi): fixate yoshi's version to ~4.25.0
-
-#### GALLERY
- -  fix (prerenderMode): re-enable margin in prerender mode and disable only for layoutFixer
- -  fix (galleryItem): fix videos preload image creation
-
----
-## [v2.2.3](https://pro-gallery-2-2-3.surge.sh) (22/10/2020)
- 
-#### GALLERY
- -  improve (layoutFixer): fix blick after ssr and pass layoutFixer data to the gallery
-
----
-## [v2.2.2](https://pro-gallery-2-2-2.surge.sh) (21/10/2020)
- 
-#### GALLERY
- -  fix: fixed isScrollEnd function in slideshow (arrows issue)
- -  improve (layoutFixer): prevent the layoutFixer from running more than once
-
----
-## [v2.2.1](https://pro-gallery-2-2-1.surge.sh) (19/10/2020)
- 
-#### GALLERY
- -  fix RTL get more items calculation
- -  autoSlideshow - stop loop if its turned off, work with RTL
-
----
-## [v2.2.0](https://pro-gallery-2-2-0.surge.sh) (18/10/2020)
- 
-#### GALLERY
- -  improve (imageMargin): stop dividing the imageMargin by 2 in process styles (styleParams should not be mutable)
- -  fix (layoutFixer): do not modify receive styles
-
----
-## [v2.1.47](https://pro-gallery-2-1-47.surge.sh) (18/10/2020)
-
----
-## [v2.1.46](https://pro-gallery-2-1-46.surge.sh) (18/10/2020)
- 
-#### GALLERY
- -  fix (layoutFixer): retry if elements do not exist
-
----
-## [v2.1.45](https://pro-gallery-2-1-45.surge.sh) (18/10/2020)
- 
-#### LIB
- -  add urlSize to itemResizer
-
-#### GALLERY
- -  improve (galleryContainer): add an option to disableSSROpacity
- -  fix (layoutFixer): measure the container correctly
-
----
-## [v2.1.44](https://pro-gallery-2-1-44.surge.sh) (15/10/2020)
- 
-#### GALLERY
- -  improve (layoutFixer): preload the layout fixer and use opacity:0 always
- -  fix (galleryhelpers): add try catch to viewport calculation (IE11 issues)
-
----
-## [v2.1.43](https://pro-gallery-2-1-43.surge.sh) (14/10/2020)
- 
-#### LAYOUTS
- -  fix (item): return rounded dimensions (without fractions)
-
-#### GALLERY
- -  improve (index): add a playground link for debugging
-
----
-## [v2.1.42](https://pro-gallery-2-1-42.surge.sh) (12/10/2020)
- 
-#### LIB
- -  blueprints manager - dont keep params of failed blueprints as baseline
-
-#### GALLERY
- -  blueprints - add handle gallery structure on mount
- -  preload blurry images with eager prop instead of lazy
- -  load-more button: prevent focus on the button onMouseDown
-
-#### PLAYGROUND
- -  improve (settings): add videoSpeed to playground
-
----
-## [v2.1.41](https://pro-gallery-2-1-41.surge.sh) (11/10/2020)
- 
-#### GALLERY
- -  catch errors on blueprint fail. dont blow up the gallery (wait for next props)
-
----
-## [v2.1.40](https://pro-gallery-2-1-40.surge.sh) (11/10/2020)
- 
-#### GALLERY
- -  blueprints - call GALLERY_CHANGED in handleNewGalleryStructure after receiving new props.
-
----
-## [v2.1.39](https://pro-gallery-2-1-39.surge.sh) (11/10/2020)
- 
-#### LIB
- -  Gallery Items - allow download links to include queryParams
-
----
-## [v2.1.38](https://pro-gallery-2-1-38.surge.sh) (04/10/2020)
- 
-#### GALLERY
- -  added findNeighborItem from the layouter to the gallery
-
----
-## [v2.1.38](https://pro-gallery-2-1-38.surge.sh) (04/10/2020)
- 
-#### GALLERY
- -  fix rebase error
- -  feat (GalleryContainer): added findNeighborItem from the layouter to the gallery
-
----
-## [v2.1.37](https://pro-gallery-2-1-37.surge.sh) (01/10/2020)
- 
-#### GALLERY
- -  improve (layoutFixer): export the layoutFixer as a seperate component
-
----
-## [v2.1.35](https://pro-gallery-2-1-35.surge.sh) (30/09/2020)
- 
-#### GALLERY
- -  Add onKeyDown event to handle case of opening FullScreen with Screen-Reader
- -  fix: slideshow RTL and current idx fixes
- -  upgrade react-player 2
- 
-
----
-## [v2.1.34](https://pro-gallery-2-1-34.surge.sh) (23/09/2020)
- 
-#### GALLERY
- -  upgrade react-player to ^2.6.0
-
----
-## [v2.1.33](https://pro-gallery-2-1-33.surge.sh) (23/09/2020)
- 
-#### LIB
- -  Add title and description as item changed params
-
----
-## [v2.1.32](https://pro-gallery-2-1-32.surge.sh) (23/09/2020)
- 
-#### GALLERY
- -  fix (itemView): remove animations from preview mode
- -  feature (slideshow): add support for fade animation is horizontal galleries
- -  improve (layoutFixer): createLayoutFixer as soon as possible.
-
----
-## [v2.1.31](https://pro-gallery-2-1-31.surge.sh) (22/09/2020)
- 
-#### GALLERY
- -  Added 'resizeMediaUrl' func to debouncedReCreateGallery (fix broken images in albums upload)
- -  tests: added a custom tests reporter
- -  improve (itemView): use item transitions in preview mode
-
----
-## [v2.1.30](https://pro-gallery-2-1-30.surge.sh) (17/09/2020)
- 
-#### GALLERY
- -  fix (galleryContainer):  item slice
-
----
-## [v2.1.29](https://pro-gallery-2-1-29.surge.sh) (15/09/2020)
- 
-#### GALLERY
- -  add a layoutFixer for prerenderedMode
-
----
-## [v2.1.28](https://pro-gallery-2-1-28.surge.sh) (15/09/2020)
- 
-#### GALLERY
- -  leanGallery: use processLayouts
-
----
-## [v2.1.27](https://pro-gallery-2-1-27.surge.sh) (15/09/2020)
- 
-#### GALLERY + LIB
- -  use visibale items only for prerender mode.
-
----
-## [v2.1.26](https://pro-gallery-2-1-26.surge.sh) (14/09/2020)
- 
-#### MAIN
- - : travis: run "test:all" (instead of "test") before running build.
-
----
-## [v2.1.25](https://pro-gallery-2-1-25.surge.sh) (14/09/2020)
- 
-#### GALLERY + LIB
- -  leanGallery: fix mobile settings to apply on gallery
- -  fix (itemView): use isEditMode as a function
- -  improve (styleParams): support colors as rgba / hex string (keep legacy {value: ...} support)
- -  improve (itemView): use item transitions only in edit mode
-
----
-## [v2.1.24](https://pro-gallery-2-1-24.surge.sh) (14/09/2020)
- 
-#### GALLERY
- -  leanGallery: fix mobile settings to apply on gallery
- -  fix (itemView): use isEditMode as a function
- -  improve (styleParams): support colors as rgba / hex string (keep legacy {value: ...} support)
- -  improve (itemView): use item transitions only in edit mode
-
----
-## [v2.1.23](https://pro-gallery-2-1-23.surge.sh) (13/09/2020)
- 
-#### LIB
- -  Handle case of video autoplay on ios devices
-
-#### ALL
- -  improve (scatter): refactor scatter to be a part of the layout
-
----
-## [v2.1.22](https://pro-gallery-2-1-22.surge.sh) (08/09/2020)
- 
-#### LIB
- -  Added resettemLooping to blueprintsManager
-
----
-## [v2.1.21](https://pro-gallery-2-1-21.surge.sh) (08/09/2020)
- 
-#### GALLERY
- -  fixed createDynamicStyles of overlayBackground (will receive it as an arg), fixed itemHover -> shouldRenderHoverInnerIfExist (when alwaysShowHover, it is true).
- -  Refactor infinate loop in slideshow, slider, thumbnails loop. Fix slideshowLoop SP is not relevnt for layouts that are not slideshow, slider, thumbnails (as was supposed to be).
-
- #### MAIN
- -  REVERT: tests (.travis.yml): run all tests in travis
-
----
-## [v2.1.20](https://pro-gallery-2-1-20.surge.sh) (08/09/2020)
- 
-#### OTHER
- -  temporarily remove test:e2e script
-
----
-## [v2.1.19](https://pro-gallery-2-1-19.surge.sh) (08/09/2020)
- 
-#### GALLERY
- -  Revereted code. stabilizing PG.
-
----
-## [v2.1.18](https://pro-gallery-2-1-18.surge.sh) (07/09/2020)
- 
-#### GALLERY
- -  Refactor infinite loop in slideshow, slider, thumbnails loop. 
- -  Fix slideshowLoop SP is not relevnt for layouts that are not slideshow, slider, thumbnails (as was supposed to be).
-
----
-## [v2.1.17](https://pro-gallery-2-1-17.surge.sh) (07/09/2020)
- 
-#### GALLERY
- -  REVERTED changes done in 2.1.16.
-
----
-## [v2.1.16](https://pro-gallery-2-1-16.surge.sh) (07/09/2020)
- 
-#### GALLERY
- - Refactor infinate loop in slideshow, slider, thumbnails loop.
- - Fix: slideshowLoop SP is not relevnt for layouts that are not slideshow, slider, thumbnails (as was supposed to be).
-
----
-## [v2.1.15](https://pro-gallery-2-1-15.surge.sh) (02/09/2020)
- 
-#### GALLERY
- -  fix: arrows are not showing for galleries below the page fold
-
----
-## [v2.1.14](https://pro-gallery-2-1-14.surge.sh) (01/09/2020)
- 
-
-
-#### GALLERY
-      -  Fix an issue where blueprints did not get the formFactor for viewModeWrapper and styles were not fitted for mobile view 
-
----
-## [v2.1.13](https://pro-gallery-2-1-13.surge.sh) (31/08/2020)
-
-#### GALLERY
- -improve dynamic css / animations creation flow
-
----
-## [v2.1.12](https://pro-gallery-2-1-12.surge.sh) (26/08/2020)
- 
-#### GALLERY
- -  fix: removed getMoreItems call from willRecieveProps
-
----
-## [v2.1.11](https://pro-gallery-2-1-11.surge.sh) (25/08/2020)
- 
-#### GALLERY
- Remove size transitions until item is loaded (looks bad in SSR)
-
----
-## [v2.1.10](https://pro-gallery-2-1-10.surge.sh) (25/08/2020)
- 
-#### GALLERY
- -  Block download on iOS when not allowed
- -  fix (galleryContainer): fix 'false' strings in dynamic styles
- -  Add protection for highres image onLoad not called
-
-#### PLAYGROUND
- -  blueprints flow: allow requesting blueprints from node server(local only)
-
----
-## [v2.1.9](https://pro-gallery-2-1-9.surge.sh) (23/08/2020)
- 
-#### PLAYGROUND
- -  Hide the code generator button if the sidebar is hidden
-
----
-## [v2.1.8](https://pro-gallery-2-1-8.surge.sh) (23/08/2020)
- 
-#### GALLERY
- -  leanGallery: update tests
-
-#### PLAYGROUND
- -  enable access to totalItemsCount from URL query param
-
----
-## [v2.1.7](https://pro-gallery-2-1-7.surge.sh) (23/08/2020)
- 
-#### GALLERY
- -  (isNew) check if watermark changed
- -  fix: return all items instead of visible items when there's currentIdx
- -  fix: fix getMoreItems is not called when dimensions are unknown
-
-#### OTHER
- -  improve (settings): add allowLeanGallery option settings
-
----
-## [v2.1.6](https://pro-gallery-2-1-6.surge.sh) (19/08/2020)
- 
-#### GALLERY
- - : itemView: do not perform e.preventDefault() on item-container 'onKeyDown' (will allow onClick flow on accessible items in the info)
-
----
-## [v2.1.5](https://pro-gallery-2-1-5.surge.sh) (18/08/2020)
- 
-#### PLAYGROUND
- -  fix (settings): rename RCP to allowContextMenu
- -  fix (styleParams): use default style params in context
- -  fix (sidebar): fix disappearing styleParams after change
-
-#### OTHER
- -  Fix: Title underline in mobile view
-
-#### GALLERY
- -  fix (galleryContainer): typo
- -  fix (galleryContainer): merge dynamic styles and fix background overlay css
-
-#### LAYOUTS
- -  fix (layouter): fix calculation of cropped items in vertical galleries with large spacing
-
----
-## [v2.1.4](https://pro-gallery-2-1-4.surge.sh) (16/08/2020)
- 
-#### GALLERY
- -  Protect looping on single video items. listen to errors sent on play.
-
----
-## [v2.1.3](https://pro-gallery-2-1-3.surge.sh) (10/08/2020)
- 
-#### GALLERY
- - LeanGallery: change the gallery key between lean and pro gallery
- - Feature (overlayBackground): add support for dynamic styles - overlayBackground
- - Fixed imageItem: remove gallery-item-hidden class in SEO
-
-#### OTHER
- - Layouter will throw an error if !galleryWidth or if !targetItemSize.
-
----
-## [v2.1.2](https://pro-gallery-2-1-2.surge.sh) (05/08/2020)
- 
-#### GALLERY
- -  fix: targetItemSize calculation
-
-#### OTHER
- -  fix isInfinite
-
----
-## [v2.1.1](https://pro-gallery-2-1-1.surge.sh) (04/08/2020)
- 
-#### OTHER
- -  improve (settings): move the settings management to the lib and remove the old settings configuration
-
-#### GALLERY
- -  feature (itemView): add styleParams to block right click
-
----
-## [v2.1.0](https://pro-gallery-2-1-0.surge.sh) (04/08/2020)
-
----
-## [v2.0.43](https://pro-gallery-2-0-43.surge.sh) (03/08/2020)
- 
-#### GALLERY
- -  leanGallery: fix isEligible to consider totalItemsCount
-
----
-## [v2.0.42](https://pro-gallery-2-0-42.surge.sh) (03/08/2020)
- 
-#### GALLERY
- -  fix (leanGallery): fix linter error (unknown var)
- -  improve: rename gallerySize to targetItemSize for inner calculations
-
----
-## [v2.0.41](https://pro-gallery-2-0-41.surge.sh) (03/08/2020)
- 
-#### GALLERY
- -  fixed version 2.0.40: itemHover will be created always (when needed) when there is an overlayAnimation. The inner part of itemHover will be rendered only when needed as well.
-
----
-## [v2.0.40](https://pro-gallery-2-0-40.surge.sh) (02/08/2020)
- 
-#### GALLERY
- -  itemHover will be created always (when needed) when there is an overlayAnimation. The inner part of itemHover will be rendered only on first hover an on.
-
----
-## [v2.0.39](https://pro-gallery-2-0-39.surge.sh) (02/08/2020)
- 
-#### OTHER
- -   better isUsingCustomElement for blueprints
-
----
-## [v2.0.38](https://pro-gallery-2-0-38.surge.sh) (02/08/2020)
- 
-#### OTHER
- -  Created an entry for a non-breaking blueprints-using gallery
-
-#### GALLERY
- -  leanGallery: update calcItemSize function and added titlePlacement fix for isEligible
-
----
-## [v2.0.37](https://pro-gallery-2-0-37.surge.sh) (29/07/2020)
- 
-#### GALLERY
- -  remove unknown dimensions
-
----
-## [v2.0.36](https://pro-gallery-2-0-36.surge.sh) (28/07/2020)
- 
-#### MAIN
- -  update changelog.md
- -  update changelog.md
-
-#### GALLERY
- -  leanGallery: added logic of calcNumberOfColumns
-
-#### OTHER
- -  utils: disable cache on SSR
-
----
-## [v2.0.36](https://pro-gallery-2-0-36.surge.sh) (28/07/2020)
- 
-#### MAIN
- -  update changelog.md
-
-#### GALLERY
- -  leanGallery: added logic of calcNumberOfColumns
-
-#### OTHER
- -  utils: disable cache on SSR
-
----
-## [v2.0.36](https://pro-gallery-2-0-36.surge.sh) (28/07/2020)
- 
-#### GALLERY
- -  leanGallery: added logic of calcNumberOfColumns
-
-#### OTHER
- -  utils: disable cache on SSR
-
----
-## [v2.0.35](https://pro-gallery-2-0-35.surge.sh) (27/07/2020)
- 
-#### PLAYGROUND
- -  Add a report an issue link
-
-#### GALLERY
- -  Remove css lazy load code
-
----
-## [v2.0.34](https://pro-gallery-2-0-34.surge.sh) (23/07/2020)
- 
-#### LIB
- -  moved GALLERY_CONSTS, GalleryItem, utils, windowWrapper, viewModeWrapper, Blueprints, presets,  defaultStyles, dimensionsHelper, ItemsHelper, processLayouts, versionsHelper, GalleryGroup to pro-gallery-lib.
-
----
-## [v2.0.33](https://pro-gallery-2-0-33.surge.sh) (22/07/2020)
- 
-#### GALLERY
- -  fix (videoScrollHelper): do not init scroll helper in ssr
-
----
-## [v2.0.32](https://pro-gallery-2-0-32.surge.sh) (22/07/2020)
- 
-#### GALLERY
- -  avoid using window in videoItem
-
----
-## [v2.0.30](https://pro-gallery-2-0-30.surge.sh) (21/07/2020)
- 
-#### GALLERY
- -  mobile 1st tap hover only if has title or description
-
----
-## [v2.0.29](https://pro-gallery-2-0-29.surge.sh) (21/07/2020)
- 
-#### GALLERY
- -  item-container opacity 0 on prerender mode
-
-#### LAYOUTS
- -  fix: gaps in vertical layouts
-
----
-## [v2.0.28](https://pro-gallery-2-0-28.surge.sh) (21/07/2020)
-
-#### GALLERY
- -  leanGallery: use isVerbose, fix cursor style, and block 'isAccessible'
- -  load video code dynamically
-
----
-## [v2.0.27](https://pro-gallery-2-0-27.surge.sh) (20/07/2020)
- 
-#### GALLERY
- -  getScrollCss will be called only whe needed (!isSEOMode() && (isEditMode() || gotFirstScrollEvent|| showMoreClickedAtLeastOnce)
-
----
-## [v2.0.26](https://pro-gallery-2-0-26.surge.sh) (19/07/2020)
- 
-#### GALLERY
- -  leanGallery: fix image size in ssr
-
----
-## [v2.0.25](https://pro-gallery-2-0-25.surge.sh) (19/07/2020)
- 
-#### GALLERY
- -  add blueprints to lib
- -  remove preset components
- -  ssrSimulator: update number of testItems
- -  improve (leanGallery): improve rendering of lean galleries in SSR
-
----
-## [v2.0.24](https://pro-gallery-2-0-24.surge.sh) (19/07/2020)
- 
-#### OTHER
- - revert export blueprints in the lib.
-
----
-## [v2.0.23](https://pro-gallery-2-0-23.surge.sh) (16/07/2020)
- 
-#### GALLERY
- -  SSR improve: item dimension
-
----
-## [v2.0.22](https://pro-gallery-2-0-22.surge.sh) (16/07/2020)
- 
-#### GALLERY
- -  export blueprints in the lib
- 
----
-## [v2.0.21](https://pro-gallery-2-0-21.surge.sh) (16/07/2020)
- 
- -  blueprint manager is no longer a singleton
- - reverted "changed pro-gallery/lib to be only ESM."
-
----
-## [v2.0.20](https://pro-gallery-2-0-20.surge.sh) (15/07/2020)
- 
-#### GALLERY
- -  changed pro-gallery/lib to be only ESM.
-
----
-## [v2.0.19](https://pro-gallery-2-0-19.surge.sh) (15/07/2020)
- 
-#### GALLERY
- -  render videoItemPlaceholder in videoItem
- -  LeanGallery supported in Ssr
-
----
-## [v2.0.18](https://pro-gallery-2-0-18.surge.sh) (15/07/2020)
-
-#### GALLERY
- -  SSR refactor
-
----
-## [v2.0.17](https://pro-gallery-2-0-17.surge.sh) (14/07/2020)
- 
-#### GALLERY
- -  fix: gallery is not visible when only first item is in view
-
----
-## [v2.0.16](https://pro-gallery-2-0-16.surge.sh) (13/07/2020)
- 
-#### GALLERY
- -  fix (itemView): avoid inline styles in non-blueprints flow
-
----
-## [v2.0.15](https://pro-gallery-2-0-15.surge.sh) (13/07/2020)
- 
-#### GALLERY
- -  fix (galleryContainerNew): use layoutCss in non-blueprints flow
-
----
-## [v2.0.14](https://pro-gallery-2-0-14.surge.sh) (13/07/2020)
- 
-#### GALLERY
- -  remove inline styles tags
-
----
-## [v2.0.13](https://pro-gallery-2-0-13.surge.sh) (13/07/2020)
- 
-#### GALLERY
- -  fix (slideshowView): fix isLastItem and isScrollEnd for infiniteScroll galleries
-
-#### PLAYGROUND
- -  connect blueprints
-
----
-## [v2.0.12](https://pro-gallery-2-0-12.surge.sh) (12/07/2020)
- 
-#### GALLERY
- -  fix leanGallery broken styleParams
- -  fix leanGallery isEligible reasons
- -  update getVisibleItems in containerExtraNew
-
-#### PLAYGROUND
- -  improve: add viewMode settings to the simulators tab
-
----
-## [v2.0.11](https://pro-gallery-2-0-11.surge.sh) (05/07/2020)
- 
-#### GALLERY
- -  fix: (containerNew) getVisibleItems - dont render less then 2 items
-
----ונת
-## [v2.0.10](https://pro-gallery-2-0-10.surge.sh) (05/07/2020)
- 
-#### GALLERY
- -  set gotFirstScrollEvent on horizontal scroll in oneRow gallery
-
----
-## [v2.0.9](https://pro-gallery-2-0-9.surge.sh) (02/07/2020)
- 
-#### GALLERY
- -  bug fix (ContainerNew) getMoreItems on didMount
- -  REVERT: changed pro-gallery/lib to be only ESM.
-
----
-## [v2.0.8](https://pro-gallery-2-0-8.surge.sh) (01/07/2020)
- 
-#### GALLERY
- -  changed pro-gallery/lib to be only ESM.
-
----
-## [v2.0.7](https://pro-gallery-2-0-7.surge.sh) (01/07/2020)
- 
-#### GALLERY
- -  **** Removed all info from the gallery ****
-
----
-## [v2.0.6](https://pro-gallery-2-0-6.surge.sh) (01/07/2020)
- 
-#### GALLERY
- -  fix: getVisibleItems only in viewMode site
-
----
-## [v2.0.5](https://pro-gallery-2-0-5.surge.sh) (30/06/2020)
- 
-#### GALLERY
- -  ItemView: Add setState with setTimeout for text line fixer
- -  improve: removed unused cod
-
----
-## [v2.0.4](https://pro-gallery-2-0-4.surge.sh) (30/06/2020)
- 
-#### GALLERY
- -  Fix (galleryContainer): fix visibleItems calc for galleries with infinite scroll
- -  ItemView: removed onMouseOver onMouseOut attrs from externalInfo (they are already on the whole item-container).
- -  Performence: Remove loaded and displayed states from ItemView
- -  Improve (galleryContainerNew): getVisibleItems
-
-#### OTHER
- - * Upgrade pro-gallery
- - * Fix import from pro-gallery
- - * Fix missing style loaders on external sources
-
----
-## [v2.0.2](https://pro-gallery-2-0-2.surge.sh) (25/06/2020)
- 
-#### PLAYGROUND
- -  Move antd css import from main entry point to side bar component
-
-#### GALLERY
- -  reactDriver add getVisibleItems
- -  (performance) render only visibleItems on first render
- -  Removed some unused code 
- -  (isNew.js) use Object.entries
- -  galleryContainer remove reCreateGalleryExpensively on didMount
-
----
-## [v2.0.1](https://pro-gallery-2-0-1.surge.sh) (23/06/2020)
- 
-#### PLAYGROUND
- - * improve: Lazy load side bar
-
-#### GALLERY
- -  (isNew.js) fix stylesHaveChanged
-
----
-## [v2.0.0](https://pro-gallery-2-0-0.surge.sh) (22/06/2020)
- 
-#### GALLERY
- improve (calcVisibilities): remove deprecated calcVisibilities
-
-#### PLAYGROUND
- -  improve (sidebar): lazy load the sidebar code
-
----
-## [v1.10.23](https://pro-gallery-1-10-23.surge.sh) (22/06/2020)
- 
-#### GALLERY
- -  changed leanGallery css from cssModule to global static.
- 
-## [v1.10.22](https://pro-gallery-1-10-22.surge.sh) (14/06/2020)
- 
-#### GALLERY
- -  fixed slideshow info structure (with/out customSlideshowInfoRenderer)
- 
----
-## [v1.10.21](https://pro-gallery-1-10-21.surge.sh) (08/06/2020)
- 
-#### GALLERY
- -  dummy commit
-
---
-## [v1.10.20](https://pro-gallery-1-10-20.surge.sh) (08/06/2020)
- 
-#### GALLERY
- -  fixed item-wrapper div container styles.
-
----
-## [v1.10.19](https://pro-gallery-1-10-19.surge.sh) (03/06/2020)
-
----
-## [v1.10.18](https://pro-gallery-1-10-18.surge.sh) (03/06/2020)
- 
-#### LAYOUTS
- -  Fix: fix support for min / max cubeType
-
----
-## [v1.10.17](https://pro-gallery-1-10-17.surge.sh) (28/05/2020)
- 
-#### LAYOUTS
- -  Improve (cubeType): add min/max cubeTypes to limit images height
-
-#### GALLERY
- -  fix (imageItem.js): added data-hook for img tags
-
-#### MAIN
- -  improve (playground): add meta tags
-
----
-## [v1.10.16](https://pro-gallery-1-10-16.surge.sh) (25/05/2020)
- 
-#### GALLERY
- -  fix: hover padding in slider.
- -  improve: use native lazyLoad when supported
-
-#### MAIN
- -  improve (package.json): release exact dependencies version
-
----
-## [v1.10.14](https://pro-gallery-1-10-14.surge.sh) (18/05/2020)
- 
-#### MAIN
- -  improve: add a repository field in package.json
-
----
-## [v1.10.13](https://pro-gallery-1-10-13.surge.sh) (18/05/2020)
- 
-#### LAYOUTS
- -  Revert bad commit: improve (calcVisibilities): remove deprecated calcVisibilities
-
----
-## [v1.10.12](https://pro-gallery-1-10-12.surge.sh) (14/05/2020)
- 
-#### GALLERY
- -  Fix (rtl): explicitly set ltr direction when not rtl
- -  Fix (social): stoppropagation off text download keypress not to trigger item navigation
- -  Improve (itemView): render Hover element only when needed
- -  Fix (social): stoppropagation off text download clicks not to trigger item navigation
- -  Fix (galleryContainerNew): Scrollbase use in getMoreItems
- -  Improve (itemView): render Hover element only when needed
- -  Fix (itemView): fix unrendered hover when hoveringBehaviour is not APPEARS
- -  Fix (itemView): fix unrendered hover when hoveringBehaviour is not APPEARS
- -  Improve (itemView): render Hover element only when needed
- -  Improve (leanGallery): use customInfoRenderer
-
-#### LAYOUTS
- -  fix (calcVisibilities): remove test
- -  fix (useExistingLayout): fix stripIdx initial number (used for random seed of group type)
- -  improve (calcVisibilities): remove deprecated calcVisibilities
-
-#### PLAYGROUND
- -  removed unused var
-
-#### OTHER
- - This reverts commit 23d01b48d8da98745418d4044f0992b85e9b16f3.
- - This reverts commit 0fa7be33c870cbd7d66c9d5a0c1046fb81dfd28f.
- - Merge branch 'master' of github.com:wix/pro-gallery
-
-#### MAIN
- -  fix (travis): publish when branch name is tagged
-
----
-## [v1.10.11](https://pro-gallery-1-10-11.surge.sh) (11/05/2020)
- 
-#### GALLERY
- - Small fix for square items (isVertical)
- - Hover css prep for info-elements -> if an element inside the external info will have 'info-member' className, hover effects will affect it as well.
-
----
-## [v1.10.10](https://pro-gallery-1-10-10.surge.sh) (07/05/2020)
- 
-#### GALLERY
- -  Fix (leanGallery): use props eventsListener
- -  Improve (index): export leanGallery and isEligible
- -  Feat (videoItem): loaded videos will no longer have a poster background. background was visible when video AR was different from the item's
-
-#### OTHER
- - Merge branch 'master' of github.com:wix/pro-gallery
-
----
-## [v1.10.9](https://pro-gallery-1-10-9.surge.sh) (03/05/2020)
-
-#### GALLERY
- - Fixed: protect conversion to GalleryItems in cases there is no last group
-
----
-## [v1.10.8](https://pro-gallery-1-10-8.surge.sh) (03/05/2020)
- 
-#### GALLERY
- - Refactor: onItemClick not sends the event in the eventsListener
- - Refactor: small refactor to customRenderers + providing isMobile to customRenderers.
-
----
-## [v1.10.7](https://pro-gallery-1-10-7.surge.sh) (30/04/2020)
- 
-#### GALLERY
- - Feature: NEED_MORE_ITEMS padding only after initial scroll
- - Feature: added support of customSlideshowInfoRenderer if provided, passing itemContainer to custom renderers
- - Fix: fixed gallery-item-hover-inner height (css)
- - Fix: fixed slideshow slide counter counted over the total with loop
- - Fix: Lean Gallery: fix broken inner style function + minor fixes
-
----
-## [v1.10.6](https://pro-gallery-1-10-6.surge.sh) (23/04/2020)
- 
-#### GALLERY
- -  fix (scrollHelper):scroll after reaplying snap - safari
----
-## [v1.10.5](https://pro-gallery-1-10-5.surge.sh) (22/04/2020)
- 
-#### GALLERY
- -  Fix - Revmoved scroll-snap for the scroll animation duration. (chrome 81 changes to scroll-snap)
-
----
-## [v1.10.4](https://pro-gallery-1-10-4.surge.sh) (21/04/2020)
- 
-#### GALLERY
- - Added addLayoutStyles to pro-gallery exports.
- - GALLERY_CONSTS: placements helper functions will be exported as well in GALLERY_CONSTS
-
----
-## [v1.10.3](https://pro-gallery-1-10-3.surge.sh) (19/04/2020)מ
- 
-#### GALLERY
- -  Remove console log
-
----
-## [v1.10.2](https://pro-gallery-1-10-2.surge.sh) (19/04/2020)
- 
-#### GALLERY
- -  Fix: use custom posters in videoPlaceholders
-
----
-## [v1.10.1](https://pro-gallery-1-10-1.surge.sh) (19/04/2020)
- 
-#### GALLERY
- - Fix: package.json: updated published files.
-
----
-## [v1.10.0](https://pro-gallery-1-10-0.surge.sh) (19/04/2020)
- 
-#### GALLERY
- - Refactor: changed pro-gallery exports.
-
----
-## [v1.9.4](https://pro-gallery-1-9-4.surge.sh) (16/04/2020)
- 
-#### GALLERY
- -  Fix: add protection for hls in iOS
-
----
-## [v1.9.3](https://pro-gallery-1-9-3.surge.sh) (13/04/2020)
- 
-#### GALLERY
- -  New feature - items have changed if one of the item types have changed
-
----
-## [v1.9.2](https://pro-gallery-1-9-2.surge.sh) (13/04/2020)
- 
-#### GALLERY
- -  Added video placeholder item option - metaData.isVideoPlaceholder
-
----
-## [v1.9.1](https://pro-gallery-1-9-1.surge.sh) (13/04/2020)
- 
-#### PLAYGROUND
- -  Fix: missing rotatingCropRatios isRelevant
-
----
-## [v1.9.0](https://pro-gallery-1-9-0.surge.sh) (07/04/2020)
- 
-#### GALLERY
- -  Feature: enable multiple title placements
-
----
-## [v1.8.13](https://pro-gallery-1-8-13.surge.sh) (06/04/2020)
- 
-#### GALLERY
- -  Fix: missing items in horizontal layouts (Grid and Masonry)
-
----
-## [v1.8.12](https://pro-gallery-1-8-12.surge.sh) (06/04/2020)
- 
-#### GALLERY
- -  Allow all videos to have _placeholder and register in the video list.
-
----
-## [v1.8.11](https://pro-gallery-1-8-11.surge.sh) (05/04/2020)
- 
-#### GALLERY
- -  Add support for HLS redirect url (or plain .m3u8) videoUrl for video items 
-
----
-## [v1.8.10](https://pro-gallery-1-8-10.surge.sh) (29/03/2020)
- 
-#### GALLERY
- -  Feat: add data-cancel-link on fake navigation expand mode share links
-
----
-## [v1.8.9](https://pro-gallery-1-8-9.surge.sh) (25/03/2020)
- 
-#### GALLERY
- -  Fix: fix pro-gallery-margin-container width to accomodate for imageMargin
-
----
-## [v1.8.8](https://pro-gallery-1-8-8.surge.sh) (24/03/2020)
- 
-#### GALLERY
- -  Fix: use galleryWidth in video visibility calc
-
----
-## [v1.8.7](https://pro-gallery-1-8-7.surge.sh) (24/03/2020)
- 
-#### GALLERY
- -  Fix: no arrows in horizontal Magic layout
-
----
-## [v1.8.6](https://pro-gallery-1-8-6.surge.sh) (24/03/2020)
- 
-#### GALLERY
- -  Feat: remove legacy js visible prop(layouts groups) from item rendering logic
-
----
-## [v1.8.5](https://pro-gallery-1-8-5.surge.sh) (23/03/2020)
- 
-#### GALLERY
- -  Improve: use single source videoPlaceholder.
-
----
-## [v1.8.4](https://pro-gallery-1-8-4.surge.sh) (22/03/2020)
- 
-#### MAIN
- -  update changelog.md
-
-#### GALLERY
- -  Gallery region label can now be passed via 'proGalleryRegionLabel' prop to PG.
- -  Feat: domId is now the only Id (no galleryId no galleryDomId)
- -  itemView: pass additional prop to ItemHover
- -  itemView: removed unused functions: openItemShopInFullScreen, toggleFullscreenIfNeeded -> Social is not using 'openItemShopInFullScreen' action.
- -  itemView: pass additional prop to ItemHover
- -  Fix: fix for gridFit and rtl
- -  social: 'text-external-item' will be set also for titlePlacement===SHOW_ON_THE_RIGHT or titlePlacement===SHOW_ON_THE_LEFT
-
-
-#### PLAYGROUND
- -  improve (sidebar): add localhost links
-
-#### LAYOUTS
- -  fix (layouter): fix left for sidebyside layouts
-
-
----
-## [v1.8.3](https://pro-gallery-1-8-3.surge.sh) (15/03/2020)
- 
-#### GALLERY
- -  SEO url -> we will replace webp with the original file type and not with jpg.
-
-#### PLAYGROUND
- -  fix: fix issue with broken gallerySize
-
----
-## [v1.8.2](https://pro-gallery-1-8-2.surge.sh) (09/03/2020)
- 
-#### GALLERY
- -  Fixed creation of customEvent for IE.
-
----
-## [v1.8.1](https://pro-gallery-1-8-1.surge.sh) (09/03/2020)
- 
-#### GALLERY
- -  Removed 'on_mouse_over' customEvent as not in use. Fixed 'current_hover_change' customEvent to be created with new customEvent logic.
-
----
-## [v1.8.0](https://pro-gallery-1-8-0.surge.sh) (08/03/2020)
- 
-#### GALLERY
- -  feature: add support for textBoxWidthPercent:
-      calculateTextBoxWidthMode SP: PERCENT / MANUAL
-      textBoxWidth SP: when MANUAL
-      textBoxWidthPercent SP: when PERCENT
-
-#### LAYOUTS
- - fixed columns width calculation (when columns don’t devide equally)
- - fix groups left calc for dynamic columns
-
----
-## [v1.7.25](https://pro-gallery-1-7-25.surge.sh) (04/03/2020)
- 
-#### GALLERY
- - Add clickTarget to EVENTS.ITEM_CLICKED eventData (options: 'item-media', 'item-info', 'item-container')
-
----
-## [v1.7.24](https://pro-gallery-1-7-24.surge.sh) (03/03/2020)
- 
-#### GALLERY
- -  Fixed classNames in horizontal galleries.
- -  Changed console.warn to console.log when local
-
----
-## [v1.7.23](https://pro-gallery-1-7-23.surge.sh) (25/02/2020)
- 
-#### GALLERY
- -  Fixed hoveringBehaviour logic
- -  Let videos with no link lay on click when the gallery is a link opens
-
----
-## [v1.7.22](https://pro-gallery-1-7-22.surge.sh) (25/02/2020)
- 
-#### GALLERY
- -  Fixed support of no media url when titlePlacement === 'SHOW_ON_HOVER'
- -  Items with link wont play videos on click 
-
----
-## [v1.7.21](https://pro-gallery-1-7-21.surge.sh) (23/02/2020)
-
-#### GALLERY
- -  Fixed lineHeightFixer for title placement SHOW_ON_THE_RIGHT and SHOW_ON_THE_LEFT
- -  Feat: allow deepLinks on items for expand mode
-
----
-## [v1.7.20](https://pro-gallery-1-7-20.surge.sh) (21/02/2020)
- 
-#### GALLERY
- - If there is no media url the infoElement (ifExists, not on hover) will grow to the whole item size.
-
----
-## [v1.7.19](https://pro-gallery-1-7-19.surge.sh) (20/02/2020)
- 
-#### GALLERY
- -  Implemented titlePlacement SHOW_ON_THE_RIGHT, SHOW_ON_THE_LEFT
- -  Improve: settings for titlePlacement and textBoxHeight
-
-
-#### PLAYGROUND
- -  improve: addPresetStyles to all styles
-
-#### MAIN
- -  fix: remove wix-incubator references
-
----
-## [v1.7.18](https://pro-gallery-1-7-18.surge.sh) (18/02/2020)
- 
-#### GALLERY
- -  Deeplinks removed from items.
-
----
-## [v1.7.17](https://pro-gallery-1-7-17.surge.sh) (18/02/2020)
- 
-#### GALLERY
- -  Deeplinks on items -  only in SEO
-
----
-## [v1.7.16](https://pro-gallery-1-7-16.surge.sh) (16/02/2020)
- 
-#### GALLERY
- -  Add sharing links on items
- -  Removed iOS download block
- -  Improve: add option for native image lazy load
-
----
-## [v1.7.15](https://pro-gallery-1-7-15.surge.sh) (13/02/2020)
- 
-#### GALLERY
- -  Added dumpCache for utils when view mode or formFactor is set.
- -  Fixed loadMoreAmount condition.
-
-#### PLAYGROUND
- -  improve (codePanel): add css to generated code
-
-#### OTHER
- -  removed isLocal from isDev. allow local testing with no dev log.
-
----
-## [v1.7.14](https://pro-gallery-1-7-14.surge.sh) (04/02/2020)
- 
-#### GALLERY
- -  Fix: fix mixup between columns and fullsize presets
-
----
-## [v1.7.13](https://pro-gallery-1-7-13.surge.sh) (03/02/2020)
- 
-#### GALLERY
- -  Fix: fixed wrong gallerySize in masonry layout
-
----
-## [v1.7.12](https://pro-gallery-1-7-12.surge.sh) (03/02/2020)
- 
-#### GALLERY
- -  do not use dom height when avoidSelfMeasure
-
----
-## [v1.7.11](https://pro-gallery-1-7-11.surge.sh) (03/02/2020)
- 
-#### GALLERY
- -  improve (presets): create exported addPresetStyles method
-
----
-## [v1.7.10](https://pro-gallery-1-7-10.surge.sh) (02/02/2020)
- 
-#### GALLERY
- -  Fix: use inherit instead of visible (allows setting visibility from parent)
- -  Fix: use constant default domId to prevent change between renders (might effect on several galleries in the same page)
- -  Improve: make domId required in propTypes
- -  Force scroll direction on all solid direction layouts
-
----
-## [v1.7.9](https://pro-gallery-1-7-9.surge.sh) (30/01/2020)
- 
-#### GALLERY
- -  fix masonry to always vertical scrollDirection
-
----
-## [v1.7.8](https://pro-gallery-1-7-8.surge.sh) (29/01/2020)
- 
-#### GALLERY
- -  Fix (dimensionHelper): set scrollBase to container in calcScrollBase
- -  Change height calc for titles in SSR
-
----
-## [v1.7.7](https://pro-gallery-1-7-7.surge.sh) (28/01/2020)
- 
-#### GALLERY
- -  Fixed images alignment bug in grid layout.
- -  Fix (leanGallery): fix liveHeightFixer in leanGallery
- -  Improve (leanGallery): fix isEligible for no title and no description
-
----
-## [v1.7.6](https://pro-gallery-1-7-6.surge.sh) (27/01/2020)
- 
-#### GALLERY
- -  In slideshow, only the itemInner will be wrapped with <a>, and not the whole item-container.
- -  Group navigation for collage horizontal and improvements to arrows.
-
----
-## [v1.7.5](https://pro-gallery-1-7-5.surge.sh) (27/01/2020)
- 
-#### GALLERY
- -  change download elements to div
-
----
-## [v1.7.4](https://pro-gallery-1-7-4.surge.sh) (26/01/2020)
- 
-#### GALLERY
- -  Fixes totitlePlacement/hoveringBehaviour.
-
----
-## [v1.7.3](https://pro-gallery-1-7-3.surge.sh) (22/01/2020)
- 
-#### GALLERY
- -  Accessibility fix loveButton label, role, and checked/unchecked
- -  Added formFactor prop ("mobile"/"desktop"/"tablet"). Will be used as one of the ways to know if the gallery is displayed on mobile.
-
-#### MAIN
- -  fix (deployToSurge): fix version specifc deploy
-
----
-## [v1.7.2](https://pro-gallery-1-7-2.surge.sh) (22/01/2020)
- 
-#### GALLERY
- -  fix padding issue: fixed padding bottom in texts when not needed (thumbnails, slider and slideshow layouts)
- -  fix Accessibility issue for vertical galleries: keyboard arrows navigation: if load more button is on, cannot navigate to items that are hidden below it
-
----
-## [v1.7.1](https://pro-gallery-1-7-1.surge.sh) (21/01/2020)
- 
-#### GALLERY
- -  improve (leanGallery): expand leanGallery coverage
-
----
-## [v1.7.0](https://pro-gallery-1-7-0.surge.sh) (21/01/2020)
- 
-#### GALLERY
- -  titlePlacement/hoveringBehaviour options: separated info/hover behaviours:
-      * titlePlacement no longer supports 'SHOW_NOT_ON_HOVER': use option - hoveringBehaviour = 'DISAPPEAR'
-      * titlePlacement no longer supports 'SHOW_ALWAYS': use option - hoveringBehaviour = 'NO_CHANGE'
-      * titlePlacement no longer supports 'DONT_SHOW': use option - hoveringBehaviour = 'NEVER_SHOW'
-
----
-## [v1.6.12](https://pro-gallery-1-6-12.surge.sh) (19/01/2020)
- 
-#### GALLERY
- -  remove arrows from first and last items
-
----
-## [v1.6.11](https://pro-gallery-1-6-11.surge.sh) (19/01/2020)
- 
-#### GALLERY
- -  fix: items will be clickable when itemClick is link and there is a dynamic link on those items.
-
----
-## [v1.6.10](https://pro-gallery-1-6-10.surge.sh) (16/01/2020)
- 
-#### GALLERY
- -  fixed EVENTS.NEED_MORE_ITEMS not beeing dispatched for some galleries.
-
----
-## [v1.6.9](https://pro-gallery-1-6-9.surge.sh) (14/01/2020)
-
-#### GALLERY
- -  fixed mix/alternate layouts mixup
- -  a click on a video item will be processed only if itemClick === 'nothing'.
-
----
-## [v1.6.8](https://pro-gallery-1-6-8.surge.sh) (12/01/2020)
- 
-#### GALLERY
- - send scroll events only on relevant scroll
-
----
-## [v1.6.7](https://pro-gallery-1-6-7.surge.sh) (12/01/2020)
- 
-#### GALLERY
- -  fixed an issue where alternate and mix presets mixed up and alternated
-
----
-## [v1.6.6](https://pro-gallery-1-6-6.surge.sh) (08/01/2020)
- 
-#### GALLERY
- -  improve: moved layoutHelper.js layout styles to presets
- -  fix (itemView): clearTimeout on unmount to prevent state update
- -  fix (videoScrollHelper): protect access to item.metaData.videoUrl
- -  improve (cssScroll): use react dangerouslySetHTML for styles
- -  improve (isEligible): allow undefined values in leanGallery params
-
----
-## [v1.6.5](https://pro-gallery-1-6-5.surge.sh) (30/12/2019)
- 
-#### GALLERY
- -  slideshowView className will always contain 'pro-gallery-parent-container' and more if needed 
- -  remove unnecessary import
-
----
-## [v1.6.4](https://pro-gallery-1-6-4.surge.sh) (25/12/2019)
- 
-#### GALLERY
- -  fix (defaultStyles): add one place for default styles and pass it to the gallery
- -  fix (slideshowView): remove event listeners on unmount
-
----
-## [v1.6.3](https://pro-gallery-1-6-3.surge.sh) (24/12/2019)
- 
-#### GALLERY
- -  New merged settings endpoint with the old settings
- -  Use different componenets for different presets
- -  Added leanGallery for eligable galleries
- -  AutoSlideshow always play in preview mode, never in editor mode
- -  Do not create Hover element unless needed
-
----
-## [v1.6.2](https://pro-gallery-1-6-2.surge.sh) (19/12/2019)
- 
-#### GALLERY
- -  fix (leanGallery): fix isEligible and responsive
-
----
-## [v1.6.1](https://pro-gallery-1-6-1.surge.sh) (18/12/2019)
- 
-#### GALLERY
- -  added showVideoPlayButton styleParam
-
----
-## [v1.6.0](https://pro-gallery-1-6-0.surge.sh) (17/12/2019)
- 
-#### GALLERY
- -  improve (hidePlay): fetch hidePlay prop from styleParams
- -  feature (leanGallery): render a css grid lean gallery when possible
-
----
-## [v1.5.50](https://pro-gallery-1-5-50.surge.sh) (17/12/2019)
-
-#### MAIN
- -  fix (tests): use image compare with larger threshold
-
----
-## [v1.5.49](https://pro-gallery-1-5-49.surge.sh) (17/12/2019)
- 
-#### GALLERY
-Added MAIN_COLOR to imageLoading options (SP imageLoadingMode and imageLoaindWithColorMode)
-
----
-## [v1.5.48](https://pro-gallery-1-5-48.surge.sh) (05/12/2019)
- 
-#### GALLERY
- -  fix (galleryContainer): always emit events
-
----
-## [v1.5.47](https://pro-gallery-1-5-47.surge.sh) (04/12/2019)
- `
-#### OTHER
- - dummy commit.
-
----
-## [v1.5.46](https://pro-gallery-1-5-46.surge.sh) (04/12/2019)
- 
-#### GALLERY
- -  fixed clicking on item behaviour when itemClick is LINK.
-
----
-## [v1.5.44](https://pro-gallery-1-5-44.surge.sh) (03/12/2019)
- 
-#### GALLERY
- -  added try-catch with console.error to scrollToItem.
- -  fixed gallery-items keyboard navigation when onItemClick===link, fixed enter press on gallery-item with direct link.
- -  fix groupView for dummyItems
-
----
-## [v1.5.43](https://pro-gallery-1-5-43.surge.sh) (01/12/2019)
- 
-#### GALLERY
- -  improve: add customLoadMoreRenderer
-
----
-## [v1.5.42](https://pro-gallery-1-5-42.surge.sh) (28/11/2019)
-
-#### GALLERY
- -  improve: remove comments from events constants
- -  fix (videos): allow for autoplay in mobile
-
----
-## [v1.5.41](https://pro-gallery-1-5-41.surge.sh) (26/11/2019)
- 
-#### GALLERY
- -  fixed animations when itemBorderRadius is not 0: itemBorderRadius will be passed to item component (image/video/text) and to hover component
- -  fixed gallery consts export
- -  remove 'current_hover_change' eventListener on unmount.
- -  manually play videos when needed (required for safari)
-
----
-## [v1.5.40](https://pro-gallery-1-5-40.surge.sh) (24/11/2019)
- 
-#### GALLERY
- -  fixed overlay animations on hover (issue when border-radius is not 0px)
-
----
-## [v1.5.39](https://pro-gallery-1-5-39.surge.sh) (24/11/2019)
- 
-#### GALLERY
- -  fix (withFullscreen): fix imports paths
- -  improve: export ExpandableProGallery from index
- -  improve: move settings to gallery/src
- -  improve: allow openning fullscreen with currentIdx
- -  use real thumbnailSize for thumbnails
- -  enable collage horizontal navigation - fix for last version regression
- 
----
-## [v1.5.38](https://pro-gallery-1-5-38.surge.sh) (17/11/2019)
- 
- no changes.
- 
----
-## [v1.5.37](https://pro-gallery-1-5-37.surge.sh) (17/11/2019)
- 
-#### GALLERY
- - improve (dimensions->scrollBase): pro-gallery will self calculate scrollBase if was not provided from a wrapper and NOT 'avoidGallerySelfMeasure'. 'externalScrollBase' can be provided to pro-gallery.
-
----
-## [v1.5.36](https://pro-gallery-1-5-36.surge.sh) (17/11/2019)
- 
-#### MAIN
- -  fix: error messages on scripts
-
----
-## [v1.5.33](https://pro-gallery-1-5-33.surge.sh) (15/11/2019)
- 
-#### GALLERY
- -  improve (tests): reorganize tests folders
- -  improve: scroll to currentIdx on gallery load if defined
- -  fix: add polyfill for Object.values
- -  improve: add ExpandableProGallery component
- -  fix (slideshowView): add restriction to nextItem > 0
- -  fix (slideshowView): fix cluncky navigation and RTL scrollToItem
- 
----
-## [v1.5.32](https://pro-gallery-1-5-32.surge.sh) (13/11/2019)
- 
-#### GALLERY
- -  improve: remove all animations from items
-
----
-## [v1.5.31](https://pro-gallery-1-5-31.surge.sh) (13/11/2019)
- 
-#### GALLERY
- -  fix: add Object.entries polyfill
- -  fix (scrollCss): use domId for the general class
-
----
-## [v1.5.30](https://pro-gallery-1-5-30.surge.sh) (11/11/2019)
- 
-#### GALLERY
- -  improve (scrollCss): seperate scrollCss into style tags
-
----
-## [v1.5.29](https://pro-gallery-1-5-29.surge.sh) (11/11/2019)
- 
-#### MAIN
- -  improve: add a version debug log script
-
-#### GALLERY
- - improve (dimensions->height): pro-gallery will self calculate height if was not provided from a wrapper.
- -  fix: remove annoying console.warn
-
----
-## [v1.5.28](https://pro-gallery-1-5-28.surge.sh) (07/11/2019)
- 
-#### GALLERY
- -  improve (dimensions->width): pro-gallery will self calculate width if was not provided from a wrapper.
- -  improve (utils): playground is always verbose
- -  fix (galleryContainer): warn about new state only if verbose
- -  improve (readme): add readme to gallery package
-
----
-## [v1.5.27](https://pro-gallery-1-5-27.surge.sh) (05/11/2019)
- 
-#### GALLERY
- -  fix (share.js): Fixed share icons mismatch (Pinteres<->Twitter).
-
----
-## [v1.5.26](https://pro-gallery-1-5-26.surge.sh) (03/11/2019)
- 
-#### GALLERY
- -  fixed mobile hover bug for galleries under the view.
-
----
-## [v1.5.25](https://pro-gallery-1-5-25.surge.sh) (03/11/2019)
- 
-#### GALLERY
- -  fix: removed calls to fixViewport and to getViewportScaleRatio as it's always 1.
-
----
-## [v1.5.24](https://pro-gallery-1-5-24.surge.sh) (30/10/2019)
- 
-#### GALLERY
- -  fix hover share icons after svg changes
-
-#### PLAYGROUND
- -  improve: add text items
-
----
-## [v1.5.23](https://pro-gallery-1-5-23.surge.sh) (28/10/2019)
-
-#### OTHER
- - Reverted v1.5.21 and v1.5.22 
-
-#### GALLERY
- -  fix: fixed a bug when hover effects all galleries
-
----
-## [v1.5.22](https://pro-gallery-1-5-22.surge.sh) (27/10/2019)
- 
-#### GALLERY
- -  fix: recalc gallery width until it is > 0
-
----
-## [v1.5.21](https://pro-gallery-1-5-21.surge.sh) (27/10/2019)
- 
-#### GALLERY
- -  fix: fixed a bug when hover effects all galleries
- -  fix: fix galleryWidth calculation
- -  improve: measure galleryDimensions and scrollBase if not supplied
-
----
-## [v1.5.20](https://pro-gallery-1-5-20.surge.sh) (24/10/2019)
- 
-#### GALLERY
- -  fix: fixed a bug when hover did not disappear on mouse out
- -  improve: remove position animations from items
-
----
-## [v1.5.18](https://pro-gallery-1-5-18.surge.sh) (23/10/2019)
- 
-#### GALLERY
- -  fix: remove dynamic loading of ViewComponent (SSR did not render)
-
----
-## [v1.5.18](https://pro-gallery-1-5-18.surge.sh) (23/10/2019)
- 
-#### GALLERY
- -  fix: do not render without a loaded viewComponent
-
----
-## [v1.5.17](https://pro-gallery-1-5-17.surge.sh) (23/10/2019)
- 
-#### GALLERY
- -  fix: trigger dynamic imports on SSR
-
----
-## [v1.5.16](https://pro-gallery-1-5-16.surge.sh) (23/10/2019)
- 
-#### GALLERY
- -  fix (dimensionHelper): fix isFullWidth condition
-
----
-## [v1.5.15](https://pro-gallery-1-5-15.surge.sh) (22/10/2019)
- 
-#### GALLERY
- -  fix (dimensionsHelper): improve fullWidth check
-
----
-## [v1.5.14](https://pro-gallery-1-5-14.surge.sh) (22/10/2019)
- 
-#### GALLERY
- -  improve (dimensionsHelper): calc scrollBase if needed
-
----
-## [v1.5.13](https://pro-gallery-1-5-13.surge.sh) (18/10/2019)
- 
-#### LAYOUTS
- -  fix: fine tune infiniteScroll one horizontal layout
-
----
-## [v1.5.12](https://pro-gallery-1-5-12.surge.sh) (17/10/2019)
- 
-#### LAYOUTS
- -  fix: set the strip width when adding new items
-
----
-## [v1.5.11](https://pro-gallery-1-5-11.surge.sh) (17/10/2019)
- 
-#### LAYOUTS
- -  fix: reset layoutHeight when adding new items
-
----
-## [v1.5.10](https://pro-gallery-1-5-10.surge.sh) (17/10/2019)
- 
-#### GALLERY
- -  fix (slideshowLoop): place dummy items for duplicated items
-
----
-## [v1.5.9](https://pro-gallery-1-5-9.surge.sh) (17/10/2019)
-
-#### LAYOUTS
- -  fix (layouter): fix horizontal infiniteScroll reset
-
----
-## [v1.5.8](https://pro-gallery-1-5-8.surge.sh) (17/10/2019)
- 
-#### GALLERY
- -  improve (animations): add blur and main color animations
-
-#### LAYOUTS
- -  fix (layouter): fix infiniteScroll for horizontal grid galleries
-
----
-## [v1.5.7](https://pro-gallery-1-5-7.surge.sh) (17/10/2019)
- 
-#### GALLERY
- - disable slideshowLoop for vertical layouts
-
----
-## [v1.5.6](https://pro-gallery-1-5-6.surge.sh) (17/10/2019)
- 
-#### GALLERY
- -  fix className of videoItemPlaceholder
- -  fix images loop for very few items
- -  add fade loading transition
-
----
-## [v1.5.5](https://pro-gallery-1-5-5.surge.sh) (15/10/2019)
- 
-#### GALLERY
- - use real styles and items as event data
-
----
-## [v1.5.4](https://pro-gallery-1-5-4.surge.sh) (15/10/2019)
- 
-#### GALLERY
- - re-add css from main index.js
-
----
-## [v1.5.3](https://pro-gallery-1-5-3.surge.sh) (15/10/2019)
- 
-#### GALLERY
- -  remove unsed dependencies
-
----
-## [v1.5.2](https://pro-gallery-1-5-2.surge.sh) (15/10/2019)
- 
-#### GALLERY
- -  remove css from main index.js
-
----
-## v1.5.1(https://pro-gallery-1-5-1.surge.sh) (15/10/2019)
- 
-#### GALLERY
- -  remove sideEffects from package.json (caused css to disappear)
- -  set default view component is null function
-
----
-## v1.5.0 (09/10/2019)
- 
-#### GALLERY
- -  dynamic load of ViewComponent
-
----
-## v1.4.4 (07/10/2019)
- 
-#### GALLERY
- -  set default scrollBase to 0
-
----
-## v1.4.3 (07/10/2019)
- 
-#### GALLERY
- -  fix: remove react context
-
----
-## v1.4.2 (07/10/2019)
- 
-#### GALLERY
- -  fix: do not cache isFullWidth
-
----
-## v1.4.1 (07/10/2019)
- 
-#### GALLERY
- -  add video preview image to css scroll (like regular images)
-
----
-## v1.4.0 (07/10/2019)
- 
-#### GALLERY
- -  better handling of unknown width in SSR 
-    width can be either empty string or a number - the gallery will not measure itself
-
----
-## v1.3.21 (03/10/2019)
- 
-#### GALLERY
- -  fix minor position diff in share icon
-
----
-## v1.3.20 (03/10/2019)
- 
-#### GALLERY
- -  remove leftovers font icons
-
----
-## v1.3.19 (03/10/2019)
- 
-#### GALLERY
- -  fix broken slideshowLoop
-
----
-## v1.3.18 (03/10/2019)
- 
-#### GALLERY
- -  remove svg-font-icons and add native SVG support
- -  better handling of arrows and horizontal swipe navigation
-
----
-## v1.3.17 (25/09/2019)
- 
-#### GALLERY
- -  handle rage clicks on gallery arrows
- -  fix videos in Safari
-
----
-## v1.3.16 (25/09/2019)
- 
-#### GALLERY
- -  fix arrows position in RTL galleries
- 
----
-## v1.3.15 (22/09/2019)
- 
-#### GALLERY
- -  fix (react-svg): save svgs to components
- -  improve (package.json): create a module instead of bundle
-
----
-## v1.3.14 (20/09/2019)
- 
-#### GALLERY
- -  fix - change metaData on items when it changes
-
----
-## v1.3.13 (19/09/2019)
- 
-#### GALLERY
- -  remove unnecessary dependencies
-
----
-## v1.3.12 (18/09/2019)
- 
-#### GALLERY
- -  fix (lineHeightFixer): fixed customButton display css attribute when textPlacement is above or below.
-
----
-## v1.3.11 (18/09/2019)
- 
-#### GALLERY
- -  fix first-tap on mobile.
-
----
-## v1.3.10 (18/09/2019)
- 
-#### GALLERY
- -  move Videos dynamic loading to componentDidMount
- -  fix slideshow arrows appearance in rtl
-
----
-## v1.3.9 (15/09/2019)
- 
-#### GALLERY
- -  refactor: moved constants, utils, window to 'common' folder. Added utils functions and constants for pro-fullscreen-renderer usage.
-
----
-## v1.3.8 (15/09/2019)
- 
-#### GALLERY
- - removed local love logic.
----
-## v1.3.7 (15/09/2019)
- 
-#### GALLERY
- -  fix grid fit with ssr
- -  decrease debounce time when measuring items
-
----
-## v1.3.6 (12/09/2019)
- 
-#### GALLERY
- -  improve: use debounce instead of throttle after image measurement
- -  fix: do not set imageDimensions on SSR
- -  fix: remove implicit usage of filename
-
----
-## v1.3.5 (12/09/2019)
- 
-#### GALLERY
- -  fix: remove double # from id
-
----
-## v1.3.4 (12/09/2019)
- 
-#### GALLERY
- -  fix ssr layout css
-
----
-## v1.3.2 (11/09/2019)
- 
-#### GALLERY
- -  fix arrow navigation in RTL mode
- -  do not populate title with filename
- -  fix css layouts for multiple galleries
-
----
-## v1.3.1 (08/09/2019)
- 
-#### GALLERY
- -  add rtl class to gallery scss
-
----
-## v1.3.0 (08/09/2019)
- 
-#### GALLERY
- -  *add support for RTL galleries*
- -  return empty string functions as links for text items
-
-#### LAYOUTS
- -  add total width to scheme
-
----
-## v1.2.16 (05/09/2019)
- 
-#### GALLERY
- -  some more A11y fixes
- -  set maximum logging depth (for verbose logging)
-  -  seoLink to return a string and not a function
-
----
-## v1.2.15 (04/09/2019)
- 
-#### GALLERY
- -  fixed A11y issue and auto slideshow play button and counter.
-
----
-## v1.2.14 (03/09/2019)
- 
-#### GALLERY
- -  remove comments from svg-fonts scss file (created errors in css dist file)
-
----
-## v1.2.13 (03/09/2019)
- 
-#### GALLERY
- -  rename play svg
- -  bind setCurrentItemByScroll to this
-
----
-## v1.2.11 (27/08/2019)
- 
-#### GALLERY
- -  use window outerWidth/Height for scroll calcs
- -  lineHeightFixer - use default values when css is not found
- -  fixed dynamic imports influence on the component (state vise).
-
----
-## v1.2.10 (26/08/2019)
- 
-#### GALLERY
- -  init playing video setState only after compDidMount
-
----
-## v1.2.9 (26/08/2019)
- 
-#### GALLERY
- -  add idx to domId
-
----
-## v1.2.8 (26/08/2019)
- 
-#### GALLERY
- -  always create new cssLayouts
-
----
-## v1.2.7 (26/08/2019)
- 
-#### GALLERY
- -  fix video props in hydrate
-
----
-## v1.2.6 (26/08/2019)
- 
-#### GALLERY
- -  add another reCreateGallery after mount
-
----
-## v1.2.5 (21/08/2019)
- 
-#### GALLERY
- -  add cssLayouts to hydrate phase
-
----
-## v1.2.4 (21/08/2019)
- 
-#### GALLERY
- -  add externalInfoSize to css
- -  do not recreate cssLayouts if not needed
-
----
-## v1.2.3 (21/08/2019)
- 
-#### GALLERY
- -  remove inline position styles - use only css
-
----
-## v1.2.2 (20/08/2019)
- 
-#### GALLERY
- -  create item url for art store
- -  upgrade file-loader to v4
-
----
-## v1.2.1 (20/08/2019)
-
-#### GALLERY
- -  re-add recreate gallery timer
-
----
-## v1.2.0 (20/08/2019)
- 
-#### GALLERY
- -  dynamic import of video modules
- -  do not render poisition styles in SSR
- -  move gallery creation to constructor
-
----
-## v1.1.4 (19/08/2019)
- 
-#### GALLERY
- -  Add windowWrapper to support SSR
-
----
+<!-- THIS FILE IS AUTOGENERATED! DO NOT TRY TO CHANGE IT MANUALLY -->
+<!-- see: scripts/changelog-builder.sh -->
+
+## [v4.1.21](https://github.com/wix/pro-gallery/compare/v4.1.20...v4.1.21) (2022-07-20)
+
+*  Revert "Fix thin lines issue ([#874](https://github.com/wix/pro-gallery/pull/874))" [828814b4](https://github.com/wix/pro-gallery/commit/828814b4dfd4f174cbef07b52e0cc88006af49d1)
+
+
+## [v4.1.20](https://github.com/wix/pro-gallery/compare/v4.1.19...v4.1.20) (2022-07-11)
+
+*  fix - allow default on click when clicking on item info ([#895](https://github.com/wix/pro-gallery/pull/895)) [7c126e41](https://github.com/wix/pro-gallery/commit/7c126e41589a72c0a7b45d33f6c8934cd6f4a97e)
+
+
+## [v4.1.19](https://github.com/wix/pro-gallery/compare/v4.1.18...v4.1.19) (2022-07-11)
+
+*  add hasThumbnails to the settings in the playground ([#894](https://github.com/wix/pro-gallery/pull/894)) [6050d4f2](https://github.com/wix/pro-gallery/commit/6050d4f2e19a3370ec3cca56e2d3e7e38ae7ebe8)
+
+
+## [v4.1.18](https://github.com/wix/pro-gallery/compare/v4.1.17...v4.1.18) (2022-07-09)
+
+*  Feat new nav panels ([#892](https://github.com/wix/pro-gallery/pull/892)) [6a9ec5e9](https://github.com/wix/pro-gallery/commit/6a9ec5e9ee73c773b5ae3b863e96b1ed6ba8cc9a)
+
+
+## [v4.1.17](https://github.com/wix/pro-gallery/compare/v4.1.16...v4.1.17) (2022-07-08)
+
+*  Feat thumbnail position ([#891](https://github.com/wix/pro-gallery/pull/891)) [438a754d](https://github.com/wix/pro-gallery/commit/438a754dee6a22da0dddeeffc0615895d44d489f)
+
+
+## [v4.1.16](https://github.com/wix/pro-gallery/compare/v4.1.15...v4.1.16) (2022-07-08)
+
+*  fix naming thumbnails alignment ([#890](https://github.com/wix/pro-gallery/pull/890)) [08097952](https://github.com/wix/pro-gallery/commit/080979522f3962c89ac827cab067738ff2d3980a)
+
+
+## [v4.1.15](https://github.com/wix/pro-gallery/compare/v4.1.14...v4.1.15) (2022-07-07)
+
+*  fix thumbnails activeIndex ([#888](https://github.com/wix/pro-gallery/pull/888)) [17a70c9a](https://github.com/wix/pro-gallery/commit/17a70c9aae3c32112735cacf28bc62a278877ae1)
+
+
+## [v4.1.14](https://github.com/wix/pro-gallery/compare/v4.1.13...v4.1.14) (2022-07-07)
+
+*  Fix partial load more ([#887](https://github.com/wix/pro-gallery/pull/887)) [d6cfc66e](https://github.com/wix/pro-gallery/commit/d6cfc66e56af35503f552f34450b0d4e571d6d20)
+
+
+## [v4.1.13](https://github.com/wix/pro-gallery/compare/v4.1.12...v4.1.13) (2022-07-03)
+
+*  adding mouse cursor to arrows position [b405602c](https://github.com/wix/pro-gallery/commit/b405602c4b627c1559feae0bcabcc2f345c9570e)
+*  Revert "adding mouse cursor to arrows position" [fa4f5664](https://github.com/wix/pro-gallery/commit/fa4f5664eea0b901d5a55471a4f1b5d48446625b)
+
+
+## [v4.1.12](https://github.com/wix/pro-gallery/compare/v4.1.11...v4.1.12) (2022-06-30)
+
+*  use container height for setHeight ([#879](https://github.com/wix/pro-gallery/pull/879)) [4df74498](https://github.com/wix/pro-gallery/commit/4df74498d6dd5993f72621146ca533fd47c5bc75)
+*  Fix add has custom focus to items ([#877](https://github.com/wix/pro-gallery/pull/877)) [5e904b99](https://github.com/wix/pro-gallery/commit/5e904b9955a3f5fd60e11e86cdb6d86e1a5c7891)
+*  inset accessibility on items ([#876](https://github.com/wix/pro-gallery/pull/876)) [050cbf4f](https://github.com/wix/pro-gallery/commit/050cbf4fe09c2f1f7a67ff2da8971b4bbd3bb868)
+
+
+## [v4.1.11](https://github.com/wix/pro-gallery/compare/v4.1.10...v4.1.11) (2022-06-28)
+
+*  Fix thin lines issue ([#874](https://github.com/wix/pro-gallery/pull/874)) [5c8f0a28](https://github.com/wix/pro-gallery/commit/5c8f0a283f29b85eaccd3de31c63153605695971)
+
+
+## [v4.1.10](https://github.com/wix/pro-gallery/compare/v4.1.9...v4.1.10) (2022-06-27)
+
+*  fix gallery Ratio with image margin ([#875](https://github.com/wix/pro-gallery/pull/875)) [635e0e0c](https://github.com/wix/pro-gallery/commit/635e0e0c77db005dfc9565ab82d906362755b30f)
+
+
+## [v4.1.9](https://github.com/wix/pro-gallery/compare/v4.1.8...v4.1.9) (2022-06-22)
+
+*  empty customNavigationPanel ([#869](https://github.com/wix/pro-gallery/pull/869)) [5156ed56](https://github.com/wix/pro-gallery/commit/5156ed56aaea25a7dd329a970f8068b0bb30f515)
+
+
+## [v4.1.8](https://github.com/wix/pro-gallery/compare/v4.1.7...v4.1.8) (2022-06-20)
+
+*  make next function asyn ([#871](https://github.com/wix/pro-gallery/pull/871)) [f6f09933](https://github.com/wix/pro-gallery/commit/f6f099331ec596f9db662fc7fc47fe63959fd021)
+
+
+## [v4.1.7](https://github.com/wix/pro-gallery/compare/v4.1.6...v4.1.7) (2022-06-19)
+
+*  basic thumbnails to navigationPanel refactor ([#863](https://github.com/wix/pro-gallery/pull/863)) [8f50173c](https://github.com/wix/pro-gallery/commit/8f50173cc6e72c8f2bf075bafb7ce44da0da253a)
+
+
+## [v4.1.6](https://github.com/wix/pro-gallery/compare/v4.1.5...v4.1.6) (2022-06-19)
+
+*  enable eslint ([#868](https://github.com/wix/pro-gallery/pull/868)) [7329ecfe](https://github.com/wix/pro-gallery/commit/7329ecfee9bd975dc9251d9b06ca6caf1982e4c5)
+
+
+## [v4.1.5](https://github.com/wix/pro-gallery/compare/v4.1.4...v4.1.5) (2022-06-14)
+
+*  use dom order instead of zIndex on nav arrows ([#865](https://github.com/wix/pro-gallery/pull/865)) [6a6fb986](https://github.com/wix/pro-gallery/commit/6a6fb986b94bf33dde6f7fda1c1340cb9d425917)
+
+
+## [v4.1.4](https://github.com/wix/pro-gallery/compare/v4.1.3...v4.1.4) (2022-06-09)
+
+*  fix vertical thumbnails with fixed gallery ratio ([#862](https://github.com/wix/pro-gallery/pull/862)) [8de63f28](https://github.com/wix/pro-gallery/commit/8de63f288ceffca5e90925b9cd276d16b3c4fc45)
+
+
+## [v4.1.3](https://github.com/wix/pro-gallery/compare/v4.1.2...v4.1.3) (2022-06-08)
+
+*  New Feature gallery ratio control external text ([#857](https://github.com/wix/pro-gallery/pull/857)) [48932819](https://github.com/wix/pro-gallery/commit/489328197f447e8dc103b694b21f6769bb80afdc)
+
+
+## [v4.1.2](https://github.com/wix/pro-gallery/compare/v4.1.1...v4.1.2) (2022-06-07)
+
+*  add classname for outer info ([#858](https://github.com/wix/pro-gallery/pull/858)) [4b82bdc5](https://github.com/wix/pro-gallery/commit/4b82bdc558b5ae03269c21a7b750883b2e20e891)
+
+
+## [v4.1.1](https://github.com/wix/pro-gallery/compare/v4.1.0...v4.1.1) (2022-06-02)
+
+*  changed lerna to patch. ([#853](https://github.com/wix/pro-gallery/pull/853)) [92aada7b](https://github.com/wix/pro-gallery/commit/92aada7b457d991bbc94fa2216793cf60a9efe5d)
+
+
+## [v4.1.0](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.304...v4.1.0) (2022-06-02)
+
+*  Changed version to 4.1.0. ([#852](https://github.com/wix/pro-gallery/pull/852)) [6a14e7e2](https://github.com/wix/pro-gallery/commit/6a14e7e216650b075f81496588b6a99e6d9b9c9d)
+
+
+## [v4.0.15-beta.304](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.303...v4.0.15-beta.304) (2022-05-29)
+
+*  dummy commit [4b38dcda](https://github.com/wix/pro-gallery/commit/4b38dcdafb4237e13c5d2331dd9f362a39db69ed)
+
+
+## [v4.0.15-beta.303](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.302...v4.0.15-beta.303) (2022-05-27)
+
+*  remove future and leave slideshow ([#849](https://github.com/wix/pro-gallery/pull/849)) [5f99fa4c](https://github.com/wix/pro-gallery/commit/5f99fa4cb12f58bc3a1e415ad4fc692745de7f5b)
+
+
+## [v4.0.15-beta.302](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.301...v4.0.15-beta.302) (2022-05-27)
+
+*  remove slideshow ([#844](https://github.com/wix/pro-gallery/pull/844)) [9ab8692c](https://github.com/wix/pro-gallery/commit/9ab8692c8e3fb4b1892d4c135b8b9351f2d66609)
+
+
+## [v4.0.15-beta.301](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.300...v4.0.15-beta.301) (2022-05-26)
+
+*  use container dimensions for thumbnails ([#848](https://github.com/wix/pro-gallery/pull/848)) [864cea85](https://github.com/wix/pro-gallery/commit/864cea85ad1bc748fb940a6d17decc93bae1cf2f)
+
+
+## [v4.0.15-beta.300](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.299...v4.0.15-beta.300) (2022-05-25)
+
+*  remove slideshow from testing ([#847](https://github.com/wix/pro-gallery/pull/847)) [ade5084b](https://github.com/wix/pro-gallery/commit/ade5084b6430b95c79853830e784423adba890b3)
+*  remove diff files [36da4b9d](https://github.com/wix/pro-gallery/commit/36da4b9debd3fbbed4609cdd1aafff3c6c2821fc)
+
+
+## [v4.0.15-beta.299](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.298...v4.0.15-beta.299) (2022-05-25)
+
+*  fix logic for halt scroll ([#846](https://github.com/wix/pro-gallery/pull/846)) [61b5ee45](https://github.com/wix/pro-gallery/commit/61b5ee457a7d7e92136161ec012ad2a13e25c43f)
+
+
+## [v4.0.15-beta.298](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.297...v4.0.15-beta.298) (2022-05-25)
+
+*  [gallery] scroll properly on IOS ([#845](https://github.com/wix/pro-gallery/pull/845)) [75e706a6](https://github.com/wix/pro-gallery/commit/75e706a6406b4b592ed5357d2eefb8d930bad862)
+
+
+## [v4.0.15-beta.297](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.296...v4.0.15-beta.297) (2022-05-24)
+
+*  Changed log message. ([#843](https://github.com/wix/pro-gallery/pull/843)) [2e8e9a08](https://github.com/wix/pro-gallery/commit/2e8e9a08be43bafee6a457f22069d4e45a83b0c6)
+
+
+## [v4.0.15-beta.296](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.295...v4.0.15-beta.296) (2022-05-24)
+
+*  feat fast stop continuous scrolling on hover ([#840](https://github.com/wix/pro-gallery/pull/840)) [bde45c32](https://github.com/wix/pro-gallery/commit/bde45c3215753f229dadef3dcd23a0c934737d8a)
+
+
+## [v4.0.15-beta.295](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.294...v4.0.15-beta.295) (2022-05-24)
+
+*  [lib] delete aria-label message  ([#841](https://github.com/wix/pro-gallery/pull/841)) [0173e9e3](https://github.com/wix/pro-gallery/commit/0173e9e3c575aab6e047df880337ab339b37b596)
+
+
+## [v4.0.15-beta.294](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.293...v4.0.15-beta.294) (2022-05-22)
+
+*  fix scrollsnap on div wrappers ([#839](https://github.com/wix/pro-gallery/pull/839)) [c9075774](https://github.com/wix/pro-gallery/commit/c9075774c3f87ea2185f2cdf1dd728664c390acc)
+
+
+## [v4.0.15-beta.293](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.292...v4.0.15-beta.293) (2022-05-22)
+
+*  fix pointer when no link ([#838](https://github.com/wix/pro-gallery/pull/838)) [85584636](https://github.com/wix/pro-gallery/commit/8558463614cc20bec3758d9e3ee0387d55fe671b)
+
+
+## [v4.0.15-beta.292](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.291...v4.0.15-beta.292) (2022-05-18)
+
+*  [gallery] change mouse cursor to default when ‘nothing happens’ - slideshow([#837](https://github.com/wix/pro-gallery/pull/837)) [2cb0cc9b](https://github.com/wix/pro-gallery/commit/2cb0cc9b009b52cc8513ed32e4e611efc139b0ca)
+
+
+## [v4.0.15-beta.291](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.290...v4.0.15-beta.291) (2022-05-16)
+
+*  Fixing deck animation on future slideshow ([#833](https://github.com/wix/pro-gallery/pull/833)) [f2125269](https://github.com/wix/pro-gallery/commit/f2125269a0733fab80ee5fdbd9327e8ae1045e8c)
+
+
+## [v4.0.15-beta.290](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.289...v4.0.15-beta.290) (2022-05-12)
+
+*  Revert "floor targetHeight/Width ([#831](https://github.com/wix/pro-gallery/pull/831))" (#836) [999070e2](https://github.com/wix/pro-gallery/commit/999070e274b8f4da8daed5d93392d3a1118eb525)
+
+
+## [v4.0.15-beta.289](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.288...v4.0.15-beta.289) (2022-05-11)
+
+*  Change playground port. ([#835](https://github.com/wix/pro-gallery/pull/835)) [47f0e6b9](https://github.com/wix/pro-gallery/commit/47f0e6b986ffc567535d2f19f4a6e320e24fdd10)
+
+
+## [v4.0.15-beta.288](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.287...v4.0.15-beta.288) (2022-05-11)
+
+*  fix initial arrows state ([#834](https://github.com/wix/pro-gallery/pull/834)) [26bb37ca](https://github.com/wix/pro-gallery/commit/26bb37ca0873a41cbc1556f8709e22822b2aa8be)
+
+
+## [v4.0.15-beta.287](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.286...v4.0.15-beta.287) (2022-05-10)
+
+*  [gallery] bug simulate scroll on scrolless galleries ([#832](https://github.com/wix/pro-gallery/pull/832)) [9013c4c8](https://github.com/wix/pro-gallery/commit/9013c4c8efd00368cb733582618922fa47e2e8fa)
+
+
+## [v4.0.15-beta.286](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.285...v4.0.15-beta.286) (2022-05-08)
+
+*  floor targetHeight/Width ([#831](https://github.com/wix/pro-gallery/pull/831)) [fdedd90a](https://github.com/wix/pro-gallery/commit/fdedd90aa90584523dada7fcca2a3110d1381ec5)
+
+
+## [v4.0.15-beta.285](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.284...v4.0.15-beta.285) (2022-05-03)
+
+*  use alt event if its an empty string ([#829](https://github.com/wix/pro-gallery/pull/829)) [46b82c11](https://github.com/wix/pro-gallery/commit/46b82c119b83971c41291b9a5a2a305b9fbe393d)
+*  use item <a> tags only when theres an href for them ([#822](https://github.com/wix/pro-gallery/pull/822)) [f01fe1d3](https://github.com/wix/pro-gallery/commit/f01fe1d36df96e6cd5b56299dbddbac96342a23d)
+
+
+## [v4.0.15-beta.284](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.283...v4.0.15-beta.284) (2022-05-02)
+
+*  [lib] process grid style for masonry ([#830](https://github.com/wix/pro-gallery/pull/830)) [e588f5c2](https://github.com/wix/pro-gallery/commit/e588f5c22acd742ba520533f531c099022d19c7a)
+
+
+## [v4.0.15-beta.283](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.282...v4.0.15-beta.283) (2022-04-26)
+
+*  Remove position absolute from slide animation. ([#824](https://github.com/wix/pro-gallery/pull/824)) [1af8a58c](https://github.com/wix/pro-gallery/commit/1af8a58ceb488a8bc09d4cb627a6046fa668d23c)
+
+
+## [v4.0.15-beta.282](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.281...v4.0.15-beta.282) (2022-04-20)
+
+*  [gallery] dispatch scroll event only when gallery is in display ([#821](https://github.com/wix/pro-gallery/pull/821)) [157b8d43](https://github.com/wix/pro-gallery/commit/157b8d4301ebd57bea96b3423d92ba6bf8048766)
+
+
+## [v4.0.15-beta.281](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.280...v4.0.15-beta.281) (2022-04-18)
+
+*  fix z-index for thumbnail highlight ([#820](https://github.com/wix/pro-gallery/pull/820)) [67042cf9](https://github.com/wix/pro-gallery/commit/67042cf910c6bbc410755e40d24fd4b3f8fd7ec9)
+
+
+## [v4.0.15-beta.280](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.279...v4.0.15-beta.280) (2022-04-18)
+
+*  fix-zindex-of-thumbnails ([#819](https://github.com/wix/pro-gallery/pull/819)) [f56d294b](https://github.com/wix/pro-gallery/commit/f56d294b497f7c34c9371ca4a68d766f50fa25ff)
+*  fix-thumbnails-logic ([#818](https://github.com/wix/pro-gallery/pull/818)) [feb24053](https://github.com/wix/pro-gallery/commit/feb240532f2682c88431ad0d93cfcd2c956eb4eb)
+
+
+## [v4.0.15-beta.279](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.278...v4.0.15-beta.279) (2022-04-17)
+
+*  [gallery] set thumbnails z-index to 1([#816](https://github.com/wix/pro-gallery/pull/816)) [3635064a](https://github.com/wix/pro-gallery/commit/3635064a25240e26e1a3aeaecabc4208a4f4693e)
+
+
+## [v4.0.15-beta.278](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.277...v4.0.15-beta.278) (2022-04-14)
+
+*  [gallery] use overflow only in prerender mode ([#815](https://github.com/wix/pro-gallery/pull/815)) [50e51b6a](https://github.com/wix/pro-gallery/commit/50e51b6a9c145932fb7ed9f0938d7b18345c657e)
+
+
+## [v4.0.15-beta.277](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.276...v4.0.15-beta.277) (2022-04-13)
+
+*  Bump trim-newlines from 1.0.0 to 3.0.1 ([#807](https://github.com/wix/pro-gallery/pull/807)) [95ddeb8d](https://github.com/wix/pro-gallery/commit/95ddeb8dee42711a0251cb9779fd1cdef9824ffb)
+
+
+## [v4.0.15-beta.276](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.275...v4.0.15-beta.276) (2022-04-12)
+
+*  dependabot - add node-forge. ([#814](https://github.com/wix/pro-gallery/pull/814)) [dd87aa77](https://github.com/wix/pro-gallery/commit/dd87aa77c8ee96b6324399478aff4a5b063d7c52)
+
+
+## [v4.0.15-beta.275](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.274...v4.0.15-beta.275) (2022-04-12)
+
+*  dependabot moment bump. ([#813](https://github.com/wix/pro-gallery/pull/813)) [64541ea8](https://github.com/wix/pro-gallery/commit/64541ea8836078e1dcce1df751870774e351aec7)
+
+
+## [v4.0.15-beta.274](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.273...v4.0.15-beta.274) (2022-04-12)
+
+*  remove ssr-simulator package ([#810](https://github.com/wix/pro-gallery/pull/810)) [334be9ca](https://github.com/wix/pro-gallery/commit/334be9cae7a2c707da3bd505c42fdb6c2f8dea3d)
+
+
+## [v4.0.15-beta.273](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.272...v4.0.15-beta.273) (2022-04-11)
+
+*  allow colage to have slideshowloop ([#809](https://github.com/wix/pro-gallery/pull/809)) [15dec73b](https://github.com/wix/pro-gallery/commit/15dec73b8627083767c6aa9571e497b614de0162)
+
+
+## [v4.0.15-beta.272](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.271...v4.0.15-beta.272) (2022-04-11)
+
+*  fix thumbnails highlight to the lowest possible working z-index ([#808](https://github.com/wix/pro-gallery/pull/808)) [8d95526a](https://github.com/wix/pro-gallery/commit/8d95526a8eb1d4ded30282271430c31b364f2e43)
+
+
+## [v4.0.15-beta.271](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.270...v4.0.15-beta.271) (2022-04-10)
+
+*  remove gh-pages ([#806](https://github.com/wix/pro-gallery/pull/806)) [2f02614e](https://github.com/wix/pro-gallery/commit/2f02614ece2f49907ad850f1f10660754518ed97)
+
+
+## [v4.0.15-beta.270](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.269...v4.0.15-beta.270) (2022-04-10)
+
+
+
+## [v4.0.15-beta.269](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.268...v4.0.15-beta.269) (2022-04-07)
+
+*  fix safari expand mode for external videos ([#793](https://github.com/wix/pro-gallery/pull/793)) [bd3c4964](https://github.com/wix/pro-gallery/commit/bd3c496479faf57ba2306e482e5c96ed6fd174ae)
+
+
+## [v4.0.15-beta.268](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.267...v4.0.15-beta.268) (2022-04-07)
+
+*  [gallery] improve: scroll animations on item with supporting scroll-snap([#804](https://github.com/wix/pro-gallery/pull/804)) [1775fbf0](https://github.com/wix/pro-gallery/commit/1775fbf0cd91c14b0f10391945c9694a86baba30)
+
+
+## [v4.0.15-beta.267](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.266...v4.0.15-beta.267) (2022-03-31)
+
+*  Revert "[gallery] improve: scroll animations on item with supporting … ([#803](https://github.com/wix/pro-gallery/pull/803)) [ebfa031f](https://github.com/wix/pro-gallery/commit/ebfa031f2ade68bf60ade2f65db78205214af957)
+
+
+## [v4.0.15-beta.266](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.265...v4.0.15-beta.266) (2022-03-30)
+
+*  [gallery] improve: scroll animations on item with supporting scroll-snap after revert([#800](https://github.com/wix/pro-gallery/pull/800)) [e6a65a87](https://github.com/wix/pro-gallery/commit/e6a65a872a44624540e3a4bbc426d69b76e1f49d)
+
+
+## [v4.0.15-beta.265](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.264...v4.0.15-beta.265) (2022-03-28)
+
+*  commit missing code [0199aee8](https://github.com/wix/pro-gallery/commit/0199aee8fdab9cbe71f08bc17ba9e43f62870f69)
+
+
+## [v4.0.15-beta.264](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.263...v4.0.15-beta.264) (2022-03-27)
+
+*  add virtualization to slideshows [18f84ef5](https://github.com/wix/pro-gallery/commit/18f84ef5c9fdb4610b3019055df66aec8093bd3c)
+*  use empty div insted of dynamic loading [9b50a9cc](https://github.com/wix/pro-gallery/commit/9b50a9ccd470685cf40e036ef067c0fbbd6acbd9)
+*  add style params to controller slideshow virtualization [fb0cc4f5](https://github.com/wix/pro-gallery/commit/fb0cc4f54d3ddeac90ec03b55c32254434a63f9c)
+*  remove package locks [d5fd59be](https://github.com/wix/pro-gallery/commit/d5fd59bed874942a8f45d9a33eb171ffd6913749)
+*  revert auto lints [891234ac](https://github.com/wix/pro-gallery/commit/891234ac6c6c2f99f8ea7dacbee2e6fca873e5b8)
+*  add tests [59d4f530](https://github.com/wix/pro-gallery/commit/59d4f530dcfcbde3b0138fcf62d5f5ebee355e02)
+*  Update package.json [11078a52](https://github.com/wix/pro-gallery/commit/11078a5215ae576f897315c4d3b4a71a396f2f50)
+*  move virtualization logic to different file [1eaa82fc](https://github.com/wix/pro-gallery/commit/1eaa82fc35dcca1c5d788d3d55b90b240ebd6b2d)
+*  update import [a78678fd](https://github.com/wix/pro-gallery/commit/a78678fda0e328266c7c393146916ee9d8155e5b)
+*  add virtualization to any gallery [9b9661ad](https://github.com/wix/pro-gallery/commit/9b9661ada63f7430fc07301c7ae28e4cf2ec5a19)
+*  update drivewr to support virtualizationSettings [1d7fec12](https://github.com/wix/pro-gallery/commit/1d7fec12330f0899f54e9b8598f9d90d326cce40)
+*  eslint [2a86d508](https://github.com/wix/pro-gallery/commit/2a86d5081322209710f0955cd793cbf1ba3d1c19)
+*  remove unused function [2827f63f](https://github.com/wix/pro-gallery/commit/2827f63fb26c012b657ff9020639736b0d2b304f)
+*  distract getVisibleItems [1eb529aa](https://github.com/wix/pro-gallery/commit/1eb529aa2f5f5a70b3cd4ae9ecfc5a7994f2e8fb)
+*  small refactor [f8aec9ee](https://github.com/wix/pro-gallery/commit/f8aec9ee85ce2ece5a109c4cf54c1ec08a99b84a)
+*  update slideshow virtualization logic to avoid map side effect [65ead67b](https://github.com/wix/pro-gallery/commit/65ead67b97aa1a9e8bdf10a3e620e19408f53ff3)
+
+
+## [v4.0.15-beta.263](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.262...v4.0.15-beta.263) (2022-03-24)
+
+*  start working on fixing slideshow-thumbnails-positioning [04f87d06](https://github.com/wix/pro-gallery/commit/04f87d0670712c529deb2327c23510e18bf4e38e)
+*  slideshow refactor - not done [28c720df](https://github.com/wix/pro-gallery/commit/28c720dfa26ed6d0bffaaf670454f0366b684891)
+*  fix looping glitch [0cfbe16b](https://github.com/wix/pro-gallery/commit/0cfbe16bc051a5393748f58515c5eecf6428bc89)
+*  move generic function to util class [4210d9f1](https://github.com/wix/pro-gallery/commit/4210d9f150a34cef665ab5af79f3ad3c07babac4)
+*  remove console log [5ec52e3d](https://github.com/wix/pro-gallery/commit/5ec52e3d9381317cfbfe7efa47b1a59e648c58eb)
+*  fix in sliceArray util function [f77c355a](https://github.com/wix/pro-gallery/commit/f77c355ac3888c3fec4ee4beb0eab9f1ff94a0df)
+*  mix looping bug [e8748723](https://github.com/wix/pro-gallery/commit/e87487231e39e2d25f42924df37f6425934159b6)
+*  change import extension [d9f9f267](https://github.com/wix/pro-gallery/commit/d9f9f2673ef9035fddc5f7b08ddf5dcfb6d0979c)
+*  update tests snapshots to correct ones :) [3a2109a0](https://github.com/wix/pro-gallery/commit/3a2109a0c5776a3bc1a2b0039b2abed6769978e0)
+*  update snapshoots [f7dfca42](https://github.com/wix/pro-gallery/commit/f7dfca42230de8613803ea1815823fed971117bc)
+*  fix bug when items dont have proper idx [24185746](https://github.com/wix/pro-gallery/commit/24185746b68621a2f48dd9dbbe4403b708248bf6)
+*  update tests snapshoots [d945ca7a](https://github.com/wix/pro-gallery/commit/d945ca7a4f9b395e7311d5e3da6659ee423323b6)
+*  update snnapshoot [310a9e1c](https://github.com/wix/pro-gallery/commit/310a9e1c9730d735ced13a489f4265293f196e97)
+*  fallback to thumbnailItem [e0832f28](https://github.com/wix/pro-gallery/commit/e0832f28da7ec9b51ce846bc35dc97891b500261)
+*  fix thumbnails on text only images [ac060d81](https://github.com/wix/pro-gallery/commit/ac060d81c44ad1cdb95263bf0541c0c9604e49fa)
+
+
+## [v4.0.15-beta.262](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.261...v4.0.15-beta.262) (2022-03-22)
+
+*  Revert "[gallery] improve: scroll animations on item with supporting scroll snap" ([#797](https://github.com/wix/pro-gallery/pull/797)) [02893577](https://github.com/wix/pro-gallery/commit/02893577b351010e8b9adf5d68d2003d1fad2650)
+
+
+## [v4.0.15-beta.261](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.260...v4.0.15-beta.261) (2022-03-20)
+
+*  [gallery] Fix prevState to prevProps ([#794](https://github.com/wix/pro-gallery/pull/794)) [c15db01d](https://github.com/wix/pro-gallery/commit/c15db01d0ea044d586d4f7919f88246da1b7329f)
+
+
+## [v4.0.15-beta.260](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.259...v4.0.15-beta.260) (2022-03-20)
+
+*  [gallery] Fixed window width calc ([#788](https://github.com/wix/pro-gallery/pull/788)) [964bdc12](https://github.com/wix/pro-gallery/commit/964bdc1284f1d9f58feaad80a6647ba82c5f3081)
+*  [gallery] Add getMoreItemsIfScrollIsDisabled to didUpdate ([#787](https://github.com/wix/pro-gallery/pull/787)) [9f28a545](https://github.com/wix/pro-gallery/commit/9f28a545cc4510a9005c925c60c24ab69d308a91)
+
+
+## [v4.0.15-beta.259](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.258...v4.0.15-beta.259) (2022-03-19)
+
+*  [gallery] improve: scroll animations on item with supporting scroll snap([#779](https://github.com/wix/pro-gallery/pull/779)) [11cd6ef2](https://github.com/wix/pro-gallery/commit/11cd6ef22ebf645c776ae9e712773b4239c9da11)
+
+
+## [v4.0.15-beta.258](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.257...v4.0.15-beta.258) (2022-03-16)
+
+*  [lib] fix crop ratios isRelevant ([#789](https://github.com/wix/pro-gallery/pull/789)) [604e149a](https://github.com/wix/pro-gallery/commit/604e149a1708caf68456ade3630bad963c9770fe)
+
+
+## [v4.0.15-beta.257](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.256...v4.0.15-beta.257) (2022-03-15)
+
+*  Revert "bump webpack-dev-server ([#783](https://github.com/wix/pro-gallery/pull/783))" (#785) [c8d2739a](https://github.com/wix/pro-gallery/commit/c8d2739ab9556d2840f9ebe464609daea26bb1f9)
+
+
+## [v4.0.15-beta.256](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.255...v4.0.15-beta.256) (2022-03-14)
+
+*  bump webpack-dev-server ([#783](https://github.com/wix/pro-gallery/pull/783)) [1ca4aae3](https://github.com/wix/pro-gallery/commit/1ca4aae3fd8c14c7a50d2e30cdb90b6961597a5b)
+
+
+## [v4.0.15-beta.255](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.254...v4.0.15-beta.255) (2022-03-14)
+
+*  dont add a default filename ([#782](https://github.com/wix/pro-gallery/pull/782)) [f04ddb9f](https://github.com/wix/pro-gallery/commit/f04ddb9f6d9d7266c5f285d51fbd14b266cb845e)
+
+
+## [v4.0.15-beta.254](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.253...v4.0.15-beta.254) (2022-03-09)
+
+*  remove @ant-design/compatible ([#777](https://github.com/wix/pro-gallery/pull/777)) [2c728c7d](https://github.com/wix/pro-gallery/commit/2c728c7d430d1cc932d501bfb56d35d6d555045d)
+
+
+## [v4.0.15-beta.253](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.252...v4.0.15-beta.253) (2022-03-09)
+
+*  [playground] bump antd and migration([#773](https://github.com/wix/pro-gallery/pull/773)) [083c4de0](https://github.com/wix/pro-gallery/commit/083c4de008d30f6636a2c8e306b56f2ad114c122)
+
+
+## [v4.0.15-beta.252](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.251...v4.0.15-beta.252) (2022-03-09)
+
+*  Add horizontal check for getting more items when scrollless [efba923c](https://github.com/wix/pro-gallery/commit/efba923cfb4ebe2512f42fc652f4b42ad8dcafe4)
+*  [layouts] add web link support in the gallery item ([#767](https://github.com/wix/pro-gallery/pull/767)) [5db6a0b3](https://github.com/wix/pro-gallery/commit/5db6a0b30409c38038aaeebc6c861a9856baa24b)
+
+
+## [v4.0.15-beta.251](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.250...v4.0.15-beta.251) (2022-03-09)
+
+*  removed the black video background ([#774](https://github.com/wix/pro-gallery/pull/774)) [91a16eaf](https://github.com/wix/pro-gallery/commit/91a16eafcc480d7a1d55cea2227142d9c42174b0)
+
+
+## [v4.0.15-beta.250](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.249...v4.0.15-beta.250) (2022-03-09)
+
+*  [gallery] use state to track scroll and check visibility ([#761](https://github.com/wix/pro-gallery/pull/761)) [109bf91d](https://github.com/wix/pro-gallery/commit/109bf91de52b92a57380308a48322adada04924d)
+*  bump lerna ([#771](https://github.com/wix/pro-gallery/pull/771)) [2cf4da16](https://github.com/wix/pro-gallery/commit/2cf4da1611baaa5c5b33ebee90fc8bec8f290692)
+
+
+## [v4.0.15-beta.249](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.248...v4.0.15-beta.249) (2022-03-09)
+
+*  Bump node-fetch from 1.7.3 to 2.6.7 ([#760](https://github.com/wix/pro-gallery/pull/760)) [f7439d76](https://github.com/wix/pro-gallery/commit/f7439d76d6981b9a9cddb73ced0911ad7adf2889)
+
+
+## [v4.0.15-beta.248](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.247...v4.0.15-beta.248) (2022-03-08)
+
+*  bump react-syntax-highlighter ([#770](https://github.com/wix/pro-gallery/pull/770)) [8d5561cb](https://github.com/wix/pro-gallery/commit/8d5561cbb5b60ed591826025c00a095e07916d67)
+
+
+## [v4.0.15-beta.247](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.246...v4.0.15-beta.247) (2022-03-08)
+
+*  bump error-overlay-webpack-plugin and package-lock ([#769](https://github.com/wix/pro-gallery/pull/769)) [77c24ea2](https://github.com/wix/pro-gallery/commit/77c24ea241d07c1a44b3a081856ae2068d8ad0c7)
+
+
+## [v4.0.15-beta.246](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.245...v4.0.15-beta.246) (2022-03-08)
+
+*  update react-dev-utils ([#768](https://github.com/wix/pro-gallery/pull/768)) [ffd7c0a8](https://github.com/wix/pro-gallery/commit/ffd7c0a8e69511c1c4f521b8fc70d3b1b08ffc9f)
+
+
+## [v4.0.15-beta.245](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.244...v4.0.15-beta.245) (2022-03-08)
+
+*  [lib] overlay is Relevant fix ([#766](https://github.com/wix/pro-gallery/pull/766)) [bb009d86](https://github.com/wix/pro-gallery/commit/bb009d867ab2691a8606dc604df52d7831d26b5c)
+
+
+## [v4.0.15-beta.244](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.243...v4.0.15-beta.244) (2022-03-06)
+
+*  [lib] remove comments ([#764](https://github.com/wix/pro-gallery/pull/764)) [2da7fd36](https://github.com/wix/pro-gallery/commit/2da7fd36fe7b51ccc557f29c26c13ab30b407a48)
+
+
+## [v4.0.15-beta.243](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.242...v4.0.15-beta.243) (2022-03-06)
+
+*  add some to the functions for specific options in the title placements ([#763](https://github.com/wix/pro-gallery/pull/763)) [8b059793](https://github.com/wix/pro-gallery/commit/8b0597938437692ab51961bbd72379f03e976c70)
+
+
+## [v4.0.15-beta.242](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.241...v4.0.15-beta.242) (2022-03-06)
+
+*  [lib] added new file for titlePlacement option ([#762](https://github.com/wix/pro-gallery/pull/762)) [fe7f78b9](https://github.com/wix/pro-gallery/commit/fe7f78b9a55891584866b482cf445806a4569783)
+
+
+## [v4.0.15-beta.241](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.240...v4.0.15-beta.241) (2022-03-02)
+
+*  [gallery] bump hls.js and new version of lock file ([#759](https://github.com/wix/pro-gallery/pull/759)) [b6177e38](https://github.com/wix/pro-gallery/commit/b6177e384d5e3fcb617e0ad76312b988f22dd2b6)
+
+
+## [v4.0.15-beta.240](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.239...v4.0.15-beta.240) (2022-03-01)
+
+*  text info style params options [dab3d6f1](https://github.com/wix/pro-gallery/commit/dab3d6f171980dfabf07e4aa3b46e205678226a6)
+*  height is allways in pixels [ee1a7e65](https://github.com/wix/pro-gallery/commit/ee1a7e65febba17af197dfdbab76073aaf6f0670)
+*  remove usage of width parm inside sizeUnits [345c8714](https://github.com/wix/pro-gallery/commit/345c871464b6383ed2ba7ff65d03ec0f1388f6c9)
+
+
+## [v4.0.15-beta.239](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.238...v4.0.15-beta.239) (2022-03-01)
+
+*  [lib] patch isInPreset - Added "gridStyle" to the fix styles of mix alternate and bricks galleries([#755](https://github.com/wix/pro-gallery/pull/755)) [455c9dc1](https://github.com/wix/pro-gallery/commit/455c9dc1b2007a1c1b9e1acea0732e2cef92d7d1)
+
+
+## [v4.0.15-beta.238](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.237...v4.0.15-beta.238) (2022-02-28)
+
+*  [gallery] Need more items bug ([#757](https://github.com/wix/pro-gallery/pull/757)) [81eac967](https://github.com/wix/pro-gallery/commit/81eac9672aef459419035600a0b0ae3a1ebb043c)
+
+
+## [v4.0.15-beta.237](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.236...v4.0.15-beta.237) (2022-02-27)
+
+*  Revert "Bug fix scroll-less getMoreItems ([#745](https://github.com/wix/pro-gallery/pull/745))" (#756) [f252961e](https://github.com/wix/pro-gallery/commit/f252961e887ee40fe176ea32032b94bedada5f3b)
+
+
+## [v4.0.15-beta.236](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.235...v4.0.15-beta.236) (2022-02-27)
+
+*  [gallery] fix overlay past image when zoom-in (cover edges) ([#754](https://github.com/wix/pro-gallery/pull/754)) [a031d02f](https://github.com/wix/pro-gallery/commit/a031d02f730f0eff39037b94d87e61cd1e10583e)
+
+
+## [v4.0.15-beta.235](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.234...v4.0.15-beta.235) (2022-02-24)
+
+*  Bug fix scroll-less getMoreItems ([#745](https://github.com/wix/pro-gallery/pull/745)) [d7e1c63e](https://github.com/wix/pro-gallery/commit/d7e1c63e86eb4aa2b789c83c258323fe42725cf7)
+
+
+## [v4.0.15-beta.234](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.233...v4.0.15-beta.234) (2022-02-24)
+
+*  TitlePlacement isRelevant fix ([#753](https://github.com/wix/pro-gallery/pull/753)) [9be36691](https://github.com/wix/pro-gallery/commit/9be3669151a7ea86194c8190474c05f2bb034b9f)
+
+
+## [v4.0.15-beta.233](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.232...v4.0.15-beta.233) (2022-02-21)
+
+*  change the z index of highlighted thumbnails ([#752](https://github.com/wix/pro-gallery/pull/752)) [eecf4d66](https://github.com/wix/pro-gallery/commit/eecf4d66003175e8836ad770277cc124e556a1f1)
+
+
+## [v4.0.15-beta.232](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.231...v4.0.15-beta.232) (2022-02-17)
+
+*  [gallery] improve: scale overlay zoom-in to cover all edge images & scroll animation: fade now on all item container([#751](https://github.com/wix/pro-gallery/pull/751)) [3a628757](https://github.com/wix/pro-gallery/commit/3a628757e49144b9803917c6c94dfd5b8a98f297)
+
+
+## [v4.0.15-beta.231](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.230...v4.0.15-beta.231) (2022-02-15)
+
+*  [lib] added slideAnimetion to the fix styles of the irrelevant presets ([#750](https://github.com/wix/pro-gallery/pull/750)) [e60efcd6](https://github.com/wix/pro-gallery/commit/e60efcd6577a2bb48f5832f18ad234c1f309fd76)
+
+
+## [v4.0.15-beta.230](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.229...v4.0.15-beta.230) (2022-02-15)
+
+*  Bump follow-redirects from 1.14.7 to 1.14.8 ([#748](https://github.com/wix/pro-gallery/pull/748)) [9656e5dd](https://github.com/wix/pro-gallery/commit/9656e5ddd38d2a3142d9717bdaf8eaba4be141a9)
+
+
+## [v4.0.15-beta.229](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.228...v4.0.15-beta.229) (2022-02-15)
+
+*  [lib ]added collageDenstiy to grid gallery fix styles ([#747](https://github.com/wix/pro-gallery/pull/747)) [4ebad40b](https://github.com/wix/pro-gallery/commit/4ebad40bb92e7d1b31a4377b5725ae178e270ee9)
+
+
+## [v4.0.15-beta.228](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.227...v4.0.15-beta.228) (2022-02-15)
+
+*  [lib] add flatted options when checking presets ([#749](https://github.com/wix/pro-gallery/pull/749)) [a3336025](https://github.com/wix/pro-gallery/commit/a333602500b0828c27af94b2c98e2a8bf3ea271e)
+
+
+## [v4.0.15-beta.227](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.226...v4.0.15-beta.227) (2022-02-08)
+
+*  Fix overflow horizontal ([#744](https://github.com/wix/pro-gallery/pull/744)) [6f5bd7a3](https://github.com/wix/pro-gallery/commit/6f5bd7a34744bd858b82f535fedc99e2c8cda4c2)
+
+
+## [v4.0.15-beta.226](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.225...v4.0.15-beta.226) (2022-02-08)
+
+*  add overflow visible to horizontal layouts for layoutFixer changes ([#743](https://github.com/wix/pro-gallery/pull/743)) [9b5014c9](https://github.com/wix/pro-gallery/commit/9b5014c97c8582e16190a8a9bb82ccfdab8b782b)
+
+
+## [v4.0.15-beta.225](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.224...v4.0.15-beta.225) (2022-02-08)
+
+*  [gallery] fixing Zoom-In Hover Effect bug (image expand past overlay) ([#735](https://github.com/wix/pro-gallery/pull/735)) [c422f89c](https://github.com/wix/pro-gallery/commit/c422f89c08d8c0ef19d69edebabdc61147448895)
+
+
+## [v4.0.15-beta.224](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.223...v4.0.15-beta.224) (2022-02-07)
+
+*  [lib] numberOfImagesPerCol is in preset fix; ([#742](https://github.com/wix/pro-gallery/pull/742)) [b3a63a2e](https://github.com/wix/pro-gallery/commit/b3a63a2e0872c5baf3f6c732a5c76e8881a56d0b)
+
+
+## [v4.0.15-beta.223](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.222...v4.0.15-beta.223) (2022-02-07)
+
+*  [lib ] gridStyle isRelevant isInPreset fix ([#741](https://github.com/wix/pro-gallery/pull/741)) [e31ecc28](https://github.com/wix/pro-gallery/commit/e31ecc2844ecefcf08b5e235c5ecb22d4ee83499)
+
+
+## [v4.0.15-beta.222](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.221...v4.0.15-beta.222) (2022-02-06)
+
+*  [lib] fix targetItemSizeValue is relevant isInPreset ([#740](https://github.com/wix/pro-gallery/pull/740)) [65fe6184](https://github.com/wix/pro-gallery/commit/65fe6184bd3e9279a7e5fd6599b7d3e039196c28)
+
+
+## [v4.0.15-beta.221](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.220...v4.0.15-beta.221) (2022-02-01)
+
+*  Bump node-fetch from 2.6.1 to 2.6.7 ([#725](https://github.com/wix/pro-gallery/pull/725)) [0edb3623](https://github.com/wix/pro-gallery/commit/0edb3623680bd29c3df12981c8b45db9cde157d3)
+
+
+## [v4.0.15-beta.220](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.219...v4.0.15-beta.220) (2022-02-01)
+
+*  Bump trim-off-newlines from 1.0.1 to 1.0.3 ([#724](https://github.com/wix/pro-gallery/pull/724)) [9937e30d](https://github.com/wix/pro-gallery/commit/9937e30d855f4274698107d79c876bd0e2e49b2e)
+
+
+## [v4.0.15-beta.219](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.218...v4.0.15-beta.219) (2022-02-01)
+
+*  Bump follow-redirects from 1.14.2 to 1.14.7 ([#715](https://github.com/wix/pro-gallery/pull/715)) [6c54a298](https://github.com/wix/pro-gallery/commit/6c54a298c04ee28a24a0f76a17d1f96bac3daae0)
+
+
+## [v4.0.15-beta.218](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.217...v4.0.15-beta.218) (2022-02-01)
+
+*  [gallery] changing duplicates id ([#739](https://github.com/wix/pro-gallery/pull/739)) [0cd49333](https://github.com/wix/pro-gallery/commit/0cd4933357e49cfc53102e369ad446f80b13865a)
+
+
+## [v4.0.15-beta.217](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.216...v4.0.15-beta.217) (2022-01-30)
+
+*  Revert "[gallery] changing duplicate id ([#736](https://github.com/wix/pro-gallery/pull/736))" (#738) [240fe344](https://github.com/wix/pro-gallery/commit/240fe3440b60feb86022777239b5f75db6aba5b7)
+
+
+## [v4.0.15-beta.216](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.215...v4.0.15-beta.216) (2022-01-30)
+
+*  fix thumbnails rendering layout ([#737](https://github.com/wix/pro-gallery/pull/737)) [9e39554a](https://github.com/wix/pro-gallery/commit/9e39554adda9a2593f4cf6cd8988ab684eacd3dd)
+
+
+## [v4.0.15-beta.215](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.214...v4.0.15-beta.215) (2022-01-30)
+
+*  [gallery] changing duplicate id ([#736](https://github.com/wix/pro-gallery/pull/736)) [a796c8b6](https://github.com/wix/pro-gallery/commit/a796c8b679a389d10b63f2d9b829aba930e2d151)
+
+
+## [v4.0.15-beta.214](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.213...v4.0.15-beta.214) (2022-01-30)
+
+*  [gallery + lib] add new arrows([#734](https://github.com/wix/pro-gallery/pull/734)) [5e43bb40](https://github.com/wix/pro-gallery/commit/5e43bb40bcd64ca13e646eace8a2d90925fd4edc)
+
+
+## [v4.0.15-beta.213](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.212...v4.0.15-beta.213) (2022-01-26)
+
+*  [lib] enablePlayButton converter and defaults([#726](https://github.com/wix/pro-gallery/pull/726)) [063a931a](https://github.com/wix/pro-gallery/commit/063a931a9fd44d9b0f5133fbea8a79685e5a344d)
+
+
+## [v4.0.15-beta.212](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.211...v4.0.15-beta.212) (2022-01-26)
+
+*  [gallery] remove gotFirstScrollEvent from preloads condition ([#730](https://github.com/wix/pro-gallery/pull/730)) [3d3750d2](https://github.com/wix/pro-gallery/commit/3d3750d2362288edf31a32ab2935e8c74ae1dd60)
+
+
+## [v4.0.15-beta.211](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.210...v4.0.15-beta.211) (2022-01-26)
+
+*  [lib] fix slideAnimation isRelevant ([#729](https://github.com/wix/pro-gallery/pull/729)) [334caa13](https://github.com/wix/pro-gallery/commit/334caa13b53c441eb2d14aba2e1b7ab2a0cd0391)
+
+
+## [v4.0.15-beta.210](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.209...v4.0.15-beta.210) (2022-01-25)
+
+*  Fix Slider Set to Continuous Slide Won't Automatically Scroll [e3353b34](https://github.com/wix/pro-gallery/commit/e3353b3460b75bae01fb8cc56e7887de9ea7ce6a)
+*  use isInDisplay and isVisible to calculate visibility [8e9af31a](https://github.com/wix/pro-gallery/commit/8e9af31addbcb6af4c955e42cda10addd0cf2914)
+*  fix default value [3f9ef25f](https://github.com/wix/pro-gallery/commit/3f9ef25ff4142ac19796fdb6df3423144fd56952)
+*  rename is visible to is in viewport [74549845](https://github.com/wix/pro-gallery/commit/745498457eebce805b4c4ebc7153a1edbb0bb952)
+*  refactoring [9368f0a9](https://github.com/wix/pro-gallery/commit/9368f0a92816ce15fc51a4813179dc73e123d94d)
+
+
+## [v4.0.15-beta.209](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.208...v4.0.15-beta.209) (2022-01-23)
+
+*  [lib] autoSlide options ([#721](https://github.com/wix/pro-gallery/pull/721)) [1906b1a0](https://github.com/wix/pro-gallery/commit/1906b1a07a550fb78e75726fe5531e405dc16202)
+
+
+## [v4.0.15-beta.208](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.207...v4.0.15-beta.208) (2022-01-23)
+
+*  [lib] fix backward converter for videoPlay ([#722](https://github.com/wix/pro-gallery/pull/722)) [4882a56d](https://github.com/wix/pro-gallery/commit/4882a56d8e9afcb324ac119efacb22fb4de6ec91)
+
+
+## [v4.0.15-beta.207](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.206...v4.0.15-beta.207) (2022-01-20)
+
+*  [lib] fix numberOfGridRows added to the fix styles of masonry and grid ([#723](https://github.com/wix/pro-gallery/pull/723)) [46881021](https://github.com/wix/pro-gallery/commit/46881021481aa7cebce9e07fb4679437e8d6a0ee)
+
+
+## [v4.0.15-beta.206](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.205...v4.0.15-beta.206) (2022-01-17)
+
+*  [gallery + lib] use string consts in navigationArrows.type ([#712](https://github.com/wix/pro-gallery/pull/712)) [1d0bb974](https://github.com/wix/pro-gallery/commit/1d0bb974ca8ada55be77f690288665da0e863bfe)
+
+
+## [v4.0.15-beta.205](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.204...v4.0.15-beta.205) (2022-01-17)
+
+*  [blueprints] refactor blueprints creation fix ([#720](https://github.com/wix/pro-gallery/pull/720)) [c1675057](https://github.com/wix/pro-gallery/commit/c167505718a3594e0e41a64dcd9d4ce931d64179)
+
+
+## [v4.0.15-beta.204](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.203...v4.0.15-beta.204) (2022-01-17)
+
+*  [blueprints] fix blueprints creation (gallery not rendering) ([#719](https://github.com/wix/pro-gallery/pull/719)) [93069ee4](https://github.com/wix/pro-gallery/commit/93069ee4f30401e0de2cb58fe7c22940e6303c4c)
+
+
+## [v4.0.15-beta.203](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.202...v4.0.15-beta.203) (2022-01-16)
+
+*  [lib] added the new Keys to the fix style of each preset ([#717](https://github.com/wix/pro-gallery/pull/717)) [9f334783](https://github.com/wix/pro-gallery/commit/9f334783e6dd913ece0e07fe733d6999935ce5f1)
+
+
+## [v4.0.15-beta.202](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.201...v4.0.15-beta.202) (2022-01-16)
+
+*  fix new arrows svg fill ([#716](https://github.com/wix/pro-gallery/pull/716)) [5fce3b61](https://github.com/wix/pro-gallery/commit/5fce3b619621e6c0cafa3da9bf180b65ec617f48)
+
+
+## [v4.0.15-beta.201](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.200...v4.0.15-beta.201) (2022-01-13)
+
+*  Fix slideshowLoop with few images bug  ([#708](https://github.com/wix/pro-gallery/pull/708)) [51e74c44](https://github.com/wix/pro-gallery/commit/51e74c443885a2397cf72831d97ae95089b38cdb)
+
+
+## [v4.0.15-beta.200](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.199...v4.0.15-beta.200) (2022-01-11)
+
+*  [gallery + layouts] improve accessibility: extract html content from text item - ssr & client and update alt text([#690](https://github.com/wix/pro-gallery/pull/690)) [b231e73c](https://github.com/wix/pro-gallery/commit/b231e73c722026b0c2a3f2f2e1392cb4307b07f7)
+
+
+## [v4.0.15-beta.199](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.198...v4.0.15-beta.199) (2022-01-10)
+
+*  improve: avoid rendering old blueprints ([#640](https://github.com/wix/pro-gallery/pull/640)) [25b820a8](https://github.com/wix/pro-gallery/commit/25b820a8605b7c6b98507d7b900fe7cf65a1cb49)
+
+
+## [v4.0.15-beta.198](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.197...v4.0.15-beta.198) (2022-01-06)
+
+*  disable animations for futureSlideshow. ([#714](https://github.com/wix/pro-gallery/pull/714)) [18065ff1](https://github.com/wix/pro-gallery/commit/18065ff1eb6a3b7cc1e208e356ce93a136d7a1e8)
+
+
+## [v4.0.15-beta.197](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.196...v4.0.15-beta.197) (2022-01-06)
+
+*  remove isNotSlideshow in a non slideshow code flow. ([#713](https://github.com/wix/pro-gallery/pull/713)) [d2f25642](https://github.com/wix/pro-gallery/commit/d2f256426954ec226686fa967449a35adde40009)
+
+
+## [v4.0.15-beta.196](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.195...v4.0.15-beta.196) (2022-01-06)
+
+*  add an option to load gallery items in full-resulotion [3dbc8333](https://github.com/wix/pro-gallery/commit/3dbc833356448977608f728a98359fba44793b66)
+*  replace literal string with enum ref [ff8af1fa](https://github.com/wix/pro-gallery/commit/ff8af1fadcc8c12a2cc495032c2a851fe8e0d652)
+*  remove unrealted change [44e9e628](https://github.com/wix/pro-gallery/commit/44e9e628455001a59b89166368c1ff86c15d71ce)
+*  small refactor [30157031](https://github.com/wix/pro-gallery/commit/30157031e8b615a6fe2bcfde1fbb58896c52d559)
+*  set width to auto in prerender mode ([#689](https://github.com/wix/pro-gallery/pull/689)) [83e0d48c](https://github.com/wix/pro-gallery/commit/83e0d48cc017bb515c28f0d8fb993a1cf0e2e3d0)
+
+
+## [v4.0.15-beta.195](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.194...v4.0.15-beta.195) (2022-01-06)
+
+*  Remove isSlideshow: replaced isNOTslideshow with NO_EFFECT in preset([#706](https://github.com/wix/pro-gallery/pull/706)) [f912160a](https://github.com/wix/pro-gallery/commit/f912160add60ab593f4e5530434cd3adf54fc733)
+
+
+## [v4.0.15-beta.194](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.193...v4.0.15-beta.194) (2022-01-05)
+
+*  [lib] export style params as options map ([#709](https://github.com/wix/pro-gallery/pull/709)) [94aada62](https://github.com/wix/pro-gallery/commit/94aada62b0a0e928c8bb119da76cda33b8fa4031)
+
+
+## [v4.0.15-beta.193](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.192...v4.0.15-beta.193) (2022-01-04)
+
+*  isSlideshow 2: delete constant true condition. ([#707](https://github.com/wix/pro-gallery/pull/707)) [0dd03ee8](https://github.com/wix/pro-gallery/commit/0dd03ee81ccc5f0652264a8c77da5d792613c53c)
+
+
+## [v4.0.15-beta.192](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.191...v4.0.15-beta.192) (2022-01-04)
+
+*  Playground - `slideshowInfoSize` => `textBoxHeight` . ([#696](https://github.com/wix/pro-gallery/pull/696)) [e01729ca](https://github.com/wix/pro-gallery/commit/e01729ca5aefc946d89fb41cc44dd62e60b567aa)
+*  Hover - remove redundant check for is sildeshow . ([#695](https://github.com/wix/pro-gallery/pull/695)) [0579afa7](https://github.com/wix/pro-gallery/commit/0579afa70fbbe99ba2edcc178cffc4d5628b45ec)
+
+
+## [v4.0.15-beta.191](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.190...v4.0.15-beta.191) (2022-01-03)
+
+*  `futureSlideshow` has a constant SHOW_BELOW . ([#694](https://github.com/wix/pro-gallery/pull/694)) [0c280c8a](https://github.com/wix/pro-gallery/commit/0c280c8a58a32dddb0cc9a963a6edf71f47224e5)
+
+
+## [v4.0.15-beta.190](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.189...v4.0.15-beta.190) (2022-01-03)
+
+*  update lock file ([#704](https://github.com/wix/pro-gallery/pull/704)) [43321fc0](https://github.com/wix/pro-gallery/commit/43321fc0f0b32573506055c57d5258ad173a0f0c)
+
+
+## [v4.0.15-beta.189](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.188...v4.0.15-beta.189) (2022-01-03)
+
+*  Remove isSlideshow 1: reuse `this.getDimensions` in `slideshowView` ([#697](https://github.com/wix/pro-gallery/pull/697)) [f4d74ffc](https://github.com/wix/pro-gallery/commit/f4d74ffce2c83817c423835dde31ba20cd710a3e)
+
+
+## [v4.0.15-beta.188](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.187...v4.0.15-beta.188) (2022-01-02)
+
+*  Deleted textBoxWidth min clause with targetItemSize ([#700](https://github.com/wix/pro-gallery/pull/700)) [0c45638a](https://github.com/wix/pro-gallery/commit/0c45638ae671bf11afca5ebc260d3ad596d0c8d3)
+
+
+## [v4.0.15-beta.187](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.186...v4.0.15-beta.187) (2022-01-02)
+
+*  Fixed ssr-simulator. ([#703](https://github.com/wix/pro-gallery/pull/703)) [a93a304d](https://github.com/wix/pro-gallery/commit/a93a304d93de0f6f04803ff52e704bcfe453d1d7)
+
+
+## [v4.0.15-beta.186](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.185...v4.0.15-beta.186) (2021-12-30)
+
+*  custom image source for printing [f1e66efc](https://github.com/wix/pro-gallery/commit/f1e66efcfb91141585c4383b82a548337788e0d6)
+
+
+## [v4.0.15-beta.185](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.184...v4.0.15-beta.185) (2021-12-30)
+
+*  lazy load on prerender ([#692](https://github.com/wix/pro-gallery/pull/692)) [1c0c4be9](https://github.com/wix/pro-gallery/commit/1c0c4be9f55ed7078645a38246e25590b7ce37f6)
+
+
+## [v4.0.15-beta.184](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.183...v4.0.15-beta.184) (2021-12-29)
+
+*  [gallery + lib + playground] arrows box styling ([#684](https://github.com/wix/pro-gallery/pull/684)) [0ea94cdd](https://github.com/wix/pro-gallery/commit/0ea94cdd5dbf87b904fbe92f9401d801d2c5a887)
+
+
+## [v4.0.15-beta.183](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.182...v4.0.15-beta.183) (2021-12-28)
+
+*  [gallery + lib + playground] added navigationArrows type ([#687](https://github.com/wix/pro-gallery/pull/687)) [8f2cad17](https://github.com/wix/pro-gallery/commit/8f2cad177d403f693734388acf6bdb3eac6faa38)
+
+
+## [v4.0.15-beta.182](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.181...v4.0.15-beta.182) (2021-12-23)
+
+*  fix youtube not playing on first tap [a7af193f](https://github.com/wix/pro-gallery/commit/a7af193f006e5154a883891acedd09e25ca3695a)
+*  fix carash on native videos [02bb9bae](https://github.com/wix/pro-gallery/commit/02bb9baed93d8c12b6b4ee592c3b9aede11e0805)
+
+
+## [v4.0.15-beta.181](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.180...v4.0.15-beta.181) (2021-12-23)
+
+*  [lib] exports styleParams as optionsMap ([#686](https://github.com/wix/pro-gallery/pull/686)) [a0912ae0](https://github.com/wix/pro-gallery/commit/a0912ae0e449cb7c8b5c00f72b4470c97084d726)
+
+
+## [v4.0.15-beta.180](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.179...v4.0.15-beta.180) (2021-12-21)
+
+*  [lib] export [ gallerySpacing, itemShadowSize, itemShadowBlur, itemShadowDirection, itemEnableShadow] as optionsMap generated key  ([#685](https://github.com/wix/pro-gallery/pull/685)) [bd227c3d](https://github.com/wix/pro-gallery/commit/bd227c3d97f7d69e4bf530eebeba2fe6db58fdba)
+
+
+## [v4.0.15-beta.179](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.178...v4.0.15-beta.179) (2021-12-21)
+
+*  [gallery] arrows refactor dimensions handling ([#682](https://github.com/wix/pro-gallery/pull/682)) [35f3f7f2](https://github.com/wix/pro-gallery/commit/35f3f7f20aacdde25d882beb0195f7d5e3df8aec)
+
+
+## [v4.0.15-beta.178](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.177...v4.0.15-beta.178) (2021-12-20)
+
+*  [lib] export arrowsPadding as optionsMap generated key ([#683](https://github.com/wix/pro-gallery/pull/683)) [1cebce34](https://github.com/wix/pro-gallery/commit/1cebce34242ddf7d04da560bec591c016bf549d8)
+
+
+## [v4.0.15-beta.177](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.176...v4.0.15-beta.177) (2021-12-14)
+
+*  [gallery] fix jump focus between galleries.  ([#678](https://github.com/wix/pro-gallery/pull/678)) [b5e2deb4](https://github.com/wix/pro-gallery/commit/b5e2deb405dddbb6a17eef812cdb5fad7b097156)
+
+
+## [v4.0.15-beta.176](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.175...v4.0.15-beta.176) (2021-12-08)
+
+*  [gallery] improve: each gallery has a unique container id  instead  pro-gallery-container ([#665](https://github.com/wix/pro-gallery/pull/665)) [d2502564](https://github.com/wix/pro-gallery/commit/d2502564cde045da6aea888d613842e087060265)
+
+
+## [v4.0.15-beta.175](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.174...v4.0.15-beta.175) (2021-12-02)
+
+*  exports style params as optionMap ([#675](https://github.com/wix/pro-gallery/pull/675)) [f21b88cf](https://github.com/wix/pro-gallery/commit/f21b88cfc7183acb0dc4b1ba919023b62e3cdb62)
+
+
+## [v4.0.15-beta.174](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.173...v4.0.15-beta.174) (2021-11-30)
+
+*  use the genreted optionsMap to exports style params 2([#674](https://github.com/wix/pro-gallery/pull/674)) [e13f8190](https://github.com/wix/pro-gallery/commit/e13f81901a5dc5aa00c88ca09ed8a3f20c8ffca0)
+
+
+## [v4.0.15-beta.173](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.172...v4.0.15-beta.173) (2021-11-30)
+
+*  [gallery] improve: screen readers  can read text item ([#664](https://github.com/wix/pro-gallery/pull/664)) [0a04b078](https://github.com/wix/pro-gallery/commit/0a04b0782917068b6d3ee93b78e828b5026eff2d)
+*  [lib] use the genreted optionsMap to exports style params ([#673](https://github.com/wix/pro-gallery/pull/673)) [0bf2a668](https://github.com/wix/pro-gallery/commit/0bf2a668ceb1e7c289a34fb6ffd45f1385278abf)
+
+
+## [v4.0.15-beta.172](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.171...v4.0.15-beta.172) (2021-11-29)
+
+*  [lib] use the generated optionsMap to exports galleryLayout, scrollDirection [91d8c124](https://github.com/wix/pro-gallery/commit/91d8c1246adbc257bb155a3079048ebddf634244)
+
+
+## [v4.0.15-beta.171](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.170...v4.0.15-beta.171) (2021-11-18)
+
+*  [lib] export itemClick as behaviourParams_item_clickAction ([#663](https://github.com/wix/pro-gallery/pull/663)) [741573cb](https://github.com/wix/pro-gallery/commit/741573cb1ebb43b6882e52e25a84c734d845d158)
+
+
+## [v4.0.15-beta.170](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.169...v4.0.15-beta.170) (2021-11-17)
+
+*  [lib] dont force titlePlacement in horizontal galleries ([#658](https://github.com/wix/pro-gallery/pull/658)) [75de1269](https://github.com/wix/pro-gallery/commit/75de1269fac534005eb5625bbc2bfb8eff878be0)
+
+
+## [v4.0.15-beta.169](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.168...v4.0.15-beta.169) (2021-11-17)
+
+*  [lib] export numberOfImagesPerCol as layoutParams_structure_numberOfGridRows ([#661](https://github.com/wix/pro-gallery/pull/661)) [5f7a9c29](https://github.com/wix/pro-gallery/commit/5f7a9c291b54ab05f2d349f9454cd44ceefbf88a)
+
+
+## [v4.0.15-beta.168](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.167...v4.0.15-beta.168) (2021-11-16)
+
+*  Add future slideshow gallery. ([#656](https://github.com/wix/pro-gallery/pull/656)) [7f764fcf](https://github.com/wix/pro-gallery/commit/7f764fcf6c0af27fbfdc504987d88a93252a43b0)
+
+
+## [v4.0.15-beta.167](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.166...v4.0.15-beta.167) (2021-11-14)
+
+*  Partially purify ItemView. ([#655](https://github.com/wix/pro-gallery/pull/655)) [660107be](https://github.com/wix/pro-gallery/commit/660107be43bf6cf212c2bc60ecdfea97723d8856)
+
+
+## [v4.0.15-beta.166](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.165...v4.0.15-beta.166) (2021-11-14)
+
+*  Resolve dependabot alert ([#657](https://github.com/wix/pro-gallery/pull/657)) [7565cc36](https://github.com/wix/pro-gallery/commit/7565cc365f1c823bf6a94ea289d338fe0b1e318a)
+
+
+## [v4.0.15-beta.165](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.164...v4.0.15-beta.165) (2021-11-11)
+
+*  [gallery] fix scrollAnimation for horizontal galleries ([#654](https://github.com/wix/pro-gallery/pull/654)) [3edeeb62](https://github.com/wix/pro-gallery/commit/3edeeb6230c495810881d99b1d258cf431edaa09)
+*  [gallery] Prevent scroll attempt in scrollLess gallery ([#652](https://github.com/wix/pro-gallery/pull/652)) [1f3a729b](https://github.com/wix/pro-gallery/commit/1f3a729b0d0c969bcd2d5ab76c4d5bbfebb6352d)
+
+
+## [v4.0.15-beta.164](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.163...v4.0.15-beta.164) (2021-11-07)
+
+*  [gallery] remove unneeded class from highlighted thumbnail [8acf71c9](https://github.com/wix/pro-gallery/commit/8acf71c91d721ae604b34e2ae904085042d4b11f)
+
+
+## [v4.0.15-beta.163](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.162...v4.0.15-beta.163) (2021-11-03)
+
+*  [gallery] fix: videos are not playing in galleries below fold ([#651](https://github.com/wix/pro-gallery/pull/651)) [988f6695](https://github.com/wix/pro-gallery/commit/988f669514aedb62f71e31d6806bd870f91fa8e7)
+
+
+## [v4.0.15-beta.162](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.161...v4.0.15-beta.162) (2021-10-28)
+
+*  Revert "[gallery] fix: gallery not re-rendered in Customize Expand Mode when needed" [bfc6ebc0](https://github.com/wix/pro-gallery/commit/bfc6ebc0935ae7cad30f5589d0f9104b35ae971f)
+
+
+## [v4.0.15-beta.161](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.160...v4.0.15-beta.161) (2021-10-28)
+
+*  [gallery] fix: gallery not re-rendered in Customize Expand Mode when needed [bc0a2395](https://github.com/wix/pro-gallery/commit/bc0a2395e8bb4098117bd5025fbaae05a2053179)
+
+
+## [v4.0.15-beta.160](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.159...v4.0.15-beta.160) (2021-10-28)
+
+*  [gallery] fix: remove unneeded call to scrollToItem [c17703b6](https://github.com/wix/pro-gallery/commit/c17703b623f686f9dd3f635ffcc7367d05123332)
+
+
+## [v4.0.15-beta.159](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.158...v4.0.15-beta.159) (2021-10-20)
+
+*  Performance improvement for createBlueprint ([#644](https://github.com/wix/pro-gallery/pull/644)) [ea9edd07](https://github.com/wix/pro-gallery/commit/ea9edd07f5e5968effb307ef2732843a7cb50b5d)
+
+
+## [v4.0.15-beta.158](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.157...v4.0.15-beta.158) (2021-10-20)
+
+*  adding --exact to lerna publish. [7c3f99b6](https://github.com/wix/pro-gallery/commit/7c3f99b65b4243fd257f658a85726409a8f46060)
+
+
+## [v4.0.15-beta.157](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.156...v4.0.15-beta.157) (2021-10-19)
+
+*  remove all ^ from beta versions ([#645](https://github.com/wix/pro-gallery/pull/645)) [6803b3af](https://github.com/wix/pro-gallery/commit/6803b3af77e3c2350b58a7869c939fee308a24d0)
+
+
+## [v4.0.15-beta.156](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.155...v4.0.15-beta.156) (2021-10-18)
+
+*  fixes to cropRatio migration + tests ([#643](https://github.com/wix/pro-gallery/pull/643)) [0a080501](https://github.com/wix/pro-gallery/commit/0a080501b43a24be1269f658821d6f7021ec584b)
+
+
+## [v4.0.15-beta.155](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.154...v4.0.15-beta.155) (2021-10-14)
+
+*  Add set value to fix security alert ([#642](https://github.com/wix/pro-gallery/pull/642)) [b3e68198](https://github.com/wix/pro-gallery/commit/b3e68198fe2395e7892ca48e572e722701e1811f)
+
+
+## [v4.0.15-beta.154](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.153...v4.0.15-beta.154) (2021-10-13)
+
+*  [lib] remove videoPlay enforcement in iOS ([#641](https://github.com/wix/pro-gallery/pull/641)) [5e75ffcb](https://github.com/wix/pro-gallery/commit/5e75ffcba06a7d28e6ad1382687e30e5a793866d)
+
+
+## [v4.0.15-beta.153](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.152...v4.0.15-beta.153) (2021-10-12)
+
+*  [lib, layouts] improve: remove galleryItem galleryGroup itemsHelper usage from 'lib' added to 'layouts' [e7e8def4](https://github.com/wix/pro-gallery/commit/e7e8def414903869bdf42066d991defed6b6cd69)
+
+
+## [v4.0.15-beta.152](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.151...v4.0.15-beta.152) (2021-10-12)
+
+*  [gallery] use camel casing in react player props [8468fb87](https://github.com/wix/pro-gallery/commit/8468fb87765d71b14bbf294defc33541d8f9606d)
+*  [gallery] fix: first video playing when not needed ([#638](https://github.com/wix/pro-gallery/pull/638)) [fe2208e3](https://github.com/wix/pro-gallery/commit/fe2208e3681d22c07db436c85e5b3663cb5994b9)
+
+
+## [v4.0.15-beta.151](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.150...v4.0.15-beta.151) (2021-10-10)
+
+*  [lib] Changed forcing arrows to gallery-center condition ([#617](https://github.com/wix/pro-gallery/pull/617)) [fbe95e44](https://github.com/wix/pro-gallery/commit/fbe95e44b8cf86d858b2c9fb4c6c6ae701d8e264)
+
+
+## [v4.0.15-beta.150](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.149...v4.0.15-beta.150) (2021-10-07)
+
+*  Bump i from 0.3.6 to 0.3.7 ([#627](https://github.com/wix/pro-gallery/pull/627)) [20e4e804](https://github.com/wix/pro-gallery/commit/20e4e8047852c8b2e5510a5979f4f1e619eca249)
+
+
+## [v4.0.15-beta.149](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.148...v4.0.15-beta.149) (2021-10-06)
+
+*  Bump semver-regex from 3.1.2 to 3.1.3 ([#628](https://github.com/wix/pro-gallery/pull/628)) [89cf7955](https://github.com/wix/pro-gallery/commit/89cf7955744dfd4d7177555ca02b0209b96eed02)
+
+
+## [v4.0.15-beta.148](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.147...v4.0.15-beta.148) (2021-10-06)
+
+*  [lib remove unneeded try/catch block [1d5ad0af](https://github.com/wix/pro-gallery/commit/1d5ad0af1f19543915aa088da3cdefc2a8c6209a)
+
+
+## [v4.0.15-beta.147](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.146...v4.0.15-beta.147) (2021-10-06)
+
+*  Disable deploy for dependabot PRs ([#633](https://github.com/wix/pro-gallery/pull/633)) [eb3b0d4d](https://github.com/wix/pro-gallery/commit/eb3b0d4d170eced07ebe7e4a32f0f66097560326)
+*  isAccessible is not a setting and not an option ([#632](https://github.com/wix/pro-gallery/pull/632)) [3bcf1dff](https://github.com/wix/pro-gallery/commit/3bcf1dff45b63f346fc3d0863fa4383ff278aa86)
+*  Bump axios from 0.21.1 to 0.21.4 ([#629](https://github.com/wix/pro-gallery/pull/629)) [fad2e29c](https://github.com/wix/pro-gallery/commit/fad2e29c55dbd139258f0f9a2d3d84f544ca5ded)
+
+
+## [v4.0.15-beta.146](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.145...v4.0.15-beta.146) (2021-10-06)
+
+*  [gallery + lib] improve :  added new property for galleryItem [30142168](https://github.com/wix/pro-gallery/commit/30142168a76bf0c1db7d8c06f22e5c84ddabe284)
+
+
+## [v4.0.15-beta.145](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.144...v4.0.15-beta.145) (2021-10-06)
+
+*  Remove GalleryComponent ([#631](https://github.com/wix/pro-gallery/pull/631)) [4ee64807](https://github.com/wix/pro-gallery/commit/4ee64807535d401aae315a5db7fa8aa11aadf060)
+
+
+## [v4.0.15-beta.144](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.143...v4.0.15-beta.144) (2021-10-04)
+
+*  reduce migrator runtime ([#625](https://github.com/wix/pro-gallery/pull/625)) [69c92d33](https://github.com/wix/pro-gallery/commit/69c92d334498c84769da39703703e627c31e14c8)
+*  Update lock files and remove deprecated scripts ([#626](https://github.com/wix/pro-gallery/pull/626)) [8581afa0](https://github.com/wix/pro-gallery/commit/8581afa01db1cba79e201a1f08bd047ce55f48a2)
+
+
+## [v4.0.15-beta.143](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.142...v4.0.15-beta.143) (2021-09-30)
+
+*  [gallery] remove pointer-events for hover [f8cea7e9](https://github.com/wix/pro-gallery/commit/f8cea7e951e916c4d33d415d38f7317a080671fa)
+
+
+## [v4.0.15-beta.142](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.141...v4.0.15-beta.142) (2021-09-29)
+
+*  adding new and old default objects ([#622](https://github.com/wix/pro-gallery/pull/622)) [4ae42b76](https://github.com/wix/pro-gallery/commit/4ae42b765047f52ee5787eada0516860dea5bc0c)
+
+
+## [v4.0.15-beta.141](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.140...v4.0.15-beta.141) (2021-09-29)
+
+*  [gallery] reactDriver: using default options  ([#619](https://github.com/wix/pro-gallery/pull/619)) [287c609e](https://github.com/wix/pro-gallery/commit/287c609e5e6c4afa126500c0abe3fa498da1ada3)
+
+
+## [v4.0.15-beta.140](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.139...v4.0.15-beta.140) (2021-09-26)
+
+*  trim undefined value before merging in migrators ([#623](https://github.com/wix/pro-gallery/pull/623)) [8a12f5d4](https://github.com/wix/pro-gallery/commit/8a12f5d495df6e9cce3e1aaa995f1a58a8c94988)
+
+
+## [v4.0.15-beta.139](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.138...v4.0.15-beta.139) (2021-09-26)
+
+*  [playground] Commented the lean gallery out of Playground ([#620](https://github.com/wix/pro-gallery/pull/620)) [66c80414](https://github.com/wix/pro-gallery/commit/66c8041459443762ae04e1887d562ee7bbbb8ece)
+*  [gallery] itemView.spec: use mergeNestedObjects [f94d7de3](https://github.com/wix/pro-gallery/commit/f94d7de381f868f3515101519d8d21dcae205472)
+*  fix migrator functions ([#612](https://github.com/wix/pro-gallery/pull/612)) [de4dfb52](https://github.com/wix/pro-gallery/commit/de4dfb5299a7961c46cc5451954fa7a7520767e6)
+
+
+## [v4.0.15-beta.138](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.137...v4.0.15-beta.138) (2021-09-23)
+
+*  dont populate in migration when undefined ([#609](https://github.com/wix/pro-gallery/pull/609)) [4253a071](https://github.com/wix/pro-gallery/commit/4253a0710667dd8e1e0cef6fe800c3af062a8745)
+
+
+## [v4.0.15-beta.137](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.136...v4.0.15-beta.137) (2021-09-22)
+
+*  fixing group types split of undefined ([#608](https://github.com/wix/pro-gallery/pull/608)) [f88c5cb6](https://github.com/wix/pro-gallery/commit/f88c5cb6861c533a1ae6848af8453e50f8508c20)
+
+
+## [v4.0.15-beta.136](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.135...v4.0.15-beta.136) (2021-09-22)
+
+*  Sp fix blueprint function order ([#607](https://github.com/wix/pro-gallery/pull/607)) [8db3ad6d](https://github.com/wix/pro-gallery/commit/8db3ad6d342dafc86f88582ec27cff080b003e3c)
+
+
+## [v4.0.15-beta.135](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.134...v4.0.15-beta.135) (2021-09-22)
+
+*  Options: magnificationLevel -> magnificationValue ([#604](https://github.com/wix/pro-gallery/pull/604)) [1cba8d85](https://github.com/wix/pro-gallery/commit/1cba8d851572c9a7a2ca90d1ec39c3bb7ecc157d)
+
+
+## [v4.0.15-beta.134](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.133...v4.0.15-beta.134) (2021-09-22)
+
+*  fix blueprints functions order to add old and new styles before processing ([#606](https://github.com/wix/pro-gallery/pull/606)) [b0138a28](https://github.com/wix/pro-gallery/commit/b0138a28fe1a83084c3028137115e27732f00934)
+
+
+## [v4.0.15-beta.133](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.132...v4.0.15-beta.133) (2021-09-22)
+
+*  [lib] Options type: made all options not mandatory ([#603](https://github.com/wix/pro-gallery/pull/603)) [048919f6](https://github.com/wix/pro-gallery/commit/048919f6ee500bca35431c559f85e29edb2873c0)
+
+
+## [v4.0.15-beta.132](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.131...v4.0.15-beta.132) (2021-09-19)
+
+*  fix hoverAnimation enum in potions types ([#602](https://github.com/wix/pro-gallery/pull/602)) [9b3cf762](https://github.com/wix/pro-gallery/commit/9b3cf7622ae8ac8d466294c8501576d0484fde75)
+
+
+## [v4.0.15-beta.131](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.130...v4.0.15-beta.131) (2021-09-19)
+
+*  [lib] added commented out Item TS config ([#601](https://github.com/wix/pro-gallery/pull/601)) [27cca254](https://github.com/wix/pro-gallery/commit/27cca254a77e0866d3d1cbc96a2473e8d7cafde7)
+
+
+## [v4.0.15-beta.130](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.129...v4.0.15-beta.130) (2021-09-14)
+
+*  [gallery] fix: custom arrows renderer [0212cddf](https://github.com/wix/pro-gallery/commit/0212cddff10570044a03a8d7c5c723913b152ca4)
+
+
+## [v4.0.15-beta.129](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.128...v4.0.15-beta.129) (2021-09-14)
+
+*  restore optional types [6f3ba875](https://github.com/wix/pro-gallery/commit/6f3ba8754c3febfda1b1fa1758bebc5ae3cf3a17)
+
+
+## [v4.0.15-beta.128](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.127...v4.0.15-beta.128) (2021-09-14)
+
+*  adding a quickfix for showArrows ([#597](https://github.com/wix/pro-gallery/pull/597)) [72e1e2bb](https://github.com/wix/pro-gallery/commit/72e1e2bba28752a6576f4809298b5adf1b7d41ea)
+
+
+## [v4.0.15-beta.127](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.126...v4.0.15-beta.127) (2021-09-12)
+
+*  added fixes to converter after using the validate with it ([#595](https://github.com/wix/pro-gallery/pull/595)) [3ab9b4e3](https://github.com/wix/pro-gallery/commit/3ab9b4e3861789f63f6b7329817337fb3ad2c3a3)
+
+
+## [v4.0.15-beta.126](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.125...v4.0.15-beta.126) (2021-09-09)
+
+*  add the converter to the blueprints before layoutHelper ([#592](https://github.com/wix/pro-gallery/pull/592)) [c0439e09](https://github.com/wix/pro-gallery/commit/c0439e0933db8c5433f26ee0326be9757f232738)
+
+
+## [v4.0.15-beta.125](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.124...v4.0.15-beta.125) (2021-09-07)
+
+*  changes to the option types ([#593](https://github.com/wix/pro-gallery/pull/593)) [35a80c8d](https://github.com/wix/pro-gallery/commit/35a80c8db923ff153b20dc65b455d4773db7cb5a)
+
+
+## [v4.0.15-beta.124](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.123...v4.0.15-beta.124) (2021-09-07)
+
+*  create alternate solution for isSlideshow etc ([#590](https://github.com/wix/pro-gallery/pull/590)) [cba43581](https://github.com/wix/pro-gallery/commit/cba43581aba996ea2e1fb8cd716df689c90d54fa)
+
+
+## [v4.0.15-beta.123](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.122...v4.0.15-beta.123) (2021-09-05)
+
+*  [gallery] fix: fix opacity for magnified preload [81e6a3e7](https://github.com/wix/pro-gallery/commit/81e6a3e7f5f23f3b8dfeb2d6b96b2c4a1b05f320)
+
+
+## [v4.0.15-beta.122](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.121...v4.0.15-beta.122) (2021-09-05)
+
+*  [gallery + lib + playground] feat: magnifying glass [6538cfa6](https://github.com/wix/pro-gallery/commit/6538cfa68fbd597a2f1b018d563a23c9ea464a49)
+
+
+## [v4.0.15-beta.121](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.120...v4.0.15-beta.121) (2021-09-05)
+
+*  finalize the options with deepClone ([#589](https://github.com/wix/pro-gallery/pull/589)) [11b67614](https://github.com/wix/pro-gallery/commit/11b67614f96259b8670ca9d67d3e403f7db08e6d)
+
+
+## [v4.0.15-beta.120](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.119...v4.0.15-beta.120) (2021-09-02)
+
+*  added more time to hover animations ([#588](https://github.com/wix/pro-gallery/pull/588)) [55641724](https://github.com/wix/pro-gallery/commit/5564172404326986f72d380c5f83bd2a5ccebb77)
+
+
+## [v4.0.15-beta.119](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.118...v4.0.15-beta.119) (2021-09-02)
+
+*  [lib ] improve : added filename to the altText and validate alt [acc2bb26](https://github.com/wix/pro-gallery/commit/acc2bb264a3bc90f8f8b73356a4cf84deaf4c34b)
+
+
+## [v4.0.15-beta.118](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.117...v4.0.15-beta.118) (2021-09-02)
+
+*  Sp backward migrator ([#578](https://github.com/wix/pro-gallery/pull/578)) [85e0a692](https://github.com/wix/pro-gallery/commit/85e0a692a48e87d2205874ba7103b1b279a8f335)
+
+
+## [v4.0.15-beta.117](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.116...v4.0.15-beta.117) (2021-09-01)
+
+*  [gallery + lib] Navigation arrows vertical positioning ([#484](https://github.com/wix/pro-gallery/pull/484)) [19737bcf](https://github.com/wix/pro-gallery/commit/19737bcfa06fb40c044586dc595e6916939c9253)
+
+
+## [v4.0.15-beta.116](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.115...v4.0.15-beta.116) (2021-09-01)
+
+*  fix layouter targetITemSize, remove spreading of layoutParams in layo… ([#577](https://github.com/wix/pro-gallery/pull/577)) [41c2fce9](https://github.com/wix/pro-gallery/commit/41c2fce9b18d98144bee3844ceba1e15870a901c)
+
+
+## [v4.0.15-beta.115](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.114...v4.0.15-beta.115) (2021-09-01)
+
+*  Delete unused files from root. ([#587](https://github.com/wix/pro-gallery/pull/587)) [fdf5ad01](https://github.com/wix/pro-gallery/commit/fdf5ad011b4c1c2de7062a232f4ceebfd2606f53)
+
+
+## [v4.0.15-beta.114](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.113...v4.0.15-beta.114) (2021-09-01)
+
+*  Fixed typo in yarn lock file. ([#584](https://github.com/wix/pro-gallery/pull/584)) [43820b8d](https://github.com/wix/pro-gallery/commit/43820b8d90a9d893a48f7e82a865bcafced0b620)
+
+
+## [v4.0.15-beta.113](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.112...v4.0.15-beta.113) (2021-08-31)
+
+*  Replacing npm install with npm CI and adding NPM lock file ([#582](https://github.com/wix/pro-gallery/pull/582)) [af3cb5a2](https://github.com/wix/pro-gallery/commit/af3cb5a259bc7b53b14f7c24b3721ca362f33c50)
+
+
+## [v4.0.15-beta.112](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.111...v4.0.15-beta.112) (2021-08-30)
+
+*  [gallery + lib] improve overlayAnimations options ([#576](https://github.com/wix/pro-gallery/pull/576)) [8f769030](https://github.com/wix/pro-gallery/commit/8f769030987acc6706f5a6cf4c274fdc3601113b)
+
+
+## [v4.0.15-beta.111](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.110...v4.0.15-beta.111) (2021-08-30)
+
+*  [gallery] improve itemHover.spec ([#526](https://github.com/wix/pro-gallery/pull/526)) [baf27f58](https://github.com/wix/pro-gallery/commit/baf27f58b60c2fd7ad710e84bbff91abf3cef78a)
+
+
+## [v4.0.15-beta.110](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.109...v4.0.15-beta.110) (2021-08-29)
+
+*  convertor for known styleParams ([#556](https://github.com/wix/pro-gallery/pull/556)) [dc971597](https://github.com/wix/pro-gallery/commit/dc9715976ca80d1d8c8df5c4b24ce847900d3d6b)
+
+
+## [v4.0.15-beta.109](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.108...v4.0.15-beta.109) (2021-08-29)
+
+*  create the ability to use layout -3 to fix styles by json ([#565](https://github.com/wix/pro-gallery/pull/565)) [77beaa07](https://github.com/wix/pro-gallery/commit/77beaa077cbca8ddda141f9cc10423a114f226dd)
+
+
+## [v4.0.15-beta.108](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.107...v4.0.15-beta.108) (2021-08-29)
+
+*  fix a typo in options renaming ([#574](https://github.com/wix/pro-gallery/pull/574)) [9630dc55](https://github.com/wix/pro-gallery/commit/9630dc552d53440ba3c2e18d4e3effe89a8441ed)
+
+
+## [v4.0.15-beta.107](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.106...v4.0.15-beta.107) (2021-08-26)
+
+*  Export optionsMap ([#571](https://github.com/wix/pro-gallery/pull/571)) [03f094aa](https://github.com/wix/pro-gallery/commit/03f094aad020788948a0710eecbe50df567fe8c4)
+
+
+## [v4.0.15-beta.106](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.105...v4.0.15-beta.106) (2021-08-26)
+
+*  added mutating assign multiple ([#570](https://github.com/wix/pro-gallery/pull/570)) [11f293dd](https://github.com/wix/pro-gallery/commit/11f293ddc4c330ebde12ccf41249c873f62503d6)
+
+
+## [v4.0.15-beta.105](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.104...v4.0.15-beta.105) (2021-08-26)
+
+*  [gallery, lib, blueprints, playground, ssr-simulator] Use only "options" (not styles, not styleParams) ([#567](https://github.com/wix/pro-gallery/pull/567)) [bb7a982e](https://github.com/wix/pro-gallery/commit/bb7a982e07b53c2cb27f1fd012d72658193d44fd)
+
+
+## [v4.0.15-beta.104](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.103...v4.0.15-beta.104) (2021-08-26)
+
+*  [gallery] improve :  refactor next item and next group [ed16404d](https://github.com/wix/pro-gallery/commit/ed16404dcefc04bdc8048cdfbb243b0d7983a516)
+
+
+## [v4.0.15-beta.103](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.102...v4.0.15-beta.103) (2021-08-25)
+
+*  Showing all validation errors([#566](https://github.com/wix/pro-gallery/pull/566)) [bf593d82](https://github.com/wix/pro-gallery/commit/bf593d82286837e690484254a2b8373cf144d0fd)
+
+
+## [v4.0.15-beta.102](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.101...v4.0.15-beta.102) (2021-08-25)
+
+*  Revert "Revert "Using only options for style params. ([#561](https://github.com/wix/pro-gallery/pull/561))" (#563)" (#564) [c2867023](https://github.com/wix/pro-gallery/commit/c286702354606e06e05cecfce8f99c94b9da4132)
+
+
+## [v4.0.15-beta.101](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.100...v4.0.15-beta.101) (2021-08-24)
+
+*  Revert "Using only options for style params. ([#561](https://github.com/wix/pro-gallery/pull/561))" (#563) [e940e889](https://github.com/wix/pro-gallery/commit/e940e8896e5d250f0a487e1bb1f82daacf19f297)
+
+
+## [v4.0.15-beta.100](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.99...v4.0.15-beta.100) (2021-08-24)
+
+*  Using only options for style params. ([#561](https://github.com/wix/pro-gallery/pull/561)) [edc265f0](https://github.com/wix/pro-gallery/commit/edc265f0e4d48b86b178962f0a1b594ce16b68aa)
+
+
+## [v4.0.15-beta.99](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.98...v4.0.15-beta.99) (2021-08-24)
+
+*  Fixed styleParamsMap generation. ([#562](https://github.com/wix/pro-gallery/pull/562)) [0e23b2ca](https://github.com/wix/pro-gallery/commit/0e23b2ca76b0f8e51fdbd1b73631d9498f6036e5)
+
+
+## [v4.0.15-beta.98](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.97...v4.0.15-beta.98) (2021-08-24)
+
+*  [gallery+lib] type ProGalleryRenderer props ([#555](https://github.com/wix/pro-gallery/pull/555)) [f46f9bdc](https://github.com/wix/pro-gallery/commit/f46f9bdcb536b70c040c54e4a3f920a3b0a1abab)
+*  GalleryProps instead of any. ([#558](https://github.com/wix/pro-gallery/pull/558)) [f3b6fe05](https://github.com/wix/pro-gallery/commit/f3b6fe0543a82ea6b3ec0a5e99ee757608d935db)
+*  Generating styleParamsMap in build time ([#560](https://github.com/wix/pro-gallery/pull/560)) [91072770](https://github.com/wix/pro-gallery/commit/9107277042c7b06617870a8d3563f761d0c29de6)
+
+
+## [v4.0.15-beta.97](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.96...v4.0.15-beta.97) (2021-08-24)
+
+*  [gallery + layout + lib + playground] feat: Cube fit position [81162d05](https://github.com/wix/pro-gallery/commit/81162d055ed00a42167971cae9ec0104f7d4e06e)
+
+
+## [v4.0.15-beta.96](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.95...v4.0.15-beta.96) (2021-08-24)
+
+*  Moving interfaces to lib ([#554](https://github.com/wix/pro-gallery/pull/554)) [c74b5b6f](https://github.com/wix/pro-gallery/commit/c74b5b6f672ac0ff164b8803da3233c0be04c5e5)
+
+
+## [v4.0.15-beta.95](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.94...v4.0.15-beta.95) (2021-08-24)
+
+*  moved textBoxDimensions calcs to another file ([#557](https://github.com/wix/pro-gallery/pull/557)) [9964b272](https://github.com/wix/pro-gallery/commit/9964b2720a1973645537b10da3c25b588e8c59f0)
+
+
+## [v4.0.15-beta.94](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.93...v4.0.15-beta.94) (2021-08-23)
+
+*  [gallery] change rendererIndex to be a tsx file ([#552](https://github.com/wix/pro-gallery/pull/552)) [8218c8a2](https://github.com/wix/pro-gallery/commit/8218c8a2204b97934d3b978832311415f5657f5d)
+
+
+## [v4.0.15-beta.93](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.92...v4.0.15-beta.93) (2021-08-23)
+
+*  Making interfaces folder portable ([#551](https://github.com/wix/pro-gallery/pull/551)) [0e738f30](https://github.com/wix/pro-gallery/commit/0e738f30e1bfea4c1df4fc4c847f6ec25042add3)
+
+
+## [v4.0.15-beta.92](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.91...v4.0.15-beta.92) (2021-08-23)
+
+*  Generate validateTypes in lib build script. ([#550](https://github.com/wix/pro-gallery/pull/550)) [01d81cb7](https://github.com/wix/pro-gallery/commit/01d81cb7db8ecad6341c7c1dce4533d7a300bcd0)
+
+
+## [v4.0.15-beta.91](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.90...v4.0.15-beta.91) (2021-08-23)
+
+*  styles.d.ts - added the full list of styles as we want it in the future ([#548](https://github.com/wix/pro-gallery/pull/548)) [bfa32ca4](https://github.com/wix/pro-gallery/commit/bfa32ca4990a91fc11e23e397be3249a53eaad79)
+
+
+## [v4.0.15-beta.90](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.89...v4.0.15-beta.90) (2021-08-22)
+
+*  Move validateTypes from gallery to lib ([#549](https://github.com/wix/pro-gallery/pull/549)) [7f3d9023](https://github.com/wix/pro-gallery/commit/7f3d9023110df835c2ec4f2006d808a6909f363f)
+
+
+## [v4.0.15-beta.89](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.88...v4.0.15-beta.89) (2021-08-22)
+
+*  WIX CI fixes. ([#547](https://github.com/wix/pro-gallery/pull/547)) [1a97aa62](https://github.com/wix/pro-gallery/commit/1a97aa62b100bead6031c775669e11a82c41c667)
+*  rotatingGroupTypes to layoutParams_repeatingGroupTypes ([#538](https://github.com/wix/pro-gallery/pull/538)) [25c2b559](https://github.com/wix/pro-gallery/commit/25c2b559efd4b7babdbae149e185e5fa017ce8a4)
+
+
+## [v4.0.15-beta.88](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.87...v4.0.15-beta.88) (2021-08-22)
+
+*  Revert "[gallery] refactor next item and next group ([#534](https://github.com/wix/pro-gallery/pull/534))" [1a09087f](https://github.com/wix/pro-gallery/commit/1a09087f57271a5fbf198ea28b6e72438f269c53)
+*  creating styles validations ([#536](https://github.com/wix/pro-gallery/pull/536)) [7b6931c8](https://github.com/wix/pro-gallery/commit/7b6931c85960dfddfe0a73dfecdfb37779dacd98)
+
+
+## [v4.0.15-beta.87](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.86...v4.0.15-beta.87) (2021-08-22)
+
+*  [gallery] refactor next item and next group ([#534](https://github.com/wix/pro-gallery/pull/534)) [def33564](https://github.com/wix/pro-gallery/commit/def33564b27b8341721ef87f9771b0c5304686cd)
+*  Adding pom.xml [da9fe318](https://github.com/wix/pro-gallery/commit/da9fe3187cfac21d80dd725e41b40343919a3ada)
+
+
+## [v4.0.15-beta.86](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.85...v4.0.15-beta.86) (2021-08-19)
+
+*  Composing ImageItem instead of extending it. ([#533](https://github.com/wix/pro-gallery/pull/533)) [a904213c](https://github.com/wix/pro-gallery/commit/a904213cd229842be1d6af5103a4917222afec2f)
+
+
+## [v4.0.15-beta.85](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.84...v4.0.15-beta.85) (2021-08-19)
+
+*  Sp full sp conversion list ([#535](https://github.com/wix/pro-gallery/pull/535)) [0e42a95b](https://github.com/wix/pro-gallery/commit/0e42a95bdf105bd7d71edc7fe0b7a092ba7d0412)
+
+
+## [v4.0.15-beta.84](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.83...v4.0.15-beta.84) (2021-08-18)
+
+*  remove forgottent logs [3855adf2](https://github.com/wix/pro-gallery/commit/3855adf2e7dd19d90ee076527db0a5ed85a49e04)
+
+
+## [v4.0.15-beta.83](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.82...v4.0.15-beta.83) (2021-08-18)
+
+*  added cropRatio to layoutParams ([#522](https://github.com/wix/pro-gallery/pull/522)) [51e10ef7](https://github.com/wix/pro-gallery/commit/51e10ef7eefa92b99228a1dc61eda9baa5a93202)
+
+
+## [v4.0.15-beta.82](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.81...v4.0.15-beta.82) (2021-08-17)
+
+*  using browserify to build a standalone validate function ([#531](https://github.com/wix/pro-gallery/pull/531)) [087dd5d6](https://github.com/wix/pro-gallery/commit/087dd5d6d327ce7fca81f450e59a9e7d0d1d8629)
+
+
+## [v4.0.15-beta.81](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.80...v4.0.15-beta.81) (2021-08-17)
+
+*  [gallery + lib ] improve itemHover: added className to parent div and adding default styles ([#530](https://github.com/wix/pro-gallery/pull/530)) [5e3fde3c](https://github.com/wix/pro-gallery/commit/5e3fde3c2a8d267f7780fe25b147c80ca34c6b55)
+
+
+## [v4.0.15-beta.80](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.79...v4.0.15-beta.80) (2021-08-17)
+
+*  removed m_numberOfImagesPerRow ([#529](https://github.com/wix/pro-gallery/pull/529)) [4c6d5c6a](https://github.com/wix/pro-gallery/commit/4c6d5c6a8765a72e313d0760c48b81e2d52864a3)
+
+
+## [v4.0.15-beta.79](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.78...v4.0.15-beta.79) (2021-08-16)
+
+*  close props list ([#518](https://github.com/wix/pro-gallery/pull/518)) [47a5dcc4](https://github.com/wix/pro-gallery/commit/47a5dcc45fb1aaa6c5895f127882563368db322e)
+*  Do not render border properties unless defined ([#326](https://github.com/wix/pro-gallery/pull/326)) [53845224](https://github.com/wix/pro-gallery/commit/53845224c26357e371b02114fabbc7e012c8c96a)
+
+
+## [v4.0.15-beta.78](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.77...v4.0.15-beta.78) (2021-08-16)
+
+*  Fixed lint config. ([#528](https://github.com/wix/pro-gallery/pull/528)) [b215162c](https://github.com/wix/pro-gallery/commit/b215162cf2204362e51f32733a5bf7018e629118)
+
+
+## [v4.0.15-beta.77](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.76...v4.0.15-beta.77) (2021-08-16)
+
+*  Sp utils merge nested ([#527](https://github.com/wix/pro-gallery/pull/527)) [f5e15c1b](https://github.com/wix/pro-gallery/commit/f5e15c1ba275bab003e3817bef06987912229d17)
+
+
+## [v4.0.15-beta.76](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.75...v4.0.15-beta.76) (2021-08-16)
+
+*  Remove duplicated lint configuration ([#524](https://github.com/wix/pro-gallery/pull/524)) [3389f178](https://github.com/wix/pro-gallery/commit/3389f178707419e6a7b3f4c11fd3c5e465339f73)
+
+
+## [v4.0.15-beta.75](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.74...v4.0.15-beta.75) (2021-08-15)
+
+*  remove pom xmls ([#520](https://github.com/wix/pro-gallery/pull/520)) [b57aedbc](https://github.com/wix/pro-gallery/commit/b57aedbc76a3f2b20e97c0f681e952ef3093458a)
+*  Removing pom.xml [7d63bff5](https://github.com/wix/pro-gallery/commit/7d63bff5d3263319ab17c0e6b157cd19320abc89)
+*  removed scrollBase ([#455](https://github.com/wix/pro-gallery/pull/455)) [14adc675](https://github.com/wix/pro-gallery/commit/14adc6755a293391abdd05811d4fa1ec3e75f06d)
+
+
+## [v4.0.15-beta.74](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.73...v4.0.15-beta.74) (2021-08-15)
+
+*  Remove publishScoped: false. ([#517](https://github.com/wix/pro-gallery/pull/517)) [ac026351](https://github.com/wix/pro-gallery/commit/ac02635197fe51a57784b3075052b7fc95f78b6a)
+*  Change pom.xml. ([#519](https://github.com/wix/pro-gallery/pull/519)) [a1517c08](https://github.com/wix/pro-gallery/commit/a1517c089e5e5e1fba82efbdd7649929c073d2c7)
+
+
+## [v4.0.15-beta.73](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.72...v4.0.15-beta.73) (2021-08-15)
+
+*  Switching test script to unit script([#516](https://github.com/wix/pro-gallery/pull/516)) [21a06184](https://github.com/wix/pro-gallery/commit/21a06184d39557203643669d4ae5305bb9c0fc91)
+
+
+## [v4.0.15-beta.72](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.71...v4.0.15-beta.72) (2021-08-15)
+
+*  Disabling tests for WIX CI ([#514](https://github.com/wix/pro-gallery/pull/514)) [b9b7233d](https://github.com/wix/pro-gallery/commit/b9b7233ddddee0387551a50f3da4793eee765da6)
+
+
+## [v4.0.15-beta.71](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.70...v4.0.15-beta.71) (2021-08-15)
+
+*  [gallery + lib + playground] feat: added new feature overlayDesign([#507](https://github.com/wix/pro-gallery/pull/507)) [08c3ad5c](https://github.com/wix/pro-gallery/commit/08c3ad5c6bcab8f29c3ff8e52a808df48b09675c)
+
+
+## [v4.0.15-beta.70](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.69...v4.0.15-beta.70) (2021-08-15)
+
+*  [gallery] removed itemsLoveData ([#505](https://github.com/wix/pro-gallery/pull/505)) [beb9a845](https://github.com/wix/pro-gallery/commit/beb9a8457d5a0726b53d1f08afbea488323b4775)
+
+
+## [v4.0.15-beta.69](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.68...v4.0.15-beta.69) (2021-08-15)
+
+*  Adding pro-gallery-blueprints package ([#481](https://github.com/wix/pro-gallery/pull/481)) [ab36f768](https://github.com/wix/pro-gallery/commit/ab36f768db5096f2fd525f33415315043f50711c)
+
+
+## [v4.0.15-beta.68](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.67...v4.0.15-beta.68) (2021-08-14)
+
+*  fixing where galleryWidth was missing in videoScrollHelper. remove dimensionsHelper usage in the gallery ([#512](https://github.com/wix/pro-gallery/pull/512)) [698fe634](https://github.com/wix/pro-gallery/commit/698fe6340b4d6e714df5a7d1d76d2d680058d9c2)
+
+
+## [v4.0.15-beta.67](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.66...v4.0.15-beta.67) (2021-08-13)
+
+*  SP_gallerySpacing  (first nested SP milestone) ([#472](https://github.com/wix/pro-gallery/pull/472)) [f6f5be52](https://github.com/wix/pro-gallery/commit/f6f5be520479f695648d2b47261715664c68c396)
+
+
+## [v4.0.15-beta.66](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.65...v4.0.15-beta.66) (2021-08-13)
+
+*  added a fix for non object assignments in flatToNested + tests ([#511](https://github.com/wix/pro-gallery/pull/511)) [556bc60a](https://github.com/wix/pro-gallery/commit/556bc60aacb091c69cc890b3caf6064ee5e6659f)
+
+
+## [v4.0.15-beta.65](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.64...v4.0.15-beta.65) (2021-08-13)
+
+*  Revert "AJV is now a dev (build time) dependency ([#508](https://github.com/wix/pro-gallery/pull/508))" [da36abe5](https://github.com/wix/pro-gallery/commit/da36abe594270db32272345cd619652b728a206b)
+
+
+## [v4.0.15-beta.64](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.63...v4.0.15-beta.64) (2021-08-13)
+
+*  cropRatio forgotten rename in defaults - layouts ([#494](https://github.com/wix/pro-gallery/pull/494)) [0e776519](https://github.com/wix/pro-gallery/commit/0e776519fdcbc7a873a2db2a7f358690d60b8bd1)
+*  tests and a fix for stylesUtils ([#510](https://github.com/wix/pro-gallery/pull/510)) [ce3b99e6](https://github.com/wix/pro-gallery/commit/ce3b99e699655c411636958eaf7c8a2cd91664ee)
+
+
+## [v4.0.15-beta.63](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.62...v4.0.15-beta.63) (2021-08-12)
+
+*  AJV is now a dev (build time) dependency ([#508](https://github.com/wix/pro-gallery/pull/508)) [3e88470e](https://github.com/wix/pro-gallery/commit/3e88470ea5642c1d3234b4d7f2aa16bb3202c8e1)
+
+
+## [v4.0.15-beta.62](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.61...v4.0.15-beta.62) (2021-08-12)
+
+*  [gallery] improve : improve is scroll end logic [21cbf91e](https://github.com/wix/pro-gallery/commit/21cbf91e7b9419f68e2f0bbb10a0e78f9123180e)
+
+
+## [v4.0.15-beta.61](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.60...v4.0.15-beta.61) (2021-08-12)
+
+*  Revert "[gallery lib playground] feat: added new feature overlayDesign" ([#506](https://github.com/wix/pro-gallery/pull/506)) [12096e15](https://github.com/wix/pro-gallery/commit/12096e151b8f5cbf31b67ccb2a71acce184d00d2)
+
+
+## [v4.0.15-beta.60](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.59...v4.0.15-beta.60) (2021-08-12)
+
+*  added a fix for undefined items and a case in the test for listed styleparams ([#504](https://github.com/wix/pro-gallery/pull/504)) [96c0b073](https://github.com/wix/pro-gallery/commit/96c0b073fa730c4ef195b18d92a07643bc6f026b)
+
+
+## [v4.0.15-beta.59](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.58...v4.0.15-beta.59) (2021-08-12)
+
+*  Generate es5 AJV validate function in build time. ([#503](https://github.com/wix/pro-gallery/pull/503)) [7807313c](https://github.com/wix/pro-gallery/commit/7807313c9c58f55c1c2a137b07acd3c31a98fdd2)
+
+
+## [v4.0.15-beta.58](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.57...v4.0.15-beta.58) (2021-08-12)
+
+*  [gallery lib playground] feat: added new feature overlayDesign ([#417](https://github.com/wix/pro-gallery/pull/417)) [04f6dcab](https://github.com/wix/pro-gallery/commit/04f6dcab30a164514421551f56e587d7d61d0bb7)
+
+
+## [v4.0.15-beta.57](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.56...v4.0.15-beta.57) (2021-08-12)
+
+*  tests and fix for the styles converter ([#501](https://github.com/wix/pro-gallery/pull/501)) [ee520ca8](https://github.com/wix/pro-gallery/commit/ee520ca8e0842bbfd275db8c12d03502793c9d20)
+
+
+## [v4.0.15-beta.56](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.55...v4.0.15-beta.56) (2021-08-12)
+
+*  [gallery] TS: type styles, styleParams, options ([#495](https://github.com/wix/pro-gallery/pull/495)) [687870c4](https://github.com/wix/pro-gallery/commit/687870c4682848a6f1eadc880f749e714577736d)
+
+
+## [v4.0.15-beta.55](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.54...v4.0.15-beta.55) (2021-08-11)
+
+*  Export convertStylesBackwards [b4ff3cf2](https://github.com/wix/pro-gallery/commit/b4ff3cf2a69eb9d047b560edd38107d825690853)
+
+
+## [v4.0.15-beta.54](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.53...v4.0.15-beta.54) (2021-08-11)
+
+*  Sp styles converter backwards ([#500](https://github.com/wix/pro-gallery/pull/500)) [a9a1420e](https://github.com/wix/pro-gallery/commit/a9a1420ec21cf2881be1fcc2d868e95932ff6788)
+
+
+## [v4.0.15-beta.53](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.52...v4.0.15-beta.53) (2021-08-11)
+
+*  [gallery] remove watermark prop ([#496](https://github.com/wix/pro-gallery/pull/496)) [0e2b77be](https://github.com/wix/pro-gallery/commit/0e2b77be4ed63a1ff04485475001b7c2820a2397)
+
+
+## [v4.0.15-beta.52](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.51...v4.0.15-beta.52) (2021-08-11)
+
+*  [gallery] removed unused isNew.js ([#497](https://github.com/wix/pro-gallery/pull/497)) [6e67088e](https://github.com/wix/pro-gallery/commit/6e67088eb2643495b6659d3b8af11fd38087f04d)
+
+
+## [v4.0.15-beta.51](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.50...v4.0.15-beta.51) (2021-08-11)
+
+*  added styles converter ([#498](https://github.com/wix/pro-gallery/pull/498)) [fb83edfa](https://github.com/wix/pro-gallery/commit/fb83edfa769c126371f398c43870ea99c70e0b97)
+
+
+## [v4.0.15-beta.50](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.49...v4.0.15-beta.50) (2021-08-10)
+
+*  Building ajv in es5. ([#493](https://github.com/wix/pro-gallery/pull/493)) [b3c7a871](https://github.com/wix/pro-gallery/commit/b3c7a8719feaf8b5d7231a44b87c9ca21bf49d10)
+
+
+## [v4.0.15-beta.49](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.48...v4.0.15-beta.49) (2021-08-10)
+
+*  Fix custom reporter ([#486](https://github.com/wix/pro-gallery/pull/486)) [60c710e2](https://github.com/wix/pro-gallery/commit/60c710e2a0f85f72bf87ca334a04aeb40641bc9e)
+
+
+## [v4.0.15-beta.48](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.47...v4.0.15-beta.48) (2021-08-10)
+
+*  [gallery] TS: enableExperimentalFeatures ([#490](https://github.com/wix/pro-gallery/pull/490)) [cfa1ea20](https://github.com/wix/pro-gallery/commit/cfa1ea20120b2b919a45d2137b17b06898fd22ab)
+
+
+## [v4.0.15-beta.47](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.46...v4.0.15-beta.47) (2021-08-10)
+
+*  [gallery] CreateMediaUrl interface: removed imageToken key ([#489](https://github.com/wix/pro-gallery/pull/489)) [5ce6e999](https://github.com/wix/pro-gallery/commit/5ce6e999e900fb6abb1c00cd843bc992099e9bb4)
+
+
+## [v4.0.15-beta.46](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.45...v4.0.15-beta.46) (2021-08-10)
+
+*  V4: type scrollingElement + isInDisplay ([#463](https://github.com/wix/pro-gallery/pull/463)) [621ad5ca](https://github.com/wix/pro-gallery/commit/621ad5cad4685d037fb5c4489d3fc8b2b3639eec)
+
+
+## [v4.0.15-beta.45](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.44...v4.0.15-beta.45) (2021-08-10)
+
+*  [playground/lib] Added stylesUtils and flatToNested functionality ([#468](https://github.com/wix/pro-gallery/pull/468)) [fcd7f7fa](https://github.com/wix/pro-gallery/commit/fcd7f7fab8860b48893fd1d548851a5263208c75)
+
+
+## [v4.0.15-beta.44](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.43...v4.0.15-beta.44) (2021-08-09)
+
+*  [layouts] remove convertStyleParams from the layouter([#474](https://github.com/wix/pro-gallery/pull/474)) [b3f856d8](https://github.com/wix/pro-gallery/commit/b3f856d883e42556fd3fcae97e11df3c9f3840b3)
+*  [gallery] customComponents will contain all the custom renderers -  try2! ([#464](https://github.com/wix/pro-gallery/pull/464)) [9eedfd2a](https://github.com/wix/pro-gallery/commit/9eedfd2ae5dcd9750c5df38ad5678e0924a749af)
+
+
+## [v4.0.15-beta.43](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.42...v4.0.15-beta.43) (2021-08-09)
+
+*  [gallery] TS: type proGalleryRegionLabel, proGalleryRole, translations ([#485](https://github.com/wix/pro-gallery/pull/485)) [35e29449](https://github.com/wix/pro-gallery/commit/35e294494cb326b6a6251d6b00fac5d0e04d719b)
+
+
+## [v4.0.15-beta.42](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.41...v4.0.15-beta.42) (2021-08-09)
+
+*  renamed cubeRatio to cropRatio ([#477](https://github.com/wix/pro-gallery/pull/477)) [fa828225](https://github.com/wix/pro-gallery/commit/fa82822511b4e9274781f5567dc1cc6ec81122e1)
+
+
+## [v4.0.15-beta.41](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.40...v4.0.15-beta.41) (2021-08-09)
+
+*  [gallery] fix: (scroll snap) The gallery pops up after each scroll [5fe6cd8d](https://github.com/wix/pro-gallery/commit/5fe6cd8d8674541c659da263d59b2c7f0d6b5ef1)
+
+
+## [v4.0.15-beta.40](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.39...v4.0.15-beta.40) (2021-08-09)
+
+*  [gallery] TS: type settings prop ([#476](https://github.com/wix/pro-gallery/pull/476)) [4ba51fe2](https://github.com/wix/pro-gallery/commit/4ba51fe22c693d81ea4cedd149367a7feae80bf4)
+
+
+## [v4.0.15-beta.39](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.38...v4.0.15-beta.39) (2021-08-09)
+
+*  remove reporter. ([#483](https://github.com/wix/pro-gallery/pull/483)) [d28040f2](https://github.com/wix/pro-gallery/commit/d28040f2ec334361e60190d8ac11e2cde3794b1c)
+
+
+## [v4.0.15-beta.38](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.37...v4.0.15-beta.38) (2021-08-09)
+
+*  Deprecate scripts. ([#480](https://github.com/wix/pro-gallery/pull/480)) [e830bda8](https://github.com/wix/pro-gallery/commit/e830bda8edf5876cba37beb960734f4e15f232e7)
+
+
+## [v4.0.15-beta.37](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.36...v4.0.15-beta.37) (2021-08-08)
+
+*  [Gallery+ lean gallery + lib +playground]  Renamed title placements functions  ([#449](https://github.com/wix/pro-gallery/pull/449)) [c6962406](https://github.com/wix/pro-gallery/commit/c69624061b76b66c413acb6dbcd6abf2e197f0a6)
+
+
+## [v4.0.15-beta.36](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.35...v4.0.15-beta.36) (2021-08-08)
+
+*  [gallery] added gotFirstScrollEvent on auto scroll to activeIndex ([#465](https://github.com/wix/pro-gallery/pull/465)) [b6d0baac](https://github.com/wix/pro-gallery/commit/b6d0baac0e96b66b401a5f0c99c923fd5b78ac2e)
+
+
+## [v4.0.15-beta.35](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.34...v4.0.15-beta.35) (2021-08-08)
+
+*  Assuring only lerna manages version numbers ([#475](https://github.com/wix/pro-gallery/pull/475)) [9195e070](https://github.com/wix/pro-gallery/commit/9195e070d408b3d304a30a570259f445fb27587a)
+
+
+## [v4.0.15-beta.34](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.33...v4.0.15-beta.34) (2021-08-08)
+
+*  Revert "Revert "[gallery] fix jest reporter"" ([#473](https://github.com/wix/pro-gallery/pull/473)) [1cbba882](https://github.com/wix/pro-gallery/commit/1cbba8829ca72704c913de2b6d3134de24b83252)
+
+
+## [v4.0.15-beta.33](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.32...v4.0.15-beta.33) (2021-08-08)
+
+*  [gallery] comment rce test [747ff76d](https://github.com/wix/pro-gallery/commit/747ff76dbecbdf102ac9ff68e737fc7b34f56c61)
+
+
+## [v4.0.15-beta.32](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.31...v4.0.15-beta.32) (2021-08-08)
+
+*  Testing SP object and playground -> lib consumption([#471](https://github.com/wix/pro-gallery/pull/471)) [73752de2](https://github.com/wix/pro-gallery/commit/73752de2515651b47be0c731ab2f03a891c46646)
+
+
+## [v4.0.15-beta.31](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.30...v4.0.15-beta.31) (2021-08-08)
+
+*  Moving scripts to deprecated. ([#466](https://github.com/wix/pro-gallery/pull/466)) [b5ae2afa](https://github.com/wix/pro-gallery/commit/b5ae2afacafc7a3a82f71ac0e6cfa9305e36c08a)
+*  Version number for lerna correct `lerna run build` sort. ([#467](https://github.com/wix/pro-gallery/pull/467)) [732db42c](https://github.com/wix/pro-gallery/commit/732db42c08fbe33920536cadb8888b24f3f68777)
+
+
+## [v4.0.15-beta.30](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.29...v4.0.15-beta.30) (2021-08-05)
+
+*  V4: customComponents will contain all the custom renderers ([#451](https://github.com/wix/pro-gallery/pull/451)) [360fb780](https://github.com/wix/pro-gallery/commit/360fb7804f2a536a0da49695bb0d7367c47611ba)
+*  [gallery] fix jest reporter [b180a59d](https://github.com/wix/pro-gallery/commit/b180a59d067c98c57d4225965075dd4127e50a45)
+*  Revert "V4: customComponents will contain all the custom renderers ([#451](https://github.com/wix/pro-gallery/pull/451))" [c2f8963d](https://github.com/wix/pro-gallery/commit/c2f8963dc5de30ef6962debe84f645d1037c70d9)
+*  Revert "[gallery] fix jest reporter" [ed43b009](https://github.com/wix/pro-gallery/commit/ed43b0096b3a59e8dc7d19a33fba5859796d2b23)
+
+
+## [v4.0.15-beta.29](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.28...v4.0.15-beta.29) (2021-08-04)
+
+*  Using lerna instad of the now deprecated build-packages and build-packages-by-order ([#458](https://github.com/wix/pro-gallery/pull/458)) [772d8bac](https://github.com/wix/pro-gallery/commit/772d8bac4806e9e198f12f5a50bbda8d88841c08)
+*  use start convention. ([#460](https://github.com/wix/pro-gallery/pull/460)) [13f1460b](https://github.com/wix/pro-gallery/commit/13f1460b30a368115c9648ffc34d1e058f061d65)
+
+
+## [v4.0.15-beta.28](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.27...v4.0.15-beta.28) (2021-08-04)
+
+*  Fixed cyclic dependency: pro-layouts -> pro-gallery-lib -> pro-layouts ([#457](https://github.com/wix/pro-gallery/pull/457)) [9ec409c8](https://github.com/wix/pro-gallery/commit/9ec409c8d9cfadcf1a2ce332a987c2a91b9f3535)
+*  [playground]  url for nested SP ([#456](https://github.com/wix/pro-gallery/pull/456)) [0429c36c](https://github.com/wix/pro-gallery/commit/0429c36c2500df1bd6d53503a322debaf0ae5c6a)
+
+
+## [v4.0.15-beta.27](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.26...v4.0.15-beta.27) (2021-08-04)
+
+*  Adding surge token. ([#452](https://github.com/wix/pro-gallery/pull/452)) [a67eaad0](https://github.com/wix/pro-gallery/commit/a67eaad0b544c92ff2d30ee40f28b0b41687b622)
+
+
+## [v4.0.15-beta.26](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.25...v4.0.15-beta.26) (2021-08-03)
+
+*  [gallery + lib + playGround] feat: added new feat "continuous auto slide show" [c1a92fb4](https://github.com/wix/pro-gallery/commit/c1a92fb4691483435ebc550b5c8f6bc10a87d4e6)
+
+
+## [v4.0.15-beta.25](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.24...v4.0.15-beta.25) (2021-08-03)
+
+*  [gallery] created Item type and export it ([#448](https://github.com/wix/pro-gallery/pull/448)) [c1d0891d](https://github.com/wix/pro-gallery/commit/c1d0891dd6ca572f679731a0afa152374e4bb9b7)
+
+
+## [v4.0.15-beta.24](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.23...v4.0.15-beta.24) (2021-08-03)
+
+*  [all] resizeMediaUrl: rename to createMediaUrl and type ([#431](https://github.com/wix/pro-gallery/pull/431)) [ffdb4121](https://github.com/wix/pro-gallery/commit/ffdb41218f3bff4ccdc550e6255eae7dde97cb2e)
+*  [gallery] CreateMediaUrl: removed unused args field ([#447](https://github.com/wix/pro-gallery/pull/447)) [72d476f1](https://github.com/wix/pro-gallery/commit/72d476f17365067e2474549c8c649f27a4311bed)
+
+
+## [v4.0.15-beta.23](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.22...v4.0.15-beta.23) (2021-08-02)
+
+*  [gallery + lib] improve: remove seo flow for picture element [a39e9664](https://github.com/wix/pro-gallery/commit/a39e96643995935e9de77574425926413f7b1228)
+
+
+## [v4.0.15-beta.22](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.21...v4.0.15-beta.22) (2021-08-01)
+
+*  [gallery] Fix: scrolling to the next group does not work when the scrolling direction is (right to left) [6cf2b728](https://github.com/wix/pro-gallery/commit/6cf2b728a685c74f000caad946729c96b83b5a5a)
+
+
+## [v4.0.15-beta.21](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.20...v4.0.15-beta.21) (2021-08-01)
+
+*  [lib] refactor processLayouts ([#424](https://github.com/wix/pro-gallery/pull/424)) [15b36425](https://github.com/wix/pro-gallery/commit/15b36425b12f9337f279a573bd4ce87fb6ef1fd7)
+
+
+## [v4.0.15-beta.20](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.19...v4.0.15-beta.20) (2021-08-01)
+
+*  [gallery] always add playsinline attr to the PlayerElement ([#430](https://github.com/wix/pro-gallery/pull/430)) [eb74fa86](https://github.com/wix/pro-gallery/commit/eb74fa86eb1fab0ed46457f07146249f990e3006)
+
+
+## [v4.0.15-beta.19](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.18...v4.0.15-beta.19) (2021-07-29)
+
+*  [gallery] TS: eventsListener ([#426](https://github.com/wix/pro-gallery/pull/426)) [976ecd8e](https://github.com/wix/pro-gallery/commit/976ecd8ebfb2f581eb874368a5dca0e9845f6b95)
+*  [gallery] fixed forgotten currentIdx [15a15a84](https://github.com/wix/pro-gallery/commit/15a15a8434f5f849ca4735ebb7a041b5ca2f5435)
+
+
+## [v4.0.15-beta.18](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.17...v4.0.15-beta.18) (2021-07-29)
+
+*  [lib] do not delete the seed in magic layout [30781d05](https://github.com/wix/pro-gallery/commit/30781d05dcf7fcb305032a0154b9cfbce69e4915)
+
+
+## [v4.0.15-beta.17](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.16...v4.0.15-beta.17) (2021-07-29)
+
+*  [gallery] export interfaces. ([#423](https://github.com/wix/pro-gallery/pull/423)) [93369269](https://github.com/wix/pro-gallery/commit/93369269345336e77fd92612a17804cf6ca9f6b3)
+*  [lib] refactor preset function [fe4d97dd](https://github.com/wix/pro-gallery/commit/fe4d97dddb135a7734c472f51db107274d9d2811)
+
+
+## [v4.0.15-beta.16](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.15...v4.0.15-beta.16) (2021-07-28)
+
+*  Updating playground on deploy ([#407](https://github.com/wix/pro-gallery/pull/407)) [6e26ae51](https://github.com/wix/pro-gallery/commit/6e26ae51d680b728b671d2f4743f226a8325ac2e)
+*  [gallery+lib] renamed formFactor to deviceType ([#420](https://github.com/wix/pro-gallery/pull/420)) [f0910b3c](https://github.com/wix/pro-gallery/commit/f0910b3caec3b8b40376cfa1cdf7218643c83277)
+
+
+## [v4.0.15-beta.15](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.14...v4.0.15-beta.15) (2021-07-27)
+
+*  [gallery+playground] renamed currentIdx to activeIndex ([#415](https://github.com/wix/pro-gallery/pull/415)) [c6ba8a78](https://github.com/wix/pro-gallery/commit/c6ba8a78f7335925f1400b8e0caae82b42382bee)
+
+
+## [v4.0.15-beta.14](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.13...v4.0.15-beta.14) (2021-07-26)
+
+*  Publishing version for each commit on prs ([#418](https://github.com/wix/pro-gallery/pull/418)) [093720c8](https://github.com/wix/pro-gallery/commit/093720c85479856bd50519f99e1272abcbd60dc5)
+
+
+## [v4.0.15-beta.13](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.12...v4.0.15-beta.13) (2021-07-26)
+
+*  [gallery] fix : Loop images bug (autoSlide keeps going when loop is off) [c8f373e3](https://github.com/wix/pro-gallery/commit/c8f373e36c0729b3298223d145ee33f001437336)
+
+
+## [v4.0.15-beta.12](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.11...v4.0.15-beta.12) (2021-07-26)
+
+*  [gallery] videoItem: add playsinline to ReactPlayer attrs when enableExperimentalFeatures. ([#412](https://github.com/wix/pro-gallery/pull/412)) [f14908d6](https://github.com/wix/pro-gallery/commit/f14908d61279e77d6783444c434c822af2ff288b)
+
+
+## [v4.0.15-beta.11](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.10...v4.0.15-beta.11) (2021-07-26)
+
+*  Removing log. ([#413](https://github.com/wix/pro-gallery/pull/413)) [747e00cb](https://github.com/wix/pro-gallery/commit/747e00cbe6c3dae14b1e2226678188fee6bc2614)
+*  [gallery] improve: Rename functions related to auto-scrolling [3a516aa5](https://github.com/wix/pro-gallery/commit/3a516aa541350febbc457ef90ba7f2f6c8d6b75c)
+
+
+## [v4.0.15-beta.10](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.9...v4.0.15-beta.10) (2021-07-26)
+
+*  V4: rename "domId" to "id" ([#396](https://github.com/wix/pro-gallery/pull/396)) [c1c4fc4a](https://github.com/wix/pro-gallery/commit/c1c4fc4abdab8ccfeef5dd014607d8bfee088834)
+
+
+## [v4.0.15-beta.9](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.8...v4.0.15-beta.9) (2021-07-25)
+
+*  Reuse tests configuration. ([#411](https://github.com/wix/pro-gallery/pull/411)) [65d95013](https://github.com/wix/pro-gallery/commit/65d9501338fddb1d14077150ba8ff7db85da513d)
+
+
+## [v4.0.15-beta.8](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.7...v4.0.15-beta.8) (2021-07-25)
+
+*  [gallery] fix: react player not updating on fast changes [812f1300](https://github.com/wix/pro-gallery/commit/812f130058ad2788ea94b8c6741ddfff8c5cdae8)
+
+
+## [v4.0.15-beta.7](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.6...v4.0.15-beta.7) (2021-07-25)
+
+*  Configurating github-actions user version commtis. [70f29e49](https://github.com/wix/pro-gallery/commit/70f29e49af40158e1a6e31fe9c6c33a0e19e1de6)
+
+
+## [v4.0.15-beta.6](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.5...v4.0.15-beta.6) (2021-07-25)
+
+*  Running lint only on shortest test job [2f375e88](https://github.com/wix/pro-gallery/commit/2f375e882f655d3139b47a28f3bcbfff9f185647)
+
+
+## [v4.0.15-beta.5](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.4...v4.0.15-beta.5) (2021-07-25)
+
+*  [gallery] improve : refactor nextItem, nextGroup use async await instead promises [62b661c1](https://github.com/wix/pro-gallery/commit/62b661c17f8fb35802fda533e7839f211311a9dc)
+
+
+## [v4.0.15-beta.4](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.3...v4.0.15-beta.4) (2021-07-25)
+
+*  Deprecating publish. [fedc0835](https://github.com/wix/pro-gallery/commit/fedc083547b67db0e15a1d6ff2db11621a5d7547)
+
+
+## [v4.0.15-beta.3](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.2...v4.0.15-beta.3) (2021-07-25)
+
+*  Adding missing tests dependency. [30d33372](https://github.com/wix/pro-gallery/commit/30d33372db1fa1769c1502ff78fa8429b56fbc0d)
+
+
+## [v4.0.15-beta.2](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.1...v4.0.15-beta.2) (2021-07-23)
+
+*  Adding missing test jobs. [6fd8bfb9](https://github.com/wix/pro-gallery/commit/6fd8bfb9e2be6d029715e29a0f63a522e6e62a9b)
+
+
+## [v4.0.15-beta.1](https://github.com/wix/pro-gallery/compare/v4.0.15-beta.0...v4.0.15-beta.1) (2021-07-23)
+
+*  Revert "[all] bump versions" [bb9089c8](https://github.com/wix/pro-gallery/commit/bb9089c829552a36d504bba534dfeb52040278a4)
+*  Removing tag blank condition from travis [0f410b94](https://github.com/wix/pro-gallery/commit/0f410b94e2d18a480ac044481832617b5274a09b)
+*  prod code [abdcf915](https://github.com/wix/pro-gallery/commit/abdcf915305b31f16cd6d221703ca510dd729b83)
+*  wip [967607c2](https://github.com/wix/pro-gallery/commit/967607c25717107ae202c307352163708d6c8984)
+*  Adding basic github actions ([#404](https://github.com/wix/pro-gallery/pull/404)) [5c58828b](https://github.com/wix/pro-gallery/commit/5c58828b50f3e531e159ca13a1f2eb274a542fee)
+*  adding needs. [57d6cd8b](https://github.com/wix/pro-gallery/commit/57d6cd8bbc95afda2a41f959b919fc3a5e2cda96)
+*  removing ci from needs [db0b877e](https://github.com/wix/pro-gallery/commit/db0b877ea0c7ee83c3ce1fbf43f090950a8bd10f)
+*  replacing npm ci with npm install. [3e767f99](https://github.com/wix/pro-gallery/commit/3e767f99b1e980c4cdb2532f6c64755433260166)
+*  making sure npm deploy works [b9d41950](https://github.com/wix/pro-gallery/commit/b9d4195064c161f6408a935aec16ffcfb2db9ee8)
+
+
+## [v4.0.15-beta.0](https://github.com/wix/pro-gallery/compare/v4.0.14-beta.1...v4.0.15-beta.0) (2021-07-22)
+
+*  Revert "[all] bump versions" [bb9089c8](https://github.com/wix/pro-gallery/commit/bb9089c829552a36d504bba534dfeb52040278a4)
+*  Removing tag blank condition from travis [0f410b94](https://github.com/wix/pro-gallery/commit/0f410b94e2d18a480ac044481832617b5274a09b)
+*  prod code [abdcf915](https://github.com/wix/pro-gallery/commit/abdcf915305b31f16cd6d221703ca510dd729b83)
+*  wip [967607c2](https://github.com/wix/pro-gallery/commit/967607c25717107ae202c307352163708d6c8984)
+*  Adding basic github actions ([#404](https://github.com/wix/pro-gallery/pull/404)) [5c58828b](https://github.com/wix/pro-gallery/commit/5c58828b50f3e531e159ca13a1f2eb274a542fee)
+*  adding needs. [57d6cd8b](https://github.com/wix/pro-gallery/commit/57d6cd8bbc95afda2a41f959b919fc3a5e2cda96)
+*  removing ci from needs [db0b877e](https://github.com/wix/pro-gallery/commit/db0b877ea0c7ee83c3ce1fbf43f090950a8bd10f)
+*  replacing npm ci with npm install. [3e767f99](https://github.com/wix/pro-gallery/commit/3e767f99b1e980c4cdb2532f6c64755433260166)
+
+
+## [v4.0.14-beta.1](https://github.com/wix/pro-gallery/compare/v4.0.14-beta.0...v4.0.14-beta.1) (2021-07-23)
+
+*  CI flow for beta version ([#394](https://github.com/wix/pro-gallery/pull/394)) [82e66add](https://github.com/wix/pro-gallery/commit/82e66add9d0a6e212cecef0af87001e546e95c92)
+*  Prevent travis builds on tagged commits [1e3ef087](https://github.com/wix/pro-gallery/commit/1e3ef0877611e83f04db5b7505745c7c96587c31)
+*  Simulating production code changes ([#397](https://github.com/wix/pro-gallery/pull/397)) [c3da409f](https://github.com/wix/pro-gallery/commit/c3da409f37a23ef9badb63ef60af9700a0841db6)
+*  deploying only on master branch [49511b4b](https://github.com/wix/pro-gallery/commit/49511b4b716fbde0ecd015b5fe9b2cd53be35620)
+*  Making sure only two builds are created after a PR merge ([#400](https://github.com/wix/pro-gallery/pull/400)) [3f126fde](https://github.com/wix/pro-gallery/commit/3f126fdec8766baa6f04c5c7bb39cfb3448bf0aa)
+*  V4 type: container ([#395](https://github.com/wix/pro-gallery/pull/395)) [85620b8b](https://github.com/wix/pro-gallery/commit/85620b8bc8b44a12ca5d0d54b4a48d475d7a78c4)
+*  [all] bump versions [75d5d000](https://github.com/wix/pro-gallery/commit/75d5d00047999846893993fba56b9b38174d8966)
+*  Revert "[all] bump versions" [bb9089c8](https://github.com/wix/pro-gallery/commit/bb9089c829552a36d504bba534dfeb52040278a4)
+*  Removing tag blank condition from travis [0f410b94](https://github.com/wix/pro-gallery/commit/0f410b94e2d18a480ac044481832617b5274a09b)
+*  prod code [abdcf915](https://github.com/wix/pro-gallery/commit/abdcf915305b31f16cd6d221703ca510dd729b83)
+*  wip [967607c2](https://github.com/wix/pro-gallery/commit/967607c25717107ae202c307352163708d6c8984)
+*  Adding basic github actions ([#404](https://github.com/wix/pro-gallery/pull/404)) [5c58828b](https://github.com/wix/pro-gallery/commit/5c58828b50f3e531e159ca13a1f2eb274a542fee)
+*  adding needs. [57d6cd8b](https://github.com/wix/pro-gallery/commit/57d6cd8bbc95afda2a41f959b919fc3a5e2cda96)
+*  removing ci from needs [db0b877e](https://github.com/wix/pro-gallery/commit/db0b877ea0c7ee83c3ce1fbf43f090950a8bd10f)
+*  replacing npm ci with npm install. [3e767f99](https://github.com/wix/pro-gallery/commit/3e767f99b1e980c4cdb2532f6c64755433260166)
+
+
+## [v4.0.14-beta.0](https://github.com/wix/pro-gallery/compare/v4.0.13-beta.7...v4.0.14-beta.0) (2021-07-21)
+
+*  CI flow for beta version ([#394](https://github.com/wix/pro-gallery/pull/394)) [82e66add](https://github.com/wix/pro-gallery/commit/82e66add9d0a6e212cecef0af87001e546e95c92)
+*  Prevent travis builds on tagged commits [1e3ef087](https://github.com/wix/pro-gallery/commit/1e3ef0877611e83f04db5b7505745c7c96587c31)
+*  Simulating production code changes ([#397](https://github.com/wix/pro-gallery/pull/397)) [c3da409f](https://github.com/wix/pro-gallery/commit/c3da409f37a23ef9badb63ef60af9700a0841db6)
+*  deploying only on master branch [49511b4b](https://github.com/wix/pro-gallery/commit/49511b4b716fbde0ecd015b5fe9b2cd53be35620)
+*  Making sure only two builds are created after a PR merge ([#400](https://github.com/wix/pro-gallery/pull/400)) [3f126fde](https://github.com/wix/pro-gallery/commit/3f126fdec8766baa6f04c5c7bb39cfb3448bf0aa)
+
+
+## [v4.0.13-beta.7](https://github.com/wix/pro-gallery/compare/v4.0.13-beta.6...v4.0.13-beta.7) (2021-07-21)
+
+*  Making sure only two builds are created after a PR merge ([#400](https://github.com/wix/pro-gallery/pull/400)) [3f126fde](https://github.com/wix/pro-gallery/commit/3f126fdec8766baa6f04c5c7bb39cfb3448bf0aa)
+
+
+## [v4.0.13-beta.6](https://github.com/wix/pro-gallery/compare/v4.0.13-beta.5...v4.0.13-beta.6) (2021-07-21)
+
+*  Prevent travis builds on tagged commits [1e3ef087](https://github.com/wix/pro-gallery/commit/1e3ef0877611e83f04db5b7505745c7c96587c31)
+*  Simulating production code changes ([#397](https://github.com/wix/pro-gallery/pull/397)) [c3da409f](https://github.com/wix/pro-gallery/commit/c3da409f37a23ef9badb63ef60af9700a0841db6)
+*  deploying only on master branch [49511b4b](https://github.com/wix/pro-gallery/commit/49511b4b716fbde0ecd015b5fe9b2cd53be35620)
+
+
+## [v4.0.13-beta.5](https://github.com/wix/pro-gallery/compare/v4.0.13-beta.4...v4.0.13-beta.5) (2021-07-21)
+
+*  new alpha release flow [42a89094](https://github.com/wix/pro-gallery/commit/42a890947a194024ad4b943212455206ebad6364)
+*  Updating origin. [35fc20a9](https://github.com/wix/pro-gallery/commit/35fc20a9c14158190578f8152d1b35ea67a0602e)
+*  code [e49fefc1](https://github.com/wix/pro-gallery/commit/e49fefc1af669d45ba005daa605d4dae233859b9)
+*  DONT MERGE BEFORE REVERT - IT IS FOR FEEDBACK LOOP [c462b8c1](https://github.com/wix/pro-gallery/commit/c462b8c17ba705fd14827f65a39b03b62d924a43)
+*  adding beta dist tag [131488de](https://github.com/wix/pro-gallery/commit/131488de1d6d368e8dd433e30e4bfe06b1916a5c)
+*  fix latest tag [3980dc2c](https://github.com/wix/pro-gallery/commit/3980dc2ce8bdf213dd4d582da6a38f5a00b72b38)
+*  publishNewAlpha. [74224dad](https://github.com/wix/pro-gallery/commit/74224daddd8313aef7c292705f1ff6ec83fb2fa2)
+*  oops fixed typo [43f2b678](https://github.com/wix/pro-gallery/commit/43f2b678430853d20ef9b8794737fbaf1645333c)
+*  removing email and user for github [287b1e8b](https://github.com/wix/pro-gallery/commit/287b1e8bdcc8c6215c6dd288f5ca5fea6d794151)
+*  code. [5a4ae4f9](https://github.com/wix/pro-gallery/commit/5a4ae4f9b699888c2502dbcaa5df5dc4bf37911e)
+*  change from beta to next. [a6e36d31](https://github.com/wix/pro-gallery/commit/a6e36d3190a27a195ce758c0f6f9121586f08f1a)
+*  Revert "DONT MERGE BEFORE REVERT - IT IS FOR FEEDBACK LOOP" [70004ad6](https://github.com/wix/pro-gallery/commit/70004ad6a5c73b882e34f4710c7a4fa7fcde90e0)
+*  chagne production code [b73b7a04](https://github.com/wix/pro-gallery/commit/b73b7a04c73cfce3ac63d7de4b24a24ff65d62eb)
+*  CI flow for beta version ([#394](https://github.com/wix/pro-gallery/pull/394)) [82e66add](https://github.com/wix/pro-gallery/commit/82e66add9d0a6e212cecef0af87001e546e95c92)
+
+
+## [v4.0.13-beta.4](https://github.com/wix/pro-gallery/compare/v4.0.13-beta.3...v4.0.13-beta.4) (2021-07-21)
+
+*  Revert "[gallery, lib, playground, ssr-simulator] renamed container to dimensions + added to typed props ([#390](https://github.com/wix/pro-gallery/pull/390))" [e5a2502d](https://github.com/wix/pro-gallery/commit/e5a2502dd3ca98cc3dc07d1a4eb11e5bfa745df8)
+*  change from beta to next. [a6e36d31](https://github.com/wix/pro-gallery/commit/a6e36d3190a27a195ce758c0f6f9121586f08f1a)
+*  Revert "DONT MERGE BEFORE REVERT - IT IS FOR FEEDBACK LOOP" [70004ad6](https://github.com/wix/pro-gallery/commit/70004ad6a5c73b882e34f4710c7a4fa7fcde90e0)
+*  chagne production code [b73b7a04](https://github.com/wix/pro-gallery/commit/b73b7a04c73cfce3ac63d7de4b24a24ff65d62eb)
+
+
+## [v4.0.13-beta.3](https://github.com/wix/pro-gallery/compare/v4.0.13-beta.2...v4.0.13-beta.3) (2021-07-21)
+
+*  removing email and user for github [287b1e8b](https://github.com/wix/pro-gallery/commit/287b1e8bdcc8c6215c6dd288f5ca5fea6d794151)
+*  code. [5a4ae4f9](https://github.com/wix/pro-gallery/commit/5a4ae4f9b699888c2502dbcaa5df5dc4bf37911e)
+
+
+## [v4.0.13-beta.2](https://github.com/wix/pro-gallery/compare/v4.0.13-beta.1...v4.0.13-beta.2) (2021-07-21)
+
+*  adding beta dist tag [131488de](https://github.com/wix/pro-gallery/commit/131488de1d6d368e8dd433e30e4bfe06b1916a5c)
+*  fix latest tag [3980dc2c](https://github.com/wix/pro-gallery/commit/3980dc2ce8bdf213dd4d582da6a38f5a00b72b38)
+*  publishNewAlpha. [74224dad](https://github.com/wix/pro-gallery/commit/74224daddd8313aef7c292705f1ff6ec83fb2fa2)
+*  oops fixed typo [43f2b678](https://github.com/wix/pro-gallery/commit/43f2b678430853d20ef9b8794737fbaf1645333c)
+
+
+## [v4.0.13-beta.1](https://github.com/wix/pro-gallery/compare/v4.0.13-beta.0...v4.0.13-beta.1) (2021-07-21)
+
+*  new alpha release flow [42a89094](https://github.com/wix/pro-gallery/commit/42a890947a194024ad4b943212455206ebad6364)
+*  Updating origin. [35fc20a9](https://github.com/wix/pro-gallery/commit/35fc20a9c14158190578f8152d1b35ea67a0602e)
+*  code [e49fefc1](https://github.com/wix/pro-gallery/commit/e49fefc1af669d45ba005daa605d4dae233859b9)
+*  DONT MERGE BEFORE REVERT - IT IS FOR FEEDBACK LOOP [c462b8c1](https://github.com/wix/pro-gallery/commit/c462b8c17ba705fd14827f65a39b03b62d924a43)
+
+
+## [v4.0.13-beta.0](https://github.com/wix/pro-gallery/compare/v4.0.12-beta.0...v4.0.13-beta.0) (2021-07-20)
+
+*  [gallery, lib, playground, ssr-simulator] renamed container to dimensions + added to typed props ([#390](https://github.com/wix/pro-gallery/pull/390)) [84690d4d](https://github.com/wix/pro-gallery/commit/84690d4d54a15724f3623a311eafb415c8604bf2)
+
+
+## [v4.0.12-beta.0](https://github.com/wix/pro-gallery/compare/v4.0.11-beta.0...v4.0.12-beta.0) (2021-07-19)
+
+*  [lib] package.json: fixed pro-layouts version ([#389](https://github.com/wix/pro-gallery/pull/389)) [195f2722](https://github.com/wix/pro-gallery/commit/195f27222db7118928cc3db012b3d8f06054f29c)
+
+
+## [v4.0.11-beta.0](https://github.com/wix/pro-gallery/compare/v4.0.10-beta.0...v4.0.11-beta.0) (2021-07-18)
+
+*  [gallery + lib + playground] feat: remove placeholders/poster from video items - enableVideoPlaceholder SP ([#388](https://github.com/wix/pro-gallery/pull/388)) [c4c2faf6](https://github.com/wix/pro-gallery/commit/c4c2faf651fd3b983b7f320f97830fee497f4f03)
+
+
+## [v4.0.10-beta.0](https://github.com/wix/pro-gallery/compare/v4.0.9-beta.0...v4.0.10-beta.0) (2021-07-18)
+
+*  [gallery] TS: added to GalleryProps: totalItemsCount, items, currentIdx, isPrerenderMode, viewMode, formFactor  ([#387](https://github.com/wix/pro-gallery/pull/387)) [26187aa2](https://github.com/wix/pro-gallery/commit/26187aa249fd6ace29cb87361e79544315d09236)
+
+
+## [v4.0.9-beta.0](https://github.com/wix/pro-gallery/compare/v4.0.8-beta.0...v4.0.9-beta.0) (2021-07-15)
+
+*  [gallery + lib] added GALLERY_SCROLLED event [8e9a1da4](https://github.com/wix/pro-gallery/commit/8e9a1da4fc246fe1699589cb9543b5986ac3e681)
+
+
+## [v4.0.8-beta.0](https://github.com/wix/pro-gallery/compare/v4.0.7-beta.0...v4.0.8-beta.0) (2021-07-14)
+
+*  [gallery + layouts ] fix: text items positioning ([#384](https://github.com/wix/pro-gallery/pull/384)) [c62b5f7c](https://github.com/wix/pro-gallery/commit/c62b5f7c8be22d5267d5e8806ce1d6384d424b77)
+
+
+## [v4.0.7-beta.0](https://github.com/wix/pro-gallery/compare/v4.0.6-beta.0...v4.0.7-beta.0) (2021-07-12)
+
+*  [gallery + lib ] remove placeholder for transparent images ([#382](https://github.com/wix/pro-gallery/pull/382)) [cad0abf3](https://github.com/wix/pro-gallery/commit/cad0abf3781f1d1022df277b21d18b8245f447fe)
+
+
+## [v4.0.6-beta.0](https://github.com/wix/pro-gallery/compare/v4.0.5-beta.0...v4.0.6-beta.0) (2021-07-08)
+
+*  [SP] consolidate oneRow with scrollDirection [797a7a3e](https://github.com/wix/pro-gallery/commit/797a7a3e18dc341b2d8ffc1848051b9f043517df)
+*  use numberOfItemsPerRow/Col in specific presets(Grid/Masonry) [f76b7728](https://github.com/wix/pro-gallery/commit/f76b7728f316c231c3a65993d133ca2c93530980)
+*  [lib] fix: added default value to the aria role [dd644847](https://github.com/wix/pro-gallery/commit/dd6448475c5e3e9e39b5c2fc34b07f9691b6781e)
+*  [gallery] : fix focus when navigating on the accessibility tree and refactor changeActiveElementIfNedded [100a655b](https://github.com/wix/pro-gallery/commit/100a655b1fcd5c170f92e78f4eef6cabeba6323c)
+*  [main] update changelog.md [5b927756](https://github.com/wix/pro-gallery/commit/5b9277560ba7b233f81f044f28475cb37ff6a2ee)
+*  Revert "[main] update changelog.md" [6a7603f2](https://github.com/wix/pro-gallery/commit/6a7603f254644e05c3c3ed0e813b555867e2ba79)
+*  [main] update changelog.md [090ce4f5](https://github.com/wix/pro-gallery/commit/090ce4f50351b5875c6193430b2bc6e4c866cdbd)
+*  [main] update changelog.md [d2f38726](https://github.com/wix/pro-gallery/commit/d2f387265ef52349699f27d0b7c97565c45a6fbb)
+*  Revert "[main] update changelog.md" [df4771d4](https://github.com/wix/pro-gallery/commit/df4771d4f0ced8b8e80dae78f1baa9ded6a872cc)
+*  Revert "[main] update changelog.md" [f1e6b83a](https://github.com/wix/pro-gallery/commit/f1e6b83a4f7e591f0e2640ae8f399403a666e026)
+*  [main] update changelog.md [f24e203a](https://github.com/wix/pro-gallery/commit/f24e203a1f5d39121d7ccfa6130418cdad22a69d)
+*  [playground] fix: correct poster objects [8361c4d3](https://github.com/wix/pro-gallery/commit/8361c4d3947f54e5ba6ed21cdd5dbb148caa47b8)
+*  [gallery] add formFactor to main flow [c9c4c5ea](https://github.com/wix/pro-gallery/commit/c9c4c5eaf9c96de9daa661600f919c5e246f1f43)
+*  [main] update changelog.md [bbabd076](https://github.com/wix/pro-gallery/commit/bbabd076dd56ee669d1fd6568a6ad6c16598fb5c)
+*  [gallery + lib] feat: A11Y added an option to focus outside the gallery when we are in application mode [8c3f6834](https://github.com/wix/pro-gallery/commit/8c3f68346c2fbcea5a3ac2363955cd7df6d9b275)
+*  [main] update changelog.md [403fb5be](https://github.com/wix/pro-gallery/commit/403fb5be7ba239fff667d06b7dd989c369189d62)
+*  [gallery] dont initializeTouchEvents if its undefined(desktop mobile sim) [f137ad9e](https://github.com/wix/pro-gallery/commit/f137ad9e60b74b000fe8c707c864bae5f7726662)
+*  [gallery] created first typed prop in ProGallery index.tsx file, configed lint to support ts ([#354](https://github.com/wix/pro-gallery/pull/354)) [629cbd9a](https://github.com/wix/pro-gallery/commit/629cbd9ad2ceb02302c26b14bd43b26d409e31bc)
+*  Adding styles builder and using it for videoPlay ([#360](https://github.com/wix/pro-gallery/pull/360)) [20f2091d](https://github.com/wix/pro-gallery/commit/20f2091d87937feedddc0c587d91770f02dbfe46)
+*  [main] update changelog.md [286e53c7](https://github.com/wix/pro-gallery/commit/286e53c703a3e92e30b8a152f34ba848a5a04150)
+*  fixed package.json [36368b92](https://github.com/wix/pro-gallery/commit/36368b9234761b8e1382ea9649c5ccc5368d7df3)
+*  Adding runtime errors based on types ([#365](https://github.com/wix/pro-gallery/pull/365)) [92c25775](https://github.com/wix/pro-gallery/commit/92c25775e77e3a93ead0e7c156bb85f705935384)
+*  Revert "Adding styles builder and using it for videoPlay ([#360](https://github.com/wix/pro-gallery/pull/360))" [93a6dec3](https://github.com/wix/pro-gallery/commit/93a6dec3871dae9850463e4ad8990cd288e64527)
+*  fixed merge from master [d892cba5](https://github.com/wix/pro-gallery/commit/d892cba52d1da847d916e66231b8a44690a47f27)
+*  [gallery + layouts + lib] refactor image dimensions to layouter and added useMaxDImensions styleParam [05ff959b](https://github.com/wix/pro-gallery/commit/05ff959b6bc43bde91319135ef66f1985ee40fa6)
+*  [main] update changelog.md [b6f09249](https://github.com/wix/pro-gallery/commit/b6f09249c8d8c3ab35f77eeec9a43de53a080bcc)
+*  fix lint [b8b44a41](https://github.com/wix/pro-gallery/commit/b8b44a41fe8014b70aef031fb96f8c7a1382a43e)
+*  Separating core styles from default styles  ([#368](https://github.com/wix/pro-gallery/pull/368)) [19fd4671](https://github.com/wix/pro-gallery/commit/19fd46713ff08bde13376c31280f5e5efcbff2c4)
+*  [leanGallery playground lib] feat:added alt text [6d57a5c7](https://github.com/wix/pro-gallery/commit/6d57a5c7f1a13a14f69cb18642a5b7cecfd004c5)
+*  [gallery] fix: Navigation Arrows Missing When Navigating to Page with Slider Gallery [276b1c0b](https://github.com/wix/pro-gallery/commit/276b1c0b481805fd9ca47790c7d53b8550e18333)
+*  [main] update changelog.md [20446bdc](https://github.com/wix/pro-gallery/commit/20446bdcb25b38825a1449ac13cb8ba8eaee7b49)
+*  [gallery] fix: use imageDimensions in video item and text item ([#373](https://github.com/wix/pro-gallery/pull/373)) [6ca3768f](https://github.com/wix/pro-gallery/commit/6ca3768f8f5a0cd527ce3490d684ec409b8c782e)
+*  [main] update changelog.md [6bc8972c](https://github.com/wix/pro-gallery/commit/6bc8972c3dc6b3ffde8469af1214b773c382914e)
+*  V4 ([#341](https://github.com/wix/pro-gallery/pull/341)) [398627b8](https://github.com/wix/pro-gallery/commit/398627b8ba8ed2dd0d065eac357c0c1077624401)
+
+
+## [v4.0.5-beta.0](https://github.com/wix/pro-gallery/compare/v4.0.4-beta.0...v4.0.5-beta.0) (2021-07-05)
+
+*  [gallery] remove video poster and background when needed [2b708145](https://github.com/wix/pro-gallery/commit/2b708145ca1a7e287b601f7be554d2d58491bc88)
+*  dummy commit [279b7bf2](https://github.com/wix/pro-gallery/commit/279b7bf2e0730a16372031f16fe5d79cbd1dd623)
+*  lean gallery dummy commit [7f9c174d](https://github.com/wix/pro-gallery/commit/7f9c174d1023d0402869d235090b291741f8f3e8)
+*  [main] update changelog.md [5ceeb19a](https://github.com/wix/pro-gallery/commit/5ceeb19a57ff0337f304e74654122bd256d93501)
+*  bump versions [70650fc5](https://github.com/wix/pro-gallery/commit/70650fc5dde6698be0e3df5fe1f49ddcade4e160)
+*  [main] update changelog.md [f365dd22](https://github.com/wix/pro-gallery/commit/f365dd2253c1001fa296727339a28ef7f20c1c93)
+*  [all] reset the versions to 3.1.30 [cf8e87fd](https://github.com/wix/pro-gallery/commit/cf8e87fdd6435c751f25b0b5450da136917ea7c8)
+*  [root] Update readme file with A11Y [b693b4ce](https://github.com/wix/pro-gallery/commit/b693b4ce973222335c57babc15b14c9dbe93a627)
+*  [gallery + lib] added slideTransition styleParam [936add19](https://github.com/wix/pro-gallery/commit/936add1908fe097e3f41b904f3dc831ec57b6e6a)
+*  [main] update changelog.md [46aad12a](https://github.com/wix/pro-gallery/commit/46aad12ac2c3f6eaf5a3468f2a33bd3a99b6e913)
+*  Revert "[main] update changelog.md" [6cae8806](https://github.com/wix/pro-gallery/commit/6cae880601ff35e2293f7595ebfdabd9a797efb7)
+*  [main] update changelog.md [5aa04ddf](https://github.com/wix/pro-gallery/commit/5aa04ddf6db60aebcf2dc6d11cfb195e45af2939)
+*  [gallery] Increasing removeArrowsIfNeeded setTimeOut call [33defe61](https://github.com/wix/pro-gallery/commit/33defe618f9164cc181d73677c90ba46fb17d137)
+*  [main] update changelog.md [ea7fc9a5](https://github.com/wix/pro-gallery/commit/ea7fc9a51f8870cb10a1576d66a1897e077a9cb0)
+*  [gallery]: fix (mobile settings) fix behaviour of what happens on the first tap when hovering behaviour set to "NO_CHANGE" [daeefbcc](https://github.com/wix/pro-gallery/commit/daeefbcc2444e08ee94c8ac6b2282fd427e94664)
+*  [main] update changelog.md [54045c5b](https://github.com/wix/pro-gallery/commit/54045c5ba737b359e41b78f422d1478be959157b)
+*  [gallery+lib+playground] slideshowView: arrows -> fix container size to be same as svg size (to support arrowsPadding correctly) ([#364](https://github.com/wix/pro-gallery/pull/364)) [0b11bcc1](https://github.com/wix/pro-gallery/commit/0b11bcc14463ce788ed708f70a67e58cfc8bb444)
+*  [main] update changelog.md [f23c1741](https://github.com/wix/pro-gallery/commit/f23c1741f94330ce76031caa5762a639da14edd4)
+*  [gallery]Adding style params [4e5a6cbf](https://github.com/wix/pro-gallery/commit/4e5a6cbf98ddd34124612c5383ecb9cb089ac8af)
+*  [main] update changelog.md [decee2b9](https://github.com/wix/pro-gallery/commit/decee2b9fda76d30ddf9febd961bef08935a4e25)
+*  Adding runtime errors based on types ([#365](https://github.com/wix/pro-gallery/pull/365)) [92c25775](https://github.com/wix/pro-gallery/commit/92c25775e77e3a93ead0e7c156bb85f705935384)
+*  Revert "Adding styles builder and using it for videoPlay ([#360](https://github.com/wix/pro-gallery/pull/360))" [93a6dec3](https://github.com/wix/pro-gallery/commit/93a6dec3871dae9850463e4ad8990cd288e64527)
+*  fixed merge from master [d892cba5](https://github.com/wix/pro-gallery/commit/d892cba52d1da847d916e66231b8a44690a47f27)
+
+
+## [v4.0.4-beta.0](https://github.com/wix/pro-gallery/compare/v4.0.4...v4.0.4-beta.0) (2021-06-29)
+
+*  [SP] consolidate oneRow with scrollDirection [797a7a3e](https://github.com/wix/pro-gallery/commit/797a7a3e18dc341b2d8ffc1848051b9f043517df)
+*  use numberOfItemsPerRow/Col in specific presets(Grid/Masonry) [f76b7728](https://github.com/wix/pro-gallery/commit/f76b7728f316c231c3a65993d133ca2c93530980)
+*  [lib] fix: added default value to the aria role [dd644847](https://github.com/wix/pro-gallery/commit/dd6448475c5e3e9e39b5c2fc34b07f9691b6781e)
+*  [gallery] : fix focus when navigating on the accessibility tree and refactor changeActiveElementIfNedded [100a655b](https://github.com/wix/pro-gallery/commit/100a655b1fcd5c170f92e78f4eef6cabeba6323c)
+*  [main] update changelog.md [5b927756](https://github.com/wix/pro-gallery/commit/5b9277560ba7b233f81f044f28475cb37ff6a2ee)
+*  Revert "[main] update changelog.md" [6a7603f2](https://github.com/wix/pro-gallery/commit/6a7603f254644e05c3c3ed0e813b555867e2ba79)
+*  [main] update changelog.md [090ce4f5](https://github.com/wix/pro-gallery/commit/090ce4f50351b5875c6193430b2bc6e4c866cdbd)
+*  [main] update changelog.md [d2f38726](https://github.com/wix/pro-gallery/commit/d2f387265ef52349699f27d0b7c97565c45a6fbb)
+*  Revert "[main] update changelog.md" [df4771d4](https://github.com/wix/pro-gallery/commit/df4771d4f0ced8b8e80dae78f1baa9ded6a872cc)
+*  Revert "[main] update changelog.md" [f1e6b83a](https://github.com/wix/pro-gallery/commit/f1e6b83a4f7e591f0e2640ae8f399403a666e026)
+*  [main] update changelog.md [f24e203a](https://github.com/wix/pro-gallery/commit/f24e203a1f5d39121d7ccfa6130418cdad22a69d)
+*  [playground] fix: correct poster objects [8361c4d3](https://github.com/wix/pro-gallery/commit/8361c4d3947f54e5ba6ed21cdd5dbb148caa47b8)
+*  [gallery] add formFactor to main flow [c9c4c5ea](https://github.com/wix/pro-gallery/commit/c9c4c5eaf9c96de9daa661600f919c5e246f1f43)
+*  [main] update changelog.md [bbabd076](https://github.com/wix/pro-gallery/commit/bbabd076dd56ee669d1fd6568a6ad6c16598fb5c)
+*  [gallery + lib] feat: A11Y added an option to focus outside the gallery when we are in application mode [8c3f6834](https://github.com/wix/pro-gallery/commit/8c3f68346c2fbcea5a3ac2363955cd7df6d9b275)
+*  [main] update changelog.md [403fb5be](https://github.com/wix/pro-gallery/commit/403fb5be7ba239fff667d06b7dd989c369189d62)
+*  [gallery] dont initializeTouchEvents if its undefined(desktop mobile sim) [f137ad9e](https://github.com/wix/pro-gallery/commit/f137ad9e60b74b000fe8c707c864bae5f7726662)
+*  [gallery] created first typed prop in ProGallery index.tsx file, configed lint to support ts ([#354](https://github.com/wix/pro-gallery/pull/354)) [629cbd9a](https://github.com/wix/pro-gallery/commit/629cbd9ad2ceb02302c26b14bd43b26d409e31bc)
+*  Adding styles builder and using it for videoPlay ([#360](https://github.com/wix/pro-gallery/pull/360)) [20f2091d](https://github.com/wix/pro-gallery/commit/20f2091d87937feedddc0c587d91770f02dbfe46)
+*  [main] update changelog.md [286e53c7](https://github.com/wix/pro-gallery/commit/286e53c703a3e92e30b8a152f34ba848a5a04150)
+*  fixed package.json [36368b92](https://github.com/wix/pro-gallery/commit/36368b9234761b8e1382ea9649c5ccc5368d7df3)
+*  [gallery] remove video poster and background when needed [2b708145](https://github.com/wix/pro-gallery/commit/2b708145ca1a7e287b601f7be554d2d58491bc88)
+*  dummy commit [279b7bf2](https://github.com/wix/pro-gallery/commit/279b7bf2e0730a16372031f16fe5d79cbd1dd623)
+*  lean gallery dummy commit [7f9c174d](https://github.com/wix/pro-gallery/commit/7f9c174d1023d0402869d235090b291741f8f3e8)
+*  [main] update changelog.md [5ceeb19a](https://github.com/wix/pro-gallery/commit/5ceeb19a57ff0337f304e74654122bd256d93501)
+*  bump versions [70650fc5](https://github.com/wix/pro-gallery/commit/70650fc5dde6698be0e3df5fe1f49ddcade4e160)
+*  [main] update changelog.md [f365dd22](https://github.com/wix/pro-gallery/commit/f365dd2253c1001fa296727339a28ef7f20c1c93)
+
+
+## [v4.0.4](https://github.com/wix/pro-gallery/compare/v4.0.3-beta.0...v4.0.4) (2021-06-29)
+
+*  [SP] consolidate oneRow with scrollDirection [797a7a3e](https://github.com/wix/pro-gallery/commit/797a7a3e18dc341b2d8ffc1848051b9f043517df)
+*  use numberOfItemsPerRow/Col in specific presets(Grid/Masonry) [f76b7728](https://github.com/wix/pro-gallery/commit/f76b7728f316c231c3a65993d133ca2c93530980)
+*  [lib] fix: added default value to the aria role [dd644847](https://github.com/wix/pro-gallery/commit/dd6448475c5e3e9e39b5c2fc34b07f9691b6781e)
+*  [gallery] : fix focus when navigating on the accessibility tree and refactor changeActiveElementIfNedded [100a655b](https://github.com/wix/pro-gallery/commit/100a655b1fcd5c170f92e78f4eef6cabeba6323c)
+*  [main] update changelog.md [5b927756](https://github.com/wix/pro-gallery/commit/5b9277560ba7b233f81f044f28475cb37ff6a2ee)
+*  Revert "[main] update changelog.md" [6a7603f2](https://github.com/wix/pro-gallery/commit/6a7603f254644e05c3c3ed0e813b555867e2ba79)
+*  [main] update changelog.md [090ce4f5](https://github.com/wix/pro-gallery/commit/090ce4f50351b5875c6193430b2bc6e4c866cdbd)
+*  [main] update changelog.md [d2f38726](https://github.com/wix/pro-gallery/commit/d2f387265ef52349699f27d0b7c97565c45a6fbb)
+*  Revert "[main] update changelog.md" [df4771d4](https://github.com/wix/pro-gallery/commit/df4771d4f0ced8b8e80dae78f1baa9ded6a872cc)
+*  Revert "[main] update changelog.md" [f1e6b83a](https://github.com/wix/pro-gallery/commit/f1e6b83a4f7e591f0e2640ae8f399403a666e026)
+*  [main] update changelog.md [f24e203a](https://github.com/wix/pro-gallery/commit/f24e203a1f5d39121d7ccfa6130418cdad22a69d)
+*  [playground] fix: correct poster objects [8361c4d3](https://github.com/wix/pro-gallery/commit/8361c4d3947f54e5ba6ed21cdd5dbb148caa47b8)
+*  [gallery] add formFactor to main flow [c9c4c5ea](https://github.com/wix/pro-gallery/commit/c9c4c5eaf9c96de9daa661600f919c5e246f1f43)
+*  [main] update changelog.md [bbabd076](https://github.com/wix/pro-gallery/commit/bbabd076dd56ee669d1fd6568a6ad6c16598fb5c)
+*  [gallery + lib] feat: A11Y added an option to focus outside the gallery when we are in application mode [8c3f6834](https://github.com/wix/pro-gallery/commit/8c3f68346c2fbcea5a3ac2363955cd7df6d9b275)
+*  [main] update changelog.md [403fb5be](https://github.com/wix/pro-gallery/commit/403fb5be7ba239fff667d06b7dd989c369189d62)
+*  [gallery] dont initializeTouchEvents if its undefined(desktop mobile sim) [f137ad9e](https://github.com/wix/pro-gallery/commit/f137ad9e60b74b000fe8c707c864bae5f7726662)
+*  [gallery] created first typed prop in ProGallery index.tsx file, configed lint to support ts ([#354](https://github.com/wix/pro-gallery/pull/354)) [629cbd9a](https://github.com/wix/pro-gallery/commit/629cbd9ad2ceb02302c26b14bd43b26d409e31bc)
+*  [layouter] add dimensions to item scheme [c96ac4b4](https://github.com/wix/pro-gallery/commit/c96ac4b4e7ad7110e35abb1b22e3e35507f3eaa7)
+*  [main] update changelog.md [a2bef0cf](https://github.com/wix/pro-gallery/commit/a2bef0cff667f0c47c38bf1e410d05472ffe7650)
+*  [gallery] fix (videoItem): grid cropped video styles (black margins) [7273a4d2](https://github.com/wix/pro-gallery/commit/7273a4d2804eae646aa8044715a6969010656ac4)
+*  [lib] galleryItem: url '' when not defined [9e13cb25](https://github.com/wix/pro-gallery/commit/9e13cb25d71b89aa63dde4c1eb8ee3cc970cd57c)
+*  [main] update changelog.md [e5308e91](https://github.com/wix/pro-gallery/commit/e5308e91f01d6f3d64b489ddc9df2504fe6b48c3)
+*  Using ws client + server implementation for webpack [1675292b](https://github.com/wix/pro-gallery/commit/1675292b2707ba278257cb1d25010a3b545b8acb)
+*  [gallery] remove video poster and background when needed [2b708145](https://github.com/wix/pro-gallery/commit/2b708145ca1a7e287b601f7be554d2d58491bc88)
+*  dummy commit [279b7bf2](https://github.com/wix/pro-gallery/commit/279b7bf2e0730a16372031f16fe5d79cbd1dd623)
+*  lean gallery dummy commit [7f9c174d](https://github.com/wix/pro-gallery/commit/7f9c174d1023d0402869d235090b291741f8f3e8)
+*  [main] update changelog.md [5ceeb19a](https://github.com/wix/pro-gallery/commit/5ceeb19a57ff0337f304e74654122bd256d93501)
+*  bump versions [70650fc5](https://github.com/wix/pro-gallery/commit/70650fc5dde6698be0e3df5fe1f49ddcade4e160)
+*  [main] update changelog.md [f365dd22](https://github.com/wix/pro-gallery/commit/f365dd2253c1001fa296727339a28ef7f20c1c93)
+
+
+## [v4.0.3-beta.0](https://github.com/wix/pro-gallery/compare/v4.0.3...v4.0.3-beta.0) (2021-06-22)
+
+*  Adding styles builder and using it for videoPlay ([#360](https://github.com/wix/pro-gallery/pull/360)) [20f2091d](https://github.com/wix/pro-gallery/commit/20f2091d87937feedddc0c587d91770f02dbfe46)
+*  [main] update changelog.md [286e53c7](https://github.com/wix/pro-gallery/commit/286e53c703a3e92e30b8a152f34ba848a5a04150)
+
+
+## [v4.0.3](https://github.com/wix/pro-gallery/compare/v4.0.2-beta.0...v4.0.3) (2021-06-29)
+
+*  [lib] fix: added default value to the aria role [cff0ba94](https://github.com/wix/pro-gallery/commit/cff0ba9456e0e838652ce6b45ca2d1a709f3e2c9)
+*  [gallery] : fix focus when navigating on the accessibility tree and refactor changeActiveElementIfNedded [133376c5](https://github.com/wix/pro-gallery/commit/133376c52a2bde0aea9151d8e97a6684fabf5889)
+*  [main] update changelog.md [b5e13a39](https://github.com/wix/pro-gallery/commit/b5e13a39b55e1bd5b973febc3fdde4e626511357)
+*  Revert "[main] update changelog.md" [43a5f398](https://github.com/wix/pro-gallery/commit/43a5f3982e96f8c024b75ba8da56b7c8286b1089)
+*  [main] update changelog.md [08ab8098](https://github.com/wix/pro-gallery/commit/08ab80988336cbc08304dc87f4fd0f4ff825c2ec)
+*  [main] update changelog.md [fdfc6800](https://github.com/wix/pro-gallery/commit/fdfc680030df3c8156b5c481eb065c3caa03c5a9)
+*  Revert "[main] update changelog.md" [bcf5c269](https://github.com/wix/pro-gallery/commit/bcf5c2691bb5e0a9166654229b14841d6fe9d549)
+*  Revert "[main] update changelog.md" [b1f88ab1](https://github.com/wix/pro-gallery/commit/b1f88ab1442e733723e0e75267d82b235920e4d9)
+*  [main] update changelog.md [a3ddfbb5](https://github.com/wix/pro-gallery/commit/a3ddfbb53d925ae4aa2e6743808d23170d7cffe2)
+*  [playground] fix: correct poster objects [766405fc](https://github.com/wix/pro-gallery/commit/766405fcb9faacb574aa2b751daeeed6c30bdd93)
+*  [gallery] add formFactor to main flow [69f48696](https://github.com/wix/pro-gallery/commit/69f486964d716915456af2bf73d50e316c897c41)
+*  [main] update changelog.md [009d1a14](https://github.com/wix/pro-gallery/commit/009d1a1400fb437a39ae9dd3e13445b9be9f23a3)
+*  [gallery + lib] feat: A11Y added an option to focus outside the gallery when we are in application mode [82c415b5](https://github.com/wix/pro-gallery/commit/82c415b58a68096f74e9b42acc7c6f6beb00bb91)
+*  [main] update changelog.md [f09ea41d](https://github.com/wix/pro-gallery/commit/f09ea41d6a3e5f89111bcc6e9c741c3863564b85)
+*  [gallery] dont initializeTouchEvents if its undefined(desktop mobile sim) [7487435c](https://github.com/wix/pro-gallery/commit/7487435cddb5efeaad412da808e9c246360ac9be)
+*  [lib] fix: added default value to the aria role [dd644847](https://github.com/wix/pro-gallery/commit/dd6448475c5e3e9e39b5c2fc34b07f9691b6781e)
+*  [gallery] : fix focus when navigating on the accessibility tree and refactor changeActiveElementIfNedded [100a655b](https://github.com/wix/pro-gallery/commit/100a655b1fcd5c170f92e78f4eef6cabeba6323c)
+*  [main] update changelog.md [5b927756](https://github.com/wix/pro-gallery/commit/5b9277560ba7b233f81f044f28475cb37ff6a2ee)
+*  Revert "[main] update changelog.md" [6a7603f2](https://github.com/wix/pro-gallery/commit/6a7603f254644e05c3c3ed0e813b555867e2ba79)
+*  [main] update changelog.md [090ce4f5](https://github.com/wix/pro-gallery/commit/090ce4f50351b5875c6193430b2bc6e4c866cdbd)
+*  [main] update changelog.md [d2f38726](https://github.com/wix/pro-gallery/commit/d2f387265ef52349699f27d0b7c97565c45a6fbb)
+*  Revert "[main] update changelog.md" [df4771d4](https://github.com/wix/pro-gallery/commit/df4771d4f0ced8b8e80dae78f1baa9ded6a872cc)
+*  Revert "[main] update changelog.md" [f1e6b83a](https://github.com/wix/pro-gallery/commit/f1e6b83a4f7e591f0e2640ae8f399403a666e026)
+*  [main] update changelog.md [f24e203a](https://github.com/wix/pro-gallery/commit/f24e203a1f5d39121d7ccfa6130418cdad22a69d)
+*  [playground] fix: correct poster objects [8361c4d3](https://github.com/wix/pro-gallery/commit/8361c4d3947f54e5ba6ed21cdd5dbb148caa47b8)
+*  [gallery] add formFactor to main flow [c9c4c5ea](https://github.com/wix/pro-gallery/commit/c9c4c5eaf9c96de9daa661600f919c5e246f1f43)
+*  [main] update changelog.md [bbabd076](https://github.com/wix/pro-gallery/commit/bbabd076dd56ee669d1fd6568a6ad6c16598fb5c)
+*  [gallery + lib] feat: A11Y added an option to focus outside the gallery when we are in application mode [8c3f6834](https://github.com/wix/pro-gallery/commit/8c3f68346c2fbcea5a3ac2363955cd7df6d9b275)
+*  [main] update changelog.md [403fb5be](https://github.com/wix/pro-gallery/commit/403fb5be7ba239fff667d06b7dd989c369189d62)
+*  [gallery] dont initializeTouchEvents if its undefined(desktop mobile sim) [f137ad9e](https://github.com/wix/pro-gallery/commit/f137ad9e60b74b000fe8c707c864bae5f7726662)
+*  17 jun fix translation ([#352](https://github.com/wix/pro-gallery/pull/352)) [50bb5c27](https://github.com/wix/pro-gallery/commit/50bb5c27a7e80fc2a9ef681bf5a49819875708d6)
+*  [main] update changelog.md [ef3183d3](https://github.com/wix/pro-gallery/commit/ef3183d3606504a4cc844009bbedcf468598ba62)
+*  [gallery] created first typed prop in ProGallery index.tsx file, configed lint to support ts ([#354](https://github.com/wix/pro-gallery/pull/354)) [629cbd9a](https://github.com/wix/pro-gallery/commit/629cbd9ad2ceb02302c26b14bd43b26d409e31bc)
+*  Adding styles builder and using it for videoPlay ([#360](https://github.com/wix/pro-gallery/pull/360)) [20f2091d](https://github.com/wix/pro-gallery/commit/20f2091d87937feedddc0c587d91770f02dbfe46)
+*  [main] update changelog.md [286e53c7](https://github.com/wix/pro-gallery/commit/286e53c703a3e92e30b8a152f34ba848a5a04150)
+
+
+## [v4.0.2-beta.0](https://github.com/wix/pro-gallery/compare/v4.0.1-beta.0...v4.0.2-beta.0) (2021-06-02)
+
+*  dummy [fcf57d26](https://github.com/wix/pro-gallery/commit/fcf57d262470d4c81b54ad612d79c1280afdb022)
+
+
+## [v4.0.1-beta.0](https://github.com/wix/pro-gallery/compare/v4.0.0-beta.0...v4.0.1-beta.0) (2021-06-01)
+
+*  [gallery] improve: remove unnecessary check from blockAutoSlideShow + added listener to ESC keyCode [0c74d7b6](https://github.com/wix/pro-gallery/commit/0c74d7b66f50ee7ebd210ab589d08bd113c42140)
+*  [gallery + lib] improve: handle "application" "region" Modes [f545525e](https://github.com/wix/pro-gallery/commit/f545525eecebd0d705c77d6668b10e853788aa8c)
+*  [main] update changelog.md [7385e28d](https://github.com/wix/pro-gallery/commit/7385e28d85a6e9f49ad5efdb8f47167782159b0f)
+*  [gallery] added class indication for loaded image [28e96689](https://github.com/wix/pro-gallery/commit/28e96689a120ee53c8aa191bde50f26c25d252d7)
+*  [main] update changelog.md [a797138d](https://github.com/wix/pro-gallery/commit/a797138d9be58d525ef333f22143d2fc4caffe00)
+*  [gallery] fix: Video item - youtube button appears under the play button [a70ce0cd](https://github.com/wix/pro-gallery/commit/a70ce0cd4ee05e837bc16cf43a19994d48898f40)
+*  [main] update changelog.md [e85c1007](https://github.com/wix/pro-gallery/commit/e85c1007ec3892898cf3dcba58d9f901119fb939)
+*  [gallery] small gallery/index refactor. [8f760c2d](https://github.com/wix/pro-gallery/commit/8f760c2df3d18294966611cb6891de4228e39bd9)
+*  use numberOfItemsPerRow/Col in specific presets(Grid/Masonry) [f76b7728](https://github.com/wix/pro-gallery/commit/f76b7728f316c231c3a65993d133ca2c93530980)
+
+
