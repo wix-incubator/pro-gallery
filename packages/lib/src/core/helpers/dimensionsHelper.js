@@ -77,6 +77,9 @@ class DimensionsHelper {
               res.height = res.galleryHeight + fixedThumbnailSize;
               break;
             default:
+            case 'right':
+            case 'left':
+              res.height = res.galleryHeight;
               break;
           }
         }
