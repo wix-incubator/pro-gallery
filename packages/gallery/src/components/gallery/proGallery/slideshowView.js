@@ -11,14 +11,13 @@ import GroupView from '../../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
 import PlayIcon from '../../svgs/components/play';
 import PauseIcon from '../../svgs/components/pause';
-import TextItem from '../../item/textItem.js';
+import NavigationPanel from './navigationPanel';
 import { 
   getArrowsRenderData,
   shouldRenderNavArrows,
   getArrowBoxStyle
 } from '../../helpers/navigationArrowUtils'
 import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
-import { getThumbnailsData, clearGalleryItems } from '../../helpers/thumbnailsLogic';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
@@ -457,9 +456,7 @@ class SlideshowView extends React.Component {
     }
   };
 
-  get clearedGalleryItems() {
-    return clearGalleryItems(this.props.items, this.props.galleryStructure.galleryItems);
-  }
+  
   scrollToThumbnail(itemIdx, scrollDuration) {
     //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
 
@@ -509,108 +506,6 @@ class SlideshowView extends React.Component {
   }
 
 
-  createThumbnails(thumbnailPosition) {
-    const { options, galleryStructure, settings } = this.props;
-    const { clearedGalleryItems } = this;
-    const activeIndex = utils.inRange(this.state.activeIndex, clearedGalleryItems.length);
-    const { thumbnailSize, thumbnailSpacings } = options;
-    const { horizontalThumbnails, items, thumbnailsMargins, thumbnailsStyle, activeIndexOffsetMemory } = getThumbnailsData({
-      items: this.props.items,
-      activeIndex,
-      options,
-      galleryStructure,
-      thumbnailPosition,
-      containerHeight: this.props.container.height,
-      containerWidth: this.props.container.width,
-      activeIndexOffsetMemory: this.activeIndexOffsetMemory,
-      prevActiveIndex: this.prevActiveIndex,
-    });
-
-    this.prevActiveIndex = activeIndex;
-    this.activeIndexOffsetMemory = activeIndexOffsetMemory;
-
-    return (
-      <div
-        className={
-          'pro-gallery inline-styles thumbnails-gallery ' +
-          (horizontalThumbnails ? ' one-row hide-scrollbars ' : '') +
-          (options.isRTL ? ' rtl ' : ' ltr ') +
-          (settings?.isAccessible ? ' accessible ' : '')
-        }
-        style={{
-          width: thumbnailsStyle.width,
-          height: thumbnailsStyle.height,
-          ...thumbnailsMargins,
-        }}
-        data-hook="gallery-thumbnails"
-      >
-        <div
-          data-hook="gallery-thumbnails-column"
-          className={'galleryColumn'}
-          key={'thumbnails-column'}
-          style={{ ...thumbnailsStyle }}
-        >
-          {items.map(({ thumbnailItem, location, idx }) => {
-            const highlighted = idx === activeIndex;
-            const itemStyle = {
-              width: thumbnailSize,
-              height: thumbnailSize,
-              marginLeft: thumbnailSpacings,
-              marginTop: thumbnailSpacings,
-              overflow: 'hidden',
-              backgroundImage: `url(${thumbnailItem.createUrl(
-                GALLERY_CONSTS.urlSizes.THUMBNAIL,
-                GALLERY_CONSTS.urlTypes.HIGH_RES
-              )})`,
-              ...location,
-            };
-            return (
-              <div
-                key={
-                  'thumbnail-' +
-                  thumbnailItem.id +
-                  (Number.isInteger(idx) ? '-' + idx : '')
-                }
-                className={
-                  'thumbnailItem' +
-                  (highlighted
-                    ? ' pro-gallery-thumbnails-highlighted pro-gallery-highlight' +
-                      (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')
-                    : '')
-                }
-                data-key={thumbnailItem.id}
-                style={itemStyle}
-                onClick={() => this.scrollToThumbnail(idx)}
-              >
-                {thumbnailItem.type === 'text' ? (
-                  <TextItem
-                    {...this.props}
-                    {...thumbnailItem.renderProps()}
-                    options={{
-                      ...options,
-                      cubeType: 'fill',
-                      cubeImages: true,
-                    }}
-                    actions={{}}
-                    imageDimensions={{
-                      ...itemStyle,
-                      marginTop: 0,
-                      marginLeft: 0,
-                    }}
-                    style={{
-                      ...thumbnailItem.renderProps().style,
-                      ...itemStyle,
-                    }}
-                  />
-                ) : null}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    );
-  }
-
   getCenteredItemOrGroupIdxByScroll(key) {
     const itemsOrGroups = this.props.galleryStructure[key];
     let centeredItemOrGroupIdx;
@@ -640,7 +535,7 @@ class SlideshowView extends React.Component {
     }
 
     if (this.isAutoScrolling) {
-      //avoid this function if the scroll was originated by us (arrows or thumbnails)
+      //avoid this function if the scroll was originated by us (arrows or navigationPanels)
       this.isAutoScrolling = false;
       return;
     }
@@ -1082,29 +977,28 @@ class SlideshowView extends React.Component {
     );
   }
 
-  getThumbnails() {
+  getNavigationPanel() {
     const hasThumbnails = this.props.options.hasThumbnails;
-    const thumbnailsPosition =
+    const navigationPanel = hasThumbnails
+    ? <NavigationPanel {...this.props} activeIndex={this.state.activeIndex} navigationToIdxCB={this.scrollToThumbnail}></NavigationPanel>
+    : false;
+    
+    const navigationPanelPosition =
       this.props.options.galleryThumbnailsAlignment;
-
-    const thumbnailsGallery = hasThumbnails
-      ? this.createThumbnails(thumbnailsPosition)
-      : false;
-
-    const thumbnails = [];
-    switch (thumbnailsPosition) {
+    const navigationPanels = [];
+    switch (navigationPanelPosition) {
       case 'top':
       case 'left':
-        thumbnails[0] = thumbnailsGallery;
-        thumbnails[1] = false;
+        navigationPanels[0] = navigationPanel;
+        navigationPanels[1] = false;
         break;
       case 'right':
       case 'bottom':
-        thumbnails[0] = false;
-        thumbnails[1] = thumbnailsGallery;
+        navigationPanels[0] = false;
+        navigationPanels[1] = navigationPanel;
         break;
     }
-    return thumbnails;
+    return navigationPanels;
   }
 
   getClassNames() {
@@ -1198,9 +1092,6 @@ class SlideshowView extends React.Component {
   }
 
   UNSAFE_componentWillReceiveProps(props) {
-    if (props.items) {
-      this.itemsForSlideshowLoopThumbnails = false;
-    }
     const isInView = props.isInViewport && (props.isInDisplay ?? true);
     const oldIsInView = this.props.isInViewport && (this.props.isInDisplay ?? true);
     if (isInView !== oldIsInView) {
@@ -1311,7 +1202,7 @@ class SlideshowView extends React.Component {
     }
 
     const gallery = this.createGallery();
-    const thumbnails = this.getThumbnails();
+    const navigationPanel = this.getNavigationPanel();
 
     if (utils.isVerbose()) {
       console.timeEnd('Rendering Gallery took ');
@@ -1329,9 +1220,9 @@ class SlideshowView extends React.Component {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
       >
-        {thumbnails[0]}
+        {navigationPanel[0]}
         {gallery}
-        {thumbnails[1]}
+        {navigationPanel[1]}
       </div>
     );
   }
