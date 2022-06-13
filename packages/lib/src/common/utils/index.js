@@ -707,8 +707,6 @@ class Utils {
     return {
       role: proGalleryRole || 'region',
       ['aria-label']: proGalleryRegionLabel,
-      ['aria-roledescription']:
-        proGalleryRole === 'application' ? 'gallery application' : 'region',
     };
   }
 
