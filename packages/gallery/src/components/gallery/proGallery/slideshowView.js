@@ -936,6 +936,9 @@ class SlideshowView extends React.Component {
         style={galleryStyle}
       >
         {this.createDebugMsg()}
+        {this.createLayout()}
+        {this.createAutoSlideShowPlayButton()}
+        {this.createSlideShowNumbers()}
         {shouldRenderNavArrows({
           options: this.props.options,
           container: this.props.container,
@@ -943,9 +946,6 @@ class SlideshowView extends React.Component {
           galleryStructure: this.props.galleryStructure,
           customNavArrowsRenderer: this.props.customComponents.customNavArrowsRenderer,
         }) && this.createNavArrows()}
-        {this.createLayout()}
-        {this.createAutoSlideShowPlayButton()}
-        {this.createSlideShowNumbers()}
       </div>
     );
   }
