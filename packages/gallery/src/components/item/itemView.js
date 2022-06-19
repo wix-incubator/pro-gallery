@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import {
   GALLERY_CONSTS,
@@ -6,7 +5,7 @@ import {
   window,
   utils,
   isEditMode,
-  isPreviewMode
+  isPreviewMode,
 } from 'pro-gallery-lib';
 import MagnifiedImage from './imageWithMagnified.js';
 import TextItem from './textItem.js';
@@ -20,7 +19,11 @@ import {
   getImageStyle,
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
-import {getSlideAnimationStyles, getCustomInfoRendererProps, getLinkParams} from './pure'
+import {
+  getSlideAnimationStyles,
+  getCustomInfoRendererProps,
+  getLinkParams,
+} from './pure';
 class ItemView extends React.Component {
   constructor(props) {
     super(props);
@@ -224,9 +227,10 @@ class ItemView extends React.Component {
     return false;
   };
 
-  isClickOnCurrentHoveredItem = () => this.state.isCurrentHover ||  // this single item was already hovered.
-  this.props.options.hoveringBehaviour ===
-  GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE; // all the items are always 'already' hovered
+  isClickOnCurrentHoveredItem = () =>
+    this.state.isCurrentHover || // this single item was already hovered.
+    this.props.options.hoveringBehaviour ===
+      GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE; // all the items are always 'already' hovered
 
   handleHoverClickOnMobile(e) {
     if (this.isClickOnCurrentHoveredItem()) {
@@ -360,14 +364,16 @@ class ItemView extends React.Component {
           }}
           renderCustomInfo={
             customComponents.customHoverRenderer
-              ? () => customComponents.customHoverRenderer(getCustomInfoRendererProps(this.props))
+              ? () =>
+                  customComponents.customHoverRenderer(
+                    getCustomInfoRendererProps(this.props)
+                  )
               : null
           }
         ></ItemHover>
       )
     );
   }
-
 
   getImageItem(imageDimensions) {
     const props = utils.pick(this.props, [
@@ -451,7 +457,12 @@ class ItemView extends React.Component {
     const { innerWidth, innerHeight } = style;
     const { innerTop, innerLeft } = offset;
 
-    const itemStyles = { width: innerWidth, height: innerHeight, marginTop: innerTop, marginLeft: innerLeft };
+    const itemStyles = {
+      width: innerWidth,
+      height: innerHeight,
+      marginTop: innerTop,
+      marginLeft: innerLeft,
+    };
     let itemHover = null;
     if (this.shouldHover()) {
       itemHover = this.getItemHover(itemStyles);
@@ -562,26 +573,29 @@ class ItemView extends React.Component {
       placement
     );
 
-    const overrideDeckTransition = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options)
-    const slideAnimationStyles = getSlideAnimationStyles(this.props, overrideDeckTransition);
+    const overrideDeckTransition = GALLERY_CONSTS.isLayout('SLIDESHOW')(
+      this.props.options
+    );
+    const slideAnimationStyles = getSlideAnimationStyles(
+      this.props,
+      overrideDeckTransition
+    );
 
     info = (
       <div
         className={'gallery-item-common-info-outer '}
-        style={{...getOuterInfoStyle(
-          placement,
-          options,
-          style.height,
-          options.textBoxHeight
-        ), ...slideAnimationStyles}}
-      >
-        <div
-          style={getInnerInfoStyle(
+        style={{
+          ...getOuterInfoStyle(
             placement,
             options,
-            infoHeight,
-            infoWidth
-          )}
+            style.height,
+            options.textBoxHeight
+          ),
+          ...slideAnimationStyles,
+        }}
+      >
+        <div
+          style={getInnerInfoStyle(placement, options, infoHeight, infoWidth)}
           className={'gallery-item-common-info ' + elementName}
           onClick={this.onItemInfoClick}
         >
@@ -625,8 +639,7 @@ class ItemView extends React.Component {
       options,
       settings = {},
     } = this.props;
-    const { scrollDirection, imageMargin, isRTL, slideAnimation } =
-      options;
+    const { scrollDirection, imageMargin, isRTL, slideAnimation } = options;
 
     const containerStyleByoptions = getContainerStyle(options);
 
@@ -709,7 +722,7 @@ class ItemView extends React.Component {
 
   getItemWrapperStyles() {
     const { options, style, type } = this.props;
-    const { height, width} = style;
+    const { height, width } = style;
     const styles = {};
     if (type === 'text') {
       styles.backgroundColor =
@@ -726,21 +739,20 @@ class ItemView extends React.Component {
 
     const itemWrapperStyles = {
       ...styles,
-      ...(getSlideAnimationStyles(this.props)),
+      ...getSlideAnimationStyles(this.props),
     };
 
     return itemWrapperStyles;
   }
 
-
   getItemAriaLabel() {
     const { type, calculatedAlt, htmlContent, options } = this.props;
     const mapTypeToLabel = {
-      'dummy': '',
-      'text' : htmlContent,
-      'video': calculatedAlt || 'Untitled video',
-      'image': calculatedAlt || 'Untitled image',
-    }
+      dummy: '',
+      text: htmlContent,
+      video: calculatedAlt || 'Untitled video',
+      image: calculatedAlt || 'Untitled image',
+    };
     const label = mapTypeToLabel[type];
     return label + (options.isStoreGallery ? ', Buy Now' : '');
   }
@@ -748,10 +760,11 @@ class ItemView extends React.Component {
   isItemClickable(options) {
     const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
 
-    return (options.itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
-        (options.itemClick === GALLERY_CONSTS.itemClick.LINK && itemDoesntHaveLink)
-          ? false
-          : true)
+    return options.itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
+      (options.itemClick === GALLERY_CONSTS.itemClick.LINK &&
+        itemDoesntHaveLink)
+      ? false
+      : true;
   }
 
   getItemContainerClass() {
@@ -773,7 +786,7 @@ class ItemView extends React.Component {
       //animations
       'animation-slide':
         imagePlacementAnimation ===
-          GALLERY_CONSTS.imagePlacementAnimations.SLIDE,
+        GALLERY_CONSTS.imagePlacementAnimations.SLIDE,
 
       //overlay animations
       'hover-animation-fade-in':
@@ -844,7 +857,7 @@ class ItemView extends React.Component {
       try {
         React.initializeTouchEvents(true);
       } catch (e) {
-        console.error(e)
+        console.error(e);
       }
     }
 
@@ -852,7 +865,6 @@ class ItemView extends React.Component {
       'current_hover_change',
       this.checkIfCurrentHoverChanged
     );
-
   }
 
   componentWillUnmount() {
@@ -867,7 +879,7 @@ class ItemView extends React.Component {
     changeActiveElementIfNeeded({
       prevProps,
       currentProps: this.props,
-      itemContainer: this.itemContainer
+      itemContainer: this.itemContainer,
     });
   }
 
@@ -907,7 +919,6 @@ class ItemView extends React.Component {
     }
   }
 
-
   composeItem() {
     const { photoId, id, hash, idx, options, type, url } = this.props;
 
@@ -942,8 +953,7 @@ class ItemView extends React.Component {
         {this.getLeftInfoElementIfNeeded()}
         <div
           style={{
-            ...(
-              getImageStyle(this.props.options)),
+            ...getImageStyle(this.props.options),
             ...(GALLERY_CONSTS.hasExternalRightPlacement(
               this.props.options.titlePlacement,
               this.props.idx
@@ -977,47 +987,38 @@ class ItemView extends React.Component {
       so it will not go deeper to the item-container keyDown event.
       */
       this.onAnchorKeyDown(e);
-    }
+    };
     const handleFocus = () => {
       onAnchorFocus({
         itemAnchor: this.itemAnchor,
-        enableExperimentalFeatures:
-          this.props.enableExperimentalFeatures,
+        enableExperimentalFeatures: this.props.enableExperimentalFeatures,
         itemContainer: this.itemContainer,
       });
+    };
+    const linkParams = getLinkParams(this.props);
+    const elementProps = {
+      ref: (e) => (this.itemAnchor = e),
+      'data-id': photoId,
+      class: 'item-link-wrapper',
+      'data-idx': idx,
+      'data-hook': 'item-link-wrapper',
+      onFocus: handleFocus,
+      tabIndex: -1,
+      onKeyDown: handleKeyDown,
+    };
+    if (linkParams?.href?.length > 0) {
+      return (
+        <a key={'item-container-link-' + id} {...elementProps} {...linkParams}>
+          {innerDiv}
+        </a>
+      );
+    } else {
+      return (
+        <div key={'item-container-div-' + id} {...elementProps}>
+          {innerDiv}
+        </div>
+      );
     }
-      const linkParams = getLinkParams(this.props)
-      const elementProps = {
-        ref: (e) => (this.itemAnchor = e),
-        'data-id': photoId,
-        class: 'item-link-wrapper',
-        'data-idx': idx,
-        'data-hook': 'item-link-wrapper',
-        onFocus: handleFocus,
-        tabIndex: -1,
-        onKeyDown: handleKeyDown,
-      }
-      if (linkParams?.href?.length>0) {
-        return (
-          <a
-          key={ 'item-container-link-' + id}
-          {...elementProps}
-          {...linkParams}
-          >
-            {innerDiv}
-          </a>
-        );
-      } else {
-        return (
-          <div
-          key={ 'item-container-div-' + id}
-          {...elementProps}
-          >
-            {innerDiv}
-          </div>
-        );
-      }
-    
   }
 
   //-----------------------------------------| RENDER |--------------------------------------------//

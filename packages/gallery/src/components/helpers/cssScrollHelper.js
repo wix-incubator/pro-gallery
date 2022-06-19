@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
 
 class CssScrollHelper {
@@ -94,8 +93,7 @@ class CssScrollHelper {
     this.minHeight = 0 - maxStep;
     this.maxHeight =
       (Math.ceil(
-        ((options.scrollDirection ===
-        GALLERY_CONSTS.scrollDirection.HORIZONTAL
+        ((options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
           ? right
           : top) +
           this.screenSize) /
@@ -244,16 +242,11 @@ class CssScrollHelper {
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.FADE_IN) {
       scrollAnimationCss +=
-        createScrollSelectors(
-          animationPreparationPadding,
-          ''
-        ) +
+        createScrollSelectors(animationPreparationPadding, '') +
         `{filter: opacity(0); transition: filter 1.${_randomDuration}s ease-in !important;}`;
       scrollAnimationCss +=
-        createScrollSelectors(
-          animationActivePadding,
-          ''
-        ) + `{filter: opacity(1) !important;}`;
+        createScrollSelectors(animationActivePadding, '') +
+        `{filter: opacity(1) !important;}`;
     }
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.GRAYSCALE) {
@@ -320,8 +313,7 @@ class CssScrollHelper {
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.ONE_COLOR) {
       const oneColorAnimationColor =
-        options.oneColorAnimationColor &&
-        options.oneColorAnimationColor.value
+        options.oneColorAnimationColor && options.oneColorAnimationColor.value
           ? options.oneColorAnimationColor.value
           : 'transparent';
 

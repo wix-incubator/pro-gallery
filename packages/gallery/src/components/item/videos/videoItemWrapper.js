@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import { utils, isEditMode } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
@@ -7,10 +6,11 @@ import PlayTriangle from '../../svgs/components/play_triangle';
 import VideoItemPlaceholder from './videoItemPlaceholder';
 
 const isIos = utils.isiOS();
-const useTransparentPlayButtonAndForceLoadVideo = (props) => (props.videoUrl || props.url).includes('youtube.com') && isIos;
+const useTransparentPlayButtonAndForceLoadVideo = (props) =>
+  (props.videoUrl || props.url).includes('youtube.com') && isIos;
 
-const VideoPlayButton = ({pointerEvents}) => (
-  <div style={{ pointerEvents: pointerEvents ? "initial" : "none" }}>
+const VideoPlayButton = ({ pointerEvents }) => (
+  <div style={{ pointerEvents: pointerEvents ? 'initial' : 'none' }}>
     <i
       key="play-triangle"
       data-hook="play-triangle"
@@ -32,8 +32,7 @@ class VideoItemWrapper extends React.Component {
   constructor(props) {
     super(props);
     this.mightPlayVideo = this.mightPlayVideo.bind(this);
-    this.createVideoPlaceholder=
-      this.createVideoPlaceholder.bind(this);
+    this.createVideoPlaceholder = this.createVideoPlaceholder.bind(this);
     this.state = { VideoItemLoaded: false };
   }
 
@@ -75,7 +74,14 @@ class VideoItemWrapper extends React.Component {
         isThumbnail={!!this.props.thumbnailHighlightId}
         id={this.props.idx}
         videoPlayButton={
-          showVideoPlayButton && !this.mightPlayVideo() && <VideoPlayButton pointerEvents={!useTransparentPlayButtonAndForceLoadVideo(this.props)} />
+          showVideoPlayButton &&
+          !this.mightPlayVideo() && (
+            <VideoPlayButton
+              pointerEvents={
+                !useTransparentPlayButtonAndForceLoadVideo(this.props)
+              }
+            />
+          )
         }
       />
     );
@@ -112,13 +118,23 @@ class VideoItemWrapper extends React.Component {
         </div>
       );
     }
-    const shouldUseTransparentPlayButtonAndForceLoadVideo = useTransparentPlayButtonAndForceLoadVideo(this.props);
+    const shouldUseTransparentPlayButtonAndForceLoadVideo =
+      useTransparentPlayButtonAndForceLoadVideo(this.props);
     return (
       <VideoItem
         {...this.props}
-        loadVideo={this.props.loadVideo || shouldUseTransparentPlayButtonAndForceLoadVideo}
+        loadVideo={
+          this.props.loadVideo ||
+          shouldUseTransparentPlayButtonAndForceLoadVideo
+        }
         videoPlaceholder={videoPlaceholder}
-        videoPlayButton={showVideoPlayButton && <VideoPlayButton pointerEvents={!shouldUseTransparentPlayButtonAndForceLoadVideo} />}
+        videoPlayButton={
+          showVideoPlayButton && (
+            <VideoPlayButton
+              pointerEvents={!shouldUseTransparentPlayButtonAndForceLoadVideo}
+            />
+          )
+        }
       />
     );
   }

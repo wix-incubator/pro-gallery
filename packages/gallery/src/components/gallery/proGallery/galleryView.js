@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import { window, utils, GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDebugMessage from './galleryDebugMessage';
@@ -47,11 +46,14 @@ class GalleryView extends React.Component {
           break;
         case 40: //down
           newIdx = findNeighborItem(idx, 'down');
-          if((this.props.totalItemsCount -1) === newIdx && newIdx === this.state.activeIndex){
+          if (
+            this.props.totalItemsCount - 1 === newIdx &&
+            newIdx === this.state.activeIndex
+          ) {
             // If we are on the last item in the gallery and we pressed the down arrow
             // we want to move the focus to the out0fGallery element
             e.stopPropagation();
-            utils.focusGalleryElement(this.props.outOfViewComponent)
+            utils.focusGalleryElement(this.props.outOfViewComponent);
             return false;
           }
           break;
@@ -146,38 +148,42 @@ class GalleryView extends React.Component {
     } else {
       galleryHeight = galleryStructure.height + 'px';
     }
-    const galleryWidth = this.props.isPrerenderMode ? 'auto' : this.props.container.galleryWidth - options.imageMargin;
-    
-    const items = getVisibleItems(
-      galleryStructure.galleryItems,
-      container
+    const galleryWidth = this.props.isPrerenderMode
+      ? 'auto'
+      : this.props.container.galleryWidth - options.imageMargin;
+
+    const items = getVisibleItems(galleryStructure.galleryItems, container);
+    const itemsWithVirtualizationData =
+      getItemsInViewportOrMarginByScrollLocation({
+        items,
+        options,
+        virtualizationSettings,
+        galleryHeight: Math.min(
+          galleryStructure.height,
+          container.screen?.height || galleryStructure.height
+        ),
+        scrollPosition: scrollTop || 0,
+      });
+    const layout = itemsWithVirtualizationData.map(
+      ({ item, shouldRender }, index) => {
+        const itemProps = item.renderProps({
+          ...galleryConfig,
+          visible: item.isVisible,
+          key: `itemView-${item.id}-${index}`,
+        });
+        return React.createElement(itemView, {
+          ...itemProps,
+          type: shouldRender ? itemProps.type : 'dummy',
+        });
+      }
     );
-    const itemsWithVirtualizationData = getItemsInViewportOrMarginByScrollLocation({
-      items,
-      options,
-      virtualizationSettings,
-      galleryHeight: Math.min(galleryStructure.height, container.screen?.height || galleryStructure.height),
-      scrollPosition: scrollTop || 0,
-    });
-    const layout = itemsWithVirtualizationData.map(({ item, shouldRender }, index) => {
-      const itemProps = item.renderProps({
-        ...galleryConfig,
-        visible: item.isVisible,
-        key: `itemView-${item.id}-${index}`,
-      });
-      return React.createElement(itemView, {
-        ...itemProps,
-        type: shouldRender ? itemProps.type : 'dummy',
-      });
-    });
 
     return (
       <div
-        id= {this.props.galleryContainerId}
+        id={this.props.galleryContainerId}
         className={
           'pro-gallery inline-styles ' +
-          (options.scrollDirection ===
-          GALLERY_CONSTS.scrollDirection.HORIZONTAL
+          (options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
             ? ' one-row slider hide-scrollbars '
             : '') +
           (settings?.isAccessible ? ' accessible ' : '') +
@@ -191,7 +197,7 @@ class GalleryView extends React.Component {
         onKeyDown={this.handleKeys}
       >
         <div
-          id= {`pro-gallery-margin-container-${this.props.id}`}
+          id={`pro-gallery-margin-container-${this.props.id}`}
           className={'pro-gallery-margin-container'}
           style={{
             margin: options.layoutParams.gallerySpacing + 'px',
@@ -245,7 +251,9 @@ class GalleryView extends React.Component {
   }
 
   createShowMoreButton() {
-    if (typeof this.props.customComponents.customLoadMoreRenderer === 'function') {
+    if (
+      typeof this.props.customComponents.customLoadMoreRenderer === 'function'
+    ) {
       return (
         <div onClick={this.showMoreItems}>
           {this.props.customComponents.customLoadMoreRenderer(this.props)}
@@ -292,10 +300,7 @@ class GalleryView extends React.Component {
     if (utils.isVerbose()) {
       console.count('galleryView render');
       console.time('Rendering Gallery took ');
-      console.log(
-        '[DEBUG_RENDER] GalleryView options',
-        this.props.options
-      );
+      console.log('[DEBUG_RENDER] GalleryView options', this.props.options);
       console.log(
         '[DEBUG_RENDER] GalleryView props changed',
         utils.printableObjectsDiff(this.lastProps || {}, this.props)
@@ -323,7 +328,7 @@ class GalleryView extends React.Component {
         key={`pro-gallery-${this.id}`}
         {...utils.getAriaAttributes({
           proGalleryRole: this.props.proGalleryRole,
-          proGalleryRegionLabel: this.props.proGalleryRegionLabel
+          proGalleryRegionLabel: this.props.proGalleryRegionLabel,
         })}
       >
         {screenLogs}
