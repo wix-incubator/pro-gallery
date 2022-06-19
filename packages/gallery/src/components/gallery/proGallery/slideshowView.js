@@ -972,17 +972,31 @@ class SlideshowView extends React.Component {
     );
   }
 
+  getCustomNavigationPanel = () => {
+    return false;
+  };
+
   getNavigationPanelArray() {
     if (!this.props.options.hasThumbnails) {
       return [false, false];
     }
-    const navigationPanel = (
-      <NavigationPanel
-        {...this.props}
-        activeIndex={this.state.activeIndex}
-        navigationToIdxCB={this.scrollToThumbnail}
-      />
-    );
+    const customNavigationPanelRenderer = this.getCustomNavigationPanel();
+    let navigationPanel;
+    if (customNavigationPanelRenderer) {
+      navigationPanel = customNavigationPanelRenderer({
+        ...this.props,
+        activeIndex: this.state.activeIndex,
+        navigationToIdxCB: this.scrollToThumbnail,
+      });
+    } else {
+      navigationPanel = (
+        <NavigationPanel
+          {...this.props}
+          activeIndex={this.state.activeIndex}
+          navigationToIdxCB={this.scrollToThumbnail}
+        />
+      );
+    }
 
     const navigationPanelPosition =
       this.props.options.galleryThumbnailsAlignment;
