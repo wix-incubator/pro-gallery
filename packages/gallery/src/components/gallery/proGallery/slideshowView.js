@@ -973,13 +973,21 @@ class SlideshowView extends React.Component {
   }
 
   getCustomNavigationPanel = () => {
-    return false;
+    if (
+      typeof this.props.customComponents?.customNavigationPanelRenderer ===
+      'function'
+    ) {
+      return this.props.customComponents.customNavigationPanelRenderer;
+    } else {
+      return false;
+    }
   };
 
   getNavigationPanelArray() {
     if (!this.props.options.hasThumbnails) {
       return [false, false];
     }
+
     const customNavigationPanelRenderer = this.getCustomNavigationPanel();
     let navigationPanel;
     if (customNavigationPanelRenderer) {
@@ -1032,9 +1040,21 @@ class SlideshowView extends React.Component {
 
     return classNames;
   }
-
+  getNavigationPanelFlexStylesIfNeeded() {
+    const hasNavigationPanel = this.props.options.hasThumbnails;
+    const hasVerticalNavigationPanelPlacement = ['top', 'bottom'].some(
+      (placement) =>
+        this.props.options.galleryThumbnailsAlignment.includes(placement)
+    );
+    if (hasNavigationPanel && hasVerticalNavigationPanelPlacement) {
+      return { flexDirection: 'column' };
+    } else {
+      return {};
+    }
+  }
   getStyles() {
     return {
+      ...this.getNavigationPanelFlexStylesIfNeeded(),
       margin:
         -1 *
         (this.props.options.imageMargin / 2 -
