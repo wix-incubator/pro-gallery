@@ -1018,9 +1018,22 @@ class SlideshowView extends React.Component {
 
     return classNames;
   }
+  getNavigationPanelFlexStylesIfNeeded() {
+    const hasNavigationPanel = this.props.options.hasThumbnails;
+    const hasVerticalNavigationPanelPlacement = ['top', 'bottom'].some(
+      (placement) =>
+        this.props.options.galleryThumbnailsAlignment.includes(placement)
+    );
+    if (hasNavigationPanel && hasVerticalNavigationPanelPlacement) {
+      return { flexDirection: 'column' };
+    } else {
+      return {};
+    }
+  }
 
   getStyles() {
     return {
+      ...this.getNavigationPanelFlexStylesIfNeeded(),
       margin:
         -1 *
         (this.props.options.imageMargin / 2 -
