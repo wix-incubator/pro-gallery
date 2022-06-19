@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import * as lodash from './lodash';
 import window from '../window/windowWrapper';
 import {
@@ -6,7 +5,7 @@ import {
   isPreviewMode,
   isDeviceTypeMobile,
 } from '../window/viewModeWrapper';
-import GALLERY_CONSTS from '../constants'
+import GALLERY_CONSTS from '../constants';
 
 class Utils {
   constructor() {
@@ -44,11 +43,7 @@ class Utils {
     return value;
   }
 
-  sliceArrayWithRange(
-    array,
-    start,
-    end
-  ) {
+  sliceArrayWithRange(array, start, end) {
     return Array(end - start)
       .fill(0)
       .map((_, i) => {
@@ -57,11 +52,7 @@ class Utils {
       });
   }
 
-  sliceArrayIfAvailable(
-    array,
-    start,
-    end
-  ) {
+  sliceArrayIfAvailable(array, start, end) {
     let maxStart = Math.max(start, 0);
     let minEnd = Math.min(end, array.length);
     if (maxStart > start) {
@@ -484,7 +475,6 @@ class Utils {
     }
   }
 
-
   printableObjectsDiff(obj1, obj2, prefix = '') {
     const _toString = (v) => {
       if (v === '') {
@@ -692,15 +682,17 @@ class Utils {
         );
       }
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
   }
 
   isSingleItemHorizontalDisplay(options) {
-    return options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+    return (
+      options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
       options.groupSize === 1 &&
       options.cubeImages &&
-      options.layoutParams.cropRatio === '100%/100%';
+      options.layoutParams.cropRatio === '100%/100%'
+    );
   }
 
   getAriaAttributes({ proGalleryRole, proGalleryRegionLabel }) {
@@ -712,14 +704,14 @@ class Utils {
     };
   }
 
-  focusGalleryElement(element){
+  focusGalleryElement(element) {
     element.focus();
   }
-  
-  isMeaningfulString (str) {
-    if (typeof str !== 'string') return false 
+
+  isMeaningfulString(str) {
+    if (typeof str !== 'string') return false;
     return !!str.trim().length;
-  };
+  }
 }
 
 export default new Utils();
