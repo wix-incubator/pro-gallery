@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import {
   GALLERY_CONSTS,
@@ -12,41 +11,41 @@ import GalleryDebugMessage from './galleryDebugMessage.js';
 import PlayIcon from '../../svgs/components/play';
 import PauseIcon from '../../svgs/components/pause';
 import TextItem from '../../item/textItem.js';
-import { 
+import {
   getArrowsRenderData,
   shouldRenderNavArrows,
-  getArrowBoxStyle
-} from '../../helpers/navigationArrowUtils'
+  getArrowBoxStyle,
+} from '../../helpers/navigationArrowUtils';
 import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
-import { getThumbnailsData, clearGalleryItems } from '../../helpers/thumbnailsLogic';
+import {
+  getThumbnailsData,
+  clearGalleryItems,
+} from '../../helpers/thumbnailsLogic';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
-
-
 function getDirection(code) {
-  const reverse = [33, 37, 38]
-  const direct = [32, 34, 39, 40]
-  if (reverse.includes(code)) return -1
-  else if (direct.includes(code)) return 1
-  throw new Error(`no direction is defined for charCode: ${code}`)
+  const reverse = [33, 37, 38];
+  const direct = [32, 34, 39, 40];
+  if (reverse.includes(code)) return -1;
+  else if (direct.includes(code)) return 1;
+  throw new Error(`no direction is defined for charCode: ${code}`);
 }
-
 
 class SlideshowView extends React.Component {
   constructor(props) {
     super(props);
 
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
-    this.clearAutoSlideshowInterval = this.clearAutoSlideshowInterval.bind(this);
+    this.clearAutoSlideshowInterval =
+      this.clearAutoSlideshowInterval.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.onAutoSlideShowButtonClick =
       this.onAutoSlideShowButtonClick.bind(this);
     this.startAutoSlideshowIfNeeded =
       this.startAutoSlideshowIfNeeded.bind(this);
-    this.updateAutoSlideShowState =
-      this.updateAutoSlideShowState.bind(this);
+    this.updateAutoSlideShowState = this.updateAutoSlideShowState.bind(this);
     this.canStartAutoSlideshow = this.canStartAutoSlideshow.bind(this);
     this.handleSlideshowKeyPress = this.handleSlideshowKeyPress.bind(this);
     this.onAutoSlideshowAutoPlayKeyPress =
@@ -79,14 +78,17 @@ class SlideshowView extends React.Component {
   isScrollStart() {
     const { slideAnimation } = this.props.options;
 
-    if (slideAnimation !== GALLERY_CONSTS.slideAnimations.SCROLL || !this.scrollElement) {
+    if (
+      slideAnimation !== GALLERY_CONSTS.slideAnimations.SCROLL ||
+      !this.scrollElement
+    ) {
       return false;
     }
     return this.scrollPosition() <= 1;
   }
 
   isScrollEnd() {
-    const { slideshowLoop, slideAnimation } = this.props.options
+    const { slideshowLoop, slideAnimation } = this.props.options;
     if (
       slideshowLoop ||
       slideAnimation === GALLERY_CONSTS.slideAnimations.FADE ||
@@ -96,7 +98,8 @@ class SlideshowView extends React.Component {
     }
     return (
       this.isAllItemsLoaded() &&
-      this.scrollPositionAtTheAndOfTheGallery() >=  Math.floor(this.getScrollElementWidth())
+      this.scrollPositionAtTheAndOfTheGallery() >=
+        Math.floor(this.getScrollElementWidth())
     );
   }
 
@@ -112,7 +115,7 @@ class SlideshowView extends React.Component {
 
   getScrollElementWidth() {
     const { galleryStructure } = this.props;
-    const { imageMargin } = this.props.options
+    const { imageMargin } = this.props.options;
     return galleryStructure.width - imageMargin / 2;
   }
 
@@ -154,13 +157,10 @@ class SlideshowView extends React.Component {
     isKeyboardNavigation = false,
     isContinuousScrolling = false,
   }) {
-
     const scrollingUpTheGallery = this.props.options.isRTL
-    ? direction <= -1
-    : direction >= 1;
-    if (
-      this.shouldBlockNext({ scrollingUpTheGallery })
-    ) {
+      ? direction <= -1
+      : direction >= 1;
+    if (this.shouldBlockNext({ scrollingUpTheGallery })) {
       this.clearAutoSlideshowInterval();
       return;
     }
@@ -183,7 +183,12 @@ class SlideshowView extends React.Component {
     }
 
     if (avoidIndividualNavigation && this.props.options.groupSize > 1) {
-      this.nextGroup({ direction, scrollDuration, isContinuousScrolling, scrollingUpTheGallery }); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
+      this.nextGroup({
+        direction,
+        scrollDuration,
+        isContinuousScrolling,
+        scrollingUpTheGallery,
+      }); //if its not in accessibility that requieres individual nav and we are in a horizontal(this file) collage(layout 0) - use group navigation
     } else {
       if (
         avoidIndividualNavigation &&
@@ -222,12 +227,10 @@ class SlideshowView extends React.Component {
         !(this.props.options.groupSize > 1))
     ) {
       const key = initiator === 'nextGroup' ? 'groups' : 'galleryItems';
-      nextIndex =
-        this.getCenteredItemOrGroupIdxByScroll(key) + direction;
-    }
-    else if(initiator === 'nextItem') {
-      if(ignoreScrollPosition || !isAutoTrigger) {
-        nextIndex = this.state.activeIndex
+      nextIndex = this.getCenteredItemOrGroupIdxByScroll(key) + direction;
+    } else if (initiator === 'nextItem') {
+      if (ignoreScrollPosition || !isAutoTrigger) {
+        nextIndex = this.state.activeIndex;
       } else {
         nextIndex = this.setCurrentItemByScroll();
       }
@@ -244,7 +247,6 @@ class SlideshowView extends React.Component {
     this.isAutoScrolling = true;
     return nextIndex;
   }
-
 
   async nextItem({
     direction,
@@ -319,7 +321,8 @@ class SlideshowView extends React.Component {
         scrollDuration,
         scrollingUpTheGallery
       );
-      const nextItem = this.getCenteredItemOrGroupIdxByScroll('galleryItems') + direction;
+      const nextItem =
+        this.getCenteredItemOrGroupIdxByScroll('galleryItems') + direction;
       this.onScrollToItemOrGroup(nextItem, isContinuousScrolling);
     } catch (e) {
       this.onThrowScrollError('Cannot proceed to the next Group', e);
@@ -333,8 +336,11 @@ class SlideshowView extends React.Component {
     scrollDuration,
     scrollingUpTheGallery
   ) {
-    const shouldAllowScroll = !this.shouldNotAllowScroll({ scrollingUpTheGallery });
-    const { scrollMarginCorrection, _scrollDuration } = this.getScrollParameters(scrollDuration);
+    const shouldAllowScroll = !this.shouldNotAllowScroll({
+      scrollingUpTheGallery,
+    });
+    const { scrollMarginCorrection, _scrollDuration } =
+      this.getScrollParameters(scrollDuration);
     shouldAllowScroll &&
       (await func(
         indexToScroll,
@@ -371,7 +377,8 @@ class SlideshowView extends React.Component {
   getScrollParameters(scrollDuration) {
     return {
       scrollMarginCorrection: this.getStyles().margin || 0,
-      _scrollDuration: scrollDuration || this.props.options.scrollDuration || 400,
+      _scrollDuration:
+        scrollDuration || this.props.options.scrollDuration || 400,
     };
   }
 
@@ -401,10 +408,7 @@ class SlideshowView extends React.Component {
   }
 
   canStartAutoSlideshow(options) {
-    return (
-      options.isAutoSlideshow &&
-      !this.state.shouldBlockAutoSlideshow
-    );
+    return options.isAutoSlideshow && !this.state.shouldBlockAutoSlideshow;
   }
 
   startAutoSlideshowIfNeeded(options) {
@@ -412,7 +416,7 @@ class SlideshowView extends React.Component {
     if (this.canStartAutoSlideshow(options)) {
       if (
         options.autoSlideshowType ===
-        GALLERY_CONSTS.autoSlideshowTypes.CONTINUOUS &&
+          GALLERY_CONSTS.autoSlideshowTypes.CONTINUOUS &&
         options.autoSlideshowContinuousSpeed > 0
       ) {
         this.autoScrollToNextItem();
@@ -430,10 +434,7 @@ class SlideshowView extends React.Component {
   }
 
   autoScrollToNextItem = () => {
-    if (
-      !isEditMode() &&
-      (this.props.isInViewport || isPreviewMode())
-    ) {
+    if (!isEditMode() && (this.props.isInViewport || isPreviewMode())) {
       const { options } = this.props;
       const direction = options.isRTL ? -1 : 1;
 
@@ -446,8 +447,9 @@ class SlideshowView extends React.Component {
           isAutoTrigger: true,
           isContinuousScrolling: true,
         });
-      } else if (options.autoSlideshowType ===
-        GALLERY_CONSTS.autoSlideshowTypes.INTERVAL) {
+      } else if (
+        options.autoSlideshowType === GALLERY_CONSTS.autoSlideshowTypes.INTERVAL
+      ) {
         this._next({
           direction,
           isAutoTrigger: true,
@@ -458,7 +460,10 @@ class SlideshowView extends React.Component {
   };
 
   get clearedGalleryItems() {
-    return clearGalleryItems(this.props.items, this.props.galleryStructure.galleryItems);
+    return clearGalleryItems(
+      this.props.items,
+      this.props.galleryStructure.galleryItems
+    );
   }
   scrollToThumbnail(itemIdx, scrollDuration) {
     //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
@@ -508,13 +513,21 @@ class SlideshowView extends React.Component {
     return false;
   }
 
-
   createThumbnails(thumbnailPosition) {
     const { options, galleryStructure, settings } = this.props;
     const { clearedGalleryItems } = this;
-    const activeIndex = utils.inRange(this.state.activeIndex, clearedGalleryItems.length);
+    const activeIndex = utils.inRange(
+      this.state.activeIndex,
+      clearedGalleryItems.length
+    );
     const { thumbnailSize, thumbnailSpacings } = options;
-    const { horizontalThumbnails, items, thumbnailsMargins, thumbnailsStyle, activeIndexOffsetMemory } = getThumbnailsData({
+    const {
+      horizontalThumbnails,
+      items,
+      thumbnailsMargins,
+      thumbnailsStyle,
+      activeIndexOffsetMemory,
+    } = getThumbnailsData({
       items: this.props.items,
       activeIndex,
       options,
@@ -614,14 +627,15 @@ class SlideshowView extends React.Component {
   getCenteredItemOrGroupIdxByScroll(key) {
     const itemsOrGroups = this.props.galleryStructure[key];
     let centeredItemOrGroupIdx;
-    const scrollPositionAtTheMiddleOfTheGallery = this.scrollPositionAtTheMiddleOfTheGallery();
+    const scrollPositionAtTheMiddleOfTheGallery =
+      this.scrollPositionAtTheMiddleOfTheGallery();
 
     if (scrollPositionAtTheMiddleOfTheGallery === 0) {
       centeredItemOrGroupIdx = 0;
     } else {
       for (let itemOrGroup, i = 0; (itemOrGroup = itemsOrGroups[i]); i++) {
-        const itemOrGroupLeft = key === 'galleryItems' ?
-        itemOrGroup.offset.left : itemOrGroup.left
+        const itemOrGroupLeft =
+          key === 'galleryItems' ? itemOrGroup.offset.left : itemOrGroup.left;
         if (itemOrGroupLeft > scrollPositionAtTheMiddleOfTheGallery) {
           centeredItemOrGroupIdx = i - 1;
           break;
@@ -646,8 +660,8 @@ class SlideshowView extends React.Component {
     }
 
     const isScrolling =
-      (this.scrollElement && this.scrollElement.getAttribute('data-scrolling')) ===
-      'true';
+      (this.scrollElement &&
+        this.scrollElement.getAttribute('data-scrolling')) === 'true';
 
     if (isScrolling) {
       this.clearAutoSlideshowInterval();
@@ -691,45 +705,43 @@ class SlideshowView extends React.Component {
       textBoxHeight,
     } = this.props.options;
     const {
-      container: {
-        type,
-        backgroundColor,
-        borderRadius,
-      },
+      container: { type, backgroundColor, borderRadius },
     } = layoutParams.navigationArrows;
     const { hideLeftArrow, hideRightArrow } = this.state;
-    const {arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight} = getArrowsRenderData({
-      customNavArrowsRenderer: this.props.customComponents.customNavArrowsRenderer,
-      arrowsColor: this.props.options.arrowsColor,
-      arrowsSize: this.props.options.arrowsSize,
-      arrowsType: layoutParams.navigationArrows.type,
-      containerStyleType: type
-    });
+    const { arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight } =
+      getArrowsRenderData({
+        customNavArrowsRenderer:
+          this.props.customComponents.customNavArrowsRenderer,
+        arrowsColor: this.props.options.arrowsColor,
+        arrowsSize: this.props.options.arrowsSize,
+        arrowsType: layoutParams.navigationArrows.type,
+        containerStyleType: type,
+      });
 
     const { galleryHeight } = this.props.container;
     const infoHeight = textBoxHeight;
     const imageHeight = galleryHeight - infoHeight;
 
-
     // the nav arrows parent container top edge is imageMargin/2 ABOVE the actual view, that calculates the middle point of gallery
-    const galleryVerticalCenter = `50% + ${imageMargin/4}px` 
+    const galleryVerticalCenter = `50% + ${imageMargin / 4}px`;
 
-    // Determines the direction fix, the direction in which we move the nav arrows 'vertical position fix' pixels 
+    // Determines the direction fix, the direction in which we move the nav arrows 'vertical position fix' pixels
     let directionFix;
-    if (GALLERY_CONSTS.hasExternalAbovePlacement(titlePlacement)){
+    if (GALLERY_CONSTS.hasExternalAbovePlacement(titlePlacement)) {
       directionFix = -1;
-    } else if (GALLERY_CONSTS.hasExternalBelowPlacement(titlePlacement)){
+    } else if (GALLERY_CONSTS.hasExternalBelowPlacement(titlePlacement)) {
       directionFix = 1;
     } else {
       // if we got here, we should be ITEM_CENTER, taken care of in layoutHelper.js
     }
-    const verticalPositionFix = 
-          {
-            [GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER]: 0,
-            [GALLERY_CONSTS.arrowsVerticalPosition.IMAGE_CENTER]: infoHeight * directionFix,
-            [GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER]: -imageHeight * directionFix,
-          }[arrowsVerticalPosition]
-    
+    const verticalPositionFix = {
+      [GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER]: 0,
+      [GALLERY_CONSTS.arrowsVerticalPosition.IMAGE_CENTER]:
+        infoHeight * directionFix,
+      [GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER]:
+        -imageHeight * directionFix,
+    }[arrowsVerticalPosition];
+
     const containerStyle = {
       width: `${navArrowsContainerWidth}px`,
       height: `${navArrowsContainerHeight}px`,
@@ -740,7 +752,7 @@ class SlideshowView extends React.Component {
         type,
         backgroundColor,
         borderRadius,
-      })
+      }),
     };
 
     const arrowsPos =
@@ -757,11 +769,12 @@ class SlideshowView extends React.Component {
     const nextContainerStyle = {
       right: arrowsPos,
     };
-    const useDropShadow = type === GALLERY_CONSTS.arrowsContainerStyleType.SHADOW;
+    const useDropShadow =
+      type === GALLERY_CONSTS.arrowsContainerStyleType.SHADOW;
     const arrowsBaseClasses = [
       'nav-arrows-container',
-      useDropShadow ? 'drop-shadow' : ''
-    ]
+      useDropShadow ? 'drop-shadow' : '',
+    ];
     return [
       hideLeftArrow ? null : (
         <button
@@ -795,26 +808,27 @@ class SlideshowView extends React.Component {
     ];
   }
 
-
   getBufferedItems(galleryGroups, container) {
     const { state, props } = this;
     const { options, virtualizationSettings, getVisibleItems } = props;
     const { activeIndex } = state;
     const groups = getVisibleItems(galleryGroups, container);
-    const galleryWidth = this.props.galleryContainerRef?.clientWidth || container.galleryWidth || 0;
-  
+    const galleryWidth =
+      this.props.galleryContainerRef?.clientWidth ||
+      container.galleryWidth ||
+      0;
+
     return getItemsInViewportOrMarginByActiveGroup({
       groups,
       activeIndex,
       galleryWidth,
       options,
       virtualizationSettings,
-    })
+    });
   }
 
   createLayout() {
-    const { container, galleryStructure } =
-      this.props;
+    const { container, galleryStructure } = this.props;
 
     const galleryConfig = {
       scrollingElement: this.props.scrollingElement,
@@ -838,33 +852,31 @@ class SlideshowView extends React.Component {
       },
     };
 
-
     const renderGroups = (column) => {
       const layoutGroupView =
         !!column.galleryGroups.length &&
         this.getBufferedItems(column.galleryGroups, container);
       if (layoutGroupView) {
-        return (
-          layoutGroupView.map(({group, shouldRender}) => {
-            return group.rendered
-              ? React.createElement(GroupView, {
+        return layoutGroupView.map(({ group, shouldRender }) => {
+          return group.rendered
+            ? React.createElement(GroupView, {
                 activeIndex: this.state.activeIndex,
                 slideAnimation: this.props.options.slideAnimation,
-                  allowLoop:
-                    this.props.options.slideshowLoop &&
-                    this.props.galleryStructure.width >
-                      this.props.container.width,
-                  ...group.renderProps(galleryConfig),
-                  ariaHidden: group.idx > this.skipFromSlide,
-                  shouldRenderEmpty: !shouldRender,
+                allowLoop:
+                  this.props.options.slideshowLoop &&
+                  this.props.galleryStructure.width >
+                    this.props.container.width,
+                ...group.renderProps(galleryConfig),
+                ariaHidden: group.idx > this.skipFromSlide,
+                shouldRenderEmpty: !shouldRender,
                 container: this.props.container,
-                  key: group.idx,
-              }): false})
-          );
-        }
-      
-    }
- 
+                key: group.idx,
+              })
+            : false;
+        });
+      }
+    };
+
     return galleryStructure.columns.map((column, c) => {
       const columnStyle = {
         width: this.props.isPrerenderMode ? '100%' : column.width,
@@ -890,17 +902,17 @@ class SlideshowView extends React.Component {
   }
 
   getDimensions() {
-    const height  = this.props.container.galleryHeight;
+    const height = this.props.container.galleryHeight;
     return this.props.isPrerenderMode
       ? {
-        width: '100%',
-        height,
-      }
+          width: '100%',
+          height,
+        }
       : {
-        height,
-        width: this.props.container.galleryWidth,
-      };
-}
+          height,
+          width: this.props.container.galleryWidth,
+        };
+  }
 
   createGallery() {
     // When arrows are set outside of the gallery, gallery is resized (in dimensionsHelper -> getGalleryWidth) and needs to be positioned accordingly
@@ -918,7 +930,7 @@ class SlideshowView extends React.Component {
           }
         : {};
 
-    const galleryDimensions = this.getDimensions()
+    const galleryDimensions = this.getDimensions();
     const galleryStyle = {
       ...galleryDimensions,
       ...galleryStyleForExternalArrows,
@@ -944,7 +956,8 @@ class SlideshowView extends React.Component {
           container: this.props.container,
           isPrerenderMode: this.props.isPrerenderMode,
           galleryStructure: this.props.galleryStructure,
-          customNavArrowsRenderer: this.props.customComponents.customNavArrowsRenderer,
+          customNavArrowsRenderer:
+            this.props.customComponents.customNavArrowsRenderer,
         }) && this.createNavArrows()}
       </div>
     );
@@ -1002,8 +1015,7 @@ class SlideshowView extends React.Component {
     } = this.props;
 
     const imageMargin =
-      this.props.options.imageMargin / 2 +
-      (this.isFullWidthGallery() ? 50 : 0);
+      this.props.options.imageMargin / 2 + (this.isFullWidthGallery() ? 50 : 0);
 
     const side =
       galleryTextAlign === 'right'
@@ -1051,8 +1063,7 @@ class SlideshowView extends React.Component {
     } = this.props;
 
     const imageMargin =
-      this.props.options.imageMargin / 2 +
-      (this.isFullWidthGallery() ? 50 : 0);
+      this.props.options.imageMargin / 2 + (this.isFullWidthGallery() ? 50 : 0);
 
     const leftMargin = this.shouldCreateSlideShowPlayButton
       ? imageMargin / 2 + 25
@@ -1084,8 +1095,7 @@ class SlideshowView extends React.Component {
 
   getThumbnails() {
     const hasThumbnails = this.props.options.hasThumbnails;
-    const thumbnailsPosition =
-      this.props.options.galleryThumbnailsAlignment;
+    const thumbnailsPosition = this.props.options.galleryThumbnailsAlignment;
 
     const thumbnailsGallery = hasThumbnails
       ? this.createThumbnails(thumbnailsPosition)
@@ -1108,7 +1118,6 @@ class SlideshowView extends React.Component {
   }
 
   getClassNames() {
-
     let classNames = 'pro-gallery-parent-container';
     if (GALLERY_CONSTS.isLayout('SLIDER')(this.props.options)) {
       classNames += ' gallery-slider';
@@ -1135,16 +1144,14 @@ class SlideshowView extends React.Component {
   }
 
   getScrollPosition() {
-    return this.scrollElement
-      ? this.scrollPosition()
-      : 0;
+    return this.scrollElement ? this.scrollPosition() : 0;
   }
 
-  scrollPositionAtTheMiddleOfTheGallery(){
+  scrollPositionAtTheMiddleOfTheGallery() {
     return this.getScrollPosition() + this.props.container.galleryWidth / 2;
   }
 
-  scrollPositionAtTheAndOfTheGallery(){
+  scrollPositionAtTheAndOfTheGallery() {
     return this.getScrollPosition() + this.props.container.galleryWidth;
   }
 
@@ -1154,9 +1161,7 @@ class SlideshowView extends React.Component {
 
   //-----------------------------------------| REACT |--------------------------------------------//
 
-  updateAutoSlideShowState(
-    props = this.props,
-  ) {
+  updateAutoSlideShowState(props = this.props) {
     const { isGalleryInHover, options, settings } = props;
     const {
       pauseAutoSlideshowClicked,
@@ -1179,22 +1184,16 @@ class SlideshowView extends React.Component {
     }
   }
 
-  onFocus(){
-    this.setState(
-      { isInFocus: true },
-      () => {
-        this.updateAutoSlideShowState(this.props);
-      }
-    );
+  onFocus() {
+    this.setState({ isInFocus: true }, () => {
+      this.updateAutoSlideShowState(this.props);
+    });
   }
 
-  onBlur(){
-    this.setState(
-      { isInFocus: false },
-      () => {
-        this.updateAutoSlideShowState(this.props);
-      }
-    );
+  onBlur() {
+    this.setState({ isInFocus: false }, () => {
+      this.updateAutoSlideShowState(this.props);
+    });
   }
 
   UNSAFE_componentWillReceiveProps(props) {
@@ -1202,12 +1201,12 @@ class SlideshowView extends React.Component {
       this.itemsForSlideshowLoopThumbnails = false;
     }
     const isInView = props.isInViewport && (props.isInDisplay ?? true);
-    const oldIsInView = this.props.isInViewport && (this.props.isInDisplay ?? true);
+    const oldIsInView =
+      this.props.isInViewport && (this.props.isInDisplay ?? true);
     if (isInView !== oldIsInView) {
       this.setState({ isInView }, () => {
-          this.updateAutoSlideShowState(props);
-        }
-      );
+        this.updateAutoSlideShowState(props);
+      });
     } else if (this.props.isGalleryInHover !== props.isGalleryInHover) {
       this.updateAutoSlideShowState(props);
     } else if (this.props.container.scrollBase != props.container.scrollBase) {
@@ -1233,8 +1232,7 @@ class SlideshowView extends React.Component {
     if (isEditMode() || isPreviewMode()) {
       if (
         //check that the change is related to the slideshow settings
-        this.props.options.isAutoSlideshow !==
-          props.options.isAutoSlideshow ||
+        this.props.options.isAutoSlideshow !== props.options.isAutoSlideshow ||
         this.props.options.autoSlideshowInterval !==
           props.options.autoSlideshowInterval
       ) {
@@ -1244,43 +1242,43 @@ class SlideshowView extends React.Component {
 
     this.shouldCreateSlideShowPlayButton =
       props.options.isAutoSlideshow && props.options.playButtonForAutoSlideShow;
-
   }
 
   removeArrowsIfNeeded() {
-      const { isRTL } = this.props.options;
-      const { hideLeftArrow, hideRightArrow } = this.state;
+    const { isRTL } = this.props.options;
+    const { hideLeftArrow, hideRightArrow } = this.state;
 
-      const isScrollStart = this.isScrollStart();
-      const isFirstItem = this.isFirstItem();
-      const isScrollEnd = this.isScrollEnd();
-      const isLastItem = this.isLastItem();
+    const isScrollStart = this.isScrollStart();
+    const isFirstItem = this.isFirstItem();
+    const isScrollEnd = this.isScrollEnd();
+    const isLastItem = this.isLastItem();
 
-      const atStart = isScrollStart || isFirstItem;
-      const atEnd = isScrollEnd || isLastItem;
+    const atStart = isScrollStart || isFirstItem;
+    const atEnd = isScrollEnd || isLastItem;
 
-      const nextHideLeft = (!isRTL && atStart) || (isRTL && atEnd);
-      const nextHideRight = (isRTL && atStart) || (!isRTL && atEnd);
-      const shouldUpdateArrowsState =
-        !!nextHideLeft !== !!hideLeftArrow ||
-        !!nextHideRight !== !!hideRightArrow;
+    const nextHideLeft = (!isRTL && atStart) || (isRTL && atEnd);
+    const nextHideRight = (isRTL && atStart) || (!isRTL && atEnd);
+    const shouldUpdateArrowsState =
+      !!nextHideLeft !== !!hideLeftArrow ||
+      !!nextHideRight !== !!hideRightArrow;
 
-      if (shouldUpdateArrowsState) {
-        this.setState({
-          hideLeftArrow: !!nextHideLeft,
-          hideRightArrow: !!nextHideRight,
-        });
-      }
+    if (shouldUpdateArrowsState) {
+      this.setState({
+        hideLeftArrow: !!nextHideLeft,
+        hideRightArrow: !!nextHideRight,
+      });
+    }
   }
 
-
   componentDidMount() {
-
     this.scrollElement = window.document.querySelector(
       `#pro-gallery-${this.props.id} #gallery-horizontal-scroll-${this.props.id}`
     );
     if (this.scrollElement) {
-      this.scrollElement.addEventListener('scroll', this._setCurrentItemByScroll);
+      this.scrollElement.addEventListener(
+        'scroll',
+        this._setCurrentItemByScroll
+      );
     }
     if (this.state.activeIndex > 0) {
       this.props.actions.scrollToItem(this.state.activeIndex);
@@ -1292,7 +1290,6 @@ class SlideshowView extends React.Component {
   }
 
   componentWillUnmount() {
-
     if (this.scrollElement) {
       this.scrollElement.removeEventListener(
         'scroll',
@@ -1324,7 +1321,7 @@ class SlideshowView extends React.Component {
         onKeyDown={this.handleSlideshowKeyPress}
         {...utils.getAriaAttributes({
           proGalleryRole: this.props.proGalleryRole,
-          proGalleryRegionLabel: this.props.proGalleryRegionLabel
+          proGalleryRegionLabel: this.props.proGalleryRegionLabel,
         })}
         onFocus={this.onFocus}
         onBlur={this.onBlur}

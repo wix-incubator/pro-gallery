@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import ImageRenderer from './imageRenderer';
@@ -47,10 +46,9 @@ class ImageItem extends React.Component {
       'gallery-item-visible',
       'gallery-item',
       'gallery-item-preloaded',
-      options.cubeImages && options.cubeType === 'fit'
-        ? 'grid-fit'
-        : '',
-      options.imageLoadingMode === GALLERY_CONSTS.loadingMode.COLOR && !isTransparent
+      options.cubeImages && options.cubeType === 'fit' ? 'grid-fit' : '',
+      options.imageLoadingMode === GALLERY_CONSTS.loadingMode.COLOR &&
+      !isTransparent
         ? `load-with-color ${isHighResImageLoaded ? 'image-loaded' : ''}`
         : '',
     ].join(' ');
@@ -123,7 +121,7 @@ class ImageItem extends React.Component {
       idx,
       settings = {},
       options,
-      isTransparent
+      isTransparent,
     } = this.props;
     const { isHighResImageLoaded } = this.state;
     const imageProps =
@@ -134,7 +132,7 @@ class ImageItem extends React.Component {
         : {};
 
     // eslint-disable-next-line no-unused-vars
-    const {marginLeft, marginTop, ...imageSizing} = imageDimensions;
+    const { marginLeft, marginTop, ...imageSizing } = imageDimensions;
 
     const image = () => {
       const imagesComponents = [];
@@ -205,12 +203,12 @@ class ImageItem extends React.Component {
       }
 
       const shouldRenderHighResImages = !this.props.isPrerenderMode;
-      const imageType = options.stylingParams?.itemResolutionMode === GALLERY_CONSTS.itemResolutionMode.FULL
-              ? GALLERY_CONSTS.urlSizes.FULL : GALLERY_CONSTS.urlSizes.MULTI;
-      const src = createUrl(
-            imageType,
-            GALLERY_CONSTS.urlTypes.HIGH_RES
-        );
+      const imageType =
+        options.stylingParams?.itemResolutionMode ===
+        GALLERY_CONSTS.itemResolutionMode.FULL
+          ? GALLERY_CONSTS.urlSizes.FULL
+          : GALLERY_CONSTS.urlSizes.MULTI;
+      const src = createUrl(imageType, GALLERY_CONSTS.urlTypes.HIGH_RES);
 
       const highres = (
         <ImageRenderer
@@ -219,7 +217,9 @@ class ImageItem extends React.Component {
           data-hook="gallery-item-image-img"
           data-idx={idx}
           src={src}
-          alt={typeof calculatedAlt === 'string' ? calculatedAlt : 'untitled image'}
+          alt={
+            typeof calculatedAlt === 'string' ? calculatedAlt : 'untitled image'
+          }
           onLoad={this.handleHighResImageLoad}
           loading={this.props.isPrerenderMode ? 'lazy' : 'eager'}
           style={{
@@ -241,8 +241,11 @@ class ImageItem extends React.Component {
 
   render() {
     const imageRenderer = this.getImageElement();
-    const imageContainerClassNames = `${this.getImageContainerClassNames()} ${this.props.extraClasses || ''}`
-    const animationOverlay = this.props.overlay || this.getImageAnimationOverlay();
+    const imageContainerClassNames = `${this.getImageContainerClassNames()} ${
+      this.props.extraClasses || ''
+    }`;
+    const animationOverlay =
+      this.props.overlay || this.getImageAnimationOverlay();
     const renderedItem = this.getImageContainer(
       imageRenderer,
       imageContainerClassNames,

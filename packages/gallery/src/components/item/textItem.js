@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 
 export default class TextItem extends React.Component {
@@ -10,7 +9,7 @@ export default class TextItem extends React.Component {
   }
 
   getTextDimensions() {
-  const { style, options, cropRatio, imageDimensions } = this.props;
+    const { style, options, cropRatio, imageDimensions } = this.props;
     const isVerticalItem = style.ratio < cropRatio - 0.01;
     const { marginLeft, marginTop } = imageDimensions;
     //text dimensions include scaling
@@ -31,7 +30,7 @@ export default class TextItem extends React.Component {
     const scale = isVerticalItem
       ? style.height / style.maxHeight
       : style.width / style.maxWidth;
-      const transform = `translate(${translate}) scale(${scale})`;
+    const transform = `translate(${translate}) scale(${scale})`;
     const scaledMarginLeft = Math.round(marginLeft / scale);
     const scaledMarginTop = Math.round(marginTop / scale);
     return {
@@ -58,8 +57,7 @@ export default class TextItem extends React.Component {
   }
 
   render() {
-    const { id, options, html, style, actions, imageDimensions } =
-      this.props;
+    const { id, options, html, style, actions, imageDimensions } = this.props;
     const processedHtml = this.processInnerhtml(html);
     const dimensions = this.getTextDimensions();
     const htmlParam = { dangerouslySetInnerHTML: { __html: processedHtml } };
@@ -78,8 +76,7 @@ export default class TextItem extends React.Component {
         imageDimensions && !this.props.isPrerenderMode
           ? imageDimensions.height
           : 'inherit',
-      backgroundColor:
-        options.cubeType !== 'fit' ? style.bgColor : 'inherit',
+      backgroundColor: options.cubeType !== 'fit' ? style.bgColor : 'inherit',
     };
 
     if (imageDimensions && imageDimensions.borderRadius) {
