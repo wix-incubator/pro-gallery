@@ -35,15 +35,6 @@ export default class ProGallery extends React.Component {
   }
 
   renderProps() {
-    // console.log('>>>>>>>>>', this.props.customComponents);
-    // const navStyles = {
-    //   heihgt: '100%',
-    //   width: '100%',
-    //   border: 'black 2px solid',
-    // };
-    // this.props.customComponents.customNavigationPanel = () => {
-    //   return <div class="customNavigationPanel" style={navStyles} />;
-    // };
     return {
       ...this.props,
       id: this.props.id,
