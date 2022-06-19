@@ -462,7 +462,11 @@ class SlideshowView extends React.Component {
       GALLERY_CONSTS.events.THUMBNAIL_CLICKED,
       this.props
     );
+    this.scrollToIndex({ itemIdx, scrollDuration });
+  }
 
+  scrollToIndex({ itemIdx, scrollDuration }) {
+    //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
     this.props.setGotFirstScrollIfNeeded(); //load all the images in the thumbnails bar
 
     const direction = itemIdx - this.state.activeIndex;
@@ -982,6 +986,35 @@ class SlideshowView extends React.Component {
       return false;
     }
   };
+  getCustomNavigationPanelAPI = () => {
+    return {
+      next: () =>
+        this.next({
+          scrollDuration: 400,
+          isKeyboardNavigation: false,
+          isAutoTrigger: false,
+          avoidIndividualNavigation: false,
+          isContinuousScrolling: false,
+          direction: 1,
+        }),
+      back: () =>
+        this.next({
+          scrollDuration: 400,
+          isKeyboardNavigation: false,
+          isAutoTrigger: false,
+          avoidIndividualNavigation: false,
+          isContinuousScrolling: false,
+          direction: -1,
+        }),
+      // nextGroup,
+      // previousItem,
+      // previousGroup,
+      toIndex: (itemIdx) =>
+        this.scrollToIndex({ itemIdx, scrollDuration: 400 }),
+      // getCurrentActiveItemIndex,
+      // getCurrentActiveGroupIndex,
+    };
+  };
 
   getNavigationPanelArray() {
     if (!this.props.options.hasThumbnails) {
@@ -995,6 +1028,7 @@ class SlideshowView extends React.Component {
         ...this.props,
         activeIndex: this.state.activeIndex,
         navigationToIdxCB: this.scrollToThumbnail,
+        navigationPanelAPI: this.getCustomNavigationPanelAPI(),
       });
     } else {
       navigationPanel = (
