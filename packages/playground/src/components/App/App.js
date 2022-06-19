@@ -193,47 +193,47 @@ export function App() {
         return null;
     }
   };
-  const getHorizontalNavigationPanelDimensions = ({width,height, galleryHeight}, isBottom)=>{
-    return {width: width, height: height - galleryHeight, }
-  }
-  const getVerticalNavigationPanelDimensions = ({width,height, galleryWidth})=>{
-    return {width: width - galleryWidth, height: height}
-  }
-  const getNavigationPanelDimensions = (pgGalleryProps) => {
-    const {galleryHeight, galleryWidth, height, width} = pgGalleryProps.container;
-    const navigationPanelPosition =
-    pgGalleryProps.options.galleryThumbnailsAlignment;
-    console.log(pgGalleryProps.options.galleryThumbnailsAlignment)
-    switch (navigationPanelPosition) {
-      case 'top':
-        return getHorizontalNavigationPanelDimensions({galleryHeight, galleryWidth, height, width}, false);
-      case 'bottom':
-        return getHorizontalNavigationPanelDimensions({galleryHeight, galleryWidth, height, width}, true);
-      case 'right':
-      case 'left':
-        return getVerticalNavigationPanelDimensions({galleryHeight, galleryWidth, height, width});
-      default: 
-        return false;
-    }
-  }
+  // const getHorizontalNavigationPanelDimensions = ({width,height, galleryHeight}, isBottom)=>{
+  //   return {width: width, height: height - galleryHeight, }
+  // }
+  // const getVerticalNavigationPanelDimensions = ({width,height, galleryWidth})=>{
+  //   return {width: width - galleryWidth, height: height}
+  // }
+  // const getNavigationPanelDimensions = (pgGalleryProps) => {
+  //   const {galleryHeight, galleryWidth, height, width} = pgGalleryProps.container;
+  //   const navigationPanelPosition =
+  //   pgGalleryProps.options.galleryThumbnailsAlignment;
+  //   console.log(pgGalleryProps.options.galleryThumbnailsAlignment)
+  //   switch (navigationPanelPosition) {
+  //     case 'top':
+  //       return getHorizontalNavigationPanelDimensions({galleryHeight, galleryWidth, height, width}, false);
+  //     case 'bottom':
+  //       return getHorizontalNavigationPanelDimensions({galleryHeight, galleryWidth, height, width}, true);
+  //     case 'right':
+  //     case 'left':
+  //       return getVerticalNavigationPanelDimensions({galleryHeight, galleryWidth, height, width});
+  //     default: 
+  //       return false;
+  //   }
+  // }
 
-  const renderNavigationPanel = (pgGalleryProps) => {
+  // const renderNavigationPanel = (pgGalleryProps) => {
     
-    const navigaitonPanelimensions = getNavigationPanelDimensions(pgGalleryProps);
-    const navStyles = {
-      ...navigaitonPanelimensions,
-      border: 'black 2px solid',
-    };
+  //   const navigaitonPanelimensions = getNavigationPanelDimensions(pgGalleryProps);
+  //   const navStyles = {
+  //     ...navigaitonPanelimensions,
+  //     border: 'black 2px solid',
+  //   };
 
-    const infoElement = (
-      <div className={'playground-navigation-panel'} style={navStyles}>
-      aaaaa
-      </div>
-    );
+  //   const infoElement = (
+  //     <div className={'playground-navigation-panel'} style={navStyles}>
+  //     aaaaa
+  //     </div>
+  //   );
 
-    return infoElement;
+  //   return infoElement;
 
-  };
+  // };
 
   const hoverInfoElement = (pgItemProps) => {
     return renderInfoElement('HOVER', pgItemProps);
@@ -242,9 +242,9 @@ export function App() {
   const externalInfoElement = (pgItemProps) => {
     return renderInfoElement('EXTERNAL', pgItemProps);
   };
-  const navigationPanel = (pgGalleryProps) => {
-    return renderNavigationPanel(pgGalleryProps);
-  };
+  // const navigationPanel = (pgGalleryProps) => {
+  //   return renderNavigationPanel(pgGalleryProps);
+  // };
 
 
   const getCustomComponents = () => {
