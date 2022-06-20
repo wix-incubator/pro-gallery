@@ -210,6 +210,7 @@ export const getCustomNavigationPanelInlineStyles = ({
       galleryThumbnailsAlignment,
     }),
     overflow: 'hidden',
+    float: 'left',
   };
 };
 
