@@ -219,9 +219,10 @@ export function App() {
   const renderNavigationPanel = (pgGalleryProps) => {
     
     const navigaitonPanelimensions = getNavigationPanelDimensions(pgGalleryProps);
-    const navStyles = {
+    const navStyles = {//this all needs to go in the slideshowView..
       ...navigaitonPanelimensions,
       border: 'black 2px solid',
+      overflow: 'hidden', //this all needs to go in the slideshowView..
     };
 
     const infoElement = (
