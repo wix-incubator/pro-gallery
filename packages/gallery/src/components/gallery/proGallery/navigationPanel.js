@@ -149,4 +149,79 @@ class NavigationPanel extends React.Component {
   }
 }
 
+const getHorizontalNavigationPanelDimensions = ({
+  width,
+  height,
+  galleryHeight,
+}) => {
+  return { width: width, height: height - galleryHeight };
+};
+const getVerticalNavigationPanelDimensions = ({
+  width,
+  height,
+  galleryWidth,
+}) => {
+  return { width: width - galleryWidth, height: height };
+};
+const getCustomNavigationPanelDimensions = ({
+  galleryHeight,
+  galleryWidth,
+  height,
+  width,
+  galleryThumbnailsAlignment,
+}) => {
+  switch (galleryThumbnailsAlignment) {
+    case 'top': //TODO use CONSTS if available
+      return getHorizontalNavigationPanelDimensions(
+        { galleryHeight, galleryWidth, height, width },
+        false
+      );
+    case 'bottom':
+      return getHorizontalNavigationPanelDimensions(
+        { galleryHeight, galleryWidth, height, width },
+        true
+      );
+    case 'right':
+    case 'left':
+      return getVerticalNavigationPanelDimensions({
+        galleryHeight,
+        galleryWidth,
+        height,
+        width,
+      });
+    default:
+      return false;
+  }
+};
+
+export const getCustomNavigationPanelInlineStyles = ({
+  galleryHeight,
+  galleryWidth,
+  height,
+  width,
+  galleryThumbnailsAlignment,
+}) => {
+  const styles = {
+    ...getCustomNavigationPanelDimensions({
+      galleryHeight,
+      galleryWidth,
+      height,
+      width,
+      galleryThumbnailsAlignment,
+    }),
+    overflow: 'hidden',
+  };
+  console.log(styles);
+  return {
+    ...getCustomNavigationPanelDimensions({
+      galleryHeight,
+      galleryWidth,
+      height,
+      width,
+      galleryThumbnailsAlignment,
+    }),
+    overflow: 'hidden',
+  };
+};
+
 export default NavigationPanel;

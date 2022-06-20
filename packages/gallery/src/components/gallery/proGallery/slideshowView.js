@@ -10,7 +10,9 @@ import GroupView from '../../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
 import PlayIcon from '../../svgs/components/play';
 import PauseIcon from '../../svgs/components/pause';
-import NavigationPanel from './navigationPanel';
+import NavigationPanel, {
+  getCustomNavigationPanelInlineStyles,
+} from './navigationPanel';
 import {
   getArrowsRenderData,
   shouldRenderNavArrows,
@@ -1023,14 +1025,33 @@ class SlideshowView extends React.Component {
     }
 
     const customNavigationPanelRenderer = this.getCustomNavigationPanel();
+
     let navigationPanel;
     if (customNavigationPanelRenderer) {
-      navigationPanel = customNavigationPanelRenderer({
-        ...this.props,
-        activeIndex: this.state.activeIndex,
-        navigationToIdxCB: this.scrollToThumbnail,
-        navigationPanelAPI: this.getCustomNavigationPanelAPI(),
-      });
+      const { galleryHeight, galleryWidth, height, width } =
+        this.props.container;
+      const { galleryThumbnailsAlignment } = this.props.options;
+      const customNavigationPanelInlineStyles =
+        getCustomNavigationPanelInlineStyles({
+          galleryHeight,
+          galleryWidth,
+          height,
+          width,
+          galleryThumbnailsAlignment,
+        });
+      navigationPanel = (
+        <div
+          className="custom-navigation-panel"
+          style={customNavigationPanelInlineStyles}
+        >
+          {customNavigationPanelRenderer({
+            ...this.props,
+            activeIndex: this.state.activeIndex,
+            navigationToIdxCB: this.scrollToThumbnail,
+            navigationPanelAPI: this.getCustomNavigationPanelAPI(),
+          })}
+        </div>
+      );
     } else {
       navigationPanel = (
         <NavigationPanel

@@ -218,22 +218,9 @@ export function App() {
 
   const renderNavigationPanel = (pgGalleryProps) => {
     
-    const navigaitonPanelimensions = getNavigationPanelDimensions(pgGalleryProps);
-    const navStyles = {//this all needs to go in the slideshowView..
-      ...navigaitonPanelimensions,
-      border: 'black 2px solid',
-      overflow: 'hidden', //this all needs to go in the slideshowView..
-    };
-
-    const infoElement = (
-      <div className={'playground-navigation-panel'} style={navStyles}>
-      aa
-      {getAllKindsOfButtons(pgGalleryProps.navigationPanelAPI)}
-      </div>
+    return  (
+      getAllKindsOfButtons(pgGalleryProps.navigationPanelAPI)
     );
-
-    return infoElement;
-
   };
   const createButton = (buttonName, func) => {
     return <button onClick={func}>{buttonName}</button>
