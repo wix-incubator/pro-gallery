@@ -148,7 +148,7 @@ class SlideshowView extends React.Component {
     );
   }
 
-  next({
+  async next({
     direction,
     isAutoTrigger,
     scrollDuration,
@@ -179,9 +179,10 @@ class SlideshowView extends React.Component {
       scrollDuration = 0;
       ignoreScrollPosition = true;
     }
+    this.removeArrowsIfNeeded();
 
     if (avoidIndividualNavigation && this.props.options.groupSize > 1) {
-      this.nextGroup({
+      return this.nextGroup({
         direction,
         scrollDuration,
         isContinuousScrolling,
@@ -195,7 +196,7 @@ class SlideshowView extends React.Component {
       ) {
         direction *= this.props.options.numberOfImagesPerCol;
       }
-      this.nextItem({
+      return this.nextItem({
         direction,
         isAutoTrigger,
         scrollDuration,
@@ -205,7 +206,6 @@ class SlideshowView extends React.Component {
         scrollingUpTheGallery,
       });
     }
-    this.removeArrowsIfNeeded();
   }
 
   getNextItemOrGroupToScrollTo(
