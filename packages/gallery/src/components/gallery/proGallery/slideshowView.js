@@ -1081,7 +1081,7 @@ class SlideshowView extends React.Component {
         this.props.options.galleryThumbnailsAlignment.includes(placement)
     );
     if (hasNavigationPanel && hasVerticalNavigationPanelPlacement) {
-      return { flexDirection: 'column' };
+      return { flexDirection: 'column', display: 'flex' };
     } else {
       return {};
     }

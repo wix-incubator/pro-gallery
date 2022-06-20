@@ -746,7 +746,6 @@ $group-view: '[data-hook="group-view"]';
       @include scroll-snap-element;
     }
   }
-  display: flex;
 } 
 
 .gallery-item-container {
