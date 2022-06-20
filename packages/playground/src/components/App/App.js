@@ -196,20 +196,30 @@ export function App() {
 
   const renderNavigationPanel = (pgGalleryProps) => {
     
-    return  (
-      getAllKindsOfButtons(pgGalleryProps.navigationPanelAPI)
-    );
+    return  <>
+      {getAllKindsOfButtons(pgGalleryProps.navigationPanelAPI)}
+      
+    </>
+    ;
   };
   const createButton = (buttonName, func) => {
     return <button onClick={func}>{buttonName}</button>
   }
   const getAllKindsOfButtons = ({next,back, previousItem, previousGroup, toIndex, getCurrentActiveItemIndex, getCurrentActiveGroupIndex}) => {
     const buttonConfig = [
-      ['Next item', next],
+      ['Next item', async ()=>{
+        console.time('SCROLLING NEXT')
+        await next(); //Scrolling functions are async. 
+        console.timeEnd('SCROLLING NEXT')
+      }],
       ['Previous item', back],
-      ['toIdex 3', ()=>toIndex(3)],
-      ['toIdex 0', ()=>toIndex(0)],
-      ['toIdex 10', ()=>toIndex(10)],
+      ['toIndex 3', async ()=>{
+        console.time('SCROLLING to item 3')
+        await toIndex(3); //Scrolling functions are async. 
+        console.timeEnd('SCROLLING to item 3')
+      }],
+      ['toIndex 0', ()=>toIndex(0)],
+      ['toIndex 10', ()=>toIndex(10)],
     ]
     return (
       <div class="navigation-panel-buttons">

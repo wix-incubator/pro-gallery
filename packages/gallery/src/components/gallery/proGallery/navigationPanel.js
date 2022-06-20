@@ -201,17 +201,6 @@ export const getCustomNavigationPanelInlineStyles = ({
   width,
   galleryThumbnailsAlignment,
 }) => {
-  const styles = {
-    ...getCustomNavigationPanelDimensions({
-      galleryHeight,
-      galleryWidth,
-      height,
-      width,
-      galleryThumbnailsAlignment,
-    }),
-    overflow: 'hidden',
-  };
-  console.log(styles);
   return {
     ...getCustomNavigationPanelDimensions({
       galleryHeight,

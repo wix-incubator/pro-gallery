@@ -472,7 +472,7 @@ class SlideshowView extends React.Component {
     this.props.setGotFirstScrollIfNeeded(); //load all the images in the thumbnails bar
 
     const direction = itemIdx - this.state.activeIndex;
-    this.next({
+    return this.next({
       direction,
       isAutoTrigger: false,
       scrollDuration,
