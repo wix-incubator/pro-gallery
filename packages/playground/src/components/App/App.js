@@ -198,7 +198,7 @@ export function App() {
     
     return  <>
       {getAllKindsOfButtons(pgGalleryProps.navigationPanelAPI)}
-      
+      {pgGalleryProps.navigationPanelAPI.getActiveItemIndex()}
     </>
     ;
   };

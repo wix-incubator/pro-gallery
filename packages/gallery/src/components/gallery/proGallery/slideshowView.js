@@ -1016,6 +1016,9 @@ class SlideshowView extends React.Component {
       isAbleToNavigateBack: () => {
         return isRTL ? !this.state.hideRightArrow : !this.state.hideLeftArrow;
       },
+      getActiveItemIndex: () => {
+        return this.state.activeIndex;
+      },
       // nextGroup,
       // previousItem,
       // previousGroup,
