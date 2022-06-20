@@ -990,6 +990,7 @@ class SlideshowView extends React.Component {
     }
   };
   getCustomNavigationPanelAPI = () => {
+    const isRTL = this.props.options.isRTL;
     return {
       next: () =>
         this.next({
@@ -998,7 +999,7 @@ class SlideshowView extends React.Component {
           isAutoTrigger: false,
           avoidIndividualNavigation: false,
           isContinuousScrolling: false,
-          direction: 1,
+          direction: isRTL ? -1 : 1,
         }),
       back: () =>
         this.next({
@@ -1007,8 +1008,14 @@ class SlideshowView extends React.Component {
           isAutoTrigger: false,
           avoidIndividualNavigation: false,
           isContinuousScrolling: false,
-          direction: -1,
+          direction: isRTL ? 1 : -1,
         }),
+      isAbleToNavigateNext: () => {
+        return isRTL ? !this.state.hideLeftArrow : !this.state.hideRightArrow;
+      },
+      isAbleToNavigateBack: () => {
+        return isRTL ? !this.state.hideRightArrow : !this.state.hideLeftArrow;
+      },
       // nextGroup,
       // previousItem,
       // previousGroup,
