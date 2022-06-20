@@ -63,12 +63,12 @@ export default class Gallery extends React.Component<
 
   onNewProps(props, calledByConstructor) {
     const { eventsListener, ...otherProps } = props;
-    const _eventsListener = (eventName, eventData) => {
+    const _eventsListener = (eventName, eventData, event) => {
       if (eventName === GALLERY_CONSTS.events.NEED_MORE_ITEMS) {
         this.blueprintsManager.getMoreItems(eventData);
       } else {
         typeof eventsListener === 'function' &&
-          eventsListener(eventName, eventData);
+          eventsListener(eventName, eventData, event);
       }
     };
     this.galleryProps = {

@@ -711,32 +711,32 @@ class SlideshowView extends React.Component {
       virtualizationSettings,
     });
   }
-
-  createLayout() {
-    const { container, galleryStructure } = this.props;
-
-    const galleryConfig = {
+  createGalleryConfig() {
+    return {
       scrollingElement: this.props.scrollingElement,
-      totalItemsCount: this.props.totalItemsCount,
       scroll: this.props.scroll,
-      options: this.props.options,
       container: this.props.container,
+      options: this.props.options,
       settings: this.props.settings,
       activeIndex: this.state.activeIndex,
       customComponents: this.props.customComponents,
-      noFollowForSEO: this.props.noFollowForSEO,
       galleryId: this.props.id,
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,
       playingVideoIdx: this.props.playingVideoIdx,
+      noFollowForSEO: this.props.noFollowForSEO,
       isPrerenderMode: this.props.isPrerenderMode,
-      totalWidth: this.props.galleryStructure.width,
       firstUserInteractionExecuted: this.props.firstUserInteractionExecuted,
       enableExperimentalFeatures: this.props.enableExperimentalFeatures,
       actions: {
         eventsListener: this.props.actions.eventsListener,
       },
+      totalItemsCount: this.props.totalItemsCount,
+      totalWidth: this.props.galleryStructure.width,
     };
-
+  }
+  createLayout() {
+    const { container, galleryStructure } = this.props;
+    const galleryConfig = this.createGalleryConfig();
     const renderGroups = (column) => {
       const layoutGroupView =
         !!column.galleryGroups.length &&
@@ -1018,6 +1018,23 @@ class SlideshowView extends React.Component {
       },
       getActiveItemIndex: () => {
         return this.state.activeIndex;
+      },
+      triggerItemAction: (e, { itemIndex = this.state.activeIndex } = {}) => {
+        const galleryConfig = this.createGalleryConfig();
+        const item =
+          this.props.galleryStructure.galleryItems[
+            itemIndex % this.props.totalItemsCount
+          ];
+        const props = item?.renderProps({
+          ...galleryConfig,
+          visible: true,
+        });
+
+        this.props.actions.eventsListener(
+          GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED,
+          props,
+          e
+        );
       },
       // nextGroup,
       // previousItem,

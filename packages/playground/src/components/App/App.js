@@ -66,7 +66,7 @@ export function App() {
   const setGalleryReady = () => {
     window.dispatchEvent(galleryReadyEvent);
   }
-  const eventListener = (eventName, eventData) => {
+  const eventListener = (eventName, eventData, event) => {
     switch (eventName) {
       case GALLERY_EVENTS.APP_LOADED:
         setGalleryReady();
@@ -84,6 +84,7 @@ export function App() {
         }
         break;
       case GALLERY_EVENTS.ITEM_ACTION_TRIGGERED:
+        console.log({eventName, eventData, event})
         // setFullscreenIdx(eventData.idx);
         break;
       case GALLERY_EVENTS.LOAD_MORE_CLICKED:
