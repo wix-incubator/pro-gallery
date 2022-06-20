@@ -1,5 +1,5 @@
 import React, {useEffect, Suspense, useState} from 'react';
-// import {SideBar} from '../SideBar';
+import {NavigationPanel} from './PlaygroundNavigationPanel';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
 import {testMedia, testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
 import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../../utils/utils";
@@ -194,42 +194,6 @@ export function App() {
     }
   };
 
-  const renderNavigationPanel = (pgGalleryProps) => {
-    
-    return  <>
-      {getAllKindsOfButtons(pgGalleryProps.navigationPanelAPI)}
-      {pgGalleryProps.navigationPanelAPI.getActiveItemIndex()}
-    </>
-    ;
-  };
-  const createButton = (buttonName, func, disabled) => {
-    return <button onClick={func} disabled={disabled}>{buttonName}</button>
-  }
-  const getAllKindsOfButtons = ({next,back,isAbleToNavigateBack, isAbleToNavigateNext, previousItem, previousGroup, toIndex, getCurrentActiveItemIndex, getCurrentActiveGroupIndex}) => {
-    const buttonConfig = [
-      ['Next item', async ()=>{
-        console.time('SCROLLING NEXT')
-        await next(); //Scrolling functions are async. 
-        console.timeEnd('SCROLLING NEXT')
-      }, !isAbleToNavigateNext()],
-      ['Previous item', back, !isAbleToNavigateBack()],
-      ['toIndex 3', async ()=>{
-        console.time('SCROLLING to item 3')
-        await toIndex(3); //Scrolling functions are async. 
-        console.timeEnd('SCROLLING to item 3')
-      }, false],
-      ['toIndex 0', ()=>toIndex(0), false],
-      ['toIndex 10', ()=>toIndex(10), false],
-    ]
-    return (
-      <div class="navigation-panel-buttons">
-        {buttonConfig.map(elem=>{
-          return (createButton(...elem))
-        })}
-      </div>
-    )
-  }
-
   const hoverInfoElement = (pgItemProps) => {
     return renderInfoElement('HOVER', pgItemProps);
   };
@@ -238,7 +202,7 @@ export function App() {
     return renderInfoElement('EXTERNAL', pgItemProps);
   };
   const navigationPanel = (pgGalleryProps) => {
-    return renderNavigationPanel(pgGalleryProps);
+    return <NavigationPanel {...pgGalleryProps}/>;
   };
 
 
