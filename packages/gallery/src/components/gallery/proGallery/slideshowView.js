@@ -978,10 +978,11 @@ class SlideshowView extends React.Component {
 
   getCustomNavigationPanel = () => {
     if (
-      typeof this.props.customComponents?.customNavigationPanelRenderer ===
-      'function'
+      typeof this.props.customComponents
+        ?.EXPERIMENTAL_customNavigationPanelRenderer === 'function'
     ) {
-      return this.props.customComponents.customNavigationPanelRenderer;
+      return this.props.customComponents
+        .EXPERIMENTAL_customNavigationPanelRenderer;
     } else {
       return false;
     }
