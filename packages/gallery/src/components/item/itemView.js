@@ -908,12 +908,17 @@ class ItemView extends React.Component {
   }
 
   getItemAriaRole() {
+    const linkParams = getLinkParams(this.props);
+    const directLink = linkParams?.href?.length > 0;
     switch (this.props.options.itemClick) {
       case 'expand':
       case 'fullscreen':
         return 'button';
       case 'link':
-        return 'link';
+        if (directLink) return 'link';
+        else {
+          return 'button';
+        }
       default:
         return '';
     }
