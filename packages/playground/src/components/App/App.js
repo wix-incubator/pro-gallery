@@ -1,5 +1,5 @@
 import React, {useEffect, Suspense, useState} from 'react';
-// import {SideBar} from '../SideBar';
+import {NavigationPanel} from './PlaygroundNavigationPanel';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
 import {testMedia, testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
 import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../../utils/utils";
@@ -66,7 +66,7 @@ export function App() {
   const setGalleryReady = () => {
     window.dispatchEvent(galleryReadyEvent);
   }
-  const eventListener = (eventName, eventData) => {
+  const eventListener = (eventName, eventData, event) => {
     switch (eventName) {
       case GALLERY_EVENTS.APP_LOADED:
         setGalleryReady();
@@ -84,6 +84,7 @@ export function App() {
         }
         break;
       case GALLERY_EVENTS.ITEM_ACTION_TRIGGERED:
+        console.log({eventName, eventData, event})
         // setFullscreenIdx(eventData.idx);
         break;
       case GALLERY_EVENTS.LOAD_MORE_CLICKED:
@@ -201,12 +202,16 @@ export function App() {
   const externalInfoElement = (pgItemProps) => {
     return renderInfoElement('EXTERNAL', pgItemProps);
   };
+  const navigationPanel = (pgGalleryProps) => {
+    return <NavigationPanel {...pgGalleryProps}/>;
+  };
 
 
   const getCustomComponents = () => {
     return {
       customHoverRenderer: hoverInfoElement,
       customInfoRenderer: externalInfoElement,
+      EXPERIMENTAL_customNavigationPanelRenderer: gallerySettings.useCustomNavigationPanel ? navigationPanel : undefined,
     };
   }
 
@@ -246,8 +251,8 @@ export function App() {
 
   // console.log('Rendering App: ', {options, items, dimensions, showSide, blueprint, blueprintProps})
   const getKeySettings = () => {
-    const { mediaType, numberOfItems, isUnknownDimensions, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand} = gallerySettings;
-    return { mediaType, numberOfItems, isUnknownDimensions, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
+    const { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand} = gallerySettings;
+    return { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
   }
 
   let GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProGalleryRenderer : ProGallery);

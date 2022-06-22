@@ -10,7 +10,9 @@ import GroupView from '../../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
 import PlayIcon from '../../svgs/components/play';
 import PauseIcon from '../../svgs/components/pause';
-import NavigationPanel from './navigationPanel';
+import NavigationPanel, {
+  getCustomNavigationPanelInlineStyles,
+} from './navigationPanel';
 import {
   getArrowsRenderData,
   shouldRenderNavArrows,
@@ -462,11 +464,15 @@ class SlideshowView extends React.Component {
       GALLERY_CONSTS.events.THUMBNAIL_CLICKED,
       this.props
     );
+    this.scrollToIndex({ itemIdx, scrollDuration });
+  }
 
+  scrollToIndex({ itemIdx, scrollDuration }) {
+    //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
     this.props.setGotFirstScrollIfNeeded(); //load all the images in the thumbnails bar
 
     const direction = itemIdx - this.state.activeIndex;
-    this.next({
+    return this.next({
       direction,
       isAutoTrigger: false,
       scrollDuration,
@@ -705,32 +711,32 @@ class SlideshowView extends React.Component {
       virtualizationSettings,
     });
   }
-
-  createLayout() {
-    const { container, galleryStructure } = this.props;
-
-    const galleryConfig = {
+  createGalleryConfig() {
+    return {
       scrollingElement: this.props.scrollingElement,
-      totalItemsCount: this.props.totalItemsCount,
       scroll: this.props.scroll,
-      options: this.props.options,
       container: this.props.container,
+      options: this.props.options,
       settings: this.props.settings,
       activeIndex: this.state.activeIndex,
       customComponents: this.props.customComponents,
-      noFollowForSEO: this.props.noFollowForSEO,
       galleryId: this.props.id,
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,
       playingVideoIdx: this.props.playingVideoIdx,
+      noFollowForSEO: this.props.noFollowForSEO,
       isPrerenderMode: this.props.isPrerenderMode,
-      totalWidth: this.props.galleryStructure.width,
       firstUserInteractionExecuted: this.props.firstUserInteractionExecuted,
       enableExperimentalFeatures: this.props.enableExperimentalFeatures,
       actions: {
         eventsListener: this.props.actions.eventsListener,
       },
+      totalItemsCount: this.props.totalItemsCount,
+      totalWidth: this.props.galleryStructure.width,
     };
-
+  }
+  createLayout() {
+    const { container, galleryStructure } = this.props;
+    const galleryConfig = this.createGalleryConfig();
     const renderGroups = (column) => {
       const layoutGroupView =
         !!column.galleryGroups.length &&
@@ -972,17 +978,116 @@ class SlideshowView extends React.Component {
     );
   }
 
+  getCustomNavigationPanel = () => {
+    if (
+      typeof this.props.customComponents
+        ?.EXPERIMENTAL_customNavigationPanelRenderer === 'function'
+    ) {
+      return this.props.customComponents
+        .EXPERIMENTAL_customNavigationPanelRenderer;
+    } else {
+      return false;
+    }
+  };
+  getCustomNavigationPanelAPI = () => {
+    const isRTL = this.props.options.isRTL;
+    return {
+      next: () =>
+        this.next({
+          scrollDuration: 400,
+          isKeyboardNavigation: false,
+          isAutoTrigger: false,
+          avoidIndividualNavigation: false,
+          isContinuousScrolling: false,
+          direction: isRTL ? -1 : 1,
+        }),
+      back: () =>
+        this.next({
+          scrollDuration: 400,
+          isKeyboardNavigation: false,
+          isAutoTrigger: false,
+          avoidIndividualNavigation: false,
+          isContinuousScrolling: false,
+          direction: isRTL ? 1 : -1,
+        }),
+      isAbleToNavigateNext: () => {
+        return isRTL ? !this.state.hideLeftArrow : !this.state.hideRightArrow;
+      },
+      isAbleToNavigateBack: () => {
+        return isRTL ? !this.state.hideRightArrow : !this.state.hideLeftArrow;
+      },
+      getActiveItemIndex: () => {
+        return this.state.activeIndex;
+      },
+      triggerItemAction: (e, { itemIndex = this.state.activeIndex } = {}) => {
+        const galleryConfig = this.createGalleryConfig();
+        const item =
+          this.props.galleryStructure.galleryItems[
+            itemIndex % this.props.totalItemsCount
+          ];
+        const props = item?.renderProps({
+          ...galleryConfig,
+          visible: true,
+        });
+
+        this.props.actions.eventsListener(
+          GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED,
+          props,
+          e
+        );
+      },
+      // nextGroup,
+      // previousItem,
+      // previousGroup,
+      toIndex: (itemIdx) =>
+        this.scrollToIndex({ itemIdx, scrollDuration: 400 }),
+      // getCurrentActiveItemIndex,
+      // getCurrentActiveGroupIndex,
+    };
+  };
+
   getNavigationPanelArray() {
     if (!this.props.options.hasThumbnails) {
       return [false, false];
     }
-    const navigationPanel = (
-      <NavigationPanel
-        {...this.props}
-        activeIndex={this.state.activeIndex}
-        navigationToIdxCB={this.scrollToThumbnail}
-      />
-    );
+
+    const customNavigationPanelRenderer = this.getCustomNavigationPanel();
+
+    let navigationPanel;
+    if (customNavigationPanelRenderer) {
+      const { galleryHeight, galleryWidth, height, width } =
+        this.props.container;
+      const { galleryThumbnailsAlignment } = this.props.options;
+      const customNavigationPanelInlineStyles =
+        getCustomNavigationPanelInlineStyles({
+          galleryHeight,
+          galleryWidth,
+          height,
+          width,
+          galleryThumbnailsAlignment,
+        });
+      navigationPanel = (
+        <div
+          className="custom-navigation-panel"
+          style={customNavigationPanelInlineStyles}
+        >
+          {customNavigationPanelRenderer({
+            ...this.props,
+            activeIndex: this.state.activeIndex,
+            navigationToIdxCB: this.scrollToThumbnail,
+            navigationPanelAPI: this.getCustomNavigationPanelAPI(),
+          })}
+        </div>
+      );
+    } else {
+      navigationPanel = (
+        <NavigationPanel
+          {...this.props}
+          activeIndex={this.state.activeIndex}
+          navigationToIdxCB={this.scrollToThumbnail}
+        />
+      );
+    }
 
     const navigationPanelPosition =
       this.props.options.galleryThumbnailsAlignment;
@@ -1018,7 +1123,6 @@ class SlideshowView extends React.Component {
 
     return classNames;
   }
-
   getStyles() {
     return {
       margin:
