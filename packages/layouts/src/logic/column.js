@@ -1,4 +1,4 @@
-import { dec } from './calc.js';
+import { dec } from './calc';
 
 export class Column {
   constructor(idx, width, left, cubedHeight, infoWidth) {

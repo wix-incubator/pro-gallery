@@ -1,5 +1,5 @@
 import { utils } from './utils';
-import { dec } from './calc.js';
+import { dec } from './calc';
 
 export class Item {
   /* @ngInject */

@@ -1,4 +1,4 @@
-import { dec } from './calc.js';
+import { dec } from './calc';
 
 export class Strip {
   constructor(config) {

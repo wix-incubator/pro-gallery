@@ -5,7 +5,7 @@ import { Group } from './group.js';
 import { Strip } from './strip.js';
 import { Column } from './column.js';
 import layoutsStore from './layoutsStore.js';
-import { dec } from './calc.js';
+import { dec } from './calc';
 
 export default class Layouter {
   constructor(layoutParams) {
