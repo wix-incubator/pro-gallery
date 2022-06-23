@@ -1,4 +1,5 @@
 import { utils } from './utils';
+import { dec } from './calc.js';
 
 export class Item {
   /* @ngInject */
@@ -70,10 +71,10 @@ export class Item {
     } else if (typeof scaleOrDimensions === 'object') {
       if (scaleOrDimensions.width) {
         const w = Math.max(1, scaleOrDimensions.width);
-        scale = w / this.width;
+        scale = dec`${w} / ${this.width}`;
       } else if (scaleOrDimensions.height) {
         const h = Math.max(1, scaleOrDimensions.height);
-        scale = h / this.height;
+        scale = dec`${h} / ${this.height}`;
       }
     }
 
@@ -104,12 +105,12 @@ export class Item {
         return 0;
       } else if (this.pin === dir) {
         //this is used only for 3h/3v group types - to calc the offset of the middle item
-        const m = this.imageMargin / 2;
+        const m = dec`${this.imageMargin} / ${2}`;
         // return ((groupSize - 6 * m) * this.pinOffset + 2 * m);
         if (dir === 'top') {
-          return this.pinAfter.height + 2 * m;
+          return dec`${this.pinAfter.height} + ${2} * ${m}`;
         } else if (dir === 'left') {
-          return this.pinAfter.width + 2 * m;
+          return dec`${this.pinAfter.width} + ${2} * ${m}`;
         } else {
           return 0;
         }
@@ -129,7 +130,7 @@ export class Item {
   }
 
   calcScatter(offset) {
-    const m = this.imageMargin / 2;
+    const m = dec`${this.imageMargin} / ${2}`;
     const g = this.gallerySpacing;
 
     const spaceLeft = offset.left > 0 ? m : g;
@@ -225,12 +226,12 @@ export class Item {
         this._groupOffset.top +
           (this.isPinnedTop
             ? this.calcPinOffset(this._group.height, 'top')
-            : this._group.height - this.outerHeight) || 0,
+            : dec`${this._group.height} - ${this.outerHeight}`) || 0,
       left:
         this._groupOffset.left +
           (this.isPinnedLeft
             ? this.calcPinOffset(this._group.width, 'left')
-            : this._group.width - this.outerWidth) || 0,
+            : dec`${this._group.width} - ${this.outerWidth}`) || 0,
     };
     const {
       fixTop = 0,
@@ -244,15 +245,15 @@ export class Item {
     offset.innerRight = fixRight;
     offset.innerBottom = fixBottom;
 
-    offset.right = offset.left + this.width;
-    offset.bottom = offset.top + this.height;
+    offset.right = dec`${offset.left} + ${this.width}`;
+    offset.bottom = dec`${offset.top} + ${this.height}`;
 
     if (this.scatter > 0 || this.rotatingScatter?.length > 0) {
       const { x, y } = this.calcScatter(offset);
       offset.left += x;
       offset.top += y;
-      offset.right = offset.left + this.width;
-      offset.bottom = offset.top + this.height;
+      offset.right = dec`${offset.left} + ${this.width}`;
+      offset.bottom = dec`${offset.top} + ${this.height}`;
     }
 
     return offset;
@@ -290,7 +291,7 @@ export class Item {
   }
 
   get outerWidth() {
-    return this.width + 2 * this.margins;
+    return dec`${this.width} + ${2} * ${this.margins}`;
   }
 
   get infoWidth() {
@@ -304,7 +305,8 @@ export class Item {
   get width() {
     let width;
     if (this.cubeImages && this.ratio >= this.cropRatio) {
-      width = this.style.cubedWidth || this.orgHeight * this.cropRatio;
+      width =
+        this.style.cubedWidth || dec`${this.orgHeight} * ${this.cropRatio}`;
     } else {
       width = this.orgWidth;
     }
@@ -314,19 +316,19 @@ export class Item {
   set width(w) {
     // prettier-ignore
     this.style.cubedWidth =
-    // prettier-ignore
+      // prettier-ignore
       this.style.orgWidth =
-    // prettier-ignore
+      // prettier-ignore
       this.style.width =
-    // prettier-ignore
-        Math.max(1, w);
+      // prettier-ignore
+      Math.max(1, w);
 
     const { fixLeft = 0, fixRight = 0 } = this.dimensions;
-    this.style.innerWidth = this.style.width - fixLeft - fixRight;
+    this.style.innerWidth = dec`${this.style.width} - ${fixLeft} - ${fixRight}`;
   }
 
   get outerHeight() {
-    return this.height + 2 * this.margins;
+    return dec`${this.height} + ${2} * ${this.margins}`;
   }
 
   get orgHeight() {
@@ -336,7 +338,8 @@ export class Item {
   get height() {
     let height;
     if (this.cubeImages && this.ratio < this.cropRatio) {
-      height = this.style.cubedHeight || this.orgWidth / this.cropRatio;
+      height =
+        this.style.cubedHeight || dec`${this.orgWidth} / ${this.cropRatio}`;
     } else {
       height = this.orgHeight;
     }
@@ -346,15 +349,15 @@ export class Item {
   set height(h) {
     // prettier-ignore
     this.style.cubedHeight =
-    // prettier-ignore
+      // prettier-ignore
       this.style.orgHeight =
-    // prettier-ignore
+      // prettier-ignore
       this.style.height =
-    // prettier-ignore
-        Math.max(1, h);
+      // prettier-ignore
+      Math.max(1, h);
 
     const { fixTop = 0, fixBottom = 0 } = this.dimensions;
-    this.style.innerHeight = this.style.height - fixBottom - fixTop;
+    this.style.innerHeight = dec`${this.style.height} - ${fixBottom} - ${fixTop}`;
   }
 
   get maxHeight() {
@@ -368,7 +371,7 @@ export class Item {
   }
 
   get margins() {
-    return this.imageMargin / 2 || 0;
+    return dec`${this.imageMargin} / ${2}` || 0;
   }
   set margins(m) {
     this.imageMargin = m;
@@ -385,12 +388,12 @@ export class Item {
         targetWidth = this.useMaxDimensions
           ? Math.min(this.width, this.maxWidth)
           : this.width;
-        targetHeight = targetWidth / ratio;
+        targetHeight = dec`${targetWidth} / ${ratio}`;
       } else {
         targetHeight = this.useMaxDimensions
           ? Math.min(this.height, this.maxHeight)
           : this.height;
-        targetWidth = targetHeight * ratio;
+        targetWidth = dec`${targetHeight} * ${ratio}`;
       }
     };
 
@@ -409,10 +412,10 @@ export class Item {
     }
 
     let fixVals = {
-      fixTop: (this.height - targetHeight) / 2,
-      fixLeft: (this.width - targetWidth) / 2,
-      fixRight: (this.width - targetWidth) / 2,
-      fixBottom: (this.height - targetHeight) / 2,
+      fixTop: dec`(${this.height} - ${targetHeight}) / ${2}`,
+      fixLeft: dec`(${this.width} - ${targetWidth}) / ${2}`,
+      fixRight: dec`(${this.width} - ${targetWidth}) / ${2}`,
+      fixBottom: dec`(${this.height} - ${targetHeight}) / ${2}`,
     };
 
     switch (this.cubeFitPosition) {
@@ -485,14 +488,14 @@ export class Item {
           if (r.type === '%') {
             const dim =
               this.container[r.dim] +
-              (r.dim === 'galleryHeight' ? this.imageMargin / 2 : 0);
-            const relativeDim = r.val * dim - this.imageMargin;
+              (r.dim === 'galleryHeight' ? dec`${this.imageMargin} / ${2}` : 0);
+            const relativeDim = dec`${r.val} * ${dim} - ${this.imageMargin}`;
             return relativeDim;
           } else {
             return r.val;
           }
         });
-        ratio = dynamicCropRatio[0] / dynamicCropRatio[1];
+        ratio = dec`${dynamicCropRatio[0]} / ${dynamicCropRatio[1]}`;
       }
     }
 
@@ -500,9 +503,9 @@ export class Item {
 
     if (this.smartCrop === true) {
       if (this.isPortrait) {
-        ratio = Math.min(ratio, 1 / ratio);
+        ratio = Math.min(ratio, dec`${1} / ${ratio}`);
       } else {
-        ratio = Math.max(ratio, 1 / ratio);
+        ratio = Math.max(ratio, dec`${1} / ${ratio}`);
       }
     }
 
@@ -536,7 +539,7 @@ export class Item {
 
   get ratio() {
     if (!this.orgRatio) {
-      this.orgRatio = this.orgWidth / this.orgHeight;
+      this.orgRatio = dec`${this.orgWidth} / ${this.orgHeight}`;
     }
     return this.orgRatio;
   }

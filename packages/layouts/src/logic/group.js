@@ -148,71 +148,65 @@ export class Group {
     switch (this.type) {
       default:
       case '1':
-        this.safeGetItem(0).width = this.width - m;
-        this.safeGetItem(0).height = this.height - m;
+        this.safeGetItem(0).width = dec`${this.width} - ${m}`;
+        this.safeGetItem(0).height = dec`${this.height} - ${m}`;
         break;
       case '2v':
-        this.safeGetItem(0).width = this.safeGetItem(1).width = this.width - m;
+        this.safeGetItem(0).width = this.safeGetItem(1).width = dec`${this.width} - ${m}`;
         this.safeGetItem(0).height =
-          this.height - this.safeGetItem(1).height - 2 * m;
+          dec`${this.height} - ${this.safeGetItem(1).height} - 2 * ${m}`;
         break;
       case '2h':
         this.safeGetItem(0).height = this.safeGetItem(1).height =
-          this.height - m;
+          dec`${this.height} - ${m}`;
         this.safeGetItem(0).width =
-          this.width - this.safeGetItem(1).width - 2 * m;
+          dec`${this.width} - ${this.safeGetItem(1).width} - 2 * ${m}`;
         break;
       case '3t':
-        this.safeGetItem(0).width = this.width - m;
+        this.safeGetItem(0).width = dec`${this.width} - ${m}`;
         this.safeGetItem(0).height =
-          this.height - this.safeGetItem(1).height - 2 * m;
+          dec`${this.height} - ${this.safeGetItem(1).height} - 2 * ${m}`;
         this.safeGetItem(1).width =
-          this.width - this.safeGetItem(2).width - 2 * m;
+          dec`${this.width} - ${this.safeGetItem(2).width} - 2 * ${m}`;
         this.safeGetItem(2).height = this.safeGetItem(1).height;
         break;
       case '3b':
         this.safeGetItem(0).width =
-          this.width - this.safeGetItem(1).width - 2 * m;
+          dec`${this.width} - ${this.safeGetItem(1).width} - 2 * ${m}`;
         this.safeGetItem(1).height = this.safeGetItem(0).height;
         this.safeGetItem(2).height =
-          this.height - this.safeGetItem(1).height - 2 * m;
-        this.safeGetItem(2).width = this.width - m;
+          dec`${this.height} - ${this.safeGetItem(1).height} - 2 * ${m}`;
+        this.safeGetItem(2).width = dec`${this.width} - ${m}`;
         break;
       case '3l':
         this.safeGetItem(1).height =
-          this.height - this.safeGetItem(2).height - 2 * m;
+          dec`${this.height} - ${this.safeGetItem(2).height} - 2 * ${m}`;
         this.safeGetItem(2).width = this.safeGetItem(1).width;
         this.safeGetItem(0).width =
-          this.width - this.safeGetItem(1).width - 2 * m;
-        this.safeGetItem(0).height = this.height - m;
+          dec`${this.width} - ${this.safeGetItem(1).width} - 2 * ${m}`;
+        this.safeGetItem(0).height = dec`${this.height} - ${m}`;
         break;
       case '3r':
         this.safeGetItem(0).height =
-          this.height - this.safeGetItem(1).height - 2 * m;
+          dec`${this.height} - ${this.safeGetItem(1).height} - 2 * ${m}`;
         this.safeGetItem(1).width = this.safeGetItem(0).width;
         this.safeGetItem(2).width =
-          this.width - this.safeGetItem(1).width - 2 * m;
-        this.safeGetItem(2).height = this.height - m;
+          dec`${this.width} - ${this.safeGetItem(1).width} - 2 * ${m}`;
+        this.safeGetItem(2).height = dec`${this.height} - ${m}`;
         break;
       case '3v':
-        this.safeGetItem(0).width = this.width - m;
-        this.safeGetItem(1).width = this.width - m;
-        this.safeGetItem(2).width = this.width - m;
+        this.safeGetItem(0).width = dec`${this.width} - ${m}`;
+        this.safeGetItem(1).width = dec`${this.width} - ${m}`;
+        this.safeGetItem(2).width = dec`${this.width} - ${m}`;
         this.safeGetItem(2).height =
-          this.height -
-          this.safeGetItem(0).height -
-          this.safeGetItem(1).height -
-          3 * m;
+          dec`${this.height} - ${this.safeGetItem(0).height} - ${this.safeGetItem(1).height} - 3 * ${m}`;
         break;
       case '3h':
-        this.safeGetItem(0).height = this.height - m;
-        this.safeGetItem(1).height = this.height - m;
-        this.safeGetItem(2).height = this.height - m;
+        this.safeGetItem(0).height = dec`${this.height} - ${m}`;
+        this.safeGetItem(1).height = dec`${this.height} - ${m}`;
+        this.safeGetItem(2).height = dec`${this.height} - ${m}`;
         this.safeGetItem(2).width =
-          this.width -
-          this.safeGetItem(0).width -
-          this.safeGetItem(1).width -
-          3 * m;
+          dec`${this.width} - ${this.safeGetItem(0).width} - ${this.safeGetItem(1).width} - 3 * ${m}`;
         break;
     }
   }
@@ -302,9 +296,10 @@ export class Group {
         const optionalGroupSizes = GROUP_SIZES_BY_MAX_SIZE[maxGroupType];
         const targetGroupSizes =
           optionalGroupSizes[
-            Math.floor(collageDensity * (optionalGroupSizes.length - 1))
+            Math.floor(
+              dec`${collageDensity} * ${optionalGroupSizes.length - 1}`
+              )
           ];
-        // seed += ((collageDensity * 1.5) - 0.75) * numOfOptions;
 
         groupTypes = groupTypes.filter(
           (groupType) => targetGroupSizes.indexOf(parseInt(groupType)) >= 0
@@ -366,8 +361,10 @@ export class Group {
 
         item = this.safeGetItem(1);
         item.pinToCorner('bottom-left');
-        item.resize(w / item.width);
-        h += item.height;
+        item.resize(
+          dec`${w} / ${item.width}`
+        );
+        h = dec`${h} + ${item.height}`;
         items.push(item);
 
         break;
@@ -383,8 +380,10 @@ export class Group {
         item = this.safeGetItem(1);
         item.pinToCorner('top-right');
         item.innerOffset = [0, 0];
-        item.resize(h / item.height);
-        w += item.width;
+        item.resize(
+          dec`${h} / ${item.height}`
+        );
+        w = dec`${w} + ${item.width}`;
         items.push(item);
 
         break;
@@ -398,14 +397,18 @@ export class Group {
 
         item = this.safeGetItem(1);
         item.pinToCorner('top-right');
-        item.resize(h / item.height);
-        w += item.width;
+        item.resize(
+          dec`${h} / ${item.height}`
+        );
+        w = dec`${w} + ${item.width}`;
         items.push(item);
 
         item = this.safeGetItem(2);
         item.pinToCorner('bottom-left');
-        item.resize(w / item.width);
-        h += item.height;
+        item.resize(
+          dec`${w} / ${item.width}`
+        );
+        h = dec`${h} + ${item.height}`;
         items.push(item);
 
         break;
@@ -419,14 +422,18 @@ export class Group {
 
         item = this.safeGetItem(2);
         item.pinToCorner('bottom-right');
-        item.resize(h / item.height);
-        w += item.width;
+        item.resize(
+          dec`${h} / ${item.height}`
+        );
+        w = dec`${w} + ${item.width}`;
         items.push(item);
 
         item = this.safeGetItem(0);
         item.pinToCorner('top-left');
-        item.resize(w / item.width);
-        h += item.height;
+        item.resize(
+          dec`${w} / ${item.width}`
+        );
+        h = dec`${h} + ${item.height}`;
         items = [item].concat(items);
 
         break;
@@ -440,14 +447,18 @@ export class Group {
 
         item = this.safeGetItem(1);
         item.pinToCorner('bottom-left');
-        item.resize(w / item.width);
-        h += item.height;
+        item.resize(
+          dec`${w} / ${item.width}`
+        );
+        h = dec`${h} + ${item.height}`;
         items.push(item);
 
         item = this.safeGetItem(2);
         item.pinToCorner('top-right');
-        item.resize(h / item.height);
-        w += item.width;
+        item.resize(
+          dec`${h} / ${item.height}`
+        );
+        w = dec`${w} + ${item.width}`;
         items.push(item);
 
         break;
@@ -461,14 +472,18 @@ export class Group {
 
         item = this.safeGetItem(2);
         item.pinToCorner('bottom-right');
-        item.resize(w / item.width);
-        h += item.height;
+        item.resize(
+          dec`${w} / ${item.width}`
+        );
+        h = dec`${h} + ${item.height}`;
         items.push(item);
 
         item = this.safeGetItem(0);
         item.pinToCorner('top-left');
-        item.resize(h / item.height);
-        w += item.width;
+        item.resize(
+          dec`${h} / ${item.height}`
+        );
+        w = dec`${w} + ${item.width}`;
         items = [item].concat(items);
 
         break;
@@ -484,15 +499,19 @@ export class Group {
         item = this.safeGetItem(2);
         item.pinToCorner('bottom-left');
         item.setPosition('relative');
-        item.resize(w / item.width);
-        h += item.height;
+        item.resize(
+          dec`${w} / ${item.width}`
+        );
+        h = dec`${h} + ${item.height}`;
         items.push(item);
 
         //the middle item must be last to position it in the middle (h must be full height)
         item = this.safeGetItem(1);
         item.setPosition('relative');
-        item.resize(w / item.width);
-        h += item.height;
+        item.resize(
+          dec`${w} / ${item.width}`
+        );
+        h = dec`${h} + ${item.height}`;
         item.pinToCorner('top', items[0]);
         items = [items[0], item, items[1]];
 
@@ -509,15 +528,19 @@ export class Group {
         item = this.safeGetItem(2);
         item.pinToCorner('top-right');
         item.setPosition('relative');
-        item.resize(h / item.height);
-        w += item.width;
+        item.resize(
+          dec`${h} / ${item.height}`
+        );
+        w = dec`${w} + ${item.width}`;
         items.push(item);
 
         //the middle item must be last to position it in the middle (w must be full width)
         item = this.safeGetItem(1);
         item.setPosition('relative');
-        item.resize(h / item.height);
-        w += item.width;
+        item.resize(
+          dec`${h} / ${item.height}`
+        );
+        w = dec`${w} + ${item.width}`;
         item.pinToCorner('left', items[0]);
         items = [items[0], item, items[1]];
 
@@ -557,8 +580,8 @@ export class Group {
         height: this.height,
       };
       item.groupOffset = {
-        bottom: this.top + this.height,
-        right: this.left + this.width,
+        bottom: dec`${this.top} + ${this.height}`,
+        right: dec`${this.left} + ${this.width}`,
       };
     });
   }
@@ -570,14 +593,14 @@ export class Group {
       case '1':
       case '2v':
       case '3v': {
-        const w = this.width - m;
+        const w = dec`${this.width} - ${m}`;
         return {
           width: w,
         };
       }
       case '2h':
       case '3h': {
-        const h = this.height - m;
+        const h = dec`${this.height} - ${m}`;
         return {
           height: h,
         };
@@ -585,12 +608,12 @@ export class Group {
       case '3t':
       case '3b':
         if (idx === 0) {
-          const w = this.width - m;
+          const w = dec`${this.width} - ${m}`;
           return {
             width: w,
           };
         } else {
-          const h = this.height - items[0].height - 2 * m;
+          const h = dec`${this.height} - ${items[0].height} - 2 * ${m}`;
           return {
             height: h,
           };
@@ -598,12 +621,12 @@ export class Group {
       case '3r':
       case '3l':
         if (idx === 0) {
-          const h = this.height - m;
+          const h = dec`${this.height} - ${m}`;
           return {
             height: h,
           };
         } else {
-          const w = this.width - items[0].width - 2 * m;
+          const w = dec`${this.width} - ${items[0].width} - 2 * ${m}`;
           return {
             width: w,
           };
@@ -615,7 +638,7 @@ export class Group {
     let Rg = 1;
     let Rm = 1;
     const M = this.imageMargin;
-    const R = this.items.map((item) => item.width / item.height);
+    const R = this.items.map((item) => dec`${item.width} / ${item.height}`);
     switch (this.type) {
       // ---------------------------------
       // GENERAL FORMULA:
@@ -630,43 +653,43 @@ export class Group {
 
       default:
       case '1':
-        Rg = 1 / R[0];
-        Rm = 1 - Rg;
+        Rg = dec`1 / ${R[0]}`;
+        Rm = dec`1 - ${Rg}`;
         break;
       case '2h':
-        Rg = 1 / (R[0] + R[1]);
-        Rm = 1 - 2 * Rg;
+        Rg = dec`1 / (${R[0]} + ${R[1]})`;
+        Rm = dec`1 - 2 * ${Rg}`;
         break;
       case '2v':
-        Rg = 1 / R[0] + 1 / R[1];
-        Rm = 2 - Rg;
+        Rg = dec`1 / ${R[0]} + 1 / ${R[1]}`;
+        Rm = dec`2 - ${Rg}`;
         break;
       case '3h':
-        Rg = 1 / (R[0] + R[1] + R[2]);
-        Rm = 1 - 3 * Rg;
+        Rg = dec`1 / (${R[0]} + ${R[1]} + ${R[2]})`;
+        Rm = dec`1 - 3 * ${Rg}`;
         break;
       case '3v':
-        Rg = 1 / R[0] + 1 / R[1] + 1 / R[2];
-        Rm = 3 - Rg;
+        Rg = dec`1 / ${R[0]} + 1 / ${R[1]} + 1 / ${R[2]}`;
+        Rm = dec`3 - ${Rg}`;
         break;
       case '3t':
-        Rg = 1 / (R[2] + R[1]) + 1 / R[0];
-        Rm = 2 - 2 / (R[2] + R[1]) + 1 / R[0];
+        Rg = dec`1 / (${R[2]} + ${R[1]}) + 1 / ${R[0]}`;
+        Rm = dec`2 - 2 / (${R[2]} + ${R[1]}) + 1 / ${R[0]}`;
         break;
       case '3b':
-        Rg = 1 / (R[0] + R[1]) + 1 / R[2];
-        Rm = 2 - 2 / (R[0] + R[1]) + 1 / R[2];
+        Rg = dec`1 / (${R[0]} + ${R[1]}) + 1 / ${R[2]}`;
+        Rm = dec`2 - 2 / (${R[0]} + ${R[1]}) + 1 / ${R[2]}`;
         break;
       case '3l':
-        Rg = (R[1] + R[2]) / (R[0] * R[1] + R[1] * R[2] + R[0] * R[2]);
-        Rm = 2 - Rg * (2 + R[0]);
+        Rg = dec`(${R[1]} + ${R[2]}) / (${R[0]} * ${R[1]} + ${R[1]} * ${R[2]} + ${R[0]} * ${R[2]})`;
+        Rm = dec`2 - ${Rg} * (2 + ${R[0]})`;
         break;
       case '3r':
-        Rg = (R[0] + R[1]) / (R[0] * R[1] + R[1] * R[2] + R[0] * R[2]);
-        Rm = 2 - Rg * (2 + R[2]);
+        Rg = dec`(${R[0]} + ${R[1]}) / (${R[0]} * ${R[1]} + ${R[1]} * ${R[2]} + ${R[0]} * ${R[2]})`;
+        Rm = dec`2 - ${Rg} * (2 + ${R[2]})`;
         break;
     }
-    const H = W * Rg + M * Rm;
+    const H = dec`${W} * ${Rg} + ${M} * ${Rm}`;
 
     return H;
   }
@@ -675,7 +698,7 @@ export class Group {
     let Rg = 1;
     let Rm = 1;
     const M = this.imageMargin;
-    const R = this.items.map((item) => item.width / item.height);
+    const R = this.items.map((item) => dec`${item.width} / ${item.height}`);
     switch (this.type) {
       // ---------------------------------
       // GENERAL FORMULA:
@@ -689,42 +712,42 @@ export class Group {
       default:
       case '1':
         Rg = R[0];
-        Rm = 1 - Rg;
+        Rm = dec`1 - ${Rg}`;
         break;
       case '2h':
-        Rg = R[0] + R[1];
-        Rm = 2 - Rg;
+        Rg = dec`${R[0]} + ${R[1]}`;
+        Rm = dec`2 - ${Rg}`;
         break;
       case '2v':
-        Rg = 1 / (1 / R[0] + 1 / R[1]);
-        Rm = 1 - 2 * Rg;
+        Rg = dec`1 / (1 / ${R[0]} + 1 / ${R[1]})`;
+        Rm = dec`1 - 2 * ${Rg}`;
         break;
       case '3h':
-        Rg = R[0] + R[1] + R[2];
-        Rm = 3 - Rg;
+        Rg = dec`${R[0]} + ${R[1]} + ${R[2]}`;
+        Rm = dec`3 - ${Rg}`;
         break;
       case '3v':
-        Rg = 1 / (1 / R[0] + 1 / R[1] + 1 / R[2]);
-        Rm = 1 - 3 * Rg;
+        Rg = dec`1 / (1 / ${R[0]} + 1 / ${R[1]} + 1 / ${R[2]})`;
+        Rm = dec`1 - 3 * ${Rg}`;
         break;
       case '3t':
-        Rg = 1 / (1 / (R[2] + R[1]) + 1 / R[0]);
-        Rm = (2 / (R[2] + R[1]) + 1 / R[0] - 2) * Rg;
+        Rg = dec`1 / (1 / (${R[2]} + ${R[1]}) + 1 / ${R[0]})`;
+        Rm = dec`(2 / (${R[2]} + ${R[1]}) + 1 / ${R[0]} - 2) * ${Rg}`;
         break;
       case '3b':
-        Rg = 1 / (1 / (R[0] + R[1]) + 1 / R[2]);
-        Rm = (2 / (R[0] + R[1]) + 1 / R[2] - 2) * Rg;
+        Rg = dec`1 / (1 / (${R[0]} + ${R[1]}) + 1 / ${R[2]})`;
+        Rm = dec`(2 / (${R[0]} + ${R[1]}) + 1 / ${R[2]} - 2) * ${Rg}`;
         break;
       case '3l':
-        Rg = (R[0] * R[1] + R[1] * R[2] + R[0] * R[2]) / (R[1] + R[2]);
-        Rm = 2 + R[0] - 2 * Rg;
+        Rg = dec`(${R[0]} * ${R[1]} + ${R[1]} * ${R[2]} + ${R[0]} * ${R[2]}) / (${R[1]} + ${R[2]})`;
+        Rm = dec`2 + ${R[0]} - 2 * ${Rg}`;
         break;
       case '3r':
-        Rg = (R[0] * R[1] + R[1] * R[2] + R[0] * R[2]) / (R[0] + R[1]);
-        Rm = 2 + R[2] - 2 * Rg;
+        Rg = dec`(${R[0]} * ${R[1]} + ${R[1]} * ${R[2]} + ${R[0]} * ${R[2]}) / (${R[0]} + ${R[1]})`;
+        Rm = dec`2 + ${R[2]} - 2 * ${Rg}`;
         break;
     }
-    const W = H * Rg + M * Rm;
+    const W = dec`${H} * ${Rg} + ${M} * ${Rm}`;
 
     return W;
   }
@@ -734,7 +757,7 @@ export class Group {
     for (const item of this.items) {
       item.groupOffset = {
         top,
-        bottom: top + this.height,
+        bottom: dec`${top} + ${this.height}`,
       };
     }
   }
@@ -744,7 +767,7 @@ export class Group {
     for (const item of this.items) {
       item.groupOffset = {
         left,
-        right: left + this.width,
+        right: dec`${left} + ${this.width}`,
       };
     }
   }
@@ -756,7 +779,7 @@ export class Group {
   get ratio() {
     const w = this.width;
     const h = this.height;
-    return w / h;
+    return dec`${w} / ${h}`;
   }
 
   get height() {
@@ -768,7 +791,7 @@ export class Group {
   }
 
   get totalHeight() {
-    return this.height + this.infoHeight;
+    return dec`${this.height} + ${this.infoHeight}`;
   }
 
   get infoHeight() {
@@ -780,11 +803,11 @@ export class Group {
   }
 
   get bottom() {
-    return this.top + this.height;
+    return dec`${this.top} + ${this.height}`;
   }
 
   get right() {
-    return this.left + this.width;
+    return dec`${this.left} + ${this.width}`;
   }
 
   set items(items) {
