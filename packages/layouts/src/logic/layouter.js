@@ -5,6 +5,7 @@ import { Group } from './group.js';
 import { Strip } from './strip.js';
 import { Column } from './column.js';
 import layoutsStore from './layoutsStore.js';
+import { dec } from './calc.js';
 
 export default class Layouter {
   constructor(layoutParams) {
@@ -64,8 +65,8 @@ export default class Layouter {
         const roundFuncs = [Math.floor, Math.ceil];
         const diffs = roundFuncs
           .map((func) => func(numOfColsFloat)) //round to top, round to bottom
-          .map((n) => Math.round(galleryWidth / n)) //width of each col
-          .map((w) => Math.abs(targetItemSize - w)); //diff from targetItemSize
+          .map((n) => Math.round(dec`${galleryWidth} / ${n}`)) //width of each col
+          .map((w) => Math.abs(dec`${targetItemSize} - ${w}`)); //diff from targetItemSize
         const roundFunc = roundFuncs[diffs.indexOf(Math.min(...diffs))]; //choose the round function that has the lowest diff from the targetItemSize
         numOfCols = roundFunc(numOfColsFloat) || 1;
       }
@@ -144,8 +145,8 @@ export default class Layouter {
               }
               const strip = this.strips[0];
               if (strip) {
-                strip.setWidth(strip.width - group.width);
-                strip.ratio = strip.width / strip.height;
+                strip.setWidth(dec`${strip.width} - ${group.width}`);
+                strip.ratio = dec`${strip.width} / ${strip.height}`;
                 strip.groups.splice(-1, 1);
                 this.strip = strip;
               }
@@ -208,8 +209,7 @@ export default class Layouter {
 
       if (this.styleParams.forceFullHeight) {
         this.targetItemSize = Math.sqrt(
-          (this.container.galleryHeight * this.container.galleryWidth) /
-            this.srcItems.length
+          dec`(${this.container.galleryHeight} * ${this.container.galleryWidth}) / ${this.srcItems.length}`
         );
       } else {
         let gallerySizeVal;
@@ -221,9 +221,9 @@ export default class Layouter {
         this.targetItemSize =
           Math.floor(gallerySizeVal) +
           Math.ceil(
-            2 *
-              (this.styleParams.imageMargin / 2 -
-                this.styleParams.layoutParams.gallerySpacing)
+            dec`(${2} * ${this.styleParams.imageMargin} / ${2} - ${
+              this.styleParams.layoutParams.gallerySpacing
+            })`
           );
       }
 
@@ -252,12 +252,11 @@ export default class Layouter {
         this.targetItemSize
       );
       this.targetItemSize = this.styleParams.isVertical
-        ? Math.floor(this.galleryWidth / this.numOfCols)
+        ? Math.floor(dec`${this.galleryWidth} / ${this.numOfCols}`)
         : this.targetItemSize;
 
-      const { columnWidths, externalInfoWidth, imageMargin } =
-        this.styleParams;
-      const {cropRatio} = this.styleParams.layoutParams;
+      const { columnWidths, externalInfoWidth, imageMargin } = this.styleParams;
+      const { cropRatio } = this.styleParams.layoutParams;
       let columnWidthsArr = false;
       if (columnWidths && columnWidths.length > 0) {
         columnWidthsArr = columnWidths.split(',').map(Number);
@@ -281,7 +280,7 @@ export default class Layouter {
           //round group widths to fit an even number of pixels
           let colWidth = columnWidthsArr
             ? columnWidthsArr[idx]
-            : Math.round(remainderWidth / (this.numOfCols - idx));
+            : Math.round(dec`${remainderWidth} / (${this.numOfCols} - ${idx})`);
           const curLeft = totalLeft;
           totalLeft += colWidth;
           remainderWidth -= colWidth;
@@ -290,12 +289,12 @@ export default class Layouter {
             Math.round(
               externalInfoWidth > 1 // integer represent size in pixels, floats size in percentage
                 ? externalInfoWidth
-                : externalInfoWidth * colWidth
+                : dec`${externalInfoWidth} * ${colWidth}`
             ) || 0;
           colWidth -= infoWidth;
           fixedCubeHeight =
             fixedCubeHeight ||
-            (this.targetItemSize - infoWidth - imageMargin) / cropRatio +
+            dec`(${this.targetItemSize} - ${infoWidth} - ${imageMargin}) / ${cropRatio}` +
               imageMargin; //calc the cube height only once
           //add space for info on the side
           return new Column(idx, colWidth, curLeft, fixedCubeHeight, infoWidth);
@@ -371,7 +370,9 @@ export default class Layouter {
 
         if (this.strip.isFull(this.group, this.isLastImage)) {
           //close the current strip
-          this.strip.resizeToHeight(this.galleryWidth / this.strip.ratio);
+          this.strip.resizeToHeight(
+            dec`${this.galleryWidth} / ${this.strip.ratio}`
+          );
           this.strip.setWidth(this.galleryWidth);
           this.galleryHeight += this.strip.height;
           this.columns[0].addGroups(this.strip.groups);
@@ -396,16 +397,15 @@ export default class Layouter {
         this.group.setTop(this.galleryHeight);
         this.strip.ratio += this.group.ratio;
         // this.strip.height = Math.min(targetItemSize, (galleryWidth / this.strip.ratio));
-        this.strip.height = this.galleryWidth / this.strip.ratio;
+        this.strip.height = dec`${this.galleryWidth} / ${this.strip.ratio}`;
         this.strip.setWidth(this.galleryWidth);
         this.strip.addGroup(this.group);
 
         if (this.isLastImage && this.strip.hasGroups) {
           if (this.styleParams.scrollDirection === 1) {
-            this.strip.height =
-              this.container.galleryHeight +
-              (this.styleParams.imageMargin / 2 -
-                this.styleParams.layoutParams.gallerySpacing);
+            this.strip.height = dec`${this.container.galleryHeight} + (${
+              this.styleParams.imageMargin
+            } / ${2} - ${this.styleParams.layoutParams.gallerySpacing})`;
           } else if (this.strip.canRemainIncomplete()) {
             //stretching the this.strip to the full width will make it too high - so make it as high as the targetItemSize and not stretch
             this.strip.height = this.targetItemSize;
@@ -454,16 +454,17 @@ export default class Layouter {
     }
 
     if (this.styleParams.forceFullHeight) {
-      const stretchRatio = this.container.galleryHeight / this.galleryHeight;
+      const stretchRatio = dec`${this.container.galleryHeight} / ${this.galleryHeight}`;
       this.items.map((item) => {
         item.cubeImages = true;
-        item.cropRatio = item.ratio = item.width / (item.height * stretchRatio);
+        item.cropRatio =
+          item.ratio = dec`${item.width} / (${item.height} * ${stretchRatio})`;
         item.height *= stretchRatio;
         return item;
       });
       this.groups.map((group) => {
         group.height *= stretchRatio;
-        group.setTop(group.top * stretchRatio);
+        group.setTop(dec`${group.top} * ${stretchRatio}`);
         group.resizeItems();
         return group;
       });
@@ -471,12 +472,14 @@ export default class Layouter {
 
     //results
     this.lastGroup = this.group;
-    this.colWidth = Math.floor(this.galleryWidth / this.numOfCols);
+    this.colWidth = Math.floor(dec`${this.galleryWidth} / ${this.numOfCols}`);
     this.height =
       this.galleryHeight -
-      (this.styleParams.imageMargin / 2 - this.styleParams.layoutParams.gallerySpacing) * 2;
+      dec`(${this.styleParams.imageMargin} / ${2} - ${
+        this.styleParams.layoutParams.gallerySpacing
+      }) * ${2}`;
 
-    this.width = this.lastGroup.left + this.lastGroup.width;
+    this.width = dec`${this.lastGroup.left} + ${this.lastGroup.width}`;
 
     this.ready = true;
 

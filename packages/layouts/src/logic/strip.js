@@ -1,3 +1,5 @@
+import { dec } from './calc.js';
+
 export class Strip {
   constructor(config) {
     this.ratio = 0;
@@ -21,7 +23,7 @@ export class Strip {
     group.stripIdx = this.idx;
     group.Strip = this;
     this.lastGroup.isLastGroup = true;
-    this.lastGroup.stripWidth = this.height * this.ratio;
+    this.lastGroup.stripWidth = dec`${this.height} * ${this.ratio}`;
   }
 
   markAsIncomplete() {
@@ -78,9 +80,8 @@ export class Strip {
     if (scrollDirection === 1) {
       isStripSmallEnough = false; //horizontal layout is one long strip
     } else {
-      const withNewGroup =
-        galleryWidth / (this.ratio + newGroup.ratio) - targetItemSize; //start a new strip BEFORE adding the current group
-      const withoutNewGroup = galleryWidth / this.ratio - targetItemSize; //start a new strip AFTER adding the current group
+      const withNewGroup = dec`${galleryWidth} / (${this.ratio} + ${newGroup.ratio}) - ${targetItemSize}`; //start a new strip BEFORE adding the current group
+      const withoutNewGroup = dec`${galleryWidth} / ${this.ratio} - ${targetItemSize}`; //start a new strip AFTER adding the current group
       if (isNaN(withNewGroup) || isNaN(withoutNewGroup)) {
         isStripSmallEnough = false;
       } else if (withoutNewGroup < 0) {

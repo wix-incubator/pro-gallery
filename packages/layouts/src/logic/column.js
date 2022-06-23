@@ -1,3 +1,5 @@
+import { dec } from './calc.js';
+
 export class Column {
   constructor(idx, width, left, cubedHeight, infoWidth) {
     this.idx = idx;
@@ -22,7 +24,7 @@ export class Column {
   }
 
   get totalWidth() {
-    return this.width + this.infoWidth;
+    return dec`${this.width} + ${this.infoWidth}`;
   }
 
   get scheme() {
