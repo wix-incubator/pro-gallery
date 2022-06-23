@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Item } from './item.js';
+import { dec } from './calc.js';
 
 const GROUP_TYPES_BY_RATIOS_V = {
   lll: '1,2h',
@@ -28,6 +29,8 @@ const GROUP_SIZES_BY_MAX_SIZE = {
   2: [[1], [1, 2], [2]],
   3: [[1], [1, 2], [1, 2, 3], [2, 3], [3]],
 };
+
+console.log({dec: dec(`0.1 + 0.2`), num: (0.1 + 0.2)});
 
 export class Group {
   constructor(config) {
