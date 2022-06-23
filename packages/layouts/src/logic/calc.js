@@ -3,15 +3,15 @@ import { BigNumber } from 'bignumber.js';
 import * as pz from 'parzec';
 
 const lexer = new pz.Lexer(
-  [/\{\d\}/],
-  [/-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/],
-  [/\(/],
-  [/\)/],
-  [/\+/],
-  [/-/],
-  [/\*/],
-  [/\//],
-  [/[\t\n\r ]+/]
+  [/\{\d\}/, undefined],
+  [/-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?/, undefined],
+  [/\(/, undefined],
+  [/\)/, undefined],
+  [/\+/, undefined],
+  [/-/, undefined],
+  [/\*/, undefined],
+  [/\//, undefined],
+  [/[\t\n\r ]+/, undefined]
 );
 
 const optws = pz.terminal(undefined, '<whitespace>').optionalRef();
@@ -69,7 +69,7 @@ function evaluate(expression, inputs) {
 
   return pz.parse(
     rootExpr,
-    pz.lexerInput(expression, lexer, new pz.Token('<end of input>'))
+    pz.lexerInput(expression, lexer, new pz.Token(undefined, '<end of input>'))
   );
 }
 
