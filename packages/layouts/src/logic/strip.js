@@ -7,10 +7,16 @@ export class Strip {
     this.isFullWidth = true;
 
     this.idx = config.idx;
-    this.groupsPerStrip = config.groupsPerStrip;
+    this._groupsPerStrip = config.groupsPerStrip;
     this.scrollDirection = config.scrollDirection;
     this.targetItemSize = config.targetItemSize;
     this.container = config.container;
+    this.remainingItems = config.remainingItems;
+  }
+
+  get groupsPerStrip() {
+    // if (remainingItems < 10 ) {}
+    return this._groupsPerStrip;
   }
 
   addGroup(group) {

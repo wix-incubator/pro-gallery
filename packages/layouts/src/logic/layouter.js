@@ -255,9 +255,8 @@ export default class Layouter {
         ? Math.floor(this.galleryWidth / this.numOfCols)
         : this.targetItemSize;
 
-      const { columnWidths, externalInfoWidth, imageMargin } =
-        this.styleParams;
-      const {cropRatio} = this.styleParams.layoutParams;
+      const { columnWidths, externalInfoWidth, imageMargin } = this.styleParams;
+      const { cropRatio } = this.styleParams.layoutParams;
       let columnWidthsArr = false;
       if (columnWidths && columnWidths.length > 0) {
         columnWidthsArr = columnWidths.split(',').map(Number);
@@ -384,6 +383,7 @@ export default class Layouter {
             groupsPerStrip: this.styleParams.groupsPerStrip,
             scrollDirection: this.styleParams.scrollDirection,
             targetItemSize: this.targetItemSize,
+            remainingItems: this.srcItems.length - this.pointer,
           });
 
           //reset the group (this group will be rebuilt)
@@ -474,7 +474,9 @@ export default class Layouter {
     this.colWidth = Math.floor(this.galleryWidth / this.numOfCols);
     this.height =
       this.galleryHeight -
-      (this.styleParams.imageMargin / 2 - this.styleParams.layoutParams.gallerySpacing) * 2;
+      (this.styleParams.imageMargin / 2 -
+        this.styleParams.layoutParams.gallerySpacing) *
+        2;
 
     this.width = this.lastGroup.left + this.lastGroup.width;
 
