@@ -14,7 +14,7 @@ const lexer = new pz.Lexer(
   [/[\t\n\r ]+/]
 );
 
-const optws = pz.terminal('<whitespace>').optionalRef();
+const optws = pz.terminal(undefined, '<whitespace>').optionalRef();
 let inputFromArg;
 const input = pz
   .terminal('<input>')
@@ -24,13 +24,13 @@ const number = pz
   .terminal('<number>')
   .map((token) => new BigNumber(token.text))
   .followedBy(optws);
-const openParen = pz.terminal('(').followedBy(optws);
-const closeParen = pz.terminal(')').followedBy(optws);
-const plus = pz.terminal('+').followedBy(optws);
-const minus = pz.terminal('-').followedBy(optws);
-const multiply = pz.terminal('*').followedBy(optws);
-const divide = pz.terminal('/').followedBy(optws);
-const eof = pz.terminal('<end of input>');
+const openParen = pz.terminal(undefined, '(').followedBy(optws);
+const closeParen = pz.terminal(undefined, ')').followedBy(optws);
+const plus = pz.terminal(undefined, '+').followedBy(optws);
+const minus = pz.terminal(undefined, '-').followedBy(optws);
+const multiply = pz.terminal(undefined, '*').followedBy(optws);
+const divide = pz.terminal(undefined, '/').followedBy(optws);
+const eof = pz.terminal(undefined, '<end of input>');
 
 const addop = pz.operators(
   [plus, (a, b) => a.plus(b)],
