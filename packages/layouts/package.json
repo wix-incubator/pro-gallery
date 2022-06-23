@@ -43,6 +43,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
+    "bignumber.js": "^9.0.2",
+    "parzec": "^1.0.2",
     "pro-gallery-lib": "4.1.9"
   }
 }
