@@ -126,19 +126,12 @@ export class Group {
 
   round() {
     //round all sizes to full pixels
-    if (this.scrollDirection === 0) {
-      const orgWidth = this.width;
-      if (this.isLastGroup && this.scrollDirection === 0) {
-        this.width = this.stripWidth - this.left;
-      } else {
-        this.width = Math.round(this.width);
-      }
-      this.height = Math.round((this.height * this.width) / orgWidth);
+    if (this.isLastGroup && this.scrollDirection === 0) {
+      this.width = this.stripWidth - this.left;
     } else {
-      const orgHeight = this.height;
-      this.height = Math.round(this.height);
-      this.width = Math.round((this.width * this.height) / orgHeight);
+      this.width = Math.round(this.width);
     }
+    this.height = Math.round(this.height);
 
     for (const item of this.items) {
       item.width = Math.round(item.width);
