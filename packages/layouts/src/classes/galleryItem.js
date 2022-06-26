@@ -285,8 +285,14 @@ class GalleryItem {
     const maxWidth = this.maxWidth || this.dto.width || this.metadata.width;
     const maxHeight = this.maxHeight || this.dto.height || this.metadata.height;
 
-    this.resizeWidth = Math.min(maxWidth, Math.ceil(this.style.innerWidth));
-    this.resizeHeight = Math.min(maxHeight, Math.ceil(this.style.innerHeight));
+    this.resizeWidth = Math.min(
+      maxWidth,
+      Math.ceil(this.style?.innerWidth || this.width)
+    );
+    this.resizeHeight = Math.min(
+      maxHeight,
+      Math.ceil(this.style?.innerHeight || this.height)
+    );
 
     this._cachedUrls = {};
     this.urls = {};
