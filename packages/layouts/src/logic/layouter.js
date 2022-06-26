@@ -470,6 +470,11 @@ export default class Layouter {
     }
 
     //results
+    this.lastStrip = this.strip;
+    debugger;
+    if (!this.lastStrip.isFull) {
+      console.log('Last Strip is BROKEN');
+    }
     this.lastGroup = this.group;
     this.colWidth = Math.floor(this.galleryWidth / this.numOfCols);
     this.height =
