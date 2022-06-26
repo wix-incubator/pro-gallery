@@ -259,7 +259,7 @@ class GalleryItem {
       mediaUrl(
         this,
         imgUrl,
-        resizeMethod,
+        GALLERY_CONSTS.resizeMethods.FILL,
         requiredWidth,
         requiredHeight,
         sharpParams,
@@ -285,8 +285,8 @@ class GalleryItem {
     const maxWidth = this.maxWidth || this.dto.width || this.metadata.width;
     const maxHeight = this.maxHeight || this.dto.height || this.metadata.height;
 
-    this.resizeWidth = Math.min(maxWidth, Math.ceil(this.width));
-    this.resizeHeight = Math.min(maxHeight, Math.ceil(this.height));
+    this.resizeWidth = Math.min(maxWidth, Math.ceil(this.style.innerWidth));
+    this.resizeHeight = Math.min(maxHeight, Math.ceil(this.style.innerHeight));
 
     this._cachedUrls = {};
     this.urls = {};
