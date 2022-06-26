@@ -21,7 +21,7 @@ describe('Layouter', () => {
   beforeEach(() => {
     const items = getItems();
     styleParams = {
-      layoutParams: { 
+      layoutParams: {
         gallerySpacing: 0,
         cropRatio: 1,
         repeatingGroupTypes: '',
@@ -86,7 +86,8 @@ describe('Layouter', () => {
       const items = getItems(100);
       styleParams.galleryWidth = 4000;
       styleParams.targetItemSize = 500;
-      styleParams.layoutParams.repeatingGroupTypes = '1,2h,2v,3r,3t,3l,3b,3v,3h';
+      styleParams.layoutParams.repeatingGroupTypes =
+        '1,2h,2v,3r,3t,3l,3b,3v,3h';
       styleParams.imageMargin = 0;
 
       gallery = getLayout({ items, container, styleParams });
@@ -631,7 +632,8 @@ describe('Layouter', () => {
     it('should type groups according to repeatingGroupTypes if defined', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
       styleParams.layoutParams.repeatingGroupTypes = '2h,3v,3b,3t,1,2h,2v';
-      const repeatingGroupTypesArr = styleParams.layoutParams.repeatingGroupTypes.split(',');
+      const repeatingGroupTypesArr =
+        styleParams.layoutParams.repeatingGroupTypes.split(',');
 
       gallery = getLayout({ items, container, styleParams });
       gallery.groups.forEach((group, g) => {
