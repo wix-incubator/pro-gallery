@@ -999,7 +999,7 @@ class ItemView extends React.Component {
     const elementProps = {
       ref: (e) => (this.itemAnchor = e),
       'data-id': photoId,
-      class: 'item-link-wrapper',
+      className: 'item-link-wrapper',
       'data-idx': idx,
       'data-hook': 'item-link-wrapper',
       onFocus: handleFocus,
