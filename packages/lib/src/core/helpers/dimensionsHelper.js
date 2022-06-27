@@ -23,6 +23,7 @@ class DimensionsHelper {
     this.id = id || this.id;
     this.options = options || this.options;
     this.container = container || this.container;
+    this.fixHeightForHorizontalGalleryIfNeeded();
   }
 
   getGalleryDimensions() {
@@ -36,61 +37,17 @@ class DimensionsHelper {
         height: Math.ceil(this.container.height),
         width: Math.ceil(this.container.width),
       };
+
       if (this.container.externalScrollBase) {
         //if was provided from the wrapper
         res.scrollBase += this.container.externalScrollBase;
       }
+
       if (this.options.hasThumbnails) {
-        const fixedThumbnailSize =
-          this.options.thumbnailSize +
-          this.options.layoutParams.gallerySpacing +
-          3 * this.options.thumbnailSpacings;
-        switch (this.options.galleryThumbnailsAlignment) {
-          case 'top':
-          case 'bottom':
-            res.galleryHeight -= fixedThumbnailSize;
-            break;
-          case 'left':
-          case 'right':
-            res.galleryWidth -= fixedThumbnailSize;
-            break;
-          default:
-            break;
-        }
+        res.galleryHeight += this.getThumbnailHeightDelta();
+        res.galleryWidth += this.getThumbnailWidthDelta();
       }
-      if (
-        this.options.scrollDirection ===
-          GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-        this.options.layoutParams.structure.galleryRatio.value > 0
-      ) {
-        res.galleryHeight =
-          res.galleryWidth *
-          this.options.layoutParams.structure.galleryRatio.value;
-        if (this.options.hasThumbnails) {
-          const fixedThumbnailSize =
-            this.options.thumbnailSize +
-            this.options.layoutParams.gallerySpacing +
-            3 * this.options.thumbnailSpacings;
-          switch (this.options.galleryThumbnailsAlignment) {
-            case 'top':
-            case 'bottom':
-              res.height = res.galleryHeight + fixedThumbnailSize;
-              break;
-            default:
-            case 'right':
-            case 'left':
-              res.height = res.galleryHeight;
-              break;
-          }
-        }
-        if (
-          !this.options.layoutParams.structure.galleryRatio
-            .includeExternalInfo &&
-          includeExternalInfo.isRelevant(this.options)
-        ) {
-          res.galleryHeight += this.options.externalInfoHeight;
-        }
-      }
+
       return res;
     });
   }
@@ -140,6 +97,62 @@ class DimensionsHelper {
       const res = this.getGalleryDimensions();
       return res.galleryWidth / res.galleryHeight;
     });
+  }
+
+  getThumbnailSize() {
+    const fixedThumbnailSize =
+      this.options.thumbnailSize +
+      this.options.layoutParams.gallerySpacing +
+      3 * this.options.thumbnailSpacings;
+    return fixedThumbnailSize;
+  }
+
+  getThumbnailHeightDelta() {
+    switch (this.options.galleryThumbnailsAlignment) {
+      case 'top':
+      case 'bottom':
+        return this.getThumbnailSize();
+      case 'left':
+      case 'right':
+        return 0;
+      default:
+        break;
+    }
+  }
+  getThumbnailWidthDelta() {
+    switch (this.options.galleryThumbnailsAlignment) {
+      case 'top':
+      case 'bottom':
+        return 0;
+      case 'left':
+      case 'right':
+        return this.getThumbnailSize();
+      default:
+        break;
+    }
+  }
+
+  fixHeightForHorizontalGalleryIfNeeded() {
+    if (
+      this.options.scrollDirection ===
+        GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+      this.options.layoutParams.structure.galleryRatio.value > 0
+    ) {
+      this.container.height =
+        this.container.width *
+        this.options.layoutParams.structure.galleryRatio.value;
+      if (this.options.hasThumbnails) {
+        this.container.height -= this.getThumbnailHeightDelta();
+      } else {
+        if (
+          !this.options.layoutParams.structure.galleryRatio
+            .includeExternalInfo &&
+          includeExternalInfo.isRelevant(this.options)
+        ) {
+          this.container.height += this.options.externalInfoHeight;
+        }
+      }
+    }
   }
 }
 
