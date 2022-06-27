@@ -44,8 +44,8 @@ class DimensionsHelper {
       }
 
       if (this.options.hasThumbnails) {
-        res.galleryHeight += this.getThumbnailHeightDelta();
-        res.galleryWidth += this.getThumbnailWidthDelta();
+        res.galleryHeight -= this.getThumbnailHeightDelta();
+        res.galleryWidth -= this.getThumbnailWidthDelta();
       }
 
       return res;
@@ -138,12 +138,28 @@ class DimensionsHelper {
         GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
       this.options.layoutParams.structure.galleryRatio.value > 0
     ) {
-      this.container.height =
-        this.container.width *
-        this.options.layoutParams.structure.galleryRatio.value;
       if (this.options.hasThumbnails) {
-        this.container.height -= this.getThumbnailHeightDelta();
+        switch (this.options.galleryThumbnailsAlignment) {
+          case 'top':
+          case 'bottom':
+            this.container.height =
+              this.container.width *
+                this.options.layoutParams.structure.galleryRatio.value +
+              this.getThumbnailHeightDelta();
+            break;
+          case 'left':
+          case 'right':
+            this.container.height =
+              (this.container.width - this.getThumbnailWidthDelta()) *
+              this.options.layoutParams.structure.galleryRatio.value;
+            break;
+          default:
+            break;
+        }
       } else {
+        this.container.height =
+          this.container.width *
+          this.options.layoutParams.structure.galleryRatio.value;
         if (
           !this.options.layoutParams.structure.galleryRatio
             .includeExternalInfo &&
