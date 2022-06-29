@@ -350,7 +350,6 @@ export default class Layouter {
         inStripIdx: this.strip.groups.length + 1,
         top: this.galleryHeight,
         items: this.groupItems,
-        isLastItems: this.isLastImages,
         targetItemSize: this.targetItemSize,
         showAllItems: this.showAllItems,
         container: this.container,
@@ -417,6 +416,42 @@ export default class Layouter {
           this.columns[0].addGroups(this.strip.groups);
           this.strips.push(this.strip);
         }
+
+        if (
+          this.styleParams.forceFullStrips &&
+          this.pointer + 1 >= this.srcItems.length
+        ) {
+          this.lastStrip = this.strip;
+          if (!this.lastStrip.isFullWidth) {
+            console.log('Last Strip is BROKEN');
+            //cut the last 3 strips
+            const totalStrips = this.strips.length;
+            const totalGroups = this.groupIdx;
+            const lastStripsCount = Math.min(totalStrips, 3);
+            const lastStrips = this.strips.slice(totalStrips - lastStripsCount);
+            const lastStripsItemsCount = lastStrips.reduce(
+              (total, strip) => total + strip.totalItems,
+              0
+            );
+            const lastStripsGroupsCount = lastStrips.reduce(
+              (total, strip) => total + strip.groups.length,
+              0
+            );
+
+            this.pointer -= lastStripsItemsCount;
+            this.groupIdx -= lastStripsGroupsCount;
+            this.strips.splice(totalStrips - lastStripsCount, lastStripsCount);
+            this.columns[0].groups.splice(
+              totalGroups - lastStripsGroupsCount,
+              lastStripsGroupsCount
+            );
+            this.strip = this.strips[this.strips.length - 1];
+            this.galleryHeight = this.strip.groups[0].top;
+            this.styleParams.groupsPerStrip = Math.floor(
+              lastStripsItemsCount / lastStripsCount
+            );
+          }
+        }
       } else {
         //---------------------| COLUMNS GALLERY |----------------------//
 
@@ -470,11 +505,15 @@ export default class Layouter {
     }
 
     //results
-    this.lastStrip = this.strip;
-    debugger;
-    if (!this.lastStrip.isFull) {
-      console.log('Last Strip is BROKEN');
-    }
+    const avgItemsPerGroup = this.srcItems.length / this.groups.length;
+    const avgGroupsPerStrip = this.groups.length / this.strips.length;
+    const expectedAvgItemsPerGroup =
+      (this.styleParams.groupSize * this.styleParams.collageDensity) / 1;
+    console.warn({
+      avgItemsPerGroup,
+      avgGroupsPerStrip,
+      expectedAvgItemsPerGroup,
+    });
     this.lastGroup = this.group;
     this.colWidth = Math.floor(this.galleryWidth / this.numOfCols);
     this.height =

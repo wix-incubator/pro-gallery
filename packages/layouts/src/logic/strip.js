@@ -4,6 +4,7 @@ export class Strip {
     this.groups = [];
     this.width = 0;
     this.height = 0;
+    this.totalItems = 0;
     this.isFullWidth = true;
 
     this.idx = config.idx;
@@ -11,7 +12,6 @@ export class Strip {
     this.scrollDirection = config.scrollDirection;
     this.targetItemSize = config.targetItemSize;
     this.container = config.container;
-    this.remainingItems = config.remainingItems;
   }
 
   get groupsPerStrip() {
@@ -28,6 +28,7 @@ export class Strip {
     group.Strip = this;
     this.lastGroup.isLastGroup = true;
     this.lastGroup.stripWidth = this.height * this.ratio;
+    this.totalItems += group.items.length;
   }
 
   markAsIncomplete() {
@@ -103,8 +104,8 @@ export class Strip {
 
       if (isStripSmallEnough && isLastImage) {
         //if it is the last image - prefer adding it to the last strip rather putting it on a new strip
-        isStripSmallEnough =
-          Number(Math.abs(withoutNewGroup)) < Math.abs(withNewGroup);
+        isStripSmallEnough = false;
+        // Number(Math.abs(withoutNewGroup)) < Math.abs(withNewGroup);
       }
     }
 

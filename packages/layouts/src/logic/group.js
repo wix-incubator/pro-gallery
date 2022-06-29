@@ -36,7 +36,6 @@ export class Group {
     this.inStripIdx = config.inStripIdx;
     this.top = config.top;
     this.showAllItems = config.showAllItems;
-    this.isLastItems = config.isLastItems;
     this.dummyItems = [];
     this.targetItemSize = config.targetItemSize;
 
@@ -55,7 +54,9 @@ export class Group {
       this.collageAmount = styleParams.collageAmount;
       this.collageDensity = styleParams.collageDensity;
       this.groupTypes = String(styleParams.groupTypes);
-      this.repeatingGroupTypes = String(styleParams.layoutParams.repeatingGroupTypes);
+      this.repeatingGroupTypes = String(
+        styleParams.layoutParams.repeatingGroupTypes
+      );
       this.rotatingCropRatios = String(styleParams.rotatingCropRatios);
       this.chooseBestGroup = styleParams.chooseBestGroup;
       this.externalInfoHeight = styleParams.externalInfoHeight;
@@ -124,7 +125,7 @@ export class Group {
 
   round() {
     //round all sizes to full pixels
-    
+
     if (this.isLastGroup && this.scrollDirection === 0) {
       this.width = this.stripWidth - this.left;
     } else {
