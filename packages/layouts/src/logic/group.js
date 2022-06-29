@@ -125,7 +125,6 @@ export class Group {
 
   round() {
     //round all sizes to full pixels
-
     if (this.isLastGroup && this.scrollDirection === 0) {
       this.width = this.stripWidth - this.left;
     } else {
