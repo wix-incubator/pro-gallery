@@ -367,7 +367,7 @@ export default class Layouter {
       if (!this.styleParams.isVertical) {
         //---------------------| STRIPS GALLERY |----------------------//
 
-        if (this.strip.isFull(this.group, this.isLastImage)) {
+        if (this.strip.isFull(this.group, this.isLastImages)) {
           //close the current strip
           this.strip.resizeToHeight(this.galleryWidth / this.strip.ratio);
           this.strip.setWidth(this.galleryWidth);
@@ -502,15 +502,6 @@ export default class Layouter {
     }
 
     //results
-    const avgItemsPerGroup = this.srcItems.length / this.groups.length;
-    const avgGroupsPerStrip = this.groups.length / this.strips.length;
-    const expectedAvgItemsPerGroup =
-      (this.styleParams.groupSize * this.styleParams.collageDensity) / 1;
-    console.warn({
-      avgItemsPerGroup,
-      avgGroupsPerStrip,
-      expectedAvgItemsPerGroup,
-    });
     this.lastGroup = this.group;
     this.colWidth = Math.floor(this.galleryWidth / this.numOfCols);
     this.height =
@@ -644,7 +635,7 @@ export default class Layouter {
   }
 
   get isLastImages() {
-    return !this.srcItems[this.pointer + 1];
+    return !this.srcItems[this.pointer + 2];
   }
 
   get imagesLeft() {
