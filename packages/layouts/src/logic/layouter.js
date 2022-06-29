@@ -375,19 +375,52 @@ export default class Layouter {
           this.columns[0].addGroups(this.strip.groups);
           this.strips.push(this.strip);
 
-          //open a new strip
-          this.strip = new Strip({
-            idx: this.strip.idx + 1,
-            container: this.container,
-            groupsPerStrip: this.styleParams.groupsPerStrip,
-            scrollDirection: this.styleParams.scrollDirection,
-            targetItemSize: this.targetItemSize,
-            remainingItems: this.srcItems.length - this.pointer,
-          });
+          const newStripIdx = this.strip.idx + 1;
 
           //reset the group (this group will be rebuilt)
           this.pointer -= this.group.realItems.length - 1;
           this.groupIdx--;
+
+          if (
+            this.styleParams.forceFullStrips &&
+            !this.recommendedGroupsPerStrip?.[newStripIdx]
+          ) {
+            const avgItemsPerGroup = this.srcItems.length / this.groups.length;
+            const avgGroupsPerStrip = this.groups.length / this.strips.length;
+            const newOfStripsToCheck = 3;
+            if (
+              this.pointer +
+                avgItemsPerGroup * avgGroupsPerStrip * newOfStripsToCheck >=
+              this.srcItems.length
+            ) {
+              const remainingItems = this.srcItems.length - this.pointer;
+              const remainingGroups = remainingItems / avgItemsPerGroup;
+              const remainingStrips = remainingGroups / avgGroupsPerStrip;
+
+              this.recommendedGroupsPerStrip = {};
+              for (
+                let i = newStripIdx;
+                i < newStripIdx + remainingStrips;
+                i++
+              ) {
+                this.recommendedGroupsPerStrip[i] = Math.ceil(
+                  remainingGroups / remainingStrips
+                );
+              }
+            }
+          }
+
+          //open a new strip
+          this.strip = new Strip({
+            idx: newStripIdx,
+            container: this.container,
+            groupsPerStrip:
+              this.styleParams.groupsPerStrip ||
+              this.recommendedGroupsPerStrip?.[newStripIdx],
+            scrollDirection: this.styleParams.scrollDirection,
+            targetItemSize: this.targetItemSize,
+          });
+
           continue;
         }
 
@@ -415,42 +448,6 @@ export default class Layouter {
           this.galleryHeight += this.strip.height;
           this.columns[0].addGroups(this.strip.groups);
           this.strips.push(this.strip);
-        }
-
-        if (
-          this.styleParams.forceFullStrips &&
-          this.pointer + 1 >= this.srcItems.length
-        ) {
-          this.lastStrip = this.strip;
-          if (!this.lastStrip.isFullWidth) {
-            console.log('Last Strip is BROKEN');
-            //cut the last 3 strips
-            const totalStrips = this.strips.length;
-            const totalGroups = this.groupIdx;
-            const lastStripsCount = Math.min(totalStrips, 3);
-            const lastStrips = this.strips.slice(totalStrips - lastStripsCount);
-            const lastStripsItemsCount = lastStrips.reduce(
-              (total, strip) => total + strip.totalItems,
-              0
-            );
-            const lastStripsGroupsCount = lastStrips.reduce(
-              (total, strip) => total + strip.groups.length,
-              0
-            );
-
-            this.pointer -= lastStripsItemsCount;
-            this.groupIdx -= lastStripsGroupsCount;
-            this.strips.splice(totalStrips - lastStripsCount, lastStripsCount);
-            this.columns[0].groups.splice(
-              totalGroups - lastStripsGroupsCount,
-              lastStripsGroupsCount
-            );
-            this.strip = this.strips[this.strips.length - 1];
-            this.galleryHeight = this.strip.groups[0].top;
-            this.styleParams.groupsPerStrip = Math.floor(
-              lastStripsItemsCount / lastStripsCount
-            );
-          }
         }
       } else {
         //---------------------| COLUMNS GALLERY |----------------------//

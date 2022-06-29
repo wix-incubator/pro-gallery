@@ -124,7 +124,7 @@ class Utils {
       collageDensity: 50,
       fixedColumns: 0,
       columnWidths: '',
-      forceFullStrips: false, //only for testing!!!
+      forceFullStrips: true,
     };
     const fullMigratedAndOld =
       extendNestedOptionsToIncludeOldAndNew(styleParams);
