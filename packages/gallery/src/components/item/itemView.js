@@ -774,6 +774,7 @@ class ItemView extends React.Component {
     const imageHoverAnimation = options.imageHoverAnimation;
     const classNames = {
       'gallery-item-container': true,
+      'has-custom-focus': true,
       visible: true,
       'pro-gallery-highlight': this.isHighlight(),
       clickable: this.isItemClickable(options),
