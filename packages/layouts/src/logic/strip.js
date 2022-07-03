@@ -36,7 +36,7 @@ export class Strip {
     if (this.groupsPerStrip > 0) {
       return false;
     } else {
-      return this.targetItemSize * 1.5 < this.height;
+      return this.targetItemSize * 2 < this.height;
     }
   }
 
@@ -92,11 +92,12 @@ export class Strip {
       } else if (withoutNewGroup < 0) {
         //the strip is already too small
         isStripSmallEnough = true;
-      } else if (withNewGroup < 0) {
+      } else if (withNewGroup < targetItemSize / 2) {
         //adding the new group makes is small enough
         // check if adding the new group makes the strip TOO small
         //so - without the new group, the strip is larger than the required size - but adding the new group might make it too small
-        isStripSmallEnough = Math.abs(withoutNewGroup) < Math.abs(withNewGroup);
+        isStripSmallEnough =
+          Math.abs(withoutNewGroup) < Math.abs(withNewGroup) * 1.5; //prefer spliting strips than over pack groups in one strip
       } else {
         isStripSmallEnough = false;
       }
