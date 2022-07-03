@@ -769,6 +769,7 @@ function expected() {
     cubeFitPosition: 'MIDDLE',
     magnificationLevel: 2,
     fixedColumns: 0,
+    forceFullStrips: false,
     behaviourParams: {
       item: {
         content: {

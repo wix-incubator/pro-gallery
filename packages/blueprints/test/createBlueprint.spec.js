@@ -427,6 +427,7 @@ function getExpected() {
         magnificationLevel: 2,
         rotatingGroupTypes: '',
         fixedColumns: 0,
+        forceFullStrips: false,
         behaviourParams: {
           item: {
             content: {
