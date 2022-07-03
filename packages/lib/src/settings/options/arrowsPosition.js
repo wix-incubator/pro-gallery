@@ -13,6 +13,6 @@ export default {
   default: GALLERY_CONSTS.arrowsPosition.ON_GALLERY,
   options: createOptions('arrowsPosition'),
   description: `Set the position of the navigation arrows in sliders. You can choose to position the arrows on the gallery (ON_GALLERY)
-  or outside the gallery (OUTSIDE_GALLERY- in these case the gallery will margins from both sides to make room for the arrows);
+  , outside the gallery (OUTSIDE_GALLERY- in these case the gallery will margins from both sides to make room for the arrows), or on the mouse cursor (MOUSE_CURSOR).;
   `,
 };

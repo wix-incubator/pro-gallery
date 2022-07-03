@@ -118,6 +118,7 @@ import layoutParams_targetItemSize_value from './layoutParams_targetItemSize_val
 import layoutParams_info_width from './layoutParams_info_width';
 import layoutParams_info_height from './layoutParams_info_height';
 import layoutParams_info_placement from './layoutParams_info_placement';
+import mouseCursorContainer from './mouseCursorContainer';
 
 export default {
   [optionsMap.behaviourParams.gallery.vertical.loadMore.text]:
@@ -352,6 +353,7 @@ export default {
     layoutParams_navigationArrows_container_borderRadius,
   [optionsMap.stylingParams.temResolutionMode]:
     stylingParams_itemResolutionMode,
+  mouseCursorContainer,
 };
 // TODO = add the options:
 /*
