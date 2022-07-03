@@ -57,6 +57,7 @@ import arrowsType from './arrowsType';
 import arrowsContainerStyleType from './arrowsContainerStyleType';
 import itemResolutionMode from './itemResolutionMode';
 import autoSlideBehaviour from './autoSlideBehaviour';
+import navigationsBehavior from './navigationsBehavior';
 
 export default {
   arrowsPosition,
@@ -119,4 +120,5 @@ export default {
   arrowsType,
   arrowsContainerStyleType,
   autoSlideBehaviour,
+  navigationsBehavior,
 };

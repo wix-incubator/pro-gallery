@@ -115,6 +115,7 @@ export const optionsBySection = {
     'behaviourParams_item_content_magnificationValue',
   ],
   [SECTIONS.DESIGN]: [
+    'navigationsBehavior',
     'showArrows',
     'arrowsSize',
     'arrowsColor',

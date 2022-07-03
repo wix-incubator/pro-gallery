@@ -103,16 +103,16 @@ body.pro-gallery {
 .nav-arrows-container {
   left: auto;
   position: absolute;
-  display: flex;
+  // display: flex;
   text-align: center;
   cursor: pointer;
   opacity: 0.9;
   //font-size: 40px;
-  align-items: center;
+  // align-items: center;
   background: transparent;
   border: none;
   outline: none;
-  justify-content: center;
+  // justify-content: center;
 
   &:hover {
     opacity: 1;

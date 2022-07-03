@@ -596,8 +596,9 @@ class SlideshowView extends React.Component {
         arrowsType: layoutParams.navigationArrows.type,
         containerStyleType: type,
       });
-
+    const { navigationsBehavior } = this.props.options;
     const { galleryHeight } = this.props.container;
+    const { galleryWidth } = this.props.container;
     const infoHeight = textBoxHeight;
     const imageHeight = galleryHeight - infoHeight;
 
@@ -621,18 +622,42 @@ class SlideshowView extends React.Component {
         -imageHeight * directionFix,
     }[arrowsVerticalPosition];
 
-    const containerStyle = {
-      width: `${navArrowsContainerWidth}px`,
-      height: `${navArrowsContainerHeight}px`,
-      padding: 0,
-      top: `calc(${galleryVerticalCenter} - ${navArrowsContainerHeight / 2}px - 
+    const containerStyle =
+      navigationsBehavior === 'MOUSE_CURSOR'
+        ? {
+            width: `${galleryWidth * 0.35}px`,
+            height: `${galleryHeight}px`,
+            padding: 0,
+            top: 0,
+            ...getArrowBoxStyle({
+              type,
+              backgroundColor,
+              borderRadius,
+            }),
+          }
+        : {
+            width: `${navArrowsContainerWidth}px`,
+            height: `${navArrowsContainerHeight}px`,
+            padding: 0,
+            top: `calc(${galleryVerticalCenter} - ${
+              navArrowsContainerHeight / 2
+            }px - 
         ${verticalPositionFix / 2}px)`,
-      ...getArrowBoxStyle({
-        type,
-        backgroundColor,
-        borderRadius,
-      }),
-    };
+            ...getArrowBoxStyle({
+              type,
+              backgroundColor,
+              borderRadius,
+            }),
+          };
+
+    // const arrowStyleContainer = {
+    //   width: `${navArrowsContainerWidth}px`,
+    //   height: `${navArrowsContainerHeight}px`,
+    //   ...getArrowBoxStyle({
+    //   type,
+    //   backgroundColor,
+    //   borderRadius,
+    // })};
 
     const arrowsPos =
       scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
@@ -642,12 +667,19 @@ class SlideshowView extends React.Component {
     // imageMargin effect the margin of the main div ('pro-gallery-parent-container') that SlideshowView is rendering, so the arrows should be places accordingly
     // arrowsPadding relevant only for arrowsPosition.ON_GALLERY
 
-    const prevContainerStyle = {
-      left: arrowsPos,
-    };
-    const nextContainerStyle = {
-      right: arrowsPos,
-    };
+    const prevContainerStyle =
+      navigationsBehavior === 'MOUSE_CURSOR'
+        ? { left: 0 }
+        : {
+            left: arrowsPos,
+          };
+    const nextContainerStyle =
+      navigationsBehavior === 'MOUSE_CURSOR'
+        ? { right: 0 }
+        : {
+            right: arrowsPos,
+          };
+
     const useDropShadow =
       type === GALLERY_CONSTS.arrowsContainerStyleType.SHADOW;
     const arrowsBaseClasses = [
@@ -791,6 +823,12 @@ class SlideshowView extends React.Component {
           height,
           width: this.props.container.galleryWidth,
         };
+  }
+
+  eleToBase64Url(ele) {
+    const string = new XMLSerializer().serializeToString(ele);
+    const encoded = Buffer.from(string).toString(`base64`);
+    return `data:image/svg+xml;base64,` + encoded;
   }
 
   createGallery() {
