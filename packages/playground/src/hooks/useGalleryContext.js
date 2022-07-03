@@ -1,20 +1,11 @@
-import { useContext } from 'react';
-import { GalleryContext } from './GalleryContext';
-import {
-  getInitialOptions,
-  getOptionsFromUrl,
-} from '../constants/options';
-import { addPresetOptions } from 'pro-gallery';
-import { SIDEBAR_WIDTH } from '../constants/consts';
-import {
-  utils,
-  flatToNested,
-} from 'pro-gallery-lib';
+import { useContext } from "react";
+import { GalleryContext } from "./GalleryContext";
+import { getInitialOptions, getOptionsFromUrl } from "../constants/options";
+import { addPresetOptions } from "pro-gallery";
+import { SIDEBAR_WIDTH } from "../constants/consts";
+import { utils, flatToNested } from "pro-gallery-lib";
 
-
-export function useGalleryContext(
-  blueprintsManager,
-) {
+export function useGalleryContext(blueprintsManager) {
   const [context, setContext] = useContext(GalleryContext);
 
   const setShowSide = (newShowSide) => {
@@ -29,7 +20,8 @@ export function useGalleryContext(
     let { items, options, container } = params;
 
     container = container || context.container || calcGalleryContainer();
-    const _options = options || context.options || flatToNested(getInitialOptions());
+    const _options =
+      options || context.options || flatToNested(getInitialOptions());
     const url = `https://www.wix.com/_serverless/pro-gallery-blueprints-server/createBlueprint`;
 
     if (!items || !container || !_options) {
@@ -37,16 +29,16 @@ export function useGalleryContext(
     }
 
     const response = await fetch(url, {
-      method: 'POST',
-      credentials: 'omit', // include, *same-origin, omit
+      method: "POST",
+      credentials: "omit", // include, *same-origin, omit
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         items,
         options,
-        container
-      }) // body data type must match "Content-Type" header
+        container,
+      }), // body data type must match "Content-Type" header
     });
     const data = await response.json();
     setBlueprint(data.blueprint);
@@ -104,8 +96,8 @@ export function useGalleryContext(
       ...getInitialOptions(),
       ...getOptionsFromUrl(window.location.search),
       [newProp]: value,
-    })
-    console.log('setting new context and requesting BP', options.layoutParams)
+    });
+    console.log("setting new context and requesting BP", options.layoutParams);
     const newContext = {
       options,
     };
@@ -118,12 +110,17 @@ export function useGalleryContext(
   };
 
   const setItems = (items) => {
+    window.galleryItems = items;
     const newContext = { items };
     if (getGallerySettings().useBlueprints) {
       requestNewBlueprint(newContext, true);
     }
 
     setContext(newContext);
+  };
+
+  const getItems = () => {
+    return context.items || window.galleryItems;
   };
 
   const setBlueprint = (blueprint) => {
@@ -141,12 +138,12 @@ export function useGalleryContext(
     try {
       localStorage.gallerySettings = JSON.stringify(gallerySettings);
     } catch (e) {
-      console.error('Could not save gallerySettings', e);
+      console.error("Could not save gallerySettings", e);
     }
   };
 
   const getGallerySettings = () => {
-    if (typeof context.gallerySettings === 'object') {
+    if (typeof context.gallerySettings === "object") {
       return context.gallerySettings;
     } else {
       try {
@@ -191,8 +188,9 @@ export function useGalleryContext(
       context.options || flatToNested(getInitialOptions())
     ), //TODO - this is a double even for the normal flow - maybe used for the sidebar somehow?
     setOptions,
-    items: context.items,
+    items: context.items || window.galleryItems,
     setItems,
+    getItems,
     blueprint: context.blueprint,
     setBlueprint,
     galleryReady: context.galleryReady,

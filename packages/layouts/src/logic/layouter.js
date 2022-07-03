@@ -397,16 +397,9 @@ export default class Layouter {
               const remainingGroups = remainingItems / avgItemsPerGroup;
               const remainingStrips = remainingGroups / avgGroupsPerStrip;
 
-              this.recommendedGroupsPerStrip = {};
-              for (
-                let i = newStripIdx;
-                i < newStripIdx + remainingStrips;
-                i++
-              ) {
-                this.recommendedGroupsPerStrip[i] = Math.ceil(
-                  remainingGroups / remainingStrips
-                );
-              }
+              this.recommendedGroupsPerStrip = {
+                [newStripIdx]: Math.floor(remainingGroups / remainingStrips),
+              };
             }
           }
 
