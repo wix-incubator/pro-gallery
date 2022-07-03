@@ -409,10 +409,10 @@ export class Item {
     }
 
     let fixVals = {
-      fixTop: (this.height - targetHeight) / 2,
-      fixLeft: (this.width - targetWidth) / 2,
-      fixRight: (this.width - targetWidth) / 2,
-      fixBottom: (this.height - targetHeight) / 2,
+      fixTop: Math.round((this.height - targetHeight) / 2),
+      fixLeft: Math.round((this.width - targetWidth) / 2),
+      fixRight: Math.round((this.width - targetWidth) / 2),
+      fixBottom: Math.round((this.height - targetHeight) / 2),
     };
 
     switch (this.cubeFitPosition) {
