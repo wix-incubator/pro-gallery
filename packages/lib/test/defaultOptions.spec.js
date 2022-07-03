@@ -66,7 +66,6 @@ function expectedOptions() {
     cubeImages: false,
     cubeType: 'fill',
     smartCrop: false,
-    forceFullStrips: false,
     fullscreen: true,
     videoLoop: true,
     videoSound: false,
