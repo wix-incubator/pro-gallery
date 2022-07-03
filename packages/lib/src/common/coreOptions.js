@@ -58,6 +58,7 @@ const coreOptions = {
   slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
   autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
   autoSlideshowContinuousSpeed: 200,
+  forceFullStrips: false,
   //duplicated from lib
 };
 
