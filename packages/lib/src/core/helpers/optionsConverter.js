@@ -245,9 +245,6 @@ function process_old_to_new_arrowsPosition(obj) {
       _obj[optionsMap.layoutParams.navigationArrows.position] =
         'OUTSIDE_GALLERY';
       break;
-    case 2:
-      _obj[optionsMap.layoutParams.navigationArrows.position] = 'MOUSE_CURSOR';
-      break;
     default:
       break;
   }
