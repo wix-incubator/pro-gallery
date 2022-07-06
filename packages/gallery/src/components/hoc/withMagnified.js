@@ -141,6 +141,7 @@ function withMagnified(WrappedComponent) {
             height: magnifiedHeight,
             position: 'absolute',
           }}
+          onLoad={this.props.actions.setItemLoaded}
         />
       );
     }
