@@ -12,10 +12,6 @@ class NavigationPanel extends React.Component {
   constructor(props) {
     super(props);
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
-
-    this.state = {
-      activeIndex: props.activeIndex || 0,
-    };
   }
 
   scrollToThumbnail(itemIdx) {
@@ -28,7 +24,7 @@ class NavigationPanel extends React.Component {
       this.props.galleryStructure.galleryItems
     );
     const activeIndex = utils.inRange(
-      this.state.activeIndex,
+      this.props.activeIndex,
       clearedGalleryItems.length
     );
     const { thumbnailSize, thumbnailSpacings } = options;
