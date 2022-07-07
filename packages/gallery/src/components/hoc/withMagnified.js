@@ -135,7 +135,7 @@ function withMagnified(WrappedComponent) {
           data-hook="magnified-item"
           src={src}
           alt={typeof alt === 'string' ? alt : 'untitled image'}
-          id={id}
+          id={`magnified-item-${id}`}
           style={{
             width: magnifiedWidth,
             height: magnifiedHeight,
