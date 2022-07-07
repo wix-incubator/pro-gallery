@@ -242,14 +242,7 @@ export class GalleryContainer extends React.Component {
     //should be called AFTER new state is set
     const { container, needToHandleShowMoreClick, initialGalleryHeight } =
       this.state;
-    const options = this.props.options;
-    const numOfItems = this.state.items.length;
-    const layoutHeight = this.props.container.height;
-    const layoutItems = this.props.structure.items;
     const isInfinite = this.containerInfiniteGrowthDirection() === 'vertical';
-    const isFixedHorizontlaGalleryRatio =
-      this.containerInfiniteGrowthDirection() === 'horizontal' &&
-      this.state.options.layoutParams.structure.galleryRatio.value > 0;
     let updatedHeight = false;
     const needToUpdateHeightNotInfinite =
       !isInfinite && needToHandleShowMoreClick;
@@ -258,6 +251,13 @@ export class GalleryContainer extends React.Component {
       updatedHeight =
         container.height + (initialGalleryHeight - showMoreContainerHeight);
     }
+    const options = this.props.options;
+    const numOfItems = this.state.items.length;
+    const layoutHeight = updatedHeight || this.props.container.height;
+    const layoutItems = this.props.structure.items;
+    const isFixedHorizontlaGalleryRatio =
+      this.containerInfiniteGrowthDirection() === 'horizontal' &&
+      this.state.options.layoutParams.structure.galleryRatio.value > 0;
 
     const onGalleryChangeData = {
       numOfItems,
