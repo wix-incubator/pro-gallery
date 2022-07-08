@@ -245,7 +245,9 @@ const getNavigationPanelOnGalleryPositionStyles = ({
   galleryThumbnailsAlignment,
   navigationPanelPosition,
 }) => {
-  if (navigationPanelPosition === 'ON_GALLERY') {
+  if (
+    navigationPanelPosition === GALLERY_CONSTS.thumbnailsPosition.ON_GALLERY
+  ) {
     let onGalleryStyles = { position: 'absolute' };
     onGalleryStyles[galleryThumbnailsAlignment] = 0;
     return onGalleryStyles;

@@ -45,6 +45,7 @@ import scrollDirection from './scrollDirection';
 import socialNetworks from './socialNetworks';
 import textBoxWidthCalculationOptions from './textBoxWidthCalculationOptions';
 import thumbnailsAlignment from './thumbnailsAlignment';
+import thumbnailsPosition from './thumbnailsPosition';
 import { URL_SIZES as urlSizes, URL_TYPES as urlTypes } from './urlTypes';
 import videoPlay from './videoPlay';
 import viewMode from './viewMode';
@@ -107,6 +108,7 @@ export default {
   socialNetworks,
   textBoxWidthCalculationOptions,
   thumbnailsAlignment,
+  thumbnailsPosition,
   urlSizes,
   urlTypes,
   videoPlay,

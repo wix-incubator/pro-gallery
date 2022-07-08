@@ -45,7 +45,8 @@ class DimensionsHelper {
 
       if (
         this.options.hasThumbnails &&
-        this.options.layoutParams.thumbnails.position === 'OUTSIDE_GALLERY'
+        this.options.layoutParams.thumbnails.position ===
+          GALLERY_CONSTS.thumbnailsPosition.OUTSIDE_GALLERY
       ) {
         res.galleryHeight -= this.getThumbnailHeightDelta();
         res.galleryWidth -= this.getThumbnailWidthDelta();
@@ -143,7 +144,8 @@ class DimensionsHelper {
     ) {
       if (
         this.options.hasThumbnails &&
-        this.options.layoutParams.thumbnails.position === 'OUTSIDE_GALLERY'
+        this.options.layoutParams.thumbnails.position ===
+          GALLERY_CONSTS.thumbnailsPosition.OUTSIDE_GALLERY
       ) {
         switch (this.options.galleryThumbnailsAlignment) {
           case 'top':

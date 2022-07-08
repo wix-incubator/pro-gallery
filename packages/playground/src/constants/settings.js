@@ -79,6 +79,7 @@ export const optionsBySection = {
     'rotatingScatter',
     'smartCrop',
 
+    'layoutParams_thumbnails_position',
     'galleryThumbnailsAlignment',
     'thumbnailSize',
     'thumbnailSpacings',

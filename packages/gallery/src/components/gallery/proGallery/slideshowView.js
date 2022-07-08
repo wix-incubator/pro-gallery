@@ -1095,7 +1095,9 @@ class SlideshowView extends React.Component {
       this.props.options.layoutParams.thumbnails;
     const { galleryThumbnailsAlignment } = this.props.options;
     const navigationPanels = [];
-    if (navigationPanelPosition === 'ON_GALLERY') {
+    if (
+      navigationPanelPosition === GALLERY_CONSTS.thumbnailsPosition.ON_GALLERY
+    ) {
       navigationPanels[0] = false;
       navigationPanels[1] = navigationPanel;
       return navigationPanels;

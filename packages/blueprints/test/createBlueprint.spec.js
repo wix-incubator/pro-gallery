@@ -90,6 +90,7 @@ function getExpected() {
             spacing: 0,
             size: 120,
             alignment: 'BOTTOM',
+            position: GALLERY_CONSTS.thumbnailsPosition.OUTSIDE_GALLERY,
           },
           info: {
             layout: 'NO_BACKGROUND',
