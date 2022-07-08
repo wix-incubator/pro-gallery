@@ -30,6 +30,7 @@ import hasThumbnails from './hasThumbnails';
 import groupTypes from './groupTypes';
 import thumbnailSize from './thumbnailSize';
 import galleryThumbnailsAlignment from './galleryThumbnailsAlignment';
+import layoutParams_thumbnails_position from './layoutParams_thumbnails_position';
 import isRTL from './isRTL';
 import scrollSnap from './scrollSnap';
 import itemBorderWidth from './itemBorderWidth';
@@ -337,6 +338,8 @@ export default {
   layoutParams_structure_galleryRatio_value,
   [optionsMap.layoutParams.structure.galleryRatio.value]:
     layoutParams_structure_galleryRatio_value,
+  [optionsMap.layoutParams.thumbnails.position]:
+    layoutParams_thumbnails_position,
   layoutParams_structure_galleryRatio_includeExternalInfo,
   [optionsMap.layoutParams.structure.galleryRatio.includeExternalInfo]:
     layoutParams_structure_galleryRatio_includeExternalInfo,

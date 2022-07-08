@@ -43,7 +43,11 @@ class DimensionsHelper {
         res.scrollBase += this.container.externalScrollBase;
       }
 
-      if (this.options.hasThumbnails) {
+      if (
+        this.options.hasThumbnails &&
+        this.options.layoutParams.thumbnails.position ===
+          GALLERY_CONSTS.thumbnailsPosition.OUTSIDE_GALLERY
+      ) {
         res.galleryHeight -= this.getThumbnailHeightDelta();
         res.galleryWidth -= this.getThumbnailWidthDelta();
       }
@@ -138,7 +142,11 @@ class DimensionsHelper {
         GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
       this.options.layoutParams.structure.galleryRatio.value > 0
     ) {
-      if (this.options.hasThumbnails) {
+      if (
+        this.options.hasThumbnails &&
+        this.options.layoutParams.thumbnails.position ===
+          GALLERY_CONSTS.thumbnailsPosition.OUTSIDE_GALLERY
+      ) {
         switch (this.options.galleryThumbnailsAlignment) {
           case 'top':
           case 'bottom':

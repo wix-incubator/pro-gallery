@@ -1058,6 +1058,8 @@ class SlideshowView extends React.Component {
       const { galleryHeight, galleryWidth, height, width } =
         this.props.container;
       const { galleryThumbnailsAlignment } = this.props.options;
+      const { position: navigationPanelPosition } =
+        this.props.options.layoutParams.thumbnails;
       const customNavigationPanelInlineStyles =
         getCustomNavigationPanelInlineStyles({
           galleryHeight,
@@ -1065,6 +1067,7 @@ class SlideshowView extends React.Component {
           height,
           width,
           galleryThumbnailsAlignment,
+          navigationPanelPosition,
         });
       navigationPanel = (
         <div
@@ -1088,23 +1091,32 @@ class SlideshowView extends React.Component {
         />
       );
     }
-
-    const navigationPanelPosition =
-      this.props.options.galleryThumbnailsAlignment;
+    const { position: navigationPanelPosition } =
+      this.props.options.layoutParams.thumbnails;
+    const { galleryThumbnailsAlignment } = this.props.options;
     const navigationPanels = [];
-    switch (navigationPanelPosition) {
-      case 'top':
-      case 'left':
-        navigationPanels[0] = navigationPanel;
-        navigationPanels[1] = false;
-        break;
-      case 'right':
-      case 'bottom':
-        navigationPanels[0] = false;
-        navigationPanels[1] = navigationPanel;
-        break;
+    if (
+      navigationPanelPosition === GALLERY_CONSTS.thumbnailsPosition.ON_GALLERY
+    ) {
+      navigationPanels[0] = false;
+      navigationPanels[1] = navigationPanel;
+      return navigationPanels;
+    } else {
+      //OUTSIDE_GALLERY
+      switch (galleryThumbnailsAlignment) {
+        case 'top':
+        case 'left':
+          navigationPanels[0] = navigationPanel;
+          navigationPanels[1] = false;
+          break;
+        case 'right':
+        case 'bottom':
+          navigationPanels[0] = false;
+          navigationPanels[1] = navigationPanel;
+          break;
+      }
+      return navigationPanels;
     }
-    return navigationPanels;
   }
 
   getClassNames() {
