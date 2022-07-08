@@ -41,6 +41,7 @@ const defaultOptions = {
       spacing: 4,
       enable: false,
       alignment: 'BOTTOM', //TODO, create and use use NEW_CONSTS
+      position: GALLERY_CONSTS.thumbnailsPosition.OUTSIDE_GALLERY, //TODO, create and use use NEW_CONSTS
     },
     navigationArrows: {
       enable: true,
