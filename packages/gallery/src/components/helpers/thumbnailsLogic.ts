@@ -52,7 +52,7 @@ export function getThumbnailsData({
   options,
   activeIndex,
   items,
-  thumbnailPosition,
+  thumbnailAlignment,
   galleryStructure,
   containerWidth,
   containerHeight,
@@ -62,7 +62,7 @@ export function getThumbnailsData({
   options: GalleryProps['options'];
   activeIndex: number;
   items: GalleryProps['items'];
-  thumbnailPosition: string;
+  thumbnailAlignment: string;
   galleryStructure: any;
   containerWidth: number;
   containerHeight: number;
@@ -86,8 +86,8 @@ export function getThumbnailsData({
   const withInfiniteScroll = false; // this is not supported yet
   const thumbnailSizeWithSpacing = thumbnailSize + thumbnailSpacings * 2;
   const horizontalThumbnails =
-    thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM ||
-    thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.TOP;
+    thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM ||
+    thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.TOP;
   const { width, height } = getThumbnailsContainerSize({
     horizontalThumbnails,
     containerWidth,
@@ -130,7 +130,7 @@ export function getThumbnailsData({
     : thumbnailsStyle;
 
   const thumbnailsMargins = getThumbnailsContainerMargin({
-    thumbnailPosition,
+    thumbnailAlignment,
     thumbnailSpacings,
   });
   return {
@@ -140,7 +140,7 @@ export function getThumbnailsData({
         thumbnailItem: thumbnailItem,
         item: item,
         location: getThumbnailLocation({
-          thumbnailPosition,
+          thumbnailAlignment,
           offset,
           isRTL,
           thumbnailSizeWithSpacing,
@@ -225,23 +225,23 @@ function getThumbnailsStyles({
 }
 
 function getThumbnailsContainerMargin({
-  thumbnailPosition,
+  thumbnailAlignment,
   thumbnailSpacings,
 }: {
-  thumbnailPosition: string;
+  thumbnailAlignment: string;
   thumbnailSpacings: number;
 }) {
   const horizontalThumbnails =
-    thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM ||
-    thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.TOP;
+    thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM ||
+    thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.TOP;
   if (horizontalThumbnails) {
-    const isTop = thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.TOP;
+    const isTop = thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.TOP;
     return {
       marginTop: isTop ? 0 : thumbnailSpacings,
       marginBottom: isTop ? thumbnailSpacings : 0,
     };
   }
-  const isLeft = thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.LEFT;
+  const isLeft = thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.LEFT;
   return {
     marginLeft: isLeft ? 0 : thumbnailSpacings,
     marginRight: isLeft ? thumbnailSpacings : 0,
@@ -249,19 +249,19 @@ function getThumbnailsContainerMargin({
 }
 
 function getThumbnailLocation({
-  thumbnailPosition,
+  thumbnailAlignment,
   thumbnailSizeWithSpacing,
   offset,
   isRTL,
 }: {
-  thumbnailPosition: string;
+  thumbnailAlignment: string;
   thumbnailSizeWithSpacing: number;
   offset: number;
   isRTL: boolean;
 }) {
   const horizontalThumbnails =
-    thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM ||
-    thumbnailPosition === GALLERY_CONSTS.thumbnailsAlignment.TOP;
+    thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM ||
+    thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.TOP;
   const offsetSize = offset * thumbnailSizeWithSpacing;
   if (horizontalThumbnails) {
     return {

@@ -18,7 +18,12 @@ class NavigationPanel extends React.Component {
     this.props.navigationToIdxCB(itemIdx);
   }
 
-  createThumbnails({ thumbnailPosition, options, galleryStructure, settings }) {
+  createThumbnails({
+    thumbnailAlignment,
+    options,
+    galleryStructure,
+    settings,
+  }) {
     const clearedGalleryItems = clearGalleryItems(
       this.props.items,
       this.props.galleryStructure.galleryItems
@@ -39,7 +44,7 @@ class NavigationPanel extends React.Component {
       activeIndex,
       options,
       galleryStructure,
-      thumbnailPosition,
+      thumbnailAlignment,
       containerHeight: this.props.container.height,
       containerWidth: this.props.container.width,
       activeIndexOffsetMemory: this.activeIndexOffsetMemory,
@@ -135,7 +140,7 @@ class NavigationPanel extends React.Component {
 
   render() {
     const navigationRelevantProps = {
-      thumbnailPosition: this.props.options.galleryThumbnailsAlignment,
+      thumbnailAlignment: this.props.options.galleryThumbnailsAlignment,
       options: this.props.options,
       galleryStructure: this.props.galleryStructure,
       settings: this.props.settings,
