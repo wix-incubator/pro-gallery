@@ -24,11 +24,15 @@ export function NavigationPanel(props) {
     const activeIdx = props.navigationPanelAPI.getActiveItemIndex();
     const percent = (activeIdx + 1 )/ props.totalItemsCount
     const totalForProgress = props.totalItemsCount === Infinity ? 100 : props.totalItemsCount
-    return  <>
+    let containerStyles = {
+      maxWidth: props.options.layoutParams.thumbnails.position === 'ON_GALLERY' ? '150px' : '',
+    } 
+    return (<div style={containerStyles}>
       {getAllKindsOfButtons(props.navigationPanelAPI)}
       <Progress percent={Math.round(percent*100)} steps={totalForProgress} size="medium" strokeColor={green[6]} />
-    </>
-    ;
+    </div>
+    )
+    
   };
   const createButton = (buttonName, func, disabled) => {
     return <Button onClick={func} disabled={disabled}>{buttonName}</Button>

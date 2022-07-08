@@ -17,6 +17,9 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
         borderRadius: 0,
       },
     },
+    thumbnails: {
+      position: 'ON_GALLERY',
+    },
     structure: {
       galleryRatio: { value: 0, includeExternalInfo: false },
     },

@@ -24,6 +24,7 @@ export interface Groups {
 
 export interface Thumbnails {
   enable?: boolean;
+  position?: 'ON_GALLERY' | 'OUTSIDE_GALLERY';
   spacing?: number;
   size?: number;
   alignment?: 'BOTTOM' | 'RIGHT' | 'LEFT' | 'TOP';
