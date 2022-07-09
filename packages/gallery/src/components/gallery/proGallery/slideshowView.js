@@ -33,7 +33,7 @@ function getDirection(code) {
 class SlideshowView extends React.Component {
   constructor(props) {
     super(props);
-
+    this.navigationPanelCallbackOnIndexChange = () => {};
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
     this.clearAutoSlideshowInterval =
       this.clearAutoSlideshowInterval.bind(this);
@@ -398,6 +398,7 @@ class SlideshowView extends React.Component {
           item
         );
       }
+      this.navigationPanelCallbackOnIndexChange(this.state.activeIndex);
     }
     this.removeArrowsIfNeeded();
   }
@@ -1043,6 +1044,9 @@ class SlideshowView extends React.Component {
         this.scrollToIndex({ itemIdx, scrollDuration: 400 }),
       // getCurrentActiveItemIndex,
       // getCurrentActiveGroupIndex,
+      assignIndexChangeCallback: (func) => {
+        this.navigationPanelCallbackOnIndexChange = func;
+      },
     };
   };
 
