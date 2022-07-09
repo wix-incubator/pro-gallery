@@ -32,7 +32,7 @@ export function NavigationPanel(props) {
     if(props.navigationPanelAPI.getActiveItemIndex() !== activeIdx) {
       props.navigationPanelAPI.toIndex(activeIdx)
     }      
-  }, [activeIdx]);
+  }, [activeIdx,props.navigationPanelAPI]);
 
   const APINavigationPanel = (props) => {
     const activeIdx = props.navigationPanelAPI.getActiveItemIndex();
