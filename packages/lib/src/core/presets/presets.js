@@ -47,6 +47,10 @@ import {
   fixedOptions as slideshow,
   createOptions as slideshowOptions,
 } from './slideshowGallery';
+import {
+  fixedOptions as experimental_showcase,
+  createOptions as experimental_showcaseOptions,
+} from './showcaseGallery';
 
 import {
   fixedOptions as thumbnails,
@@ -117,6 +121,8 @@ const addPresetOptions = (options) => {
         return mixOptions(options);
       case LAYOUTS.ALTERNATE:
         return alternateOptions(options);
+      case LAYOUTS.EXPERIMENTAL_SHOWCASE:
+        return experimental_showcaseOptions(options);
       case LAYOUTS.EMPTY:
         return emptyOptions(options);
       case LAYOUTS.JSON_FIXED:
@@ -141,6 +147,7 @@ const NEW_PRESETS = {
   panorama,
   slider,
   slideshow,
+  experimental_showcase,
   thumbnails,
   empty,
 };

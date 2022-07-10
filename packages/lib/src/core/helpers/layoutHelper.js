@@ -100,12 +100,14 @@ const forceInfoOnHoverWhenNeeded = (options) =>{
 if (    
   !GALLERY_CONSTS.isLayout('SLIDER')(_options) && //not slider
   !GALLERY_CONSTS.isLayout('COLUMN')(_options) &&  //not columns
-  !GALLERY_CONSTS.isLayout('SLIDESHOW')(_options) //not columns
+  !GALLERY_CONSTS.isLayout('SLIDESHOW')(_options) && //not columns
+  !GALLERY_CONSTS.isLayout('EXPERIMENTAL_SHOWCASE')(_options)
   ) {
     if (
       (!_options.isVertical || //layout orientation is horizontal
         _options.groupSize > 1) //groups are larger than one (items can be on top or right left of eachother)
     ) {
+      console.log('THIS IS IT', _options.groupSize, _options.isVertical)
       // Dont allow titlePlacement to be above / below / left / right
       _options.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
     }
