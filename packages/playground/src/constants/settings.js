@@ -45,6 +45,7 @@ export const optionsBySection = {
     'scrollDirection',
     optionsMap.layoutParams.structure.galleryRatio.value,
     optionsMap.layoutParams.structure.galleryRatio.includeExternalInfo,
+    'hasThumbnails',
     'isVertical',
     'isRTL',
     'imageMargin',
