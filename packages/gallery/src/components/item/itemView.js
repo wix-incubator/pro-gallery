@@ -174,7 +174,7 @@ class ItemView extends React.Component {
 
   onItemInfoClick(e) {
     const clickTarget = 'item-info';
-    this.onItemClick(e, clickTarget);
+    this.onItemClick(e, clickTarget, false);
   }
 
   onItemClick(e, clickTarget, shouldPreventDefault = true) {
