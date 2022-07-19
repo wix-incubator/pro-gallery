@@ -177,7 +177,7 @@ class ImageItem extends React.Component {
                 }}
                 {...preloadProps}
                 customImageRenderer={
-                  this.props.customComponents.customImageRenderer
+                  this.props.customComponents?.customImageRenderer
                 }
               />
             );
@@ -198,7 +198,7 @@ class ImageItem extends React.Component {
                 }}
                 {...preloadProps}
                 customImageRenderer={
-                  this.props.customComponents.customImageRenderer
+                  this.props.customComponents?.customImageRenderer
                 }
               />
             );
@@ -234,7 +234,7 @@ class ImageItem extends React.Component {
             ...(!shouldRenderHighResImages && preloadStyles),
           }}
           {...imageProps}
-          customImageRenderer={this.props.customComponents.customImageRenderer}
+          customImageRenderer={this.props.customComponents?.customImageRenderer}
         />
       );
 
