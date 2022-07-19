@@ -1,18 +1,18 @@
 import React from 'react';
 import { PrintOnlyImageSource } from './printOnlySource';
 
-const ImageRenderer = (props) => {
-  if (typeof ImageRenderer.customImageRenderer === 'function') {
-    return ImageRenderer.customImageRenderer(props);
-  } else if (typeof props.src === 'string') {
-    return <img alt={props.alt} {...props} />;
-  } else if (typeof props.src === 'object') {
+const ImageRenderer = ({ customImageRenderer, ...restProps }) => {
+  if (typeof customImageRenderer === 'function') {
+    return customImageRenderer(restProps);
+  } else if (typeof restProps.src === 'string') {
+    return <img alt={restProps.alt} {...restProps} />;
+  } else if (typeof restProps.src === 'object') {
     return (
       <picture
-        id={`multi_picture_${props.id}`}
-        key={`multi_picture_${props.id}`}
+        id={`multi_picture_${restProps.id}`}
+        key={`multi_picture_${restProps.id}`}
       >
-        {props.src.map((src) =>
+        {restProps.src.map((src) =>
           src.forPrinting ? (
             <PrintOnlyImageSource srcSet={src.dpr} type={`image/${src.type}`} />
           ) : (
@@ -20,9 +20,9 @@ const ImageRenderer = (props) => {
           )
         )}
         <img
-          alt={props.alt}
-          {...props}
-          src={props.src[props.src.length - 1].url}
+          alt={restProps.alt}
+          {...restProps}
+          src={restProps.src[restProps.src.length - 1].url}
         />
       </picture>
     );

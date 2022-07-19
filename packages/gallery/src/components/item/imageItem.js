@@ -176,6 +176,9 @@ class ImageItem extends React.Component {
                   ...blockDownloadStyles,
                 }}
                 {...preloadProps}
+                customImageRenderer={
+                  this.props.customComponents.customImageRenderer
+                }
               />
             );
             break;
@@ -194,6 +197,9 @@ class ImageItem extends React.Component {
                   ...blockDownloadStyles,
                 }}
                 {...preloadProps}
+                customImageRenderer={
+                  this.props.customComponents.customImageRenderer
+                }
               />
             );
             break;
@@ -228,6 +234,7 @@ class ImageItem extends React.Component {
             ...(!shouldRenderHighResImages && preloadStyles),
           }}
           {...imageProps}
+          customImageRenderer={this.props.customComponents.customImageRenderer}
         />
       );
 
