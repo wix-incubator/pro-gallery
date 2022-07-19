@@ -902,6 +902,10 @@ export class GalleryContainer extends React.Component {
         onMouseLeave={this.onMouseLeave}
         ref={(e) => (this.galleryContainerRef = e)}
         tabIndex={-1}
+        style={{
+          width: this.props.container.width,
+          height: this.props.container.height,
+        }}
       >
         <ScrollIndicator
           id={this.props.id}

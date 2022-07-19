@@ -1148,8 +1148,8 @@ class SlideshowView extends React.Component {
         -1 *
         (this.props.options.imageMargin / 2 -
           this.props.options.layoutParams.gallerySpacing),
-      width: this.props.container.width,
-      height: this.props.container.height,
+      // width: this.props.container.width,
+      // height: this.props.container.height,
     };
   }
 
