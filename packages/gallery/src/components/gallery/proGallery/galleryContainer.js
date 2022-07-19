@@ -904,7 +904,6 @@ export class GalleryContainer extends React.Component {
         tabIndex={-1}
         style={{
           width: this.props.container.width,
-          height: this.props.container.height,
         }}
       >
         <ScrollIndicator
