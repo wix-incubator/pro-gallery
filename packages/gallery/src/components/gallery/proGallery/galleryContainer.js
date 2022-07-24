@@ -876,6 +876,7 @@ export class GalleryContainer extends React.Component {
     if (!this.canRender()) {
       return null;
     }
+
     const ViewComponent =
       this.props.options.scrollDirection ===
       GALLERY_CONSTS.scrollDirection.HORIZONTAL
