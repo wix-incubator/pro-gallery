@@ -876,8 +876,6 @@ export class GalleryContainer extends React.Component {
     if (!this.canRender()) {
       return null;
     }
-    console.log(this.state.structure);
-    console.log(this.props.container);
     const ViewComponent =
       this.props.options.scrollDirection ===
       GALLERY_CONSTS.scrollDirection.HORIZONTAL
@@ -903,10 +901,6 @@ export class GalleryContainer extends React.Component {
         onMouseLeave={this.onMouseLeave}
         ref={(e) => (this.galleryContainerRef = e)}
         tabIndex={-1}
-        style={{
-          width: this.props.container.width,
-          height: this.props.container.height,
-        }}
       >
         <ScrollIndicator
           id={this.props.id}
