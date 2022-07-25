@@ -100,6 +100,17 @@ body.pro-gallery {
   line-height: normal;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(50%,-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(50%,-50%);
+  }
+}
+
 .nav-arrows-container {
   left: auto;
   position: absolute;
@@ -113,6 +124,17 @@ body.pro-gallery {
   border: none;
   outline: none;
   justify-content: center;
+
+  &.follow-mouse-cursor {
+    position: relative;
+    cursor: none;
+    span {
+      animation: fadeIn 0.1s ease-in-out;
+      // position: absolute;
+      transition: top 50ms, left 50ms;
+      transform: translate(50%, -50%);
+    }
+  }
 
   &:hover {
     opacity: 1;
