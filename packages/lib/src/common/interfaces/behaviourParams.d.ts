@@ -8,6 +8,7 @@ export interface Item {
   video?: Video;
   overlay?: Overlay;
   content?: Content;
+  secondaryMedia?: SecondaryMedia;
 }
 
 export interface Gallery {
@@ -29,7 +30,10 @@ export interface Gallery {
   horizontal?: Horizontal;
   // allowLeanGallery?: 'behaviourParams_gallery_enableLeanGallery', //think about removing this!
 }
-
+export interface SecondaryMedia {
+  trigger: 'OFF' | 'HOVER';
+  behaviour: 'APPEARS' | 'DISSAPEARS';
+}
 export interface Video {
   speed?: number;
   volume?: number;

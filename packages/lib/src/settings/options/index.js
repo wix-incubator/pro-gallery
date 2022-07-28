@@ -119,6 +119,8 @@ import layoutParams_targetItemSize_value from './layoutParams_targetItemSize_val
 import layoutParams_info_width from './layoutParams_info_width';
 import layoutParams_info_height from './layoutParams_info_height';
 import layoutParams_info_placement from './layoutParams_info_placement';
+import behaviourParams_item_secondaryMedia_trigger from './behaviourParams_item_secondaryMedia_trigger';
+import behaviourParams_item_secondaryMedia_behaviour from './behaviourParams_item_secondaryMedia_behaviour';
 
 export default {
   [optionsMap.behaviourParams.gallery.vertical.loadMore.text]:
@@ -355,6 +357,10 @@ export default {
     layoutParams_navigationArrows_container_borderRadius,
   [optionsMap.stylingParams.temResolutionMode]:
     stylingParams_itemResolutionMode,
+  [optionsMap.behaviourParams.item.secondaryMedia.trigger]:
+    behaviourParams_item_secondaryMedia_trigger,
+  [optionsMap.behaviourParams.item.secondaryMedia.behaviour]:
+    behaviourParams_item_secondaryMedia_behaviour,
 };
 // TODO = add the options:
 /*
