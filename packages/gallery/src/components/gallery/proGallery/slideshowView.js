@@ -19,7 +19,7 @@ import {
   getArrowBoxStyle,
 } from '../../helpers/navigationArrowUtils';
 import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
-import { CursorController } from '../../helpers/mouseCursorPosition';
+import { useCursorController } from '../../helpers/useCursorController';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
@@ -712,43 +712,16 @@ class SlideshowView extends React.Component {
         </button>
       ) : (
         // case we are in mouse cursor navigation.
-        <CursorController>
-          {({ containerRef, mouseRef, position, isMouseDown }) => (
-            <button
-              ref={containerRef}
-              className={
-                arrowsBaseClasses.join(' ') +
-                (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')
-              }
-              onClick={() =>
-                this._next({ direction: directionIsLeft ? -1 : 1 })
-              }
-              aria-label={`${
-                (directionIsLeft && isRTL) || (!directionIsLeft && !isRTL)
-                  ? 'Next'
-                  : 'Previous'
-              } Item`}
-              tabIndex={utils.getTabIndex(
-                directionIsLeft ? 'slideshowPrev' : 'slideshowNext'
-              )}
-              key="nav-arrow-back"
-              data-hook="nav-arrow-back"
-              style={{
-                ...containerStyle,
-                ...(directionIsLeft ? prevContainerStyle : nextContainerStyle),
-              }}
-            >
-              {isMouseDown && (
-                <span
-                  ref={mouseRef}
-                  style={{ top: position.y, left: position.x }}
-                >
-                  {arrowRenderer(directionIsLeft ? 'left' : 'right')}
-                </span>
-              )}
-            </button>
-          )}
-        </CursorController>
+        useCursorController({
+          arrowRenderer,
+          next: this._next,
+          directionIsLeft,
+          arrowsBaseClasses,
+          containerStyle,
+          prevContainerStyle,
+          nextContainerStyle,
+          isRTL,
+        })
       );
     const res = [
       hideLeftArrow ? null : renderArrow(true),
