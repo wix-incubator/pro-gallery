@@ -2,10 +2,11 @@ import React from 'react';
 import { PrintOnlyImageSource } from './printOnlySource';
 
 const ImageRenderer = (props) => {
-  if (typeof ImageRenderer.customImageRenderer === 'function') {
-    return ImageRenderer.customImageRenderer(props);
+  const { customImageRenderer, ...imageProps } = props; // customImageRenderer is not valid for dom elements.
+  if (typeof customImageRenderer === 'function') {
+    return customImageRenderer(props);
   } else if (typeof props.src === 'string') {
-    return <img alt={props.alt} {...props} />;
+    return <img alt={props.alt} {...imageProps} />;
   } else if (typeof props.src === 'object') {
     return (
       <picture
@@ -21,7 +22,7 @@ const ImageRenderer = (props) => {
         )}
         <img
           alt={props.alt}
-          {...props}
+          {...imageProps}
           src={props.src[props.src.length - 1].url}
         />
       </picture>

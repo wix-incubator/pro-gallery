@@ -390,6 +390,7 @@ class ItemView extends React.Component {
       'isPrerenderMode',
       'isTransparent',
       'style',
+      'customComponents',
     ]);
 
     return (
