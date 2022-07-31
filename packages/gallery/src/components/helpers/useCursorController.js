@@ -6,6 +6,7 @@ export function useCursorController({
   next,
   directionIsLeft,
   arrowsBaseClasses,
+  tabIndex,
   containerStyle,
   prevContainerStyle,
   nextContainerStyle,
@@ -23,9 +24,9 @@ export function useCursorController({
               ? 'Next'
               : 'Previous'
           } Item`}
-          // tabIndex={utils.getTabIndex(
-          //     directionIsLeft ? 'slideshowPrev' : 'slideshowNext'
-          // )}
+          tabIndex={tabIndex(
+            directionIsLeft ? 'slideshowPrev' : 'slideshowNext'
+          )}
           key="nav-arrow-back"
           data-hook="nav-arrow-back"
           style={{

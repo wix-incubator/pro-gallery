@@ -717,6 +717,7 @@ class SlideshowView extends React.Component {
           next: this._next,
           directionIsLeft,
           arrowsBaseClasses,
+          tabIndex: utils.getTabIndex,
           containerStyle,
           prevContainerStyle,
           nextContainerStyle,
