@@ -682,16 +682,14 @@ class SlideshowView extends React.Component {
     const arrowsBaseClasses = [
       'nav-arrows-container',
       useDropShadow ? 'drop-shadow' : '',
+      utils.isMobile() ? ' pro-gallery-mobile-indicator' : '',
       arrowsPosition === 2 ? 'follow-mouse-cursor' : '',
     ];
 
     const renderArrow = (directionIsLeft) =>
       arrowsPosition !== 2 ? (
         <button
-          className={
-            arrowsBaseClasses.join(' ') +
-            (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')
-          }
+          className={arrowsBaseClasses.join(' ')}
           onClick={() => this._next({ direction: directionIsLeft ? -1 : 1 })}
           aria-label={`${
             (directionIsLeft && isRTL) || (!directionIsLeft && !isRTL)

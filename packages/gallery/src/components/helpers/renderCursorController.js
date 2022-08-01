@@ -14,47 +14,22 @@ export function renderCursorController({
 }) {
   return (
     <CursorController>
-      {
-        ({ containerRef, mouseRef, position, isMouseDown }) =>
-          reuseButton({
-            containerRef,
-            mouseRef,
-            position,
-            isMouseDown,
-            arrowsBaseClasses,
-            containerStyle,
-            prevContainerStyle,
-            nextContainerStyle,
-            isRTL,
-            directionIsLeft,
-            arrowRenderer,
-            next,
-            tabIndex,
-          })
-        // <button
-        //     ref={containerRef}
-        //     className={arrowsBaseClasses.join(' ')}
-        //     onClick={() => next({ direction: directionIsLeft ? -1 : 1 })}
-        //     aria-label={`${(directionIsLeft && isRTL) || (!directionIsLeft && !isRTL)
-        //         ? 'Next'
-        //         : 'Previous'
-        //         } Item`}
-        //     tabIndex={tabIndex(
-        //         directionIsLeft ? 'slideshowPrev' : 'slideshowNext'
-        //     )}
-        //     key="nav-arrow-back"
-        //     data-hook="nav-arrow-back"
-        //     style={{
-        //         ...containerStyle,
-        //         ...(directionIsLeft ? prevContainerStyle : nextContainerStyle),
-        //     }}
-        // >
-        //     {isMouseDown && (
-        //         <span ref={mouseRef} style={{ top: position.y, left: position.x }}>
-        //             {arrowRenderer(directionIsLeft ? 'left' : 'right')}
-        //         </span>
-        //     )}
-        // </button>
+      {({ containerRef, mouseRef, position, isMouseDown }) =>
+        reuseButton({
+          containerRef,
+          mouseRef,
+          position,
+          isMouseDown,
+          arrowsBaseClasses,
+          containerStyle,
+          prevContainerStyle,
+          nextContainerStyle,
+          isRTL,
+          directionIsLeft,
+          arrowRenderer,
+          next,
+          tabIndex,
+        })
       }
     </CursorController>
   );
