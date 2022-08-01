@@ -19,7 +19,7 @@ import {
   getArrowBoxStyle,
 } from '../../helpers/navigationArrowUtils';
 import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
-import { useCursorController } from '../../helpers/useCursorController';
+import { renderCursorController } from '../../helpers/useCursorController';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
@@ -712,12 +712,12 @@ class SlideshowView extends React.Component {
         </button>
       ) : (
         // case we are in mouse cursor navigation.
-        useCursorController({
+        renderCursorController({
           arrowRenderer,
           next: this._next,
           directionIsLeft,
           arrowsBaseClasses,
-          tabIndex: utils.getTabIndex,
+          tabIndex: utils.getTabIndex.bind(utils),
           containerStyle,
           prevContainerStyle,
           nextContainerStyle,
@@ -1335,6 +1335,7 @@ class SlideshowView extends React.Component {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
+    console.log(utils.getTabIndex(), '>>>');
     if (utils.isVerbose()) {
       console.count('galleryView render');
       console.count('Rendering Gallery count');
