@@ -19,7 +19,7 @@ import {
   getArrowBoxStyle,
 } from '../../helpers/navigationArrowUtils';
 import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
-import { renderCursorController } from '../../helpers/useCursorController';
+import { renderCursorController } from '../../helpers/renderCursorController';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
