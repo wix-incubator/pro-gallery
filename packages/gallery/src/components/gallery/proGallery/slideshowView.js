@@ -1335,7 +1335,6 @@ class SlideshowView extends React.Component {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
-    console.log(utils.getTabIndex(), '>>>');
     if (utils.isVerbose()) {
       console.count('galleryView render');
       console.count('Rendering Gallery count');
