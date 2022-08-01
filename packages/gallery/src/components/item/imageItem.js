@@ -37,11 +37,12 @@ class ImageItem extends React.Component {
   }
 
   getImageContainerClassNames() {
-    const { options, isTransparent } = this.props;
+    const { isCurrentHover, options, isTransparent } = this.props;
     const { isHighResImageLoaded } = this.state;
 
     const imageContainerClassNames = [
       'gallery-item-content',
+      isCurrentHover ? 'item-content-hover' : 'item-content-regular',
       'image-item',
       'gallery-item-visible',
       'gallery-item',
