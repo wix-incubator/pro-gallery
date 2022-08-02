@@ -84,7 +84,7 @@ export default class TextItem extends React.Component {
     }
     const containerClasses = [
       'gallery-item-content',
-      this.props.isCurrentHover ? 'item-overlay-hover' : 'item-overlay-regular',
+      this.props.isCurrentHover ? 'item-content-hover' : 'item-content-regular',
     ];
     return (
       <div className={containerClasses.join(' ')} style={itemContentStyle}>
