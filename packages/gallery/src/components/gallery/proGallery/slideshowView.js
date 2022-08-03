@@ -699,8 +699,8 @@ class SlideshowView extends React.Component {
           tabIndex={utils.getTabIndex(
             directionIsLeft ? 'slideshowPrev' : 'slideshowNext'
           )}
-          key="nav-arrow-back"
-          data-hook="nav-arrow-back"
+          key={directionIsLeft ? 'nav-arrow-back' : 'nav-arrow-next'}
+          data-hook={directionIsLeft ? 'nav-arrow-back' : 'nav-arrow-next'}
           style={{
             ...containerStyle,
             ...(directionIsLeft ? prevContainerStyle : nextContainerStyle),
