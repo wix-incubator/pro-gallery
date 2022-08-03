@@ -47,6 +47,9 @@ function expectedOptions() {
           borderRadius: 0,
         },
       },
+      thumbnails: {
+        position: GALLERY_CONSTS.thumbnailsPosition.OUTSIDE_GALLERY,
+      },
       structure: { galleryRatio: { value: 0, includeExternalInfo: false } },
     },
     behaviourParams: {

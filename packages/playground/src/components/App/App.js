@@ -203,7 +203,7 @@ export function App() {
     return renderInfoElement('EXTERNAL', pgItemProps);
   };
   const navigationPanel = (pgGalleryProps) => {
-    return <NavigationPanel {...pgGalleryProps}/>;
+    return <NavigationPanel {...{...pgGalleryProps, panelType: gallerySettings.navPanelType}}/>;
   };
 
 
@@ -251,8 +251,8 @@ export function App() {
 
   // console.log('Rendering App: ', {options, items, dimensions, showSide, blueprint, blueprintProps})
   const getKeySettings = () => {
-    const { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand} = gallerySettings;
-    return { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
+    const { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, navPanelType, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand} = gallerySettings;
+    return { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, navPanelType, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
   }
 
   let GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProGalleryRenderer : ProGallery);

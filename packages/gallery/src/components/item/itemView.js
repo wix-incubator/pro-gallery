@@ -174,7 +174,7 @@ class ItemView extends React.Component {
 
   onItemInfoClick(e) {
     const clickTarget = 'item-info';
-    this.onItemClick(e, clickTarget);
+    this.onItemClick(e, clickTarget, false);
   }
 
   onItemClick(e, clickTarget, shouldPreventDefault = true) {
@@ -355,6 +355,7 @@ class ItemView extends React.Component {
         <ItemHover
           {...props}
           forceShowHover={this.simulateOverlayHover()}
+          isCurrentHover={this.simulateHover()}
           imageDimensions={imageDimensions}
           itemWasHovered={this.state.itemWasHovered}
           key="hover"
@@ -390,6 +391,7 @@ class ItemView extends React.Component {
       'isPrerenderMode',
       'isTransparent',
       'style',
+      'customComponents',
     ]);
 
     return (
@@ -398,6 +400,7 @@ class ItemView extends React.Component {
         key="imageItem"
         imageDimensions={imageDimensions}
         isThumbnail={!!this.props.thumbnailHighlightId}
+        isCurrentHover={this.simulateHover()}
         actions={{
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
@@ -416,6 +419,7 @@ class ItemView extends React.Component {
         hover={itemHover}
         imageDimensions={imageDimensions}
         hasLink={this.itemHasLink()}
+        isCurrentHover={this.simulateHover()}
         actions={{
           ...this.props.actions,
           setItemLoaded: this.setItemLoaded,
@@ -439,6 +443,7 @@ class ItemView extends React.Component {
     return (
       <TextItem
         {...props}
+        isCurrentHover={this.simulateHover()}
         key="textItem"
         imageDimensions={imageDimensions}
         actions={{
@@ -772,8 +777,12 @@ class ItemView extends React.Component {
     const imagePlacementAnimation = options.imagePlacementAnimation;
     const overlayAnimation = options.overlayAnimation;
     const imageHoverAnimation = options.imageHoverAnimation;
+    const isHovered = this.simulateHover();
     const classNames = {
       'gallery-item-container': true,
+      'item-container-regular': !isHovered,
+      'item-container-hover': isHovered,
+
       'has-custom-focus': true,
       visible: true,
       'pro-gallery-highlight': this.isHighlight(),
