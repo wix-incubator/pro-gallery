@@ -661,36 +661,33 @@ class SlideshowView extends React.Component {
       'nav-arrows-container',
       useDropShadow ? 'drop-shadow' : '',
     ];
+
+    const renderArrow = (directionIsLeft) => (
+      <button
+        className={arrowsBaseClasses.join(' ')}
+        onClick={() => this._next({ direction: directionIsLeft ? -1 : 1 })}
+        aria-label={`${
+          (directionIsLeft && isRTL) || (!directionIsLeft && !isRTL)
+            ? 'Next'
+            : 'Previous'
+        } Item`}
+        tabIndex={utils.getTabIndex(
+          directionIsLeft ? 'slideshowPrev' : 'slideshowNext'
+        )}
+        key={directionIsLeft ? 'nav-arrow-back' : 'nav-arrow-next'}
+        data-hook={directionIsLeft ? 'nav-arrow-back' : 'nav-arrow-next'}
+        style={{
+          ...containerStyle,
+          ...(directionIsLeft ? prevContainerStyle : nextContainerStyle),
+        }}
+      >
+        {arrowRenderer(directionIsLeft ? 'left' : 'right')}
+      </button>
+    );
+
     return [
-      hideLeftArrow ? null : (
-        <button
-          className={
-            arrowsBaseClasses.join(' ') +
-            (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')
-          }
-          onClick={() => this._next({ direction: -1 })}
-          aria-label={`${isRTL ? 'Next' : 'Previous'} Item`}
-          tabIndex={utils.getTabIndex('slideshowPrev')}
-          key="nav-arrow-back"
-          data-hook="nav-arrow-back"
-          style={{ ...containerStyle, ...prevContainerStyle }}
-        >
-          {arrowRenderer('left')}
-        </button>
-      ),
-      hideRightArrow ? null : (
-        <button
-          className={arrowsBaseClasses.join(' ')}
-          onClick={() => this._next({ direction: 1 })}
-          aria-label={`${!isRTL ? 'Next' : 'Previous'} Item`}
-          tabIndex={utils.getTabIndex('slideshowNext')}
-          key="nav-arrow-next"
-          data-hook="nav-arrow-next"
-          style={{ ...containerStyle, ...nextContainerStyle }}
-        >
-          {arrowRenderer('right')}
-        </button>
-      ),
+      hideLeftArrow ? null : renderArrow(true),
+      hideRightArrow ? null : renderArrow(false),
     ];
   }
 
