@@ -660,6 +660,7 @@ class SlideshowView extends React.Component {
     const arrowsBaseClasses = [
       'nav-arrows-container',
       useDropShadow ? 'drop-shadow' : '',
+      utils.isMobile() ? ' pro-gallery-mobile-indicator' : '',
     ];
 
     const renderArrow = (directionIsLeft) => (
