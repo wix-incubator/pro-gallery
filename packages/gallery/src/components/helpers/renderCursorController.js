@@ -1,78 +1,91 @@
 import React from 'react';
 import { CursorController } from './mouseCursorPosition';
 
-export function renderCursorController({
-  arrowRenderer,
-  next,
-  directionIsLeft,
-  arrowsBaseClasses,
-  containerStyle,
-  prevContainerStyle,
-  nextContainerStyle,
-  isRTL,
-  tabIndex,
+export function ArrowsContainer({
+  hideRightArrow,
+  hideLeftArrow,
+  mouseCursorEnabled,
+  children,
 }) {
+  if (mouseCursorEnabled) {
+    const styleForMouseCursor = {
+      display: 'flex',
+      width: '100%',
+      position: 'absolute',
+      justifyContent: hideLeftArrow
+        ? 'flex-end'
+        : hideRightArrow
+        ? 'flex-start'
+        : 'space-between',
+    };
+    return (
+      <div className="mouse-cursor" style={{ ...styleForMouseCursor }}>
+        {children}
+      </div>
+    );
+  }
+  return <>{children}</>;
+}
+
+export function renderArrowButtonWithCursorController(props) {
   return (
     <CursorController>
       {({ containerRef, mouseRef, position, isMouseDown }) =>
-        reuseButton({
-          containerRef,
-          mouseRef,
-          position,
-          isMouseDown,
-          arrowsBaseClasses,
-          containerStyle,
-          prevContainerStyle,
-          nextContainerStyle,
-          isRTL,
-          directionIsLeft,
-          arrowRenderer,
-          next,
-          tabIndex,
+        renderArrowButton({
+          cursor: {
+            containerRef,
+            mouseRef,
+            position,
+            isMouseDown,
+          },
+          ...props,
         })
       }
     </CursorController>
   );
 }
 
-function reuseButton({
-  containerRef,
-  mouseRef,
-  position,
-  isMouseDown,
+export function renderArrowButton({
+  cursor,
   arrowsBaseClasses,
   containerStyle,
   prevContainerStyle,
   nextContainerStyle,
   isRTL,
   directionIsLeft,
-  arrowRenderer,
+  renderArrowSvg,
   next,
   tabIndex,
 }) {
+  const isNext = (directionIsLeft && isRTL) || (!directionIsLeft && !isRTL);
+
+  const buttonProps = {
+    className: arrowsBaseClasses.join(' '),
+    onClick: () => next({ direction: directionIsLeft ? -1 : 1 }),
+    ['aria-label']: `${isNext ? 'Next' : 'Previous'} Item`,
+    tabIndex: tabIndex(isNext ? 'slideshowNext' : 'slideshowPrev'),
+    key: !isNext ? 'nav-arrow-back' : 'nav-arrow-next',
+    ['data-hook']: directionIsLeft ? 'nav-arrow-back' : 'nav-arrow-next',
+    style: {
+      ...containerStyle,
+      ...(directionIsLeft ? prevContainerStyle : nextContainerStyle),
+    },
+  };
+  if (cursor) {
+    const { containerRef, isMouseDown, mouseRef, position } = cursor;
+    return (
+      <button ref={containerRef} {...buttonProps}>
+        {isMouseDown && (
+          <span ref={mouseRef} style={{ top: position.y, left: position.x }}>
+            {renderArrowSvg(directionIsLeft ? 'left' : 'right')}
+          </span>
+        )}
+      </button>
+    );
+  }
   return (
-    <button
-      ref={containerRef}
-      className={arrowsBaseClasses.join(' ')}
-      onClick={() => next({ direction: directionIsLeft ? -1 : 1 })}
-      aria-label={`${
-        (directionIsLeft && isRTL) || (!directionIsLeft && !isRTL)
-          ? 'Next'
-          : 'Previous'
-      } Item`}
-      tabIndex={tabIndex(directionIsLeft ? 'slideshowPrev' : 'slideshowNext')}
-      key={directionIsLeft ? 'nav-arrow-back' : 'nav-arrow-next'}
-      data-hook={directionIsLeft ? 'nav-arrow-back' : 'nav-arrow-next'}
-      style={{
-        ...containerStyle,
-        ...(directionIsLeft ? prevContainerStyle : nextContainerStyle),
-      }}
-    >
-      {isMouseDown && (
-        <span ref={mouseRef} style={{ top: position.y, left: position.x }}>
-          {arrowRenderer(directionIsLeft ? 'left' : 'right')}
-        </span>
-      )}
+    <button {...buttonProps}>
+      {renderArrowSvg(directionIsLeft ? 'left' : 'right')}
     </button>
   );
 }

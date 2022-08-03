@@ -19,7 +19,11 @@ import {
   getArrowBoxStyle,
 } from '../../helpers/navigationArrowUtils';
 import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
-import { renderArrowButtonWithCursorController, renderArrowButton } from '../../helpers/renderCursorController';
+import {
+  renderArrowButtonWithCursorController,
+  renderArrowButton,
+  ArrowsContainer,
+} from '../../helpers/renderCursorController';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
@@ -608,6 +612,7 @@ class SlideshowView extends React.Component {
       arrowsType: layoutParams.navigationArrows.type,
       containerStyleType: type,
     });
+    const mouseCursorEnabled = arrowsPosition === 2;
 
     const { galleryHeight } = this.props.container;
     const { galleryWidth } = this.props.container;
@@ -634,30 +639,29 @@ class SlideshowView extends React.Component {
         -imageHeight * directionFix,
     }[arrowsVerticalPosition];
 
-    const containerStyle =
-      arrowsPosition === 2
-        ? {
-            width: `${galleryWidth}px`,
-            maxWidth: `${mouseCursorContainer}%`,
-            height: `${galleryHeight}px`,
-            padding: 0,
-            top: 0,
-            flex: 1,
-          }
-        : {
-            width: `${navArrowsContainerWidth}px`,
-            height: `${navArrowsContainerHeight}px`,
-            padding: 0,
-            top: `calc(${galleryVerticalCenter} - ${
-              navArrowsContainerHeight / 2
-            }px - 
+    const containerStyle = mouseCursorEnabled
+      ? {
+          width: `${galleryWidth}px`,
+          maxWidth: `${mouseCursorContainer}%`,
+          height: `${galleryHeight}px`,
+          padding: 0,
+          top: 0,
+          flex: 1,
+        }
+      : {
+          width: `${navArrowsContainerWidth}px`,
+          height: `${navArrowsContainerHeight}px`,
+          padding: 0,
+          top: `calc(${galleryVerticalCenter} - ${
+            navArrowsContainerHeight / 2
+          }px - 
         ${verticalPositionFix / 2}px)`,
-            ...getArrowBoxStyle({
-              type,
-              backgroundColor,
-              borderRadius,
-            }),
-          };
+          ...getArrowBoxStyle({
+            type,
+            backgroundColor,
+            borderRadius,
+          }),
+        };
 
     const arrowsPos =
       scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
@@ -667,44 +671,52 @@ class SlideshowView extends React.Component {
     // imageMargin effect the margin of the main div ('pro-gallery-parent-container') that SlideshowView is rendering, so the arrows should be places accordingly
     // arrowsPadding relevant only for arrowsPosition.ON_GALLERY
 
-
-    const prevContainerStyle =
-      arrowsPosition === 2 ? { left: 0 } : { left: arrowsPos };
-    const nextContainerStyle =
-      arrowsPosition === 2 ? { right: 0 } : { right: arrowsPos };
+    const prevContainerStyle = mouseCursorEnabled
+      ? { left: 0 }
+      : { left: arrowsPos };
+    const nextContainerStyle = mouseCursorEnabled
+      ? { right: 0 }
+      : { right: arrowsPos };
     const useDropShadow =
       type === GALLERY_CONSTS.arrowsContainerStyleType.SHADOW;
     const arrowsBaseClasses = [
       'nav-arrows-container',
       useDropShadow ? 'drop-shadow' : '',
       utils.isMobile() ? ' pro-gallery-mobile-indicator' : '',
-      arrowsPosition === 2 ? 'follow-mouse-cursor' : '',
+      mouseCursorEnabled ? 'follow-mouse-cursor' : '',
     ];
 
+    const ArrowRenderHandler = mouseCursorEnabled
+      ? renderArrowButtonWithCursorController
+      : renderArrowButton;
     const renderArrow = (directionIsLeft) => {
-      const mouseCursorEnabeld = arrowsPosition === 2;
-      const ArrowRenderHandler = mouseCursorEnabeld ?
-        renderArrowButtonWithCursorController
-        : renderArrowButton;
-      return <ArrowRenderHandler {...{
-        renderArrowSvg,
-        next: this._next,
-        directionIsLeft,
-        arrowsBaseClasses,
-        tabIndex: utils.getTabIndex.bind(utils),
-        containerStyle,
-        prevContainerStyle,
-        nextContainerStyle,
-        isRTL,
-        hideLeftArrow,
-      }} />
+      return (
+        <ArrowRenderHandler
+          {...{
+            renderArrowSvg,
+            next: this._next,
+            directionIsLeft,
+            arrowsBaseClasses,
+            tabIndex: utils.getTabIndex.bind(utils),
+            containerStyle,
+            prevContainerStyle,
+            nextContainerStyle,
+            isRTL,
+            hideLeftArrow,
+          }}
+        />
+      );
     };
 
     return (
-      <>
-        {hideLeftArrow && renderArrow(true)}
-        {hideRightArrow && renderArrow(false)}
-      </>
+      <ArrowsContainer
+        hideLeftArrow={hideLeftArrow}
+        hideRightArrow={hideRightArrow}
+        mouseCursorEnabled={mouseCursorEnabled}
+      >
+        {hideLeftArrow ? null : renderArrow(true)}
+        {hideRightArrow ? null : renderArrow(false)}
+      </ArrowsContainer>
     );
   }
 
