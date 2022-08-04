@@ -3,6 +3,7 @@ export interface LayoutParams {
   crop?: Crop;
   structure?: Structure;
   thumbnails?: Thumbnails;
+  galleryControlPanel?: GalleryControlPanel;
   navigationArrows?: NavigationArrows;
   info?: Info;
   targetItemSize?: TargetItemSize;
@@ -26,6 +27,12 @@ export interface Thumbnails {
   enable?: boolean;
   position?: 'ON_GALLERY' | 'OUTSIDE_GALLERY';
   spacing?: number;
+  size?: number;
+  alignment?: 'BOTTOM' | 'RIGHT' | 'LEFT' | 'TOP';
+}
+export interface GalleryControlPanel {
+  enable?: boolean;
+  position?: 'ON_GALLERY' | 'OUTSIDE_GALLERY';
   size?: number;
   alignment?: 'BOTTOM' | 'RIGHT' | 'LEFT' | 'TOP';
 }
