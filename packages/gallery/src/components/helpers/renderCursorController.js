@@ -30,13 +30,13 @@ export function ArrowsContainer({
 export function renderArrowButtonWithCursorController(props) {
   return (
     <CursorController>
-      {({ containerRef, mouseRef, position, isMouseDown }) =>
+      {({ containerRef, mouseRef, position, isMouseEnter }) =>
         renderArrowButton({
           cursor: {
             containerRef,
             mouseRef,
             position,
-            isMouseDown,
+            isMouseEnter,
           },
           ...props,
         })
@@ -72,10 +72,10 @@ export function renderArrowButton({
     },
   };
   if (cursor) {
-    const { containerRef, isMouseDown, mouseRef, position } = cursor;
+    const { containerRef, isMouseEnter, mouseRef, position } = cursor;
     return (
       <button ref={containerRef} {...buttonProps}>
-        {isMouseDown && (
+        {isMouseEnter && (
           <span ref={mouseRef} style={{ top: position.y, left: position.x }}>
             {renderArrowSvg(directionIsLeft ? 'left' : 'right')}
           </span>

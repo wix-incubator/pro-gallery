@@ -17,7 +17,7 @@ const throttle = (func, time) => {
 
 function useCursor() {
   const [position, _setPosition] = useState({ x: 0, y: 0 });
-  const [isMouseDown, setIsMouseDown] = useState(false);
+  const [isMouseEnter, setIsMouseEnter] = useState(false);
   const containerRef = useRef();
   const mouseRef = useRef();
   const setPosition = React.useMemo(() => throttle(_setPosition, 50), []);
@@ -31,12 +31,12 @@ function useCursor() {
       mouseIn = true;
       x = e.offsetX;
       y = e.offsetY;
-      setIsMouseDown(true);
+      setIsMouseEnter(true);
       _setPosition({ x, y });
     });
     containerRef.current.addEventListener('mouseleave', () => {
       mouseIn = false;
-      setIsMouseDown(false);
+      setIsMouseEnter(false);
     });
     containerRef.current.addEventListener('mousemove', (e) => {
       x += e.movementX;
@@ -55,7 +55,7 @@ function useCursor() {
     containerRef,
     mouseRef,
     position,
-    isMouseDown,
+    isMouseEnter,
   };
 }
 
