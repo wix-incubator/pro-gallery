@@ -43,6 +43,7 @@ export interface NavigationArrows {
   verticalAlignment?: 'ITEM_CENTER' | 'IMAGE_CENTER' | 'INFO_CENTER';
   type?: 'DEFAULT_ARROW' | 'ARROW_2' | 'ARROW_3';
   container?: NavigationArrowsContainer;
+  mouseCursorContainerMaxWidth?: number;
 }
 
 export interface NavigationArrowsContainer {
