@@ -1,6 +1,21 @@
 import React from 'react';
-import {Alert, Popover, Select, Menu, Icon, Collapse, Switch, Input, Slider, InputNumber, Row, Col, Button, Divider} from 'antd';
-import {INPUT_TYPES, isInPreset} from 'pro-gallery-lib';
+import { CheckOutlined, CloseOutlined, InfoCircleTwoTone, WarningOutlined } from '@ant-design/icons';
+import {
+  Alert,
+  Popover,
+  Select,
+  Menu,
+  Collapse,
+  Switch,
+  Input,
+  Slider,
+  InputNumber,
+  Row,
+  Col,
+  Button,
+  Divider,
+} from 'antd';
+import {INPUT_TYPES, isInPreset, flatToNested} from 'pro-gallery-lib';
 import ColorPicker from '../ColorPicker/ColorPicker';
 import { settingsManager } from '../../constants/settings';
 
@@ -14,12 +29,12 @@ class JsonEditor extends React.Component {
   }
 
   onFieldChanged(key, value) {
-    
+
     if(key === 'enableInfiniteScroll') {
-      console.log(`[PLAYGROUND] StyleParams changed: ${key} Changed to ${!value}`);
+      console.log(`[PLAYGROUND] Options changed: ${key} Changed to ${!value}`);
       this.props.onChange(key, !value);
-    } else { 
-      console.log(`[PLAYGROUND] StyleParams changed: ${key} Changed to ${value}`);
+    } else {
+      console.log(`[PLAYGROUND] Options changed: ${key} Changed to ${value}`);
       this.props.onChange(key, value);
     }
   }
@@ -38,21 +53,21 @@ class JsonEditor extends React.Component {
 
   renderEntryEditor(key, settings) {
     const theValue = settings.value;
-     
+
     switch (settings.type) {
       case INPUT_TYPES.BOOLEAN:
         return (
-          <Switch
-          checkedChildren={<Icon type="check" />}
-          unCheckedChildren={<Icon type="close" />}
-          checked={key === 'enableInfiniteScroll'  ? !theValue : theValue }
-          onChange={e => this.onFieldChanged(key, e)}
-          />
           //     <Checkbox
           // style={{float: 'right'}}
           // checked={theValue}
           //   onChange={e => this.onFieldChanged(key, e.target.checked)}
           // />
+          <Switch
+          checkedChildren={<CheckOutlined />}
+          unCheckedChildren={<CloseOutlined />}
+          checked={key === 'enableInfiniteScroll'  ? !theValue : theValue }
+          onChange={e => this.onFieldChanged(key, e)}
+          />
         );
       case INPUT_TYPES.OPTIONS:
         return (
@@ -121,7 +136,7 @@ class JsonEditor extends React.Component {
                 />
               </Col>
             </Row>
-    
+
           );
         } else {
           return (
@@ -133,9 +148,9 @@ class JsonEditor extends React.Component {
         }
       case INPUT_TYPES.COLOR_PICKER:
         return (
-          <ColorPicker 
+          <ColorPicker
             style={{float: 'right'}}
-            color={theValue} 
+            color={theValue}
             colorChanged={({value}) => this.onFieldChanged(key, value)}
           />
         );
@@ -163,10 +178,7 @@ class JsonEditor extends React.Component {
 
 
   render() {
-    const {section, subSection, styleParams, allStyleParams, styleParam, expandIcon} = this.props;
-    const context = {
-      isMobile: false,
-    }
+    const {section, subSection, options, allOptions, option, expandIcon} = this.props;
     // const selectedProps = LayoutProps[selectedLayout];
     // let json = selectedProps ?
     //   Object.keys(selectedProps).reduce((acc, key) => {
@@ -175,53 +187,53 @@ class JsonEditor extends React.Component {
     //     return acc;
     //   }, {}) :
     //   styleParams;
-
+    const flatAndNestedOptions = {...flatToNested(allOptions), ...allOptions}
     // json = removeFieldsNotNeeded(json, selectedLayout);
-    const filterFunction = styleParam ? 
-    ([key]) => key === styleParam : 
-    ([key, settings]) => 
-      (!section || settings.section === section) && 
-      (!subSection || settings.subSection === subSection) && 
-      (this.props.showAllStyles || settings.isRelevant(allStyleParams, context))
+    const filterFunction = option ?
+    ([key]) => key === option :
+    ([key, settings]) =>
+      (!section || settings.section === section) &&
+      (!subSection || settings.subSection === subSection) &&
+      (this.props.showAllOptions || settings.isRelevant(flatAndNestedOptions))
 
-    const activeKey = styleParam ? {activeKey: 'collapse' + styleParam} : {defaultActiveKey: []};
+    const activeKey = option ? {activeKey: 'collapse' + option} : {defaultActiveKey: []};
 
     const json = Object.entries(settingsManager)
       .filter(filterFunction)
       .reduce((acc, [key]) => {
-        if (typeof styleParams[key] === 'undefined') {
+        if (typeof options[key] === 'undefined') {
           return acc
         } else {
           acc[key] = settingsManager[key];
-          acc[key].value = styleParams[key];
+          acc[key].value = options[key];
           return acc;
         }
       }, {});
 
-    const isSingleItem = !!styleParam;
+    const isSingleItem = !!option;
 
     const Extra = settings => {
-      if (settings.isRelevant(allStyleParams)) {
+      if (settings.isRelevant(flatAndNestedOptions)) {
         return null; //<Icon type="check" style={{fontSize: 10, color: '#52c41a'}} />
       } else {
         if (settings.missing) {
-          return <Icon type="warning" style={{fontSize: 14, color: 'red'}} />
+          return <WarningOutlined style={{fontSize: 14, color: 'red'}} />;
         } else {
-          return <Popover placement="right" title="Not Relevant" content={<p>This param is not relevant in current scope: <br/><br/><pre>{settings.isRelevantDescription}</pre></p>}><Icon theme="twoTone" twoToneColor="#faad14" type="info-circle" /></Popover>
+          return <Popover placement="right" title="Not Relevant" content={<p>This param is not relevant in current scope: <br/><br/><pre>{settings.isRelevantDescription}</pre></p>}><InfoCircleTwoTone twoToneColor="#faad14" /></Popover>;
         }
       }
     }
     const isDev = (window.location.hostname.indexOf('localhost') >= 0) || null;
     return (
       <Collapse accordion={true} bordered={false} onChange={() => {}} style={{whiteSpace: 'pre-wrap', margin: '-17px -15px', background: '#fff'}} expandIconPosition={expandIcon ? 'right' : 'left'} {...activeKey} expandIcon={expandIcon}>
-        {Object.entries(json).map(([styleParam, settings]) => (
-          <Collapse.Panel header={settings.title || styleParam} key={'collapse' + styleParam} extra={Extra(settings)}>
-            {this.renderEntryEditor(styleParam, settings)}
+        {Object.entries(json).map(([option, settings]) => (
+          <Collapse.Panel header={settings.title || option} key={'collapse' + option} extra={Extra(settings)}>
+            {this.renderEntryEditor(option, settings)}
             <div>
               {!!settings.description && (<><Divider/><p>{settings.description}</p></>)}
               {isDev && <>
                 <Divider/>
-                <p><b>Key: </b><code>{styleParam}</code></p>
+                <p><b>Key: </b><code>{option}</code></p>
                 <p><b>Value: </b><code>{String(settings.value)}</code></p>
                 <p><b>Default: </b><code>{String(settings.default)}</code></p>
               </>}
@@ -229,8 +241,8 @@ class JsonEditor extends React.Component {
               {!!isSingleItem && (<>
                 <Divider/>
                 <p><b>Section: </b>{settings.section + (settings.subSection ? ` > ${settings.subSection}` : '')}</p>
-                <p><b>Overriden by current Preset: </b>{isInPreset(allStyleParams.galleryLayout, styleParam) ? 'Yes' : 'No'}</p>
-                <p><b>Relevant in current configuration: </b>{settings.isRelevant(allStyleParams, false) ? 'Yes' : 'No'}</p>
+                <p><b>Overriden by current Preset: </b>{isInPreset(allOptions.galleryLayout, option) ? 'Yes' : 'No'}</p>
+                <p><b>Relevant in current configuration: </b>{settings.isRelevant(allOptions, false) ? 'Yes' : 'No'}</p>
               </>)}
               {isDev && <>
                 <Divider/>

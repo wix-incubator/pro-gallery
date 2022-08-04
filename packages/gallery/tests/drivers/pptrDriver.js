@@ -1,7 +1,6 @@
 import puppeteer from 'puppeteer';
-
-const config = require('../environment-setup.js');
 const devices = require('puppeteer/DeviceDescriptors');
+import { flattenObject } from 'pro-gallery-lib';
 
 export default class galleryDriver {
   constructor() {
@@ -45,8 +44,8 @@ export default class galleryDriver {
     return page;
   }
 
-  async navigate(styleParams) {
-    const pageUrl = this.getPageUrl(styleParams);
+  async navigate(options) {
+    const pageUrl = this.getPageUrl(options);
     await this.page.goto(pageUrl, { waitUntil: 'networkidle2' });
     await this.scrollInteraction();
     await this.page.waitFor(500);
@@ -86,13 +85,11 @@ export default class galleryDriver {
         }),
     };
   }
-  getPageUrl(styleParams) {
+  getPageUrl(options) {
     let urlParam = '';
-    Object.keys(styleParams).map(
-      (sp) => (urlParam += `${sp}=${styleParams[sp]}&`)
-    );
-    const localhost = config.baseUrl;
-    const url = `${localhost}/?${urlParam}isTestEnvironment=true`;
+    let flatSP = flattenObject(options);
+    Object.keys(flatSP).map((sp) => (urlParam += `${sp}=${flatSP[sp]}&`));
+    const url = `http://localhost:3006/?${urlParam}isTestEnvironment=true`;
     return url;
   }
   get grab() {

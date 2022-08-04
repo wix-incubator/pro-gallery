@@ -1,15 +1,17 @@
 import React from 'react';
+import { CodeOutlined } from '@ant-design/icons';
 import {Modal, Button} from 'antd';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 // choose highlighter style here: https://conorhastings.github.io/react-syntax-highlighter/demo/
 import {tomorrowNightEighties} from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import s from './CodePanel.module.scss';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
-import { getStyleParamsFromUrl } from '../../constants/styleParams'
+import { getOptionsFromUrl } from '../../constants/options'
+import { addMigratedOptions, flatToNested } from 'pro-gallery-lib'
 
 function CodePanel() {
 
-  const {styleParams} = useGalleryContext();
+  const {options} = useGalleryContext();
 
   const [hasCopied, setHasCopied] = React.useState(false);
   const [modalVisible, set_modalVisible] = React.useState(false);
@@ -25,12 +27,11 @@ function CodePanel() {
   };
 
   const getStyleParams = () => {
-    const {galleryLayout} = styleParams;
-    return Object.entries({galleryLayout, ...getStyleParamsFromUrl()})
-      .reduce((acc, [key, value]) => {
-        const val = typeof value === 'string' ? `'${value}'` : value;
-        return acc.concat(`      ${key}: ${val},`);
-    }, []).join(`\n`);
+    const {galleryLayout} = options;
+    const migratedOptions = flatToNested(addMigratedOptions({galleryLayout, ...getOptionsFromUrl(window.location.search)}));
+    let {layoutParams, behaviourParams, stylingParams } = migratedOptions;
+    const v4Options = {layoutParams, behaviourParams, stylingParams }
+    return JSON.stringify(v4Options, null, 4);
   }
 
   const code = getCode(getStyleParams());
@@ -58,8 +59,8 @@ function CodePanel() {
           {code}
         </SyntaxHighlighter>
       </Modal>
-      <Button type="primary" icon="code" shape="round" size="large" disabled={modalVisible} onClick={() => set_modalVisible(true)} block>
-        Generate Gallery Code 
+      <Button type="primary" icon={<CodeOutlined />} shape="round" size="large" disabled={modalVisible} onClick={() => set_modalVisible(true)} block>
+        Generate Gallery Code
       </Button>
     </div>
   );

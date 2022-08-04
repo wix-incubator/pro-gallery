@@ -1,27 +1,29 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
-import { styleParams, container } from '../drivers/mocks/styles';
+import { options, container } from '../drivers/mocks/styles';
 import { getElementDimensions } from '../utils/utils';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
-describe('styleParam - imageMargin', () => {
+describe('options - imageMargin', () => {
   let driver;
-  const initialProps = {
-    container,
-    items: images2,
-    styles: styleParams,
-  };
+  let initialProps;
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      options,
+    };
   });
 
-  it('should set use CSS property "margin" to create the spacing when gallery is "oneRow"', async () => {
-    Object.assign(initialProps.styles, {
+  it('should set use CSS property "margin" to create the spacing when gallery is horizontal', async () => {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: 7,
       imageMargin: 10,
-      oneRow: true,
-      scrollDirection: 1,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -32,10 +34,10 @@ describe('styleParam - imageMargin', () => {
 
   it('should use "top" and "left" properties to create the spacing', async () => {
     //in vertical layout the spacing will be set with the "top" and "left" properties and not with "margin"
-    Object.assign(initialProps.styles, {
+    initialProps.options = mergeNestedObjects(initialProps.options, {
       galleryLayout: 2,
       imageMargin: 25,
-      oneRow: false,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       gallerySizeType: 'px',
       gallerySizePx: 390,
       isVertical: true,
@@ -49,7 +51,7 @@ describe('styleParam - imageMargin', () => {
       const dims = getElementDimensions(item);
       if (dims.top === prevDims.top) {
         const spacing = dims.left - (prevDims.left + prevDims.width);
-        expect(spacing).to.eq(initialProps.styles.imageMargin);
+        expect(spacing).to.eq(initialProps.options.imageMargin);
       }
       prevDims = dims;
     }

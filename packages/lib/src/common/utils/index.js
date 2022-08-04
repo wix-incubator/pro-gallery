@@ -1,12 +1,11 @@
-/* eslint-disable prettier/prettier */
 import * as lodash from './lodash';
 import window from '../window/windowWrapper';
 import {
   isEditMode,
   isPreviewMode,
-  isFormFactorMobile,
+  isDeviceTypeMobile,
 } from '../window/viewModeWrapper';
-import GALLERY_CONSTS from '../constants'
+import GALLERY_CONSTS from '../constants';
 
 class Utils {
   constructor() {
@@ -23,6 +22,46 @@ class Utils {
 
   isUndefined(something) {
     return typeof something === 'undefined';
+  }
+
+  uniqueBy(array, key) {
+    return array.filter((obj, pos, arr) => {
+      return arr.map((mapObj) => mapObj[key]).indexOf(obj[key]) === pos;
+    });
+  }
+
+  inRange(value, range, max = range) {
+    if (range === 0) {
+      throw new Error('Range cannot be 0');
+    }
+    while (value < 0) {
+      value += range;
+    }
+    while (value > max) {
+      value -= range;
+    }
+    return value;
+  }
+
+  sliceArrayWithRange(array, start, end) {
+    return Array(end - start)
+      .fill(0)
+      .map((_, i) => {
+        const index = start + i;
+        return array[this.inRange(index, array.length, array.length - 1)];
+      });
+  }
+
+  sliceArrayIfAvailable(array, start, end) {
+    let maxStart = Math.max(start, 0);
+    let minEnd = Math.min(end, array.length);
+    if (maxStart > start) {
+      minEnd = Math.min(minEnd + (maxStart - start), array.length);
+    }
+    if (minEnd < end) {
+      maxStart = Math.max(maxStart - (end - minEnd), 0);
+    }
+    return this.sliceArrayWithRange(array, maxStart, minEnd);
   }
 
   dumpCache() {
@@ -172,13 +211,13 @@ class Utils {
     const _isMobileByProps = () => {
       const deviceType = this.parseGetParam('deviceType') || window.deviceType;
       const isMobileViewer = this.parseGetParam('showMobileView') === 'true';
-      const formFactorMobile = isFormFactorMobile();
+      const deviceTypeMobile = isDeviceTypeMobile();
       if (isMobileViewer) {
         return true;
       } else if (deviceType) {
         return String(deviceType).toLowerCase().indexOf('mobile') >= 0;
-      } else if (formFactorMobile) {
-        return formFactorMobile;
+      } else if (deviceTypeMobile) {
+        return deviceTypeMobile;
       } else {
         return undefined;
       }
@@ -446,7 +485,7 @@ class Utils {
       return String(v);
     };
 
-    const getInnerDiff = (_obj1, _obj2, _prefix, depth = 1) => {
+    const getInnerDiff = (_obj1 = {}, _obj2 = {}, _prefix, depth = 1) => {
       if (depth > 3) {
         return {};
       }
@@ -624,10 +663,10 @@ class Utils {
     return isValidColor ? colorStr : defaultColor;
   }
 
-  logPlaygroundLink(styles) {
+  logPlaygroundLink(options) {
     try {
       if (this.isVerbose()) {
-        const stylesStr = Object.entries(styles)
+        const optionsStr = Object.entries(options)
           .filter(
             ([key, val]) =>
               typeof val !== 'object' &&
@@ -639,32 +678,39 @@ class Utils {
 
         console.log(
           'Gallery Playground link:',
-          `https://pro-gallery.surge.sh?${stylesStr}`
+          `https://pro-gallery.surge.sh?${optionsStr}`
         );
       }
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
   }
-  isSingleItemHorizontalDisplay(styles) {
-    return styles.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-      styles.groupSize === 1 &&
-      styles.cubeImages &&
-      styles.cubeRatio === '100%/100%';
+
+  isSingleItemHorizontalDisplay(options) {
+    return (
+      options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+      options.groupSize === 1 &&
+      options.cubeImages &&
+      options.layoutParams.cropRatio === '100%/100%'
+    );
   }
 
   getAriaAttributes({ proGalleryRole, proGalleryRegionLabel }) {
     return {
       role: proGalleryRole || 'region',
-      ['aria-label']: proGalleryRegionLabel ||
-        'Press the Enter key and then use the arrow keys to navigate the gallery items',
+      ['aria-label']: proGalleryRegionLabel,
       ['aria-roledescription']:
         proGalleryRole === 'application' ? 'gallery application' : 'region',
     };
   }
-  
-  focusGalleryElement(element){
+
+  focusGalleryElement(element) {
     element.focus();
+  }
+
+  isMeaningfulString(str) {
+    if (typeof str !== 'string') return false;
+    return !!str.trim().length;
   }
 }
 

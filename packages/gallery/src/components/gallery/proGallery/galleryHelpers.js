@@ -1,32 +1,28 @@
 import { window } from 'pro-gallery-lib';
 
-export function isGalleryInViewport(container) {
+// Promise-wrapping class
+export class Deferred {
+  constructor() {
+    this.promise = new Promise((resolve, reject) => {
+      this.reject = (...args) => {
+        this.isPending = false;
+        reject(...args);
+      };
+      this.resolve = (...args) => {
+        this.isPending = false;
+        resolve(...args);
+      };
+      this.isPending = true;
+    });
+  }
+}
+
+export function isGalleryInViewport({ container, scrollTop }) {
   try {
-    const haveAllVariablesForViewPortCalc = !!(
-      container &&
-      Number.isInteger(container.scrollBase) &&
-      Number.isInteger(container.galleryHeight) &&
-      window &&
-      window.document &&
-      window.document.documentElement &&
-      (Number.isInteger(window.document.documentElement.scrollTop) ||
-        (window.document.scrollingElement &&
-          Number.isInteger(window.document.scrollingElement.scrollTop))) &&
-      Number.isInteger(window.document.documentElement.offsetHeight)
-    );
-    const inTopViewPort =
-      haveAllVariablesForViewPortCalc &&
-      container.scrollBase + container.galleryHeight >
-        window.document.documentElement.scrollTop;
-    const inBottomViewPort =
-      haveAllVariablesForViewPortCalc &&
-      container.scrollBase <
-        (window.document.documentElement.scrollTop ||
-          window.document.scrollingElement.scrollTop) +
-          window.document.documentElement.offsetHeight;
-    return (
-      (inTopViewPort && inBottomViewPort) || !haveAllVariablesForViewPortCalc
-    ); // if some parameters are missing (haveAllVariablesForViewPortCalc is false) we still want the used functionality to work
+    const isTopVisible = container.scrollBase < scrollTop + window.innerHeight;
+    const isBottomVisible =
+      container.scrollBase + container.galleryHeight > scrollTop;
+    return isTopVisible && isBottomVisible;
   } catch (e) {
     console.warn('Could not calculate viewport', e);
     return true;

@@ -1,13 +1,16 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
-import { utils, isEditMode, GALLERY_CONSTS } from 'pro-gallery-lib';
-import ImageItem from '../imageItem';
+import { utils, isEditMode } from 'pro-gallery-lib';
+import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import VideoItemPlaceholder from './videoItemPlaceholder';
 
-const videoPlayButton = (
-  <div>
+const isIos = utils.isiOS();
+const useTransparentPlayButtonAndForceLoadVideo = (props) =>
+  (props.videoUrl || props.url).includes('youtube.com') && isIos;
+
+const VideoPlayButton = ({ pointerEvents }) => (
+  <div style={{ pointerEvents: pointerEvents ? 'initial' : 'none' }}>
     <i
       key="play-triangle"
       data-hook="play-triangle"
@@ -25,17 +28,16 @@ const videoPlayButton = (
   </div>
 );
 
-class VideoItemWrapper extends ImageItem {
+class VideoItemWrapper extends React.Component {
   constructor(props) {
     super(props);
     this.mightPlayVideo = this.mightPlayVideo.bind(this);
-    this.createVideoPlaceholderIfNeeded =
-      this.createVideoPlaceholderIfNeeded.bind(this);
+    this.createVideoPlaceholder = this.createVideoPlaceholder.bind(this);
     this.state = { VideoItemLoaded: false };
   }
 
   mightPlayVideo() {
-    const { videoPlay, itemClick } = this.props.styleParams;
+    const { videoPlay, itemClick } = this.props.options;
     const { hasLink } = this.props;
     if (this.props.isVideoPlaceholder) {
       return false;
@@ -51,24 +53,21 @@ class VideoItemWrapper extends ImageItem {
     return false;
   }
 
-  createVideoPlaceholderIfNeeded(showVideoPlayButton) {
-    const {styleParams} = this.props;
+  createVideoPlaceholder(showVideoPlayButton) {
     const props = utils.pick(this.props, [
       'alt',
       'title',
       'description',
       'id',
       'idx',
-      'styleParams',
+      'options',
       'createUrl',
       'settings',
       'actions',
+      'isCurrentHover',
     ]);
-    const shouldCreatePlaceHolder =
-      utils.isSingleItemHorizontalDisplay(styleParams) && 
-      styleParams.videoPlay === GALLERY_CONSTS.videoPlay.AUTO;
 
-    return shouldCreatePlaceHolder ? null : (
+    return (
       <VideoItemPlaceholder
         {...props}
         key="videoPlaceholder"
@@ -76,7 +75,14 @@ class VideoItemWrapper extends ImageItem {
         isThumbnail={!!this.props.thumbnailHighlightId}
         id={this.props.idx}
         videoPlayButton={
-          showVideoPlayButton && !this.mightPlayVideo() && videoPlayButton
+          showVideoPlayButton &&
+          !this.mightPlayVideo() && (
+            <VideoPlayButton
+              pointerEvents={
+                !useTransparentPlayButtonAndForceLoadVideo(this.props)
+              }
+            />
+          )
         }
       />
     );
@@ -101,23 +107,35 @@ class VideoItemWrapper extends ImageItem {
   render() {
     const hover = this.props.hover;
     const showVideoPlayButton =
-      !this.props.hidePlay && this.props.styleParams.showVideoPlayButton;
-    const videoPlaceholder = this.createVideoPlaceholderIfNeeded(showVideoPlayButton);
+      !this.props.hidePlay && this.props.options.showVideoPlayButton;
+    const videoPlaceholder = this.createVideoPlaceholder(showVideoPlayButton);
 
     const VideoItem = this.VideoItem;
     if (!this.mightPlayVideo() || !VideoItem) {
       return (
         <div>
-          {videoPlaceholder}
+          {shouldCreateVideoPlaceholder(this.props.options) && videoPlaceholder}
           {hover}
         </div>
       );
     }
+    const shouldUseTransparentPlayButtonAndForceLoadVideo =
+      useTransparentPlayButtonAndForceLoadVideo(this.props);
     return (
       <VideoItem
         {...this.props}
+        loadVideo={
+          this.props.loadVideo ||
+          shouldUseTransparentPlayButtonAndForceLoadVideo
+        }
         videoPlaceholder={videoPlaceholder}
-        videoPlayButton={showVideoPlayButton && videoPlayButton}
+        videoPlayButton={
+          showVideoPlayButton && (
+            <VideoPlayButton
+              pointerEvents={!shouldUseTransparentPlayButtonAndForceLoadVideo}
+            />
+          )
+        }
       />
     );
   }

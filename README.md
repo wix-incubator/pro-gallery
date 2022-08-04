@@ -129,8 +129,8 @@ const container = {
 ```
 The `width` and `height` values represent the size of the gallery. Thus, the gallery will size inner items to fit exactly into that size. Notice that when `infiniteScroll` is enabled, vertical galleries will ignore the `height` parameter and horizontal galleries will ignore the `width` parameter.
 
-### domId
-A unique Id for the gallery. Use this if you plan to display multiple galleries on the same page, or when using SSR - to make sure the gallery does not "flicker" in the hydrate phase.
+### id
+A unique id for the gallery. Use this if you plan to display multiple galleries on the same page, or when using SSR - to make sure the gallery does not "flicker" in the hydrate phase.
 
 ### Scrolling Element
 The DOM element inside which the gallery is scrolled (defaults to `window`). If the gallery is scrolled inside a different element, pass its dom reference in this property. You can also pass a function that returns that dom element.
@@ -156,17 +156,34 @@ An example can be found [here](https://github.com/wix/pro-gallery/blob/a3d858fc2
 The prerender mode is a special middle phase for situations where the gallery is rendered in a responsive layout in SSR - *without the real container measurements*. This render will not be accurate until the client will "fix" the layout (since the server cannot measure the size of the container).
 When passing the gallery a "fake" container measurements, you'll need to pass this parameter as true to let the gallery know it should only prepare the html, but wait for the real measurements before showing the gallery
 
-### Custom Renderers
-The Gallery supports custom renderers both for the Hover Element (appears when hovering over an item) and the Info Element (appears below / above an item).
-To replace the default rendering of these elements, pass a function that will receive the props of an item and that in turn should return a JSX element. For example:
+### Custom Components
+The Gallery supports replacing the default rendering of the following elements:
+- Hover Element (appears when hovering over an item)
+- Info Element (appears below / above /on the right / on the left of the item).
+- Slideshow Info Element (appears below the item when gallery layout is slideshow)
+- Navigation Arrows Buttons (for horizontal layouts)
+- Load More button (for vertical layouts)
+- Image Elements (to render the image items)
+
+To replace the default rendering of these elements, pass to the customComponents, to the relevant key a function that will receive the props of an item and that in turn should return a JSX element. For example:
 ```
 <ProGallery
   {...otherProps}
-  customHoverRenderer={itemProps => <div>Hover #{itemProps.idx}</div>}
-  customInfoRenderer={itemProps => <div>Info #{itemProps.idx}</div>}
-  customImageRenderer={imageProps => <img {...imageProps} />}
-  customLoadMoreRenderer={galleryProps => <button>Load More</button>}
-  customNavArrowsRenderer={direction => <button>{direction}</button>}
+  customComponents={{
+      customHoverRenderer={itemProps => <div>Hover #{itemProps.idx}</div>}
+      customInfoRenderer={itemProps => <div>Info #{itemProps.idx}</div>}
+      customImageRenderer={imageProps => <img {...imageProps} />}
+      customLoadMoreRenderer={galleryProps => <button>Load More</button>}
+      customNavArrowsRenderer={direction => <button>{direction}</button>}
+  }}
+/>
+```
+### Accessibility Aria role
+The gallery allows setting the aria role attribute of its container by passing a prop. The default value is “region” (read more about the different options of the “role” attribute [here](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles))
+```
+<ProGallery
+  {...otherProps}
+  proGalleryRole: 'application'
 />
 ```
 
@@ -180,7 +197,7 @@ It will expect a ready gallery Blueprint spread into the props it receives.
 We call the result of all the calculations that the `ProGalleryRenderer` needs a Blueprint.
 
 To create a Blueprint we need :
-- Styles
+- Options
 - Items
 - Container
 - totalItemsCount

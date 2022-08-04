@@ -1,8 +1,7 @@
 import React from 'react';
 import itemView from '../item/itemView.js';
-import { GalleryComponent } from '../galleryComponent';
 
-class GroupView extends GalleryComponent {
+class GroupView extends React.Component {
   constructor(props) {
     super(props);
     this.displayName = 'GroupView';
@@ -10,13 +9,14 @@ class GroupView extends GalleryComponent {
     this.state = {};
   }
 
-  createDom(visible) {
-    return this.props.items.map((item) =>
-      React.createElement(itemView, {
-        ...item.renderProps({ ...this.props.galleryConfig, visible }),
-        ...this.props.itemsLoveData[item.id],
-      })
-    );
+  createDom(visible, empty) {
+    return this.props.items.map((item) => {
+      const props = item.renderProps({ ...this.props.galleryConfig, visible });
+      return React.createElement(itemView, {
+        ...props,
+        type: empty ?? false ? 'dummy' : props.type,
+      });
+    });
   }
 
   shouldRender() {
@@ -33,9 +33,9 @@ class GroupView extends GalleryComponent {
 
     if (this.props.allowLoop) {
       const { idx } = items[items.length - 1];
-      const { currentIdx, totalItemsCount } = galleryConfig;
+      const { activeIndex, totalItemsCount } = galleryConfig;
 
-      const distance = currentIdx - idx;
+      const distance = activeIndex - idx;
       const padding = Math.floor(totalItemsCount / 2);
 
       return Math.abs(distance) <= padding;
@@ -45,13 +45,20 @@ class GroupView extends GalleryComponent {
   }
 
   render() {
+    const { isRTL } = this.props.galleryConfig.options;
     return this.shouldRender() ? (
       <div
         key={`group_${this.props.idx}_${this.props.items[0].id}`}
         data-hook={'group-view'}
+        style={{
+          '--group-top': this.props.top + 'px',
+          '--group-left': isRTL ? 'auto' : this.props.left + 'px',
+          '--group-width': this.props.width + 'px',
+          '--group-right': !isRTL ? 'auto' : this.props.left + 'px',
+        }}
         aria-hidden={this.props.ariaHidden}
       >
-        {this.createDom(this.isVisible())}
+        {this.createDom(this.isVisible(), this.props.shouldRenderEmpty)}
       </div>
     ) : null;
   }

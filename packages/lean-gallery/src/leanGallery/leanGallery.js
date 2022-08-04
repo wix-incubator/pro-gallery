@@ -3,11 +3,11 @@ import React from 'react';
 import {
   GALLERY_CONSTS,
   processLayouts,
-  addPresetStyles,
+  addPresetOptions,
   isSEOMode,
   utils,
 } from 'pro-gallery-lib';
-
+//lean gallery dummy commit
 export default class LeanGallery extends React.Component {
   constructor() {
     super();
@@ -105,7 +105,7 @@ export default class LeanGallery extends React.Component {
       cubeImages,
       titlePlacement,
       textBoxHeight,
-      cubeRatio,
+      cropRatio,
       imageMargin,
     } = styles;
 
@@ -113,14 +113,14 @@ export default class LeanGallery extends React.Component {
       container.width > 0
         ? Math.min(targetItemSize, container.width)
         : targetItemSize;
-    let itemHeight = itemWidth / cubeRatio;
+    let itemHeight = itemWidth / cropRatio;
 
     if (item && cubeImages === false) {
       const ratio = get(item, 'width') / get(item, 'height');
       itemHeight = Math.round((itemWidth - imageMargin / 2) / ratio);
     }
 
-    if (GALLERY_CONSTS.hasVerticalPlacement(titlePlacement)) {
+    if (GALLERY_CONSTS.hasExternalVerticalPlacement(titlePlacement)) {
       itemHeight += textBoxHeight;
     }
 
@@ -219,7 +219,7 @@ export default class LeanGallery extends React.Component {
   // #region Image
   resizeUrl({ item }) {
     const { styles, resizeMediaUrl } = this.props;
-    const { cubeType, imageQuality, cubeRatio, cubeImages } = styles;
+    const { cubeType, imageQuality, cropRatio, cubeImages } = styles;
     const { itemStyle } = this.state;
 
     const { url, mediaUrl, src } = item;
@@ -229,7 +229,7 @@ export default class LeanGallery extends React.Component {
 
     const width = (cubeImages === true && itemStyle.width) || itemSize.width;
     const height =
-      (cubeImages === true && itemStyle.height) || itemSize.height / cubeRatio;
+      (cubeImages === true && itemStyle.height) || itemSize.height / cropRatio;
 
     const focalPoint = false;
 
@@ -323,7 +323,7 @@ export default class LeanGallery extends React.Component {
       this.setState({
         itemStyle: {
           width: this.clientWidth,
-          height: Math.round(this.clientWidth / styles.cubeRatio),
+          height: Math.round(this.clientWidth / styles.cropRatio),
         },
       });
     }
@@ -432,7 +432,7 @@ export default class LeanGallery extends React.Component {
                     'gallery-item-content',
                     'lean-gallery-image',
                   ].join(' ')}
-                  alt={get(item, 'title')}
+                  alt={get(item, 'alt')}
                   style={this.createImageStyle(imageWrapperStyle)}
                   onLoad={() =>
                     eventsListener(GALLERY_CONSTS.events.ITEM_LOADED, itemData)
@@ -464,7 +464,7 @@ const get = (item, attr) => {
 export const formatLeanGalleryStyles = (styles) => {
   const customExternalInfoRendererExists = true;
   return processLayouts(
-    addPresetStyles(styles),
+    addPresetOptions(styles),
     customExternalInfoRendererExists
   ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
 };
@@ -483,8 +483,8 @@ function getInnerInfoStyle(placement, styleParams, infoHeight, infoWidth) {
     boxSizing: 'border-box',
   };
 
-  const infoAboveOrBelow = GALLERY_CONSTS.hasVerticalPlacement(placement);
-  const infoRightOrLeft = GALLERY_CONSTS.hasHorizontalPlacement(placement);
+  const infoAboveOrBelow = GALLERY_CONSTS.hasExternalVerticalPlacement(placement);
+  const infoRightOrLeft = GALLERY_CONSTS.hasExternalHorizontalPlacement(placement);
 
   return {
     ...commonStyles,

@@ -1,36 +1,46 @@
 import LAYOUTS from '../../common/constants/layout';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
 import { featureManager } from '../helpers/versionsHelper';
+import { assignByString } from '../helpers/optionsUtils';
 
-export const fixedStyles = {
-  galleryLayout: LAYOUTS.MAGIC,
-  cubeImages: undefined,
-  cubeRatio: undefined,
-  isVertical: undefined,
-  targetItemSize: undefined,
-  collageAmount: undefined,
-  collageDensity: undefined,
-  groupTypes: undefined,
-  oneRow: undefined, // later on in layoutHelper this can be changed if it is false, so not exactly fixed.
-  imageMargin: undefined,
-  scatter: undefined,
-  galleryMargin: undefined,
-  chooseBestGroup: undefined,
-  smartCrop: undefined,
-  cubeType: undefined,
-  hasThumbnails: undefined,
-  enableScroll: undefined,
-  isGrid: undefined,
-  isSlideshow: undefined,
-  isSlider: undefined,
-  isColumns: undefined,
-  cropOnlyFill: undefined,
-  fixedColumns: undefined,
-  enableInfiniteScroll: undefined,
-  slideshowLoop: false,
+const fixToMagic = (options) => {
+  let presetOptions = { ...options };
+  presetOptions.galleryLayout = LAYOUTS.MAGIC;
+  presetOptions.cubeImages = undefined;
+  presetOptions = assignByString(
+    presetOptions,
+    'layoutParams_cropRatio',
+    undefined
+  );
+  presetOptions.isVertical = undefined;
+  presetOptions.targetItemSize = undefined;
+  presetOptions.collageAmount = undefined;
+  presetOptions.collageDensity = undefined;
+  presetOptions.groupTypes = undefined;
+  presetOptions.oneRow = undefined; // later on in layoutHelper this can be changed if it is false, so not exactly fixed;
+  presetOptions.imageMargin = undefined;
+  presetOptions.scatter = undefined;
+  presetOptions = assignByString(
+    presetOptions,
+    'layoutParams_gallerySpacing',
+    undefined
+  );
+  presetOptions.chooseBestGroup = undefined;
+  presetOptions.smartCrop = undefined;
+  presetOptions.cubeType = undefined;
+  presetOptions.hasThumbnails = undefined;
+  presetOptions.enableScroll = undefined;
+  presetOptions.cropOnlyFill = undefined;
+  presetOptions.fixedColumns = undefined;
+  presetOptions.enableInfiniteScroll = undefined;
+  presetOptions.slideshowLoop = false;
+  return presetOptions;
 };
+export const fixedOptions = fixToMagic({});
 
-const getStyleBySeed = (seed) => {
+const addSeedOptions = (options) => {
+  let res = { ...options };
+  let seed = res.magicLayoutSeed;
   if (!seed > 0) {
     seed = 999999;
   }
@@ -59,66 +69,67 @@ const getStyleBySeed = (seed) => {
     return !!numFromSeed(0, 1, strSeed);
   };
 
-  const style = {
-    cubeImages: boolFromSeed('cubeImages'),
-    cubeRatio: numFromSeed(1, 25, 'cubeRatio') / 5,
-    isVertical: boolFromSeed('isVertical'),
-    targetItemSize: numFromSeed(300, 800, 'gallerySize'),
-    collageAmount: numFromSeed(5, 10, 'collageAmount') / 10,
-    collageDensity:
-      (featureManager.supports.spacingCalculation
-        ? numFromSeed(1, 100, 'collageDensity')
-        : numFromSeed(5, 10, 'collageDensity')) / 100,
-    groupTypes: ['1'].concat(
-      '2h,2v,3t,3b,3l,3r,3h,3v'
-        .split(',')
-        .filter((type, i) => boolFromSeed('groupTypes' + i))
-    ),
-    oneRow: boolFromSeed('oneRow'),
-    imageMargin: numFromSeed(
-      0,
-      featureManager.supports.spacingCalculation
-        ? numFromSeed(300, 800, 'gallerySize') / 5
-        : 5,
-      'imageMargin'
-    ),
-    galleryMargin: featureManager.supports.spacingCalculation
+  res.cubeImages = boolFromSeed('cubeImages');
+  res = assignByString(
+    res,
+    'layoutParams_cropRatio',
+    numFromSeed(1, 25, 'cubeRatio') / 5
+  );
+  res.isVertical = boolFromSeed('isVertical');
+  res.targetItemSize = numFromSeed(300, 800, 'gallerySize');
+  res.collageAmount = numFromSeed(5, 10, 'collageAmount') / 10;
+  res.collageDensity =
+    (featureManager.supports.spacingCalculation
+      ? numFromSeed(1, 100, 'collageDensity')
+      : numFromSeed(5, 10, 'collageDensity')) / 100;
+  res.groupTypes = ['1'].concat(
+    '2h,2v,3t,3b,3l,3r,3h,3v'
+      .split(',')
+      .filter((type, i) => boolFromSeed('groupTypes' + i))
+  );
+  res.oneRow = boolFromSeed('oneRow'); //we keep oneRow here as this is the string that defines the outcome of the seed.
+  res.imageMargin = numFromSeed(
+    0,
+    featureManager.supports.spacingCalculation
+      ? numFromSeed(300, 800, 'gallerySize') / 5
+      : 5,
+    'imageMargin'
+  );
+  res = assignByString(
+    res,
+    'layoutParams_gallerySpacing',
+    featureManager.supports.spacingCalculation
       ? 0
-      : numFromSeed(0, 5, 'imageMargin'),
-    scatter: 0,
-    rotatingScatter: '',
-    chooseBestGroup: boolFromSeed('chooseBestGroup'),
-    smartCrop: boolFromSeed('smartCrop'),
-    cubeType: 'fill',
-    enableScroll: true,
-    isGrid: false,
-    isSlideshow: false,
-    isSlider: false,
-    isColumns: false,
-    cropOnlyFill: false,
-    fixedColumns: 0,
-    enableInfiniteScroll: 1,
-  };
+      : numFromSeed(0, 5, 'imageMargin')
+  );
+  res.scatter = 0;
+  res.rotatingScatter = '';
+  res.chooseBestGroup = boolFromSeed('chooseBestGroup');
+  res.smartCrop = boolFromSeed('smartCrop');
+  res.cubeType = 'fill';
+  res.enableScroll = true;
+  res.cropOnlyFill = false;
+  res.fixedColumns = 0;
+  res.enableInfiniteScroll = 1;
 
   //force adjustments
-  if (style.oneRow) {
-    style.isVertical = false;
-    style.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
+  if (res.oneRow) {
+    res.isVertical = false;
+    res.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
   } else {
-    style.scrollDirection = SCROLL_DIRECTION.VERTICAL;
+    res.scrollDirection = SCROLL_DIRECTION.VERTICAL;
   }
-  style.galleryType = style.isVertical ? 'Columns' : 'Strips';
-  style.groupSize = parseInt(style.groupTypes.slice(-1)[0]);
-  style.groupTypes = style.groupTypes.join(',');
-  style.minItemSize = style.targetItemSize / style.groupSize / 2;
+  res.galleryType = res.isVertical ? 'Columns' : 'Strips';
+  res.groupSize = parseInt(res.groupTypes.slice(-1)[0]);
+  res.groupTypes = res.groupTypes.join(',');
+  res.minItemSize = res.targetItemSize / res.groupSize / 2;
 
-  return style;
+  return res;
 };
 
-export const createStyles = (styles) => {
-  return {
-    ...styles,
-    ...fixedStyles,
-    ...getStyleBySeed(styles.magicLayoutSeed),
-  };
+export const createOptions = (options) => {
+  let res = { ...options };
+  res = fixToMagic(res);
+  res = addSeedOptions(res);
+  return res;
 };

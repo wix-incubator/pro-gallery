@@ -8,7 +8,7 @@ export const handledStyleParams = {
   gallerySizePx: 300,
   gallerySize: 30,
   cubeType: 'fill',
-  cubeRatio: 1,
+  cropRatio: 1,
   fixedColumns: 0,
   imageMargin: 10,
   gridStyle: 0,
@@ -20,23 +20,25 @@ export const handledStyleParams = {
 
 //these params must be set to these exact values in order for the lean gallery to render well
 export const fixedStyleParams = {
+  layoutParams: {
+    gallerySpacing: 0,
+    repeatingGroupTypes: '',
+  },
+
   allowLeanGallery: true,
   cubeImages: true,
   galleryLayout: [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.GRID],
   // galleryLayout: [GALLERY_CONSTS.layout.EMPTY, GALLERY_CONSTS.layout.MASONRY, GALLERY_CONSTS.layout.GRID],
   isVertical: true,
-  oneRow: false,
   isRTL: false,
-  scrollDirection: [0, undefined],
+  scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
   groupSize: 1,
   hoveringBehaviour: [
     GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW,
     GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
   ],
-  rotatingGroupTypes: '',
   smartCrop: false,
-  rotatingCubeRatio: '',
-  galleryMargin: 0,
+  rotatingCropRatio: '',
   scatter: 0,
   rotatingScatter: '',
   placeGroupsLtr: false,
@@ -51,7 +53,7 @@ export const fixedStyleParams = {
   scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
   titlePlacement: (sp) => {
     return (
-      GALLERY_CONSTS.isVerticalPlacement(sp.titlePlacement) ||
+      GALLERY_CONSTS.isExternalVerticalPlacement(sp.titlePlacement) ||
       sp.hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW ||
       (GALLERY_CONSTS.isHoverPlacement(sp.titlePlacement) &&
         !sp.loveButton &&

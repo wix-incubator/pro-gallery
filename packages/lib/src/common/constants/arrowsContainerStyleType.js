@@ -1,0 +1,7 @@
+const ARROWS_CONTAINER_STYLE_TYPE = {
+  NONE: 'NONE',
+  SHADOW: 'SHADOW',
+  BOX: 'BOX',
+};
+
+export default ARROWS_CONTAINER_STYLE_TYPE;

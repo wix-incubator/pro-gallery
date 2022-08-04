@@ -19,7 +19,9 @@ describe('slider - e2e', () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.SLIDER,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      cubeRatio: 16 / 9,
+      layoutParams: {
+        cropRatio: 16 / 9,
+      },
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -30,7 +32,9 @@ describe('slider - e2e', () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.SLIDER,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
-      cubeRatio: 16 / 9,
+      layoutParams: {
+        cropRatio: 16 / 9,
+      },
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);

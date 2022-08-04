@@ -1,10 +1,8 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
-import { GALLERY_CONSTS, utils, isSEOMode } from 'pro-gallery-lib';
-import { GalleryComponent } from '../galleryComponent';
+import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import ImageRenderer from './imageRenderer';
 
-export default class ImageItem extends GalleryComponent {
+class ImageItem extends React.Component {
   constructor(props) {
     super(props);
     this.getImageContainer = this.getImageContainer.bind(this);
@@ -39,19 +37,19 @@ export default class ImageItem extends GalleryComponent {
   }
 
   getImageContainerClassNames() {
-    const { styleParams } = this.props;
+    const { isCurrentHover, options, isTransparent } = this.props;
     const { isHighResImageLoaded } = this.state;
 
     const imageContainerClassNames = [
       'gallery-item-content',
+      isCurrentHover ? 'item-content-hover' : 'item-content-regular',
       'image-item',
       'gallery-item-visible',
       'gallery-item',
       'gallery-item-preloaded',
-      styleParams.cubeImages && styleParams.cubeType === 'fit'
-        ? 'grid-fit'
-        : '',
-      styleParams.imageLoadingMode === GALLERY_CONSTS.loadingMode.COLOR
+      options.cubeImages && options.cubeType === 'fit' ? 'grid-fit' : '',
+      options.imageLoadingMode === GALLERY_CONSTS.loadingMode.COLOR &&
+      !isTransparent
         ? `load-with-color ${isHighResImageLoaded ? 'image-loaded' : ''}`
         : '',
     ].join(' ');
@@ -69,11 +67,7 @@ export default class ImageItem extends GalleryComponent {
         onTouchEnd={actions.handleItemMouseUp}
         key={'image_container-' + id}
         data-hook={'image-item'}
-        style={
-          imageDimensions.borderRadius
-            ? { borderRadius: imageDimensions.borderRadius }
-            : {}
-        }
+        style={imageDimensions}
       >
         {imageRenderer()}
         {extraNodes}
@@ -81,16 +75,54 @@ export default class ImageItem extends GalleryComponent {
     );
   }
 
+  getImageAnimationOverlay() {
+    const { imageDimensions, options, createUrl, id } = this.props;
+
+    let imageAnimationUrl = null;
+    switch (options.scrollAnimation) {
+      case GALLERY_CONSTS.scrollAnimations.BLUR:
+        imageAnimationUrl = createUrl(
+          GALLERY_CONSTS.urlSizes.RESIZED,
+          GALLERY_CONSTS.urlTypes.LOW_RES
+        );
+        break;
+      case GALLERY_CONSTS.scrollAnimations.MAIN_COLOR:
+        imageAnimationUrl = createUrl(
+          GALLERY_CONSTS.urlSizes.PIXEL,
+          GALLERY_CONSTS.urlTypes.HIGH_RES
+        );
+        break;
+    }
+
+    return (
+      imageAnimationUrl && (
+        <div
+          key={'image_container-overlay-' + id}
+          data-hook={'image-item-overlay'}
+          style={{
+            ...imageDimensions,
+            backgroundImage: `url(${imageAnimationUrl})`,
+            backgroundSize: 'cover',
+            pointerEvents: 'none',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+          }}
+        ></div>
+      )
+    );
+  }
+
   getImageElement() {
     const {
-      alt,
+      calculatedAlt,
       imageDimensions,
       createUrl,
       id,
       idx,
       settings = {},
-      styleParams,
-      gotFirstScrollEvent,
+      options,
+      isTransparent,
     } = this.props;
     const { isHighResImageLoaded } = this.state;
     const imageProps =
@@ -101,12 +133,12 @@ export default class ImageItem extends GalleryComponent {
         : {};
 
     // eslint-disable-next-line no-unused-vars
-    const { margin, ...restOfDimensions } = imageDimensions || {};
+    const { marginLeft, marginTop, ...imageSizing } = imageDimensions;
 
     const image = () => {
       const imagesComponents = [];
       const blockDownloadStyles =
-        utils.isMobile() && !this.props.styleParams.allowContextMenu
+        utils.isMobile() && !this.props.options.allowContextMenu
           ? {
               '-webkit-user-select': 'none',
               '-webkit-touch-callout': 'none',
@@ -120,7 +152,7 @@ export default class ImageItem extends GalleryComponent {
           }
         : {};
 
-      if (!isHighResImageLoaded && gotFirstScrollEvent) {
+      if (!isHighResImageLoaded && !isTransparent) {
         let preload = null;
         const preloadProps = {
           className: 'gallery-item-visible gallery-item gallery-item-preloaded',
@@ -129,7 +161,7 @@ export default class ImageItem extends GalleryComponent {
           loading: 'eager',
           ...imageProps,
         };
-        switch (styleParams.imageLoadingMode) {
+        switch (options.imageLoadingMode) {
           case GALLERY_CONSTS.loadingMode.BLUR:
             preload = (
               <ImageRenderer
@@ -140,11 +172,14 @@ export default class ImageItem extends GalleryComponent {
                   GALLERY_CONSTS.urlTypes.LOW_RES
                 )}
                 style={{
-                  ...restOfDimensions,
+                  ...imageSizing,
                   ...preloadStyles,
                   ...blockDownloadStyles,
                 }}
                 {...preloadProps}
+                customImageRenderer={
+                  this.props.customComponents?.customImageRenderer
+                }
               />
             );
             break;
@@ -158,11 +193,14 @@ export default class ImageItem extends GalleryComponent {
                   GALLERY_CONSTS.urlTypes.HIGH_RES
                 )}
                 style={{
-                  ...restOfDimensions,
+                  ...imageSizing,
                   ...preloadStyles,
                   ...blockDownloadStyles,
                 }}
                 {...preloadProps}
+                customImageRenderer={
+                  this.props.customComponents?.customImageRenderer
+                }
               />
             );
             break;
@@ -172,15 +210,12 @@ export default class ImageItem extends GalleryComponent {
       }
 
       const shouldRenderHighResImages = !this.props.isPrerenderMode;
-      const src = isSEOMode()
-        ? createUrl(
-            GALLERY_CONSTS.urlSizes.RESIZED,
-            GALLERY_CONSTS.urlTypes.SEO
-          )
-        : createUrl(
-            GALLERY_CONSTS.urlSizes.MULTI,
-            GALLERY_CONSTS.urlTypes.HIGH_RES
-          );
+      const imageType =
+        options.stylingParams?.itemResolutionMode ===
+        GALLERY_CONSTS.itemResolutionMode.FULL
+          ? GALLERY_CONSTS.urlSizes.FULL
+          : GALLERY_CONSTS.urlSizes.MULTI;
+      const src = createUrl(imageType, GALLERY_CONSTS.urlTypes.HIGH_RES);
 
       const highres = (
         <ImageRenderer
@@ -189,14 +224,18 @@ export default class ImageItem extends GalleryComponent {
           data-hook="gallery-item-image-img"
           data-idx={idx}
           src={src}
-          alt={alt ? alt : 'untitled image'}
+          alt={
+            typeof calculatedAlt === 'string' ? calculatedAlt : 'untitled image'
+          }
           onLoad={this.handleHighResImageLoad}
+          loading={this.props.isPrerenderMode ? 'lazy' : 'eager'}
           style={{
-            ...restOfDimensions,
+            ...imageSizing,
             ...blockDownloadStyles,
             ...(!shouldRenderHighResImages && preloadStyles),
           }}
           {...imageProps}
+          customImageRenderer={this.props.customComponents?.customImageRenderer}
         />
       );
 
@@ -210,7 +249,11 @@ export default class ImageItem extends GalleryComponent {
 
   render() {
     const imageRenderer = this.getImageElement();
-    const imageContainerClassNames = this.getImageContainerClassNames();
+    const imageContainerClassNames = `${this.getImageContainerClassNames()} ${
+      this.props.extraClasses || ''
+    }`;
+    const animationOverlay =
+      this.props.overlay || this.getImageAnimationOverlay();
     const renderedItem = this.getImageContainer(
       imageRenderer,
       imageContainerClassNames
@@ -219,3 +262,4 @@ export default class ImageItem extends GalleryComponent {
   }
 }
 /* eslint-enable prettier/prettier */
+export default ImageItem;

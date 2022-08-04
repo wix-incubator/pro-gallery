@@ -20,8 +20,7 @@ import {ReactComponent as ColumnSel} from '../../assets/layouts/columns-sel.svg'
 // import {ReactComponent as MagicSel} from '../../assets/layouts/magic-sel.svg';
 // import {ReactComponent as Bricks} from '../../assets/layouts/bricks-reg.svg';
 // import {ReactComponent as BricksSel} from '../../assets/layouts/bricks-sel.svg';
-// import {ReactComponent as Alternate} from '../../assets/layouts/alternate-reg.svg';
-// import {ReactComponent as AlternateSel} from '../../assets/layouts/alternate-sel.svg';
+
 
 export const svgs = {
   collage: {

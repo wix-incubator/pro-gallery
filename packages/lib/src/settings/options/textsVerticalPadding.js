@@ -5,8 +5,8 @@ export default {
   title: 'Text vertical padding',
   isRelevantDescription:
     'Set "Texts Placement" to anything but "Show On Hover".',
-  isRelevant: (styleParams) =>
-    styleParams.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER,
+  isRelevant: (options) =>
+    options.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER,
   type: INPUT_TYPES.NUMBER,
   default: 0,
   description: `Set the vertical padding for the texts for each item in the gallery.

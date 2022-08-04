@@ -19,7 +19,7 @@ describe('numberOfImagesPerCol - e2e', () => {
     await driver.navigate({
       galleryLayout: 2,
       numberOfImagesPerCol: 1,
-      oneRow: true,
+      oneRow: true, // deprecated but left here to make sure we are not breaking for those who still use it
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -31,7 +31,7 @@ describe('numberOfImagesPerCol - e2e', () => {
     await driver.navigate({
       galleryLayout: 2,
       numberOfImagesPerCol: 2,
-      oneRow: true,
+      oneRow: true, // deprecated but left here to make sure we are not breaking for those who still use it
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -43,7 +43,7 @@ describe('numberOfImagesPerCol - e2e', () => {
     await driver.navigate({
       galleryLayout: 2,
       numberOfImagesPerCol: 3,
-      oneRow: true,
+      oneRow: true, // deprecated but left here to make sure we are not breaking for those who still use it
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');

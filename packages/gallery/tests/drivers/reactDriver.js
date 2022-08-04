@@ -1,17 +1,12 @@
-import { Layouter } from 'pro-layouts';
-import {
-  GALLERY_CONSTS,
-  GalleryItem,
-  ItemsHelper,
-  window,
-  utils,
-} from 'pro-gallery-lib';
+import { Layouter, GalleryItem, ItemsHelper } from 'pro-layouts';
+import { window, defaultOptions, mergeNestedObjects } from 'pro-gallery-lib';
 import { testImages } from './mocks/images-mock.js';
 import { mount, shallow, configure } from 'enzyme';
 import { GalleryContainer } from '../../src/components/gallery/proGallery/galleryContainer'; //import GalleryContainer before the connect (without redux)
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import ProGallery from '../../src/components/gallery';
+import _ from 'lodash';
 
 configure({ adapter: new Adapter() });
 
@@ -33,6 +28,8 @@ class galleryDriver {
       maxGalleryWidth: 1000,
       galleryWidth: 1000,
       galleryHeight: 500,
+      width: 1000,
+      height: 500,
       viewMode: 'site',
       bounds: {
         visibleTop: 0,
@@ -42,52 +39,9 @@ class galleryDriver {
       },
     };
 
-    this.styleParams = {
-      gotStyleParams: true,
-      selectedLayout: 0,
-      isVertical: false,
-      isRTL: false,
+    this.options = mergeNestedObjects(defaultOptions, {
       targetItemSize: 320,
-      minItemSize: 120,
-      groupSize: 3,
-      chooseBestGroup: true,
-      groupTypes: '1,2h,2v,3t,3b,3l,3r',
-      cubeImages: false,
-      smartCrop: false,
-      fullscreen: true,
-      videoLoop: true,
-      videoSound: false,
-      videoSpeed: 1,
-      videoPlay: 'hover',
-      sharpParams: {
-        quality: 90,
-        usm: {}, // do not apply usm - {usm_r: 0.66, usm_a: 1.00, usm_t: 0.01},
-      },
-      collageAmount: 0.8,
-      collageDensity: 0.8,
-      imageMargin: 5,
-      galleryMargin: 1,
-      viewMode: 'preview',
-      enableInfiniteScroll: true,
-      itemClick: 'expand',
-      cubeRatio: 1, //determine the ratio of the images when using grid (use 1 for squares grid)
-      fixedColumns: 0, //determine the number of columns regardless of the screen size (use 0 to ignore)
-      oneRow: false, //render the gallery as a single row with horizontal scroll
-      showArrows: true,
-      isSlideshow: false,
-      isSlider: false,
-      hasThumbnails: false,
-      thumbnailSize: utils.isMobile() ? 90 : 120,
-      galleryThumbnailsAlignment: 'bottom',
-      thumbnailSpacings: 0,
-      titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
-      itemEnableShadow: false,
-      itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
-      itemShadowBlur: 20,
-      itemShadowDirection: 135,
-      itemShadowSize: 10,
-      shouldIndexDirectShareLinkInSEO: true,
-    };
+    });
 
     this.scroll = {
       top: 0,
@@ -109,7 +63,7 @@ class galleryDriver {
     this.layoutParams = {
       items: this.items,
       container: this.container,
-      styleParams: this.styleParams,
+      styleParams: this.options,
       gotScrollEvent: true,
     };
 
@@ -117,22 +71,24 @@ class galleryDriver {
       new Layouter(this.layoutParams)
     );
 
+    this.customComponents = {
+      customHoverRenderer: () => {},
+      customInfoRenderer: () => {},
+    };
+
     this.galleryConfig = {
       container: this.get.container,
       scroll: this.get.scroll,
-      styleParams: this.get.styleParams,
+      options: this.get.options,
       actions: this.get.actions,
+      customComponents: this.customComponents,
     };
-
-    this.customHoverRenderer = () => {};
-    this.customInfoRenderer = () => {};
-    this.customSlideshowInfoRenderer = () => {};
   }
 
   get get() {
     return {
       container: this.container,
-      styleParams: this.styleParams,
+      options: this.options,
       scroll: this.scroll,
       items: this.items,
       actions: this.actions,
@@ -224,6 +180,18 @@ class galleryDriver {
     };
   }
 
+  get images() {
+    return _.uniqBy(
+      Array.from(this.find.hook('gallery-item-image-img')),
+      ({ props }) => props.src
+    );
+  }
+
+  getContainer() {
+    const id = this.wrapper.props().id || 'default-dom-id';
+    return this.find.selector(`#pro-gallery-container-${id}`);
+  }
+
   get text() {
     return this.wrapper.text();
   }
@@ -247,9 +215,7 @@ class galleryDriver {
           totalItemsCount: this.items.length,
           layout,
           actions: this.actions,
-          customHoverRenderer: this.customHoverRenderer,
-          customInfoRenderer: this.customInfoRenderer,
-          customSlideshowInfoRenderer: this.customSlideshowInfoRenderer,
+          customComponents: this.customComponents,
         };
       },
 
@@ -262,19 +228,16 @@ class galleryDriver {
             galleryStructure: this.galleryStructure,
             scroll: this.scroll,
             container: this.container,
-            styleParams: this.styleParams,
+            options: this.options,
             actions: this.actions,
-            customHoverRenderer: this.customHoverRenderer,
-            customInfoRenderer: this.customInfoRenderer,
-            customSlideshowInfoRenderer: this.customSlideshowInfoRenderer,
-            itemsLoveData: {},
+            customComponents: this.customComponents,
           };
         }
 
         const layoutParams = {
           items: galleryViewProps.items,
           container: galleryViewProps.container,
-          styleParams: galleryViewProps.styleParams,
+          styleParams: galleryViewProps.options,
         };
 
         const galleryStructure = ItemsHelper.convertToGalleryItems(
@@ -289,15 +252,12 @@ class galleryDriver {
           scroll: galleryViewProps.scroll,
           container: galleryViewProps.container,
           getVisibleItems: (items) => items,
-          styleParams: galleryViewProps.styleParams,
+          options: galleryViewProps.options,
           actions: galleryViewProps.actions,
-          itemsLoveData: galleryViewProps.itemsLoveData,
           convertToGalleryItems: ItemsHelper.convertToGalleryItems,
           convertDtoToLayoutItem: ItemsHelper.convertDtoToLayoutItem,
-          customHoverRenderer: galleryViewProps.customHoverRenderer,
-          customInfoRenderer: galleryViewProps.customInfoRenderer,
-          customSlideshowInfoRenderer:
-            galleryViewProps.customSlideshowInfoRenderer,
+          customComponents: galleryViewProps.customComponents,
+          virtualizationSettings: galleryViewProps.virtualizationSettings,
         };
       },
 
@@ -327,6 +287,7 @@ class galleryDriver {
             ...this.actions,
             eventsListener: () => {},
           },
+          customComponents: {},
         });
       },
 
@@ -335,7 +296,14 @@ class galleryDriver {
         const galleryItem = new GalleryItem({ dto: itemDto });
         const itemViewPropsObj = Object.assign(
           galleryItem.renderProps(newGalleryConfig),
-          { config: newGalleryConfig, visible: true }
+          {
+            config: newGalleryConfig,
+            visible: true,
+            imageDimensions: {
+              marginLeft: 0,
+              marginTop: 0,
+            },
+          }
         );
         return Object.assign(itemViewPropsObj, {
           actions: {

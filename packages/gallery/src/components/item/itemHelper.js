@@ -1,12 +1,13 @@
-import { window, utils, isSiteMode, isSEOMode } from 'pro-gallery-lib';
+import {
+  window,
+  utils,
+  isSiteMode,
+  isSEOMode,
+  GALLERY_CONSTS,
+} from 'pro-gallery-lib';
 
 function shouldChangeActiveElement() {
   return (isSiteMode() || isSEOMode()) && !utils.isMobile() && window.document;
-}
-
-function isThisGalleryElementInFocus(className) {
-  const activeElement = window.document.activeElement;
-  return String(activeElement.className).includes(className);
 }
 
 export function onAnchorFocus({
@@ -25,6 +26,16 @@ export function onAnchorFocus({
   }
 }
 
+function isThisGalleryElementInFocus(className, galleryId) {
+  const activeElement = window.document.activeElement;
+  return (
+    String(activeElement.className).includes(className) &&
+    !!window.document.querySelector(
+      `#pro-gallery-${galleryId} #${String(activeElement.id)}`
+    )
+  );
+}
+
 export function changeActiveElementIfNeeded({
   prevProps,
   currentProps,
@@ -36,10 +47,13 @@ export function changeActiveElementIfNeeded({
       window.document.activeElement.className
     ) {
       const isGalleryItemInFocus = isThisGalleryElementInFocus(
-        'gallery-item-container'
+        'gallery-item-container',
+        currentProps.galleryId
       );
-      const isShowMoreInFocus = isThisGalleryElementInFocus('show-more');
-
+      const isShowMoreInFocus = isThisGalleryElementInFocus(
+        'show-more',
+        currentProps.galleryId
+      );
       if (isGalleryItemInFocus || isShowMoreInFocus) {
         if (
           currentProps.thumbnailHighlightId !==
@@ -49,10 +63,10 @@ export function changeActiveElementIfNeeded({
           // if the highlighted thumbnail changed and it is the same as this itemview's
           itemContainer.focus();
         } else if (
-          currentProps.currentIdx !== prevProps.currentIdx &&
-          currentProps.currentIdx === currentProps.idx
+          currentProps.activeIndex !== prevProps.activeIndex &&
+          currentProps.activeIndex === currentProps.idx
         ) {
-          //check if currentIdx has changed to the current item
+          //check if activeIndex has changed to the current item
           itemContainer.focus();
         }
       }
@@ -60,4 +74,12 @@ export function changeActiveElementIfNeeded({
   } catch (e) {
     console.error('Could not set focus to active element', e);
   }
+}
+
+export function shouldCreateVideoPlaceholder(options) {
+  return (
+    options.enableVideoPlaceholder &&
+    (!utils.isSingleItemHorizontalDisplay(options) ||
+      options.videoPlay !== GALLERY_CONSTS.videoPlay.AUTO)
+  );
 }

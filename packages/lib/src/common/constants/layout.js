@@ -1,4 +1,5 @@
 const LAYOUTS = {
+  JSON_FIXED: -3,
   DESIGNED_PRESET: -2,
   EMPTY: -1,
   COLLAGE: 0,
@@ -16,4 +17,9 @@ const LAYOUTS = {
   ALTERNATE: 12,
 };
 
+const isLayout = (layoutName) => (options) => {
+  return options.galleryLayout === LAYOUTS[layoutName];
+};
+
 export default LAYOUTS;
+export { isLayout };

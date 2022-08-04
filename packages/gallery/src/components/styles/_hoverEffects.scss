@@ -7,15 +7,22 @@ div.pro-gallery {
     //image hover animations
 
     &.zoom-in-on-hover:not(.hide-hover) {
-      .gallery-item-content {
-        transition: transform 2.2s cubic-bezier(.14, .4, .09, .99) !important;
-      }
 
+      .gallery-item-hover:not(.hide-hover), .gallery-item-content, .hover-info-element {
+        transition: transform 2.2s cubic-bezier(.14, .4, .09, .99) !important;
+    }
       &.simulate-hover,
       &:hover {
         .gallery-item-content {
           transform: scale(1.1);
         }
+        .gallery-item-hover:not(.hide-hover) {
+          transform: scale(1.110); //make sure overlay cover all edges of an image.
+        }
+        .gallery-item-hover:not(.hide-hover) .hover-info-element {
+          transform: scale(calc(1/1.110));
+        }
+
       }
     }
 
@@ -266,6 +273,59 @@ div.pro-gallery {
       }
     }
 
+    &.hover-animation-slide-left {
+      .gallery-item-hover {
+        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+
+        &:before {
+          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+          transform: translateX(100%);
+          filter: opacity(0);
+        }
+
+        .gallery-item-hover-inner,
+        .info-member:not(.hidden) {
+          transition: opacity .4s ease;
+        }
+      }
+
+      .gallery-item-hover.force-hover,
+      &:hover .gallery-item-hover:not(.hide-hover) {
+
+        &:before {
+          transform: translateX(0);
+          filter: opacity(1);
+        }
+      }
+    }
+
+    &.hover-animation-slide-down {
+
+      .gallery-item-hover {
+        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+
+        &:before {
+          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+          transform: translateY(-100%);
+          filter: opacity(0);
+        }
+
+        .gallery-item-hover-inner,
+        .info-member:not(.hidden) {
+          transition: opacity .4s ease;
+        }
+      }
+
+      .gallery-item-hover.force-hover,
+      &:hover .gallery-item-hover:not(.hide-hover) {
+
+        &:before {
+          transform: translateY(0);
+          filter: opacity(1);
+        }
+      }
+    }
+
     //&.hover-animation-radius {
     //  .gallery-item-hover {
     //    &:before {
@@ -428,6 +488,58 @@ div.pro-gallery {
 
         &:before {
           transform: translateX(-100%);
+          filter: opacity(0);
+        }
+      }
+    }
+
+    &.hover-animation-slide-left {
+      .gallery-item-hover {
+        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+
+        &:before {
+          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+          transform: translateX(100%);
+          filter: opacity(1);
+        }
+
+        .gallery-item-hover-inner,
+        .info-member:not(.hidden) {
+          transition: opacity .4s ease;
+        }
+      }
+
+      .gallery-item-hover.force-hover,
+      &:hover .gallery-item-hover:not(.hide-hover) {
+
+        &:before {
+          transform: translateX(0);
+          filter: opacity(0);
+        }
+      }
+    }
+
+    &.hover-animation-slide-down {
+      .gallery-item-hover {
+        transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+
+        &:before {
+          transition: transform .4s cubic-bezier(.3, .13, .12, 1), filter .5s ease, opacity .5s ease !important;
+          transform: translateY(-100%);
+          filter: opacity(1);
+        }
+
+        .gallery-item-hover-inner,
+        .info-member:not(.hidden) {
+          transition: opacity .4s ease;
+        }
+      }
+
+      .gallery-item-hover.force-hover,
+      &:hover .gallery-item-hover:not(.hide-hover) {
+
+        &:before {
+          transform: translateY(0);
           filter: opacity(0);
         }
       }
