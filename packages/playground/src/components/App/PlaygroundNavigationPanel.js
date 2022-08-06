@@ -26,20 +26,23 @@ import {
 const { Step } = Steps;
 
 export function NavigationPanel(props) {
-  const [activeIdx, setActiveIndex] = useState(props.navigationPanelAPI.getActiveItemIndex());
-  props.navigationPanelAPI.assignIndexChangeCallback(setActiveIndex)
+  const [activeIdx, setActiveIndex] = useState(props.navigationPanelAPI?.getActiveItemIndex ? props.navigationPanelAPI?.getActiveItemIndex() : undefined);
   useEffect(() => {
-    if(props.navigationPanelAPI.getActiveItemIndex() !== activeIdx) {
-      props.navigationPanelAPI.toIndex(activeIdx)
+    if(props.navigationPanelAPI?.getActiveItemIndex && props.navigationPanelAPI?.getActiveItemIndex() !== activeIdx) {
+      props.navigationPanelAPI?.toIndex(activeIdx)
     }      
   }, [activeIdx,props.navigationPanelAPI]);
-
+  
+  if(!props.navigationPanelAPI?.toIndex) {
+    return (<div>Waiting for API...</div>)
+  } 
+  props.navigationPanelAPI?.assignIndexChangeCallback(setActiveIndex)
   const APINavigationPanel = (props) => {
     const activeIdx = props.navigationPanelAPI.getActiveItemIndex();
     const percent = (activeIdx + 1 )/ props.totalItemsCount
     const totalForProgress = props.totalItemsCount === Infinity ? 100 : props.totalItemsCount
     let containerStyles = {
-      maxWidth: props.options.layoutParams.thumbnails.position === 'ON_GALLERY' ? '150px' : '',
+      maxWidth: props.options?.layoutParams?.thumbnails?.position === 'ON_GALLERY' ? '150px' : '',
     } 
     return (<div style={containerStyles}>
       {getAllKindsOfButtons(props.navigationPanelAPI)}

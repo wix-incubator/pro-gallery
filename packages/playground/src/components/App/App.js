@@ -1,4 +1,4 @@
-import React, {useEffect, Suspense, useState} from 'react';
+import React, {useEffect, Suspense, useState, useRef} from 'react';
 import {NavigationPanel} from './PlaygroundNavigationPanel';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
 import {testMedia, testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
@@ -33,7 +33,7 @@ let sideShownOnce = false;
 let totalItems = 0;
 
 export function App() {
-  const {getBlueprintFromServer, setContainer, options, setItems, items, gallerySettings, setBlueprint, blueprint, container, setShowSide} = useGalleryContext(blueprintsManager);
+  const {getBlueprintFromServer, setContainer, options, setItems, items, gallerySettings, setBlueprint, blueprint, container, setShowSide, } = useGalleryContext(blueprintsManager);
   const {showSide} = gallerySettings;
   sideShownOnce = sideShownOnce || showSide;
 
@@ -42,6 +42,9 @@ export function App() {
   const isTestingEnv = isTestingEnvironment(window.location.search);
 
   const [resizedDims, setResizedDims] = useState({width: 320, height: 500});
+  const [navigationPanelAPISet, setNavigationPanelAPISet] = useState(false);
+  const navigationPanelAPI = useRef({}); 
+
 
   const _mixAndSlice = (items, batchSize, shouldAdd) => {
     const mixedItems = mixAndSlice(items, batchSize, totalItems, gallerySettings);
@@ -88,6 +91,11 @@ export function App() {
         // setFullscreenIdx(eventData.idx);
         break;
       case GALLERY_EVENTS.LOAD_MORE_CLICKED:
+        break;
+      case GALLERY_EVENTS.NAVIGATION_API_CREATED:
+        console.count('>>>>>>got a nav api')
+        navigationPanelAPI.current = eventData;
+        setNavigationPanelAPISet(true)
         break;
       default:
         // console.log({eventName, eventData});
@@ -270,7 +278,6 @@ export function App() {
   // };
 
   window.playgroundItems = getItems();
-
   return (
     <main id="sidebar_main" className={s.main}>
       {/* <Loader/> */}
@@ -288,6 +295,10 @@ export function App() {
         </Suspense>}
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide && !utils.isMobile() ? SIDEBAR_WIDTH : 0}}>
+      <NavigationPanel
+      navigationPanelAPI={navigationPanelAPI.current}
+      totalItemsCount={getTotalItemsCount()}
+    ></NavigationPanel>
         {!canRender() ? <div>Waiting for blueprint...</div> : addResizable(GalleryComponent, {
           key: `pro-gallery-${JSON.stringify(getKeySettings())}-${getItems()[0].itemId}`,
           id: 'pro-gallery-playground',
@@ -307,6 +318,7 @@ export function App() {
 }
 
 const addResizable = (Component, props, resizedDims, setResizedDims, gallerySettings) => {
+
   props.shouldValidateTypes = false
   return gallerySettings.responsivePreview ? (<div style={{
     background: '#666',
@@ -356,5 +368,7 @@ const addResizable = (Component, props, resizedDims, setResizedDims, gallerySett
       </Resizable>
     </div>
   </div>) :
-  (<Component {...props}/>)
+  (
+    <Component {...props}/>
+    )
 }

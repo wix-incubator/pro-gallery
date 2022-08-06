@@ -33,6 +33,8 @@ function getDirection(code) {
 class SlideshowView extends React.Component {
   constructor(props) {
     super(props);
+    console.count('>>>>>>CONSTRUCTOR');
+
     this.navigationPanelCallbackOnIndexChange = () => {};
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
     this.clearAutoSlideshowInterval =
@@ -990,66 +992,78 @@ class SlideshowView extends React.Component {
       return false;
     }
   };
+  updateNavigationAPI = () => {
+    this.props.actions.eventsListener(
+      GALLERY_CONSTS.events.NAVIGATION_API_CREATED,
+      this.navigationPanelAPI
+    );
+  };
+  createAndSendNavigationAPI = (isRTL) => {
+    this.createNavigationAPI(isRTL);
+    this.updateNavigationAPI();
+  };
+  createNavigationAPI = (isRTL) =>
+    (this.navigationPanelAPI = {
+      next: () =>
+        this.next({
+          scrollDuration: 400,
+          isKeyboardNavigation: false,
+          isAutoTrigger: false,
+          avoidIndividualNavigation: false,
+          isContinuousScrolling: false,
+          direction: isRTL ? -1 : 1,
+        }),
+      back: () =>
+        this.next({
+          scrollDuration: 400,
+          isKeyboardNavigation: false,
+          isAutoTrigger: false,
+          avoidIndividualNavigation: false,
+          isContinuousScrolling: false,
+          direction: isRTL ? 1 : -1,
+        }),
+      isAbleToNavigateNext: () => {
+        return isRTL ? !this.state.hideLeftArrow : !this.state.hideRightArrow;
+      },
+      isAbleToNavigateBack: () => {
+        return isRTL ? !this.state.hideRightArrow : !this.state.hideLeftArrow;
+      },
+      getActiveItemIndex: () => {
+        return this.state.activeIndex;
+      },
+      triggerItemAction: (e, { itemIndex = this.state.activeIndex } = {}) => {
+        const galleryConfig = this.createGalleryConfig();
+        const item =
+          this.props.galleryStructure.galleryItems[
+            itemIndex % this.props.totalItemsCount
+          ];
+        const props = item?.renderProps({
+          ...galleryConfig,
+          visible: true,
+        });
+
+        this.props.actions.eventsListener(
+          GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED,
+          props,
+          e
+        );
+      },
+      // nextGroup,
+      // previousItem,
+      // previousGroup,
+      toIndex: (itemIdx) =>
+        this.scrollToIndex({ itemIdx, scrollDuration: 400 }),
+      // getCurrentActiveItemIndex,
+      // getCurrentActiveGroupIndex,
+      assignIndexChangeCallback: (func) => {
+        this.navigationPanelCallbackOnIndexChange = func;
+      },
+    });
+
   createOrGetCustomNavigationPanelAPI = () => {
-    const isRTL = this.props.options.isRTL;
     return (
       this.navigationPanelAPI ||
-      (this.navigationPanelAPI = {
-        next: () =>
-          this.next({
-            scrollDuration: 400,
-            isKeyboardNavigation: false,
-            isAutoTrigger: false,
-            avoidIndividualNavigation: false,
-            isContinuousScrolling: false,
-            direction: isRTL ? -1 : 1,
-          }),
-        back: () =>
-          this.next({
-            scrollDuration: 400,
-            isKeyboardNavigation: false,
-            isAutoTrigger: false,
-            avoidIndividualNavigation: false,
-            isContinuousScrolling: false,
-            direction: isRTL ? 1 : -1,
-          }),
-        isAbleToNavigateNext: () => {
-          return isRTL ? !this.state.hideLeftArrow : !this.state.hideRightArrow;
-        },
-        isAbleToNavigateBack: () => {
-          return isRTL ? !this.state.hideRightArrow : !this.state.hideLeftArrow;
-        },
-        getActiveItemIndex: () => {
-          return this.state.activeIndex;
-        },
-        triggerItemAction: (e, { itemIndex = this.state.activeIndex } = {}) => {
-          const galleryConfig = this.createGalleryConfig();
-          const item =
-            this.props.galleryStructure.galleryItems[
-              itemIndex % this.props.totalItemsCount
-            ];
-          const props = item?.renderProps({
-            ...galleryConfig,
-            visible: true,
-          });
-
-          this.props.actions.eventsListener(
-            GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED,
-            props,
-            e
-          );
-        },
-        // nextGroup,
-        // previousItem,
-        // previousGroup,
-        toIndex: (itemIdx) =>
-          this.scrollToIndex({ itemIdx, scrollDuration: 400 }),
-        // getCurrentActiveItemIndex,
-        // getCurrentActiveGroupIndex,
-        assignIndexChangeCallback: (func) => {
-          this.navigationPanelCallbackOnIndexChange = func;
-        },
-      })
+      this.createNavigationAPI(this.props.options.isRTL)
     );
   };
 
@@ -1236,6 +1250,9 @@ class SlideshowView extends React.Component {
     if (this.props.totalItemsCount !== props.totalItemsCount) {
       this.removeArrowsIfNeeded();
     }
+    if (this.props.options.isRTL !== props.options.isRTL) {
+      this.createAndSendNavigationAPI(props.options.isRTL);
+    }
     if (isEditMode() || isPreviewMode()) {
       if (
         //check that the change is related to the slideshow settings
@@ -1294,6 +1311,7 @@ class SlideshowView extends React.Component {
       this.setCurrentItemByScroll();
     }
     this.startAutoSlideshowIfNeeded(this.props.options);
+    this.createAndSendNavigationAPI(this.props.options.isRTL);
   }
 
   componentWillUnmount() {
