@@ -1,4 +1,5 @@
-import React, {useEffect, Suspense, useState, useRef} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect, Suspense, useState, useMemo} from 'react';
 import {NavigationPanel} from './PlaygroundNavigationPanel';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
 import {testMedia, testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
@@ -32,6 +33,14 @@ const galleryReadyEvent = new Event('galleryReady');
 let sideShownOnce = false;
 let totalItems = 0;
 
+const _mixAndSlice = (items, batchSize, shouldAdd, gallerySettings) => {
+  const mixedItems = mixAndSlice(items, batchSize, totalItems, gallerySettings);
+  if (shouldAdd) {
+    totalItems += mixedItems.length;
+  }
+  return mixedItems;
+}
+
 export function App() {
   const {getBlueprintFromServer, setContainer, options, setItems, items, gallerySettings, setBlueprint, blueprint, container, setShowSide, } = useGalleryContext(blueprintsManager);
   const {showSide} = gallerySettings;
@@ -42,25 +51,15 @@ export function App() {
   const isTestingEnv = isTestingEnvironment(window.location.search);
 
   const [resizedDims, setResizedDims] = useState({width: 320, height: 500});
-  const [navigationPanelAPISet, setNavigationPanelAPISet] = useState(false);
-  const navigationPanelAPI = useRef({}); 
-
-
-  const _mixAndSlice = (items, batchSize, shouldAdd) => {
-    const mixedItems = mixAndSlice(items, batchSize, totalItems, gallerySettings);
-    if (shouldAdd) {
-      totalItems += mixedItems.length;
-    }
-    return mixedItems;
-  }
-
-  const initialItems = {
-    media: _mixAndSlice(testMedia, ITEMS_BATCH_SIZE),
-    mixed: _mixAndSlice(testItems, ITEMS_BATCH_SIZE),
-    texts: _mixAndSlice(testTexts, ITEMS_BATCH_SIZE),
-    videos: _mixAndSlice(testVideos, ITEMS_BATCH_SIZE),
-    images: _mixAndSlice(testImages, ITEMS_BATCH_SIZE)
-  };
+  const [navigationPanelAPI, setNavigationPanelAPI] = useState({});
+  const initialItems = useMemo(()=>{
+    return ({
+    media: _mixAndSlice(testMedia, ITEMS_BATCH_SIZE, gallerySettings),
+    mixed: _mixAndSlice(testItems, ITEMS_BATCH_SIZE, gallerySettings),
+    texts: _mixAndSlice(testTexts, ITEMS_BATCH_SIZE, gallerySettings),
+    videos: _mixAndSlice(testVideos, ITEMS_BATCH_SIZE, gallerySettings),
+    images: _mixAndSlice(testImages, ITEMS_BATCH_SIZE, gallerySettings)
+})}, []);
 
   const switchState = () => {
     setShowSide(!showSide);
@@ -93,9 +92,7 @@ export function App() {
       case GALLERY_EVENTS.LOAD_MORE_CLICKED:
         break;
       case GALLERY_EVENTS.NAVIGATION_API_CREATED:
-        console.count('>>>>>>got a nav api')
-        navigationPanelAPI.current = eventData;
-        setNavigationPanelAPISet(true)
+        setNavigationPanelAPI(eventData)
         break;
       default:
         // console.log({eventName, eventData});
@@ -135,7 +132,6 @@ export function App() {
     if (isTestingEnvironment(window.location.search)) {
       return monochromeImages.slice(0,20);
     }
-
     const theItems = items || initialItems[mediaTypes];
     if (numberOfItems > 0) {
       return theItems.slice(0, numberOfItems);
@@ -295,10 +291,10 @@ export function App() {
         </Suspense>}
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide && !utils.isMobile() ? SIDEBAR_WIDTH : 0}}>
-      {navigationPanelAPISet && (      <NavigationPanel
-        navigationPanelAPI={navigationPanelAPI.current}
+      <NavigationPanel
+        navigationPanelAPI={navigationPanelAPI}
         totalItemsCount={getTotalItemsCount()}
-      ></NavigationPanel>)}
+      ></NavigationPanel>
         {!canRender() ? <div>Waiting for blueprint...</div> : addResizable(GalleryComponent, {
           key: `pro-gallery-${JSON.stringify(getKeySettings())}-${getItems()[0].itemId}`,
           id: 'pro-gallery-playground',

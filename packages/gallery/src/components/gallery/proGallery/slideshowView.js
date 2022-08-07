@@ -33,8 +33,6 @@ function getDirection(code) {
 class SlideshowView extends React.Component {
   constructor(props) {
     super(props);
-    console.count('>>>>>>CONSTRUCTOR');
-
     this.navigationPanelCallbackOnIndexChange = () => {};
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
     this.clearAutoSlideshowInterval =
