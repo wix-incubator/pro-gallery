@@ -1,5 +1,5 @@
 import React from 'react';
-import {GALLERY_CONSTS, ProGallery, ProGalleryRenderer} from 'pro-gallery';
+import {GALLERY_CONSTS, ProGalleryRenderer} from 'pro-gallery';
 import {utils} from 'pro-gallery-lib';
 // import CLICK_ACTIONS from '../../../common/constants/itemClick';
 import CloseButton from './x';
