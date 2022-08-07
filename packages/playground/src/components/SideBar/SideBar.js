@@ -223,6 +223,9 @@ function SideBar({ items, blueprintsManager, visible }) {
             <Form.Item label="Use Custom Navigation Panel" labelAlign="left">
               <Switch checked={!!gallerySettings.useCustomNavigationPanel} onChange={e => setGallerySettings({ useCustomNavigationPanel: e })} />
             </Form.Item>
+            <Form.Item label="Use External Custom Navigation Panel" labelAlign="left">
+              <Switch checked={!!gallerySettings.useExternalCustomNavigationPanel} onChange={e => setGallerySettings({ useExternalCustomNavigationPanel: e })} />
+            </Form.Item>
             <Form.Item label="Use Server Blueprints" labelAlign="left">
               <Switch checked={!!gallerySettings.shouldUseBlueprintsFromServer} onChange={e => setGallerySettings({ shouldUseBlueprintsFromServer: e })} />
             </Form.Item>
@@ -260,7 +263,7 @@ function SideBar({ items, blueprintsManager, visible }) {
               <Button shape="circle" icon={<ArrowRightOutlined />} target="_blank" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
             </Form.Item>
             {isDev && <Form.Item label="Simulate Local SSR" labelAlign="left">
-              <Button shape="circle" icon={<BugOutlined />} target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useCustomNavigationPanel=${gallerySettings.useCustomNavigationPanel}&useBlueprints=${gallerySettings.useBlueprints}&${getContainerUrlParams(gallerySettings)}&${Object.entries(flatOptions).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
+              <Button shape="circle" icon={<BugOutlined />} target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useExternalCustomNavigationPanel=${gallerySettings.useExternalCustomNavigationPanel}&useCustomNavigationPanel=${gallerySettings.useCustomNavigationPanel}&useBlueprints=${gallerySettings.useBlueprints}&${getContainerUrlParams(gallerySettings)}&${Object.entries(flatOptions).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
             </Form.Item>}
           </Form>
         </Collapse.Panel>

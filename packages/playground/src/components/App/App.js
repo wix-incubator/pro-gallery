@@ -291,10 +291,12 @@ export function App() {
         </Suspense>}
       </aside>
       <section className={s.gallery} style={{paddingLeft: showSide && !utils.isMobile() ? SIDEBAR_WIDTH : 0}}>
-      <NavigationPanel
+      {gallerySettings.useExternalCustomNavigationPanel && (<NavigationPanel
         navigationPanelAPI={navigationPanelAPI}
         totalItemsCount={getTotalItemsCount()}
-      ></NavigationPanel>
+        panelType={gallerySettings.navPanelType}
+        {...blueprintProps}
+      ></NavigationPanel>)}
         {!canRender() ? <div>Waiting for blueprint...</div> : addResizable(GalleryComponent, {
           key: `pro-gallery-${JSON.stringify(getKeySettings())}-${getItems()[0].itemId}`,
           id: 'pro-gallery-playground',
