@@ -67,7 +67,7 @@ export default class ExpandableProGallery extends React.Component {
     }
 
     render() {
-        const Gallery = this.props.useBlueprints ? ProGalleryRenderer : ProGallery;
+        const Gallery = ProGalleryRenderer;
         return (
             <>
                 <section style={{...styles.gallery, display: (this.state.fullscreenIdx < 0 ? 'block' : 'none')}}>

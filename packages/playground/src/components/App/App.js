@@ -77,11 +77,7 @@ export function App() {
         }
         break;
       case GALLERY_EVENTS.NEED_MORE_ITEMS:
-        if(gallerySettings.useBlueprints){
           blueprintsManager.needMoreItems(eventData);
-        } else {
-          addItems();
-        }
         break;
       case GALLERY_EVENTS.ITEM_ACTION_TRIGGERED:
         console.log({eventName, eventData, event})
@@ -224,7 +220,7 @@ export function App() {
   }
 
   const canRender = ()=> {
-    if (!gallerySettings.useBlueprints || blueprint) {
+    if (blueprint) {
       return true;
     } else {
       return false;
@@ -242,20 +238,16 @@ export function App() {
     setOptionsInUrl(options);
   }
 
-  const blueprintProps = gallerySettings.useBlueprints ? getOrInitBlueprint() :
-  {
-    items: getItems(),
-    options,
-    container: getContainer()
-  };
+  const blueprintProps = getOrInitBlueprint();
+
 
   // console.log('Rendering App: ', {options, items, dimensions, showSide, blueprint, blueprintProps})
   const getKeySettings = () => {
-    const { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, navPanelType, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand} = gallerySettings;
-    return { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, navPanelType, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
+    const { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, navPanelType, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand} = gallerySettings;
+    return { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, navPanelType, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
   }
 
-  let GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProGalleryRenderer : ProGallery);
+  let GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : ProGalleryRenderer;
 
   // const shouldRenderLeanGallery = isEligibleForLeanGallery({
   //   items: getItems(),
