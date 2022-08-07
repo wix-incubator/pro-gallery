@@ -146,6 +146,17 @@ const forceHoverToShowTextsIfNeeded = (options) =>{
 
   return _options
 }
+const blockScrollOnFadeOrDeckScrollAnimations = (options) =>{
+  let _options = {...options}
+  if (
+    options.behaviourParams.gallery.horizontal.slideAnimation === GALLERY_CONSTS.slideAnimations.FADE ||
+    options.behaviourParams.gallery.horizontal.slideAnimation === GALLERY_CONSTS.slideAnimations.DECK
+  ) {
+    _options.behaviourParams.gallery.horizontal.blockScroll = true
+  }
+
+  return _options
+}
 
 const processImageLoadingWithColorMode = (options) => {
   let _options = {...options}
@@ -367,6 +378,7 @@ function processLayouts(options, customExternalInfoRendererExists) {
     processedOptions = processTextDimensions(processedOptions, customExternalInfoRendererExists);
     processedOptions = centerArrowsWhenNeeded(processedOptions); 
     processedOptions = blockCounterByProduct(processedOptions); 
+    processedOptions = blockScrollOnFadeOrDeckScrollAnimations(processedOptions); 
 
   return processedOptions;
 }
