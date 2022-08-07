@@ -6,7 +6,7 @@ import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../.
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { createMediaUrl } from '../../utils/itemResizer';
 import {setOptionsInUrl} from '../../constants/options'
-import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
+import { GALLERY_CONSTS, ProGalleryRenderer } from 'pro-gallery';
 import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
 import { BlueprintsManager } from 'pro-gallery-blueprints'
