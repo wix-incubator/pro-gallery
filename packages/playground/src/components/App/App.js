@@ -101,6 +101,9 @@ export function App() {
   }
 
   const createItems = () => {
+    if (isTestingEnvironment(window.location.search)) {
+      return monochromeImages.slice(0,20);
+    }
     const batchSize = numberOfItems || ITEMS_BATCH_SIZE;
     switch (mediaTypes) {
       case 'images':
