@@ -30,8 +30,8 @@ describe('scrollAnimations - e2e', () => {
           );
           return AnimationStyleTags.length;
         });
-        // the default e2e images is always 20 so we should get 20 animation style tags
-        expect(numberOfAnimationStyleTags).toEqual(20);
+        // the default e2e images is always 40 so we should get 40 animation style tags
+        expect(numberOfAnimationStyleTags).toEqual(40);
       });
     }
   });
