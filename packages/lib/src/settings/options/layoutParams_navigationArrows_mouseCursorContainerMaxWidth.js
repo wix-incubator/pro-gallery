@@ -10,7 +10,7 @@ export default {
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal"), set "Show Navigation Arrows" to "true" and set "Navigation Arrows Position" to "Mouse Cursor".',
   type: INPUT_TYPES.NUMBER,
-  min: 0,
+  min: 10,
   max: 100,
   default: 100,
   description: `Set the size of the container mouse cursor in percentage.`,
