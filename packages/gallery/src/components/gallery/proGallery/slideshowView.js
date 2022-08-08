@@ -666,7 +666,7 @@ class SlideshowView extends React.Component {
       utils.isMobile() ? ' pro-gallery-mobile-indicator' : '',
     ];
 
-    const renderButtonArrow = (directionIsLeft) => {
+    const renderArrowButton = (directionIsLeft) => {
       const isNext = (directionIsLeft && isRTL) || (!directionIsLeft && !isRTL);
       return (
         <button
@@ -689,8 +689,8 @@ class SlideshowView extends React.Component {
     };
 
     return [
-      hideLeftArrow ? null : renderButtonArrow(true),
-      hideRightArrow ? null : renderButtonArrow(false),
+      hideLeftArrow ? null : renderArrowButton(true),
+      hideRightArrow ? null : renderArrowButton(false),
     ];
   }
 
