@@ -124,6 +124,7 @@ export const optionsBySection = {
     'mouseCursorContainer',
     'arrowsPadding',
     'arrowsVerticalPosition',
+    'layoutParams_navigationArrows_mouseCursorContainerMaxWidth',
     'layoutParams_navigationArrows_type',
     'layoutParams_navigationArrows_container_type',
     'layoutParams_navigationArrows_container_backgroundColor',
