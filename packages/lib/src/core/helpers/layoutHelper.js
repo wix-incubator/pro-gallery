@@ -16,7 +16,7 @@ import ARROWS_POSITION from '../../common/constants/arrowsPosition';
 import { default as GALLERY_CONSTS } from '../../common/constants/index';
 import {assignByString} from './optionsUtils'
 import processTextDimensions from './textBoxDimensionsHelper'
-import { default as scrollAnimation } from '../../settings/options/slideAnimation';
+import { cachedIsRelevant } from '../../settings/options/isRelevantCache';
 
 export const calcTargetItemSize = (options, smartCalc = false) => {
   if (
@@ -152,7 +152,7 @@ const blockScrollOnFadeOrDeckScrollAnimations = (options) =>{
   if ((
     options.slideAnimation === GALLERY_CONSTS.slideAnimations.FADE ||
     options.slideAnimation === GALLERY_CONSTS.slideAnimations.DECK
-  ) && (scrollAnimation.isRelevant(options))) {
+  ) && (cachedIsRelevant('slideAnimation', options))) {
     _options.enableScroll = false;
   }
 
