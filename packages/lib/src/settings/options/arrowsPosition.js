@@ -1,12 +1,11 @@
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import { createOptions } from '../utils/utils';
+import { default as showArrows } from './showArrows';
 
 export default {
   title: 'Navigation Arrows Position',
-  isRelevant: (options) =>
-    options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-    options.showArrows,
+  isRelevant: (options) => showArrows.isRelevant(options) && options.showArrows,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Show Navigation Arrows" to "true".',
   type: INPUT_TYPES.OPTIONS,
