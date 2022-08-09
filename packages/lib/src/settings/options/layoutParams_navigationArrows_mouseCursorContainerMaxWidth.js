@@ -1,11 +1,10 @@
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
-
+import { default as arrowsPosition } from './arrowsPosition';
 export default {
   title: 'Mouse Cursor Container Max Width',
   isRelevant: (options) =>
-    options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-    options.showArrows &&
+    arrowsPosition.isRelevant(options) &&
     options.arrowsPosition === GALLERY_CONSTS.arrowsPosition.MOUSE_CURSOR,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal"), set "Show Navigation Arrows" to "true" and set "Navigation Arrows Position" to "Mouse Cursor".',
