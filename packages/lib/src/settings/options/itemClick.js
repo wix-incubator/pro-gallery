@@ -1,12 +1,14 @@
 import { INPUT_TYPES } from '../utils/constants';
 import { createOptions } from '../utils/utils';
 import { default as GALLERY_CONSTS } from '../../common/constants';
+import { default as layoutParams_navigationArrows_mouseCursorContainerMaxWidth } from './layoutParams_navigationArrows_mouseCursorContainerMaxWidth';
 
 export default {
   title: 'Click Action',
   isRelevant: (options) =>
-    options.showArrows &&
-    options.arrowsPosition !== GALLERY_CONSTS.arrowsPosition.MOUSE_CURSOR,
+    layoutParams_navigationArrows_mouseCursorContainerMaxWidth.isRelevant(
+      options
+    ) && layoutParams_navigationArrows_mouseCursorContainerMaxWidth !== 100,
   isRelevantDescription:
     'set "Arrows Position" to anything but "Mouse Cursor" (ON_GALLERY or OUTSIDE_GALLERY)',
   type: INPUT_TYPES.OPTIONS,

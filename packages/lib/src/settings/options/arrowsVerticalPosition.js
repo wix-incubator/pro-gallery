@@ -1,13 +1,14 @@
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import { createOptions } from '../utils/utils';
+import { default as layoutParams_navigationArrows_mouseCursorContainerMaxWidth } from './layoutParams_navigationArrows_mouseCursorContainerMaxWidth';
 
 export default {
   title: 'Navigation Arrows Vertical Position',
   isRelevant: (options) =>
-    options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-    options.showArrows &&
-    options.arrowsPosition !== GALLERY_CONSTS.arrowsPosition.MOUSE_CURSOR,
+    layoutParams_navigationArrows_mouseCursorContainerMaxWidth.isRelevant(
+      options
+    ) && layoutParams_navigationArrows_mouseCursorContainerMaxWidth !== 100,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Show Navigation Arrows" to "true".',
   type: INPUT_TYPES.OPTIONS,

@@ -1,6 +1,7 @@
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import { createOptions } from '../utils/utils';
+import { default as layoutParams_navigationArrows_mouseCursorContainerMaxWidth } from './layoutParams_navigationArrows_mouseCursorContainerMaxWidth';
 
 export default {
   title: 'Play Video On',
@@ -8,7 +9,11 @@ export default {
   isRelevant: (options, option) => {
     // specific isRelevant function
     const isVideoPlayAbleToPlay = (options) => {
-      return options['showArrows'] && options['arrowsPosition'] !== 2;
+      return (
+        layoutParams_navigationArrows_mouseCursorContainerMaxWidth.isRelevant(
+          options
+        ) && layoutParams_navigationArrows_mouseCursorContainerMaxWidth !== 100
+      );
     };
     // Distribution of the specific isRelevant functions
     const videoPlayOptions = {
