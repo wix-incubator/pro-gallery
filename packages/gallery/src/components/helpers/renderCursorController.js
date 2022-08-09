@@ -56,6 +56,9 @@ export function renderArrowButton({
   renderArrowSvg,
   next,
   tabIndex,
+  styleArrowBox,
+  navArrowsContainerWidth,
+  navArrowsContainerHeight,
 }) {
   const isNext = (directionIsLeft && isRTL) || (!directionIsLeft && !isRTL);
 
@@ -76,7 +79,16 @@ export function renderArrowButton({
     return (
       <button ref={containerRef} {...buttonProps}>
         {isMouseEnter && (
-          <span ref={mouseRef} style={{ top: position.y, left: position.x }}>
+          <span
+            ref={mouseRef}
+            style={{
+              top: position.y,
+              left: position.x,
+              ...styleArrowBox,
+              width: navArrowsContainerWidth,
+              height: navArrowsContainerHeight,
+            }}
+          >
             {renderArrowSvg(directionIsLeft ? 'left' : 'right')}
           </span>
         )}

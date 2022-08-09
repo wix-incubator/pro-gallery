@@ -638,7 +638,11 @@ class SlideshowView extends React.Component {
       [GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER]:
         -imageHeight * directionFix,
     }[arrowsVerticalPosition];
-
+    const styleArrowBox = getArrowBoxStyle({
+      type,
+      backgroundColor,
+      borderRadius,
+    });
     const containerStyle = mouseCursorEnabled
       ? {
           width: `${galleryWidth}px`,
@@ -703,6 +707,9 @@ class SlideshowView extends React.Component {
             nextContainerStyle,
             isRTL,
             hideLeftArrow,
+            styleArrowBox,
+            navArrowsContainerWidth,
+            navArrowsContainerHeight,
           }}
         />
       );

@@ -133,6 +133,9 @@ body.pro-gallery {
       position: absolute;
       transition: top 50ms, left 50ms;
       transform: translate(50%, -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 
