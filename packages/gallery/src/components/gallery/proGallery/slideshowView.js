@@ -594,10 +594,10 @@ class SlideshowView extends React.Component {
       layoutParams,
       titlePlacement,
       textBoxHeight,
-      mouseCursorContainer,
     } = this.props.options;
     const {
       container: { type, backgroundColor, borderRadius },
+      mouseCursorContainerMaxWidth,
     } = layoutParams.navigationArrows;
     const { hideLeftArrow, hideRightArrow } = this.state;
     const {
@@ -642,7 +642,7 @@ class SlideshowView extends React.Component {
     const containerStyle = mouseCursorEnabled
       ? {
           width: `${galleryWidth}px`,
-          maxWidth: `${mouseCursorContainer}%`,
+          maxWidth: `${mouseCursorContainerMaxWidth}%`,
           height: `${galleryHeight}px`,
           padding: 0,
           top: 0,
