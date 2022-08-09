@@ -6,8 +6,7 @@ export default {
   title: 'Navigation Arrows Vertical Position',
   isRelevant: (options) =>
     options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-    options.showArrows &&
-    options.arrowsPosition !== GALLERY_CONSTS.arrowsPosition.MOUSE_CURSOR,
+    options.showArrows,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Show Navigation Arrows" to "true".',
   type: INPUT_TYPES.OPTIONS,

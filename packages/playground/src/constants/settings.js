@@ -121,7 +121,6 @@ export const optionsBySection = {
     'arrowsSize',
     'arrowsColor',
     'arrowsPosition',
-    'mouseCursorContainer',
     'arrowsPadding',
     'arrowsVerticalPosition',
     'layoutParams_navigationArrows_mouseCursorContainerMaxWidth',
