@@ -6,11 +6,14 @@ import { default as layoutParams_navigationArrows_mouseCursorContainerMaxWidth }
 export default {
   title: 'Click Action',
   isRelevant: (options) =>
-    layoutParams_navigationArrows_mouseCursorContainerMaxWidth.isRelevant(
-      options
-    ) && layoutParams_navigationArrows_mouseCursorContainerMaxWidth !== 100,
+    !(
+      layoutParams_navigationArrows_mouseCursorContainerMaxWidth === 100 &&
+      layoutParams_navigationArrows_mouseCursorContainerMaxWidth.isRelevant(
+        options
+      )
+    ),
   isRelevantDescription:
-    'set "Arrows Position" to anything but "Mouse Cursor" (ON_GALLERY or OUTSIDE_GALLERY)',
+    'its always relevant except if arrow position is set to mouse cursor and the mouse cursor container max width is 100 (clicks will navigate to the next item)',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.itemClick.NOTHING,
   options: createOptions('itemClick'),

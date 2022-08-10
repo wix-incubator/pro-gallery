@@ -9,10 +9,11 @@ export default {
   isRelevant: (options, option) => {
     // specific isRelevant function
     const isVideoPlayAbleToPlay = (options) => {
-      return (
+      return !(
+        layoutParams_navigationArrows_mouseCursorContainerMaxWidth === 100 &&
         layoutParams_navigationArrows_mouseCursorContainerMaxWidth.isRelevant(
           options
-        ) && layoutParams_navigationArrows_mouseCursorContainerMaxWidth !== 100
+        )
       );
     };
     // Distribution of the specific isRelevant functions

@@ -10,7 +10,9 @@ export default {
     (options.arrowsPosition === GALLERY_CONSTS.arrowsPosition.ON_GALLERY ||
       options.arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY),
   isRelevantDescription:
-    'Set a Horizontal gallery ("Scroll Direction" as "Horizontal"), set "Show Navigation Arrows" to "true" and set arrows position to "on gallery" or "outside gallery".',
+    arrowsPosition.isRelevantDescription +
+    ' and make sure arrow position is set to "on gallery" or "outside gallery"',
+  // 'Set a Horizontal gallery ("Scroll Direction" as "Horizontal"), set "Show Navigation Arrows" to "true" and set arrows position to "on gallery" or "outside gallery".',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER,
   options: createOptions('arrowsVerticalPosition'),
