@@ -48,6 +48,7 @@ function getExpected() {
               value: 0,
               includeExternalInfo: false,
             },
+            forceFullStrips: false,
             galleryLayout: 0,
             itemSpacing: 10,
             scrollDirection: 'VERTICAL',
@@ -427,7 +428,6 @@ function getExpected() {
         magnificationLevel: 2,
         rotatingGroupTypes: '',
         fixedColumns: 0,
-        forceFullStrips: false,
         behaviourParams: {
           item: {
             content: {

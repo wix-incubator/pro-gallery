@@ -277,7 +277,6 @@ function input() {
     galleryTextAlign: 'center',
     imageMargin: 10,
     fixedColumns: 0,
-    forceFullStrips: false,
     showArrows: true,
     hasThumbnails: false,
     galleryThumbnailsAlignment: 'bottom',

@@ -404,7 +404,7 @@ export default class Layouter {
           this.groupIdx--;
 
           if (
-            this.styleParams.forceFullStrips &&
+            this.styleParams.layoutParams.structure.forceFullStrips &&
             !this.recommendedGroupsPerStrip?.[newStripIdx]
           ) {
             console.log(

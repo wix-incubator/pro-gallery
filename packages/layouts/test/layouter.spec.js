@@ -42,7 +42,6 @@ describe('Layouter', () => {
       scatter: 0,
       rotatingScatter: '',
       fixedColumns: 0,
-      forceFullStrips: false,
     };
 
     container = {

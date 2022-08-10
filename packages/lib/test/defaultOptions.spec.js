@@ -47,7 +47,10 @@ function expectedOptions() {
           borderRadius: 0,
         },
       },
-      structure: { galleryRatio: { value: 0, includeExternalInfo: false } },
+      structure: {
+        galleryRatio: { value: 0, includeExternalInfo: false },
+        forceFullStrips: false,
+      },
     },
     behaviourParams: {
       item: {
@@ -66,7 +69,6 @@ function expectedOptions() {
     cubeImages: false,
     cubeType: 'fill',
     smartCrop: false,
-    forceFullStrips: false,
     fullscreen: true,
     videoLoop: true,
     videoSound: false,
