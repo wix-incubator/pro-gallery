@@ -91,7 +91,7 @@ export function App() {
         break;
       case GALLERY_EVENTS.LOAD_MORE_CLICKED:
         break;
-      case GALLERY_EVENTS.NAVIGATION_API_CREATED:
+      case GALLERY_EVENTS.EXPERIMENTAL_EVENT_NAVIGATION_API_CREATED:
         setNavigationPanelAPI(eventData)
         break;
       default:
