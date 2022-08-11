@@ -12,7 +12,6 @@ export default {
   isRelevantDescription:
     arrowsPosition.isRelevantDescription +
     ' and make sure arrow position is set to "on gallery" or "outside gallery"',
-  // 'Set a Horizontal gallery ("Scroll Direction" as "Horizontal"), set "Show Navigation Arrows" to "true" and set arrows position to "on gallery" or "outside gallery".',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER,
   options: createOptions('arrowsVerticalPosition'),
