@@ -24,6 +24,7 @@ export interface Groups {
 
 export interface Thumbnails {
   enable?: boolean;
+  position?: 'ON_GALLERY' | 'OUTSIDE_GALLERY';
   spacing?: number;
   size?: number;
   alignment?: 'BOTTOM' | 'RIGHT' | 'LEFT' | 'TOP';
@@ -38,10 +39,11 @@ export interface NavigationArrows {
   enable?: boolean;
   size?: number;
   padding?: number;
-  position?: 'ON_GALLERY' | 'OUTSIDE_GALLERY';
+  position?: 'ON_GALLERY' | 'OUTSIDE_GALLERY' | 'MOUSE_CURSOR';
   verticalAlignment?: 'ITEM_CENTER' | 'IMAGE_CENTER' | 'INFO_CENTER';
   type?: 'DEFAULT_ARROW' | 'ARROW_2' | 'ARROW_3';
   container?: NavigationArrowsContainer;
+  mouseCursorContainerMaxWidth?: number;
 }
 
 export interface NavigationArrowsContainer {

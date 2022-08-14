@@ -30,6 +30,7 @@ import hasThumbnails from './hasThumbnails';
 import groupTypes from './groupTypes';
 import thumbnailSize from './thumbnailSize';
 import galleryThumbnailsAlignment from './galleryThumbnailsAlignment';
+import layoutParams_thumbnails_position from './layoutParams_thumbnails_position';
 import isRTL from './isRTL';
 import scrollSnap from './scrollSnap';
 import itemBorderWidth from './itemBorderWidth';
@@ -119,6 +120,7 @@ import layoutParams_targetItemSize_value from './layoutParams_targetItemSize_val
 import layoutParams_info_width from './layoutParams_info_width';
 import layoutParams_info_height from './layoutParams_info_height';
 import layoutParams_info_placement from './layoutParams_info_placement';
+import layoutParams_navigationArrows_mouseCursorContainerMaxWidth from './layoutParams_navigationArrows_mouseCursorContainerMaxWidth';
 
 export default {
   [optionsMap.behaviourParams.gallery.vertical.loadMore.text]:
@@ -339,6 +341,8 @@ export default {
   layoutParams_structure_galleryRatio_value,
   [optionsMap.layoutParams.structure.galleryRatio.value]:
     layoutParams_structure_galleryRatio_value,
+  [optionsMap.layoutParams.thumbnails.position]:
+    layoutParams_thumbnails_position,
   layoutParams_structure_galleryRatio_includeExternalInfo,
   [optionsMap.layoutParams.structure.galleryRatio.includeExternalInfo]:
     layoutParams_structure_galleryRatio_includeExternalInfo,
@@ -354,6 +358,8 @@ export default {
     layoutParams_navigationArrows_container_borderRadius,
   [optionsMap.stylingParams.temResolutionMode]:
     stylingParams_itemResolutionMode,
+  [optionsMap.layoutParams.navigationArrows.mouseCursorContainerMaxWidth]:
+    layoutParams_navigationArrows_mouseCursorContainerMaxWidth,
 };
 // TODO = add the options:
 /*

@@ -240,6 +240,13 @@ function SideBar({ items, blueprintsManager, visible }) {
               </Select>
             </Form.Item>
           </Form>
+          <Form layout="vertical">
+            <Form.Item label="Navigation Panel Type">
+              <Select defaultValue={gallerySettings.navPanelType || 'circles'} onChange={val => setGallerySettings({ navPanelType: val })}>
+                {['api', 'steps', 'circles'].map((val) => <Select.Option key={val} value={val}>{val}</Select.Option>)}
+              </Select>
+            </Form.Item>
+          </Form>
         </Collapse.Panel>
         <Collapse.Panel header="Develop" key="develop">
           <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>

@@ -37,7 +37,12 @@ const generateSubdomains = subdomain => {
       console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
   } else {
     //push with branch suffix
-    subdomains.push(subdomain + `-${formatBranchName(GITHUB_HEAD_REF)}`);
+    const branchName = formatBranchName(GITHUB_HEAD_REF);
+    if (branchName) {
+        subdomains.push(`${subdomain}-${branchName}`);
+    } else {
+        subdomains.push(subdomain);
+    }
     console.log(chalk.magenta(`Add subdomain: ${subdomains[subdomains.length - 1]}`));
   }
 

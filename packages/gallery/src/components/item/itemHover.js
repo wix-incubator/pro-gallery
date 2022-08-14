@@ -23,7 +23,11 @@ export default class ItemHover extends React.Component {
     } else if (utils.isMobile()) {
       hoverClass.push('hide-hover');
     }
-
+    if (this.props.isCurrentHover) {
+      hoverClass.push('item-overlay-hover');
+    } else {
+      hoverClass.push('item-overlay-regular');
+    }
     return hoverClass.join(' ');
   }
 
