@@ -10,7 +10,7 @@ export default {
     // specific isRelevant function
     const isVideoPlayAbleToPlay = (options) => {
       return !(
-        options.layoutParams_navigationArrows_mouseCursorContainerMaxWidth ===
+        options.layoutParams.navigationArrows.mouseCursorContainerMaxWidth ===
           100 &&
         layoutParams_navigationArrows_mouseCursorContainerMaxWidth.isRelevant(
           options
