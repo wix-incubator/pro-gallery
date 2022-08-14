@@ -23,7 +23,7 @@ export default {
         return true;
       },
       HOVER: isVideoPlayAbleToPlay,
-      ON_CLICK: isVideoPlayAbleToPlay,
+      CLICK: isVideoPlayAbleToPlay,
     };
 
     // specific option isRelevant : general video play isRelevant (AUTO always true)
