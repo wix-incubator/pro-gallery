@@ -7,7 +7,8 @@ export default {
   title: 'Click Action',
   isRelevant: (options) =>
     !(
-      layoutParams_navigationArrows_mouseCursorContainerMaxWidth === 100 &&
+      options.layoutParams_navigationArrows_mouseCursorContainerMaxWidth ===
+        100 &&
       layoutParams_navigationArrows_mouseCursorContainerMaxWidth.isRelevant(
         options
       )
