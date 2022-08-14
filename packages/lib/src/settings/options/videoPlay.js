@@ -25,6 +25,7 @@ export default {
       HOVER: isVideoPlayAbleToPlay,
       ON_CLICK: isVideoPlayAbleToPlay,
     };
+
     // specific option isRelevant : general video play isRelevant (AUTO always true)
     return option
       ? videoPlayOptions[option](options)
