@@ -115,6 +115,8 @@ export const optionsBySection = {
     'pauseAutoSlideshowOnHover',
     'itemClick',
     'behaviourParams_item_content_magnificationValue',
+    optionsMap.behaviourParams.item.secondaryMedia.trigger,
+    optionsMap.behaviourParams.item.secondaryMedia.behaviour,
   ],
   [SECTIONS.DESIGN]: [
     'showArrows',
