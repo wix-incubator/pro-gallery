@@ -57,6 +57,10 @@ function expectedOptions() {
         content: {
           magnificationValue: 2,
         },
+        secondaryMedia: {
+          trigger: GALLERY_CONSTS.secondaryMediaTrigger.OFF,
+          behaviour: GALLERY_CONSTS.secondaryMediaBehaviour.APPEARS,
+        },
       },
     },
     scrollSnap: false,
