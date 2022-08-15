@@ -118,6 +118,7 @@ function withMagnified(WrappedComponent) {
               shouldMagnify ? '' : ', opacity 0.1s ease 0.3s'
             }`,
           }}
+          customImageRenderer={this.props.customComponents?.customImageRenderer}
         />
       );
     }
@@ -141,6 +142,7 @@ function withMagnified(WrappedComponent) {
             height: magnifiedHeight,
             position: 'absolute',
           }}
+          customImageRenderer={this.props.customComponents?.customImageRenderer}
         />
       );
     }

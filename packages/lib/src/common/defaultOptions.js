@@ -16,6 +16,7 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
         backgroundColor: 'rgba(0,0,0,0)',
         borderRadius: 0,
       },
+      mouseCursorContainerMaxWidth: 100,
     },
     thumbnails: {
       position: GALLERY_CONSTS.thumbnailsPosition.OUTSIDE_GALLERY,

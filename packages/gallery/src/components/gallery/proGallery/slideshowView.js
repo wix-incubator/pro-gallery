@@ -594,15 +594,18 @@ class SlideshowView extends React.Component {
       container: { type, backgroundColor, borderRadius },
     } = layoutParams.navigationArrows;
     const { hideLeftArrow, hideRightArrow } = this.state;
-    const { arrowRenderer, navArrowsContainerWidth, navArrowsContainerHeight } =
-      getArrowsRenderData({
-        customNavArrowsRenderer:
-          this.props.customComponents.customNavArrowsRenderer,
-        arrowsColor: this.props.options.arrowsColor,
-        arrowsSize: this.props.options.arrowsSize,
-        arrowsType: layoutParams.navigationArrows.type,
-        containerStyleType: type,
-      });
+    const {
+      arrowRenderer: renderArrowSvg,
+      navArrowsContainerWidth,
+      navArrowsContainerHeight,
+    } = getArrowsRenderData({
+      customNavArrowsRenderer:
+        this.props.customComponents.customNavArrowsRenderer,
+      arrowsColor: this.props.options.arrowsColor,
+      arrowsSize: this.props.options.arrowsSize,
+      arrowsType: layoutParams.navigationArrows.type,
+      containerStyleType: type,
+    });
 
     const { galleryHeight } = this.props.container;
     const infoHeight = textBoxHeight;
@@ -660,37 +663,34 @@ class SlideshowView extends React.Component {
     const arrowsBaseClasses = [
       'nav-arrows-container',
       useDropShadow ? 'drop-shadow' : '',
+      utils.isMobile() ? ' pro-gallery-mobile-indicator' : '',
     ];
-    return [
-      hideLeftArrow ? null : (
-        <button
-          className={
-            arrowsBaseClasses.join(' ') +
-            (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')
-          }
-          onClick={() => this._next({ direction: -1 })}
-          aria-label={`${isRTL ? 'Next' : 'Previous'} Item`}
-          tabIndex={utils.getTabIndex('slideshowPrev')}
-          key="nav-arrow-back"
-          data-hook="nav-arrow-back"
-          style={{ ...containerStyle, ...prevContainerStyle }}
-        >
-          {arrowRenderer('left')}
-        </button>
-      ),
-      hideRightArrow ? null : (
+
+    const renderArrowButton = (directionIsLeft) => {
+      const isNext = (directionIsLeft && isRTL) || (!directionIsLeft && !isRTL);
+      return (
         <button
           className={arrowsBaseClasses.join(' ')}
-          onClick={() => this._next({ direction: 1 })}
-          aria-label={`${!isRTL ? 'Next' : 'Previous'} Item`}
-          tabIndex={utils.getTabIndex('slideshowNext')}
-          key="nav-arrow-next"
-          data-hook="nav-arrow-next"
-          style={{ ...containerStyle, ...nextContainerStyle }}
+          onClick={() => this._next({ direction: directionIsLeft ? -1 : 1 })}
+          aria-label={`${isNext ? 'Next' : 'Previous'} Item`}
+          tabIndex={utils.getTabIndex(
+            isNext ? 'slideshowNext' : 'slideshowPrev'
+          )}
+          key={!isNext ? 'nav-arrow-back' : 'nav-arrow-next'}
+          data-hook={directionIsLeft ? 'nav-arrow-back' : 'nav-arrow-next'}
+          style={{
+            ...containerStyle,
+            ...(directionIsLeft ? prevContainerStyle : nextContainerStyle),
+          }}
         >
-          {arrowRenderer('right')}
+          {renderArrowSvg(directionIsLeft ? 'left' : 'right')}
         </button>
-      ),
+      );
+    };
+
+    return [
+      hideLeftArrow ? null : renderArrowButton(true),
+      hideRightArrow ? null : renderArrowButton(false),
     ];
   }
 
