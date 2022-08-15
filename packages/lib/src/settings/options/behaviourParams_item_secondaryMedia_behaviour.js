@@ -10,7 +10,7 @@ export default {
     sp.behaviourParams.item.secondaryMedia.trigger !==
       GALLERY_CONSTS.secondaryMediaTrigger.OFF,
   isRelevantDescription:
-    '"Second Media Trigger" must be set to anything but "OFF".',
+    'Secondary Media Trigger is not "OFF" and when arrowsPosition is MOUSE_CURSOR there must be some space to hover (mouseCursorContainerMaxWidth less then 100)',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.secondaryMediaBehaviour.APPEARS,
   options: createOptions('secondaryMediaBehaviour'),

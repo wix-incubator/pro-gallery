@@ -16,7 +16,8 @@ export default {
         options
       )
     ),
-  isRelevantDescription: 'Allways.',
+  isRelevantDescription:
+    'Not relevant when arowsPosition is MOUSE_CURSOR and mouseCursorContainerMaxWidth is 100',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.secondaryMediaTrigger.OFF,
   options: createOptions('secondaryMediaTrigger'),
