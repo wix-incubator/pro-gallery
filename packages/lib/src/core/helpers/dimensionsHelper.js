@@ -1,5 +1,6 @@
 import { default as GALLERY_CONSTS } from '../../common/constants/index';
-import { default as includeExternalInfo } from '../../settings/options/layoutParams_structure_galleryRatio_includeExternalInfo';
+import { cachedIsRelevant } from '../../settings/options/isRelevantCache';
+
 class DimensionsHelper {
   constructor() {
     this.options = {};
@@ -171,7 +172,10 @@ class DimensionsHelper {
         if (
           !this.options.layoutParams.structure.galleryRatio
             .includeExternalInfo &&
-          includeExternalInfo.isRelevant(this.options)
+          cachedIsRelevant(
+            'layoutParams_structure_galleryRatio_includeExternalInfo',
+            this.options
+          )
         ) {
           this.container.height += this.options.externalInfoHeight;
         }

@@ -46,7 +46,8 @@ class Blueprints {
         this.formatOptionsIfNeeded(
           newOptions,
           oldOptions,
-          isUsingCustomInfoElements
+          isUsingCustomInfoElements,
+          params.id
         );
       const { formattedContainer, changed: containerChanged } =
         this.formatContainerIfNeeded(
@@ -224,7 +225,12 @@ class Blueprints {
     return { formattedItems, changed };
   }
 
-  formatOptionsIfNeeded(options, lastOptions, isUsingCustomInfoElements) {
+  formatOptionsIfNeeded(
+    options,
+    lastOptions,
+    isUsingCustomInfoElements,
+    blueprintManagerId
+  ) {
     const optionsHaveChanged = (newOptions, oldOptions) => {
       if (!newOptions) {
         this.reasons.options = 'no new options.';
@@ -259,6 +265,7 @@ class Blueprints {
     let changed = false;
     let formattedOptions;
     if (optionsHaveChanged(options, oldOptions)) {
+      options.id = blueprintManagerId + Date.now();
       const mergedOldAndNewStyles =
         extendNestedOptionsToIncludeOldAndNew(options); //add both old and new options
       const fullOptionsOverDefualts = populateWithDefaultOptions(

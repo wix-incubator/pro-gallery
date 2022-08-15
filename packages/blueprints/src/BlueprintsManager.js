@@ -193,7 +193,7 @@ export default class BlueprintsManager {
     container = await this.fetchContainerIfNeeded(container);
     items = await this.fetchItemsIfNeeded(items);
     options = await this.fetchOptionsIfNeeded(options); // can be async... TODO
-
+    id = id || this.id;
     return { container, items, options, id };
   }
 
