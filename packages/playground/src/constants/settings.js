@@ -162,6 +162,7 @@ export const optionsBySection = {
     "oneColorAnimationColor",
     "slideAnimation",
     "slideTransition",
+    "animationDirection",
   ],
   [SECTIONS.IMAGE]: [
     "stylingParams_itemResolutionMode",

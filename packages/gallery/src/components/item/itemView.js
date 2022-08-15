@@ -12,7 +12,6 @@ import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
 import { changeActiveElementIfNeeded, onAnchorFocus } from './itemHelper.js';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
-import { GalleryComponent } from '../galleryComponent';
 import { ScrollAnimations } from './scrollAnimations';
 import {
   getOuterInfoStyle,

@@ -7,6 +7,7 @@ import {
   GALLERY_CONSTS,
   extendNestedOptionsToIncludeOldAndNew,
 } from 'pro-gallery-lib';
+import { cssScrollHelper } from 'pro-gallery';
 
 class Blueprints {
   createBlueprint({
@@ -90,8 +91,8 @@ class Blueprints {
         existingBlueprint.scrollAnimationsCss = this.createCssAnimations({
           items: structure.items,
           container: existingBlueprint.container,
-          styleParams: existingBlueprint.styles,
-          domId: params.domId,
+          options: existingBlueprint.styles,
+          id: params.id,
         });
         console.log({ existingBlueprint });
 
@@ -355,7 +356,7 @@ class Blueprints {
     const layoutParams = {
       items: formattedItems,
       container: formattedContainer,
-      styleParams: formattedOptions,
+      options: formattedOptions,
       options: {
         showAllItems: true,
         skipVisibilitiesCalc: true,
@@ -373,12 +374,14 @@ class Blueprints {
     return this.layouter.createLayout(layoutParams);
   }
 
-  createCssAnimations({ items, container, styleParams, domId }) {
+  createCssAnimations({ items, container, options, id }) {
+    debugger;
+
     return cssScrollHelper.calcScrollCss({
       items,
+      options,
       container,
-      styleParams,
-      domId,
+      id,
     });
   }
 }

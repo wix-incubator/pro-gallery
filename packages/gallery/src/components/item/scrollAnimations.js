@@ -1,5 +1,3 @@
-import { GalleryComponent } from '../galleryComponent';
-
 export class ScrollAnimations extends GalleryComponent {
   constructor(props) {
     super(props);

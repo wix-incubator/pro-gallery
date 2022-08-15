@@ -81,16 +81,24 @@ class CssScrollHelper {
       const iterations = 10;
       const transitionDuration = 400;
 
-      const transitionCss = `transition: ${animationCss.split(':')[0]} ${transitionDuration}ms ease !important`;
+      const transitionCss = `transition: ${
+        animationCss.split(':')[0]
+      } ${transitionDuration}ms ease !important`;
 
       const animationPadding = 1000;
       const animationDuration = Math.round(stop - start);
 
-      const entryAnimationStart = Math.round(imageStart - containerSize + start);
-      const entryAnimationEnd = Math.round(entryAnimationStart + animationDuration);
+      const entryAnimationStart = Math.round(
+        imageStart - containerSize + start
+      );
+      const entryAnimationEnd = Math.round(
+        entryAnimationStart + animationDuration
+      );
 
       const exitAnimationStart = Math.round(imageStart + imageSize - stop);
-      const exitAnimationEnd = Math.round(exitAnimationStart + animationDuration);
+      const exitAnimationEnd = Math.round(
+        exitAnimationStart + animationDuration
+      );
 
       const createAnimationStep = (idx, isExit) => {
         const [to, from] = isExit ? [exitTo, exitFrom] : [enterTo, enterFrom];
@@ -116,7 +124,9 @@ class CssScrollHelper {
         to = Math.round(to);
         from = Math.round(from);
         while (from < to) {
-          const largestDividerIdx = this.pgScrollSteps.findIndex(step => (from % step === 0 && from + step <= to)); //eslint-disable-line
+          const largestDividerIdx = this.pgScrollSteps.findIndex(
+            (step) => from % step === 0 && from + step <= to
+          ); //eslint-disable-line
           scrollClasses.push(
             `.${this.buildScrollClassName(
               largestDividerIdx,
@@ -131,7 +141,7 @@ class CssScrollHelper {
 
       const createAnimationRange = (start, end, isExit) => {
         if (end < 0 || end <= start) {
-          return {}
+          return {};
         }
         return Array.from({ length: iterations })
           .map((i, idx) => start + (idx * (end - start)) / iterations)
@@ -178,10 +188,15 @@ class CssScrollHelper {
         [suffix]
       );
 
+      debugger; //eslint-disable-line
+
       if (styleParams.animationDirection === 'BOTH') {
         addScrollClass(
           createAnimationStep(0) + 'transtion: none !important;',
-          createSelectorsRange(entryAnimationStart - animationPadding, entryAnimationStart)
+          createSelectorsRange(
+            entryAnimationStart - animationPadding,
+            entryAnimationStart
+          )
         );
         addScrollClasses(
           createAnimationRange(entryAnimationStart, entryAnimationEnd)
@@ -195,33 +210,46 @@ class CssScrollHelper {
         );
         addScrollClass(
           createAnimationStep(iterations, true) + 'transtion: none !important;',
-          createSelectorsRange(exitAnimationEnd, exitAnimationEnd + animationPadding )
+          createSelectorsRange(
+            exitAnimationEnd,
+            exitAnimationEnd + animationPadding
+          )
         );
-
       } else if (styleParams.animationDirection === 'IN') {
         addScrollClass(
           createAnimationStep(0) + 'transtion: none !important;',
-          createSelectorsRange(entryAnimationStart - animationPadding, entryAnimationStart)
+          createSelectorsRange(
+            entryAnimationStart - animationPadding,
+            entryAnimationStart
+          )
         );
         addScrollClasses(
           createAnimationRange(entryAnimationStart, entryAnimationEnd)
         );
         addScrollClass(
           createAnimationStep(iterations) + 'transtion: none !important;',
-          createSelectorsRange(entryAnimationEnd, entryAnimationEnd + animationPadding)
+          createSelectorsRange(
+            entryAnimationEnd,
+            entryAnimationEnd + animationPadding
+          )
         );
-
       } else if (styleParams.animationDirection === 'OUT') {
         addScrollClass(
           createAnimationStep(iterations) + 'transtion: none !important;',
-          createSelectorsRange(exitAnimationStart - animationPadding, exitAnimationStart)
+          createSelectorsRange(
+            exitAnimationStart - animationPadding,
+            exitAnimationStart
+          )
         );
         addScrollClasses(
           createAnimationRange(exitAnimationStart, exitAnimationEnd, true)
         );
         addScrollClass(
           createAnimationStep(iterations, true) + 'transtion: none !important;',
-          createSelectorsRange(exitAnimationEnd, exitAnimationEnd + animationPadding)
+          createSelectorsRange(
+            exitAnimationEnd,
+            exitAnimationEnd + animationPadding
+          )
         );
       }
 
@@ -235,18 +263,9 @@ class CssScrollHelper {
     };
   }
 
-  createScrollAnimationsIfNeeded({
-    idx,
-    item,
-    container,
-    styleParams,
-  }) {
-    const {
-      isRTL,
-      oneRow,
-      scrollAnimation,
-      oneColorAnimationColor,
-    } = styleParams;
+  createScrollAnimationsIfNeeded({ idx, item, container, styleParams }) {
+    const { isRTL, oneRow, scrollAnimation, oneColorAnimationColor } =
+      styleParams;
 
     if (
       !scrollAnimation ||
@@ -280,7 +299,7 @@ class CssScrollHelper {
     switch (scrollAnimation) {
       case FADE_IN:
         return createScrollSelectors(
-          [0,100],
+          [0, 100],
           `#${domId} .gallery-item-wrapper`,
           'opacity: #;',
           [0, 1]
@@ -291,7 +310,7 @@ class CssScrollHelper {
         if (oneRow) {
           return (
             createScrollSelectors(
-              [0,80],
+              [0, 80],
               `#${domId} > div`,
               `transform: translateX(#px);`,
               [slideGap, 0],
@@ -300,7 +319,7 @@ class CssScrollHelper {
           );
         } else {
           return createScrollSelectors(
-            [0,50],
+            [0, 50],
             `#${domId}`,
             `transform: translateY(#px);`,
             [slideGap, 0],
@@ -309,28 +328,28 @@ class CssScrollHelper {
         }
       case GRAYSCALE:
         return createScrollSelectors(
-          [0,200],
+          [0, 200],
           `#${domId} .gallery-item-content`,
           'filter: grayscale(#%);',
           [100, 0]
         );
       case EXPAND:
         return createScrollSelectors(
-          [0,100],
+          [0, 100],
           `#${domId} .gallery-item-wrapper`,
           'transform: scale(#);',
           [0.95, 1]
         );
       case ZOOM_OUT:
         return createScrollSelectors(
-          [0,100],
+          [0, 100],
           `#${domId} .gallery-item-wrapper`,
           'transform: scale(#);',
           [1.15, 1]
         );
       case SHRINK:
         return createScrollSelectors(
-          [0,100],
+          [0, 100],
           `#${domId}`,
           'transform: scale(#);',
           [1.02, 1]
@@ -342,7 +361,7 @@ class CssScrollHelper {
           'transparent';
         return (
           createScrollSelectors(
-            [0,100],
+            [0, 100],
             `#${domId} .gallery-item-wrapper>div`,
             `opacity :#;`,
             [0, 1]
@@ -351,20 +370,22 @@ class CssScrollHelper {
         );
       case BLUR:
         return createScrollSelectors(
-          [0,100],
+          [0, 100],
           `#${domId} .gallery-item-content`,
           'filter: blur(#px);',
           [30, 0]
         );
       case MAIN_COLOR:
         const pixel = item.createUrl('pixel', 'img');
-        return createScrollSelectors(
-          [0,100],
-          `#${domId} .gallery-item-wrapper>div`,
-          `opacity :#;`,
-          [0, 1]
-        ) +
-        ` #${domId} .gallery-item-wrapper {background-image: url(${pixel}) !important;}`
+        return (
+          createScrollSelectors(
+            [0, 100],
+            `#${domId} .gallery-item-wrapper>div`,
+            `opacity :#;`,
+            [0, 1]
+          ) +
+          ` #${domId} .gallery-item-wrapper {background-image: url(${pixel}) !important;}`
+        );
     }
   }
 
@@ -385,6 +406,7 @@ class CssScrollHelper {
   }
 
   calcScrollCss({ domId, items, container, styleParams }) {
+    debugger; // eslint-disable-line no-debugger
     this.domId = domId;
     const scrollAnimation = styleParams.scrollAnimation;
     if (!(items && items.length)) {
