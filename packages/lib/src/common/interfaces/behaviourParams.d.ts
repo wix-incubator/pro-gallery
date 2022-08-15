@@ -32,7 +32,7 @@ export interface Gallery {
 }
 export interface SecondaryMedia {
   trigger: 'OFF' | 'HOVER';
-  behaviour: 'APPEARS' | 'DISSAPEARS';
+  behaviour: 'APPEARS';
 }
 export interface Video {
   speed?: number;
