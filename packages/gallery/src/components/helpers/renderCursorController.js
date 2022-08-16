@@ -74,11 +74,12 @@ export function renderArrowButton({
     },
   };
   if (cursor) {
-    const { containerRef, isMouseEnter, position } = cursor;
+    const { containerRef, isMouseEnter, mouseRef, position } = cursor;
     return (
-      <button ref={(ref) => (containerRef.current = ref)} {...buttonProps}>
+      <button ref={containerRef} {...buttonProps}>
         {isMouseEnter && (
           <span
+            ref={mouseRef}
             style={{
               top: position.y,
               left: position.x,
