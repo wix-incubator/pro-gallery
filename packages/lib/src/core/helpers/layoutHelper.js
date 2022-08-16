@@ -161,7 +161,6 @@ const blockScrollOnFadeOrDeckScrollAnimations = (options) =>{
 }
 
 const blockVideoControlsOnMouseCursorNavigation = (options) =>{
-  console.log(options.showVideoControls, options )
   let _options = {...options}
   if ((options.arrowsPosition === GALLERY_CONSTS.arrowsPosition.MOUSE_CURSOR) && (arrowsPosition.isRelevant(options))) {
     _options.showVideoControls = false;
