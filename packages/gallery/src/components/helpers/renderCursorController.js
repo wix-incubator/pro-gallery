@@ -30,11 +30,10 @@ export function ArrowsContainer({
 export function renderArrowButtonWithCursorController(props) {
   return (
     <CursorController>
-      {({ containerRef, mouseRef, position, isMouseEnter }) =>
+      {({ containerRef, position, isMouseEnter }) =>
         renderArrowButton({
           cursor: {
             containerRef,
-            mouseRef,
             position,
             isMouseEnter,
           },
