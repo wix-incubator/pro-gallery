@@ -17,11 +17,11 @@ import {
   getArrowsRenderData,
   shouldRenderNavArrows,
   getArrowBoxStyle,
+  renderArrowButton,
 } from '../../helpers/navigationArrowUtils';
 import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
 import {
   renderArrowButtonWithCursorController,
-  renderArrowButton,
   ArrowsContainer,
 } from '../../helpers/renderCursorController';
 
