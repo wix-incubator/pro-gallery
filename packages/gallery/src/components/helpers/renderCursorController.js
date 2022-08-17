@@ -9,9 +9,6 @@ export function ArrowsContainer({
 }) {
   if (mouseCursorEnabled) {
     const styleForMouseCursor = {
-      display: 'flex',
-      width: '100%',
-      position: 'absolute',
       justifyContent: hideLeftArrow
         ? 'flex-end'
         : hideRightArrow
