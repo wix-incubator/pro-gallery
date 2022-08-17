@@ -14,16 +14,10 @@ import NavigationPanel, {
   getCustomNavigationPanelInlineStyles,
 } from './navigationPanel';
 import {
-  getArrowsRenderData,
   shouldRenderNavArrows,
-  getArrowBoxStyle,
+  Arrows,
 } from '../../helpers/navigationArrowUtils';
 import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
-import {
-  renderArrowButtonWithCursorController,
-  renderArrowButton,
-  ArrowsContainer,
-} from '../../helpers/renderCursorController';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
@@ -584,146 +578,17 @@ class SlideshowView extends React.Component {
   }
 
   createNavArrows() {
-    const {
-      isRTL,
-      scrollDirection,
-      imageMargin,
-      arrowsPadding,
-      arrowsPosition,
-      arrowsVerticalPosition,
-      layoutParams,
-      titlePlacement,
-      textBoxHeight,
-    } = this.props.options;
-    const {
-      container: { type, backgroundColor, borderRadius },
-      mouseCursorContainerMaxWidth,
-    } = layoutParams.navigationArrows;
+    const { container, options, customComponents } = this.props;
     const { hideLeftArrow, hideRightArrow } = this.state;
-    const {
-      arrowRenderer: renderArrowSvg,
-      navArrowsContainerWidth,
-      navArrowsContainerHeight,
-    } = getArrowsRenderData({
-      customNavArrowsRenderer:
-        this.props.customComponents.customNavArrowsRenderer,
-      arrowsColor: this.props.options.arrowsColor,
-      arrowsSize: this.props.options.arrowsSize,
-      arrowsType: layoutParams.navigationArrows.type,
-      containerStyleType: type,
-    });
-    const mouseCursorEnabled = arrowsPosition === 2;
-
-    const { galleryHeight } = this.props.container;
-    const { galleryWidth } = this.props.container;
-    const infoHeight = textBoxHeight;
-    const imageHeight = galleryHeight - infoHeight;
-
-    // the nav arrows parent container top edge is imageMargin/2 ABOVE the actual view, that calculates the middle point of gallery
-    const galleryVerticalCenter = `50% + ${imageMargin / 4}px`;
-
-    // Determines the direction fix, the direction in which we move the nav arrows 'vertical position fix' pixels
-    let directionFix;
-    if (GALLERY_CONSTS.hasExternalAbovePlacement(titlePlacement)) {
-      directionFix = -1;
-    } else if (GALLERY_CONSTS.hasExternalBelowPlacement(titlePlacement)) {
-      directionFix = 1;
-    } else {
-      // if we got here, we should be ITEM_CENTER, taken care of in layoutHelper.js
-    }
-    const verticalPositionFix = {
-      [GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER]: 0,
-      [GALLERY_CONSTS.arrowsVerticalPosition.IMAGE_CENTER]:
-        infoHeight * directionFix,
-      [GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER]:
-        -imageHeight * directionFix,
-    }[arrowsVerticalPosition];
-    const styleArrowBox = getArrowBoxStyle({
-      type,
-      backgroundColor,
-      borderRadius,
-    });
-    const containerStyle = mouseCursorEnabled
-      ? {
-          width: `${galleryWidth}px`,
-          maxWidth: `${mouseCursorContainerMaxWidth}%`,
-          height: `${galleryHeight}px`,
-          padding: 0,
-          top: 0,
-          flex: 1,
-        }
-      : {
-          width: `${navArrowsContainerWidth}px`,
-          height: `${navArrowsContainerHeight}px`,
-          padding: 0,
-          top: `calc(${galleryVerticalCenter} - ${
-            navArrowsContainerHeight / 2
-          }px - 
-        ${verticalPositionFix / 2}px)`,
-          ...getArrowBoxStyle({
-            type,
-            backgroundColor,
-            borderRadius,
-          }),
-        };
-
-    const arrowsPos =
-      scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-      arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
-        ? `-${20 + navArrowsContainerWidth}px`
-        : `${imageMargin / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
-    // imageMargin effect the margin of the main div ('pro-gallery-parent-container') that SlideshowView is rendering, so the arrows should be places accordingly
-    // arrowsPadding relevant only for arrowsPosition.ON_GALLERY
-
-    const prevContainerStyle = mouseCursorEnabled
-      ? { left: 0 }
-      : { left: arrowsPos };
-    const nextContainerStyle = mouseCursorEnabled
-      ? { right: 0 }
-      : { right: arrowsPos };
-    const useDropShadow =
-      type === GALLERY_CONSTS.arrowsContainerStyleType.SHADOW;
-    const arrowsBaseClasses = [
-      'nav-arrows-container',
-      useDropShadow ? 'drop-shadow' : '',
-      utils.isMobile() ? ' pro-gallery-mobile-indicator' : '',
-      mouseCursorEnabled ? 'follow-mouse-cursor' : '',
-    ];
-
-    const ArrowRenderHandler = mouseCursorEnabled
-      ? renderArrowButtonWithCursorController
-      : renderArrowButton;
-    const renderArrow = (directionIsLeft) => {
-      return (
-        <ArrowRenderHandler
-          {...{
-            renderArrowSvg,
-            next: this._next,
-            directionIsLeft,
-            arrowsBaseClasses,
-            tabIndex: utils.getTabIndex.bind(utils),
-            containerStyle,
-            prevContainerStyle,
-            nextContainerStyle,
-            isRTL,
-            hideLeftArrow,
-            styleArrowBox,
-            navArrowsContainerWidth,
-            navArrowsContainerHeight,
-          }}
-        />
-      );
-    };
-
     return (
-      <ArrowsContainer
+      <Arrows
+        container={container}
+        options={options}
+        customNavArrowsRenderer={customComponents.customNavArrowsRenderer}
         hideLeftArrow={hideLeftArrow}
         hideRightArrow={hideRightArrow}
-        mouseCursorEnabled={mouseCursorEnabled}
-      >
-        {hideLeftArrow ? null : renderArrow(true)}
-        {hideRightArrow ? null : renderArrow(false)}
-      </ArrowsContainer>
+        next={this._next}
+      />
     );
   }
 
