@@ -277,11 +277,7 @@ export function Arrows({
           navArrowsContainerHeight / 2
         }px - 
       ${verticalPositionFix / 2}px)`,
-        ...getArrowBoxStyle({
-          type,
-          backgroundColor,
-          borderRadius,
-        }),
+        ...styleArrowBox,
       };
 
   const arrowsPos =
@@ -291,13 +287,10 @@ export function Arrows({
       : `${imageMargin / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
   // imageMargin effect the margin of the main div ('pro-gallery-parent-container') that SlideshowView is rendering, so the arrows should be places accordingly
   // arrowsPadding relevant only for arrowsPosition.ON_GALLERY
+  const xPosition = mouseCursorEnabled ? 0 : arrowsPos;
+  const prevContainerStyle = { left: xPosition };
+  const nextContainerStyle = { right: xPosition };
 
-  const prevContainerStyle = mouseCursorEnabled
-    ? { left: 0 }
-    : { left: arrowsPos };
-  const nextContainerStyle = mouseCursorEnabled
-    ? { right: 0 }
-    : { right: arrowsPos };
   const useDropShadow = type === GALLERY_CONSTS.arrowsContainerStyleType.SHADOW;
   const arrowsBaseClasses = [
     'nav-arrows-container',
