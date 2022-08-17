@@ -23,8 +23,8 @@ function mouseFollower(listener) {
       container.addEventListener('mousemove', (e) => {
         if (!mouseIn) {
           mouseIn = true;
-          x = e.screenX;
-          y = e.screenY;
+          x = e.pageX;
+          y = e.pageY;
           listener(mouseIn, {
             x,
             y,
