@@ -20,7 +20,7 @@ function mouseFollower(listener) {
   let mouseIn = false;
   return {
     init(container) {
-      container.addEventListener('mousemove', (e) => {
+      const onMouseEnter = (e) => {
         if (!mouseIn) {
           mouseIn = true;
           x = e.pageX;
@@ -29,10 +29,14 @@ function mouseFollower(listener) {
             x,
             y,
           });
-
+          return true;
+        }
+        return false;
+      };
+      container.addEventListener('mousemove', (e) => {
+        if (onMouseEnter(e)) {
           return;
         }
-
         x += e.movementX;
         y += e.movementY;
         if (x > 0 && y > 0 && mouseIn) {
@@ -41,6 +45,9 @@ function mouseFollower(listener) {
             y,
           });
         }
+      });
+      container.addEventListener('mouseover', (e) => {
+        onMouseEnter(e);
       });
       container.addEventListener('mouseleave', () => {
         mouseIn = false;
