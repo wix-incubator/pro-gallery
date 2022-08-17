@@ -1,18 +1,5 @@
 import * as React from 'react';
-
-const throttle = (func, time) => {
-  let callback = null;
-  let timer = null;
-  return (...args) => {
-    callback = () => func(...args);
-    if (!timer) {
-      callback();
-      timer = setTimeout(() => {
-        timer = null;
-      }, time);
-    }
-  };
-};
+import { utils } from 'pro-gallery-lib';
 
 function mouseFollower(listener) {
   let x = 0;
@@ -71,7 +58,7 @@ export class CursorController extends React.Component {
     isMouseEnter: false,
   };
   containerRef = { current: null };
-  setPosition = throttle((position) => {
+  setPosition = utils.throttle((position) => {
     this.setState({
       position,
     });
