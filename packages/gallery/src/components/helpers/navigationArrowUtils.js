@@ -212,10 +212,13 @@ export function Arrows({
     layoutParams,
     titlePlacement,
     textBoxHeight,
+    arrowsColor,
+    arrowsSize,
   } = options;
   const {
-    container: { type, backgroundColor, borderRadius },
+    container: { type: containerStyleType, backgroundColor, borderRadius },
     mouseCursorContainerMaxWidth,
+    type: arrowsType,
   } = layoutParams.navigationArrows;
   const {
     arrowRenderer: renderArrowSvg,
@@ -223,10 +226,10 @@ export function Arrows({
     navArrowsContainerHeight,
   } = getArrowsRenderData({
     customNavArrowsRenderer,
-    arrowsColor: options.arrowsColor,
-    arrowsSize: options.arrowsSize,
-    arrowsType: layoutParams.navigationArrows.type,
-    containerStyleType: type,
+    arrowsColor: arrowsColor,
+    arrowsSize: arrowsSize,
+    arrowsType,
+    containerStyleType,
   });
   const mouseCursorEnabled =
     arrowsPosition === GALLERY_CONSTS.arrowsPosition.MOUSE_CURSOR;
@@ -256,7 +259,7 @@ export function Arrows({
       -imageHeight * directionFix,
   }[arrowsVerticalPosition];
   const styleArrowBox = getArrowBoxStyle({
-    type,
+    type: containerStyleType,
     backgroundColor,
     borderRadius,
   });
@@ -291,7 +294,8 @@ export function Arrows({
   const prevContainerStyle = { left: xPosition };
   const nextContainerStyle = { right: xPosition };
 
-  const useDropShadow = type === GALLERY_CONSTS.arrowsContainerStyleType.SHADOW;
+  const useDropShadow =
+    containerStyleType === GALLERY_CONSTS.arrowsContainerStyleType.SHADOW;
   const arrowsBaseClasses = [
     'nav-arrows-container',
     useDropShadow ? 'drop-shadow' : '',
