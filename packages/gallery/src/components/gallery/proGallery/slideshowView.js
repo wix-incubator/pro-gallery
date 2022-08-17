@@ -13,11 +13,9 @@ import PauseIcon from '../../svgs/components/pause';
 import NavigationPanel, {
   getCustomNavigationPanelInlineStyles,
 } from './navigationPanel';
-import {
-  shouldRenderNavArrows,
-  CreateArrows,
-} from '../../helpers/navigationArrowUtils';
 import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
+import { NavigationArrows } from './navigationArrows.js';
+import { shouldRenderNavArrows } from '../../helpers/navigationArrowUtils.js';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
@@ -581,7 +579,7 @@ class SlideshowView extends React.Component {
     const { container, options, customComponents } = this.props;
     const { hideLeftArrow, hideRightArrow } = this.state;
     return (
-      <CreateArrows
+      <NavigationArrows
         container={container}
         options={options}
         customNavArrowsRenderer={customComponents.customNavArrowsRenderer}
