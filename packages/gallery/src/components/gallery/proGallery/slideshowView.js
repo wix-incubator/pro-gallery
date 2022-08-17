@@ -612,7 +612,8 @@ class SlideshowView extends React.Component {
       arrowsType: layoutParams.navigationArrows.type,
       containerStyleType: type,
     });
-    const mouseCursorEnabled = arrowsPosition === 2;
+    const mouseCursorEnabled =
+      arrowsPosition === GALLERY_CONSTS.arrowsPosition.MOUSE_CURSOR;
 
     const { galleryHeight } = this.props.container;
     const { galleryWidth } = this.props.container;
@@ -638,7 +639,7 @@ class SlideshowView extends React.Component {
       [GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER]:
         -imageHeight * directionFix,
     }[arrowsVerticalPosition];
-    const styleArrowBox = getArrowBoxStyle({
+    const arrowBoxStyle = getArrowBoxStyle({
       type,
       backgroundColor,
       borderRadius,
@@ -660,11 +661,7 @@ class SlideshowView extends React.Component {
             navArrowsContainerHeight / 2
           }px - 
         ${verticalPositionFix / 2}px)`,
-          ...getArrowBoxStyle({
-            type,
-            backgroundColor,
-            borderRadius,
-          }),
+          ...arrowBoxStyle,
         };
 
     const arrowsPos =
@@ -675,12 +672,9 @@ class SlideshowView extends React.Component {
     // imageMargin effect the margin of the main div ('pro-gallery-parent-container') that SlideshowView is rendering, so the arrows should be places accordingly
     // arrowsPadding relevant only for arrowsPosition.ON_GALLERY
 
-    const prevContainerStyle = mouseCursorEnabled
-      ? { left: 0 }
-      : { left: arrowsPos };
-    const nextContainerStyle = mouseCursorEnabled
-      ? { right: 0 }
-      : { right: arrowsPos };
+    const prevContainerStyle = { left: mouseCursorEnabled ? 0 : arrowsPos };
+    const nextContainerStyle = { right: mouseCursorEnabled ? 0 : arrowsPos };
+
     const useDropShadow =
       type === GALLERY_CONSTS.arrowsContainerStyleType.SHADOW;
     const arrowsBaseClasses = [
@@ -707,7 +701,7 @@ class SlideshowView extends React.Component {
             nextContainerStyle,
             isRTL,
             hideLeftArrow,
-            styleArrowBox,
+            arrowBoxStyle,
             navArrowsContainerWidth,
             navArrowsContainerHeight,
           }}
