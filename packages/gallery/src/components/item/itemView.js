@@ -508,16 +508,12 @@ class ItemView extends React.Component {
     ).includes(true);
   }
 
-  shouldRenderNewExternalInfoElement() {
-    return this.shouldRenderNewInfoType('external');
-  }
   shouldRenderNewInternalInfoElement() {
     return this.shouldRenderNewInfoType('internal');
   }
 
   getRightInfoElementIfNeeded() {
     if (
-      this.shouldRenderNewExternalInfoElement() ||
       GALLERY_CONSTS.hasExternalRightPlacement(
         this.props.options.titlePlacement,
         this.props.idx
@@ -534,7 +530,6 @@ class ItemView extends React.Component {
 
   getLeftInfoElementIfNeeded() {
     if (
-      this.shouldRenderNewExternalInfoElement() ||
       GALLERY_CONSTS.hasExternalLeftPlacement(
         this.props.options.titlePlacement,
         this.props.idx
@@ -551,7 +546,6 @@ class ItemView extends React.Component {
 
   getBottomInfoElementIfNeeded() {
     if (
-      this.shouldRenderNewExternalInfoElement() ||
       GALLERY_CONSTS.hasExternalBelowPlacement(
         this.props.options.titlePlacement,
         this.props.idx
@@ -568,7 +562,6 @@ class ItemView extends React.Component {
 
   getTopInfoElementIfNeeded() {
     if (
-      this.shouldRenderNewExternalInfoElement() ||
       GALLERY_CONSTS.hasExternalAbovePlacement(
         this.props.options.titlePlacement,
         this.props.idx
