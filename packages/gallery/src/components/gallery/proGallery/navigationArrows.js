@@ -144,6 +144,7 @@ export function NavigationArrows({
       hideLeftArrow={hideLeftArrow}
       hideRightArrow={hideRightArrow}
       mouseCursorEnabled={mouseCursorEnabled}
+      isRTL={isRTL}
     >
       {hideLeftArrow ? null : renderArrow(true)}
       {hideRightArrow ? null : renderArrow(false)}
@@ -228,6 +229,7 @@ export function ArrowsContainer({
   hideRightArrow,
   hideLeftArrow,
   mouseCursorEnabled,
+  isRTL,
   children,
 }) {
   if (mouseCursorEnabled) {
@@ -237,6 +239,7 @@ export function ArrowsContainer({
         : hideRightArrow
         ? 'flex-start'
         : 'space-between',
+      flexDirection: isRTL ? 'row-reverse' : 'row',
     };
     return (
       <div className="mouse-cursor" style={{ ...styleForMouseCursor }}>
