@@ -174,7 +174,7 @@ export function ArrowButton({
     ['aria-label']: `${isNext ? 'Next' : 'Previous'} Item`,
     tabIndex: tabIndex(isNext ? 'slideshowNext' : 'slideshowPrev'),
     key: !isNext ? 'nav-arrow-back' : 'nav-arrow-next',
-    ['data-hook']: directionIsLeft ? 'nav-arrow-back' : 'nav-arrow-next',
+    ['data-hook']: !isNext ? 'nav-arrow-back' : 'nav-arrow-next',
     style: {
       ...containerStyle,
       ...(directionIsLeft ? prevContainerStyle : nextContainerStyle),
