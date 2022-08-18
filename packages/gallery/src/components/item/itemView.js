@@ -504,7 +504,7 @@ class ItemView extends React.Component {
   }
 
   hasSomeInfosEnabled(infoType) {
-    if (this.newInfoElementsIsSupported() === false) {
+    if (!this.newInfoElementsIsSupported()) {
       return false;
     }
     return Object.values(
