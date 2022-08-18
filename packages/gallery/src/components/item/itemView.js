@@ -960,7 +960,7 @@ class ItemView extends React.Component {
     this.hasRequiredMediaUrl = url || type === 'text';
     //if titlePlacement !== SHOW_ON_HOVER and !this.hasRequiredMediaUrl, we will NOT render the itemWrapper (but will render the info element with the whole size of the item)
     const isItemWrapperEmpty =
-      this.shouldRenderNewInternalInfoElement() === false ||
+      this.shouldRenderNewInternalInfoElement() ||
       (options.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER &&
         !this.hasRequiredMediaUrl);
     const innerDiv = (
