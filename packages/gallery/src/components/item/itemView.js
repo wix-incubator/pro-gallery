@@ -500,7 +500,7 @@ class ItemView extends React.Component {
   }
 
   shouldRenderNewInfoType(infoType) {
-    if (!this.props.infoElementsOptions) {
+    if (!this.props.options.infoElementsOptions) {
       return false;
     }
     return Object.values(
