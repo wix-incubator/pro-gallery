@@ -255,6 +255,7 @@ export function ArrowsContainer({
     return (
       <div className="mouse-cursor" style={{ ...styleForMouseCursor }}>
         <div id={navigationArrowPortalId} className="arrow-portal-container" />
+        {/* navigationArrowPortalId must be the first element to make sure the mouseCursor events work properly */}
         {children}
       </div>
     );
