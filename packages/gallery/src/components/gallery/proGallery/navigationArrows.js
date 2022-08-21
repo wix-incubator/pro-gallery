@@ -1,7 +1,5 @@
 import React from 'react';
-
 import * as ReactDOM from 'react-dom';
-
 import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import { CursorController } from '../../helpers/mouseCursorPosition';
 import {
