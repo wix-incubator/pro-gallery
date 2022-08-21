@@ -24,16 +24,16 @@ function mouseFollower(listener) {
         if (onMouseEnter(e)) {
           return;
         }
-        x += e.movementX;
-        y += e.movementY;
-        if (x > 0 && y > 0 && mouseIn) {
+        x = e.pageX;
+        y = e.pageY;
+        if (mouseIn) {
           listener(mouseIn, {
             x,
             y,
           });
         }
       });
-      container.addEventListener('mouseover', (e) => {
+      container.addEventListener('mouseenter', (e) => {
         onMouseEnter(e);
       });
       container.addEventListener('mouseleave', () => {

@@ -1,4 +1,7 @@
 import React from 'react';
+
+import * as ReactDOM from 'react-dom';
+
 import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import { CursorController } from '../../helpers/mouseCursorPosition';
 import {
@@ -13,6 +16,7 @@ export function NavigationArrows({
   container,
   customNavArrowsRenderer,
   next,
+  id,
 }) {
   const {
     isRTL,
@@ -113,6 +117,7 @@ export function NavigationArrows({
     utils.isMobile() ? ' pro-gallery-mobile-indicator' : '',
     mouseCursorEnabled ? 'follow-mouse-cursor' : '',
   ];
+  const navigationArrowPortalId = `arrow-portal-container-${id}`;
 
   const ArrowRenderHandler = mouseCursorEnabled
     ? ArrowButtonWithCursorController
@@ -134,6 +139,7 @@ export function NavigationArrows({
           arrowBoxStyle,
           navArrowsContainerWidth,
           navArrowsContainerHeight,
+          navigationArrowPortalId,
         }}
       />
     );
@@ -145,6 +151,7 @@ export function NavigationArrows({
       hideRightArrow={hideRightArrow}
       mouseCursorEnabled={mouseCursorEnabled}
       isRTL={isRTL}
+      navigationArrowPortalId={navigationArrowPortalId}
     >
       {hideLeftArrow ? null : renderArrow(true)}
       {hideRightArrow ? null : renderArrow(false)}
@@ -163,9 +170,10 @@ export function ArrowButton({
   renderArrowSvg,
   next,
   tabIndex,
-  styleArrowBox,
+  arrowBoxStyle,
   navArrowsContainerWidth,
   navArrowsContainerHeight,
+  navigationArrowPortalId,
 }) {
   const isNext = (directionIsLeft && isRTL) || (!directionIsLeft && !isRTL);
 
@@ -185,19 +193,21 @@ export function ArrowButton({
     const { containerRef, isMouseEnter, position } = cursor;
     return (
       <button ref={(ref) => (containerRef.current = ref)} {...buttonProps}>
-        {isMouseEnter && (
-          <span
-            style={{
-              top: position.y,
-              left: position.x,
-              ...styleArrowBox,
-              width: navArrowsContainerWidth,
-              height: navArrowsContainerHeight,
-            }}
-          >
-            {renderArrowSvg(directionIsLeft ? 'left' : 'right')}
-          </span>
-        )}
+        {isMouseEnter &&
+          ReactDOM.createPortal(
+            <span
+              style={{
+                top: position.y - navArrowsContainerHeight / 2,
+                left: position.x - navArrowsContainerWidth / 2,
+                ...arrowBoxStyle,
+                width: navArrowsContainerWidth,
+                height: navArrowsContainerHeight,
+              }}
+            >
+              {renderArrowSvg(directionIsLeft ? 'left' : 'right')}
+            </span>,
+            window.document.getElementById(navigationArrowPortalId)
+          )}
       </button>
     );
   }
@@ -231,6 +241,7 @@ export function ArrowsContainer({
   mouseCursorEnabled,
   isRTL,
   children,
+  navigationArrowPortalId,
 }) {
   if (mouseCursorEnabled) {
     const styleForMouseCursor = {
@@ -243,6 +254,7 @@ export function ArrowsContainer({
     };
     return (
       <div className="mouse-cursor" style={{ ...styleForMouseCursor }}>
+        <div id={navigationArrowPortalId} className="arrow-portal-container" />
         {children}
       </div>
     );

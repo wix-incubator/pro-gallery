@@ -99,15 +99,12 @@ body.pro-gallery {
   font-size: 15px;
   line-height: normal;
 }
-
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translate(50%,-50%);
   }
   to {
     opacity: 1;
-    transform: translate(50%,-50%);
   }
 }
 
@@ -134,15 +131,6 @@ body.pro-gallery {
   &.follow-mouse-cursor {
     position: relative;
     cursor: none;
-    span {
-      animation: fadeIn 0.1s ease-in-out;
-      position: fixed;
-      transition: top 50ms, left 50ms;
-      transform: translate(50%, -50%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
   }
 
   &:hover {
@@ -157,6 +145,16 @@ body.pro-gallery {
   }
 }
 
+.arrow-portal-container {
+  span {
+  animation: fadeIn 0.1s ease-in-out;
+  position: fixed;
+  transition: top 50ms, left 50ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+}
 div.gallery-slideshow {
 
   div.pro-gallery,

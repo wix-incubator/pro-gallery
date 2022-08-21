@@ -576,7 +576,7 @@ class SlideshowView extends React.Component {
   }
 
   createNavArrows() {
-    const { container, options, customComponents } = this.props;
+    const { container, options, customComponents, id } = this.props;
     const { hideLeftArrow, hideRightArrow } = this.state;
     return (
       <NavigationArrows
@@ -586,6 +586,7 @@ class SlideshowView extends React.Component {
         hideLeftArrow={hideLeftArrow}
         hideRightArrow={hideRightArrow}
         next={this._next}
+        id={id}
       />
     );
   }
