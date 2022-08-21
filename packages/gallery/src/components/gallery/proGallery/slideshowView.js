@@ -712,7 +712,7 @@ class SlideshowView extends React.Component {
               this.props.options.imageMargin / 2,
           }
         : {};
-    const styleMouseCursor = {
+    const mouseCursorContainerStyle = {
       display: 'flex',
       justifyContent: 'space-between',
     };
@@ -720,7 +720,7 @@ class SlideshowView extends React.Component {
     const galleryStyle = {
       ...galleryDimensions,
       ...galleryStyleForExternalArrows,
-      ...styleMouseCursor,
+      ...mouseCursorContainerStyle,
     };
 
     return (
