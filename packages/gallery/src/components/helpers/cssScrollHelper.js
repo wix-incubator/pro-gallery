@@ -65,7 +65,6 @@ class CssScrollHelper {
       ? Math.min(container.width, window.innerWidth)
       : Math.min(container.height, window.innerHeight) + container.scrollBase;
 
-    // return (range, suffix, animationCss, entryAnimationValues, exitAnimationValues) => {
     return ({
       fromPosition,
       toPosition,
@@ -74,9 +73,8 @@ class CssScrollHelper {
       selectorSuffix,
       animationCss,
       reverseOnExit,
+      iterations = 10,
     }) => {
-      // return (range, suffix, animationCss, entryAnimationValues, exitAnimationValues) => {
-
       // fromPosition:  the distance from the bottom of the screen to start the animation
       // toPosition:  the distance from the bottom of the screen to end the animation
       // fromValue: the animation start value
@@ -86,7 +84,6 @@ class CssScrollHelper {
       const [enterFrom, enterTo] = [fromValue, toValue];
       const [exitFrom, exitTo] = [toValue, fromValue * exitFix];
 
-      const iterations = 10;
       const transitionDuration = 400;
       const animationPadding = 1000;
 
@@ -111,13 +108,14 @@ class CssScrollHelper {
       );
 
       const createAnimationStep = (idx, isExit) => {
-        const [to, from] = isExit ? [exitTo, exitFrom] : [enterTo, enterFrom];
+        const [to, from] = isExit ? [exitFrom, exitTo] : [enterTo, enterFrom];
         if (isExit) {
           idx = iterations - idx;
         }
         const ease = (t) =>
           t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
-        let step = Math.round((to - from) * ease(idx / iterations) + from);
+        let stepWithEase = (to - from) * ease(idx / iterations) + from;
+        let step = (to - from) * (idx / iterations) + from;
         item.idx === 0 &&
           console.log('SCROLL CSS createAnimationStep', {
             idx,
