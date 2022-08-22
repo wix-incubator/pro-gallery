@@ -1,14 +1,17 @@
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import { createOptions } from '../utils/utils';
+import { default as arrowsPosition } from './arrowsPosition';
 
 export default {
   title: 'Navigation Arrows Vertical Position',
   isRelevant: (options) =>
-    options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-    options.showArrows,
+    arrowsPosition.isRelevant(options) &&
+    (options.arrowsPosition === GALLERY_CONSTS.arrowsPosition.ON_GALLERY ||
+      options.arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY),
   isRelevantDescription:
-    'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Show Navigation Arrows" to "true".',
+    arrowsPosition.isRelevantDescription +
+    ' and make sure arrow position is set to "on gallery" or "outside gallery"',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER,
   options: createOptions('arrowsVerticalPosition'),

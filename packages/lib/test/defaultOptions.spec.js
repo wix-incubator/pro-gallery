@@ -46,6 +46,7 @@ function expectedOptions() {
           backgroundColor: 'rgba(0,0,0,0)',
           borderRadius: 0,
         },
+        mouseCursorContainerMaxWidth: 100,
       },
       thumbnails: {
         position: GALLERY_CONSTS.thumbnailsPosition.OUTSIDE_GALLERY,
@@ -56,6 +57,10 @@ function expectedOptions() {
       item: {
         content: {
           magnificationValue: 2,
+        },
+        secondaryMedia: {
+          trigger: GALLERY_CONSTS.secondaryMediaTrigger.OFF,
+          behaviour: GALLERY_CONSTS.secondaryMediaBehaviour.APPEARS,
         },
       },
     },

@@ -197,6 +197,9 @@ function process_new_to_old_arrowsPosition(obj) {
     case 'OUTSIDE_GALLERY':
       _obj['arrowsPosition'] = 1;
       break;
+    case 'MOUSE_CURSOR':
+      _obj['arrowsPosition'] = 2;
+      break;
     default:
       break;
   }
