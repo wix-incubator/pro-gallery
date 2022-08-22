@@ -65,37 +65,47 @@ class CssScrollHelper {
       ? Math.min(container.width, window.innerWidth)
       : Math.min(container.height, window.innerHeight) + container.scrollBase;
 
-    return (range, suffix, animationCss, animation, exitAnimation) => {
-      // const r = Math.round(Math.random() * 20);
-      // range[0] += r;
-      // range[1] += r;
+    // return (range, suffix, animationCss, entryAnimationValues, exitAnimationValues) => {
+    return ({
+      fromPosition,
+      toPosition,
+      fromValue,
+      toValue,
+      selectorSuffix,
+      animationCss,
+      reverseOnExit,
+    }) => {
+      // return (range, suffix, animationCss, entryAnimationValues, exitAnimationValues) => {
 
-      const [start, stop] = range;
-      // start:  the distance from the bottom of the screen to start the animation
-      // stop:  the distance from the bottom of the screen to end the animation
+      // fromPosition:  the distance from the bottom of the screen to start the animation
+      // toPosition:  the distance from the bottom of the screen to end the animation
+      // fromValue: the animation start value
+      // toValue: the animation end value
 
-      const [enterFrom, enterTo] = animation;
-      const [exitFrom, exitTo] = exitAnimation || animation;
-      // from: the animation start value
-      // to: the animation end value
+      const exitFix = reverseOnExit ? -1 : 1;
+      const [enterFrom, enterTo] = [fromValue, toValue];
+      const [exitFrom, exitTo] = [toValue, fromValue * exitFix];
+
       const iterations = 10;
       const transitionDuration = 400;
+      const animationPadding = 1000;
 
       const transitionCss = `transition: ${
         animationCss.split(':')[0]
       } ${transitionDuration}ms ease !important`;
 
-      const animationPadding = 1000;
-      const animationDuration = Math.round(stop - start);
+      const animationDuration = Math.round(toPosition - fromPosition);
 
       const entryAnimationStart = Math.round(
-        imageStart - containerSize + start
+        imageStart - containerSize + fromPosition
       );
       const entryAnimationEnd = Math.round(
         entryAnimationStart + animationDuration
       );
 
-      const exitAnimationStart = Math.round(imageStart + imageSize - stop);
+      const exitAnimationStart = Math.round(
+        imageStart + imageSize - toPosition
+      );
       const exitAnimationEnd = Math.round(
         exitAnimationStart + animationDuration
       );
@@ -132,7 +142,7 @@ class CssScrollHelper {
               largestDividerIdx,
               from,
               itemId
-            )} ~ div ${suffix}`
+            )} ~ div ${selectorSuffix}`
           );
           from += this.pgScrollSteps[largestDividerIdx];
           // console.count('pgScroll class created');
@@ -186,7 +196,7 @@ class CssScrollHelper {
       //first batch: animation start value until the range start:
       addScrollClass(
         `${transitionCss}; ${animationCss.replace('#', enterTo)}`,
-        [suffix]
+        [selectorSuffix]
       );
 
       if (options.animationDirection === 'BOTH') {

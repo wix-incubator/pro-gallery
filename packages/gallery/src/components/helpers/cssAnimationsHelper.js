@@ -25,92 +25,112 @@ export const createScrollAnimations = ({
 
   switch (scrollAnimation) {
     case FADE_IN:
-      return createScrollSelectors(
-        [0, 100],
-        `#${itemId} .gallery-item-wrapper`,
-        'opacity: #;',
-        [0, 1]
-      );
+      return createScrollSelectors({
+        fromPosition: 0,
+        toPosition: 100,
+        selectorSuffix: `#${itemId} .gallery-item-wrapper`,
+        animationCss: 'opacity: #;',
+        fromValue: 0,
+        toValue: 1,
+      });
     case SLIDE_UP:
       const rtlFix = oneRow && isRTL ? -1 : 1;
       const slideGap = rtlFix * 50;
       if (oneRow) {
         return (
-          createScrollSelectors(
-            [0, 80],
-            `#${itemId} > div`,
-            `transform: translateX(#px);`,
-            [slideGap, 0],
-            [-1 * slideGap, 0]
-          ) + ` #${itemId} {overflow: visible !important;}`
+          createScrollSelectors({
+            fromPosition: 0,
+            toPosition: 80,
+            selectorSuffix: `#${itemId} > div`,
+            animationCss: `transform: translateX(#px);`,
+            fromValue: slideGap,
+            toValue: 0,
+            reverseOnExit: true,
+          }) + ` #${itemId} {overflow: visible !important;}`
         );
       } else {
-        return createScrollSelectors(
-          [0, 500],
-          `#${itemId}`,
-          `transform: translateY(#px);`,
-          [slideGap, 0],
-          [-1 * slideGap, 0]
-        );
+        return createScrollSelectors({
+          fromPosition: 0,
+          toPosition: 500,
+          selectorSuffix: `#${itemId}`,
+          animationCss: `transform: translateY(#px);`,
+          fromValue: slideGap,
+          toValue: 0,
+          reverseOnExit: true,
+        });
       }
     case GRAYSCALE:
-      return createScrollSelectors(
-        [0, 200],
-        `#${itemId} .gallery-item-content`,
-        'filter: grayscale(#%);',
-        [100, 0]
-      );
+      return createScrollSelectors({
+        fromPosition: 0,
+        toPosition: 200,
+        selectorSuffix: `#${itemId} .gallery-item-content`,
+        animationCss: 'filter: grayscale(#%);',
+        fromValue: 100,
+        toValue: 0,
+      });
     case EXPAND:
-      return createScrollSelectors(
-        [0, 100],
-        `#${itemId} .gallery-item-wrapper`,
-        'transform: scale(#);',
-        [0.95, 1]
-      );
+      return createScrollSelectors({
+        fromPosition: 0,
+        toPosition: 100,
+        selectorSuffix: `#${itemId} .gallery-item-wrapper`,
+        animationCss: 'transform: scale(#);',
+        fromValue: 0.95,
+        toValue: 1,
+      });
     case ZOOM_OUT:
-      return createScrollSelectors(
-        [0, 100],
-        `#${itemId} .gallery-item-wrapper`,
-        'transform: scale(#);',
-        [1.15, 1]
-      );
+      return createScrollSelectors({
+        fromPosition: 0,
+        toPosition: 100,
+        selectorSuffix: `#${itemId} .gallery-item-wrapper`,
+        animationCss: 'transform: scale(#);',
+        fromValue: 1.15,
+        toValue: 1,
+      });
     case SHRINK:
-      return createScrollSelectors(
-        [0, 100],
-        `#${itemId}`,
-        'transform: scale(#);',
-        [1.02, 1]
-      );
+      return createScrollSelectors({
+        fromPosition: 0,
+        toPosition: 100,
+        selectorSuffix: `#${itemId}`,
+        animationCss: 'transform: scale(#);',
+        fromValue: 1.02,
+        toValue: 1,
+      });
     case ONE_COLOR:
       const bgColor =
         oneColorAnimationColor?.value ||
         oneColorAnimationColor ||
         'transparent';
       return (
-        createScrollSelectors(
-          [0, 100],
-          `#${itemId} .gallery-item-wrapper>div`,
-          `opacity :#;`,
-          [0, 1]
-        ) +
+        createScrollSelectors({
+          fromPosition: 0,
+          toPosition: 100,
+          selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
+          animationCss: `opacity :#;`,
+          fromValue: 0,
+          toValue: 1,
+        }) +
         ` #${itemId} .gallery-item-wrapper {background-color: ${bgColor} !important;}`
       );
     case BLUR:
-      return createScrollSelectors(
-        [0, 100],
-        `#${itemId} .gallery-item-content`,
-        'filter: blur(#px);',
-        [30, 0]
-      );
+      return createScrollSelectors({
+        fromPosition: 0,
+        toPosition: 100,
+        selectorSuffix: `#${itemId} .gallery-item-content`,
+        animationCss: 'filter: blur(#px);',
+        fromValue: 30,
+        toValue: 0,
+      });
     case MAIN_COLOR:
       const pixel = item.createUrl('pixel', 'img');
       return (
-        createScrollSelectors(
-          [0, 100],
-          `#${itemId} .gallery-item-wrapper>div`,
-          `opacity :#;`,
-          [0, 1]
-        ) +
+        createScrollSelectors({
+          fromPosition: 0,
+          toPosition: 100,
+          selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
+          animationCss: `opacity :#;`,
+          fromValue: 0,
+          toValue: 1,
+        }) +
         ` #${itemId} .gallery-item-wrapper {background-image: url(${pixel}) !important;}`
       );
   }
