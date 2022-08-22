@@ -322,9 +322,6 @@ class ItemView extends React.Component {
     } = options;
     const { NEVER_SHOW, APPEARS } = GALLERY_CONSTS.infoBehaviourOnHover;
     const { NO_EFFECT } = GALLERY_CONSTS.overlayAnimations;
-    if (this.shouldRenderNewInternalInfoElement()) {
-      return true;
-    }
 
     if (hoveringBehaviour === NEVER_SHOW) {
       return false;
@@ -499,36 +496,8 @@ class ItemView extends React.Component {
     return itemInner;
   }
 
-  newInfoElementsIsSupported() {
-    return this.props.options.infoElementsOptions;
-  }
-
-  hasSomeInfosEnabled(infoType) {
-    if (!this.newInfoElementsIsSupported()) {
-      return false;
-    }
-    return Object.values(
-      this.props.options.infoElementsOptions[infoType].enabled
-    ).includes(true);
-  }
-
-  shouldRenderNewExternalInfoElement() {
-    if (this.props.options.allowTitle || this.props.options.allowDescription) {
-      return true;
-    }
-    if (this.newInfoElementsIsSupported()) {
-      return this.hasSomeInfosEnabled('external');
-    } else {
-      return true;
-    }
-  }
-  shouldRenderNewInternalInfoElement() {
-    return this.hasSomeInfosEnabled('internal');
-  }
-
   getRightInfoElementIfNeeded() {
     if (
-      this.shouldRenderNewExternalInfoElement() &&
       GALLERY_CONSTS.hasExternalRightPlacement(
         this.props.options.titlePlacement,
         this.props.idx
@@ -545,7 +514,6 @@ class ItemView extends React.Component {
 
   getLeftInfoElementIfNeeded() {
     if (
-      this.shouldRenderNewExternalInfoElement() &&
       GALLERY_CONSTS.hasExternalLeftPlacement(
         this.props.options.titlePlacement,
         this.props.idx
@@ -562,7 +530,6 @@ class ItemView extends React.Component {
 
   getBottomInfoElementIfNeeded() {
     if (
-      this.shouldRenderNewExternalInfoElement() &&
       GALLERY_CONSTS.hasExternalBelowPlacement(
         this.props.options.titlePlacement,
         this.props.idx
@@ -579,7 +546,6 @@ class ItemView extends React.Component {
 
   getTopInfoElementIfNeeded() {
     if (
-      this.shouldRenderNewExternalInfoElement() &&
       GALLERY_CONSTS.hasExternalAbovePlacement(
         this.props.options.titlePlacement,
         this.props.idx
@@ -648,7 +614,6 @@ class ItemView extends React.Component {
 
   simulateHover() {
     return (
-      this.shouldRenderNewInternalInfoElement() ||
       this.state.isCurrentHover ||
       this.props.options.alwaysShowHover === true ||
       (isEditMode() && this.props.options.previewHover)
@@ -657,7 +622,6 @@ class ItemView extends React.Component {
 
   simulateOverlayHover() {
     return (
-      this.shouldRenderNewInternalInfoElement() ||
       this.simulateHover() ||
       this.props.options.hoveringBehaviour ===
         GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE
