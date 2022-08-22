@@ -499,12 +499,8 @@ class ItemView extends React.Component {
     return itemInner;
   }
 
-  newInfoElementsIsSupported() {
-    return this.props.options.infoElementsOptions;
-  }
-
-  hasSomeInfosEnabled(infoType) {
-    if (!this.newInfoElementsIsSupported()) {
+  shouldRenderNewInfoType(infoType) {
+    if (!this.props.options.infoElementsOptions) {
       return false;
     }
     return Object.values(
@@ -513,22 +509,15 @@ class ItemView extends React.Component {
   }
 
   shouldRenderNewExternalInfoElement() {
-    if (this.props.options.allowTitle || this.props.options.allowDescription) {
-      return true;
-    }
-    if (this.newInfoElementsIsSupported()) {
-      return this.hasSomeInfosEnabled('external');
-    } else {
-      return true;
-    }
+    return this.shouldRenderNewInfoType('external');
   }
   shouldRenderNewInternalInfoElement() {
-    return this.hasSomeInfosEnabled('internal');
+    return this.shouldRenderNewInfoType('internal');
   }
 
   getRightInfoElementIfNeeded() {
     if (
-      this.shouldRenderNewExternalInfoElement() &&
+      this.shouldRenderNewExternalInfoElement() ||
       GALLERY_CONSTS.hasExternalRightPlacement(
         this.props.options.titlePlacement,
         this.props.idx
@@ -545,7 +534,7 @@ class ItemView extends React.Component {
 
   getLeftInfoElementIfNeeded() {
     if (
-      this.shouldRenderNewExternalInfoElement() &&
+      this.shouldRenderNewExternalInfoElement() ||
       GALLERY_CONSTS.hasExternalLeftPlacement(
         this.props.options.titlePlacement,
         this.props.idx
@@ -562,7 +551,7 @@ class ItemView extends React.Component {
 
   getBottomInfoElementIfNeeded() {
     if (
-      this.shouldRenderNewExternalInfoElement() &&
+      this.shouldRenderNewExternalInfoElement() ||
       GALLERY_CONSTS.hasExternalBelowPlacement(
         this.props.options.titlePlacement,
         this.props.idx
@@ -579,7 +568,7 @@ class ItemView extends React.Component {
 
   getTopInfoElementIfNeeded() {
     if (
-      this.shouldRenderNewExternalInfoElement() &&
+      this.shouldRenderNewExternalInfoElement() ||
       GALLERY_CONSTS.hasExternalAbovePlacement(
         this.props.options.titlePlacement,
         this.props.idx
@@ -657,7 +646,6 @@ class ItemView extends React.Component {
 
   simulateOverlayHover() {
     return (
-      this.shouldRenderNewInternalInfoElement() ||
       this.simulateHover() ||
       this.props.options.hoveringBehaviour ===
         GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE
@@ -972,8 +960,9 @@ class ItemView extends React.Component {
     this.hasRequiredMediaUrl = url || type === 'text';
     //if titlePlacement !== SHOW_ON_HOVER and !this.hasRequiredMediaUrl, we will NOT render the itemWrapper (but will render the info element with the whole size of the item)
     const isItemWrapperEmpty =
-      options.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER &&
-      !this.hasRequiredMediaUrl;
+      this.shouldRenderNewInternalInfoElement() ||
+      (options.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER &&
+        !this.hasRequiredMediaUrl);
     const innerDiv = (
       <div
         className={this.getItemContainerClass()}
