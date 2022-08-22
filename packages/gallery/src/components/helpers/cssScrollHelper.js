@@ -8,6 +8,7 @@ import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 class CssScrollHelper {
   constructor() {
+    this.galleryId = '???';
     this.pgScrollSteps = [];
     for (let i = 1; i < 50000; i *= 2) {
       this.pgScrollSteps.push(i);
@@ -30,16 +31,14 @@ class CssScrollHelper {
     return `pgi${shortId}_${idx}`;
   }
 
-  buildScrollClassName(idx, val, domId) {
-    const shortId = String(domId || this.domId)
-      .replace(/[\W]+/g, '')
-      .slice(-8);
+  buildScrollClassName(idx, val, itemId) {
+    const shortId = String(this.galleryId).replace(/[\W]+/g, '').slice(-8);
     return `${this.pgScrollClassName}_${shortId}_${val}-${
       this.pgScrollSteps[idx] + Number(val)
     }`;
   }
 
-  calcScrollClasses(scrollTop, domId) {
+  calcScrollClasses(scrollTop, itemId) {
     //used by the scroll indicator
     return (
       `${this.pgScrollClassName}-${scrollTop} ` +
@@ -48,20 +47,20 @@ class CssScrollHelper {
           this.buildScrollClassName(
             idx,
             Math.floor(scrollTop / step) * step,
-            domId
+            itemId
           )
         )
         .join(' ')
     );
   }
 
-  createScrollSelectorsFunction({ item, container, styleParams }) {
+  createScrollSelectorsFunction({ itemId, item, container, options }) {
     const imageStart = Math.round(
-      styleParams.oneRow ? item.offset.left : item.offset.top
+      options.oneRow ? item.offset.left : item.offset.top
     );
-    const imageSize = Math.round(styleParams.oneRow ? item.width : item.height);
+    const imageSize = Math.round(options.oneRow ? item.width : item.height);
 
-    const containerSize = styleParams.oneRow
+    const containerSize = options.oneRow
       ? Math.min(container.width, window.innerWidth)
       : Math.min(container.height, window.innerHeight) + container.scrollBase;
 
@@ -130,7 +129,8 @@ class CssScrollHelper {
           scrollClasses.push(
             `.${this.buildScrollClassName(
               largestDividerIdx,
-              from
+              from,
+              itemId
             )} ~ div ${suffix}`
           );
           from += this.pgScrollSteps[largestDividerIdx];
@@ -188,9 +188,7 @@ class CssScrollHelper {
         [suffix]
       );
 
-      debugger;
-
-      if (styleParams.animationDirection === 'BOTH') {
+      if (options.animationDirection === 'BOTH') {
         addScrollClass(
           createAnimationStep(0) + 'transtion: none !important;',
           createSelectorsRange(
@@ -215,7 +213,7 @@ class CssScrollHelper {
             exitAnimationEnd + animationPadding
           )
         );
-      } else if (styleParams.animationDirection === 'IN') {
+      } else if (options.animationDirection === 'IN') {
         addScrollClass(
           createAnimationStep(0) + 'transtion: none !important;',
           createSelectorsRange(
@@ -233,7 +231,7 @@ class CssScrollHelper {
             entryAnimationEnd + animationPadding
           )
         );
-      } else if (styleParams.animationDirection === 'OUT') {
+      } else if (options.animationDirection === 'OUT') {
         addScrollClass(
           createAnimationStep(iterations) + 'transtion: none !important;',
           createSelectorsRange(
@@ -263,9 +261,8 @@ class CssScrollHelper {
     };
   }
 
-  createScrollAnimationsIfNeeded({ idx, item, container, styleParams }) {
-    const { isRTL, oneRow, scrollAnimation, oneColorAnimationColor } =
-      styleParams;
+  createScrollAnimationsIfNeeded({ idx, item, container, options }) {
+    const { isRTL, oneRow, scrollAnimation, oneColorAnimationColor } = options;
 
     if (
       !scrollAnimation ||
@@ -288,19 +285,19 @@ class CssScrollHelper {
     } = GALLERY_CONSTS.scrollAnimations;
 
     const randomRange = this.settings.animation_random;
-    const domId = this.getSellectorDomId(item);
+    const itemId = this.getSellectorDomId(item);
     const createScrollSelectors = this.createScrollSelectorsFunction({
-      domId,
+      itemId,
       item,
       container,
-      styleParams,
+      options,
     });
 
     switch (scrollAnimation) {
       case FADE_IN:
         return createScrollSelectors(
           [0, 100],
-          `#${domId} .gallery-item-wrapper`,
+          `#${itemId} .gallery-item-wrapper`,
           'opacity: #;',
           [0, 1]
         );
@@ -311,16 +308,16 @@ class CssScrollHelper {
           return (
             createScrollSelectors(
               [0, 80],
-              `#${domId} > div`,
+              `#${itemId} > div`,
               `transform: translateX(#px);`,
               [slideGap, 0],
               [-1 * slideGap, 0]
-            ) + ` #${domId} {overflow: visible !important;}`
+            ) + ` #${itemId} {overflow: visible !important;}`
           );
         } else {
           return createScrollSelectors(
             [0, 50],
-            `#${domId}`,
+            `#${itemId}`,
             `transform: translateY(#px);`,
             [slideGap, 0],
             [-1 * slideGap, 0]
@@ -329,28 +326,28 @@ class CssScrollHelper {
       case GRAYSCALE:
         return createScrollSelectors(
           [0, 200],
-          `#${domId} .gallery-item-content`,
+          `#${itemId} .gallery-item-content`,
           'filter: grayscale(#%);',
           [100, 0]
         );
       case EXPAND:
         return createScrollSelectors(
           [0, 100],
-          `#${domId} .gallery-item-wrapper`,
+          `#${itemId} .gallery-item-wrapper`,
           'transform: scale(#);',
           [0.95, 1]
         );
       case ZOOM_OUT:
         return createScrollSelectors(
           [0, 100],
-          `#${domId} .gallery-item-wrapper`,
+          `#${itemId} .gallery-item-wrapper`,
           'transform: scale(#);',
           [1.15, 1]
         );
       case SHRINK:
         return createScrollSelectors(
           [0, 100],
-          `#${domId}`,
+          `#${itemId}`,
           'transform: scale(#);',
           [1.02, 1]
         );
@@ -362,16 +359,16 @@ class CssScrollHelper {
         return (
           createScrollSelectors(
             [0, 100],
-            `#${domId} .gallery-item-wrapper>div`,
+            `#${itemId} .gallery-item-wrapper>div`,
             `opacity :#;`,
             [0, 1]
           ) +
-          ` #${domId} .gallery-item-wrapper {background-color: ${bgColor} !important;}`
+          ` #${itemId} .gallery-item-wrapper {background-color: ${bgColor} !important;}`
         );
       case BLUR:
         return createScrollSelectors(
           [0, 100],
-          `#${domId} .gallery-item-content`,
+          `#${itemId} .gallery-item-content`,
           'filter: blur(#px);',
           [30, 0]
         );
@@ -380,23 +377,23 @@ class CssScrollHelper {
         return (
           createScrollSelectors(
             [0, 100],
-            `#${domId} .gallery-item-wrapper>div`,
+            `#${itemId} .gallery-item-wrapper>div`,
             `opacity :#;`,
             [0, 1]
           ) +
-          ` #${domId} .gallery-item-wrapper {background-image: url(${pixel}) !important;}`
+          ` #${itemId} .gallery-item-wrapper {background-image: url(${pixel}) !important;}`
         );
     }
   }
 
-  calcScrollCssForItem({ domId, item, container, styleParams }) {
+  calcScrollCssForItem({ item, container, options }) {
     const { idx } = item;
     let scrollCss = '';
     scrollCss += this.createScrollAnimationsIfNeeded({
       idx,
       item,
       container,
-      styleParams,
+      options,
     });
 
     this.scrollCss[idx] = scrollCss || this.scrollCss[idx];
@@ -405,10 +402,9 @@ class CssScrollHelper {
     // console.count('pgScroll item created');
   }
 
-  calcScrollCss({ domId, items, container, styleParams }) {
-    debugger;
-    this.domId = domId;
-    const scrollAnimation = styleParams.scrollAnimation;
+  calcScrollCss({ galleryId, items, container, options }) {
+    this.galleryId = galleryId;
+    const scrollAnimation = options.scrollAnimation;
     if (!(items && items.length)) {
       return [];
     }
@@ -420,7 +416,7 @@ class CssScrollHelper {
     }
 
     const res = items.map((item) =>
-      this.calcScrollCssForItem({ item, container, styleParams })
+      this.calcScrollCssForItem({ item, container, options })
     );
     return res;
   }

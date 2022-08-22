@@ -1017,27 +1017,23 @@ class ItemView extends React.Component {
       tabIndex: -1,
       onKeyDown: handleKeyDown,
     };
-    if (linkParams?.href?.length > 0) {
-      return (
-        <a key={'item-container-link-' + id} {...elementProps} {...linkParams}>
-          {innerDiv}
-          {this.props.scrollAnimationCss ? (
-            <ScrollAnimations
-              idx={idx}
-              css={this.props.scrollAnimationCss[idx]}
-            />
-          ) : (
-            <div>NO CSS</div>
-          )}
-        </a>
-      );
-    } else {
-      return (
-        <div key={'item-container-div-' + id} {...elementProps}>
-          {innerDiv}
-        </div>
-      );
-    }
+    return (
+      <a
+        key={'item-container-link-' + id}
+        {...elementProps}
+        {...(linkParams?.href?.length > 0 && linkParams)}
+      >
+        {innerDiv}
+        {this.props.scrollAnimationCss ? (
+          <ScrollAnimations
+            idx={idx}
+            css={this.props.scrollAnimationCss[idx]}
+          />
+        ) : (
+          <div>NO CSS</div>
+        )}
+      </a>
+    );
   }
 
   //-----------------------------------------| RENDER |--------------------------------------------//

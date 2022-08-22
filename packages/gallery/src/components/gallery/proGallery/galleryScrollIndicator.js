@@ -75,8 +75,8 @@ export default class ScrollIndicator extends React.Component {
           GALLERY_CONSTS.scrollDirection.HORIZONTAL
         ) {
           this.setState({
-            scrollTop: left,
-            scrollLeft: left,
+            scrollTop: Math.round(left),
+            scrollLeft: Math.round(left),
           });
           this.props.getMoreItemsIfNeeded(left);
           this.debouncedOnScroll({ left });
@@ -87,7 +87,7 @@ export default class ScrollIndicator extends React.Component {
     try {
       scrollingElement
         .horizontal()
-        .addEventListener('scroll', this.onHorizontalScroll);
+        ?.addEventListener('scroll', this.onHorizontalScroll);
     } catch (e) {
       console.error(e);
     }
@@ -118,7 +118,7 @@ export default class ScrollIndicator extends React.Component {
       // console.log('[RTL SCROLL] onVerticalScroll: ', left);
       if (top >= 0) {
         this.setState({
-          scrollTop: top,
+          scrollTop: Math.round(top),
         });
         if (
           this.props.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL
@@ -179,10 +179,7 @@ export default class ScrollIndicator extends React.Component {
         data-hook="css-scroll-indicator"
         data-scroll-base={verticalScrollBase}
         data-scroll-top={this.state.scrollTop}
-        className={cssScrollHelper.calcScrollClasses(
-          domId,
-          scrollTopWithoutBase
-        )}
+        className={cssScrollHelper.calcScrollClasses(scrollTopWithoutBase, id)}
         style={{
           position: 'fixed',
           top: 0,

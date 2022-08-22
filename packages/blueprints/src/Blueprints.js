@@ -375,13 +375,11 @@ class Blueprints {
   }
 
   createCssAnimations({ items, container, options, id }) {
-    debugger;
-
     return cssScrollHelper.calcScrollCss({
       items,
       options,
       container,
-      id,
+      galleryId: id,
     });
   }
 }

@@ -1,4 +1,6 @@
-export class ScrollAnimations extends GalleryComponent {
+import React from 'react';
+
+export class ScrollAnimations extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -663,16 +663,15 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  getScrollCss({ domId, items, container, styleParams }) {
-    debugger;
+  getScrollCss({ id, items, container, options }) {
     // if (this.shouldCreateScrollCss) {
     this.scrollCss = cssScrollHelper.calcScrollCss({
       items,
       container,
-      styleParams,
-      domId,
+      options,
+      galleryId: id,
     });
-    console.log('SCROLL CSS: getScrollCss', this.scrollCss);
+    console.log('SCROLL CSS: getScrollCss', id, this.scrollCss);
     // }
   }
 
@@ -930,7 +929,7 @@ export class GalleryContainer extends React.Component {
           options={this.props.options}
           container={this.props.container}
           settings={this.props.settings}
-          scrollAnimationCss={this.props.scrollAnimationCss}
+          scrollAnimationCss={this.scrollCss}
           displayShowMore={displayShowMore}
           id={this.props.id}
           activeIndex={this.props.activeIndex || 0}
