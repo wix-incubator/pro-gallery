@@ -83,6 +83,7 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   cubeFitPosition: GALLERY_CONSTS.cubeFitPosition.MIDDLE,
   //migrated: keep here or it will still break users of this (no dependency on refactor)
   magnificationLevel: 2,
+  forceFullStrips: false,
 });
 
 export function populateWithDefaultOptions(options) {

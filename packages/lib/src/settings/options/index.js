@@ -40,6 +40,7 @@ import rotatingCropRatios from './rotatingCropRatios';
 import columnWidths from './columnWidths';
 import autoSlideshowInterval from './autoSlideshowInterval';
 import smartCrop from './smartCrop';
+import forceFullStrips from './forceFullStrips';
 import minItemSize from './minItemSize';
 import scrollAnimation from './scrollAnimation';
 import slideAnimation from './slideAnimation';
@@ -209,6 +210,7 @@ export default {
     behaviourParams_gallery_horizontal_autoSlide_interval,
   smartCrop,
   [optionsMap.layoutParams.crop.enableSmartCrop]: smartCrop,
+  forceFullStrips,
   minItemSize,
   [optionsMap.layoutParams.targetItemSize.minimum]: minItemSize,
   scrollAnimation,

@@ -255,9 +255,8 @@ export default class Layouter {
         ? Math.floor(this.galleryWidth / this.numOfCols)
         : this.targetItemSize;
 
-      const { columnWidths, externalInfoWidth, imageMargin } =
-        this.styleParams;
-      const {cropRatio} = this.styleParams.layoutParams;
+      const { columnWidths, externalInfoWidth, imageMargin } = this.styleParams;
+      const { cropRatio } = this.styleParams.layoutParams;
       let columnWidthsArr = false;
       if (columnWidths && columnWidths.length > 0) {
         columnWidthsArr = columnWidths.split(',').map(Number);
@@ -345,17 +344,38 @@ export default class Layouter {
         continue;
       }
 
+      const calcRecommendedGroupSize = () => {
+        if (this.srcItems.length > this.pointer + 1) return null;
+
+        const totalGroupsInStrip = this.strip.groups.length;
+        const recommendedGroupsInStrip =
+          this.recommendedGroupsPerStrip?.[this.strip.idx];
+        const remainingGroups = recommendedGroupsInStrip - totalGroupsInStrip;
+        if (remainingGroups === 1) {
+          console.log(
+            '[FORCE FULL STRIPS]',
+            `LAST GROUP\n`,
+            `STRIP has ${totalGroupsInStrip} groups, but recommended is ${recommendedGroupsInStrip}\n`,
+            `ITEM #${this.pointer} out of ${this.srcItems.length} GROUP items ${this.groupItems.length}\n`,
+            `recommended size: ${this.groupItems.length}\n`
+          );
+          return this.groupItems.length;
+        } else {
+          return null;
+        }
+      };
+
       this.group = new Group({
         idx: this.groupIdx,
         stripIdx: this.strip.idx,
         inStripIdx: this.strip.groups.length + 1,
         top: this.galleryHeight,
         items: this.groupItems,
-        isLastItems: this.isLastImages,
         targetItemSize: this.targetItemSize,
         showAllItems: this.showAllItems,
         container: this.container,
         styleParams: this.styleParams,
+        recommendedGroupSize: calcRecommendedGroupSize(),
       });
       this.groups[this.groupIdx] = this.group;
 
@@ -377,18 +397,99 @@ export default class Layouter {
           this.columns[0].addGroups(this.strip.groups);
           this.strips.push(this.strip);
 
-          //open a new strip
-          this.strip = new Strip({
-            idx: this.strip.idx + 1,
-            container: this.container,
-            groupsPerStrip: this.styleParams.groupsPerStrip,
-            scrollDirection: this.styleParams.scrollDirection,
-            targetItemSize: this.targetItemSize,
-          });
+          const newStripIdx = this.strip.idx + 1;
 
           //reset the group (this group will be rebuilt)
           this.pointer -= this.group.realItems.length - 1;
           this.groupIdx--;
+
+          if (
+            this.styleParams.forceFullStrips &&
+            !this.recommendedGroupsPerStrip?.[newStripIdx]
+          ) {
+            console.log(
+              '[FORCE FULL STRIPS]',
+              `-----------------------------| Starting |----------------------------`
+            );
+            const placedItems = this.pointer;
+            const placedGroups = this.groupIdx - 1;
+            const placedStrips = this.strip.idx;
+            const avgItemsPerGroup = placedItems / placedGroups;
+            const avgGroupsPerStrip = placedGroups / placedStrips;
+            const avgItemsPerStrip = avgItemsPerGroup * avgGroupsPerStrip;
+            const remainingItems = this.srcItems.length - placedItems;
+            const remainingGroups = remainingItems / avgItemsPerGroup;
+            const remainingStrips = remainingGroups / avgGroupsPerStrip;
+            console.log(
+              '[FORCE FULL STRIPS]',
+              `STRIP #${placedStrips} Placed ${placedItems} ITEMS in ${placedGroups} GROUPS`
+            );
+            // console.log(
+            //   '[FORCE FULL STRIPS]',
+            //   `Number of placed ITEMS: ${placedItems}`
+            // );
+            // console.log(
+            //   '[FORCE FULL STRIPS]',
+            //   `Number of placed GROUPS: ${placedGroups}`
+            // );
+            // console.log(
+            //   '[FORCE FULL STRIPS]',
+            //   `Number of placed STRIPS: ${placedStrips}`
+            // );
+            console.log(
+              '[FORCE FULL STRIPS]',
+              `Average ITEMS per GROUP: ${avgItemsPerGroup}`
+            );
+            console.log(
+              '[FORCE FULL STRIPS]',
+              `Average GROUPS per STRIP: ${avgGroupsPerStrip}`
+            );
+            console.log(
+              '[FORCE FULL STRIPS]',
+              `Average ITEMS per STRIP: ${avgItemsPerStrip}`
+            );
+            console.log(
+              '[FORCE FULL STRIPS]',
+              `Remaining ITEMS: ${remainingItems}`
+            );
+            console.log(
+              '[FORCE FULL STRIPS]',
+              `Estimated remaining GROUPS: ${remainingGroups}`
+            );
+            console.log(
+              '[FORCE FULL STRIPS]',
+              `Estimated remaining STRIPS: ${remainingStrips}`
+            );
+            console.log(
+              '[FORCE FULL STRIPS]',
+              `Recommended GROUPS per STRIP: ${
+                remainingGroups / remainingStrips
+              }`
+            );
+            const maxStripsToFix = 3;
+            if (avgItemsPerStrip * maxStripsToFix >= remainingItems) {
+              this.recommendedGroupsPerStrip = {
+                [newStripIdx]: Math.floor(remainingGroups / remainingStrips),
+              };
+              console.log(
+                '[FORCE FULL STRIPS]',
+                `(SET!) Recommended Groups per Strip: ${this.recommendedGroupsPerStrip[newStripIdx]}`,
+                this.recommendedGroupsPerStrip
+              );
+            }
+          }
+
+          //open a new strip
+          this.strip = new Strip({
+            idx: newStripIdx,
+            container: this.container,
+            groupsPerStrip:
+              this.styleParams.groupsPerStrip ||
+              this.recommendedGroupsPerStrip?.[newStripIdx],
+            scrollDirection: this.styleParams.scrollDirection,
+            targetItemSize: this.targetItemSize,
+          });
+
           continue;
         }
 
@@ -474,7 +575,9 @@ export default class Layouter {
     this.colWidth = Math.floor(this.galleryWidth / this.numOfCols);
     this.height =
       this.galleryHeight -
-      (this.styleParams.imageMargin / 2 - this.styleParams.layoutParams.gallerySpacing) * 2;
+      (this.styleParams.imageMargin / 2 -
+        this.styleParams.layoutParams.gallerySpacing) *
+        2;
 
     this.width = this.lastGroup.left + this.lastGroup.width;
 
@@ -601,7 +704,7 @@ export default class Layouter {
   }
 
   get isLastImages() {
-    return !this.srcItems[this.pointer + 1];
+    return !this.srcItems[this.pointer + 2];
   }
 
   get imagesLeft() {

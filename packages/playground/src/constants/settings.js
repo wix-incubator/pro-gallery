@@ -45,7 +45,6 @@ export const optionsBySection = {
     "scrollDirection",
     optionsMap.layoutParams.structure.galleryRatio.value,
     optionsMap.layoutParams.structure.galleryRatio.includeExternalInfo,
-    "hasThumbnails",
     "isVertical",
     "isRTL",
     "imageMargin",
@@ -80,6 +79,8 @@ export const optionsBySection = {
     "smartCrop",
 
     "layoutParams_thumbnails_position",
+    "forceFullStrips",
+
     "galleryThumbnailsAlignment",
     "thumbnailSize",
     "thumbnailSpacings",
@@ -163,6 +164,9 @@ export const optionsBySection = {
     "slideAnimation",
     "slideTransition",
     "animationDirection",
+    "slideAnimation",
+    "oneColorAnimationColor",
+    "slideTransition",
   ],
   [SECTIONS.IMAGE]: [
     "stylingParams_itemResolutionMode",

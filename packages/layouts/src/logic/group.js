@@ -36,9 +36,9 @@ export class Group {
     this.inStripIdx = config.inStripIdx;
     this.top = config.top;
     this.showAllItems = config.showAllItems;
-    this.isLastItems = config.isLastItems;
     this.dummyItems = [];
     this.targetItemSize = config.targetItemSize;
+    this.recommendedGroupSize = config.recommendedGroupSize;
 
     this.items = config.items.map((item) => {
       item.Group = this;
@@ -801,6 +801,9 @@ export class Group {
   get isWithinMinItemSize() {
     if (this.items.length === 0 || !this.placed) {
       return false;
+    }
+    if (this.items.length === this.recommendedGroupSize) {
+      return true;
     }
     if (this.items.length === 1) {
       return true;

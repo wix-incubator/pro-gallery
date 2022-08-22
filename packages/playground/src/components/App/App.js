@@ -49,6 +49,7 @@ export function App() {
     setContainer,
     options,
     setItems,
+    getItems: getContextItems,
     items,
     gallerySettings,
     setBlueprint,
@@ -158,7 +159,7 @@ export function App() {
       return monochromeImages.slice(0, 20);
     }
 
-    const theItems = items || initialItems[mediaTypes];
+    const theItems = items || getContextItems() || initialItems[mediaTypes];
     if (numberOfItems > 0) {
       return theItems.slice(0, numberOfItems);
     } else {
