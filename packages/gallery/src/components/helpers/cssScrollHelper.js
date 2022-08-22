@@ -8,7 +8,7 @@ import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import { createScrollAnimations } from './cssAnimationsHelper';
 
 const isHorizontalScroll = (options) =>
-  options.scrollDirection === consts.scrollDirection.HORIZONTAL;
+  options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
 
 class CssScrollHelper {
   constructor() {
@@ -59,7 +59,6 @@ class CssScrollHelper {
   }
 
   createScrollSelectorsFunction({ itemId, item, container, options }) {
-    debugger;
     const imageStart = Math.round(
       isHorizontalScroll(options) ? item.offset.left : item.offset.top
     );
@@ -79,6 +78,7 @@ class CssScrollHelper {
       selectorSuffix,
       animationCss,
       reverseOnExit,
+      noEasing,
       iterations = 10,
     }) => {
       // fromPosition:  the distance from the bottom of the screen to start the animation
@@ -119,15 +119,9 @@ class CssScrollHelper {
           idx = iterations - idx;
         }
         const ease = (t) =>
-          t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
+          noEasing ? t : t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
         let stepWithEase = (to - from) * ease(idx / iterations) + from;
         let step = (to - from) * (idx / iterations) + from;
-        item.idx === 0 &&
-          console.log('SCROLL CSS createAnimationStep', {
-            idx,
-            step,
-            res: animationCss.replace('#', step),
-          });
         return animationCss.replace('#', step);
       };
 
@@ -149,7 +143,6 @@ class CssScrollHelper {
             )} ~ div ${selectorSuffix}`
           );
           from += this.pgScrollSteps[largestDividerIdx];
-          // console.count('pgScroll class created');
         }
         return scrollClasses;
       };
@@ -270,8 +263,6 @@ class CssScrollHelper {
         .map(([css, selectors]) => `${selectors.join(', ')} {${css}}`)
         .join(' ');
 
-      console.log('SCROLL CLASSES #' + item.idx, scrollClassesLog);
-
       return fullCss;
     };
   }
@@ -316,13 +307,11 @@ class CssScrollHelper {
     this.scrollCss[idx] = scrollCss || this.scrollCss[idx];
 
     return this.scrollCss[idx];
-    // console.count('pgScroll item created');
   }
 
   calcScrollCss({ galleryId, items, container, options }) {
     this.galleryId = galleryId;
     const scrollAnimation = options.scrollAnimation;
-    debugger;
     if (!(items && items.length)) {
       return [];
     }

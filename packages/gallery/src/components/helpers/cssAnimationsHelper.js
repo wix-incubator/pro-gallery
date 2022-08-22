@@ -35,30 +35,32 @@ export const createScrollAnimations = ({
     case SLIDE_UP:
       const rtlFix = isHorizontalScroll && isRTL ? -1 : 1;
       const slideGap = 100 * rtlFix;
-      const r = () => Math.round(Math.random() * slideGap);
+      const r = Math.round(Math.random() * slideGap);
       if (isHorizontalScroll) {
         return (
           createScrollSelectors({
-            fromPosition: 0 - slideGap + r(),
-            toPosition: 200 + r(),
+            fromPosition: 0 - slideGap + r,
+            toPosition: 200 + r,
             fromValue: slideGap,
             toValue: 0,
             selectorSuffix: `#${itemId} > div`,
             animationCss: `transform: translateX(#px);`,
             iterations: 20,
             reverseOnExit: true,
+            noEasing: true,
           }) + ` #${itemId} {overflow: visible !important;}`
         );
       } else {
         return createScrollSelectors({
-          fromPosition: 0 - slideGap + r(),
-          toPosition: 200 + r(),
+          fromPosition: 0 - slideGap + r,
+          toPosition: 200 + r,
           fromValue: slideGap,
           toValue: 0,
           selectorSuffix: `#${itemId}`,
           animationCss: `transform: translateY(#px);`,
           iterations: 20,
           reverseOnExit: true,
+          noEasing: true,
         });
       }
     case GRAYSCALE:
@@ -104,8 +106,8 @@ export const createScrollAnimations = ({
         'transparent';
       return (
         createScrollSelectors({
-          fromPosition: 100,
-          toPosition: 250,
+          fromPosition: 150,
+          toPosition: 500,
           fromValue: 0,
           toValue: 1,
           selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
@@ -117,7 +119,7 @@ export const createScrollAnimations = ({
       return createScrollSelectors({
         fromPosition: 50,
         toPosition: 200,
-        fromValue: 30,
+        fromValue: 50,
         toValue: 0,
         selectorSuffix: `#${itemId} .gallery-item-content`,
         animationCss: 'filter: blur(#px);',
@@ -126,8 +128,8 @@ export const createScrollAnimations = ({
       const pixel = item.createUrl('pixel', 'img');
       return (
         createScrollSelectors({
-          fromPosition: 100,
-          toPosition: 250,
+          fromPosition: 150,
+          toPosition: 500,
           fromValue: 0,
           toValue: 1,
           selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
