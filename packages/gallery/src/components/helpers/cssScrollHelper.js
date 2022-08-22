@@ -7,6 +7,9 @@ import { window } from 'pro-gallery-lib';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import { createScrollAnimations } from './cssAnimationsHelper';
 
+const isHorizontalScroll = (options) =>
+  options.scrollDirection === consts.scrollDirection.HORIZONTAL;
+
 class CssScrollHelper {
   constructor() {
     this.galleryId = '???';
@@ -56,12 +59,15 @@ class CssScrollHelper {
   }
 
   createScrollSelectorsFunction({ itemId, item, container, options }) {
+    debugger;
     const imageStart = Math.round(
-      options.oneRow ? item.offset.left : item.offset.top
+      isHorizontalScroll(options) ? item.offset.left : item.offset.top
     );
-    const imageSize = Math.round(options.oneRow ? item.width : item.height);
+    const imageSize = Math.round(
+      isHorizontalScroll(options) ? item.width : item.height
+    );
 
-    const containerSize = options.oneRow
+    const containerSize = isHorizontalScroll(options)
       ? Math.min(container.width, window.innerWidth)
       : Math.min(container.height, window.innerHeight) + container.scrollBase;
 
@@ -271,7 +277,7 @@ class CssScrollHelper {
   }
 
   createScrollAnimationsIfNeeded({ idx, item, container, options }) {
-    const { isRTL, oneRow, scrollAnimation, oneColorAnimationColor } = options;
+    const { isRTL, scrollAnimation, oneColorAnimationColor } = options;
 
     if (
       !scrollAnimation ||
@@ -291,10 +297,9 @@ class CssScrollHelper {
     return createScrollAnimations({
       createScrollSelectors,
       itemId,
-      idx,
       item,
-      container,
       options,
+      isHorizontalScroll: isHorizontalScroll(options),
     });
   }
 
@@ -317,6 +322,7 @@ class CssScrollHelper {
   calcScrollCss({ galleryId, items, container, options }) {
     this.galleryId = galleryId;
     const scrollAnimation = options.scrollAnimation;
+    debugger;
     if (!(items && items.length)) {
       return [];
     }

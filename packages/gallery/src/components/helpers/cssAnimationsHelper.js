@@ -3,12 +3,11 @@ import { GALLERY_CONSTS } from 'pro-gallery-lib';
 export const createScrollAnimations = ({
   createScrollSelectors,
   itemId,
-  idx,
   item,
-  container,
   options,
+  isHorizontalScroll,
 }) => {
-  const { isRTL, oneRow, scrollAnimation, oneColorAnimationColor } = options;
+  const { isRTL, scrollAnimation, oneColorAnimationColor } = options;
 
   const {
     NO_EFFECT,
@@ -34,19 +33,19 @@ export const createScrollAnimations = ({
         animationCss: 'opacity: #;',
       });
     case SLIDE_UP:
-      const rtlFix = oneRow && isRTL ? -1 : 1;
+      const rtlFix = isHorizontalScroll && isRTL ? -1 : 1;
       const slideGap = 100 * rtlFix;
       const r = () => Math.round(Math.random() * slideGap);
-      if (oneRow) {
+      if (isHorizontalScroll) {
         return (
           createScrollSelectors({
-            fromPosition: 0 - slideGap - r(),
-            toPosition: 100 - r(),
+            fromPosition: 0 - slideGap + r(),
+            toPosition: 200 + r(),
             fromValue: slideGap,
             toValue: 0,
             selectorSuffix: `#${itemId} > div`,
             animationCss: `transform: translateX(#px);`,
-            iterations: 100,
+            iterations: 20,
             reverseOnExit: true,
           }) + ` #${itemId} {overflow: visible !important;}`
         );
@@ -58,7 +57,7 @@ export const createScrollAnimations = ({
           toValue: 0,
           selectorSuffix: `#${itemId}`,
           animationCss: `transform: translateY(#px);`,
-          iterations: 10,
+          iterations: 20,
           reverseOnExit: true,
         });
       }
