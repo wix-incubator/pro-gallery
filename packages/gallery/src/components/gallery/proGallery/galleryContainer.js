@@ -671,7 +671,6 @@ export class GalleryContainer extends React.Component {
       options,
       galleryId: id,
     });
-    console.log('SCROLL CSS: getScrollCss', id, this.scrollCss);
     // }
   }
 

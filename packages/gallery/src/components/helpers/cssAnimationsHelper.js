@@ -19,6 +19,7 @@ export const createScrollAnimations = ({
     FADE_IN,
     GRAYSCALE,
     SLIDE_UP,
+    SLIDE_LEFT,
     EXPAND,
     SHRINK,
     ZOOM_OUT,
@@ -39,37 +40,6 @@ export const createScrollAnimations = ({
         selectorSuffix: `#${itemId} .gallery-item-wrapper`,
         animationCss: 'opacity: #;',
       });
-    case SLIDE_UP:
-      const rtlFix = isHorizontalScroll && isRTL ? -1 : 1;
-      const slideGap = i * 2 * rtlFix; // 0-200
-      const r = Math.round((Math.random() * slideGap) / 10);
-      if (isHorizontalScroll) {
-        return (
-          createScrollSelectors({
-            fromPosition: 0 - slideGap + r,
-            toPosition: i * 6 + r, // 0-600
-            fromValue: slideGap,
-            toValue: 0,
-            selectorSuffix: `#${itemId} > div`,
-            animationCss: `transform: translateX(#px);`,
-            iterations: 16,
-            reverseOnExit: true,
-            noEasing: true,
-          }) + ` #${itemId} {overflow: visible !important;}`
-        );
-      } else {
-        return createScrollSelectors({
-          fromPosition: 0 - slideGap + r,
-          toPosition: i * 4 + r, // 0-400
-          fromValue: slideGap,
-          toValue: 0,
-          selectorSuffix: `#${itemId}`,
-          animationCss: `transform: translateY(#px);`,
-          iterations: 16,
-          reverseOnExit: true,
-          noEasing: true,
-        });
-      }
     case GRAYSCALE:
       return createScrollSelectors({
         fromPosition: i * 2, //0-200
@@ -144,5 +114,65 @@ export const createScrollAnimations = ({
         }) +
         ` #${itemId} .gallery-item-wrapper {background-image: url(${pixel}) !important;}`
       );
+    case SLIDE_UP: {
+      const rtlFix = isHorizontalScroll && isRTL ? -1 : 1;
+      const slideGap = i * 2 * rtlFix; // 0-200
+      const r = Math.round((Math.random() * slideGap) / 10);
+      if (isHorizontalScroll) {
+        return (
+          createScrollSelectors({
+            fromPosition: 0 - slideGap + r,
+            toPosition: i * 6 + r, // 0-600
+            fromValue: slideGap,
+            toValue: 0,
+            selectorSuffix: `#${itemId} > div`,
+            animationCss: `transform: translateX(#px);`,
+            iterations: 16,
+            reverseOnExit: true,
+            noEasing: true,
+          }) + ` #${itemId} {overflow: visible !important;}`
+        );
+      } else {
+        return createScrollSelectors({
+          fromPosition: 0 - slideGap + r,
+          toPosition: i * 4 + r, // 0-400
+          fromValue: slideGap,
+          toValue: 0,
+          selectorSuffix: `#${itemId}`,
+          animationCss: `transform: translateY(#px);`,
+          iterations: 16,
+          reverseOnExit: true,
+          noEasing: true,
+        });
+      }}
+    case SLIDE_LEFT: {
+      const rtlFix = isHorizontalScroll && isRTL ? -1 : 1;
+      if (isHorizontalScroll) {
+        return (
+          createScrollSelectors({
+            fromPosition: 0,
+            toPosition: i * 6, // 0-600
+            fromValue: 100,
+            toValue: 0,
+            selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
+            animationCss: `transform: translateY(-#%);`,
+            iterations: 16,
+            reverseOnExit: true,
+            noEasing: true,
+          }) + ` #${itemId} {overflow: visible !important;}`
+        );
+      } else {
+        return createScrollSelectors({
+          fromPosition: 0,
+          toPosition: i * 4, // 0-400
+          fromValue: 100,
+          toValue: 0,
+          selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
+          animationCss: `transform: translateX(#%);`,
+          iterations: 16,
+          reverseOnExit: true,
+          noEasing: true,
+        });
+      }
   }
 };
