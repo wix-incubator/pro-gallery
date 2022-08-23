@@ -139,6 +139,7 @@ const setMobileFonts = (options) => {
 
 const forceHoverToShowTextsIfNeeded = (options) =>{
   let _options = {...options}
+  if(options.EXPERIMENTALallowParallelInfos) return _options
   if (
     !hasHoverPlacement(_options.titlePlacement) &&
     _options.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
