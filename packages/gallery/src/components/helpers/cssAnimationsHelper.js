@@ -109,7 +109,7 @@ export const createScrollAnimations = ({
     case BLUR:
       return createScrollSelectors({
         fromPosition: i * 2, // 0-200
-        toPosition: i * 10, // 0-1000
+        toPosition: i * 8, // 0-800
         fromValue: 25 + i / 2, // 25-75
         toValue: 0,
         selectorSuffix: `#${itemId} .gallery-item-content`,
@@ -122,8 +122,8 @@ export const createScrollAnimations = ({
         'transparent';
       return (
         createScrollSelectors({
-          fromPosition: i * 6, // 0-600
-          toPosition: i * 20, // 0-2000
+          fromPosition: i * 2, // 0-200
+          toPosition: i * 8, // 0-800
           fromValue: 0,
           toValue: 1,
           selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
@@ -135,8 +135,8 @@ export const createScrollAnimations = ({
       const pixel = item.createUrl('pixel', 'img');
       return (
         createScrollSelectors({
-          fromPosition: i * 6, // 0-600
-          toPosition: i * 20, // 0-2000
+          fromPosition: i * 2, // 0-200
+          toPosition: i * 8, // 0-800
           fromValue: 0,
           toValue: 1,
           selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
