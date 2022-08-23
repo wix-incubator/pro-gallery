@@ -141,13 +141,10 @@ const setMobileFonts = (options) => {
 const forceHoverToShowTextsIfNeeded = (options) =>{
   let _options = {...options}
   const allowdParallelInfos = !options.EXPERIMENTALallowParallelInfos
-  if(allowdParallelInfos) return _options
-  const userAskedExternalInfoOnly = !hasHoverPlacement(_options.titlePlacement)
-  const userDidNotCancelOverlayEntire = _options.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
+  if(!allowdParallelInfos) return _options
   if (
-    userAskedExternalInfoOnly &&
-    userDidNotCancelOverlayEntire
-    && allowdParallelInfos
+    !hasHoverPlacement(_options.titlePlacement) &&
+    _options.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
   ) {
     _options.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.APPEARS;
   }
