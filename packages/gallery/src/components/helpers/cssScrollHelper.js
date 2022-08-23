@@ -196,7 +196,7 @@ class CssScrollHelper {
         [selectorSuffix]
       );
 
-      if (options.animationDirection === 'BOTH') {
+      if (options.scrollAnimationDirection === 'BOTH') {
         addScrollClass(
           createAnimationStep(0) + 'transtion: none !important;',
           createSelectorsRange(
@@ -221,7 +221,7 @@ class CssScrollHelper {
             exitAnimationEnd + animationPadding
           )
         );
-      } else if (options.animationDirection === 'IN') {
+      } else if (options.scrollAnimationDirection === 'IN') {
         addScrollClass(
           createAnimationStep(0) + 'transtion: none !important;',
           createSelectorsRange(
@@ -239,7 +239,7 @@ class CssScrollHelper {
             entryAnimationEnd + animationPadding
           )
         );
-      } else if (options.animationDirection === 'OUT') {
+      } else if (options.scrollAnimationDirection === 'OUT') {
         addScrollClass(
           createAnimationStep(iterations) + 'transtion: none !important;',
           createSelectorsRange(

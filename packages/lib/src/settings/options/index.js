@@ -77,7 +77,8 @@ import gallerySizeRatio from './gallerySizeRatio';
 import allowContextMenu from './allowContextMenu';
 import galleryLayout from './galleryLayout';
 import scrollDirection from './scrollDirection';
-import animationDirection from './animationDirection';
+import scrollAnimationDirection from './scrollAnimationDirection';
+import scrollAnimationIntensity from './scrollAnimationIntensity';
 import scrollDuration from './scrollDuration';
 import isAutoSlideshow from './isAutoSlideshow';
 import loadMoreAmount from './loadMoreAmount';
@@ -284,7 +285,8 @@ export default {
   galleryLayout,
   [optionsMap.layoutParams.structure.galleryLayout]: galleryLayout,
   scrollDirection,
-  animationDirection,
+  scrollAnimationDirection,
+  scrollAnimationIntensity,
   [optionsMap.layoutParams.structure.scrollDirection]: scrollDirection,
   scrollDuration,
   [optionsMap.behaviourParams.gallery.horizontal.navigationDuration]:

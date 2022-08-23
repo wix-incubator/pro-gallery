@@ -112,7 +112,7 @@ export function App() {
         }
         break;
       case GALLERY_EVENTS.ITEM_ACTION_TRIGGERED:
-        console.log({ eventName, eventData, event });
+        // console.log({ eventName, eventData, event });
         // setFullscreenIdx(eventData.idx);
         break;
       case GALLERY_EVENTS.LOAD_MORE_CLICKED:

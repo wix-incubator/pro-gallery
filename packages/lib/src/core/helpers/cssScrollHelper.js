@@ -191,7 +191,7 @@
 
 //       debugger; //eslint-disable-line
 
-//       if (styleParams.animationDirection === 'BOTH') {
+//       if (styleParams.scrollAnimationDirection === 'BOTH') {
 //         addScrollClass(
 //           createAnimationStep(0) + 'transtion: none !important;',
 //           createSelectorsRange(
@@ -216,7 +216,7 @@
 //             exitAnimationEnd + animationPadding
 //           )
 //         );
-//       } else if (styleParams.animationDirection === 'IN') {
+//       } else if (styleParams.scrollAnimationDirection === 'IN') {
 //         addScrollClass(
 //           createAnimationStep(0) + 'transtion: none !important;',
 //           createSelectorsRange(
@@ -234,7 +234,7 @@
 //             entryAnimationEnd + animationPadding
 //           )
 //         );
-//       } else if (styleParams.animationDirection === 'OUT') {
+//       } else if (styleParams.scrollAnimationDirection === 'OUT') {
 //         addScrollClass(
 //           createAnimationStep(iterations) + 'transtion: none !important;',
 //           createSelectorsRange(

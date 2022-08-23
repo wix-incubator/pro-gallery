@@ -41,7 +41,7 @@ import placements, {
 import resizeMethods from './resizeMethods';
 import scrollAnimations from './scrollAnimations';
 import slideAnimations from './slideAnimations';
-import animationDirection from './animationDirection';
+import scrollAnimationDirection from './scrollAnimationDirection';
 import scrollDirection from './scrollDirection';
 import socialNetworks from './socialNetworks';
 import textBoxWidthCalculationOptions from './textBoxWidthCalculationOptions';
@@ -117,7 +117,7 @@ export default {
   videoPlay,
   viewMode,
   imagePlacementAnimations,
-  animationDirection,
+  scrollAnimationDirection,
   slideTransition,
   overlayPositions,
   overlaySizeType,
