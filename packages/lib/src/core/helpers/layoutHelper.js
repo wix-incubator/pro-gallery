@@ -137,11 +137,17 @@ const setMobileFonts = (options) => {
   return _options;
 }
 
+
 const forceHoverToShowTextsIfNeeded = (options) =>{
   let _options = {...options}
+  const allowdParallelInfos = !options.EXPERIMENTALallowParallelInfos
+  if(allowdParallelInfos) return _options
+  const userAskedExternalInfoOnly = !hasHoverPlacement(_options.titlePlacement)
+  const userDidNotCancelOverlayEntire = _options.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
   if (
-    !hasHoverPlacement(_options.titlePlacement) &&
-    _options.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
+    userAskedExternalInfoOnly &&
+    userDidNotCancelOverlayEntire
+    && allowdParallelInfos
   ) {
     _options.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.APPEARS;
   }
@@ -368,6 +374,10 @@ const setTextUnderline = (itemFontOption, textDecorationType, options) => {
 };
 
 function processLayouts(options, customExternalInfoRendererExists) {
+  console.log('processLayouts options.behaviourParams_item_overlay_hoveringBehaviour '+ options.behaviourParams?.item?.overlay?.hoveringBehaviour)
+  console.log('processLayouts options.hoveringBehaviour '+ options.hoveringBehaviour)
+  console.log('EXPERIMENTALallowParallelInfos2 ', options.EXPERIMENTALallowParallelInfos)
+
   let processedOptions = {...options};
   if (utils.isMobile()) {
     processedOptions = setMobileFonts(processedOptions);
@@ -391,6 +401,8 @@ function processLayouts(options, customExternalInfoRendererExists) {
     processedOptions = blockScrollOnFadeOrDeckScrollAnimations(processedOptions); 
     processedOptions = blockVideoControlsOnMouseCursorNavigation(processedOptions);
 
+  console.log('processLayouts processedOptions.behaviourParams?.item?.overlay?.hoveringBehaviour '+ processedOptions.behaviourParams?.item?.overlay?.hoveringBehaviour)
+  console.log('processLayouts processedOptions.hoveringBehaviour '+ processedOptions.hoveringBehaviour)
   return processedOptions;
 }
 
