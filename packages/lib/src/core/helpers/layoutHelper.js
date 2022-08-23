@@ -374,9 +374,6 @@ const setTextUnderline = (itemFontOption, textDecorationType, options) => {
 };
 
 function processLayouts(options, customExternalInfoRendererExists) {
-  console.log('processLayouts options.behaviourParams_item_overlay_hoveringBehaviour '+ options.behaviourParams?.item?.overlay?.hoveringBehaviour)
-  console.log('processLayouts options.hoveringBehaviour '+ options.hoveringBehaviour)
-  console.log('EXPERIMENTALallowParallelInfos2 ', options.EXPERIMENTALallowParallelInfos)
 
   let processedOptions = {...options};
   if (utils.isMobile()) {
@@ -401,8 +398,6 @@ function processLayouts(options, customExternalInfoRendererExists) {
     processedOptions = blockScrollOnFadeOrDeckScrollAnimations(processedOptions); 
     processedOptions = blockVideoControlsOnMouseCursorNavigation(processedOptions);
 
-  console.log('processLayouts processedOptions.behaviourParams?.item?.overlay?.hoveringBehaviour '+ processedOptions.behaviourParams?.item?.overlay?.hoveringBehaviour)
-  console.log('processLayouts processedOptions.hoveringBehaviour '+ processedOptions.hoveringBehaviour)
   return processedOptions;
 }
 
