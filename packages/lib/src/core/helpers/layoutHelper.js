@@ -137,11 +137,9 @@ const setMobileFonts = (options) => {
   return _options;
 }
 
-
 const forceHoverToShowTextsIfNeeded = (options) =>{
   let _options = {...options}
-  const allowdParallelInfos = !options.EXPERIMENTALallowParallelInfos
-  if(!allowdParallelInfos) return _options
+  if(options.EXPERIMENTALallowParallelInfos) return _options
   if (
     !hasHoverPlacement(_options.titlePlacement) &&
     _options.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
@@ -371,7 +369,6 @@ const setTextUnderline = (itemFontOption, textDecorationType, options) => {
 };
 
 function processLayouts(options, customExternalInfoRendererExists) {
-
   let processedOptions = {...options};
   if (utils.isMobile()) {
     processedOptions = setMobileFonts(processedOptions);
