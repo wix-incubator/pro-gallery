@@ -58,7 +58,10 @@ class ImageItem extends React.Component {
   }
 
   getImageContainer(imageRenderer, classNames, extraNodes) {
-    const { imageDimensions, id, actions } = this.props;
+    const { imageDimensions, id, actions, options } = this.props;
+
+    const perspective = options.scrollAnimation ===
+      GALLERY_CONSTS.scrollAnimations.ROTATE3D && { perspective: '1000px' };
 
     return (
       <div
@@ -67,7 +70,7 @@ class ImageItem extends React.Component {
         onTouchEnd={actions.handleItemMouseUp}
         key={'image_container-' + id}
         data-hook={'image-item'}
-        style={imageDimensions}
+        style={{ ...imageDimensions, ...perspective }}
       >
         {imageRenderer()}
         {extraNodes}

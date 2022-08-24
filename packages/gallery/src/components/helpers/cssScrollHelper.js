@@ -76,16 +76,19 @@ class CssScrollHelper {
       fromValue,
       toValue,
       selectorSuffix,
-      animationCss,
+      entryAnimationCss,
+      exitAnimationCss,
       reverseOnExit,
       noEasing,
-      iterations = 10,
     }) => {
       // fromPosition:  the distance from the bottom of the screen to start the animation
       // toPosition:  the distance from the bottom of the screen to end the animation
       // fromValue: the animation start value
       // toValue: the animation end value
 
+      const animationCss = (isExit) =>
+        isExit && exitAnimationCss ? exitAnimationCss : entryAnimationCss;
+      const iterations = Math.round(options.scrollAnimationIntensity / 4);
       const exitFix = reverseOnExit ? -1 : 1;
       const [enterFrom, enterTo] = [fromValue, toValue];
       const [exitFrom, exitTo] = [toValue, fromValue * exitFix];
@@ -99,7 +102,7 @@ class CssScrollHelper {
           noEasing ? t : t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
         let stepWithEase = (to - from) * ease(idx / iterations) + from;
         let step = (to - from) * (idx / iterations) + from;
-        return animationCss.replace('#', step);
+        return animationCss(isExit).replaceAll('#', step);
       };
 
       const createSelectorsRange = (fromPosition, toPosition) => {
@@ -148,7 +151,7 @@ class CssScrollHelper {
         const animationPadding = 1000;
 
         const transitionCss = `transition: ${
-          animationCss.split(':')[0]
+          animationCss(false).split(':')[0]
         } ${transitionDuration}ms ease !important`;
 
         const animationDuration = Math.round(toPosition - fromPosition);
@@ -181,7 +184,7 @@ class CssScrollHelper {
 
         //first batch: animation start value until the range start:
         addScrollClass(
-          `${transitionCss}; ${animationCss.replace('#', enterTo)}`,
+          `${transitionCss}; ${animationCss(false).replaceAll('#', enterTo)}`,
           [selectorSuffix]
         );
 
