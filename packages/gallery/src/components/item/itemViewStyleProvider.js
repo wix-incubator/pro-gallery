@@ -11,8 +11,6 @@ export function getContainerStyle(options) {
         options.itemBorderColor
       ),
       ...boxShadow(options),
-      ...(options.scrollAnimation ===
-        GALLERY_CONSTS.scrollAnimations.ROTATE3D && { perspective: '1000px' }),
     }),
   };
 }

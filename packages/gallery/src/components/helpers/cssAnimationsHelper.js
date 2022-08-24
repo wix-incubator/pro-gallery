@@ -137,19 +137,21 @@ export const createScrollAnimations = ({
           ? 'left'
           : 'right'
         : 'bottom';
-      return createScrollSelectors({
-        fromPosition: 0, // 0-100
-        toPosition: i * 3, // 0-400
-        fromValue: (i * 10) / 10, // 0-90
-        toValue: 0,
-        selectorSuffix: `#${itemId}>div`,
-        entryAnimationCss: `transform: rotate3d(-${h ? 0 : 1}, ${
-          h ? 1 : 0
-        }, 0, #deg); transform-origin: ${entryOrigin};`,
-        exitAnimationCss: `transform: rotate3d(${h ? 0 : 1}, -${
-          h ? 1 : 0
-        }, 0, #deg); transform-origin: ${exitOrigin};`,
-      });
+      return (
+        createScrollSelectors({
+          fromPosition: 0, // 0-100
+          toPosition: i * 3, // 0-400
+          fromValue: (i * 10) / 10, // 0-90
+          toValue: 0,
+          selectorSuffix: `#${itemId}>div`,
+          entryAnimationCss: `transform: rotate3d(-${h ? 0 : 1}, ${
+            h ? 1 : 0
+          }, 0, #deg); transform-origin: ${entryOrigin};`,
+          exitAnimationCss: `transform: rotate3d(${h ? 0 : 1}, -${
+            h ? 1 : 0
+          }, 0, #deg); transform-origin: ${exitOrigin};`,
+        }) + `#${itemId} {perspective: 1000px;}`
+      );
     }
     case ONE_COLOR:
       const bgColor =
