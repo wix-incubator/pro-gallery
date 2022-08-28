@@ -12,6 +12,6 @@ export default {
     (sp.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
       sp.slideAnimation === GALLERY_CONSTS.slideAnimations.SCROLL),
   options: createOptions('scrollAnimations'),
-  type: INPUT_TYPES.MULTISELECT,
+  type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
 };
