@@ -136,44 +136,47 @@ export const createScrollAnimations = ({
         ? 'left'
         : 'right'
       : 'bottom';
-    scrollSelectors.push({
-      fromPosition: 0, // 0-100
-      toPosition: i * 3, // 0-400
-      fromValue: (i * 10) / 10, // 0-90
-      toValue: 0,
-      selectorSuffix: `#${itemId}>div`,
-      entryAnimationCss: `transform: rotate3d(-${h ? 0 : 1}, ${
-        h ? 1 : 0
-      }, 0, #deg); transform-origin: ${entryOrigin};`,
-      exitAnimationCss: `transform: rotate3d(${h ? 0 : 1}, -${
-        h ? 1 : 0
-      }, 0, #deg); transform-origin: ${exitOrigin};`,
-    }) + `#${itemId} {perspective: 1000px;}`;
+    scrollSelectors +=
+      createScrollSelectors({
+        fromPosition: 0, // 0-100
+        toPosition: i * 3, // 0-400
+        fromValue: (i * 10) / 10, // 0-90
+        toValue: 0,
+        selectorSuffix: `#${itemId}>div`,
+        entryAnimationCss: `transform: rotate3d(-${h ? 0 : 1}, ${
+          h ? 1 : 0
+        }, 0, #deg); transform-origin: ${entryOrigin};`,
+        exitAnimationCss: `transform: rotate3d(${h ? 0 : 1}, -${
+          h ? 1 : 0
+        }, 0, #deg); transform-origin: ${exitOrigin};`,
+      }) + `#${itemId} {perspective: 1000px;}`;
   }
 
   if (scrollAnimation.includes('ONE_COLOR')) {
     const bgColor =
       oneColorAnimationColor?.value || oneColorAnimationColor || 'transparent';
-    scrollSelectors.push({
-      fromPosition: i * 2, // 0-200
-      toPosition: i * 8, // 0-800
-      fromValue: 0,
-      toValue: 1,
-      selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
-      entryAnimationCss: `opacity :#;`,
-    }) +
+    scrollSelectors +=
+      createScrollSelectors({
+        fromPosition: i * 2, // 0-200
+        toPosition: i * 8, // 0-800
+        fromValue: 0,
+        toValue: 1,
+        selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
+        entryAnimationCss: `opacity :#;`,
+      }) +
       ` #${itemId} .gallery-item-wrapper {background-color: ${bgColor} !important;}`;
   }
   if (scrollAnimation.includes('MAIN_COLOR')) {
     const pixel = item.createUrl('pixel', 'img');
-    scrollSelectors.push({
-      fromPosition: i * 2, // 0-200
-      toPosition: i * 8, // 0-800
-      fromValue: 0,
-      toValue: 1,
-      selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
-      entryAnimationCss: `opacity :#;`,
-    }) +
+    scrollSelectors +=
+      createScrollSelectors({
+        fromPosition: i * 2, // 0-200
+        toPosition: i * 8, // 0-800
+        fromValue: 0,
+        toValue: 1,
+        selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
+        entryAnimationCss: `opacity :#;`,
+      }) +
       ` #${itemId} .gallery-item-wrapper {background-image: url(${pixel}) !important;}`;
   }
   if (scrollAnimation.includes('SLIDE_UP')) {
@@ -181,15 +184,16 @@ export const createScrollAnimations = ({
     const slideGap = i * 2 * rtlFix; // 0-200
     const r = Math.round((Math.random() * slideGap) / 10);
     if (isHorizontalScroll) {
-      scrollSelectors.push({
-        fromPosition: 0 - slideGap + r,
-        toPosition: i * 6 + r, // 0-600
-        fromValue: slideGap,
-        toValue: 0,
-        selectorSuffix: `#${itemId} > div`,
-        entryAnimationCss: `transform: translateX(#px);`,
-        reverseOnExit: true,
-      }) + ` #${itemId} {overflow: visible !important;}`;
+      scrollSelectors +=
+        createScrollSelectors({
+          fromPosition: 0 - slideGap + r,
+          toPosition: i * 6 + r, // 0-600
+          fromValue: slideGap,
+          toValue: 0,
+          selectorSuffix: `#${itemId} > div`,
+          entryAnimationCss: `transform: translateX(#px);`,
+          reverseOnExit: true,
+        }) + ` #${itemId} {overflow: visible !important;}`;
     } else {
       scrollSelectors.push({
         fromPosition: 0 - slideGap + r,
@@ -205,15 +209,16 @@ export const createScrollAnimations = ({
 
   if (scrollAnimation.includes('SLIDE_IN')) {
     if (isHorizontalScroll) {
-      scrollSelectors.push({
-        fromPosition: 0,
-        toPosition: i * 6, // 0-600
-        fromValue: 100,
-        toValue: 0,
-        selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
-        entryAnimationCss: `transform: translateY(#%);`,
-        reverseOnExit: true,
-      }) + ` #${itemId} {overflow: visible !important;}`;
+      scrollSelectors +=
+        createScrollSelectors({
+          fromPosition: 0,
+          toPosition: i * 6, // 0-600
+          fromValue: 100,
+          toValue: 0,
+          selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
+          entryAnimationCss: `transform: translateY(#%);`,
+          reverseOnExit: true,
+        }) + ` #${itemId} {overflow: visible !important;}`;
     } else {
       scrollSelectors.push({
         fromPosition: 0,
@@ -229,16 +234,17 @@ export const createScrollAnimations = ({
 
   if (scrollAnimation.includes('SLIDE_IN_REVERSED')) {
     if (isHorizontalScroll) {
-      scrollSelectors.push({
-        fromPosition: 0,
-        toPosition: i * 6, // 0-600
-        fromValue: 100,
-        toValue: 0,
-        selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
-        entryAnimationCss: `transform: translateY(-#%);`,
-        reverseOnExit: true,
-        noEasing: true,
-      }) + ` #${itemId} {overflow: visible !important;}`;
+      scrollSelectors +=
+        createScrollSelectors({
+          fromPosition: 0,
+          toPosition: i * 6, // 0-600
+          fromValue: 100,
+          toValue: 0,
+          selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
+          entryAnimationCss: `transform: translateY(-#%);`,
+          reverseOnExit: true,
+          noEasing: true,
+        }) + ` #${itemId} {overflow: visible !important;}`;
     } else {
       scrollSelectors.push({
         fromPosition: 0,
@@ -255,31 +261,5 @@ export const createScrollAnimations = ({
 
   // TODO - merge all scroll selectors into several objects for different ranges
 
-  //   const mergeSelectors = (selectors, fromPosition, toPosition) => {};
-  //   let pointData = {};
-  //   let points = [];
-  //   for (let selector of scrollSelectors) {
-  //     const { fromPosition, toPosition } = selector;
-  //     if (points.indexOf(fromPosition) === -1) points.push(fromPosition);
-  //     if (points.indexOf(toPosition) === -1) points.push(toPosition);
-  //   }
-  //   points = points.sort((p1, p2) => p1 - p2);
-
-  //   for (let point of points) {
-  //     for (let selector of scrollSelectors) {
-  //       const { fromPosition, toPosition } = selector;
-  //       if (point === fromPosition) {
-  //         console.log('pointData[point]', pointData[point]);
-  //         pointData[point] = [...(pointData[point] || []), selector];
-  //       }
-  //       if (point > fromPosition && point < toPosition) {
-  //         console.log('pointData[point]', pointData[point]);
-  //         pointData[point] = [...(pointData[point] || []), selector];
-  //       }
-  //     }
-  //   }
-
-  //   console.log({ points, pointData });
-
-  return scrollSelectors.map(createScrollSelectors).join(';\n');
+  return createScrollSelectors(scrollSelectors[0]);
 };
