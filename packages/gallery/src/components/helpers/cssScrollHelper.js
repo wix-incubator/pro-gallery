@@ -18,7 +18,7 @@ class CssScrollHelper {
       this.pgScrollSteps.push(i);
     }
     this.pgScrollSteps.reverse();
-    this.pgScrollClassName = 'pgscl';
+    this.pgScrollClassName = 'pgs';
 
     this.scrollCss = [];
     this.scrollCssProps = [];
@@ -36,8 +36,8 @@ class CssScrollHelper {
   }
 
   buildScrollClassName(idx, val, itemId) {
-    const shortId = String(this.galleryId).replace(/[\W]+/g, '').slice(-8);
-    return `${this.pgScrollClassName}_${shortId}_${val}-${
+    const shortId = String(this.galleryId).replace(/[\W]+/g, '').slice(-4);
+    return `${this.pgScrollClassName}${shortId}_${val}-${
       this.pgScrollSteps[idx] + Number(val)
     }`;
   }
@@ -254,8 +254,10 @@ class CssScrollHelper {
         }
 
         const fullCss = Object.entries(scrollClasses)
-          .map(([css, selectors]) => `${selectors.join(', ')} {${css}}`)
-          .join(' ');
+          .map(([css, selectors]) =>
+            selectors[0] ? `${selectors.join(',\n')} \n{${css}}\n` : ''
+          )
+          .join('\n');
 
         return fullCss;
       };
