@@ -34,12 +34,13 @@ export const createScrollAnimations = ({
   } = GALLERY_CONSTS.scrollAnimations;
 
   const i = scrollAnimationIntensity || 25;
+  const r = (num) => num + Math.round((Math.random() * i) / 4);
 
   switch (scrollAnimation) {
     case FADE_IN:
       return createScrollSelectors({
-        fromPosition: i * 2,
-        toPosition: i * 10,
+        fromPosition: r(i * 2),
+        toPosition: r(100 + i * 10),
         fromValue: 0,
         toValue: 1,
         selectorSuffix: `#${itemId} .gallery-item-wrapper`,
@@ -47,8 +48,8 @@ export const createScrollAnimations = ({
       });
     case GRAYSCALE:
       return createScrollSelectors({
-        fromPosition: i * 2, //0-200
-        toPosition: i * 10, //0-1000
+        fromPosition: r(i * 2), //0-200
+        toPosition: r(100 + i * 10), //0-1000
         fromValue: 100,
         toValue: 0,
         selectorSuffix: `#${itemId} .gallery-item-content`,
@@ -56,8 +57,8 @@ export const createScrollAnimations = ({
       });
     case EXPAND:
       return createScrollSelectors({
-        fromPosition: i * 2, //0-200
-        toPosition: i * 10, //0-1000
+        fromPosition: r(i * 2), //0-200
+        toPosition: r(100 + i * 10), //0-1000
         fromValue: Math.round(95 - i / 4) / 100, // 0.95-0.7
         toValue: 1,
         selectorSuffix: `#${itemId} .gallery-item-wrapper`,
@@ -65,8 +66,8 @@ export const createScrollAnimations = ({
       });
     case ZOOM_OUT:
       return createScrollSelectors({
-        fromPosition: i * 2, //0-200
-        toPosition: i * 10, //0-1000
+        fromPosition: r(i * 2), //0-200
+        toPosition: r(100 + i * 10), //0-1000
         fromValue: Math.round(110 + i / 4) / 100, // 1.1-1.35
         toValue: 1,
         selectorSuffix: `#${itemId} .gallery-item-wrapper`,
@@ -74,17 +75,17 @@ export const createScrollAnimations = ({
       });
     case SHRINK:
       return createScrollSelectors({
-        fromPosition: i * 2, // 0-200
-        toPosition: i * 10, // 0-1000
-        fromValue: Math.round(105 + i / 5) / 100, // 1.05-1.25
+        fromPosition: r(i * 2), // 0-200
+        toPosition: r(100 + i * 10), // 0-1000
+        fromValue: Math.round(101 + i / 20) / 100, // 1.05-1.25
         toValue: 1,
         selectorSuffix: `#${itemId}`,
         entryAnimationCss: 'transform: scale(#);',
       });
     case BLUR:
       return createScrollSelectors({
-        fromPosition: i * 2, // 0-200
-        toPosition: i * 8, // 0-800
+        fromPosition: r(i * 2), // 0-200
+        toPosition: r(100 + i * 8), // 0-800
         fromValue: Math.round(25 + i / 2), // 25-75
         toValue: 0,
         selectorSuffix: `#${itemId} .gallery-item-content`,
@@ -92,8 +93,8 @@ export const createScrollAnimations = ({
       });
     case HINGE:
       return createScrollSelectors({
-        fromPosition: i * 2, // 0-200
-        toPosition: i * 8, // 0-800
+        fromPosition: r(i * 2), // 0-200
+        toPosition: r(100 + i * 8), // 0-800
         fromValue: Math.round(5 + i / 5), // 5-25
         toValue: 0,
         selectorSuffix: `#${itemId}`,
@@ -115,8 +116,8 @@ export const createScrollAnimations = ({
           : 'right'
         : 'bottom';
       return createScrollSelectors({
-        fromPosition: i * 2, // 0-200
-        toPosition: i * 8, // 0-800
+        fromPosition: r(i), // 0-200
+        toPosition: r(100 + i * 4), // 0-800
         fromValue: Math.round((i * 4) / 5) / 100, // .8-0
         toValue: 1,
         selectorSuffix: `#${itemId} .gallery-item-content img`,
@@ -139,9 +140,9 @@ export const createScrollAnimations = ({
         : 'bottom';
       return (
         createScrollSelectors({
-          fromPosition: 0, // 0-100
-          toPosition: i * 3, // 0-400
-          fromValue: (i * 10) / 10, // 0-90
+          fromPosition: r(0), //) 0-100
+          toPosition: r(100 + i * 3), // 0-400
+          fromValue: (i * 9) / 10, // 0-90
           toValue: 0,
           selectorSuffix: `#${itemId}>div`,
           entryAnimationCss: `transform: rotate3d(-${h ? 0 : 1}, ${
@@ -160,8 +161,8 @@ export const createScrollAnimations = ({
         'transparent';
       return (
         createScrollSelectors({
-          fromPosition: i * 2, // 0-200
-          toPosition: i * 8, // 0-800
+          fromPosition: r(i), // 0-200
+          toPosition: r(100 + i * 7), // 0-800
           fromValue: 0,
           toValue: 1,
           selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
@@ -173,8 +174,8 @@ export const createScrollAnimations = ({
       const pixel = item.createUrl('pixel', 'img');
       return (
         createScrollSelectors({
-          fromPosition: i * 2, // 0-200
-          toPosition: i * 8, // 0-800
+          fromPosition: r(i),
+          toPosition: r(100 + i * 7),
           fromValue: 0,
           toValue: 1,
           selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
@@ -185,12 +186,11 @@ export const createScrollAnimations = ({
     case SLIDE_UP: {
       const rtlFix = isHorizontalScroll && isRTL ? -1 : 1;
       const slideGap = i * 2 * rtlFix; // 0-200
-      const r = Math.round((Math.random() * slideGap) / 10);
       if (isHorizontalScroll) {
         return (
           createScrollSelectors({
-            fromPosition: 0 - slideGap + r,
-            toPosition: i * 6 + r, // 0-600
+            fromPosition: r(0 - slideGap),
+            toPosition: r(100 + i * 6), // 0-600
             fromValue: slideGap,
             toValue: 0,
             selectorSuffix: `#${itemId} > div`,
@@ -200,8 +200,8 @@ export const createScrollAnimations = ({
         );
       } else {
         return createScrollSelectors({
-          fromPosition: 0 - slideGap + r,
-          toPosition: i * 4 + r, // 0-400
+          fromPosition: r(0 - slideGap),
+          toPosition: r(100 + i * 4), // 0-400
           fromValue: slideGap,
           toValue: 0,
           selectorSuffix: `#${itemId}`,
@@ -214,25 +214,23 @@ export const createScrollAnimations = ({
       if (isHorizontalScroll) {
         return (
           createScrollSelectors({
-            fromPosition: 0,
-            toPosition: i * 6, // 0-600
+            fromPosition: r(0),
+            toPosition: r(100 + i * 6), // 0-600
             fromValue: 100,
             toValue: 0,
             selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
             entryAnimationCss: `transform: translateY(#%);`,
-            iterations: 16,
             reverseOnExit: true,
           }) + ` #${itemId} {overflow: visible !important;}`
         );
       } else {
         return createScrollSelectors({
-          fromPosition: 0,
-          toPosition: i * 4, // 0-400
+          fromPosition: r(0),
+          toPosition: r(100 + i * 4), // 0-400
           fromValue: 100,
           toValue: 0,
           selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
           entryAnimationCss: `transform: translateX(#%);`,
-          iterations: 16,
           reverseOnExit: true,
         });
       }
@@ -241,26 +239,24 @@ export const createScrollAnimations = ({
       if (isHorizontalScroll) {
         return (
           createScrollSelectors({
-            fromPosition: 0,
-            toPosition: i * 6, // 0-600
+            fromPosition: r(0),
+            toPosition: r(100 + i * 6), // 0-600
             fromValue: 100,
             toValue: 0,
             selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
             entryAnimationCss: `transform: translateY(-#%);`,
-            iterations: 16,
             reverseOnExit: true,
             noEasing: true,
           }) + ` #${itemId} {overflow: visible !important;}`
         );
       } else {
         return createScrollSelectors({
-          fromPosition: 0,
-          toPosition: i * 4, // 0-400
+          fromPosition: r(0),
+          toPosition: r(100 + i * 4), // 0-400
           fromValue: 100,
           toValue: 0,
           selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
           entryAnimationCss: `transform: translateX(-#%);`,
-          iterations: 16,
           reverseOnExit: true,
           noEasing: true,
         });

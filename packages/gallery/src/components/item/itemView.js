@@ -1029,9 +1029,7 @@ class ItemView extends React.Component {
             idx={idx}
             css={this.props.scrollAnimationCss[idx]}
           />
-        ) : (
-          <div>NO CSS</div>
-        )}
+        ) : null}
       </a>
     );
   }

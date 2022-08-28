@@ -8,5 +8,5 @@ export default {
   min: 0,
   max: 100,
   default: 25,
-  description: `Set the intensity of the scrollAnimation. SEtting a higher number with make the scroll animation start later and be more visible`,
+  description: `Set the intensity of the scrollAnimation. Setting a higher number with make the scroll animation start later and be more visible`,
 };
