@@ -9,8 +9,38 @@ class GalleryItem {
 
     this.createUrl = this.createUrl.bind(this);
     this.createMagnifiedUrl = this.createMagnifiedUrl.bind(this);
+    this.createSecondMediaItemIfNeeded(config);
 
     this.update(config);
+  }
+  createSecondMediaItemIfNeeded(config) {
+    if (config.dto.secondaryMedia) {
+      this.secondaryMediaItem = new GalleryItem(this.mapItemConfig(config));
+    }
+  }
+
+  updateSecondaryMedia(config) {
+    if (this.secondaryMediaItem) {
+      this.secondaryMediaItem.update(this.mapItemConfig(config));
+    }
+  }
+
+  mapItemConfig(config) {
+    const dto = {};
+    Object.assign(
+      dto,
+      config.dto.secondaryMedia,
+      config.dto.secondaryMedia.metadata
+    );
+    return {
+      ...config,
+      dto,
+      scheme: {
+        ...config.scheme,
+        maxHeight: dto.height,
+        maxWidth: dto.width,
+      },
+    };
   }
 
   update(config) {
@@ -51,6 +81,7 @@ class GalleryItem {
 
     this.resetUrls();
     this.updateSharpParams();
+    this.updateSecondaryMedia(config);
   }
 
   processScheme(scheme) {
@@ -76,7 +107,17 @@ class GalleryItem {
   }
 
   renderProps(config) {
-    return {
+    const style = {
+      ratio: this.ratio,
+      bgColor: this.bgColor,
+      maxWidth: this.maxWidth,
+      maxHeight: this.maxHeight,
+      infoWidth: this.infoWidth,
+      infoHeight: this.infoHeight,
+      orientation: this.orientation,
+      ...this.style,
+    };
+    const itemProps = {
       className: 'image',
       key: this.key,
       idx: this.idx,
@@ -106,21 +147,23 @@ class GalleryItem {
       cropRatio: this.cropRatio,
       isTransparent: this.isTransparent,
       offset: this.offset,
-      style: {
-        ratio: this.ratio,
-        bgColor: this.bgColor,
-        maxWidth: this.maxWidth,
-        maxHeight: this.maxHeight,
-        infoWidth: this.infoWidth,
-        infoHeight: this.infoHeight,
-        orientation: this.orientation,
-        ...this.style,
-      },
+      style,
       isDemo: this.isDemo,
       videoUrl: this.videoUrl,
       isExternalVideo: this.isExternalVideo,
+      hasSecondaryMedia: this.hasSecondaryMedia,
       ...config,
     };
+    if (this.hasSecondaryMedia) {
+      itemProps.secondaryMediaItem = {
+        ...this.secondaryMediaItem.renderProps(),
+        style: {
+          ...style,
+          bgColor: this.secondaryMediaItem.bgColor,
+        },
+      };
+    }
+    return itemProps;
   }
 
   getDataForShop() {
@@ -467,6 +510,9 @@ class GalleryItem {
     }
   }
 
+  get hasSecondaryMedia() {
+    return !!this.secondaryMediaItem;
+  }
   get itemId() {
     return this.id;
   }

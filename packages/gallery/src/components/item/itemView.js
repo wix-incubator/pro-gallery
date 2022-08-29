@@ -8,6 +8,7 @@ import {
   isPreviewMode,
 } from 'pro-gallery-lib';
 import MagnifiedImage from './imageWithMagnified.js';
+import withSecondaryMedia from '../hoc/withSecondMedia.js';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
 import { changeActiveElementIfNeeded, onAnchorFocus } from './itemHelper.js';
@@ -24,6 +25,9 @@ import {
   getCustomInfoRendererProps,
   getLinkParams,
 } from './pure';
+
+const ImageWithSecondMedia = withSecondaryMedia(MagnifiedImage);
+const TextWithSecondMedia = withSecondaryMedia(TextItem);
 class ItemView extends React.Component {
   constructor(props) {
     super(props);
@@ -390,14 +394,18 @@ class ItemView extends React.Component {
       'isPrerenderMode',
       'isTransparent',
       'style',
+      'hasSecondaryMedia',
+      'secondaryMediaItem',
     ]);
 
     return (
-      <MagnifiedImage
+      <ImageWithSecondMedia
         {...props}
         key="imageItem"
         imageDimensions={imageDimensions}
         isThumbnail={!!this.props.thumbnailHighlightId}
+        isCurrentHover={this.simulateHover()}
+        itemWasHovered={this.state.itemWasHovered}
         actions={{
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
@@ -434,13 +442,17 @@ class ItemView extends React.Component {
       'html',
       'cropRatio',
       'isPrerenderMode',
+      'hasSecondaryMedia',
+      'secondaryMediaItem',
     ]);
 
     return (
-      <TextItem
+      <TextWithSecondMedia
         {...props}
         key="textItem"
         imageDimensions={imageDimensions}
+        isCurrentHover={this.simulateHover()}
+        itemWasHovered={this.state.itemWasHovered}
         actions={{
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
