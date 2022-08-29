@@ -14,7 +14,7 @@ class GalleryItem {
     this.update(config);
   }
   createSecondMediaItemIfNeeded(config) {
-    if (config.dto.secondaryMedia) {
+    if (config.dto?.secondaryMedia) {
       this.secondaryMediaItem = new GalleryItem(this.mapItemConfig(config));
     }
   }
