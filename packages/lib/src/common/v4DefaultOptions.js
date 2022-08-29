@@ -87,10 +87,6 @@ const defaultOptions = {
         enablePlayButton: false,
         enablePlaceholder: true,
       },
-      secondaryMedia: {
-        trigger: GALLERY_CONSTS.secondaryMediaTrigger.OFF,
-        behaviour: GALLERY_CONSTS.secondaryMediaBehaviour.APPEARS,
-      },
       overlay: {
         hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
         hoverAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,
