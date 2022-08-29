@@ -15,6 +15,7 @@ describe('options - imageLoadingMode', () => {
     return Object.assign(sampleItemViewProps, {
       gotFirstScrollEvent: true,
       options: {
+        ...sampleItemViewProps.options,
         imageLoadingMode,
       },
       createUrl: createUrlStub,
