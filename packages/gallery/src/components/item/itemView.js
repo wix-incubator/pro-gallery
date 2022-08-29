@@ -451,7 +451,6 @@ class ItemView extends React.Component {
     return (
       <TextWithSecondMedia
         {...props}
-        isCurrentHover={this.simulateHover()}
         key="textItem"
         imageDimensions={imageDimensions}
         isCurrentHover={this.simulateHover()}
