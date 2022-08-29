@@ -16,6 +16,8 @@ import ARROWS_POSITION from '../../common/constants/arrowsPosition';
 import { default as GALLERY_CONSTS } from '../../common/constants/index';
 import {assignByString} from './optionsUtils'
 import processTextDimensions from './textBoxDimensionsHelper'
+import { default as slideAnimation } from '../../settings/options/slideAnimation';
+import { default as arrowsPosition } from '../../settings/options/arrowsPosition';
 
 export const calcTargetItemSize = (options, smartCalc = false) => {
   if (
@@ -137,6 +139,7 @@ const setMobileFonts = (options) => {
 
 const forceHoverToShowTextsIfNeeded = (options) =>{
   let _options = {...options}
+  if(options.EXPERIMENTALallowParallelInfos) return _options
   if (
     !hasHoverPlacement(_options.titlePlacement) &&
     _options.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
@@ -144,6 +147,25 @@ const forceHoverToShowTextsIfNeeded = (options) =>{
     _options.hoveringBehaviour = INFO_BEHAVIOUR_ON_HOVER.APPEARS;
   }
 
+  return _options
+}
+const blockScrollOnFadeOrDeckScrollAnimations = (options) =>{
+  let _options = {...options}
+  if ((
+    options.slideAnimation === GALLERY_CONSTS.slideAnimations.FADE ||
+    options.slideAnimation === GALLERY_CONSTS.slideAnimations.DECK
+  ) && (slideAnimation.isRelevant(options))) {
+    _options.enableScroll = false;
+  }
+
+  return _options
+}
+
+const blockVideoControlsOnMouseCursorNavigation = (options) =>{
+  let _options = {...options}
+  if ((options.arrowsPosition === GALLERY_CONSTS.arrowsPosition.MOUSE_CURSOR) && (arrowsPosition.isRelevant(options))) {
+    _options.showVideoControls = false;
+  }
   return _options
 }
 
@@ -367,6 +389,8 @@ function processLayouts(options, customExternalInfoRendererExists) {
     processedOptions = processTextDimensions(processedOptions, customExternalInfoRendererExists);
     processedOptions = centerArrowsWhenNeeded(processedOptions); 
     processedOptions = blockCounterByProduct(processedOptions); 
+    processedOptions = blockScrollOnFadeOrDeckScrollAnimations(processedOptions); 
+    processedOptions = blockVideoControlsOnMouseCursorNavigation(processedOptions);
 
   return processedOptions;
 }

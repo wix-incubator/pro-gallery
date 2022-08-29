@@ -99,6 +99,20 @@ body.pro-gallery {
   font-size: 15px;
   line-height: normal;
 }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.mouse-cursor {
+  display: flex;
+  width: 100%;
+  position: absolute;
+}
 
 .nav-arrows-container {
   left: auto;
@@ -114,6 +128,11 @@ body.pro-gallery {
   outline: none;
   justify-content: center;
 
+  &.follow-mouse-cursor {
+    position: relative;
+    cursor: none;
+  }
+
   &:hover {
     opacity: 1;
   }
@@ -126,6 +145,16 @@ body.pro-gallery {
   }
 }
 
+.arrow-portal-container {
+  span {
+  animation: fadeIn 0.1s ease-in-out;
+  position: fixed;
+  transition: top 50ms, left 50ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+}
 div.gallery-slideshow {
 
   div.pro-gallery,

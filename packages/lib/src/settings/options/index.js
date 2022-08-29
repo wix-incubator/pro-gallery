@@ -119,6 +119,7 @@ import layoutParams_targetItemSize_value from './layoutParams_targetItemSize_val
 import layoutParams_info_width from './layoutParams_info_width';
 import layoutParams_info_height from './layoutParams_info_height';
 import layoutParams_info_placement from './layoutParams_info_placement';
+import layoutParams_navigationArrows_mouseCursorContainerMaxWidth from './layoutParams_navigationArrows_mouseCursorContainerMaxWidth';
 import behaviourParams_item_secondaryMedia_trigger from './behaviourParams_item_secondaryMedia_trigger';
 import behaviourParams_item_secondaryMedia_behaviour from './behaviourParams_item_secondaryMedia_behaviour';
 
@@ -357,6 +358,8 @@ export default {
     layoutParams_navigationArrows_container_borderRadius,
   [optionsMap.stylingParams.temResolutionMode]:
     stylingParams_itemResolutionMode,
+  [optionsMap.layoutParams.navigationArrows.mouseCursorContainerMaxWidth]:
+    layoutParams_navigationArrows_mouseCursorContainerMaxWidth,
   [optionsMap.behaviourParams.item.secondaryMedia.trigger]:
     behaviourParams_item_secondaryMedia_trigger,
   [optionsMap.behaviourParams.item.secondaryMedia.behaviour]:

@@ -242,7 +242,7 @@ class JsonEditor extends React.Component {
                 <Divider/>
                 <p><b>Section: </b>{settings.section + (settings.subSection ? ` > ${settings.subSection}` : '')}</p>
                 <p><b>Overriden by current Preset: </b>{isInPreset(allOptions.galleryLayout, option) ? 'Yes' : 'No'}</p>
-                <p><b>Relevant in current configuration: </b>{settings.isRelevant(allOptions, false) ? 'Yes' : 'No'}</p>
+                <p><b>Relevant in current configuration: </b>{settings.isRelevant(flatAndNestedOptions, false) ? 'Yes' : 'No'}</p>
               </>)}
               {isDev && <>
                 <Divider/>

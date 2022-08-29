@@ -82,9 +82,12 @@ export default class TextItem extends React.Component {
     if (imageDimensions && imageDimensions.borderRadius) {
       itemContentStyle.borderRadius = imageDimensions.borderRadius;
     }
-
+    const containerClasses = [
+      'gallery-item-content',
+      this.props.isCurrentHover ? 'item-content-hover' : 'item-content-regular',
+    ];
     return (
-      <div className={'gallery-item-content'} style={itemContentStyle}>
+      <div className={containerClasses.join(' ')} style={itemContentStyle}>
         <div
           className={
             'gallery-item-visible gallery-item gallery-item-loaded text-item'

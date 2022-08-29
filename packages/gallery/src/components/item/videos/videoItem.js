@@ -289,20 +289,33 @@ class VideoItem extends React.Component {
 
   render() {
     const { videoPlaceholder, hover } = this.props;
-    let baseClassName =
-      'gallery-item-content gallery-item-visible gallery-item-preloaded gallery-item-video gallery-item video-item' +
-      (utils.isiPhone() ? ' ios' : '');
+    let baseClassName = [
+      'gallery-item-content',
+      'gallery-item-visible',
+      'gallery-item-preloaded',
+      'gallery-item-video',
+      'gallery-item',
+      'video-item',
+    ];
+    if (utils.isiPhone()) {
+      baseClassName.push('ios');
+    }
     if (this.state.isPlaying) {
-      baseClassName += ' playing';
+      baseClassName.push('playing');
     }
     if (this.state.playedOnce && this.state.ready) {
-      baseClassName += ' playedOnce';
+      baseClassName.push('playedOnce');
+    }
+    if (this.props.isCurrentHover) {
+      baseClassName.push('item-content-hover');
+    } else {
+      baseClassName.push('item-content-regular');
     }
     // eslint-disable-next-line no-unused-vars
 
     const video = (
       <div
-        className={baseClassName}
+        className={baseClassName.join(' ')}
         data-hook="video_container-video-player-element"
         key={'video_container-' + this.props.id}
         style={this.getVideoContainerStyles()}

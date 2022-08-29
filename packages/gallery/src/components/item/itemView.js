@@ -359,6 +359,7 @@ class ItemView extends React.Component {
         <ItemHover
           {...props}
           forceShowHover={this.simulateOverlayHover()}
+          isCurrentHover={this.simulateHover()}
           imageDimensions={imageDimensions}
           itemWasHovered={this.state.itemWasHovered}
           key="hover"
@@ -424,6 +425,7 @@ class ItemView extends React.Component {
         hover={itemHover}
         imageDimensions={imageDimensions}
         hasLink={this.itemHasLink()}
+        isCurrentHover={this.simulateHover()}
         actions={{
           ...this.props.actions,
           setItemLoaded: this.setItemLoaded,
@@ -449,6 +451,7 @@ class ItemView extends React.Component {
     return (
       <TextWithSecondMedia
         {...props}
+        isCurrentHover={this.simulateHover()}
         key="textItem"
         imageDimensions={imageDimensions}
         isCurrentHover={this.simulateHover()}
@@ -784,8 +787,12 @@ class ItemView extends React.Component {
     const imagePlacementAnimation = options.imagePlacementAnimation;
     const overlayAnimation = options.overlayAnimation;
     const imageHoverAnimation = options.imageHoverAnimation;
+    const isHovered = this.simulateHover();
     const classNames = {
       'gallery-item-container': true,
+      'item-container-regular': !isHovered,
+      'item-container-hover': isHovered,
+
       'has-custom-focus': true,
       visible: true,
       'pro-gallery-highlight': this.isHighlight(),
@@ -1012,7 +1019,7 @@ class ItemView extends React.Component {
     const elementProps = {
       ref: (e) => (this.itemAnchor = e),
       'data-id': photoId,
-      class: 'item-link-wrapper',
+      className: 'item-link-wrapper',
       'data-idx': idx,
       'data-hook': 'item-link-wrapper',
       onFocus: handleFocus,

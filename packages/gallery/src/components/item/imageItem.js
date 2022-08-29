@@ -37,11 +37,12 @@ class ImageItem extends React.Component {
   }
 
   getImageContainerClassNames() {
-    const { options, isTransparent } = this.props;
+    const { isCurrentHover, options, isTransparent } = this.props;
     const { isHighResImageLoaded } = this.state;
 
     const imageContainerClassNames = [
       'gallery-item-content',
+      isCurrentHover ? 'item-content-hover' : 'item-content-regular',
       'image-item',
       'gallery-item-visible',
       'gallery-item',
@@ -176,6 +177,9 @@ class ImageItem extends React.Component {
                   ...blockDownloadStyles,
                 }}
                 {...preloadProps}
+                customImageRenderer={
+                  this.props.customComponents?.customImageRenderer
+                }
               />
             );
             break;
@@ -194,6 +198,9 @@ class ImageItem extends React.Component {
                   ...blockDownloadStyles,
                 }}
                 {...preloadProps}
+                customImageRenderer={
+                  this.props.customComponents?.customImageRenderer
+                }
               />
             );
             break;
@@ -228,6 +235,7 @@ class ImageItem extends React.Component {
             ...(!shouldRenderHighResImages && preloadStyles),
           }}
           {...imageProps}
+          customImageRenderer={this.props.customComponents?.customImageRenderer}
         />
       );
 

@@ -115,6 +115,8 @@ export const optionsBySection = {
     'pauseAutoSlideshowOnHover',
     'itemClick',
     'behaviourParams_item_content_magnificationValue',
+    optionsMap.behaviourParams.item.secondaryMedia.trigger,
+    optionsMap.behaviourParams.item.secondaryMedia.behaviour,
   ],
   [SECTIONS.DESIGN]: [
     'showArrows',
@@ -123,6 +125,7 @@ export const optionsBySection = {
     'arrowsPosition',
     'arrowsPadding',
     'arrowsVerticalPosition',
+    'layoutParams_navigationArrows_mouseCursorContainerMaxWidth',
     'layoutParams_navigationArrows_type',
     'layoutParams_navigationArrows_container_type',
     'layoutParams_navigationArrows_container_backgroundColor',
