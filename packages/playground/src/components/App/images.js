@@ -1808,6 +1808,63 @@ const monochromeImages = [
   }
 ]
 
+const test3D = [
+  {
+    itemId: 'd19570fa-e97f-4b3d-b8ad-4e24b3a9a3ec',
+    url: window.location.origin + '/3d/cow.glb',
+    metadata: {
+      width: 1920,
+      height: 1080,
+      type: '3d',
+      poster: {
+        url: 'https://static.wixstatic.com/media/0d72ac_7c7a5b89485a4062ba36ed97b6ac9615f000.jpg',
+        width: 1920,
+        height: 1080,
+      },
+      background: {
+        type: 'image',
+        url: 'https://static.wixstatic.com/media/0d72ac_7c7a5b89485a4062ba36ed97b6ac9615f000.jpg',
+      }
+    }
+  },
+  {
+    itemId: 'd19570fa-e97f-4b3d-b8ad-4e24b3a9a1c',
+    url: window.location.origin + '/3d/nike_air_jordan.glb',
+    metadata: {
+      width: 1920,
+      height: 1080,
+      type: '3d',
+      poster: {
+        url: 'https://static.wixstatic.com/media/0d72ac_c7b0d48d722642cfa03bb2bab58bd1c4f000.jpg',
+        width: 1920,
+        height: 1080,
+      },
+      background: {
+        type: 'color',
+        color: '#4287f5',
+      }
+    }
+  },
+  {
+    itemId: 'd19570fa-e97f-4b3d-b8ad-4e24b3a9a1c',
+    url: window.location.origin + '/3d/cow.glb',
+    metadata: {
+      width: 1920,
+      height: 1080,
+      type: '3d',
+      poster: {
+        url: 'https://static.wixstatic.com/media/8bb438_5ec836c505f445dfab711a56e67fc502.jpg',
+        width: 1920,
+        height: 1080,
+      },
+      background: {
+        type: 'css',
+        color: 'radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(175,70,252,1) 100%)',
+      }
+    }
+  },
+]
+
 const testMedia = [...testImages, ...testVideos];
 const testItems = [...testMedia, ...testTexts];
 
@@ -1817,5 +1874,6 @@ export {
   testVideos,
   testTexts,
   testItems,
+  test3D,
   monochromeImages
 };

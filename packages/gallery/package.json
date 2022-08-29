@@ -38,6 +38,7 @@
   "dependencies": {
     "@vimeo/player": "2.8.2",
     "hls.js": "^1.1.5",
+    "three": "0.143.0",
     "pro-gallery-blueprints": "4.1.40",
     "pro-gallery-lib": "4.1.40",
     "pro-layouts": "4.1.40",
@@ -50,6 +51,7 @@
   "devDependencies": {
     "@babel/core": "7.16.7",
     "@babel/preset-env": "^7.5.5",
+    "@types/three": "0.143.1",
     "@types/react": "^16.14.6",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",

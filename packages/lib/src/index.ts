@@ -56,5 +56,6 @@ export { ScrollingElement } from './common/interfaces/ScrollingElement';
 export { Structure } from './common/interfaces/Structure';
 export { GalleryProps, GalleryState } from './common/interfaces/galleryTypes';
 export { Options } from './common/interfaces/options';
+export { Settings } from './common/interfaces/Settings';
 export { GalleryRendererProps } from './common/interfaces/galleryRendererTypes';
 export { VirtualizationSettings } from './common/interfaces/virtualization';

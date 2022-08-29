@@ -8,6 +8,7 @@ import {
   isPreviewMode,
 } from 'pro-gallery-lib';
 import MagnifiedImage from './imageWithMagnified.js';
+import ThreeDItem from './3DItem.js';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
 import { changeActiveElementIfNeeded, onAnchorFocus } from './itemHelper.js';
@@ -410,6 +411,40 @@ class ItemView extends React.Component {
     );
   }
 
+  get3dItem(dimensions) {
+    const props = utils.pick(this.props, [
+      'gotFirstScrollEvent',
+      'calculatedAlt',
+      'title',
+      'description',
+      'id',
+      'idx',
+      'options',
+      'createUrl',
+      'createMagnifiedUrl',
+      'settings',
+      'isPrerenderMode',
+      'isTransparent',
+      'style',
+      'customComponents',
+      'activeIndex',
+    ]);
+
+    return (
+      <ThreeDItem
+        {...props}
+        key="3dItem"
+        dimensions={dimensions}
+        actions={{
+          ...this.props.actions,
+          setItemLoaded: this.setItemLoaded,
+          handleItemMouseDown: this.handleItemMouseDown,
+          handleItemMouseUp: this.handleItemMouseUp,
+        }}
+      />
+    );
+  }
+
   getVideoItem(imageDimensions, itemHover) {
     return (
       <VideoItemWrapper
@@ -482,6 +517,9 @@ class ItemView extends React.Component {
         break;
       case 'text':
         itemInner = [this.getTextItem(itemStyles), itemHover];
+        break;
+      case '3d':
+        itemInner = [this.get3dItem(itemStyles), itemHover];
         break;
       case 'image':
       case 'picture':

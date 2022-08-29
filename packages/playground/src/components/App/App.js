@@ -1,7 +1,7 @@
 import React, {useEffect, Suspense, useState} from 'react';
 import {NavigationPanel} from './PlaygroundNavigationPanel';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
-import {testMedia, testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
+import {testMedia, testItems, testImages, testVideos, testTexts, monochromeImages, test3D} from './images';
 import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { createMediaUrl } from '../../utils/itemResizer';
@@ -38,7 +38,7 @@ export function App() {
   sideShownOnce = sideShownOnce || showSide;
 
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
-  const {numberOfItems = 0, mediaTypes = 'media'} = gallerySettings || {};
+  const {numberOfItems = 0, mediaTypes = 'images'} = gallerySettings || {};
   const isTestingEnv = isTestingEnvironment(window.location.search);
 
   const [resizedDims, setResizedDims] = useState({width: 320, height: 500});
@@ -56,7 +56,8 @@ export function App() {
     mixed: _mixAndSlice(testItems, ITEMS_BATCH_SIZE),
     texts: _mixAndSlice(testTexts, ITEMS_BATCH_SIZE),
     videos: _mixAndSlice(testVideos, ITEMS_BATCH_SIZE),
-    images: _mixAndSlice(testImages, ITEMS_BATCH_SIZE)
+    images: _mixAndSlice(testImages, ITEMS_BATCH_SIZE),
+    threeD: _mixAndSlice(test3D, ITEMS_BATCH_SIZE),
   };
 
   const switchState = () => {
@@ -113,6 +114,8 @@ export function App() {
         return _mixAndSlice(testVideos, batchSize, true);
       case 'texts':
         return _mixAndSlice(testTexts, batchSize, true);
+      case 'threeD':
+        return _mixAndSlice(test3D, batchSize, true);
       case 'mixed':
         return _mixAndSlice(testItems, batchSize, true);
       case 'media':

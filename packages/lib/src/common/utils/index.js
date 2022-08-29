@@ -712,6 +712,16 @@ class Utils {
     if (typeof str !== 'string') return false;
     return !!str.trim().length;
   }
+
+  singleInstance(fun) {
+    let instance;
+    return (...args) => {
+      if (!instance) {
+        instance = fun(...args);
+      }
+      return instance;
+    };
+  }
 }
 
 export default new Utils();

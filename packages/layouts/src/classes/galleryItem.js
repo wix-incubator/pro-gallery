@@ -231,6 +231,10 @@ class GalleryItem {
     const urls = {};
     let imgUrl = this.url;
 
+    urls[GALLERY_CONSTS.urlTypes.THREE_D] = () => this.url;
+    if (this.is3D) {
+      imgUrl = this.poster.url;
+    }
     if (this.isText) {
       return Object.assign(
         {},
@@ -630,6 +634,8 @@ class GalleryItem {
       case 'html':
       case 'text':
         return 'text';
+      case '3d':
+        return '3d';
       case 'i':
       case 'image':
       default:
@@ -930,6 +936,10 @@ class GalleryItem {
 
   get isVideo() {
     return this.type === 'video';
+  }
+
+  get is3D() {
+    return this.type === '3d';
   }
 
   get isVisible() {
