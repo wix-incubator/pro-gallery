@@ -696,12 +696,17 @@ class Utils {
   }
 
   getAriaAttributes({ proGalleryRole, proGalleryRegionLabel }) {
-    return {
+    const role = proGalleryRole || 'region';
+    const roledescription =
+      proGalleryRole === 'application' ? 'gallery application' : 'region';
+    const attr = {
       role: proGalleryRole || 'region',
       ['aria-label']: proGalleryRegionLabel,
-      ['aria-roledescription']:
-        proGalleryRole === 'application' ? 'gallery application' : 'region',
     };
+    if (role !== roledescription) {
+      attr['aria-roledescription'] = roledescription;
+    }
+    return attr;
   }
 
   focusGalleryElement(element) {
