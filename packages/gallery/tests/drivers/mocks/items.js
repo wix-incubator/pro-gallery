@@ -795,5 +795,54 @@ const textItems = [
   },
 }));
 
-export { images, images2, videoItems, textItems, itemsWithDirectShareLink };
+const itemsWithSecondaryMedia = [
+  {
+    metadata: {
+      height: 3032,
+      width: 2021,
+      focalPoint: [0.1, 0.9],
+    },
+    itemId: 'aa0c3adcc23504ac822d5c3ed5f3b6a1',
+    url: 'https://static.wixstatic.com/media/8bb438_6ad0d6b1ab9b4f8ea4f93389a3d68a4d.jpg',
+    secondaryMedia: {
+      metadata: {
+        height: 5600,
+        width: 3737,
+        focalPoint: [0.9, 0.1],
+      },
+
+      itemId: '2d3b675ea857dc41158bad3b28300824',
+      url: 'https://static.wixstatic.com/media/8bb438_78ff5e32500d48cdaa22a3f446d68216.jpg',
+    },
+  },
+  {
+    itemId: '96858c1s-1f77-4d88-a622-6a2444ffadad',
+    html: '<div style=\'white-space: pre-wrap; font-family: cursive; color: #115; width: 200px; height: 300px; background:#ffadad; text-align: center; padding: 10px;\'>\n            <p style="line-height:24px; padding:10px; color: #0f0066; font-size: 18px;">Life isn’t about getting and having, it’s about giving and being.</p>\n            <p style="font-weight: bold; line-height:26px; color: #09003d; padding:5px; font-size: 21px;">Kevin Kruse</p>\n          </div>',
+    metadata: {
+      type: 'text',
+      height: 300,
+      width: 200,
+      backgroundColor: '#ffadad',
+    },
+    secondaryMedia: {
+      itemId: '96858c1s-1f77-4d88-a622-6a2444a0c4ff',
+      html: '<div style=\'white-space: pre-wrap; font-family: cursive; color: #115; width: 250px; height: 300px; background:#a0c4ff; text-align: center; padding: 10px;\'>\n            <p style="line-height:24px; padding:10px; color: #0f0066; font-size: 18px;">You take your life in your own hands, and what happens? A terrible thing, no one to blame.</p>\n            <p style="font-weight: bold; line-height:26px; color: #09003d; padding:5px; font-size: 21px;">Erica Jong</p>\n          </div>',
+      metadata: {
+        type: 'text',
+        height: 300,
+        width: 250,
+        backgroundColor: '#a0c4ff',
+      },
+    },
+  },
+];
+
+export {
+  images,
+  images2,
+  videoItems,
+  textItems,
+  itemsWithDirectShareLink,
+  itemsWithSecondaryMedia,
+};
 /* eslint-enable prettier/prettier */
