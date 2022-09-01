@@ -49,10 +49,17 @@ export default class ScrollIndicator extends React.Component {
     const { isRTL, setGotFirstScrollIfNeeded, scrollingElement, oneRow } =
       this.props;
 
-    this.debouncedPauseScrolling = utils.debounce(
+    this.pauseVerticalScrolling = utils.debounce(
       () =>
         this.setState({
-          scrolling: false,
+          scrollingVerically: false,
+        }),
+      cssScrollHelper.transitionDuration
+    );
+    this.pauseHorizontalScrolling = utils.debounce(
+      () =>
+        this.setState({
+          scrollingHorizontally: false,
         }),
       cssScrollHelper.transitionDuration
     );
@@ -66,8 +73,10 @@ export default class ScrollIndicator extends React.Component {
           GALLERY_CONSTS.scrollDirection.HORIZONTAL
         ) {
           this.setState({
+            scrollingHorizontally: true,
             scrollLeft: this.state.scrollLeft + step,
           });
+          this.pauseHorizontalScrolling();
         }
       }
     };
@@ -85,11 +94,10 @@ export default class ScrollIndicator extends React.Component {
           GALLERY_CONSTS.scrollDirection.HORIZONTAL
         ) {
           this.setState({
-            scrolling: true,
-            scrollTop: Math.round(left),
+            scrollingHorizontally: true,
             scrollLeft: Math.round(left),
           });
-          this.debouncedPauseScrolling();
+          this.pauseHorizontalScrolling();
           this.props.getMoreItemsIfNeeded(left);
           this.debouncedOnScroll({ left });
         }
@@ -130,7 +138,7 @@ export default class ScrollIndicator extends React.Component {
       // console.log('[RTL SCROLL] onVerticalScroll: ', left);
       if (top >= 0) {
         this.setState({
-          scrolling: true,
+          scrollingVerically: true,
           scrollTop: Math.round(top),
         });
         if (
@@ -138,7 +146,7 @@ export default class ScrollIndicator extends React.Component {
         ) {
           this.props.getMoreItemsIfNeeded(top);
         }
-        this.debouncedPauseScrolling();
+        this.pauseVerticalScrolling();
         this.debouncedOnScroll({ top });
       }
     };
@@ -186,7 +194,9 @@ export default class ScrollIndicator extends React.Component {
         ? this.props.scrollBase
         : 0;
     const scrollTopWithoutBase = this.state.scrollTop - verticalScrollBase;
-    const isScrolling = this.state.scrolling;
+    const scrollLeft = this.state.scrollLeft;
+    const isScrollingVertically = this.state.scrollingVerically;
+    const isScrollingHorizontally = this.state.scrollingHorizontally;
     const { id } = this.props;
     return (
       <div
@@ -195,9 +205,11 @@ export default class ScrollIndicator extends React.Component {
         data-scroll-base={verticalScrollBase}
         data-scroll-top={this.state.scrollTop}
         className={cssScrollHelper.calcScrollClasses(
-          scrollTopWithoutBase,
           id,
-          isScrolling
+          scrollTopWithoutBase,
+          scrollLeft,
+          isScrollingVertically,
+          isScrollingHorizontally
         )}
         style={{
           position: 'fixed',
@@ -209,7 +221,9 @@ export default class ScrollIndicator extends React.Component {
           border: '1px solid blue',
         }}
       >
-        {this.state.scrollTop}
+        x: {this.state.scrollLeft}
+        <br />
+        y: {this.state.scrollTop}
       </div>
     );
   }

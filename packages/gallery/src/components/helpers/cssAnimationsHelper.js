@@ -45,6 +45,7 @@ export const createScrollAnimations = ({
         toValue: 1,
         selectorSuffix: `#${itemId} .gallery-item-wrapper`,
         entryAnimationCss: 'opacity: #;',
+        resetWhenPaused: true,
       });
     case GRAYSCALE:
       return createScrollSelectors({
@@ -54,6 +55,7 @@ export const createScrollAnimations = ({
         toValue: 0,
         selectorSuffix: `#${itemId} .gallery-item-content`,
         entryAnimationCss: 'filter: grayscale(#%);',
+        resetWhenPaused: true,
       });
     case EXPAND:
       return createScrollSelectors({
@@ -90,6 +92,7 @@ export const createScrollAnimations = ({
         toValue: 0,
         selectorSuffix: `#${itemId} .gallery-item-content`,
         entryAnimationCss: 'filter: blur(#px);',
+        resetWhenPaused: true,
       });
     case HINGE:
       return createScrollSelectors({
@@ -98,6 +101,7 @@ export const createScrollAnimations = ({
         fromValue: Math.round(5 + i / 5), // 5-25
         toValue: 0,
         selectorSuffix: `#${itemId}`,
+        resetWhenPaused: true,
         entryAnimationCss:
           'transform: rotate(#deg); transform-origin: top left;',
         exitAnimationCss:
@@ -165,6 +169,7 @@ export const createScrollAnimations = ({
           toPosition: r(100 + i * 7), // 0-800
           fromValue: 0,
           toValue: 1,
+          resetWhenPaused: true,
           selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
           entryAnimationCss: `opacity :#;`,
         }) +
@@ -178,6 +183,7 @@ export const createScrollAnimations = ({
           toPosition: r(100 + i * 7),
           fromValue: 0,
           toValue: 1,
+          resetWhenPaused: true,
           selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
           entryAnimationCss: `opacity :#;`,
         }) +
@@ -227,7 +233,7 @@ export const createScrollAnimations = ({
         return createScrollSelectors({
           fromPosition: r(0),
           toPosition: r(100 + i * 4), // 0-400
-          fromValue: 100,
+          fromValue: 50,
           toValue: 0,
           selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
           entryAnimationCss: `transform: translateX(#%);`,
@@ -253,7 +259,7 @@ export const createScrollAnimations = ({
         return createScrollSelectors({
           fromPosition: r(0),
           toPosition: r(100 + i * 4), // 0-400
-          fromValue: 100,
+          fromValue: 50,
           toValue: 0,
           selectorSuffix: `#${itemId} .gallery-item-wrapper>div`,
           entryAnimationCss: `transform: translateX(-#%);`,

@@ -38,29 +38,49 @@ class CssScrollHelper {
     return `pgi${shortId}_${idx}`;
   }
 
-  buildScrollClassName(idx, val, itemId) {
+  buildScrollClassName(idx, val, itemId, axis) {
     const shortId = String(this.galleryId).replace(/[\W]+/g, '').slice(-4);
-    return `${this.pgScrollClassName}${shortId}_${val}-${
+    return `${this.pgScrollClassName}${shortId}-${axis}_${val}-${
       this.pgScrollSteps[idx] + Number(val)
     }`;
   }
 
-  isScrollingClassName(isScrolling) {
-    return `${this.pgScrollClassName}-${isScrolling ? 'scrolling' : 'paused'}`;
+  isScrollingClassName(axis, isScrolling) {
+    return `${this.pgScrollClassName}-${axis}-${
+      isScrolling ? 'scrolling' : 'paused'
+    }`;
   }
 
-  calcScrollClasses(scrollTop, itemId, isScrolling) {
+  calcScrollClasses(
+    itemId,
+    scrollTop,
+    scrollLeft,
+    isScrollingVertically,
+    isScrollingHorizontally
+  ) {
     //used by the scroll indicator
     return (
-      `${this.isScrollingClassName(isScrolling)} ${
-        this.pgScrollClassName
-      }-${scrollTop} ` +
+      `${this.isScrollingClassName('y', isScrollingVertically)} ` +
+      `${this.isScrollingClassName('x', isScrollingHorizontally)} ` +
+      `${this.pgScrollClassName}-y-${scrollTop} ` +
+      `${this.pgScrollClassName}-x-${scrollLeft} ` +
       this.pgScrollSteps
         .map((step, idx) =>
           this.buildScrollClassName(
             idx,
             Math.floor(scrollTop / step) * step,
-            itemId
+            itemId,
+            'y'
+          )
+        )
+        .join(' ') +
+      this.pgScrollSteps
+        .map((step, idx) =>
+          this.buildScrollClassName(
+            idx,
+            Math.floor(scrollLeft / step) * step,
+            itemId,
+            'x'
           )
         )
         .join(' ')
@@ -89,6 +109,7 @@ class CssScrollHelper {
       exitAnimationCss,
       reverseOnExit,
       noEasing,
+      resetWhenPaused,
     }) => {
       // fromPosition:  the distance from the bottom of the screen to start the animation
       // toPosition:  the distance from the bottom of the screen to end the animation
@@ -121,17 +142,23 @@ class CssScrollHelper {
         let scrollClasses = [];
         toPosition = Math.round(toPosition);
         fromPosition = Math.round(fromPosition);
+        const axis = isHorizontalScroll(options) ? 'x' : 'y';
+
         while (fromPosition < toPosition) {
           const largestDividerIdx = this.pgScrollSteps.findIndex(
             (step) =>
               fromPosition % step === 0 && fromPosition + step <= toPosition
           ); //eslint-disable-line
           scrollClasses.push(
-            `.${this.isScrollingClassName(true)}.${this.buildScrollClassName(
-              largestDividerIdx,
-              fromPosition,
-              itemId
-            )} ~ div ${selectorSuffix}`
+            (resetWhenPaused
+              ? `.${this.isScrollingClassName(axis, true)}`
+              : '') +
+              `.${this.buildScrollClassName(
+                largestDividerIdx,
+                fromPosition,
+                itemId,
+                axis
+              )} ~ div ${selectorSuffix}`
           );
           fromPosition += this.pgScrollSteps[largestDividerIdx];
         }
