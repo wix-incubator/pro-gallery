@@ -23,6 +23,9 @@ class CssScrollHelper {
     this.scrollCss = [];
     this.scrollCssProps = [];
 
+    this.transitionDuration = 400;
+    this.animationPadding = 1000;
+
     try {
       this.settings = JSON.parse(localStorage.gallerySettings);
     } catch (e) {
@@ -42,10 +45,16 @@ class CssScrollHelper {
     }`;
   }
 
-  calcScrollClasses(scrollTop, itemId) {
+  isScrollingClassName(isScrolling) {
+    return `${this.pgScrollClassName}-${isScrolling ? 'scrolling' : 'paused'}`;
+  }
+
+  calcScrollClasses(scrollTop, itemId, isScrolling) {
     //used by the scroll indicator
     return (
-      `${this.pgScrollClassName}-${scrollTop} ` +
+      `${this.isScrollingClassName(isScrolling)} ${
+        this.pgScrollClassName
+      }-${scrollTop} ` +
       this.pgScrollSteps
         .map((step, idx) =>
           this.buildScrollClassName(
@@ -88,7 +97,10 @@ class CssScrollHelper {
 
       const animationCss = (isExit) =>
         isExit && exitAnimationCss ? exitAnimationCss : entryAnimationCss;
-      const iterations = Math.round(options.scrollAnimationIntensity / 4);
+      const iterations = Math.max(
+        10,
+        Math.round(options.scrollAnimationIntensity / 4)
+      );
       const exitFix = reverseOnExit ? -1 : 1;
       const [enterFrom, enterTo] = [fromValue, toValue];
       const [exitFrom, exitTo] = [toValue, fromValue * exitFix];
@@ -98,10 +110,8 @@ class CssScrollHelper {
         if (isExit) {
           idx = iterations - idx;
         }
-        const ease = (t) =>
-          noEasing ? t : t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t;
-        let stepWithEase = (to - from) * ease(idx / iterations) + from;
-        let step = (to - from) * (idx / iterations) + from;
+        const ease = (x) => x * x * x;
+        let step = (to - from) * ease(idx / iterations) + from;
         return animationCss(isExit).replaceAll('#', step);
       };
 
@@ -117,7 +127,7 @@ class CssScrollHelper {
               fromPosition % step === 0 && fromPosition + step <= toPosition
           ); //eslint-disable-line
           scrollClasses.push(
-            `.${this.buildScrollClassName(
+            `.${this.isScrollingClassName(true)}.${this.buildScrollClassName(
               largestDividerIdx,
               fromPosition,
               itemId
@@ -147,27 +157,24 @@ class CssScrollHelper {
       };
 
       const createScrollClasses = () => {
-        const transitionDuration = 400;
-        const animationPadding = 1000;
-
         const transitionCss = `transition: ${
           animationCss(false).split(':')[0]
-        } ${transitionDuration}ms ease !important`;
+        } ${this.transitionDuration}ms ease !important`;
 
-        const animationDuration = Math.round(toPosition - fromPosition);
+        const animationRange = Math.round(toPosition - fromPosition);
 
         const entryAnimationStart = Math.round(
           imageStart - containerSize + fromPosition
         );
         const entryAnimationEnd = Math.round(
-          entryAnimationStart + animationDuration
+          entryAnimationStart + animationRange
         );
 
         const exitAnimationStart = Math.round(
           imageStart + imageSize - toPosition
         );
         const exitAnimationEnd = Math.round(
-          exitAnimationStart + animationDuration
+          exitAnimationStart + animationRange
         );
 
         const scrollClasses = {};
@@ -192,7 +199,7 @@ class CssScrollHelper {
           addScrollClass(
             createAnimationStep(0) + 'transtion: none !important;',
             createSelectorsRange(
-              entryAnimationStart - animationPadding,
+              entryAnimationStart - this.animationPadding,
               entryAnimationStart
             )
           );
@@ -211,14 +218,14 @@ class CssScrollHelper {
               'transtion: none !important;',
             createSelectorsRange(
               exitAnimationEnd,
-              exitAnimationEnd + animationPadding
+              exitAnimationEnd + this.animationPadding
             )
           );
         } else if (options.scrollAnimationDirection === 'IN') {
           addScrollClass(
             createAnimationStep(0) + 'transtion: none !important;',
             createSelectorsRange(
-              entryAnimationStart - animationPadding,
+              entryAnimationStart - this.animationPadding,
               entryAnimationStart
             )
           );
@@ -229,14 +236,14 @@ class CssScrollHelper {
             createAnimationStep(iterations) + 'transtion: none !important;',
             createSelectorsRange(
               entryAnimationEnd,
-              entryAnimationEnd + animationPadding
+              entryAnimationEnd + this.animationPadding
             )
           );
         } else if (options.scrollAnimationDirection === 'OUT') {
           addScrollClass(
             createAnimationStep(iterations) + 'transtion: none !important;',
             createSelectorsRange(
-              exitAnimationStart - animationPadding,
+              exitAnimationStart - this.animationPadding,
               exitAnimationStart
             )
           );
@@ -248,7 +255,7 @@ class CssScrollHelper {
               'transtion: none !important;',
             createSelectorsRange(
               exitAnimationEnd,
-              exitAnimationEnd + animationPadding
+              exitAnimationEnd + this.animationPadding
             )
           );
         }

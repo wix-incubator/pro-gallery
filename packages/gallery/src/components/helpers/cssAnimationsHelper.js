@@ -85,8 +85,8 @@ export const createScrollAnimations = ({
     case BLUR:
       return createScrollSelectors({
         fromPosition: r(i * 2), // 0-200
-        toPosition: r(100 + i * 8), // 0-800
-        fromValue: Math.round(25 + i / 2), // 25-75
+        toPosition: r(100 + i * 5), // 0-800
+        fromValue: Math.round(i / 2), // 0-50
         toValue: 0,
         selectorSuffix: `#${itemId} .gallery-item-content`,
         entryAnimationCss: 'filter: blur(#px);',

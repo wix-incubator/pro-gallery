@@ -7,10 +7,11 @@ export default class ScrollIndicator extends React.Component {
     super();
 
     this.state = {
+      scrolling: false,
       scrollTop: 0,
       scrollLeft: 0,
     };
-    // this.debouncedOnScroll = utils.debounce(props.onScroll, 50);
+    this.setState = this.setState.bind(this);
     this.debouncedOnScroll = props.onScroll;
   }
 
@@ -47,6 +48,15 @@ export default class ScrollIndicator extends React.Component {
     this.scrollEventListenerSet = true;
     const { isRTL, setGotFirstScrollIfNeeded, scrollingElement, oneRow } =
       this.props;
+
+    this.debouncedPauseScrolling = utils.debounce(
+      () =>
+        this.setState({
+          scrolling: false,
+        }),
+      cssScrollHelper.transitionDuration
+    );
+
     //Horizontal Scroll
     this.onHorizontalScrollTransition = ({ detail }) => {
       const step = Math.round(detail);
@@ -75,9 +85,11 @@ export default class ScrollIndicator extends React.Component {
           GALLERY_CONSTS.scrollDirection.HORIZONTAL
         ) {
           this.setState({
+            scrolling: true,
             scrollTop: Math.round(left),
             scrollLeft: Math.round(left),
           });
+          this.debouncedPauseScrolling();
           this.props.getMoreItemsIfNeeded(left);
           this.debouncedOnScroll({ left });
         }
@@ -118,6 +130,7 @@ export default class ScrollIndicator extends React.Component {
       // console.log('[RTL SCROLL] onVerticalScroll: ', left);
       if (top >= 0) {
         this.setState({
+          scrolling: true,
           scrollTop: Math.round(top),
         });
         if (
@@ -125,6 +138,7 @@ export default class ScrollIndicator extends React.Component {
         ) {
           this.props.getMoreItemsIfNeeded(top);
         }
+        this.debouncedPauseScrolling();
         this.debouncedOnScroll({ top });
       }
     };
@@ -172,6 +186,7 @@ export default class ScrollIndicator extends React.Component {
         ? this.props.scrollBase
         : 0;
     const scrollTopWithoutBase = this.state.scrollTop - verticalScrollBase;
+    const isScrolling = this.state.scrolling;
     const { id } = this.props;
     return (
       <div
@@ -179,7 +194,11 @@ export default class ScrollIndicator extends React.Component {
         data-hook="css-scroll-indicator"
         data-scroll-base={verticalScrollBase}
         data-scroll-top={this.state.scrollTop}
-        className={cssScrollHelper.calcScrollClasses(scrollTopWithoutBase, id)}
+        className={cssScrollHelper.calcScrollClasses(
+          scrollTopWithoutBase,
+          id,
+          isScrolling
+        )}
         style={{
           position: 'fixed',
           top: 0,
