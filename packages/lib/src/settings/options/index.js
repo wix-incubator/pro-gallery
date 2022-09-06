@@ -79,6 +79,7 @@ import galleryLayout from './galleryLayout';
 import scrollDirection from './scrollDirection';
 import scrollAnimationDirection from './scrollAnimationDirection';
 import scrollAnimationIntensity from './scrollAnimationIntensity';
+import scrollAnimationReset from './scrollAnimationReset';
 import scrollDuration from './scrollDuration';
 import isAutoSlideshow from './isAutoSlideshow';
 import loadMoreAmount from './loadMoreAmount';
@@ -285,6 +286,7 @@ export default {
   galleryLayout,
   [optionsMap.layoutParams.structure.galleryLayout]: galleryLayout,
   scrollDirection,
+  scrollAnimationReset,
   scrollAnimationDirection,
   scrollAnimationIntensity,
   [optionsMap.layoutParams.structure.scrollDirection]: scrollDirection,

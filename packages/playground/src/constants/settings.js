@@ -165,6 +165,7 @@ export const optionsBySection = {
     "slideTransition",
     "scrollAnimationDirection",
     "scrollAnimationIntensity",
+    "scrollAnimationReset",
   ],
   [SECTIONS.IMAGE]: [
     "stylingParams_itemResolutionMode",

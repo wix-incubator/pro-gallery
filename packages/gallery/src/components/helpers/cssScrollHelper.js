@@ -100,23 +100,9 @@ class CssScrollHelper {
       ? Math.min(container.width, window.innerWidth)
       : Math.min(container.height, window.innerHeight) + container.scrollBase;
 
-    return ({
-      fromPosition,
-      toPosition,
-      fromValue,
-      toValue,
-      selectorSuffix,
-      animationCss,
-      entryAnimationCss,
-      exitAnimationCss,
-      reverseOnExit,
-      noEasing,
-      resetWhenPaused,
-    }) => {
+    return ({ fromPosition, toPosition, selectorSuffix, animationCss }) => {
       // fromPosition:  the distance from the bottom of the screen to start the animation
       // toPosition:  the distance from the bottom of the screen to end the animation
-      // fromValue: the animation start value
-      // toValue: the animation end value
 
       const createAnimationCss = (step, isExit) => {
         const cssObject = animationCss(step, isExit);
@@ -129,18 +115,11 @@ class CssScrollHelper {
         10,
         Math.round(options.scrollAnimationIntensity / 4)
       );
-      // const exitFix = reverseOnExit ? -1 : 1;
-      // const [enterFrom, enterTo] = [fromValue, toValue];
-      // const [exitFrom, exitTo] = [toValue, fromValue * exitFix];
 
       const createAnimationStep = (idx, isExit) => {
-        // const [to, from] = isExit ? [exitFrom, exitTo] : [enterTo, enterFrom];
         if (isExit) {
           idx = iterations - idx;
         }
-        // const ease = (x) => x * x * x;
-        // let step = (to - from) * ease(idx / iterations) + from;
-        // let step = ease(idx / iterations);
         let step = idx / iterations;
         return createAnimationCss(step, isExit);
       };
@@ -159,7 +138,7 @@ class CssScrollHelper {
               fromPosition % step === 0 && fromPosition + step <= toPosition
           ); //eslint-disable-line
           scrollClasses.push(
-            (resetWhenPaused
+            (options.scrollAnimationReset
               ? `.${this.isScrollingClassName(axis, true)}`
               : '') +
               `.${this.buildScrollClassName(

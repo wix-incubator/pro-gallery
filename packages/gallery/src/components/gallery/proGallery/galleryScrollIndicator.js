@@ -54,14 +54,14 @@ export default class ScrollIndicator extends React.Component {
         this.setState({
           scrollingVerically: false,
         }),
-      cssScrollHelper.transitionDuration
+      5000
     );
     this.pauseHorizontalScrolling = utils.debounce(
       () =>
         this.setState({
           scrollingHorizontally: false,
         }),
-      cssScrollHelper.transitionDuration
+      5000
     );
 
     //Horizontal Scroll
