@@ -18,6 +18,7 @@ import {assignByString} from './optionsUtils'
 import processTextDimensions from './textBoxDimensionsHelper'
 import { default as slideAnimation } from '../../settings/options/slideAnimation';
 import { default as arrowsPosition } from '../../settings/options/arrowsPosition';
+import { isDeviceTypeTouch } from '../../common/window/viewModeWrapper';
 
 export const calcTargetItemSize = (options, smartCalc = false) => {
   if (
@@ -171,7 +172,7 @@ const blockVideoControlsOnMouseCursorNavigation = (options) =>{
 
 const blockMouseCursorNavigationOnTouchDevice = (options) =>{
   let _options = {...options}
-  if (utils.isTouch() && (options.arrowsPosition === GALLERY_CONSTS.arrowsPosition.MOUSE_CURSOR) && (arrowsPosition.isRelevant(options))) {
+  if (isDeviceTypeTouch() && (options.arrowsPosition === GALLERY_CONSTS.arrowsPosition.MOUSE_CURSOR) && (arrowsPosition.isRelevant(options))) {
     _options.layoutParams.navigationArrows.enable = false;
 
   }
