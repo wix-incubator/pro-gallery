@@ -6,7 +6,9 @@ export default {
   description: `Set the color for the one color animation.`,
   isRelevantDescription: 'Set "Scroll Animation" to "One Color".',
   isRelevant: (styleParams) =>
-    styleParams.scrollAnimation === GALLERY_CONSTS.scrollAnimations.ONE_COLOR,
+    styleParams.scrollAnimation === GALLERY_CONSTS.scrollAnimations.ONE_COLOR ||
+    styleParams.exitScrollAnimation ===
+      GALLERY_CONSTS.scrollAnimations.ONE_COLOR,
   type: INPUT_TYPES.COLOR_PICKER,
   default: 'rgba(208, 208 ,208, 1)',
 };

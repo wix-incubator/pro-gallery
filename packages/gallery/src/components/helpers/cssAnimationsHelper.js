@@ -5,14 +5,10 @@ export const createScrollAnimations = ({
   itemId,
   item,
   options,
+  scrollAnimation,
   isHorizontalScroll,
 }) => {
-  const {
-    isRTL,
-    scrollAnimation,
-    oneColorAnimationColor,
-    scrollAnimationIntensity,
-  } = options;
+  const { isRTL, oneColorAnimationColor, scrollAnimationIntensity } = options;
 
   const {
     NO_EFFECT,

@@ -2,7 +2,9 @@ import { INPUT_TYPES } from '../utils/constants';
 
 export default {
   title: 'Scroll Animation Intensity',
-  isRelevant: (sp) => sp.scrollAnimation !== 'NO_EFFECT',
+  isRelevant: (sp) =>
+    sp.scrollAnimation !== 'NO_EFFECT' ||
+    sp.exitScrollAnimation !== 'NO_EFFECT',
   isRelevantDescription: 'Set any scroll animation',
   type: INPUT_TYPES.NUMBER,
   min: 0,

@@ -160,6 +160,7 @@ export const optionsBySection = {
     "imageLoadingColor",
     "imagePlacementAnimation",
     "scrollAnimation",
+    "exitScrollAnimation",
     "oneColorAnimationColor",
     "slideAnimation",
     "slideTransition",

@@ -43,6 +43,7 @@ import smartCrop from './smartCrop';
 import forceFullStrips from './forceFullStrips';
 import minItemSize from './minItemSize';
 import scrollAnimation from './scrollAnimation';
+import exitScrollAnimation from './exitScrollAnimation';
 import slideAnimation from './slideAnimation';
 import scatter from './scatter';
 import rotatingScatter from './rotatingScatter';
@@ -220,6 +221,8 @@ export default {
   [optionsMap.layoutParams.targetItemSize.minimum]: minItemSize,
   scrollAnimation,
   [optionsMap.behaviourParams.gallery.scrollAnimation]: scrollAnimation,
+  exitScrollAnimation,
+  [optionsMap.behaviourParams.gallery.exitScrollAnimation]: exitScrollAnimation,
   slideAnimation,
   [optionsMap.behaviourParams.gallery.horizontal.slideAnimation]:
     slideAnimation,

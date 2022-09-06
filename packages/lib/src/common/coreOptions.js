@@ -41,6 +41,7 @@ const coreOptions = {
   slideshowInfoSize: 200,
   imageLoadingMode: GALLERY_CONSTS.loadingMode.BLUR,
   scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
+  exitScrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
   overlayAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,
   imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.NO_EFFECT,
   itemBorderWidth: 0,

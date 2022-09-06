@@ -217,6 +217,7 @@ function input() {
     slideshowInfoSize: 200,
     imageLoadingMode: 'COLOR',
     scrollAnimation: 'NO_EFFECT',
+    exitScrollAnimation: 'NO_EFFECT',
     overlayAnimation: 'NO_EFFECT',
     imageHoverAnimation: 'NO_EFFECT',
     itemBorderWidth: 0,
@@ -714,6 +715,7 @@ function expected() {
     slideshowInfoSize: 200,
     imageLoadingMode: 'COLOR',
     scrollAnimation: 'NO_EFFECT',
+    exitScrollAnimation: 'NO_EFFECT',
     overlayAnimation: 'NO_EFFECT',
     imageHoverAnimation: 'NO_EFFECT',
     itemBorderWidth: 0,
@@ -799,6 +801,7 @@ function expected() {
       },
       gallery: {
         scrollAnimation: 'NO_EFFECT',
+        exitScrollAnimation: 'NO_EFFECT',
         enableIndexingShareLinks: false,
         horizontal: {
           slideAnimation: 'SCROLL',

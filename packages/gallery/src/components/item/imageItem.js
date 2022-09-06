@@ -79,19 +79,21 @@ class ImageItem extends React.Component {
     const { imageDimensions, options, createUrl, id } = this.props;
 
     let imageAnimationUrl = null;
-    switch (options.scrollAnimation) {
-      case GALLERY_CONSTS.scrollAnimations.BLUR:
-        imageAnimationUrl = createUrl(
-          GALLERY_CONSTS.urlSizes.RESIZED,
-          GALLERY_CONSTS.urlTypes.LOW_RES
-        );
-        break;
-      case GALLERY_CONSTS.scrollAnimations.MAIN_COLOR:
-        imageAnimationUrl = createUrl(
-          GALLERY_CONSTS.urlSizes.PIXEL,
-          GALLERY_CONSTS.urlTypes.HIGH_RES
-        );
-        break;
+    const allScrollAnimations =
+      options.scrollAnimation + ',' + options.exitScrollAnimation;
+
+    if (allScrollAnimations.includes(GALLERY_CONSTS.scrollAnimations.BLUR)) {
+      imageAnimationUrl = createUrl(
+        GALLERY_CONSTS.urlSizes.RESIZED,
+        GALLERY_CONSTS.urlTypes.LOW_RES
+      );
+    } else if (
+      allScrollAnimations.includes(GALLERY_CONSTS.scrollAnimations.MAIN_COLOR)
+    ) {
+      imageAnimationUrl = createUrl(
+        GALLERY_CONSTS.urlSizes.PIXEL,
+        GALLERY_CONSTS.urlTypes.HIGH_RES
+      );
     }
 
     return (

@@ -102,6 +102,7 @@ function expectedOptions() {
     slideshowInfoSize: 200,
     imageLoadingMode: 'BLUR',
     scrollAnimation: 'NO_EFFECT',
+    exitScrollAnimation: 'NO_EFFECT',
     overlayAnimation: 'NO_EFFECT',
     imageHoverAnimation: 'NO_EFFECT',
     itemBorderWidth: 0,

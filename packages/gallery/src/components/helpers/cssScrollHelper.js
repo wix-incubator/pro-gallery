@@ -88,7 +88,13 @@ class CssScrollHelper {
     );
   }
 
-  createScrollSelectorsFunction({ itemId, item, container, options }) {
+  createScrollSelectorsFunction({
+    itemId,
+    item,
+    container,
+    options,
+    direction,
+  }) {
     const imageStart = Math.round(
       isHorizontalScroll(options) ? item.offset.left : item.offset.top
     );
@@ -215,35 +221,9 @@ class CssScrollHelper {
           selectorSuffix,
         ]);
 
-        if (options.scrollAnimationDirection === 'BOTH') {
-          // addScrollClass(
-          //   createAnimationStep(0) + 'transtion: none !important;',
-          //   createSelectorsRange(
-          //     entryAnimationStart - this.animationPadding,
-          //     entryAnimationStart
-          //   )
-          // );
-          addScrollClasses(
-            createAnimationRange(entryAnimationStart, entryAnimationEnd)
-          );
+        if (direction === 'IN') {
           addScrollClass(
-            createAnimationStep(iterations),
-            createSelectorsRange(entryAnimationEnd, exitAnimationStart)
-          );
-          addScrollClasses(
-            createAnimationRange(exitAnimationStart, exitAnimationEnd, true)
-          );
-          // addScrollClass(
-          //   createAnimationStep(iterations, true) +
-          //     'transtion: none !important;',
-          //   createSelectorsRange(
-          //     exitAnimationEnd,
-          //     exitAnimationEnd + this.animationPadding
-          //   )
-          // );
-        } else if (options.scrollAnimationDirection === 'IN') {
-          addScrollClass(
-            createAnimationStep(0) + 'transtion: none !important;',
+            createAnimationStep(0) + ' transtion: none !important;',
             createSelectorsRange(
               entryAnimationStart - this.animationPadding,
               entryAnimationStart
@@ -252,32 +232,31 @@ class CssScrollHelper {
           addScrollClasses(
             createAnimationRange(entryAnimationStart, entryAnimationEnd)
           );
-          // addScrollClass(
-          //   createAnimationStep(iterations) + 'transtion: none !important;',
-          //   createSelectorsRange(
-          //     entryAnimationEnd,
-          //     entryAnimationEnd + this.animationPadding
-          //   )
-          // );
-        } else if (options.scrollAnimationDirection === 'OUT') {
-          // addScrollClass(
-          //   createAnimationStep(iterations) + 'transtion: none !important;',
-          //   createSelectorsRange(
-          //     exitAnimationStart - this.animationPadding,
-          //     exitAnimationStart
-          //   )
-          // );
+          addScrollClass(
+            createAnimationStep(iterations) + ' transtion: none !important;',
+            createSelectorsRange(
+              entryAnimationEnd,
+              entryAnimationEnd + this.animationPadding
+            )
+          );
+        } else if (direction === 'OUT') {
+          addScrollClass(
+            createAnimationStep(iterations) + ' transtion: none !important;',
+            createSelectorsRange(
+              exitAnimationStart - this.animationPadding,
+              exitAnimationStart
+            )
+          );
           addScrollClasses(
             createAnimationRange(exitAnimationStart, exitAnimationEnd, true)
           );
-          // addScrollClass(
-          //   createAnimationStep(iterations, true) +
-          //     'transtion: none !important;',
-          //   createSelectorsRange(
-          //     exitAnimationEnd,
-          //     exitAnimationEnd + this.animationPadding
-          //   )
-          // );
+          addScrollClass(
+            createAnimationStep(0) + ' transtion: none !important;',
+            createSelectorsRange(
+              exitAnimationEnd,
+              exitAnimationEnd + this.animationPadding
+            )
+          );
         }
 
         const fullCss = Object.entries(scrollClasses)
@@ -297,30 +276,48 @@ class CssScrollHelper {
   }
 
   createScrollAnimationsIfNeeded({ idx, item, container, options }) {
-    const { isRTL, scrollAnimation, oneColorAnimationColor } = options;
-
-    if (
-      !scrollAnimation ||
-      scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT
-    ) {
-      return '';
-    }
+    const {
+      isRTL,
+      scrollAnimation,
+      exitScrollAnimation,
+      oneColorAnimationColor,
+    } = options;
 
     const itemId = this.getSellectorDomId(item);
-    const createScrollSelectors = this.createScrollSelectorsFunction({
+    const createEntryScrollSelectors = this.createScrollSelectorsFunction({
       itemId,
       item,
       container,
       options,
+      direction: 'IN',
     });
-
-    return createScrollAnimations({
-      createScrollSelectors,
+    const createExitScrollSelectors = this.createScrollSelectorsFunction({
       itemId,
       item,
+      container,
       options,
-      isHorizontalScroll: isHorizontalScroll(options),
+      direction: 'OUT',
     });
+
+    return (
+      createScrollAnimations({
+        createScrollSelectors: createEntryScrollSelectors,
+        itemId,
+        item,
+        options,
+        scrollAnimation: options.scrollAnimation,
+        isHorizontalScroll: isHorizontalScroll(options),
+      }) +
+      ' \n' +
+      createScrollAnimations({
+        createScrollSelectors: createExitScrollSelectors,
+        itemId,
+        item,
+        options,
+        scrollAnimation: options.exitScrollAnimation,
+        isHorizontalScroll: isHorizontalScroll(options),
+      })
+    );
   }
 
   calcScrollCssForItem({ item, container, options }) {
@@ -340,13 +337,15 @@ class CssScrollHelper {
 
   calcScrollCss({ galleryId, items, container, options }) {
     this.galleryId = galleryId;
-    const scrollAnimation = options.scrollAnimation;
+    const { exitScrollAnimation, scrollAnimation } = options;
     if (!(items && items.length)) {
       return [];
     }
     if (
-      !scrollAnimation ||
-      scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT
+      (!scrollAnimation ||
+        scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT) &&
+      (!exitScrollAnimation ||
+        exitScrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT)
     ) {
       return [];
     }
