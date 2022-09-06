@@ -151,6 +151,7 @@ export const createScrollAnimations = ({
       resetWhenPaused: true,
       animationCss: (step, isExit) => ({
         transform: `rotate(${valueInRange(step, fromVal, toVal, 1)}deg)`,
+        'transform-origin': 'center',
       }),
     });
   }
