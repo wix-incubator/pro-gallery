@@ -80,6 +80,7 @@ const v3DefaultOptions = {
   galleryTextAlign: 'center',
   imageMargin: 10, // The renderer will do the /2 *2 for his pictures, the default is the margin between images (thats how it is in the settings menu. 50 = 50 between images)
   fixedColumns: 0, // determine the number of columns regardless of the screen size (use 0 to ignore)
+  forceFullStrips: false,
   showArrows: true,
   hasThumbnails: false,
   galleryThumbnailsAlignment: 'bottom',
@@ -96,6 +97,7 @@ const v3DefaultOptions = {
   slideshowInfoSize: 200,
   imageLoadingMode: 'BLUR',
   scrollAnimation: 'NO_EFFECT',
+  exitScrollAnimation: 'NO_EFFECT',
   overlayAnimation: 'NO_EFFECT',
   imageHoverAnimation: 'NO_EFFECT',
   itemBorderWidth: 0,

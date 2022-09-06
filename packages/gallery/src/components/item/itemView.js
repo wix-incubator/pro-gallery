@@ -13,6 +13,7 @@ import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
 import { changeActiveElementIfNeeded, onAnchorFocus } from './itemHelper.js';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
+import { ScrollAnimations } from './scrollAnimations';
 import {
   getOuterInfoStyle,
   getInnerInfoStyle,
@@ -1042,19 +1043,21 @@ class ItemView extends React.Component {
       tabIndex: -1,
       onKeyDown: handleKeyDown,
     };
-    if (linkParams?.href?.length > 0) {
-      return (
-        <a key={'item-container-link-' + id} {...elementProps} {...linkParams}>
-          {innerDiv}
-        </a>
-      );
-    } else {
-      return (
-        <div key={'item-container-div-' + id} {...elementProps}>
-          {innerDiv}
-        </div>
-      );
-    }
+    return (
+      <a
+        key={'item-container-link-' + id}
+        {...elementProps}
+        {...(linkParams?.href?.length > 0 && linkParams)}
+      >
+        {innerDiv}
+        {this.props.scrollAnimationCss ? (
+          <ScrollAnimations
+            idx={idx}
+            css={this.props.scrollAnimationCss[idx]}
+          />
+        ) : null}
+      </a>
+    );
   }
 
   //-----------------------------------------| RENDER |--------------------------------------------//

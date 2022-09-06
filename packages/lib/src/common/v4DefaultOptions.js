@@ -106,6 +106,7 @@ const defaultOptions = {
       blockContextMenu: true,
       layoutDirection: 'LEFT_TO_RIGHT', //TODO, create and use use consts
       scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
+      exitScrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
       enableIndexingShareLinks: true,
       horizontal: {
         enableScrollSnap: false,

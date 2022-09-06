@@ -24,6 +24,7 @@ const coreOptions = {
   galleryTextAlign: 'center',
   imageMargin: 10, // The renderer will do the /2 *2 for his pictures, the default is the margin between images (thats how it is in the settings menu. 50 = 50 between images)
   fixedColumns: 0, // determine the number of columns regardless of the screen size (use 0 to ignore)
+  forceFullStrips: false,
   showArrows: true,
   hasThumbnails: false,
   galleryThumbnailsAlignment: 'bottom',
@@ -40,6 +41,7 @@ const coreOptions = {
   slideshowInfoSize: 200,
   imageLoadingMode: GALLERY_CONSTS.loadingMode.BLUR,
   scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
+  exitScrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
   overlayAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,
   imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.NO_EFFECT,
   itemBorderWidth: 0,

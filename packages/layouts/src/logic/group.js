@@ -36,9 +36,9 @@ export class Group {
     this.inStripIdx = config.inStripIdx;
     this.top = config.top;
     this.showAllItems = config.showAllItems;
-    this.isLastItems = config.isLastItems;
     this.dummyItems = [];
     this.targetItemSize = config.targetItemSize;
+    this.recommendedGroupSize = config.recommendedGroupSize;
 
     this.items = config.items.map((item) => {
       item.Group = this;
@@ -55,7 +55,9 @@ export class Group {
       this.collageAmount = styleParams.collageAmount;
       this.collageDensity = styleParams.collageDensity;
       this.groupTypes = String(styleParams.groupTypes);
-      this.repeatingGroupTypes = String(styleParams.layoutParams.repeatingGroupTypes);
+      this.repeatingGroupTypes = String(
+        styleParams.layoutParams.repeatingGroupTypes
+      );
       this.rotatingCropRatios = String(styleParams.rotatingCropRatios);
       this.chooseBestGroup = styleParams.chooseBestGroup;
       this.externalInfoHeight = styleParams.externalInfoHeight;
@@ -124,7 +126,7 @@ export class Group {
 
   round() {
     //round all sizes to full pixels
-    
+
     if (this.isLastGroup && this.scrollDirection === 0) {
       this.width = this.stripWidth - this.left;
     } else {
@@ -272,7 +274,7 @@ export class Group {
       //---------| Override with specifically defined group types
       if (this.groupTypes) {
         // let groupTypesArr = union(['1'], this.groupTypes.split(','));
-        const groupTypesArr = this.groupTypes.split(',');
+        const groupTypesArr = this.groupTypes.split(',') || [];
 
         if (groupTypesArr.length > 1) {
           groupTypes = groupTypes.filter(
@@ -300,7 +302,7 @@ export class Group {
         const targetGroupSizes =
           optionalGroupSizes[
             Math.floor(collageDensity * (optionalGroupSizes.length - 1))
-          ];
+          ] || [];
         // seed += ((collageDensity * 1.5) - 0.75) * numOfOptions;
 
         groupTypes = groupTypes.filter(
@@ -799,6 +801,9 @@ export class Group {
   get isWithinMinItemSize() {
     if (this.items.length === 0 || !this.placed) {
       return false;
+    }
+    if (this.items.length === this.recommendedGroupSize) {
+      return true;
     }
     if (this.items.length === 1) {
       return true;

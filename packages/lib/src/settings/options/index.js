@@ -40,8 +40,10 @@ import rotatingCropRatios from './rotatingCropRatios';
 import columnWidths from './columnWidths';
 import autoSlideshowInterval from './autoSlideshowInterval';
 import smartCrop from './smartCrop';
+import forceFullStrips from './forceFullStrips';
 import minItemSize from './minItemSize';
 import scrollAnimation from './scrollAnimation';
+import exitScrollAnimation from './exitScrollAnimation';
 import slideAnimation from './slideAnimation';
 import scatter from './scatter';
 import rotatingScatter from './rotatingScatter';
@@ -76,6 +78,9 @@ import gallerySizeRatio from './gallerySizeRatio';
 import allowContextMenu from './allowContextMenu';
 import galleryLayout from './galleryLayout';
 import scrollDirection from './scrollDirection';
+import scrollAnimationDirection from './scrollAnimationDirection';
+import scrollAnimationIntensity from './scrollAnimationIntensity';
+import scrollAnimationReset from './scrollAnimationReset';
 import scrollDuration from './scrollDuration';
 import isAutoSlideshow from './isAutoSlideshow';
 import loadMoreAmount from './loadMoreAmount';
@@ -86,6 +91,7 @@ import playButtonForAutoSlideShow from './playButtonForAutoSlideShow';
 import hidePlay from './hidePlay';
 import overlayBackground from './overlayBackground';
 import allowLeanGallery from './allowLeanGallery';
+import oneColorAnimationColor from './oneColorAnimationColor';
 import placeGroupsLtr from './placeGroupsLtr';
 import pauseAutoSlideshowOnHover from './pauseAutoSlideshowOnHover';
 import showVideoControls from './showVideoControls';
@@ -210,10 +216,13 @@ export default {
     behaviourParams_gallery_horizontal_autoSlide_interval,
   smartCrop,
   [optionsMap.layoutParams.crop.enableSmartCrop]: smartCrop,
+  forceFullStrips,
   minItemSize,
   [optionsMap.layoutParams.targetItemSize.minimum]: minItemSize,
   scrollAnimation,
   [optionsMap.behaviourParams.gallery.scrollAnimation]: scrollAnimation,
+  exitScrollAnimation,
+  [optionsMap.behaviourParams.gallery.exitScrollAnimation]: exitScrollAnimation,
   slideAnimation,
   [optionsMap.behaviourParams.gallery.horizontal.slideAnimation]:
     slideAnimation,
@@ -280,6 +289,9 @@ export default {
   galleryLayout,
   [optionsMap.layoutParams.structure.galleryLayout]: galleryLayout,
   scrollDirection,
+  scrollAnimationReset,
+  scrollAnimationDirection,
+  scrollAnimationIntensity,
   [optionsMap.layoutParams.structure.scrollDirection]: scrollDirection,
   scrollDuration,
   [optionsMap.behaviourParams.gallery.horizontal.navigationDuration]:
@@ -301,6 +313,7 @@ export default {
   [optionsMap.behaviourParams.item.video.enablePlayButton]: hidePlay,
   overlayBackground,
   allowLeanGallery,
+  oneColorAnimationColor,
   placeGroupsLtr,
   [optionsMap.layoutParams.structure.groupsOrder]: placeGroupsLtr,
   showVideoControls,
@@ -365,9 +378,3 @@ export default {
   [optionsMap.behaviourParams.item.secondaryMedia.behaviour]:
     behaviourParams_item_secondaryMedia_behaviour,
 };
-// TODO = add the options:
-/*
-itemOpacity
-imageLoadingColor
-oneColorAnimationColor
-*/

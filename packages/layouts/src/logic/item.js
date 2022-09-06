@@ -30,6 +30,7 @@ export class Item {
       this.cropOnlyFill = styleParams.cropOnlyFill;
       this.imageMargin = styleParams.imageMargin;
       this.gallerySpacing = styleParams.layoutParams.gallerySpacing;
+      this.forceFullStrips = styleParams.forceFullStrips;
       this.scatter = styleParams.scatter;
       this.rotatingScatter = styleParams.rotatingScatter;
       this.smartCrop = styleParams.smartCrop;

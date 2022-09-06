@@ -7,6 +7,7 @@ import {
   GALLERY_CONSTS,
   extendNestedOptionsToIncludeOldAndNew,
 } from 'pro-gallery-lib';
+import { cssScrollHelper } from 'pro-gallery';
 
 class Blueprints {
   createBlueprint({
@@ -86,6 +87,14 @@ class Blueprints {
           existingBlueprint.container = formattedContainer;
         }
         existingBlueprint.structure = structure;
+
+        existingBlueprint.scrollAnimationsCss = this.createCssAnimations({
+          items: structure.items,
+          container: existingBlueprint.container,
+          options: existingBlueprint.styles,
+          id: params.id,
+        });
+        console.log({ existingBlueprint });
 
         // if its an infinite gallery - let the container loose
         const isInfinite =
@@ -347,7 +356,7 @@ class Blueprints {
     const layoutParams = {
       items: formattedItems,
       container: formattedContainer,
-      styleParams: formattedOptions,
+      options: formattedOptions,
       options: {
         showAllItems: true,
         skipVisibilitiesCalc: true,
@@ -363,6 +372,15 @@ class Blueprints {
     // }
 
     return this.layouter.createLayout(layoutParams);
+  }
+
+  createCssAnimations({ items, container, options, id }) {
+    return cssScrollHelper.calcScrollCss({
+      items,
+      options,
+      container,
+      galleryId: id,
+    });
   }
 }
 const blueprints = new Blueprints();

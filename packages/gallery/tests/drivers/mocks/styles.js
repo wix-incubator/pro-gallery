@@ -24,6 +24,7 @@ const options = {
   smartCrop: false,
   rotatingCropRatio: '',
   fixedColumns: 0,
+  forceFullStrips: false,
   groupsPerStrip: 0,
   imageMargin: 10,
   scatter: 0,

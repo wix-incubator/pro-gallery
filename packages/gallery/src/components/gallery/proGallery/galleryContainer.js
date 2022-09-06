@@ -663,13 +663,15 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  getScrollCss({ id, items, options, container }) {
+  getScrollCss({ id, items, container, options }) {
+    // if (this.shouldCreateScrollCss) {
     this.scrollCss = cssScrollHelper.calcScrollCss({
       items,
-      options,
-      id,
       container,
+      options,
+      galleryId: id,
     });
+    // }
   }
 
   toggleLoadMoreItems() {
@@ -887,6 +889,7 @@ export class GalleryContainer extends React.Component {
     }
 
     const displayShowMore = this.containerInfiniteGrowthDirection() === 'none';
+
     return (
       <div
         data-key="pro-gallery-inner-container"
@@ -924,6 +927,7 @@ export class GalleryContainer extends React.Component {
           options={this.props.options}
           container={this.props.container}
           settings={this.props.settings}
+          scrollAnimationCss={this.scrollCss}
           displayShowMore={displayShowMore}
           id={this.props.id}
           activeIndex={this.props.activeIndex || 0}
@@ -963,7 +967,7 @@ export class GalleryContainer extends React.Component {
               dangerouslySetInnerHTML={{ __html: css }}
             />
           ))}
-          {(this.scrollCss || []).filter(Boolean).map((css, idx) => (
+          {(this.props.scrollCss || []).filter(Boolean).map((css, idx) => (
             <style
               id={`scrollCss_${idx}`}
               key={`scrollCss_${idx}`}

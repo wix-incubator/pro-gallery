@@ -221,6 +221,8 @@ class GalleryView extends React.Component {
       container: this.props.container,
       options: this.props.options,
       settings: this.props.settings,
+      scrollAnimationCss: this.props.scrollAnimationCss,
+      domId: this.props.domId,
       activeIndex: this.state.activeIndex,
       customComponents: this.props.customComponents,
       galleryId: this.props.id,

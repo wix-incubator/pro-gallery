@@ -7,10 +7,12 @@ export default class ScrollIndicator extends React.Component {
     super();
 
     this.state = {
+      scrolling: false,
       scrollTop: 0,
       scrollLeft: 0,
     };
-    this.debouncedOnScroll = utils.debounce(props.onScroll, 50);
+    this.setState = this.setState.bind(this);
+    this.debouncedOnScroll = props.onScroll;
   }
 
   removeScrollListener() {
@@ -44,7 +46,24 @@ export default class ScrollIndicator extends React.Component {
     }
 
     this.scrollEventListenerSet = true;
-    const scrollingElement = this.props.scrollingElement;
+    const { isRTL, setGotFirstScrollIfNeeded, scrollingElement, oneRow } =
+      this.props;
+
+    this.pauseVerticalScrolling = utils.debounce(
+      () =>
+        this.setState({
+          scrollingVerically: false,
+        }),
+      5000
+    );
+    this.pauseHorizontalScrolling = utils.debounce(
+      () =>
+        this.setState({
+          scrollingHorizontally: false,
+        }),
+      5000
+    );
+
     //Horizontal Scroll
     this.onHorizontalScrollTransition = ({ detail }) => {
       const step = Math.round(detail);
@@ -54,17 +73,18 @@ export default class ScrollIndicator extends React.Component {
           GALLERY_CONSTS.scrollDirection.HORIZONTAL
         ) {
           this.setState({
+            scrollingHorizontally: true,
             scrollLeft: this.state.scrollLeft + step,
           });
+          this.pauseHorizontalScrolling();
         }
       }
     };
-
     this.onHorizontalScroll = (e) => {
-      this.props.setGotFirstScrollIfNeeded();
+      setGotFirstScrollIfNeeded();
       const target = e.currentTarget || e.target || e;
       let left = target && (target.scrollX || target.scrollLeft || target.x);
-      if (this.props.isRTL) {
+      if (isRTL) {
         left = Math.abs(left); //this.props.totalWidth - left;
       }
       // console.log('[RTL SCROLL] onHorizontalScroll: ', left);
@@ -74,14 +94,23 @@ export default class ScrollIndicator extends React.Component {
           GALLERY_CONSTS.scrollDirection.HORIZONTAL
         ) {
           this.setState({
-            scrollTop: left,
-            scrollLeft: left,
+            scrollingHorizontally: true,
+            scrollLeft: Math.round(left),
           });
+          this.pauseHorizontalScrolling();
           this.props.getMoreItemsIfNeeded(left);
           this.debouncedOnScroll({ left });
         }
       }
     };
+
+    try {
+      scrollingElement
+        .horizontal()
+        ?.addEventListener('scroll', this.onHorizontalScroll);
+    } catch (e) {
+      console.error(e);
+    }
 
     if (
       this.props.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
@@ -109,13 +138,15 @@ export default class ScrollIndicator extends React.Component {
       // console.log('[RTL SCROLL] onVerticalScroll: ', left);
       if (top >= 0) {
         this.setState({
-          scrollTop: top,
+          scrollingVerically: true,
+          scrollTop: Math.round(top),
         });
         if (
           this.props.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL
         ) {
           this.props.getMoreItemsIfNeeded(top);
         }
+        this.pauseVerticalScrolling();
         this.debouncedOnScroll({ top });
       }
     };
@@ -163,6 +194,9 @@ export default class ScrollIndicator extends React.Component {
         ? this.props.scrollBase
         : 0;
     const scrollTopWithoutBase = this.state.scrollTop - verticalScrollBase;
+    const scrollLeft = this.state.scrollLeft;
+    const isScrollingVertically = this.state.scrollingVerically;
+    const isScrollingHorizontally = this.state.scrollingHorizontally;
     const { id } = this.props;
     return (
       <div
@@ -170,9 +204,27 @@ export default class ScrollIndicator extends React.Component {
         data-hook="css-scroll-indicator"
         data-scroll-base={verticalScrollBase}
         data-scroll-top={this.state.scrollTop}
-        className={cssScrollHelper.calcScrollClasses(id, scrollTopWithoutBase)}
-        style={{ display: 'none' }}
-      />
+        className={cssScrollHelper.calcScrollClasses(
+          id,
+          scrollTopWithoutBase,
+          scrollLeft,
+          isScrollingVertically,
+          isScrollingHorizontally
+        )}
+        style={{
+          position: 'fixed',
+          top: 0,
+          right: 0,
+          background: 'white',
+          zIndex: 99999,
+          padding: 10,
+          border: '1px solid blue',
+        }}
+      >
+        x: {this.state.scrollLeft}
+        <br />
+        y: {this.state.scrollTop}
+      </div>
     );
   }
 }
