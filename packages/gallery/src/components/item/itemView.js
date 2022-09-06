@@ -201,7 +201,10 @@ class ItemView extends React.Component {
       e.preventDefault();
     }
 
-    if (this.shouldShowHoverOnMobile()) {
+    if (
+      this.shouldShowHoverOnMobile() ||
+      this.shouldShowSecondMediaOnMobile()
+    ) {
       this.handleHoverClickOnMobile(e);
     } else {
       this.handleGalleryItemAction(e);
@@ -303,6 +306,20 @@ class ItemView extends React.Component {
       }
       if (isEditMode() && previewHover) {
         return true;
+      }
+    }
+    return false;
+  }
+  shouldShowSecondMediaOnMobile() {
+    if (utils.isMobile()) {
+      const { itemClick } = this.props.options;
+      if (itemClick === 'nothing' && this.props.type !== 'video') {
+        return (
+          this.props.options.behaviourParams.item.secondaryMedia.trigger ===
+          GALLERY_CONSTS.secondaryMediaTrigger.HOVER
+        );
+      } else {
+        return false;
       }
     }
     return false;
