@@ -94,5 +94,8 @@
     "setupFilesAfterEnv": [
       "<rootDir>/tests/drivers/mocks/jest-setup.js"
     ]
+  },
+  "prettier": {
+    "printWidth": 120
   }
 }

@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { GALLERY_CONSTS } from "pro-gallery-lib";
 
 export const createScrollAnimations = ({
   createScrollSelectors,
@@ -8,20 +8,20 @@ export const createScrollAnimations = ({
   scrollAnimation,
   isHorizontalScroll,
 }) => {
-  const {
-    isRTL,
-    oneColorAnimationColor,
-    scrollAnimationIntensity,
-    scrollAnimationDistance,
-  } = options;
+  const { isRTL, oneColorAnimationColor, scrollAnimationIntensity, scrollAnimationDistance } = options;
 
   const {
     NO_EFFECT,
     FADE_IN,
     GRAYSCALE,
     SLIDE_UP,
-    SLIDE_IN,
-    SLIDE_IN_REVERSED,
+    SLIDE_DOWN,
+    SLIDE_LEFT,
+    SLIDE_RIGHT,
+    APPEAR_UP,
+    APPEAR_DOWN,
+    APPEAR_LEFT,
+    APPEAR_RIGHT,
     EXPAND,
     SHRINK,
     ZOOM_OUT,
@@ -30,36 +30,37 @@ export const createScrollAnimations = ({
     MAIN_COLOR,
     BLUR,
     HINGE,
-    SQUEEZE,
     ROTATE,
+    ROUND,
     FLIP,
+    SQUEEZE_LEFT,
+    SQUEEZE_RIGHT,
+    SQUEEZE_UP,
+    SQUEEZE_DOWN,
+    PAN_LEFT,
+    PAN_RIGHT,
+    PAN_UP,
+    PAN_DOWN,
   } = GALLERY_CONSTS.scrollAnimations;
 
   const i = scrollAnimationIntensity || 25;
   const d = scrollAnimationDistance || 200;
   const r = (num) => num + Math.round((Math.random() * i) / 4);
   const h = isHorizontalScroll;
+  const s = scrollAnimation;
 
-  let scrollSelectorsCss = '';
-  let generalCss = '';
+  let scrollSelectorsCss = "";
+  let generalCss = "";
   let createEntryAnimationStepCss = [];
   let animationBySuffix = {};
 
-  const addScrollSelectors = (
-    { selectorSuffix, animationCss },
-    generalStyles = ''
-  ) => {
+  const addScrollSelectors = ({ selectorSuffix, animationCss }, generalStyles = "") => {
     scrollSelectorsCss += generalStyles + ` \n`;
-    animationBySuffix[selectorSuffix] = [
-      ...(animationBySuffix[selectorSuffix] || []),
-      animationCss,
-    ];
+    animationBySuffix[selectorSuffix] = [...(animationBySuffix[selectorSuffix] || []), animationCss];
   };
 
   const mergeSelectorsCss = () => {
-    for (let [selectorSuffix, animationCss] of Object.entries(
-      animationBySuffix
-    )) {
+    for (let [selectorSuffix, animationCss] of Object.entries(animationBySuffix)) {
       scrollSelectorsCss += createScrollSelectors({
         fromPosition: 0,
         toPosition: scrollAnimationDistance,
@@ -70,8 +71,7 @@ export const createScrollAnimations = ({
             const animationCssObject = cssCreationFunction(step, isExit);
             for (let cssProp of Object.keys(animationCssObject)) {
               if (cssObject[cssProp]) {
-                cssObject[cssProp] =
-                  cssObject[cssProp] + ' ' + animationCssObject[cssProp];
+                cssObject[cssProp] = cssObject[cssProp] + " " + animationCssObject[cssProp];
               } else {
                 cssObject[cssProp] = animationCssObject[cssProp];
               }
@@ -91,7 +91,7 @@ export const createScrollAnimations = ({
     return roundedVal;
   };
 
-  if (scrollAnimation.includes(FADE_IN)) {
+  if (s.includes(FADE_IN)) {
     const fromVal = Math.round(50 - i / 2) / 100; // 0.5 - 0
     const toVal = 1;
     addScrollSelectors({
@@ -102,7 +102,7 @@ export const createScrollAnimations = ({
       resetWhenPaused: true,
     });
   }
-  if (scrollAnimation.includes(GRAYSCALE)) {
+  if (s.includes(GRAYSCALE)) {
     const fromVal = Math.round(50 + i / 2); // 50-100
     const toVal = 0;
     addScrollSelectors({
@@ -113,7 +113,7 @@ export const createScrollAnimations = ({
       resetWhenPaused: true,
     });
   }
-  if (scrollAnimation.includes(EXPAND)) {
+  if (s.includes(EXPAND)) {
     const fromVal = Math.round(95 - i / 4) / 100; // 0.95-0.7
     const toVal = 1;
     addScrollSelectors({
@@ -123,7 +123,7 @@ export const createScrollAnimations = ({
       }),
     });
   }
-  if (scrollAnimation.includes(SHRINK)) {
+  if (s.includes(SHRINK)) {
     const fromVal = Math.round(105 + i / 10) / 100; // 1.05-1.1
     const toVal = 1;
     addScrollSelectors({
@@ -133,7 +133,7 @@ export const createScrollAnimations = ({
       }),
     });
   }
-  if (scrollAnimation.includes(ZOOM_OUT)) {
+  if (s.includes(ZOOM_OUT)) {
     const fromVal = Math.round(110 + i / 4) / 100; // 1.1-1.35
     const toVal = 1;
     addScrollSelectors({
@@ -143,7 +143,7 @@ export const createScrollAnimations = ({
       }),
     });
   }
-  if (scrollAnimation.includes(ZOOM_IN)) {
+  if (s.includes(ZOOM_IN)) {
     const fromVal = 1;
     const toVal = Math.round(110 + i / 4) / 100; // 1.1-1.35
     addScrollSelectors({
@@ -153,8 +153,8 @@ export const createScrollAnimations = ({
       }),
     });
   }
-  if (scrollAnimation.includes(BLUR)) {
-    const fromVal = Math.round(i / 2); // 0-50;
+  if (s.includes(BLUR)) {
+    const fromVal = Math.round(i / 4); // 0-25;
     const toVal = 0;
     addScrollSelectors({
       selectorSuffix: `#${itemId} .gallery-item-content`,
@@ -164,7 +164,7 @@ export const createScrollAnimations = ({
       resetWhenPaused: true,
     });
   }
-  if (scrollAnimation.includes(ROTATE)) {
+  if (s.includes(ROTATE)) {
     const fromVal = Math.round(5 + i / 10); // 5-15
     const toVal = 0;
     addScrollSelectors({
@@ -172,44 +172,65 @@ export const createScrollAnimations = ({
       resetWhenPaused: true,
       animationCss: (step, isExit) => ({
         transform: `rotate(${valueInRange(step, fromVal, toVal, 1)}deg)`,
-        'transform-origin': 'center',
+        "transform-origin": "center",
       }),
     });
   }
-  if (scrollAnimation.includes(HINGE)) {
+  if (s.includes(HINGE)) {
     const fromVal = Math.round(5 + i / 10); // 5-15
     const toVal = 0;
     addScrollSelectors({
-      selectorSuffix: `#${itemId}`,
+      selectorSuffix: `#${itemId} .gallery-item-wrapper`,
       resetWhenPaused: true,
       animationCss: (step, isExit) => ({
-        transform: `rotate(${
-          (isExit ? -1 : 1) * valueInRange(step, fromVal, toVal, 1)
-        }deg)`,
-        'transform-origin': isExit ? 'bottom left' : 'top left',
+        transform: `rotate(${(isExit ? -1 : 1) * valueInRange(step, fromVal, toVal, 1)}deg)`,
+        "transform-origin": isExit ? "bottom left" : "top left",
       }),
     });
   }
-  if (scrollAnimation.includes(SQUEEZE)) {
-    const prop = h ? 'X' : 'Y';
-    const entryOrigin = h ? (isRTL ? 'right' : 'left') : 'top';
-    const exitOrigin = h ? (isRTL ? 'left' : 'right') : 'bottom';
-    const from = Math.round((i * 4) / 5) / 100; // .8-0
-    const to = 1;
+  if (s.includes(ROUND)) {
+    const from = Math.round(i / 2);
+    const to = 0;
     addScrollSelectors({
-      selectorSuffix: `#${itemId} .gallery-item-content`,
+      selectorSuffix: `#${itemId} .gallery-item-wrapper`,
       animationCss: (step, isExit) => ({
-        transform: `scale${prop}(${valueInRange(step, from, to, 0.01)})`,
-        'transform-origin': isExit ? exitOrigin : entryOrigin,
-        'object-fit': 'fill',
+        "border-radius": `${valueInRange(step, from, to, 1)}%`,
       }),
     });
   }
 
-  if (scrollAnimation.includes(FLIP)) {
-    const prop = h ? 'X' : 'Y';
-    const entryOrigin = h ? (isRTL ? 'right' : 'left') : 'top';
-    const exitOrigin = h ? (isRTL ? 'left' : 'right') : 'bottom';
+  if ([SQUEEZE_DOWN, SQUEEZE_UP, SQUEEZE_LEFT, SQUEEZE_RIGHT].some((r) => s.includes(r))) {
+    const rtlFix = h && isRTL ? -1 : 1;
+    const directionFix = [SQUEEZE_UP, SQUEEZE_LEFT].some((r) => s.includes(r)) ? 1 : -1;
+    const prop = [SQUEEZE_LEFT, SQUEEZE_RIGHT].some((r) => s.includes(r)) ? "X" : "Y";
+    const origin = s.includes(SQUEEZE_DOWN)
+      ? "bottom"
+      : s.includes(SQUEEZE_UP)
+      ? "top"
+      : s.includes(SQUEEZE_RIGHT)
+      ? "right"
+      : "left";
+    const fromVal = Math.round((i * 4) / 5) / 100; // .8-0
+    const toVal = 0;
+
+    addScrollSelectors(
+      {
+        selectorSuffix: `#${itemId} .gallery-item-content`,
+        animationCss: (step, isExit) => ({
+          transform: `scale${prop}(${valueInRange(step, fromVal, toVal, 0.01)})`,
+          "transform-origin": origin,
+          "object-fit": "fill",
+        }),
+        reverseOnExit: true,
+      },
+      ` #${itemId} {overflow: visible !important;}`
+    );
+  }
+
+  if (s.includes(FLIP)) {
+    const prop = h ? "X" : "Y";
+    const entryOrigin = h ? (isRTL ? "right" : "left") : "top";
+    const exitOrigin = h ? (isRTL ? "left" : "right") : "bottom";
     const fromVal = (i * 9) / 10; // 0-90
     const toVal = 0;
     addScrollSelectors(
@@ -219,16 +240,15 @@ export const createScrollAnimations = ({
           transform: `rotate3d(${(isExit ? 1 : -1) * (h ? 0 : 1)}, ${
             (isExit ? -1 : 1) * (h ? 1 : 0)
           }, 0, ${valueInRange(step, fromVal, toVal, 1)}deg)`,
-          'transform-origin': isExit ? exitOrigin : entryOrigin,
+          "transform-origin": isExit ? exitOrigin : entryOrigin,
         }),
       },
       `#${itemId}>div {perspective: 1000px;}`
     );
   }
 
-  if (scrollAnimation.includes(ONE_COLOR)) {
-    const bgColor =
-      oneColorAnimationColor?.value || oneColorAnimationColor || 'transparent';
+  if (s.includes(ONE_COLOR)) {
+    const bgColor = oneColorAnimationColor?.value || oneColorAnimationColor || "transparent";
     addScrollSelectors(
       {
         resetWhenPaused: true,
@@ -240,8 +260,8 @@ export const createScrollAnimations = ({
       ` #${itemId} .gallery-item-wrapper {background-color: ${bgColor} !important;}`
     );
   }
-  if (scrollAnimation.includes(MAIN_COLOR)) {
-    const pixel = item.createUrl('pixel', 'img');
+  if (s.includes(MAIN_COLOR)) {
+    const pixel = item.createUrl("pixel", "img");
     addScrollSelectors(
       {
         resetWhenPaused: true,
@@ -253,23 +273,19 @@ export const createScrollAnimations = ({
       ` #${itemId} .gallery-item-wrapper {background-image: url(${pixel}) !important;}`
     );
   }
-  if (scrollAnimation.includes(SLIDE_UP)) {
+  if ([SLIDE_DOWN, SLIDE_UP, SLIDE_LEFT, SLIDE_RIGHT].some((r) => s.includes(r))) {
     const rtlFix = h && isRTL ? -1 : 1;
-    const prop = h ? 'X' : 'Y';
-    const slideGap = i * 2 * rtlFix; // 0-200
-    const fromVal = slideGap;
+    const directionFix = [SLIDE_UP, SLIDE_LEFT].some((r) => s.includes(r)) ? 1 : -1;
+    const prop = [SLIDE_LEFT, SLIDE_RIGHT].some((r) => s.includes(r)) ? "X" : "Y";
+    const slideGap = i * 2; // 0-200
+    const fromVal = slideGap * rtlFix * directionFix;
     const toVal = 0;
 
     addScrollSelectors(
       {
         selectorSuffix: `#${itemId} .gallery-item-wrapper`,
         animationCss: (step, isExit) => ({
-          transform: `translate${prop}(${valueInRange(
-            step,
-            fromVal,
-            toVal,
-            1
-          )}px)`,
+          transform: `translate${prop}(${valueInRange(step, fromVal * (isExit ? -1 : 1), toVal, 1)}px)`,
         }),
         reverseOnExit: true,
       },
@@ -277,20 +293,19 @@ export const createScrollAnimations = ({
     );
   }
 
-  if (scrollAnimation.includes(SLIDE_IN)) {
-    const fromVal = 100;
+  if ([APPEAR_DOWN, APPEAR_UP, APPEAR_LEFT, APPEAR_RIGHT].some((r) => s.includes(r))) {
+    const rtlFix = h && isRTL ? -1 : 1;
+    const directionFix = [APPEAR_UP, APPEAR_LEFT].some((r) => s.includes(r)) ? 1 : -1;
+    const prop = [APPEAR_LEFT, APPEAR_RIGHT].some((r) => s.includes(r)) ? "X" : "Y";
+    const appearFrom = 50 + i / 2; // 0-200
+    const fromVal = appearFrom * rtlFix * directionFix;
     const toVal = 0;
-    const prop = h ? 'Y' : 'X';
+
     addScrollSelectors(
       {
         selectorSuffix: `#${itemId} .gallery-item-content`,
         animationCss: (step, isExit) => ({
-          transform: `translate${prop}(${valueInRange(
-            step,
-            fromVal,
-            toVal,
-            1
-          )}px)`,
+          transform: `translate${prop}(${valueInRange(step, fromVal * (isExit ? -1 : 1), toVal, 1)}px)`,
         }),
         reverseOnExit: true,
       },
@@ -298,26 +313,19 @@ export const createScrollAnimations = ({
     );
   }
 
-  if (scrollAnimation.includes(SLIDE_IN_REVERSED)) {
-    const fromVal = 100;
-    const toVal = 0;
-    const prop = h ? 'Y' : 'X';
-    addScrollSelectors(
-      {
-        fromVal: 100,
-        toVal: 0,
-        selectorSuffix: `#${itemId} .gallery-item-content`,
-        animationCss: (step, isExit) => ({
-          transform: `translate${prop}(-${valueInRange(
-            step,
-            fromVal,
-            toVal,
-            1
-          )}px)`,
-        }),
-      },
-      ` #${itemId} {overflow: visible !important;}`
-    );
+  if ([PAN_LEFT, PAN_RIGHT, PAN_UP, PAN_DOWN].some((r) => s.includes(r))) {
+    const scale = 1.1 + i / 100; //1.1 - 2.1
+    const pan = Math.round(((scale - 1) / 4) * 100);
+    const selectorSuffix = `#${itemId} .gallery-item-content`;
+    const prop = [PAN_LEFT, PAN_RIGHT].some((r) => s.includes(r)) ? "X" : "Y";
+    const fromVal = ([PAN_LEFT, PAN_UP].some((r) => s.includes(r)) ? 1 : -1) * pan;
+
+    addScrollSelectors({
+      selectorSuffix,
+      animationCss: (step, isExit) => ({
+        transform: `scale(${scale}) translate${prop}(${valueInRange(step, fromVal, 0, 1)}%)`,
+      }),
+    });
   }
 
   return mergeSelectorsCss();
