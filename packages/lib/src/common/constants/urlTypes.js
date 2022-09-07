@@ -11,6 +11,8 @@ export const URL_SIZES = {
   DOWNLOAD: 'download',
   DOWNLOAD_SAMPLE: 'download_sample',
   MAGNIFIED: 'magnified',
+  PAN_HORIZONTAL: 'panh',
+  PAN_VERTICAL: 'panv',
 };
 
 export const URL_TYPES = {

@@ -164,7 +164,7 @@ export const optionsBySection = {
     "oneColorAnimationColor",
     "slideAnimation",
     "slideTransition",
-    "scrollAnimationDirection",
+    "scrollAnimationDistance",
     "scrollAnimationIntensity",
     "scrollAnimationReset",
   ],

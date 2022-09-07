@@ -78,7 +78,7 @@ import gallerySizeRatio from './gallerySizeRatio';
 import allowContextMenu from './allowContextMenu';
 import galleryLayout from './galleryLayout';
 import scrollDirection from './scrollDirection';
-import scrollAnimationDirection from './scrollAnimationDirection';
+import scrollAnimationDistance from './scrollAnimationDistance';
 import scrollAnimationIntensity from './scrollAnimationIntensity';
 import scrollAnimationReset from './scrollAnimationReset';
 import scrollDuration from './scrollDuration';
@@ -290,7 +290,7 @@ export default {
   [optionsMap.layoutParams.structure.galleryLayout]: galleryLayout,
   scrollDirection,
   scrollAnimationReset,
-  scrollAnimationDirection,
+  scrollAnimationDistance,
   scrollAnimationIntensity,
   [optionsMap.layoutParams.structure.scrollDirection]: scrollDirection,
   scrollDuration,

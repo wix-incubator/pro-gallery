@@ -8,7 +8,12 @@ export const createScrollAnimations = ({
   scrollAnimation,
   isHorizontalScroll,
 }) => {
-  const { isRTL, oneColorAnimationColor, scrollAnimationIntensity } = options;
+  const {
+    isRTL,
+    oneColorAnimationColor,
+    scrollAnimationIntensity,
+    scrollAnimationDistance,
+  } = options;
 
   const {
     NO_EFFECT,
@@ -18,6 +23,7 @@ export const createScrollAnimations = ({
     SLIDE_IN,
     SLIDE_IN_REVERSED,
     EXPAND,
+    SHRINK,
     ZOOM_OUT,
     ZOOM_IN,
     ONE_COLOR,
@@ -30,6 +36,7 @@ export const createScrollAnimations = ({
   } = GALLERY_CONSTS.scrollAnimations;
 
   const i = scrollAnimationIntensity || 25;
+  const d = scrollAnimationDistance || 200;
   const r = (num) => num + Math.round((Math.random() * i) / 4);
   const h = isHorizontalScroll;
 
@@ -54,8 +61,8 @@ export const createScrollAnimations = ({
       animationBySuffix
     )) {
       scrollSelectorsCss += createScrollSelectors({
-        fromPosition: r(0),
-        toPosition: r(100 + i * 4),
+        fromPosition: 0,
+        toPosition: scrollAnimationDistance,
         selectorSuffix,
         animationCss: (step, isExit) => {
           const cssObject = {};
@@ -85,25 +92,39 @@ export const createScrollAnimations = ({
   };
 
   if (scrollAnimation.includes(FADE_IN)) {
+    const fromVal = Math.round(50 - i / 2) / 100; // 0.5 - 0
+    const toVal = 1;
     addScrollSelectors({
       selectorSuffix: `#${itemId} .gallery-item-wrapper`,
       animationCss: (step, isExit) => ({
-        opacity: valueInRange(step, 0, 1, 0.01),
+        opacity: valueInRange(step, fromVal, toVal, 0.01),
       }),
       resetWhenPaused: true,
     });
   }
   if (scrollAnimation.includes(GRAYSCALE)) {
+    const fromVal = Math.round(50 + i / 2); // 50-100
+    const toVal = 0;
     addScrollSelectors({
       selectorSuffix: `#${itemId} .gallery-item-content`,
       animationCss: (step, isExit) => ({
-        filter: `grayscale(${valueInRange(step, 100, 0, 1)}%)`,
+        filter: `grayscale(${valueInRange(step, fromVal, toVal, 1)}%)`,
       }),
       resetWhenPaused: true,
     });
   }
   if (scrollAnimation.includes(EXPAND)) {
     const fromVal = Math.round(95 - i / 4) / 100; // 0.95-0.7
+    const toVal = 1;
+    addScrollSelectors({
+      selectorSuffix: `#${itemId} .gallery-item-wrapper`,
+      animationCss: (step, isExit) => ({
+        transform: `scale(${valueInRange(step, fromVal, toVal, 0.01)})`,
+      }),
+    });
+  }
+  if (scrollAnimation.includes(SHRINK)) {
+    const fromVal = Math.round(105 + i / 10) / 100; // 1.05-1.1
     const toVal = 1;
     addScrollSelectors({
       selectorSuffix: `#${itemId} .gallery-item-wrapper`,
@@ -241,7 +262,7 @@ export const createScrollAnimations = ({
 
     addScrollSelectors(
       {
-        selectorSuffix: `#${itemId} > div`,
+        selectorSuffix: `#${itemId} .gallery-item-wrapper`,
         animationCss: (step, isExit) => ({
           transform: `translate${prop}(${valueInRange(
             step,
