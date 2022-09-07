@@ -231,7 +231,7 @@ export const createScrollAnimations = ({
       ? "right"
       : "left";
     const fromVal = Math.round((i * 4) / 5) / 100; // .8-0
-    const toVal = 0;
+    const toVal = 1;
 
     addScrollSelectors(
       {
