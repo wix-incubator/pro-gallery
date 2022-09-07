@@ -14,6 +14,27 @@ export const createScrollAnimations = ({
     NO_EFFECT,
     FADE_IN,
     GRAYSCALE,
+    SHADOW,
+    BLUR,
+    ONE_COLOR,
+    MAIN_COLOR,
+    EXPAND,
+    SHRINK,
+    ROUND,
+    FLIP_UP,
+    FLIP_DOWN,
+    FLIP_LEFT,
+    FLIP_RIGHT,
+    ROTATE_RIGHT,
+    ROTATE_LEFT,
+    HINGE_RIGHT,
+    HINGE_LEFT,
+    ZOOM_IN,
+    ZOOM_OUT,
+    SQUEEZE_UP,
+    SQUEEZE_DOWN,
+    SQUEEZE_LEFT,
+    SQUEEZE_RIGHT,
     SLIDE_UP,
     SLIDE_DOWN,
     SLIDE_LEFT,
@@ -22,21 +43,6 @@ export const createScrollAnimations = ({
     APPEAR_DOWN,
     APPEAR_LEFT,
     APPEAR_RIGHT,
-    EXPAND,
-    SHRINK,
-    ZOOM_OUT,
-    ZOOM_IN,
-    ONE_COLOR,
-    MAIN_COLOR,
-    BLUR,
-    HINGE,
-    ROTATE,
-    ROUND,
-    FLIP,
-    SQUEEZE_LEFT,
-    SQUEEZE_RIGHT,
-    SQUEEZE_UP,
-    SQUEEZE_DOWN,
     PAN_LEFT,
     PAN_RIGHT,
     PAN_UP,
@@ -113,6 +119,17 @@ export const createScrollAnimations = ({
       resetWhenPaused: true,
     });
   }
+  if (s.includes(SHADOW)) {
+    const fromVal = Math.round(5 + i / 5); // 5-25
+    const toVal = 0;
+    addScrollSelectors({
+      selectorSuffix: `#${itemId}`,
+      animationCss: (step, isExit) => ({
+        filter: `drop-shadow(0 0 ${valueInRange(step, fromVal, toVal, 1)}px rgba(0,0,0,.7));`,
+      }),
+      resetWhenPaused: true,
+    });
+  }
   if (s.includes(EXPAND)) {
     const fromVal = Math.round(95 - i / 4) / 100; // 0.95-0.7
     const toVal = 1;
@@ -127,7 +144,7 @@ export const createScrollAnimations = ({
     const fromVal = Math.round(105 + i / 10) / 100; // 1.05-1.1
     const toVal = 1;
     addScrollSelectors({
-      selectorSuffix: `#${itemId} .gallery-item-wrapper`,
+      selectorSuffix: `#${itemId}`,
       animationCss: (step, isExit) => ({
         transform: `scale(${valueInRange(step, fromVal, toVal, 0.01)})`,
       }),
@@ -164,8 +181,9 @@ export const createScrollAnimations = ({
       resetWhenPaused: true,
     });
   }
-  if (s.includes(ROTATE)) {
-    const fromVal = Math.round(5 + i / 10); // 5-15
+  if ([ROTATE_LEFT, ROTATE_RIGHT].some((r) => s.includes(r))) {
+    const direction = s.includes(ROTATE_LEFT) ? 1 : -1;
+    const fromVal = direction * Math.round(5 + i / 10); // 5-15
     const toVal = 0;
     addScrollSelectors({
       selectorSuffix: `#${itemId}`,
@@ -176,15 +194,17 @@ export const createScrollAnimations = ({
       }),
     });
   }
-  if (s.includes(HINGE)) {
-    const fromVal = Math.round(5 + i / 10); // 5-15
+  if ([HINGE_LEFT, HINGE_RIGHT].some((r) => s.includes(r))) {
+    const origin = s.includes(HINGE_LEFT) ? "top left" : "top right";
+    const direction = s.includes(HINGE_LEFT) ? 1 : -1;
+    const fromVal = direction * Math.round(5 + i / 10); // 5-15
     const toVal = 0;
     addScrollSelectors({
-      selectorSuffix: `#${itemId} .gallery-item-wrapper`,
+      selectorSuffix: `#${itemId}`,
       resetWhenPaused: true,
       animationCss: (step, isExit) => ({
         transform: `rotate(${(isExit ? -1 : 1) * valueInRange(step, fromVal, toVal, 1)}deg)`,
-        "transform-origin": isExit ? "bottom left" : "top left",
+        "transform-origin": origin,
       }),
     });
   }
@@ -227,20 +247,24 @@ export const createScrollAnimations = ({
     );
   }
 
-  if (s.includes(FLIP)) {
-    const prop = h ? "X" : "Y";
-    const entryOrigin = h ? (isRTL ? "right" : "left") : "top";
-    const exitOrigin = h ? (isRTL ? "left" : "right") : "bottom";
+  if ([FLIP_DOWN, FLIP_UP, FLIP_LEFT, FLIP_RIGHT].some((r) => s.includes(r))) {
+    const xAxis = [FLIP_RIGHT, FLIP_LEFT].some((r) => s.includes(r)) ? 0 : s.includes(FLIP_UP) ? -1 : 1;
+    const yAxis = [FLIP_UP, FLIP_DOWN].some((r) => s.includes(r)) ? 0 : s.includes(FLIP_RIGHT) ? -1 : 1;
+    const origin = s.includes(FLIP_DOWN)
+      ? "bottom"
+      : s.includes(FLIP_UP)
+      ? "top"
+      : s.includes(FLIP_RIGHT)
+      ? "right"
+      : "left";
     const fromVal = (i * 9) / 10; // 0-90
     const toVal = 0;
     addScrollSelectors(
       {
         selectorSuffix: `#${itemId} .gallery-item-wrapper`,
         animationCss: (step, isExit) => ({
-          transform: `rotate3d(${(isExit ? 1 : -1) * (h ? 0 : 1)}, ${
-            (isExit ? -1 : 1) * (h ? 1 : 0)
-          }, 0, ${valueInRange(step, fromVal, toVal, 1)}deg)`,
-          "transform-origin": isExit ? exitOrigin : entryOrigin,
+          transform: `rotate3d(${xAxis}, ${yAxis}, 0, ${valueInRange(step, fromVal, toVal, 1)}deg)`,
+          "transform-origin": origin,
         }),
       },
       `#${itemId}>div {perspective: 1000px;}`
