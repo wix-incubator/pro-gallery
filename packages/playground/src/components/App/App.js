@@ -1,7 +1,7 @@
 import React, {useEffect, Suspense, useState} from 'react';
 import {NavigationPanel} from './PlaygroundNavigationPanel';
 import {useGalleryContext} from '../../hooks/useGalleryContext';
-import {testMedia, testItems, testImages, testVideos, testTexts, monochromeImages} from './images';
+import {testMedia, testItems, testImages, testVideos, testTexts, monochromeImages, itemsWithSecondaryMedia} from './images';
 import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../../utils/utils";
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { createMediaUrl } from '../../utils/itemResizer';
@@ -56,7 +56,8 @@ export function App() {
     mixed: _mixAndSlice(testItems, ITEMS_BATCH_SIZE),
     texts: _mixAndSlice(testTexts, ITEMS_BATCH_SIZE),
     videos: _mixAndSlice(testVideos, ITEMS_BATCH_SIZE),
-    images: _mixAndSlice(testImages, ITEMS_BATCH_SIZE)
+    images: _mixAndSlice(testImages, ITEMS_BATCH_SIZE),
+    itemsWithSecondaryMedia: _mixAndSlice(itemsWithSecondaryMedia, ITEMS_BATCH_SIZE),
   };
 
   const switchState = () => {
@@ -115,6 +116,8 @@ export function App() {
         return _mixAndSlice(testTexts, batchSize, true);
       case 'mixed':
         return _mixAndSlice(testItems, batchSize, true);
+      case 'itemsWithSecondaryMedia':
+        return _mixAndSlice(itemsWithSecondaryMedia, batchSize, true);
       case 'media':
       default:
         return _mixAndSlice(testMedia, batchSize, true);
