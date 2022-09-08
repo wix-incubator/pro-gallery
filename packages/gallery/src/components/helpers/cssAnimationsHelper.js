@@ -105,7 +105,6 @@ export const createScrollAnimations = ({
       animationCss: (step, isExit) => ({
         opacity: valueInRange(step, fromVal, toVal, 0.01),
       }),
-      resetWhenPaused: true,
     });
   }
   if (s.includes(GRAYSCALE)) {
@@ -116,7 +115,6 @@ export const createScrollAnimations = ({
       animationCss: (step, isExit) => ({
         filter: `grayscale(${valueInRange(step, fromVal, toVal, 1)}%)`,
       }),
-      resetWhenPaused: true,
     });
   }
   if (s.includes(SHADOW)) {
@@ -127,7 +125,6 @@ export const createScrollAnimations = ({
       animationCss: (step, isExit) => ({
         filter: `drop-shadow(0 0 ${valueInRange(step, fromVal, toVal, 1)}px rgba(0,0,0,.7));`,
       }),
-      resetWhenPaused: true,
     });
   }
   if (s.includes(EXPAND)) {
@@ -171,14 +168,13 @@ export const createScrollAnimations = ({
     });
   }
   if (s.includes(BLUR)) {
-    const fromVal = Math.round(i / 4); // 0-25;
+    const fromVal = Math.round(i / 10); // 0-25;
     const toVal = 0;
     addScrollSelectors({
       selectorSuffix: `#${itemId} .gallery-item-content`,
       animationCss: (step, isExit) => ({
         filter: `blur(${valueInRange(step, fromVal, toVal, 1)}px)`,
       }),
-      resetWhenPaused: true,
     });
   }
   if ([ROTATE_LEFT, ROTATE_RIGHT].some((r) => s.includes(r))) {
@@ -187,7 +183,6 @@ export const createScrollAnimations = ({
     const toVal = 0;
     addScrollSelectors({
       selectorSuffix: `#${itemId}`,
-      resetWhenPaused: true,
       animationCss: (step, isExit) => ({
         transform: `rotate(${valueInRange(step, fromVal, toVal, 1)}deg)`,
         "transform-origin": "center",
@@ -201,7 +196,6 @@ export const createScrollAnimations = ({
     const toVal = 0;
     addScrollSelectors({
       selectorSuffix: `#${itemId}`,
-      resetWhenPaused: true,
       animationCss: (step, isExit) => ({
         transform: `rotate(${(isExit ? -1 : 1) * valueInRange(step, fromVal, toVal, 1)}deg)`,
         "transform-origin": origin,
@@ -241,7 +235,6 @@ export const createScrollAnimations = ({
           "transform-origin": origin,
           "object-fit": "fill",
         }),
-        reverseOnExit: true,
       },
       ` #${itemId} {overflow: visible !important;}`
     );
@@ -275,7 +268,6 @@ export const createScrollAnimations = ({
     const bgColor = oneColorAnimationColor?.value || oneColorAnimationColor || "transparent";
     addScrollSelectors(
       {
-        resetWhenPaused: true,
         selectorSuffix: `#${itemId} .gallery-item-content`,
         animationCss: (step, isExit) => ({
           opacity: valueInRange(step, 0, 1, 0.01),
@@ -288,7 +280,6 @@ export const createScrollAnimations = ({
     const pixel = item.createUrl("pixel", "img");
     addScrollSelectors(
       {
-        resetWhenPaused: true,
         selectorSuffix: `#${itemId} .gallery-item-content`,
         animationCss: (step, isExit) => ({
           opacity: valueInRange(step, 0, 1, 0.01),
@@ -311,7 +302,6 @@ export const createScrollAnimations = ({
         animationCss: (step, isExit) => ({
           transform: `translate${prop}(${valueInRange(step, fromVal * (isExit ? -1 : 1), toVal, 1)}px)`,
         }),
-        reverseOnExit: true,
       },
       ` #${itemId} {overflow: visible !important;}`
     );
@@ -329,9 +319,8 @@ export const createScrollAnimations = ({
       {
         selectorSuffix: `#${itemId} .gallery-item-content`,
         animationCss: (step, isExit) => ({
-          transform: `translate${prop}(${valueInRange(step, fromVal * (isExit ? -1 : 1), toVal, 1)}px)`,
+          transform: `translate${prop}(${valueInRange(step, fromVal * (isExit ? -1 : 1), toVal, 1, false)}px)`,
         }),
-        reverseOnExit: true,
       },
       ` #${itemId} {overflow: visible !important;}`
     );
@@ -347,7 +336,7 @@ export const createScrollAnimations = ({
     addScrollSelectors({
       selectorSuffix,
       animationCss: (step, isExit) => ({
-        transform: `scale(${scale}) translate${prop}(${valueInRange(step, fromVal, 0, 1)}%)`,
+        transform: `scale(${scale}) translate${prop}(${valueInRange(step, fromVal, 0, 1, false)}%)`,
       }),
     });
   }

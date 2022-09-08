@@ -2,28 +2,27 @@
 /* eslint-disable no-redeclare */
 /* eslint-disable no-case-declarations */
 /* eslint-disable no-unused-vars */
-import utils from '../../common/utils';
-import { window } from 'pro-gallery-lib';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
-import { createScrollAnimations } from './cssAnimationsHelper';
+import utils from "../../common/utils";
+import { window } from "pro-gallery-lib";
+import { GALLERY_CONSTS } from "pro-gallery-lib";
+import { createScrollAnimations } from "./cssAnimationsHelper";
 
-const isHorizontalScroll = (options) =>
-  options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
+const isHorizontalScroll = (options) => options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
 
 class CssScrollHelper {
   constructor() {
-    this.galleryId = '???';
+    this.galleryId = "???";
     this.pgScrollSteps = [];
     for (let i = 1; i < 50000; i *= 2) {
       this.pgScrollSteps.push(i);
     }
     this.pgScrollSteps.reverse();
-    this.pgScrollClassName = 'pgs';
+    this.pgScrollClassName = "pgs";
 
     this.scrollCss = [];
     this.scrollCssProps = [];
 
-    this.transitionDuration = 400;
+    this.transitionDuration = 250;
     this.animationPadding = 1000;
 
     try {
@@ -34,73 +33,39 @@ class CssScrollHelper {
   }
 
   getSellectorDomId({ id, idx }) {
-    const shortId = String(id).replace(/[\W]+/g, '');
+    const shortId = String(id).replace(/[\W]+/g, "");
     return `pgi${shortId}_${idx}`;
   }
 
   buildScrollClassName(idx, val, itemId, axis) {
-    const shortId = String(this.galleryId).replace(/[\W]+/g, '').slice(-4);
-    return `${this.pgScrollClassName}${shortId}-${axis}_${val}-${
-      this.pgScrollSteps[idx] + Number(val)
-    }`;
+    const shortId = String(this.galleryId).replace(/[\W]+/g, "").slice(-4);
+    return `${this.pgScrollClassName}${shortId}-${axis}_${val}-${this.pgScrollSteps[idx] + Number(val)}`;
   }
 
   isScrollingClassName(axis, isScrolling) {
-    return `${this.pgScrollClassName}-${axis}-${
-      isScrolling ? 'scrolling' : 'paused'
-    }`;
+    return `${this.pgScrollClassName}-${axis}-${isScrolling ? "scrolling" : "paused"}`;
   }
 
-  calcScrollClasses(
-    itemId,
-    scrollTop,
-    scrollLeft,
-    isScrollingVertically,
-    isScrollingHorizontally
-  ) {
+  calcScrollClasses(itemId, scrollTop, scrollLeft, isScrollingVertically, isScrollingHorizontally) {
     //used by the scroll indicator
     return (
-      `${this.isScrollingClassName('y', isScrollingVertically)} ` +
-      `${this.isScrollingClassName('x', isScrollingHorizontally)} ` +
+      `${this.isScrollingClassName("y", isScrollingVertically)} ` +
+      `${this.isScrollingClassName("x", isScrollingHorizontally)} ` +
       `${this.pgScrollClassName}-y-${scrollTop} ` +
       `${this.pgScrollClassName}-x-${scrollLeft} ` +
       this.pgScrollSteps
-        .map((step, idx) =>
-          this.buildScrollClassName(
-            idx,
-            Math.floor(scrollTop / step) * step,
-            itemId,
-            'y'
-          )
-        )
-        .join(' ') +
-      ' ' +
+        .map((step, idx) => this.buildScrollClassName(idx, Math.floor(scrollTop / step) * step, itemId, "y"))
+        .join(" ") +
+      " " +
       this.pgScrollSteps
-        .map((step, idx) =>
-          this.buildScrollClassName(
-            idx,
-            Math.floor(scrollLeft / step) * step,
-            itemId,
-            'x'
-          )
-        )
-        .join(' ')
+        .map((step, idx) => this.buildScrollClassName(idx, Math.floor(scrollLeft / step) * step, itemId, "x"))
+        .join(" ")
     );
   }
 
-  createScrollSelectorsFunction({
-    itemId,
-    item,
-    container,
-    options,
-    direction,
-  }) {
-    const imageStart = Math.round(
-      isHorizontalScroll(options) ? item.offset.left : item.offset.top
-    );
-    const imageSize = Math.round(
-      isHorizontalScroll(options) ? item.width : item.height
-    );
+  createScrollSelectorsFunction({ itemId, item, container, options, direction }) {
+    const imageStart = Math.round(isHorizontalScroll(options) ? item.offset.left : item.offset.top);
+    const imageSize = Math.round(isHorizontalScroll(options) ? item.width : item.height);
 
     const containerSize = isHorizontalScroll(options)
       ? Math.min(container.width, window.innerWidth)
@@ -114,13 +79,11 @@ class CssScrollHelper {
         const cssObject = animationCss(step, isExit);
         const res = Object.entries(cssObject)
           .map(([prop, val]) => `${prop}: ${val};`)
-          .join('\n');
+          .join("\n");
         return res;
       };
-      const iterations = Math.max(
-        10,
-        Math.round(options.scrollAnimationIntensity / 4)
-      );
+      const iterations = Math.max(10, Math.round(options.scrollAnimationDistance / 10));
+      this.transitionDuration = 400;
 
       const createAnimationStep = (idx, isExit) => {
         if (isExit) {
@@ -136,23 +99,15 @@ class CssScrollHelper {
         let scrollClasses = [];
         toPosition = Math.round(toPosition);
         fromPosition = Math.round(fromPosition);
-        const axis = isHorizontalScroll(options) ? 'x' : 'y';
+        const axis = isHorizontalScroll(options) ? "x" : "y";
 
         while (fromPosition < toPosition) {
           const largestDividerIdx = this.pgScrollSteps.findIndex(
-            (step) =>
-              fromPosition % step === 0 && fromPosition + step <= toPosition
+            (step) => fromPosition % step === 0 && fromPosition + step <= toPosition
           ); //eslint-disable-line
           scrollClasses.push(
-            (options.scrollAnimationReset
-              ? `.${this.isScrollingClassName(axis, true)}`
-              : '') +
-              `.${this.buildScrollClassName(
-                largestDividerIdx,
-                fromPosition,
-                itemId,
-                axis
-              )} ~ div ${selectorSuffix}`
+            (options.scrollAnimationReset ? `.${this.isScrollingClassName(axis, true)}` : "") +
+              `.${this.buildScrollClassName(largestDividerIdx, fromPosition, itemId, axis)} ~ div ${selectorSuffix}`
           );
           fromPosition += this.pgScrollSteps[largestDividerIdx];
         }
@@ -164,15 +119,9 @@ class CssScrollHelper {
           return {};
         }
         return Array.from({ length: iterations })
-          .map(
-            (i, idx) =>
-              fromPosition + (idx * (toPosition - fromPosition)) / iterations
-          )
+          .map((i, idx) => fromPosition + (idx * (toPosition - fromPosition)) / iterations)
           .map((i, idx) => ({
-            [createAnimationStep(idx, isExit)]: createSelectorsRange(
-              i,
-              i + (toPosition - fromPosition) / iterations
-            ),
+            [createAnimationStep(idx, isExit)]: createSelectorsRange(i, i + (toPosition - fromPosition) / iterations),
           }))
           .reduce((obj, item) => {
             const itemKey = Object.keys(item)[0];
@@ -190,19 +139,11 @@ class CssScrollHelper {
 
         const animationRange = Math.round(toPosition - fromPosition);
 
-        const entryAnimationStart = Math.round(
-          imageStart - containerSize + fromPosition
-        );
-        const entryAnimationEnd = Math.round(
-          entryAnimationStart + animationRange
-        );
+        const entryAnimationStart = Math.round(imageStart - containerSize + fromPosition);
+        const entryAnimationEnd = Math.round(entryAnimationStart + animationRange);
 
-        const exitAnimationStart = Math.round(
-          imageStart + imageSize - toPosition
-        );
-        const exitAnimationEnd = Math.round(
-          exitAnimationStart + animationRange
-        );
+        const exitAnimationStart = Math.round(imageStart + imageSize - toPosition);
+        const exitAnimationEnd = Math.round(exitAnimationStart + animationRange);
 
         const scrollClasses = {};
 
@@ -217,56 +158,34 @@ class CssScrollHelper {
         };
 
         //first batch: animation start value until the range start:
-        addScrollClass(`${transitionCss}; ${createAnimationStep(0, true)}`, [
-          selectorSuffix,
-        ]);
+        addScrollClass(`${transitionCss}; ${createAnimationStep(0, true)}`, [selectorSuffix]);
 
-        if (direction === 'IN') {
+        if (direction === "IN") {
           addScrollClass(
-            createAnimationStep(0) + ' transtion: none !important;',
-            createSelectorsRange(
-              entryAnimationStart - this.animationPadding,
-              entryAnimationStart
-            )
+            createAnimationStep(0) + " transtion: none !important;",
+            createSelectorsRange(entryAnimationStart - this.animationPadding, entryAnimationStart)
           );
-          addScrollClasses(
-            createAnimationRange(entryAnimationStart, entryAnimationEnd)
-          );
+          addScrollClasses(createAnimationRange(entryAnimationStart, entryAnimationEnd));
           addScrollClass(
-            createAnimationStep(iterations) + ' transtion: none !important;',
-            createSelectorsRange(
-              entryAnimationEnd,
-              entryAnimationEnd + this.animationPadding
-            )
+            createAnimationStep(iterations) + " transtion: none !important;",
+            createSelectorsRange(entryAnimationEnd, entryAnimationEnd + this.animationPadding)
           );
-        } else if (direction === 'OUT') {
+        } else if (direction === "OUT") {
           addScrollClass(
-            createAnimationStep(iterations) + ' transtion: none !important;',
-            createSelectorsRange(
-              exitAnimationStart - this.animationPadding,
-              exitAnimationStart
-            )
+            createAnimationStep(iterations) + " transtion: none !important;",
+            createSelectorsRange(exitAnimationStart - this.animationPadding, exitAnimationStart)
           );
-          addScrollClasses(
-            createAnimationRange(exitAnimationStart, exitAnimationEnd, true)
-          );
+          addScrollClasses(createAnimationRange(exitAnimationStart, exitAnimationEnd, true));
           addScrollClass(
-            createAnimationStep(0) + ' transtion: none !important;',
-            createSelectorsRange(
-              exitAnimationEnd,
-              exitAnimationEnd + this.animationPadding
-            )
+            createAnimationStep(0) + " transtion: none !important;",
+            createSelectorsRange(exitAnimationEnd, exitAnimationEnd + this.animationPadding)
           );
         }
 
         const fullCss = Object.entries(scrollClasses)
-          .map(([css, selectors]) =>
-            selectors.length > 0
-              ? `${selectors.join(',\n')} \n{${css}}\n`
-              : false
-          )
+          .map(([css, selectors]) => (selectors.length > 0 ? `${selectors.join(",\n")} \n{${css}}\n` : false))
           .filter(Boolean)
-          .join('\n');
+          .join("\n");
 
         return fullCss;
       };
@@ -276,12 +195,7 @@ class CssScrollHelper {
   }
 
   createScrollAnimationsIfNeeded({ idx, item, container, options }) {
-    const {
-      isRTL,
-      scrollAnimation,
-      exitScrollAnimation,
-      oneColorAnimationColor,
-    } = options;
+    const { isRTL, scrollAnimation, exitScrollAnimation, oneColorAnimationColor } = options;
 
     const itemId = this.getSellectorDomId(item);
     const createEntryScrollSelectors = this.createScrollSelectorsFunction({
@@ -289,14 +203,14 @@ class CssScrollHelper {
       item,
       container,
       options,
-      direction: 'IN',
+      direction: "IN",
     });
     const createExitScrollSelectors = this.createScrollSelectorsFunction({
       itemId,
       item,
       container,
       options,
-      direction: 'OUT',
+      direction: "OUT",
     });
 
     return (
@@ -308,7 +222,7 @@ class CssScrollHelper {
         scrollAnimation: options.scrollAnimation,
         isHorizontalScroll: isHorizontalScroll(options),
       }) +
-      ' \n' +
+      " \n" +
       createScrollAnimations({
         createScrollSelectors: createExitScrollSelectors,
         itemId,
@@ -322,7 +236,7 @@ class CssScrollHelper {
 
   calcScrollCssForItem({ item, container, options }) {
     const { idx } = item;
-    let scrollCss = '';
+    let scrollCss = "";
     scrollCss += this.createScrollAnimationsIfNeeded({
       idx,
       item,
@@ -342,17 +256,13 @@ class CssScrollHelper {
       return [];
     }
     if (
-      (!scrollAnimation ||
-        scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT) &&
-      (!exitScrollAnimation ||
-        exitScrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT)
+      (!scrollAnimation || scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT) &&
+      (!exitScrollAnimation || exitScrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT)
     ) {
       return [];
     }
 
-    const res = items.map((item) =>
-      this.calcScrollCssForItem({ item, container, options })
-    );
+    const res = items.map((item) => this.calcScrollCssForItem({ item, container, options }));
     return res;
   }
 }
