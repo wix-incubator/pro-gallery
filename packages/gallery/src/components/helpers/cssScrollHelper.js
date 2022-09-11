@@ -84,9 +84,9 @@ class CssScrollHelper {
           .join("\n");
         return res;
       };
-      const animationDistanceInPx = Math.round(((containerSize / 100) * options.scrollAnimationDistance) / 2);
-      const iterations = Math.max(10, Math.round(animationDistanceInPx / 5));
-      this.transitionDuration = 200;
+      const animationDistanceInPx = Math.round((containerSize / 2) * (options.scrollAnimationDistance / 100));
+      const iterations = Math.max(10, Math.round(animationDistanceInPx / 10));
+      this.transitionDuration = 300;
 
       const createAnimationStep = (idx, isExit) => {
         if (isExit) {

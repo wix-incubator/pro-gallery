@@ -35,7 +35,6 @@ const SCROLL_ANIMATIONS = {
   PAN_RIGHT: 'PAN_RIGHT',
   PAN_UP: 'PAN_UP',
   PAN_DOWN: 'PAN_DOWN',
-  REVEAL: 'REVEAL',
 };
 
 export default SCROLL_ANIMATIONS;
