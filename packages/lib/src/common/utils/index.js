@@ -264,10 +264,6 @@ class Utils {
     return this.getOrPutFromCache('isMobile', _isMobile);
   }
 
-  isTouch() {
-    return navigator.maxTouchPoints > 0;
-  }
-
   isTest() {
     try {
       return window.isTest;
