@@ -173,7 +173,7 @@ const blockVideoControlsOnMouseCursorNavigation = (options) =>{
 const blockMouseCursorNavigationOnTouchDevice = (options) =>{
   let _options = {...options}
   if (isDeviceTypeTouch() && (options.arrowsPosition === GALLERY_CONSTS.arrowsPosition.MOUSE_CURSOR) && (arrowsPosition.isRelevant(options))) {
-    _options.layoutParams.navigationArrows.enable = false;
+    _options.showArrows = false;
 
   }
   return _options
