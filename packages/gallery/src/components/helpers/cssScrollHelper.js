@@ -8,6 +8,10 @@ import { GALLERY_CONSTS } from "pro-gallery-lib";
 import { createScrollAnimations } from "./cssAnimationsHelper";
 
 const isHorizontalScroll = (options) => options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
+const getContainerSize = (options, container) =>
+  isHorizontalScroll(options)
+    ? Math.min(container.width, window.innerWidth)
+    : Math.min(container.height, window.innerHeight) + container.scrollBase;
 
 class CssScrollHelper {
   constructor() {
@@ -67,9 +71,7 @@ class CssScrollHelper {
     const imageStart = Math.round(isHorizontalScroll(options) ? item.offset.left : item.offset.top);
     const imageSize = Math.round(isHorizontalScroll(options) ? item.width : item.height);
 
-    const containerSize = isHorizontalScroll(options)
-      ? Math.min(container.width, window.innerWidth)
-      : Math.min(container.height, window.innerHeight) + container.scrollBase;
+    const containerSize = getContainerSize(options, container);
 
     return ({ fromPosition, toPosition, selectorSuffix, animationCss }) => {
       // fromPosition:  the distance from the bottom of the screen to start the animation
@@ -82,8 +84,9 @@ class CssScrollHelper {
           .join("\n");
         return res;
       };
-      const iterations = Math.max(10, Math.round(options.scrollAnimationDistance / 10));
-      this.transitionDuration = 400;
+      const animationDistanceInPx = Math.round(((containerSize / 100) * options.scrollAnimationDistance) / 2);
+      const iterations = Math.max(10, Math.round(animationDistanceInPx / 5));
+      this.transitionDuration = 200;
 
       const createAnimationStep = (idx, isExit) => {
         if (isExit) {
@@ -166,15 +169,15 @@ class CssScrollHelper {
             createSelectorsRange(entryAnimationStart - this.animationPadding, entryAnimationStart)
           );
           addScrollClasses(createAnimationRange(entryAnimationStart, entryAnimationEnd));
-          addScrollClass(
-            createAnimationStep(iterations) + " transtion: none !important;",
-            createSelectorsRange(entryAnimationEnd, entryAnimationEnd + this.animationPadding)
-          );
+          // addScrollClass(
+          //   createAnimationStep(iterations) + " transtion: none !important;",
+          //   createSelectorsRange(entryAnimationEnd, entryAnimationEnd + this.animationPadding)
+          // );
         } else if (direction === "OUT") {
-          addScrollClass(
-            createAnimationStep(iterations) + " transtion: none !important;",
-            createSelectorsRange(exitAnimationStart - this.animationPadding, exitAnimationStart)
-          );
+          // addScrollClass(
+          //   createAnimationStep(iterations) + " transtion: none !important;",
+          //   createSelectorsRange(exitAnimationStart - this.animationPadding, exitAnimationStart)
+          // );
           addScrollClasses(createAnimationRange(exitAnimationStart, exitAnimationEnd, true));
           addScrollClass(
             createAnimationStep(0) + " transtion: none !important;",
@@ -219,6 +222,7 @@ class CssScrollHelper {
         itemId,
         item,
         options,
+        containerSize: getContainerSize(options, container),
         scrollAnimation: options.scrollAnimation,
         isHorizontalScroll: isHorizontalScroll(options),
       }) +
@@ -228,6 +232,7 @@ class CssScrollHelper {
         itemId,
         item,
         options,
+        containerSize: getContainerSize(options, container),
         scrollAnimation: options.exitScrollAnimation,
         isHorizontalScroll: isHorizontalScroll(options),
       })

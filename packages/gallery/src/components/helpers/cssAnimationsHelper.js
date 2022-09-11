@@ -5,6 +5,7 @@ export const createScrollAnimations = ({
   itemId,
   item,
   options,
+  containerSize,
   scrollAnimation,
   isHorizontalScroll,
 }) => {
@@ -47,10 +48,11 @@ export const createScrollAnimations = ({
     PAN_RIGHT,
     PAN_UP,
     PAN_DOWN,
+    REVEAL,
   } = GALLERY_CONSTS.scrollAnimations;
 
   const i = scrollAnimationIntensity || 25;
-  const d = scrollAnimationDistance || 200;
+  const d = item.height; //((scrollAnimationDistance / 100) * containerSize) / 2;
   const r = (num) => num + Math.round((Math.random() * i) / 4);
   const h = isHorizontalScroll;
   const s = scrollAnimation;
@@ -69,7 +71,7 @@ export const createScrollAnimations = ({
     for (let [selectorSuffix, animationCss] of Object.entries(animationBySuffix)) {
       scrollSelectorsCss += createScrollSelectors({
         fromPosition: 0,
-        toPosition: scrollAnimationDistance,
+        toPosition: d,
         selectorSuffix,
         animationCss: (step, isExit) => {
           const cssObject = {};
@@ -93,7 +95,8 @@ export const createScrollAnimations = ({
   const valueInRange = (step, from, to, roundTo, ease = true) => {
     const _step = ease ? Math.pow(step, 3) : step;
     const val = _step * (to - from) + from;
-    const roundedVal = Math.round(val / roundTo) * roundTo;
+    const roundedRoundTo = Math.round(1 / roundTo); //stupid javascript
+    const roundedVal = Math.round(val * roundedRoundTo) / roundedRoundTo;
     return roundedVal;
   };
 
@@ -336,7 +339,27 @@ export const createScrollAnimations = ({
     addScrollSelectors({
       selectorSuffix,
       animationCss: (step, isExit) => ({
-        transform: `scale(${scale}) translate${prop}(${valueInRange(step, fromVal, 0, 1, false)}%)`,
+        transform: `scale(${valueInRange(0, scale, scale, 0.01)}) translate${prop}(${valueInRange(
+          step,
+          fromVal,
+          0,
+          0.1,
+          false
+        )}%)`,
+      }),
+    });
+  }
+
+  if ([REVEAL].some((r) => s.includes(r))) {
+    const selectorSuffix = `#${itemId} .gallery-item-wrapper`;
+    const prop = h ? "X" : "Y";
+    const fromVal = -100;
+    const img = item.createUrl("resized", "img");
+
+    addScrollSelectors({
+      selectorSuffix,
+      animationCss: (step, isExit) => ({
+        transform: `translate${prop}(${valueInRange(step, fromVal, 0, 0.1, false)}%)`,
       }),
     });
   }

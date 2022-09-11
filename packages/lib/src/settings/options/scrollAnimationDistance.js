@@ -7,7 +7,7 @@ export default {
     sp.exitScrollAnimation !== 'NO_EFFECT',
   type: INPUT_TYPES.NUMBER,
   min: 0,
-  max: 1000,
-  default: 200,
+  max: 100,
+  default: 20,
   description: `Choose the distance of scroll to display the animation. The bigger the distance, the more visible the animation will be`,
 };
