@@ -351,11 +351,13 @@ export const createScrollAnimations = ({
   if ([PAN_LEFT, PAN_RIGHT, PAN_UP, PAN_DOWN].some((r) => s.includes(r))) {
     //TODO = the image should not exit the frame
     const scale = 1.1 + i / 200; //1.1 - 2.1
-    const pan = Math.round(((scale - 1) / 2) * 100);
+    const { width, height } = item;
+    const dimension = [PAN_LEFT, PAN_RIGHT].some((r) => s.includes(r)) ? width : height;
+    const pan = Math.round((dimension * (scale - 1)) / 2 / scale);
     const selectorSuffix = `#${itemId} .gallery-item-content`;
     const prop = [PAN_LEFT, PAN_RIGHT].some((r) => s.includes(r)) ? "X" : "Y";
-    const fromVal = (([PAN_LEFT, PAN_UP].some((r) => s.includes(r)) ? 1 : -1) * pan) / 2;
-    const toVal = (([PAN_LEFT, PAN_UP].some((r) => s.includes(r)) ? -1 : 1) * pan) / 2;
+    const fromVal = ([PAN_LEFT, PAN_UP].some((r) => s.includes(r)) ? 1 : -1) * pan;
+    const toVal = -1 * fromVal;
 
     addScrollSelectors({
       selectorSuffix,
@@ -364,9 +366,9 @@ export const createScrollAnimations = ({
           step,
           fromVal,
           toVal,
-          0.1,
+          1,
           false
-        )}%)`,
+        )}px)`,
       }),
     });
   }
@@ -376,7 +378,10 @@ export const createScrollAnimations = ({
     const fromVal = direction * (5 + Math.round(i / 8)); // 5 - 30
     const scaleByDeg = (deg) => {
       const rad = (Math.abs(deg) * 2 * Math.PI) / 360;
-      return Math.sin(rad) + Math.cos(rad);
+      const { width, height } = item;
+      const maxSize = Math.max(width, height);
+      const minSize = Math.min(width, height);
+      return (Math.cos(rad) * (maxSize * Math.sin(rad) + minSize)) / minSize;
     };
     const toVal = 0;
     const selectorSuffix = `#${itemId} .gallery-item-content`;
@@ -398,7 +403,10 @@ export const createScrollAnimations = ({
     const fromVal = direction * (5 + Math.round(i / 20)); // 5 - 30
     const scaleByDeg = (deg) => {
       const rad = (Math.abs(deg) * 2 * Math.PI) / 360;
-      return Math.sin(rad) + Math.cos(rad);
+      const { width, height } = item;
+      const maxSize = Math.max(width, height);
+      const minSize = Math.min(width, height);
+      return (Math.tan(rad) * minSize + maxSize) / maxSize;
     };
     const toVal = 0;
     const selectorSuffix = `#${itemId} .gallery-item-content`;
