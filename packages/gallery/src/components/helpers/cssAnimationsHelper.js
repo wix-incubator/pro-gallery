@@ -8,6 +8,7 @@ export const createScrollAnimations = ({
   containerSize,
   scrollAnimation,
   isHorizontalScroll,
+  animationDistanceInPx,
 }) => {
   const { isRTL, oneColorAnimationColor, scrollAnimationIntensity, scrollAnimationDistance } = options;
 
@@ -58,7 +59,7 @@ export const createScrollAnimations = ({
 
   const i = scrollAnimationIntensity || 25;
   const h = isHorizontalScroll;
-  const d = Math.round((scrollAnimationDistance / 100) * (containerSize + item[h ? "width" : "height"]));
+  const d = animationDistanceInPx;
   const s = scrollAnimation;
 
   let scrollSelectorsCss = "";

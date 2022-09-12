@@ -67,7 +67,7 @@ class CssScrollHelper {
     );
   }
 
-  createScrollSelectorsFunction({ itemId, item, container, options, direction }) {
+  createScrollSelectorsFunction({ itemId, item, container, options, direction, animationDistanceInPx }) {
     const imageStart = Math.round(isHorizontalScroll(options) ? item.offset.left : item.offset.top);
     const imageSize = Math.round(isHorizontalScroll(options) ? item.width : item.height);
 
@@ -84,8 +84,7 @@ class CssScrollHelper {
           .join("\n");
         return res;
       };
-      const animationDistanceInPx = Math.round(containerSize * (options.scrollAnimationDistance / 100));
-      const iterations = Math.max(10, Math.round(animationDistanceInPx / 10));
+      const iterations = Math.max(10, Math.round(animationDistanceInPx / 20));
       this.transitionDuration = 400;
 
       const createAnimationStep = (idx, isExit) => {
@@ -201,18 +200,24 @@ class CssScrollHelper {
     const { isRTL, scrollAnimation, exitScrollAnimation, oneColorAnimationColor } = options;
 
     const itemId = this.getSellectorDomId(item);
+
+    const containerSize = getContainerSize(options, container);
+    const animationDistanceInPx = Math.round(containerSize * (options.scrollAnimationDistance / 100));
+
     const createEntryScrollSelectors = this.createScrollSelectorsFunction({
       itemId,
       item,
       container,
       options,
       direction: "IN",
+      animationDistanceInPx,
     });
     const createExitScrollSelectors = this.createScrollSelectorsFunction({
       itemId,
       item,
       container,
       options,
+      animationDistanceInPx,
       direction: "OUT",
     });
 
@@ -225,6 +230,7 @@ class CssScrollHelper {
         containerSize: getContainerSize(options, container),
         scrollAnimation: options.scrollAnimation,
         isHorizontalScroll: isHorizontalScroll(options),
+        animationDistanceInPx,
       }) +
       " \n" +
       createScrollAnimations({
@@ -235,6 +241,7 @@ class CssScrollHelper {
         containerSize: getContainerSize(options, container),
         scrollAnimation: options.exitScrollAnimation,
         isHorizontalScroll: isHorizontalScroll(options),
+        animationDistanceInPx,
       })
     );
   }
