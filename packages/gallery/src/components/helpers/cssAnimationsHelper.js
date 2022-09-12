@@ -22,16 +22,22 @@ export const createScrollAnimations = ({
     EXPAND,
     SHRINK,
     ROUND,
-    FLIP_UP,
-    FLIP_DOWN,
-    FLIP_LEFT,
-    FLIP_RIGHT,
+    ZOOM_IN,
+    ZOOM_OUT,
+    SKEW_UP,
+    SKEW_DOWN,
+    SKEW_RIGHT,
+    SKEW_LEFT,
+    SPIRAL_RIGHT,
+    SPIRAL_LEFT,
     ROTATE_RIGHT,
     ROTATE_LEFT,
     HINGE_RIGHT,
     HINGE_LEFT,
-    ZOOM_IN,
-    ZOOM_OUT,
+    FLIP_UP,
+    FLIP_DOWN,
+    FLIP_LEFT,
+    FLIP_RIGHT,
     SQUEEZE_UP,
     SQUEEZE_DOWN,
     SQUEEZE_LEFT,
@@ -51,8 +57,8 @@ export const createScrollAnimations = ({
   } = GALLERY_CONSTS.scrollAnimations;
 
   const i = scrollAnimationIntensity || 25;
-  const d = Math.round((scrollAnimationDistance / 100) * containerSize) / 2;
   const h = isHorizontalScroll;
+  const d = Math.round((scrollAnimationDistance / 100) * (containerSize + item[h ? "width" : "height"]));
   const s = scrollAnimation;
 
   let scrollSelectorsCss = "";
@@ -66,7 +72,7 @@ export const createScrollAnimations = ({
   const mergeSelectorsCss = () => {
     for (let [selectorSuffix, animationCss] of Object.entries(animationBySuffix)) {
       scrollSelectorsCss += createScrollSelectors({
-        fromPosition: 0,
+        fromPosition: -1 * item[h ? "width" : "height"],
         toPosition: d,
         selectorSuffix,
         animationCss: (step, isExit) => {
@@ -88,7 +94,8 @@ export const createScrollAnimations = ({
     return scrollSelectorsCss;
   };
 
-  const valueInRange = (step, from, to, roundTo, ease = true) => {
+  const valueInRange = (step, from, to, roundTo, ease = false) => {
+    //TODO - use easing
     const _step = ease ? Math.pow(step, 3) : step;
     const val = _step * (to - from) + from;
     if (roundTo < 1) {
@@ -120,13 +127,17 @@ export const createScrollAnimations = ({
     });
   }
   if (s.includes(SHADOW)) {
-    const fromVal = Math.round(5 + i / 5); // 5-25
+    //TODO check why animation doesn't start on time
+    const fromVal = Math.round(15 + i / 6); // 15-31
     const toVal = 0;
     addScrollSelectors({
       selectorSuffix: `#${itemId}`,
-      animationCss: (step, isExit) => ({
-        filter: `drop-shadow(0 0 ${valueInRange(step, fromVal, toVal, 1)}px rgba(0,0,0,.7));`,
-      }),
+      animationCss: (step, isExit) => {
+        const size = valueInRange(step, fromVal, toVal, 1);
+        return {
+          filter: `drop-shadow(0 0 ${size}px rgba(0,0,0,${0.3 + i / 250}));`,
+        };
+      },
     });
   }
   if (s.includes(EXPAND)) {
@@ -140,7 +151,7 @@ export const createScrollAnimations = ({
     });
   }
   if (s.includes(SHRINK)) {
-    const fromVal = Math.round(105 + i / 10) / 100; // 1.05-1.1
+    const fromVal = Math.round(102 + i / 12) / 100; // 1.02-1.10
     const toVal = 1;
     addScrollSelectors({
       selectorSuffix: `#${itemId}`,
@@ -329,7 +340,7 @@ export const createScrollAnimations = ({
   }
 
   if ([PAN_LEFT, PAN_RIGHT, PAN_UP, PAN_DOWN].some((r) => s.includes(r))) {
-    const scale = 1.1 + i / 100; //1.1 - 2.1
+    const scale = 1.1 + i / 50; //1.1 - 2.1
     const pan = Math.round(((scale - 1) / 4) * 100);
     const selectorSuffix = `#${itemId} .gallery-item-content`;
     const prop = [PAN_LEFT, PAN_RIGHT].some((r) => s.includes(r)) ? "X" : "Y";
@@ -346,6 +357,52 @@ export const createScrollAnimations = ({
           false
         )}%)`,
       }),
+    });
+  }
+
+  if ([SPIRAL_LEFT, SPIRAL_RIGHT].some((r) => s.includes(r))) {
+    const direction = s.includes(SPIRAL_LEFT) ? 1 : -1;
+    const fromVal = direction * (5 + Math.round(i / 8)); // 5 - 30
+    const scaleByDeg = (deg) => {
+      const rad = (Math.abs(deg) * 2 * Math.PI) / 360;
+      return Math.sin(rad) + Math.cos(rad);
+    };
+    const toVal = 0;
+    const selectorSuffix = `#${itemId} .gallery-item-content`;
+
+    addScrollSelectors({
+      selectorSuffix,
+      animationCss: (step, isExit) => {
+        const deg = valueInRange(step, fromVal, toVal, 1);
+        return {
+          transform: `scale(${scaleByDeg(deg)}) rotate(${deg}deg)`,
+          "transform-origin": "center",
+        };
+      },
+    });
+  }
+
+  if ([SKEW_LEFT, SKEW_RIGHT, SKEW_UP, SKEW_DOWN].some((r) => s.includes(r))) {
+    const direction = s.includes(SKEW_LEFT, SKEW_UP) ? 1 : -1;
+    const fromVal = direction * (5 + Math.round(i / 8)); // 5 - 30
+    const scaleByDeg = (deg) => {
+      const rad = (Math.abs(deg) * 2 * Math.PI) / 360;
+      return Math.sin(rad) + Math.cos(rad);
+    };
+    const toVal = 0;
+    const selectorSuffix = `#${itemId} .gallery-item-content`;
+    const skewX = (deg) => (s.includes(SKEW_LEFT, SKEW_RIGHT) ? deg : 0);
+    const skewY = (deg) => (s.includes(SKEW_LEFT, SKEW_RIGHT) ? 0 : deg);
+
+    addScrollSelectors({
+      selectorSuffix,
+      animationCss: (step, isExit) => {
+        const deg = valueInRange(step, fromVal, toVal, 1);
+        return {
+          transform: `scale(${scaleByDeg(Math.abs(deg))}) skew(${skewY(deg)}deg, ${skewX(deg)}deg)`,
+          "transform-origin": "center",
+        };
+      },
     });
   }
 
