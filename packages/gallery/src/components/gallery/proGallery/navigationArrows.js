@@ -1,7 +1,7 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom';
 import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
-import { CursorController } from '../../helpers/mouseCursorPosition';
+import { ArrowFollower } from '../../helpers/mouseCursorPosition';
 import {
   getArrowBoxStyle,
   getArrowsRenderData,
@@ -138,6 +138,8 @@ export function NavigationArrows({
           navArrowsContainerWidth,
           navArrowsContainerHeight,
           navigationArrowPortalId,
+          mouseCursorContainerMaxWidth,
+          id,
         }}
       />
     );
@@ -218,18 +220,26 @@ export function ArrowButton({
 
 export function ArrowButtonWithCursorController(props) {
   return (
-    <CursorController>
-      {({ containerRef, position, isMouseEnter }) => (
-        <ArrowButton
-          cursor={{
-            containerRef,
-            position,
-            isMouseEnter,
+    <ArrowFollower
+      gallery={() => document.getElementById(`pro-gallery-${props.id}`)}
+      mouseCursorContainerMaxWidth={props.mouseCursorContainerMaxWidth}
+      onNavigate={(direction) => props.next(direction === 'left' ? 1 : -1)}
+    >
+      {(x, y, direction) => (
+        <svg
+          style={{
+            position: 'absolute',
+            top: y,
+            left: x,
+            width: 50,
+            height: 50,
+            transform: `rotate(${direction === 'left' ? 180 : 0}deg)`,
           }}
-          {...props}
-        />
+        >
+          <path d="M 0 0 L 0 0 L 0 0 Z" />
+        </svg>
       )}
-    </CursorController>
+    </ArrowFollower>
   );
 }
 
