@@ -72,7 +72,7 @@ export const createScrollAnimations = ({
   const mergeSelectorsCss = () => {
     for (let [selectorSuffix, animationCss] of Object.entries(animationBySuffix)) {
       scrollSelectorsCss += createScrollSelectors({
-        fromPosition: -1 * item[h ? "width" : "height"],
+        fromPosition: 0,
         toPosition: d,
         selectorSuffix,
         animationCss: (step, isExit) => {
@@ -181,18 +181,27 @@ export const createScrollAnimations = ({
     });
   }
   if (s.includes(BLUR)) {
-    const fromVal = Math.round(i / 10); // 0-25;
+    const fromVal = Math.round(10 + (i * 9) / 10); // 10-100;
     const toVal = 0;
+    const scaleByBlur = (blur) => {
+      const size = Math.min(item.width, item.height);
+      return (size + blur * 2) / size;
+    };
     addScrollSelectors({
       selectorSuffix: `#${itemId} .gallery-item-content`,
-      animationCss: (step, isExit) => ({
-        filter: `blur(${valueInRange(step, fromVal, toVal, 1)}px)`,
-      }),
+      animationCss: (step, isExit) => {
+        const blur = valueInRange(step, fromVal, toVal, 1);
+        return {
+          transform: `scale(${scaleByBlur(blur)})`,
+          filter: `blur(${blur}px)`,
+        };
+      },
     });
   }
   if ([ROTATE_LEFT, ROTATE_RIGHT].some((r) => s.includes(r))) {
+    //TODO - add scale so that the image will fit in the container
     const direction = s.includes(ROTATE_LEFT) ? 1 : -1;
-    const fromVal = direction * Math.round(5 + i / 10); // 5-15
+    const fromVal = direction * Math.round(2 + i / 8); // 2-14
     const toVal = 0;
     addScrollSelectors({
       selectorSuffix: `#${itemId}`,
@@ -205,7 +214,7 @@ export const createScrollAnimations = ({
   if ([HINGE_LEFT, HINGE_RIGHT].some((r) => s.includes(r))) {
     const origin = s.includes(HINGE_LEFT) ? "top left" : "top right";
     const direction = s.includes(HINGE_LEFT) ? 1 : -1;
-    const fromVal = direction * Math.round(5 + i / 10); // 5-15
+    const fromVal = direction * Math.round(2 + i / 8); // 2-14
     const toVal = 0;
     addScrollSelectors({
       selectorSuffix: `#${itemId}`,
@@ -216,7 +225,7 @@ export const createScrollAnimations = ({
     });
   }
   if (s.includes(ROUND)) {
-    const from = Math.round(i / 2);
+    const from = Math.round(i / 1.2);
     const to = 0;
     addScrollSelectors({
       selectorSuffix: `#${itemId} .gallery-item-wrapper`,
@@ -237,7 +246,7 @@ export const createScrollAnimations = ({
       : s.includes(SQUEEZE_RIGHT)
       ? "right"
       : "left";
-    const fromVal = Math.round((i * 4) / 5) / 100; // .8-0
+    const fromVal = 1 - i / 100; // .8-0
     const toVal = 1;
 
     addScrollSelectors(
@@ -263,7 +272,7 @@ export const createScrollAnimations = ({
       : s.includes(FLIP_RIGHT)
       ? "right"
       : "left";
-    const fromVal = (i * 9) / 10; // 0-90
+    const fromVal = 10 + (i * 8) / 10; // 0-90
     const toVal = 0;
     addScrollSelectors(
       {
@@ -340,11 +349,13 @@ export const createScrollAnimations = ({
   }
 
   if ([PAN_LEFT, PAN_RIGHT, PAN_UP, PAN_DOWN].some((r) => s.includes(r))) {
-    const scale = 1.1 + i / 50; //1.1 - 2.1
-    const pan = Math.round(((scale - 1) / 4) * 100);
+    //TODO = the image should not exit the frame
+    const scale = 1.1 + i / 200; //1.1 - 2.1
+    const pan = Math.round(((scale - 1) / 2) * 100);
     const selectorSuffix = `#${itemId} .gallery-item-content`;
     const prop = [PAN_LEFT, PAN_RIGHT].some((r) => s.includes(r)) ? "X" : "Y";
-    const fromVal = ([PAN_LEFT, PAN_UP].some((r) => s.includes(r)) ? 1 : -1) * pan;
+    const fromVal = (([PAN_LEFT, PAN_UP].some((r) => s.includes(r)) ? 1 : -1) * pan) / 2;
+    const toVal = (([PAN_LEFT, PAN_UP].some((r) => s.includes(r)) ? -1 : 1) * pan) / 2;
 
     addScrollSelectors({
       selectorSuffix,
@@ -352,7 +363,7 @@ export const createScrollAnimations = ({
         transform: `scale(${valueInRange(0, scale, scale, 0.01)}) translate${prop}(${valueInRange(
           step,
           fromVal,
-          0,
+          toVal,
           0.1,
           false
         )}%)`,
@@ -384,7 +395,7 @@ export const createScrollAnimations = ({
 
   if ([SKEW_LEFT, SKEW_RIGHT, SKEW_UP, SKEW_DOWN].some((r) => s.includes(r))) {
     const direction = s.includes(SKEW_LEFT, SKEW_UP) ? 1 : -1;
-    const fromVal = direction * (5 + Math.round(i / 8)); // 5 - 30
+    const fromVal = direction * (5 + Math.round(i / 20)); // 5 - 30
     const scaleByDeg = (deg) => {
       const rad = (Math.abs(deg) * 2 * Math.PI) / 360;
       return Math.sin(rad) + Math.cos(rad);
