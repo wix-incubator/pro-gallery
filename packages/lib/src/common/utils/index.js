@@ -269,7 +269,8 @@ class Utils {
     const _isTouch = () => {
       const isTouchByProps = isDeviceTypeTouch();
       const isTouchBrowser =
-        navigator.maxTouchPoints > 0 ||
+        this.isMobile() ||
+        window.navigator.maxTouchPoints > 0 ||
         'ontouchstart' in window.document.documentElement;
 
       return this.isUndefined(isTouchByProps) ? isTouchBrowser : isTouchByProps;
