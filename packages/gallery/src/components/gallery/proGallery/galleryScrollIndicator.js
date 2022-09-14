@@ -119,12 +119,16 @@ export default class ScrollIndicator extends React.Component {
         this.debouncedOnScroll({ top });
       }
     };
-    try {
-      scrollingElement
-        .vertical()
-        .addEventListener('scroll', this.onVerticalScroll);
-    } catch (e) {
-      console.error(e);
+    if (
+      this.props.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL
+    ) {
+      try {
+        scrollingElement
+          .vertical()
+          .addEventListener('scroll', this.onVerticalScroll);
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 
