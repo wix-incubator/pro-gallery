@@ -2,9 +2,8 @@ import React from 'react';
 import { utils, defaultOptions } from 'pro-gallery-lib';
 import ProGallery from './proGallery/proGallery';
 import { GalleryRendererProps } from 'pro-gallery-lib';
-import { ViewModeWrapperHOC } from './proGallery/viewModeWrapper';
 
-class GalleryRenderer extends React.Component<GalleryRendererProps> {
+export default class GalleryRenderer extends React.Component<GalleryRendererProps> {
   render() {
     const { id, options, eventsListener, customComponents, ...otherProps } =
       this.props;
@@ -37,5 +36,4 @@ class GalleryRenderer extends React.Component<GalleryRendererProps> {
     }
   }
 }
-export default ViewModeWrapperHOC(GalleryRenderer);
 /* eslint-enable prettier/prettier */
