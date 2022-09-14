@@ -417,7 +417,7 @@ const removeCropOnlyFillParam = (options) => {
   if (
     _options.cubeImages === true &&
     _options.cropOnlyFill === true &&
-    _options.cropType === CROP_TYPE.FIT
+    _options.cubeType === CROP_TYPE.FIT
   ) {
     _options.cubeImages = false;
   }

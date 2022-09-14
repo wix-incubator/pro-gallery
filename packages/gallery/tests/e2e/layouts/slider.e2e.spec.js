@@ -19,6 +19,7 @@ describe('slider - e2e', () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.SLIDER,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      cubeImages: true,
       layoutParams: {
         cropRatio: 16 / 9,
       },
@@ -32,6 +33,7 @@ describe('slider - e2e', () => {
     await driver.navigate({
       galleryLayout: GALLERY_CONSTS.layout.SLIDER,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
+      cubeImages: true,
       layoutParams: {
         cropRatio: 16 / 9,
       },
