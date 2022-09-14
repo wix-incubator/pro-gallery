@@ -269,7 +269,7 @@ class Utils {
     const _isTouch = () => {
       const isTouchByProps = isDeviceTypeTouch();
       const isTouchBrowser =
-        window.navigator.maxTouchPoints > 0 ||
+        window.navigator?.maxTouchPoints > 0 || // checking if navigator exist on ssr
         'ontouchstart' in window.document.documentElement;
 
       return this.isUndefined(isTouchByProps) ? isTouchBrowser : isTouchByProps;
