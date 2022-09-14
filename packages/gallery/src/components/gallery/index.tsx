@@ -2,14 +2,11 @@ import React from 'react';
 import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import { BlueprintsManager } from 'pro-gallery-blueprints';
 import ProGallery from './proGallery/proGallery';
-
 import { GalleryProps, GalleryState } from 'pro-gallery-lib';
 import shouldValidate from './typeValidator/shouldValidate';
+import { ViewModeWrapperHOC } from './proGallery/viewModeWrapper';
 
-export default class Gallery extends React.Component<
-  GalleryProps,
-  GalleryState
-> {
+class Gallery extends React.Component<GalleryProps, GalleryState> {
   private blueprintsManager: any;
   private galleryProps: any;
 
@@ -118,3 +115,5 @@ export default class Gallery extends React.Component<
     }
   }
 }
+
+export default ViewModeWrapperHOC<GalleryProps>(Gallery);
