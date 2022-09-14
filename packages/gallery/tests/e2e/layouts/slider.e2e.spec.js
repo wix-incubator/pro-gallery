@@ -20,6 +20,9 @@ describe('slider - e2e', () => {
       galleryLayout: GALLERY_CONSTS.layout.SLIDER,
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       layoutParams: {
+        crop: {
+          enable: true,
+        },
         cropRatio: 16 / 9,
       },
     });
@@ -33,6 +36,9 @@ describe('slider - e2e', () => {
       galleryLayout: GALLERY_CONSTS.layout.SLIDER,
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
       layoutParams: {
+        crop: {
+          enable: true,
+        },
         cropRatio: 16 / 9,
       },
     });
