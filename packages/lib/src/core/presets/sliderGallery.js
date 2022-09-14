@@ -10,7 +10,7 @@ const fixToSlider = (options) => {
   let presetOptions = { ...options };
   presetOptions.galleryLayout = LAYOUTS.SLIDER;
   presetOptions.enableInfiniteScroll = true;
-  presetOptions.cubeType = 'fill';
+  presetOptions.cubeImages = true;
   presetOptions.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
   presetOptions.isVertical = false;
   presetOptions.groupSize = 1;
@@ -21,6 +21,7 @@ const fixToSlider = (options) => {
   presetOptions.hasThumbnails = false;
   presetOptions.enableScroll = true;
   presetOptions.scrollSnap = true;
+  presetOptions.cropOnlyFill = true;
   presetOptions.slideAnimation = SLIDE_ANIMATIONS.SCROLL;
   return presetOptions;
 };
