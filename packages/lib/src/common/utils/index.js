@@ -4,7 +4,6 @@ import {
   isEditMode,
   isPreviewMode,
   isDeviceTypeMobile,
-  isDeviceTypeTouch,
 } from '../window/viewModeWrapper';
 import GALLERY_CONSTS from '../constants';
 
@@ -263,19 +262,6 @@ class Utils {
     };
 
     return this.getOrPutFromCache('isMobile', _isMobile);
-  }
-
-  isTouch() {
-    const _isTouch = () => {
-      const isTouchByProps = isDeviceTypeTouch();
-      const isTouchBrowser =
-        window.navigator?.maxTouchPoints > 0 || // checking if navigator exist on ssr
-        'ontouchstart' in window.document.documentElement;
-
-      return this.isUndefined(isTouchByProps) ? isTouchBrowser : isTouchByProps;
-    };
-
-    return this.getOrPutFromCache('isTouch', _isTouch);
   }
 
   isTest() {

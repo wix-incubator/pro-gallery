@@ -169,15 +169,6 @@ const blockVideoControlsOnMouseCursorNavigation = (options) =>{
   return _options
 }
 
-const blockMouseCursorNavigationOnTouchDevice = (options) =>{
-  let _options = {...options}
-  if (utils.isTouch() && (options.arrowsPosition === GALLERY_CONSTS.arrowsPosition.MOUSE_CURSOR) && (arrowsPosition.isRelevant(options))) {
-    _options.showArrows = false;
-
-  }
-  return _options
-}
-
 const processImageLoadingWithColorMode = (options) => {
   let _options = {...options}
   if (
@@ -400,7 +391,6 @@ function processLayouts(options, customExternalInfoRendererExists) {
     processedOptions = blockCounterByProduct(processedOptions); 
     processedOptions = blockScrollOnFadeOrDeckScrollAnimations(processedOptions); 
     processedOptions = blockVideoControlsOnMouseCursorNavigation(processedOptions);
-    processedOptions = blockMouseCursorNavigationOnTouchDevice(processedOptions);
 
   return processedOptions;
 }

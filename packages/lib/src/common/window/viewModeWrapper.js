@@ -34,7 +34,7 @@ class ViewModeWrapper {
     return this._deviceType === DEVICE_TYPE.DESKTOP;
   }
   isDeviceTypeTouch() {
-    return this.isDeviceTypeMobile() || this.isDeviceTypeTablet();
+    return this.isMobile() || this.isTablet();
   }
 
   isSiteMode() {
