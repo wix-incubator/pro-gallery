@@ -134,6 +134,7 @@ export function NavigationArrows({
           nextContainerStyle,
           isRTL,
           hideLeftArrow,
+          hideRightArrow,
           arrowBoxStyle,
           navArrowsContainerWidth,
           navArrowsContainerHeight,
@@ -219,24 +220,42 @@ export function ArrowButton({
 }
 
 export function ArrowButtonWithCursorController(props) {
+  const {
+    directionIsLeft,
+    next,
+    mouseCursorContainerMaxWidth,
+    hideLeftArrow,
+    hideRightArrow,
+  } = props;
+  const isTheOnlyArrow = hideLeftArrow || hideRightArrow;
   return (
     <ArrowFollower
-      gallery={() => document.getElementById(`pro-gallery-${props.id}`)}
-      mouseCursorContainerMaxWidth={props.mouseCursorContainerMaxWidth}
-      onNavigate={(direction) => props.next(direction === 'left' ? 1 : -1)}
+      id={props.id}
+      mouseCursorContainerMaxWidth={mouseCursorContainerMaxWidth}
+      onNavigate={() => next({ direction: directionIsLeft ? -1 : 1 })}
+      direction={directionIsLeft ? 'left' : 'right'}
+      isTheOnlyArrow={isTheOnlyArrow}
     >
-      {(x, y, direction) => (
+      {(x, y) => (
         <svg
           style={{
             position: 'absolute',
             top: y,
             left: x,
             width: 50,
+            pointerEvents: 'none',
             height: 50,
-            transform: `rotate(${direction === 'left' ? 180 : 0}deg)`,
+            background: 'red',
+            transition: 'all 0.2s ease',
+            transform: `rotate(${directionIsLeft ? 180 : 0}deg)`,
           }}
         >
-          <path d="M 0 0 L 0 0 L 0 0 Z" />
+          <path
+            d="M 0 0 L 50 25 L 0 50 Z"
+            fill="white"
+            stroke="black"
+            strokeWidth="1"
+          />
         </svg>
       )}
     </ArrowFollower>

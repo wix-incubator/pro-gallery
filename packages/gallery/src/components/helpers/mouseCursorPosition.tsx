@@ -45,7 +45,7 @@ interface MouseCursorProps {
   render: (x: number, y: number) => React.ReactNode;
   onClick: (x: number, y: number, e: MouseEvent) => void;
   onEnterState?: (mouseIn: boolean) => void;
-  element: () => HTMLElement;
+  elementId: string;
   throttle: number;
 }
 
@@ -54,13 +54,17 @@ interface MouseCursorState {
   mouseIn: boolean;
 }
 
+const getContainerById = (id: string) =>
+  document.getElementById(`pro-gallery-container-${id}`);
+
 export class MouseCursor extends React.Component<
   MouseCursorProps,
   MouseCursorState
 > {
   private mouseFollower?: ReturnType<typeof mouseFollower>;
-  componentDidMount() {
-    this.mouseFollower = mouseFollower(this.props.element());
+  componentDidMount(): void {
+    const element = getContainerById(this.props.elementId)!;
+    this.mouseFollower = mouseFollower(element);
     this.mouseFollower.listen.mouseMove(
       (utils as any).throttle((x, y) => {
         this.setState({
@@ -78,6 +82,9 @@ export class MouseCursor extends React.Component<
       }
     });
     this.mouseFollower.listen.mouseClick(this.props.onClick);
+  }
+  componentWillUnmount(): void {
+    this.mouseFollower?.destroy();
   }
   state: MouseCursorState = {
     position: [0, 0],
@@ -110,49 +117,66 @@ const getCssSelector = (element: HTMLElement) => {
 };
 
 interface ArrowFollowerProps {
-  children: (
-    x: number,
-    y: number,
-    direction: 'right' | 'left'
-  ) => React.ReactNode;
-  onNavigate: (direction: 'right' | 'left') => void;
+  children: (x: number, y: number) => React.ReactNode;
+  onNavigate: () => void;
   mouseCursorContainerMaxWidth: number;
-  gallery: () => HTMLElement;
+  id: string;
+  direction: 'right' | 'left';
+  isTheOnlyArrow: boolean;
 }
 
 export class ArrowFollower extends React.Component<ArrowFollowerProps> {
-  getDirection = (x: number) => {
-    const containerWidth = this.props.gallery().offsetWidth;
-    const amountOfPixelsNeeded =
-      containerWidth * (this.props.mouseCursorContainerMaxWidth / 100);
-    const isLeft = x < amountOfPixelsNeeded;
-    const isRight = x > containerWidth - amountOfPixelsNeeded;
-    const direction = isRight ? 'right' : 'left';
-
-    return {
-      isLeft,
-      isRight,
-      direction,
-    } as const;
+  shouldRender = (x: number) => {
+    const element = getContainerById(this.props.id)!;
+    const containerWidth = element.offsetWidth;
+    const realMaxWidth = Math.min(
+      this.props.mouseCursorContainerMaxWidth,
+      this.props.isTheOnlyArrow ? 100 : 50
+    );
+    const amountOfPixelsNeeded = containerWidth * (realMaxWidth / 100);
+    const isLeft = containerWidth - amountOfPixelsNeeded > x;
+    const isRight = x > amountOfPixelsNeeded;
+    return this.props.direction === 'left' ? isLeft : isRight;
   };
+
+  onAnyClick = (x: number, y: number, e: MouseEvent) => {
+    if (!this.shouldRender(x)) {
+      return;
+    }
+    // cancel the click event
+    for (const ele of (e as any).path as HTMLElement[]) {
+      if (
+        ele instanceof HTMLElement &&
+        ele.getAttribute(CLICKABLE_ATTR) === 'true'
+      ) {
+        return;
+      }
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    const element = getContainerById(this.props.id)!;
+    this.props.onNavigate();
+  };
+
   render() {
     return (
       <MouseCursor
-        element={this.props.gallery}
+        elementId={this.props.id}
         render={(x, y) => {
-          const { isLeft, isRight, direction } = this.getDirection(x);
-          const bounding = this.props.gallery().getBoundingClientRect();
+          const shouldRender = this.shouldRender(x);
+          if (!shouldRender) {
+            return null;
+          }
+          const element = getContainerById(this.props.id)!;
+          const bounding = element.getBoundingClientRect();
           const elementUnderMouse = document.elementFromPoint(
             x + bounding.left,
             y + bounding.top
           ) as HTMLElement | null;
-          if (!isLeft && !isRight) {
-            return null;
-          }
 
           return (
             <>
-              {this.props.children(x, y, direction)}
+              {this.props.children(x, y)}
               <style>
                 {elementUnderMouse &&
                   `
@@ -164,22 +188,7 @@ export class ArrowFollower extends React.Component<ArrowFollowerProps> {
             </>
           );
         }}
-        onClick={(x, y, e) => {
-          // cancel the click event
-          for (const ele of (e as any).path as HTMLElement[]) {
-            if (
-              ele instanceof HTMLElement &&
-              ele.getAttribute(CLICKABLE_ATTR) === 'true'
-            ) {
-              return;
-            }
-          }
-          e.preventDefault();
-          e.stopPropagation();
-          this.props.onNavigate(
-            x < this.props.gallery().offsetWidth / 2 ? 'right' : 'left'
-          );
-        }}
+        onClick={this.onAnyClick}
         throttle={50}
       />
     );
