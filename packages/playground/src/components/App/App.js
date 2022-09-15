@@ -18,7 +18,6 @@ import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
 // import { LeanGallery, isEligibleForLeanGallery } from 'lean-gallery';
-import 'lean-gallery/dist/styles/leanGallery.css';
 
 // //dummy commit
 const SideBar = React.lazy(() => import('../SideBar'));

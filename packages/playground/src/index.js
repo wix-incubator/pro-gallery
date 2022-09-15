@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {App} from './components/App/App';
 import {GalleryProvider} from './hooks/GalleryContext';
+import reportWebVitals from './reportWebVitals';
 
 const Root = () => (
   <GalleryProvider>
@@ -12,3 +13,4 @@ const Root = () => (
 );
 
 ReactDOM.render(<Root />, document.getElementById('root'));
+reportWebVitals(console.log);
