@@ -67,7 +67,6 @@ export default class ScrollIndicator extends React.Component {
       if (this.props.isRTL) {
         left = Math.abs(left); //this.props.totalWidth - left;
       }
-      // console.log('[RTL SCROLL] onHorizontalScroll: ', left);
       if (left >= 0) {
         if (
           this.props.scrollDirection ===
@@ -108,27 +107,23 @@ export default class ScrollIndicator extends React.Component {
       const top = target && (target.scrollY || target.scrollTop || target.y);
       // console.log('[RTL SCROLL] onVerticalScroll: ', left);
       if (top >= 0) {
-        this.setState({
-          scrollTop: top,
-        });
         if (
           this.props.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL
         ) {
+          this.setState({
+            scrollTop: top,
+          });
           this.props.getMoreItemsIfNeeded(top);
         }
         this.debouncedOnScroll({ top });
       }
     };
-    if (
-      this.props.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL
-    ) {
-      try {
-        scrollingElement
-          .vertical()
-          .addEventListener('scroll', this.onVerticalScroll);
-      } catch (e) {
-        console.error(e);
-      }
+    try {
+      scrollingElement
+        .vertical()
+        .addEventListener('scroll', this.onVerticalScroll);
+    } catch (e) {
+      console.error(e);
     }
   }
 
