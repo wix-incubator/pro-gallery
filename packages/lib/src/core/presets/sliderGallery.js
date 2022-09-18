@@ -21,6 +21,7 @@ const fixToSlider = (options) => {
   presetOptions.hasThumbnails = false;
   presetOptions.enableScroll = true;
   presetOptions.scrollSnap = true;
+  presetOptions.cropOnlyFill = true;
   presetOptions.slideAnimation = SLIDE_ANIMATIONS.SCROLL;
   return presetOptions;
 };
