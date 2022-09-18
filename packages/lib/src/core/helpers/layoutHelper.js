@@ -414,12 +414,8 @@ const setTextUnderline = (itemFontOption, textDecorationType, options) => {
 
 const removeCropOnlyFillParam = (options) => {
   let _options = { ...options };
-  if (
-    _options.cubeImages === true &&
-    _options.cropOnlyFill === true &&
-    _options.cubeType === CROP_TYPE.FIT
-  ) {
-    _options.cubeImages = false;
+  if (_options.cropOnlyFill === true) {
+    _options.cubeImages = !(_options.cubeType === CROP_TYPE.FIT);
   }
   return _options;
 };
