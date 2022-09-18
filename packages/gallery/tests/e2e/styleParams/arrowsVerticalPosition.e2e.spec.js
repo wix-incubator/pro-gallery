@@ -11,7 +11,6 @@ const getLayoutStylesByVerticalPosition = (
 ) => {
   return {
     galleryLayout: GALLERY_CONSTS.layout.SLIDER,
-    cubeImages: true,
     titlePlacement: titlePlacement,
     arrowsSize: 60,
     arrowsVerticalPosition: arrowsVerticalPosition,
