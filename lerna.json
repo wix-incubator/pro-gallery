@@ -2,11 +2,13 @@
   "packages": [
     "packages/*"
   ],
-  "bootstrap": {
-    "nohoist": [
-      "react",
-      "react-dom"
-    ]
+  "command": {
+    "bootstrap": {
+      "nohoist": [
+        "react",
+        "react-dom"
+      ]
+    }
   },
   "version": "4.1.49"
 }
