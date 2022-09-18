@@ -10,7 +10,7 @@ const fixToSlider = (options) => {
   let presetOptions = { ...options };
   presetOptions.galleryLayout = LAYOUTS.SLIDER;
   presetOptions.enableInfiniteScroll = true;
-  presetOptions.cubeType = 'fill';
+  presetOptions.cubeImages = true;
   presetOptions.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
   presetOptions.isVertical = false;
   presetOptions.groupSize = 1;
