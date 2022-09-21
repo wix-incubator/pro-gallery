@@ -36,7 +36,7 @@ import s from './SideBar.module.scss';
 import { GALLERY_CONSTS } from 'pro-gallery';
 // import { notEligibleReasons, isEligibleForLeanGallery } from 'lean-gallery';
 
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 import { getContainerUrlParams } from "./helper";
 import {utils} from 'pro-gallery-lib';
 import {StylesList} from './StyleList';
