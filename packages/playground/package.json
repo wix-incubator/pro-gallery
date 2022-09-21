@@ -26,8 +26,6 @@
     "unit": "react-scripts test",
     "test": "echo 'no test in wix CI'",
     "deploy": "react-scripts build",
-    "lint": "eslint src/**/*.js",
-    "lint:fix": "npm run lint -- --fix",
     "start-playground": "npm run start",
     "eject": "react-scripts eject"
   },
