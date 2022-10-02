@@ -13,6 +13,7 @@ export function mouseFollower(container: HTMLElement) {
     emitter.call.mouseEnterState(true);
   }
   function onMouseMove(event: MouseEvent) {
+    emitter.call.mouseEnterState(true);
     const bounding = container.getBoundingClientRect();
     const position = [
       event.clientX - bounding.left,
@@ -134,12 +135,20 @@ export class ArrowFollower extends React.Component<ArrowFollowerProps> {
       this.props.isTheOnlyArrow ? 100 : 50
     );
     const amountOfPixelsNeeded = containerWidth * (realMaxWidth / 100);
-    const isLeft = containerWidth - amountOfPixelsNeeded > x;
-    const isRight = x > amountOfPixelsNeeded;
+    const isLeft = amountOfPixelsNeeded > x;
+    const isRight = x > containerWidth - amountOfPixelsNeeded;
+    console.table({
+      isLeft,
+      isRight,
+      amountOfPixelsNeeded,
+      realMaxWidth,
+      containerWidth,
+      x,
+    });
     return this.props.direction === 'left' ? isLeft : isRight;
   };
 
-  onAnyClick = (x: number, y: number, e: MouseEvent) => {
+  onAnyClick = (x: number, _y: number, e: MouseEvent) => {
     if (!this.shouldRender(x)) {
       return;
     }
@@ -154,7 +163,7 @@ export class ArrowFollower extends React.Component<ArrowFollowerProps> {
     }
     e.preventDefault();
     e.stopPropagation();
-    const element = getContainerById(this.props.id)!;
+    // const element = getContainerById(this.props.id)!;
     this.props.onNavigate();
   };
 
@@ -163,6 +172,7 @@ export class ArrowFollower extends React.Component<ArrowFollowerProps> {
       <MouseCursor
         elementId={this.props.id}
         render={(x, y) => {
+          console.table({ x, y });
           const shouldRender = this.shouldRender(x);
           if (!shouldRender) {
             return null;
@@ -173,7 +183,7 @@ export class ArrowFollower extends React.Component<ArrowFollowerProps> {
             x + bounding.left,
             y + bounding.top
           ) as HTMLElement | null;
-
+          console.log({ elementUnderMouse });
           return (
             <>
               {this.props.children(x, y)}

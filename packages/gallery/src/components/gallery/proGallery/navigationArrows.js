@@ -226,6 +226,7 @@ export function ArrowButtonWithCursorController(props) {
     mouseCursorContainerMaxWidth,
     hideLeftArrow,
     hideRightArrow,
+    renderArrowSvg,
   } = props;
   const isTheOnlyArrow = hideLeftArrow || hideRightArrow;
   return (
@@ -237,26 +238,36 @@ export function ArrowButtonWithCursorController(props) {
       isTheOnlyArrow={isTheOnlyArrow}
     >
       {(x, y) => (
-        <svg
+        // <svg
+        //   style={{
+        //     position: 'absolute',
+        //     top: y,
+        //     left: x,
+        //     width: 50,
+        //     pointerEvents: 'none',
+        //     height: 50,
+        //     background: 'red',
+        //     transition: 'all 0.2s ease',
+        //     transform: `rotate(${directionIsLeft ? 180 : 0}deg)`,
+        //   }}
+        // >
+        //   <path
+        //     d="M 0 0 L 50 25 L 0 50 Z"
+        //     fill="white"
+        //     stroke="black"
+        //     strokeWidth="1"
+        //   />
+        // </svg>
+        <div
           style={{
             position: 'absolute',
             top: y,
             left: x,
-            width: 50,
             pointerEvents: 'none',
-            height: 50,
-            background: 'red',
-            transition: 'all 0.2s ease',
-            transform: `rotate(${directionIsLeft ? 180 : 0}deg)`,
           }}
         >
-          <path
-            d="M 0 0 L 50 25 L 0 50 Z"
-            fill="white"
-            stroke="black"
-            strokeWidth="1"
-          />
-        </svg>
+          {renderArrowSvg(directionIsLeft ? 'left' : 'right')}
+        </div>
       )}
     </ArrowFollower>
   );
