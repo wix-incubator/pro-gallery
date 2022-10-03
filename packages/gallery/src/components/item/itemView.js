@@ -752,7 +752,7 @@ class ItemView extends React.Component {
   }
 
   getItemWrapperStyles() {
-    const { options, style, type } = this.props;
+    const { createUrl, options, style, type } = this.props;
     const { height, width } = style;
     const styles = {};
     if (type === 'text') {
@@ -762,6 +762,16 @@ class ItemView extends React.Component {
       styles.backgroundColor =
         (options.cubeType !== 'fit' ? style.bgColor : 'inherit') ||
         'transparent';
+    }
+
+    if (
+      options.imageHoverAnimation ===
+      GALLERY_CONSTS.imageHoverAnimations.MAIN_COLOR
+    ) {
+      styles.background = `url(${createUrl(
+        GALLERY_CONSTS.urlSizes.PIXEL,
+        GALLERY_CONSTS.urlTypes.HIGH_RES
+      )})`;
     }
 
     styles.height = height + 'px';
@@ -839,6 +849,8 @@ class ItemView extends React.Component {
         overlayAnimation === GALLERY_CONSTS.overlayAnimations.SLIDE_LEFT,
 
       //image hover animations
+      'main-color-on-hover':
+        imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.MAIN_COLOR,
       'zoom-in-on-hover':
         imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.ZOOM_IN,
       'blur-on-hover':
