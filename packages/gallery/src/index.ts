@@ -16,4 +16,4 @@ export { Structure } from 'pro-gallery-lib';
 export { GALLERY_CONSTS } from 'pro-gallery-lib';
 export { addPresetOptions } from 'pro-gallery-lib';
 export { defaultOptions } from 'pro-gallery-lib';
-export { flatDefualtOptions } from 'pro-gallery-lib';
+export { flatDefaultOptions } from 'pro-gallery-lib';
