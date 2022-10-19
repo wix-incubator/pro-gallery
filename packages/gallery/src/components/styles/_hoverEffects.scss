@@ -7,6 +7,11 @@ div.pro-gallery {
     //image hover animations
 
     &.main-color-on-hover:not(.hide-hover) {
+
+     .gallery-item-content .gallery-item {
+      transition: opacity .4s ease !important;
+     }
+
       &.simulate-hover,
       &:hover {
         .gallery-item-content {
