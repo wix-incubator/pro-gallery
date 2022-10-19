@@ -25,7 +25,12 @@ export function mouseFollower(container: HTMLElement) {
     emitter.call.mouseEnterState(false);
   }
   function onClick(event: MouseEvent) {
-    emitter.call.mouseClick(event.offsetX, event.offsetY, event);
+    const bounding = container.getBoundingClientRect();
+    const position = [
+      event.clientX - bounding.left,
+      event.clientY - bounding.top,
+    ];
+    emitter.call.mouseClick(position[0], position[1], event);
   }
   container.addEventListener('mouseenter', onMouseEnter);
   container.addEventListener('mousemove', onMouseMove);
@@ -190,9 +195,9 @@ export class ArrowFollower extends React.Component<ArrowFollowerProps> {
               <style>
                 {elementUnderMouse &&
                   `
-                ${getCssSelector(elementUnderMouse)} {
-                  cursor: none !important;
-                }
+                  #${getContainerById(this.props.id)?.id} * {
+                    cursor: none !important;
+                  }
               `}
               </style>
             </>
