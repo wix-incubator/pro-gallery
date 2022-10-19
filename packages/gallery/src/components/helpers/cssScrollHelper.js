@@ -52,7 +52,7 @@ class CssScrollHelper {
 
   calcScrollClasses(itemId, scrollTop, scrollLeft, isScrollingVertically, isScrollingHorizontally) {
     //used by the scroll indicator
-    return (
+    return 'disabled' || (
       `${this.isScrollingClassName("y", isScrollingVertically)} ` +
       `${this.isScrollingClassName("x", isScrollingHorizontally)} ` +
       `${this.pgScrollClassName}-y-${scrollTop} ` +
