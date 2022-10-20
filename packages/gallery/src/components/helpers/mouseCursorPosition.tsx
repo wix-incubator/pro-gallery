@@ -105,23 +105,6 @@ export class MouseCursor extends React.Component<
 }
 
 const CLICKABLE_ATTR = 'pg-clickable';
-
-const getCssSelector = (element: HTMLElement) => {
-  const path: string[] = [];
-  let parent: HTMLElement;
-  let currentElement: HTMLElement = element;
-  while (currentElement.parentNode) {
-    parent = currentElement.parentNode as HTMLElement;
-    path.unshift(
-      `${currentElement.tagName}:nth-child(${
-        Array.from(parent.children).indexOf(currentElement) + 1
-      })`
-    );
-    currentElement = parent;
-  }
-  return `${path.join(' > ')}`.toLowerCase();
-};
-
 interface ArrowFollowerProps {
   children: (x: number, y: number) => React.ReactNode;
   onNavigate: () => void;
@@ -188,7 +171,6 @@ export class ArrowFollower extends React.Component<ArrowFollowerProps> {
             x + bounding.left,
             y + bounding.top
           ) as HTMLElement | null;
-          console.log({ elementUnderMouse });
           return (
             <>
               {this.props.children(x, y)}
