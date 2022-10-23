@@ -1,6 +1,7 @@
 import { GALLERY_CONSTS } from "pro-gallery-lib";
 
 export const createScrollAnimations = ({
+  top, 
   createScrollSelectors,
   itemId,
   item,
@@ -73,6 +74,7 @@ export const createScrollAnimations = ({
   const mergeSelectorsCss = () => {
     for (let [selectorSuffix, animationCss] of Object.entries(animationBySuffix)) {
       scrollSelectorsCss += createScrollSelectors({
+        position: top, 
         fromPosition: 0,
         toPosition: d,
         selectorSuffix,
