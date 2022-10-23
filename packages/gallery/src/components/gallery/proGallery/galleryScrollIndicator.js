@@ -145,6 +145,7 @@ export default class ScrollIndicator extends React.Component {
           this.props.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL
         ) {
           this.props.getMoreItemsIfNeeded(top);
+          cssScrollHelper.calcScrollCss({top})
         }
         this.pauseVerticalScrolling();
         this.debouncedOnScroll({ top });

@@ -665,7 +665,7 @@ export class GalleryContainer extends React.Component {
 
   getScrollCss({ id, items, container, options }) {
     // if (this.shouldCreateScrollCss) {
-    this.scrollCss = cssScrollHelper.calcScrollCss({
+    this.scrollCss = cssScrollHelper.prepareScrollCss({
       items,
       container,
       options,

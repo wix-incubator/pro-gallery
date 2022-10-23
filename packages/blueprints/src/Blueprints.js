@@ -88,12 +88,12 @@ class Blueprints {
         }
         existingBlueprint.structure = structure;
 
-        existingBlueprint.scrollAnimationsCss = this.createCssAnimations({
-          items: structure.items,
-          container: existingBlueprint.container,
-          options: existingBlueprint.styles,
-          id: params.id,
-        });
+        // existingBlueprint.scrollAnimationsCss = this.createCssAnimations({
+        //   items: structure.items,
+        //   container: existingBlueprint.container,
+        //   options: existingBlueprint.styles,
+        //   id: params.id,
+        // });
         console.log({ existingBlueprint });
 
         // if its an infinite gallery - let the container loose
