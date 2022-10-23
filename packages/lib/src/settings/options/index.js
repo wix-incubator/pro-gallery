@@ -145,6 +145,17 @@ import layoutParams_structure_scatter_randomScatter from './layoutParams_structu
 import layoutParams_structure_scatter_manualScatter from './layoutParams_structure_scatter_manualScatter';
 import layoutParams_structure_layoutOrientation from './layoutParams_structure_layoutOrientation';
 import layoutParams_structure_groupsOrder from './layoutParams_structure_groupsOrder';
+import layoutParams_thumbnails_spacing from './layoutParams_thumbnails_spacing';
+import layoutParams_thumbnails_size from './layoutParams_thumbnails_size';
+import layoutParams_thumbnails_enable from './layoutParams_thumbnails_enable';
+// import layoutParams_thumbnails_position from './layoutParams_thumbnails_position';
+import layoutParams_thumbnails_alignment from './layoutParams_thumbnails_alignment';
+
+import layoutParams_navigationArrows_enable from './layoutParams_navigationArrows_enable';
+import layoutParams_navigationArrows_size from './layoutParams_navigationArrows_size';
+import layoutParams_navigationArrows_padding from './layoutParams_navigationArrows_padding';
+import layoutParams_navigationArrows_position from './layoutParams_navigationArrows_position';
+import layoutParams_navigationArrows_verticalAlignment from './layoutParams_navigationArrows_verticalAlignment';
 //NEW STYPEPARAMS METHOD
 
 export default {
@@ -415,6 +426,23 @@ export default {
   layoutParams_structure_scatter_manualScatter,
   layoutParams_structure_layoutOrientation,
   layoutParams_structure_groupsOrder,
+
+  layoutParams_thumbnails_spacing,
+  layoutParams_thumbnails_size,
+  layoutParams_thumbnails_enable,
+  //  layoutParams_thumbnails_position,
+  layoutParams_thumbnails_alignment,
+
+  layoutParams_navigationArrows_enable,
+  layoutParams_navigationArrows_size,
+  layoutParams_navigationArrows_padding,
+  layoutParams_navigationArrows_position,
+  layoutParams_navigationArrows_verticalAlignment,
+  // layoutParams_navigationArrows_type,
+  // layoutParams_navigationArrows_container_type,
+  // layoutParams_navigationArrows_container_borderRadius,
+  // layoutParams_navigationArrows_container_backgroundColor,
+  // layoutParams_navigationArrows_mouseCursorContainerMaxWidth,
 
   //NEW STYPEPARAMS METHOD
 };
