@@ -68,6 +68,7 @@ import layoutParams_structure_groupsOrder from './layoutParams_structure_groupsO
 import layoutParams_structure_layoutOrientation from './layoutParams_structure_layoutOrientation';
 import layoutParams_structure_responsiveMode from './layoutParams_structure_responsiveMode';
 import layoutParams_structure_scrollDirection from './layoutParams_structure_scrollDirection';
+import layoutParams_thumbnails_alignment from './layoutParams_thumbnails_alignment';
 
 //NEW STYPEPARAMS METHOD
 export default {
@@ -143,5 +144,6 @@ export default {
   layoutParams_structure_layoutOrientation,
   layoutParams_structure_responsiveMode,
   layoutParams_structure_scrollDirection,
+  layoutParams_thumbnails_alignment,
   //NEW STYPEPARAMS METHOD
 };
