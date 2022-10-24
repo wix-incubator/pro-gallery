@@ -60,7 +60,17 @@ import itemResolutionMode from './itemResolutionMode';
 import autoSlideBehaviour from './autoSlideBehaviour';
 import secondaryMediaTrigger from './secondaryMediaTrigger';
 import secondaryMediaBehaviour from './secondaryMediaBehaviour';
+//NEW STYPEPARAMS METHOD
+import layoutParams_crop_method from './layoutParams_crop_method';
+import layoutParams_crop_alignment from './layoutParams_crop_alignment';
+import layoutParams_structure_galleryLayout from './layoutParams_structure_galleryLayout';
+import layoutParams_structure_groupsOrder from './layoutParams_structure_groupsOrder';
+import layoutParams_structure_layoutOrientation from './layoutParams_structure_layoutOrientation';
+import layoutParams_structure_responsiveMode from './layoutParams_structure_responsiveMode';
+import layoutParams_structure_scrollDirection from './layoutParams_structure_scrollDirection';
+import layoutParams_thumbnails_alignment from './layoutParams_thumbnails_alignment';
 
+//NEW STYPEPARAMS METHOD
 export default {
   arrowsPosition,
   itemResolutionMode,
@@ -125,4 +135,15 @@ export default {
   autoSlideBehaviour,
   secondaryMediaTrigger,
   secondaryMediaBehaviour,
+
+  //NEW STYPEPARAMS METHOD
+  layoutParams_crop_method,
+  layoutParams_crop_alignment,
+  layoutParams_structure_galleryLayout,
+  layoutParams_structure_groupsOrder,
+  layoutParams_structure_layoutOrientation,
+  layoutParams_structure_responsiveMode,
+  layoutParams_structure_scrollDirection,
+  layoutParams_thumbnails_alignment,
+  //NEW STYPEPARAMS METHOD
 };

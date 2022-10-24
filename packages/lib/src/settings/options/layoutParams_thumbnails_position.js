@@ -4,7 +4,7 @@ import { default as GALLERY_CONSTS } from '../../common/constants';
 export default {
   title: 'Thumbnails Position',
   isRelevant: (options) =>
-    options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+    options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && //NEW STYPEPARAMS METHOD change to the new sp const
     options.hasThumbnails,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and enable Thumbnails.',

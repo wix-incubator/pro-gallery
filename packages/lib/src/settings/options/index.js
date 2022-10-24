@@ -114,7 +114,7 @@ import behaviourParams_gallery_horizontal_autoSlide_interval from './behaviourPa
 import behaviourParams_gallery_horizontal_autoSlide_speed from './behaviourParams_gallery_horizontal_autoSlide_speed';
 import layoutParams_structure_responsiveMode from './layoutParams_structure_responsiveMode';
 import layoutParams_structure_galleryRatio_value from './layoutParams_structure_galleryRatio_value';
-import layoutParams_structure_galleryRatio_includeExternalInfo from './layoutParams_structure_galleryRatio_includeExternalInfo';
+// import layoutParams_structure_galleryRatio_includeExternalInfo from './layoutParams_structure_galleryRatio_includeExternalInfo';
 import layoutParams_targetItemSize_value from './layoutParams_targetItemSize_value';
 import layoutParams_info_width from './layoutParams_info_width';
 import layoutParams_info_height from './layoutParams_info_height';
@@ -130,6 +130,26 @@ import layoutParams_groups_numberOfGroupsPerRow from './layoutParams_groups_numb
 import layoutParams_groups_allowedGroupTypes from './layoutParams_groups_allowedGroupTypes';
 import layoutParams_groups_repeatingGroupTypes from './layoutParams_groups_repeatingGroupTypes';
 import layoutParams_groups_groupSize from './layoutParams_groups_groupSize';
+// import layoutParams_structure_galleryRatio_value from './layoutParams_structure_galleryRatio_value';
+// // // import layoutParams_structure_galleryRatio_includeExternalInfo from './layoutParams_structure_galleryRatio_includeExternalInfo';
+import layoutParams_structure_galleryLayout from './layoutParams_structure_galleryLayout';
+import layoutParams_structure_enableStreching from './layoutParams_structure_enableStreching';
+import layoutParams_structure_gallerySpacing from './layoutParams_structure_gallerySpacing';
+import layoutParams_structure_itemSpacing from './layoutParams_structure_itemSpacing';
+import layoutParams_structure_scrollDirection from './layoutParams_structure_scrollDirection';
+import layoutParams_structure_numberOfColumns from './layoutParams_structure_numberOfColumns';
+// import layoutParams_structure_numberOfGridRows from './layoutParams_structure_numberOfGridRows'; //NEW STYPEPARAMS METHOD need to import it from the new file... an old import was already here and might break.
+// import layoutParams_structure_responsiveMode from './layoutParams_structure_responsiveMode';
+import layoutParams_structure_columnRatios from './layoutParams_structure_columnRatios';
+import layoutParams_structure_scatter_randomScatter from './layoutParams_structure_scatter_randomScatter';
+import layoutParams_structure_scatter_manualScatter from './layoutParams_structure_scatter_manualScatter';
+import layoutParams_structure_layoutOrientation from './layoutParams_structure_layoutOrientation';
+import layoutParams_structure_groupsOrder from './layoutParams_structure_groupsOrder';
+import layoutParams_thumbnails_spacing from './layoutParams_thumbnails_spacing';
+import layoutParams_thumbnails_size from './layoutParams_thumbnails_size';
+import layoutParams_thumbnails_enable from './layoutParams_thumbnails_enable';
+// import layoutParams_thumbnails_position from './layoutParams_thumbnails_position';
+import layoutParams_thumbnails_alignment from './layoutParams_thumbnails_alignment';
 //NEW STYPEPARAMS METHOD
 
 export default {
@@ -352,10 +372,10 @@ export default {
     layoutParams_structure_galleryRatio_value,
   [optionsMap.layoutParams.thumbnails.position]:
     layoutParams_thumbnails_position,
-  layoutParams_structure_galleryRatio_includeExternalInfo,
+  // layoutParams_structure_galleryRatio_includeExternalInfo,
   [optionsMap.layoutParams.structure.galleryRatio.includeExternalInfo]:
-    layoutParams_structure_galleryRatio_includeExternalInfo,
-  arrowsColor,
+    // layoutParams_structure_galleryRatio_includeExternalInfo,
+    arrowsColor,
   [optionsMap.stylingParams.arrowsColor]: arrowsColor,
   [optionsMap.layoutParams.navigationArrows.type]:
     layoutParams_navigationArrows_type,
@@ -385,6 +405,28 @@ export default {
   [optionsMap.layoutParams.groups.repeatingGroupTypes]:
     layoutParams_groups_repeatingGroupTypes,
   [optionsMap.layoutParams.groups.groupSize]: layoutParams_groups_groupSize,
+  // layoutParams_structure_galleryRatio_value,
+  // layoutParams_structure_galleryRatio_includeExternalInfo,
+  layoutParams_structure_galleryLayout,
+  layoutParams_structure_enableStreching,
+  layoutParams_structure_gallerySpacing,
+  layoutParams_structure_itemSpacing,
+  layoutParams_structure_scrollDirection,
+  layoutParams_structure_numberOfColumns,
+  // layoutParams_structure_numberOfGridRows,
+  layoutParams_structure_responsiveMode,
+  layoutParams_structure_columnRatios,
+  layoutParams_structure_scatter_randomScatter,
+  layoutParams_structure_scatter_manualScatter,
+  layoutParams_structure_layoutOrientation,
+  layoutParams_structure_groupsOrder,
+
+  layoutParams_thumbnails_spacing,
+  layoutParams_thumbnails_size,
+  layoutParams_thumbnails_enable,
+  //  layoutParams_thumbnails_position,
+  layoutParams_thumbnails_alignment,
+
   //NEW STYPEPARAMS METHOD
 };
 // TODO = add the options:
