@@ -7,22 +7,27 @@ export function mouseFollower(container: HTMLElement) {
   const emitter = new Emitter<{
     mouseMove: (x: number, y: number) => void;
     mouseClick: (x: number, y: number, e: MouseEvent) => void;
-    mouseEnterState: (mouseIn: boolean) => void;
+    mouseEnterState: (mouseIn: boolean, x: number, y: number) => void;
   }>();
-  function onMouseEnter() {
-    emitter.call.mouseEnterState(true);
-  }
-  function onMouseMove(event: MouseEvent) {
-    emitter.call.mouseEnterState(true);
+  const getMousePosition = (event: MouseEvent) => {
     const bounding = container.getBoundingClientRect();
     const position = [
       event.clientX - bounding.left,
       event.clientY - bounding.top,
-    ];
-    emitter.call.mouseMove(position[0], position[1]);
+    ] as [number, number];
+    return position;
+  };
+
+  function onMouseEnter(event: MouseEvent) {
+    emitter.call.mouseEnterState(true, ...getMousePosition(event));
+  }
+  function onMouseMove(event: MouseEvent) {
+    const [x, y] = getMousePosition(event);
+    emitter.call.mouseEnterState(true, x, y);
+    emitter.call.mouseMove(x, y);
   }
   function onMouseLeave() {
-    emitter.call.mouseEnterState(false);
+    emitter.call.mouseEnterState(false, 0, 0);
   }
   function onClick(event: MouseEvent) {
     const bounding = container.getBoundingClientRect();
@@ -78,13 +83,15 @@ export class MouseCursor extends React.Component<
         });
       }, this.props.throttle)
     );
-    this.mouseFollower.listen.mouseEnterState((mouseIn) => {
-      this.setState({
-        mouseIn: mouseIn,
-        position: mouseIn ? this.state.position : [0, 0],
-      });
-      if (this.props.onEnterState) {
-        this.props.onEnterState(mouseIn);
+    this.mouseFollower.listen.mouseEnterState((mouseIn, ...position) => {
+      if (this.state.mouseIn !== mouseIn) {
+        this.setState({
+          mouseIn: mouseIn,
+          position,
+        });
+        if (this.props.onEnterState) {
+          this.props.onEnterState(mouseIn);
+        }
       }
     });
     this.mouseFollower.listen.mouseClick(this.props.onClick);
