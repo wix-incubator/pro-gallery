@@ -69,6 +69,8 @@ import layoutParams_structure_layoutOrientation from './layoutParams_structure_l
 import layoutParams_structure_responsiveMode from './layoutParams_structure_responsiveMode';
 import layoutParams_structure_scrollDirection from './layoutParams_structure_scrollDirection';
 import layoutParams_thumbnails_alignment from './layoutParams_thumbnails_alignment';
+import layoutParams_info_layout from './layoutParams_info_layout';
+import layoutParams_info_sizeUnits from './layoutParams_info_sizeUnits';
 
 //NEW STYPEPARAMS METHOD
 export default {
@@ -145,5 +147,7 @@ export default {
   layoutParams_structure_responsiveMode,
   layoutParams_structure_scrollDirection,
   layoutParams_thumbnails_alignment,
+  layoutParams_info_layout,
+  layoutParams_info_sizeUnits,
   //NEW STYPEPARAMS METHOD
 };

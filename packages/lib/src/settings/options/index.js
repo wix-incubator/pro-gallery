@@ -51,7 +51,6 @@ import arrowsPadding from './arrowsPadding';
 import arrowsSize from './arrowsSize';
 import textBoxHeight from './textBoxHeight';
 import calculateTextBoxWidthMode from './calculateTextBoxWidthMode';
-import layoutParams_info_sizeUntis from './layoutParams_info_sizeUnits';
 import chooseBestGroup from './chooseBestGroup';
 import imageLoadingMode from './imageLoadingMode';
 import cropOnlyFill from './cropOnlyFill';
@@ -150,6 +149,16 @@ import layoutParams_thumbnails_size from './layoutParams_thumbnails_size';
 import layoutParams_thumbnails_enable from './layoutParams_thumbnails_enable';
 // import layoutParams_thumbnails_position from './layoutParams_thumbnails_position';
 import layoutParams_thumbnails_alignment from './layoutParams_thumbnails_alignment';
+
+import layoutParams_info_sizeUnits from './layoutParams_info_sizeUnits';
+// import layoutParams_info_width from './layoutParams_info_width';
+// import layoutParams_info_height from './layoutParams_info_height';
+import layoutParams_info_spacing from './layoutParams_info_spacing';
+import layoutParams_info_layout from './layoutParams_info_layout';
+import layoutParams_info_border_width from './layoutParams_info_border_width';
+import layoutParams_info_border_color from './layoutParams_info_border_color';
+import layoutParams_info_border_radius from './layoutParams_info_border_radius';
+// import layoutParams_info_placement from './layoutParams_info_placement';
 //NEW STYPEPARAMS METHOD
 
 export default {
@@ -261,7 +270,7 @@ export default {
   textBoxHeight,
   [optionsMap.layoutParams.info.height]: layoutParams_info_height,
   calculateTextBoxWidthMode,
-  [optionsMap.layoutParams.info.sizeUnits]: layoutParams_info_sizeUntis,
+  [optionsMap.layoutParams.info.sizeUnits]: layoutParams_info_sizeUnits,
   chooseBestGroup,
   [optionsMap.layoutParams.groups.groupByOrientation]: chooseBestGroup,
   imageLoadingMode,
@@ -427,6 +436,15 @@ export default {
   //  layoutParams_thumbnails_position,
   layoutParams_thumbnails_alignment,
 
+  // layoutParams_info_sizeUnits,
+  // layoutParams_info_width,
+  // layoutParams_info_height,
+  layoutParams_info_spacing,
+  layoutParams_info_layout,
+  layoutParams_info_border_width,
+  layoutParams_info_border_color,
+  layoutParams_info_border_radius,
+  // layoutParams_info_placement,
   //NEW STYPEPARAMS METHOD
 };
 // TODO = add the options:
