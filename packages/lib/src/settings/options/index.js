@@ -198,6 +198,21 @@ import behaviourParams_gallery_enableIndexingShareLinks from './behaviourParams_
 import behaviourParams_gallery_vertical_loadMore_enable from './behaviourParams_gallery_vertical_loadMore_enable';
 import behaviourParams_gallery_vertical_loadMore_amount from './behaviourParams_gallery_vertical_loadMore_amount';
 import behaviourParams_gallery_vertical_loadMore_text from './behaviourParams_gallery_vertical_loadMore_text';
+
+import behaviourParams_gallery_horizontal_enableScrollSnap from './behaviourParams_gallery_horizontal_enableScrollSnap';
+import behaviourParams_gallery_horizontal_slideAnimation from './behaviourParams_gallery_horizontal_slideAnimation';
+import behaviourParams_gallery_horizontal_slideTransition from './behaviourParams_gallery_horizontal_slideTransition';
+import behaviourParams_gallery_horizontal_blockScroll from './behaviourParams_gallery_horizontal_blockScroll';
+import behaviourParams_gallery_horizontal_navigationDuration from './behaviourParams_gallery_horizontal_navigationDuration';
+import behaviourParams_gallery_horizontal_loop from './behaviourParams_gallery_horizontal_loop';
+// import behaviourParams_gallery_horizontal_autoSlide_behaviour from './behaviourParams_gallery_horizontal_autoSlide_behaviour';
+// import behaviourParams_gallery_horizontal_autoSlide_interval from './behaviourParams_gallery_horizontal_autoSlide_interval';
+import behaviourParams_gallery_horizontal_autoSlide_pauseOnHover from './behaviourParams_gallery_horizontal_autoSlide_pauseOnHover';
+// import behaviourParams_gallery_horizontal_autoSlide_speed from './behaviourParams_gallery_horizontal_autoSlide_speed';
+import behaviourParams_gallery_horizontal_slideshowInfo_buttonsAlignment from './behaviourParams_gallery_horizontal_slideshowInfo_buttonsAlignment';
+import behaviourParams_gallery_horizontal_slideshowInfo_enableCounter from './behaviourParams_gallery_horizontal_slideshowInfo_enableCounter';
+import behaviourParams_gallery_horizontal_slideshowInfo_enablePlayButton from './behaviourParams_gallery_horizontal_slideshowInfo_enablePlayButton';
+
 //NEW STYPEPARAMS METHOD
 
 export default {
@@ -527,6 +542,20 @@ export default {
   behaviourParams_gallery_vertical_loadMore_enable,
   behaviourParams_gallery_vertical_loadMore_amount,
   behaviourParams_gallery_vertical_loadMore_text,
+
+  behaviourParams_gallery_horizontal_enableScrollSnap,
+  behaviourParams_gallery_horizontal_slideAnimation,
+  behaviourParams_gallery_horizontal_slideTransition,
+  behaviourParams_gallery_horizontal_blockScroll,
+  behaviourParams_gallery_horizontal_navigationDuration,
+  behaviourParams_gallery_horizontal_loop,
+  // behaviourParams_gallery_horizontal_autoSlide_behaviour,
+  // behaviourParams_gallery_horizontal_autoSlide_interval,
+  behaviourParams_gallery_horizontal_autoSlide_pauseOnHover,
+  // behaviourParams_gallery_horizontal_autoSlide_speed,
+  behaviourParams_gallery_horizontal_slideshowInfo_buttonsAlignment,
+  behaviourParams_gallery_horizontal_slideshowInfo_enableCounter,
+  behaviourParams_gallery_horizontal_slideshowInfo_enablePlayButton,
   //NEW STYPEPARAMS METHOD
 };
 // TODO = add the options:
