@@ -165,6 +165,10 @@ import layoutParams_info_border_width from './layoutParams_info_border_width';
 import layoutParams_info_border_color from './layoutParams_info_border_color';
 import layoutParams_info_border_radius from './layoutParams_info_border_radius';
 // import layoutParams_info_placement from './layoutParams_info_placement';
+
+import layoutParams_targetItemSize_unit from './layoutParams_targetItemSize_unit';
+// import layoutParams_targetItemSize_value from './layoutParams_targetItemSize_value';
+import layoutParams_targetItemSize_minimum from './layoutParams_targetItemSize_minimum';
 //NEW STYPEPARAMS METHOD
 
 export default {
@@ -462,6 +466,10 @@ export default {
   layoutParams_info_border_color,
   layoutParams_info_border_radius,
   // layoutParams_info_placement,
+
+  layoutParams_targetItemSize_unit,
+  // layoutParams_targetItemSize_value,
+  layoutParams_targetItemSize_minimum,
   //NEW STYPEPARAMS METHOD
 };
 // TODO = add the options:
