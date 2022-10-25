@@ -16,6 +16,8 @@ import {ReactComponent as Panorama} from '../../assets/layouts/panorama-reg.svg'
 import {ReactComponent as PanoramaSel} from '../../assets/layouts/panorama-sel.svg';
 import {ReactComponent as Column} from '../../assets/layouts/columns-reg.svg';
 import {ReactComponent as ColumnSel} from '../../assets/layouts/columns-sel.svg';
+import {ReactComponent as Showcase} from '../../assets/layouts/slideshow-reg.svg';
+import {ReactComponent as ShowcaseSel} from '../../assets/layouts/slideshow-sel.svg'
 // import {ReactComponent as Magic} from '../../assets/layouts/magic-reg.svg';
 // import {ReactComponent as MagicSel} from '../../assets/layouts/magic-sel.svg';
 // import {ReactComponent as Bricks} from '../../assets/layouts/bricks-reg.svg';
@@ -62,6 +64,11 @@ export const svgs = {
     reg: Column,
     sel: ColumnSel,
     key: 7,
+  },
+  EXPERIMENTAL_SHOWCASE: {
+    reg: Showcase,
+    sel: ShowcaseSel,
+    key: 13,
   },
   pro: { //--mix
     reg: Pro,

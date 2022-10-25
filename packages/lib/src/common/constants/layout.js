@@ -15,6 +15,7 @@ const LAYOUTS = {
   BRICKS: 10,
   MIX: 11,
   ALTERNATE: 12,
+  EXPERIMENTAL_SHOWCASE: 13,
 };
 
 const isLayout = (layoutName) => (options) => {
