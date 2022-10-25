@@ -1,6 +1,0 @@
-const SECONDARY_MEDIA_TRIGGER = {
-  OFF: 'OFF',
-  HOVER: 'HOVER',
-};
-
-export default SECONDARY_MEDIA_TRIGGER;
