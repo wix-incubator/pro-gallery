@@ -156,6 +156,10 @@ import layoutParams_navigationArrows_size from './layoutParams_navigationArrows_
 import layoutParams_navigationArrows_padding from './layoutParams_navigationArrows_padding';
 import layoutParams_navigationArrows_position from './layoutParams_navigationArrows_position';
 import layoutParams_navigationArrows_verticalAlignment from './layoutParams_navigationArrows_verticalAlignment';
+
+import layoutParams_targetItemSize_unit from './layoutParams_targetItemSize_unit';
+// import layoutParams_targetItemSize_value from './layoutParams_targetItemSize_value';
+import layoutParams_targetItemSize_minimum from './layoutParams_targetItemSize_minimum';
 //NEW STYPEPARAMS METHOD
 
 export default {
@@ -444,6 +448,9 @@ export default {
   // layoutParams_navigationArrows_container_backgroundColor,
   // layoutParams_navigationArrows_mouseCursorContainerMaxWidth,
 
+  layoutParams_targetItemSize_unit,
+  // layoutParams_targetItemSize_value,
+  layoutParams_targetItemSize_minimum,
   //NEW STYPEPARAMS METHOD
 };
 // TODO = add the options:

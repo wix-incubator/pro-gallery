@@ -71,6 +71,8 @@ import layoutParams_structure_scrollDirection from './layoutParams_structure_scr
 import layoutParams_thumbnails_alignment from './layoutParams_thumbnails_alignment';
 import layoutParams_navigationArrows_verticalAlignment from './layoutParams_navigationArrows_verticalAlignment';
 import layoutParams_navigationArrows_position from './layoutParams_navigationArrows_position';
+import layoutParams_targetItemSize_unit from './layoutParams_targetItemSize_unit';
+
 //NEW STYPEPARAMS METHOD
 export default {
   arrowsPosition,
@@ -148,5 +150,6 @@ export default {
   layoutParams_thumbnails_alignment,
   layoutParams_navigationArrows_verticalAlignment,
   layoutParams_navigationArrows_position,
+  layoutParams_targetItemSize_unit,
   //NEW STYPEPARAMS METHOD
 };
