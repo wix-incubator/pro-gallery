@@ -747,7 +747,7 @@ class Utils {
           GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
             .VERTICAL &&
         !options[optionsMap.behaviourParams.gallery.vertical.loadMore]
-      );
+      ); //NEW STYLEPARAMS METHOD POSSIBLE BUG FOUND Could be that I need to add the horizontal gallery ratio thing here....
     };
     return (
       oldSPs_isHeightSetByGallery(options) || //NEW STYPEPARAMS METHOD remove when done
