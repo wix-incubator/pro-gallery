@@ -68,6 +68,7 @@ import layoutParams_structure_groupsOrder from './layoutParams_structure_groupsO
 import layoutParams_structure_layoutOrientation from './layoutParams_structure_layoutOrientation';
 import layoutParams_structure_responsiveMode from './layoutParams_structure_responsiveMode';
 import layoutParams_structure_scrollDirection from './layoutParams_structure_scrollDirection';
+import layoutParams_groups_allowedGroupTypes from './layoutParams_groups_allowedGroupTypes';
 import layoutParams_thumbnails_alignment from './layoutParams_thumbnails_alignment';
 
 import layoutParams_navigationArrows_verticalAlignment from './layoutParams_navigationArrows_verticalAlignment';
@@ -172,6 +173,7 @@ export default {
   layoutParams_structure_layoutOrientation,
   layoutParams_structure_responsiveMode,
   layoutParams_structure_scrollDirection,
+  layoutParams_groups_allowedGroupTypes,
   layoutParams_thumbnails_alignment,
   layoutParams_navigationArrows_verticalAlignment,
   layoutParams_navigationArrows_position,
