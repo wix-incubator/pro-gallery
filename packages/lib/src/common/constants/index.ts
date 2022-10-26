@@ -78,6 +78,7 @@ import layoutParams_navigationArrows_container_type from './layoutParams_navigat
 
 import layoutParams_info_layout from './layoutParams_info_layout';
 import layoutParams_info_sizeUnits from './layoutParams_info_sizeUnits';
+import layoutParams_info_placement from './layoutParams_info_placement';
 
 import layoutParams_targetItemSize_unit from './layoutParams_targetItemSize_unit';
 
@@ -183,6 +184,7 @@ export default {
   layoutParams_navigationArrows_container_type,
   layoutParams_info_layout,
   layoutParams_info_sizeUnits,
+  layoutParams_info_placement,
   layoutParams_targetItemSize_unit,
   behaviourParams_item_clickAction,
   behaviourParams_item_video_playTrigger,
