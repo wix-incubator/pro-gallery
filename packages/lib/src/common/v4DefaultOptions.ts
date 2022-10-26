@@ -9,7 +9,7 @@ const defaultV4Options = {
       enable: false,
       enableSmartCrop: false,
       cropOnlyFill: false,
-      alignment: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].CENTER,
+      alignment: GALLERY_CONSTS[optionsMap.layoutParams.crop.alignment].CENTER,
     },
     structure: {
       galleryLayout: -1,
@@ -161,7 +161,7 @@ const defaultV4Options = {
         slideTransition:
           GALLERY_CONSTS[
             optionsMap.behaviourParams.gallery.horizontal.slideTransition
-          ].ease,
+          ].EASE,
         slideAnimation:
           GALLERY_CONSTS[
             optionsMap.behaviourParams.gallery.horizontal.slideAnimation
