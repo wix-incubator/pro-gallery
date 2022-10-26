@@ -1,0 +1,6 @@
+const ITEM_RESOLUTION_MODE = {
+  FULL: 'FULL',
+  SCALED_DOWN: 'SCALED_DOWN',
+} as const;
+
+export default ITEM_RESOLUTION_MODE;
