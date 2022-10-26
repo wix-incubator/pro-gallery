@@ -8,6 +8,7 @@ import {
   extendNestedOptionsToIncludeOldAndNew,
 } from 'pro-gallery-lib';
 import { cssScrollHelper } from 'pro-gallery';
+import { scrollAnimationHelper } from 'pro-gallery';
 
 class Blueprints {
   createBlueprint({
@@ -375,6 +376,12 @@ class Blueprints {
   }
 
   createCssAnimations({ items, container, options, id }) {
+    scrollAnimationHelper.init({
+      items,
+      options,
+      container,
+      galleryId: id,
+    });
     return cssScrollHelper.calcScrollCss({
       items,
       options,

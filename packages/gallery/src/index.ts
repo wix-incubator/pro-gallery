@@ -1,6 +1,7 @@
 export { default as ProGallery } from './components/gallery/index';
 export { default as ProGalleryRenderer } from './components/gallery/rendererIndex';
 export { cssScrollHelper } from './components/helpers/cssScrollHelper';
+export { scrollAnimationHelper } from './components/helpers/ScrollAnimationHelper';
 export { default as ItemView } from './components/item/itemView';
 export { PrintOnlyImageSource } from './components/item/printOnlySource';
 

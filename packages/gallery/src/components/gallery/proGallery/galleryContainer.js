@@ -19,6 +19,7 @@ import {
 import ScrollIndicator from './galleryScrollIndicator';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
+import { scrollAnimationHelper } from '../../helpers/ScrollAnimationHelper.js';
 import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper';
 import findNeighborItem from '../../helpers/layoutUtils';
 import { isGalleryInViewport, Deferred } from './galleryHelpers';
@@ -665,7 +666,13 @@ export class GalleryContainer extends React.Component {
 
   getScrollCss({ id, items, container, options }) {
     // if (this.shouldCreateScrollCss) {
-    this.scrollCss = cssScrollHelper.prepareScrollCss({
+    scrollAnimationHelper.init({
+      items,
+      container,
+      options,
+      galleryId: id,
+    });
+    this.scrollCss = cssScrollHelper.calcScrollCss({
       items,
       container,
       options,

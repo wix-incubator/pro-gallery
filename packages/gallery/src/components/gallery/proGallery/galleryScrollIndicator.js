@@ -1,6 +1,7 @@
 import React from 'react';
 import { utils, GALLERY_CONSTS } from 'pro-gallery-lib';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper';
+import { scrollAnimationHelper } from '../../helpers/ScrollAnimationHelper';
 
 export default class ScrollIndicator extends React.Component {
   constructor(props) {
@@ -145,7 +146,7 @@ export default class ScrollIndicator extends React.Component {
           this.props.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL
         ) {
           this.props.getMoreItemsIfNeeded(top);
-          cssScrollHelper.calcScrollCss({top})
+          scrollAnimationHelper.calcScrollAnimation({top})
         }
         this.pauseVerticalScrolling();
         this.debouncedOnScroll({ top });
