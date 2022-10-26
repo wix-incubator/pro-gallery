@@ -92,6 +92,11 @@ import behaviourParams_item_secondaryMedia_behaviour from './behaviourParams_ite
 import behaviourParams_gallery_layoutDirection from './behaviourParams_gallery_layoutDirection';
 import behaviourParams_gallery_scrollAnimation from './behaviourParams_gallery_scrollAnimation';
 import behaviourParams_gallery_vertical_loadMore_amount from './behaviourParams_gallery_vertical_loadMore_amount';
+import behaviourParams_gallery_horizontal_slideAnimation from './behaviourParams_gallery_horizontal_slideAnimation';
+import behaviourParams_gallery_horizontal_slideTransition from './behaviourParams_gallery_horizontal_slideTransition';
+import behaviourParams_gallery_horizontal_autoSlide_behaviour from './behaviourParams_gallery_horizontal_autoSlide_behaviour';
+import behaviourParams_gallery_horizontal_slideshowInfo_buttonsAlignment from './behaviourParams_gallery_horizontal_slideshowInfo_buttonsAlignment';
+
 //NEW STYPEPARAMS METHOD
 
 export default {
@@ -187,5 +192,9 @@ export default {
   behaviourParams_gallery_layoutDirection,
   behaviourParams_gallery_scrollAnimation,
   behaviourParams_gallery_vertical_loadMore_amount,
+  behaviourParams_gallery_horizontal_slideAnimation,
+  behaviourParams_gallery_horizontal_slideTransition,
+  behaviourParams_gallery_horizontal_autoSlide_behaviour,
+  behaviourParams_gallery_horizontal_slideshowInfo_buttonsAlignment,
   //NEW STYPEPARAMS METHOD
 };
