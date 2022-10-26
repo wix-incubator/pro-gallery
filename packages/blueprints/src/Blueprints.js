@@ -4,7 +4,7 @@ import {
   addPresetOptions,
   dimensionsHelper,
   processLayouts,
-  GALLERY_CONSTS,
+  utils,
   extendNestedOptionsToIncludeOldAndNew,
 } from 'pro-gallery-lib';
 
@@ -88,10 +88,9 @@ class Blueprints {
         existingBlueprint.structure = structure;
 
         // if its an infinite gallery - let the container loose
-        const isInfinite =
-          existingBlueprint.options.scrollDirection ===
-            GALLERY_CONSTS.scrollDirection.VERTICAL &&
-          existingBlueprint.options.enableInfiniteScroll;
+        const isInfinite = utils.isHeightSetByGallery(
+          existingBlueprint.options
+        );
         if (isInfinite) {
           existingBlueprint.container.height =
             existingBlueprint.container.galleryHeight = structure.height;
@@ -297,13 +296,10 @@ class Blueprints {
         return false; // no new continainer
       }
       const containerHasChanged = {
-        height:
-          formattedOptions.scrollDirection ===
-            GALLERY_CONSTS.scrollDirection.VERTICAL &&
-          formattedOptions.enableInfiniteScroll // height doesnt matter if the new gallery is going to be vertical
-            ? false
-            : !!newContainerParams.height &&
-              newContainerParams.height !== oldContainerParams.height,
+        height: utils.isHeightSetByGallery(formattedOptions) // height doesnt matter if the new gallery is going to be vertical
+          ? false
+          : !!newContainerParams.height &&
+            newContainerParams.height !== oldContainerParams.height,
         width:
           !oldContainerParams ||
           (!!newContainerParams.width &&
