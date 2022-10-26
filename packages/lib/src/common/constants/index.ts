@@ -60,6 +60,7 @@ import itemResolutionMode from './itemResolutionMode';
 import autoSlideBehaviour from './autoSlideBehaviour';
 import secondaryMediaTrigger from './secondaryMediaTrigger';
 import secondaryMediaBehaviour from './secondaryMediaBehaviour';
+
 //NEW STYPEPARAMS METHOD
 import layoutParams_crop_method from './layoutParams_crop_method';
 import layoutParams_crop_alignment from './layoutParams_crop_alignment';
@@ -75,6 +76,7 @@ import layoutParams_navigationArrows_position from './layoutParams_navigationArr
 
 import layoutParams_info_layout from './layoutParams_info_layout';
 import layoutParams_info_sizeUnits from './layoutParams_info_sizeUnits';
+import layoutParams_info_placement from './layoutParams_info_placement';
 
 import layoutParams_targetItemSize_unit from './layoutParams_targetItemSize_unit';
 
@@ -96,6 +98,7 @@ import behaviourParams_gallery_horizontal_slideAnimation from './behaviourParams
 import behaviourParams_gallery_horizontal_slideTransition from './behaviourParams_gallery_horizontal_slideTransition';
 import behaviourParams_gallery_horizontal_autoSlide_behaviour from './behaviourParams_gallery_horizontal_autoSlide_behaviour';
 import behaviourParams_gallery_horizontal_slideshowInfo_buttonsAlignment from './behaviourParams_gallery_horizontal_slideshowInfo_buttonsAlignment';
+import stylingParams_itemResolutionMode from './stylingParams_itemResolutionMode';
 
 //NEW STYPEPARAMS METHOD
 
@@ -177,6 +180,7 @@ export default {
   layoutParams_navigationArrows_position,
   layoutParams_info_layout,
   layoutParams_info_sizeUnits,
+  layoutParams_info_placement,
   layoutParams_targetItemSize_unit,
   behaviourParams_item_clickAction,
   behaviourParams_item_video_playTrigger,
@@ -196,5 +200,6 @@ export default {
   behaviourParams_gallery_horizontal_slideTransition,
   behaviourParams_gallery_horizontal_autoSlide_behaviour,
   behaviourParams_gallery_horizontal_slideshowInfo_buttonsAlignment,
+  stylingParams_itemResolutionMode,
   //NEW STYPEPARAMS METHOD
 };
