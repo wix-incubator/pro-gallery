@@ -73,6 +73,7 @@ import layoutParams_thumbnails_alignment from './layoutParams_thumbnails_alignme
 
 import layoutParams_navigationArrows_verticalAlignment from './layoutParams_navigationArrows_verticalAlignment';
 import layoutParams_navigationArrows_position from './layoutParams_navigationArrows_position';
+import layoutParams_navigationArrows_type from './layoutParams_navigationArrows_type';
 
 import layoutParams_info_layout from './layoutParams_info_layout';
 import layoutParams_info_sizeUnits from './layoutParams_info_sizeUnits';
@@ -177,6 +178,7 @@ export default {
   layoutParams_thumbnails_alignment,
   layoutParams_navigationArrows_verticalAlignment,
   layoutParams_navigationArrows_position,
+  layoutParams_navigationArrows_type,
   layoutParams_info_layout,
   layoutParams_info_sizeUnits,
   layoutParams_targetItemSize_unit,
