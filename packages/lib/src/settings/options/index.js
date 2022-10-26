@@ -527,6 +527,7 @@ export default {
   behaviourParams_gallery_vertical_loadMore_enable,
   behaviourParams_gallery_vertical_loadMore_amount,
   behaviourParams_gallery_vertical_loadMore_text,
+
   //NEW STYPEPARAMS METHOD
 };
 // TODO = add the options:
