@@ -19,7 +19,7 @@ import {
 import ScrollIndicator from './galleryScrollIndicator';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
-import { scrollAnimationHelper } from '../../helpers/ScrollAnimationHelper.js';
+import { scrollAnimationHelper } from '../../helpers/scrollAnimationsHelper.js';
 import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper';
 import findNeighborItem from '../../helpers/layoutUtils';
 import { isGalleryInViewport, Deferred } from './galleryHelpers';

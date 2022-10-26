@@ -1,7 +1,7 @@
 import { GALLERY_CONSTS } from "pro-gallery-lib";
 
 export const createScrollAnimations = ({
-  top, 
+  position, 
   createScrollSelectors,
   itemId,
   item,
@@ -63,18 +63,18 @@ export const createScrollAnimations = ({
   const d = animationDistanceInPx;
   const s = scrollAnimation;
 
-  let scrollSelectorsCss = "";
+  let scrollSelectorsCss = {};
   let animationBySuffix = {};
 
   const addScrollSelectors = ({ selectorSuffix, animationCss }, generalStyles = "") => {
-    scrollSelectorsCss += generalStyles + ` \n`;
+    // scrollSelectorsCss += generalStyles ? (generalStyles + ` \n`) : '';
     animationBySuffix[selectorSuffix] = [...(animationBySuffix[selectorSuffix] || []), animationCss];
   };
 
   const mergeSelectorsCss = () => {
     for (let [selectorSuffix, animationCss] of Object.entries(animationBySuffix)) {
-      scrollSelectorsCss += createScrollSelectors({
-        position: top, 
+      const selectorsCss = createScrollSelectors({
+        position, 
         fromPosition: 0,
         toPosition: d,
         selectorSuffix,
@@ -93,8 +93,11 @@ export const createScrollAnimations = ({
           return cssObject;
         },
       });
+      if (selectorsCss) {
+        scrollSelectorsCss[selectorsCss.selector] = selectorsCss.scrollCss;
+      }
     }
-    return scrollSelectorsCss;
+    return Object.keys(scrollSelectorsCss).length ? scrollSelectorsCss : null;
   };
 
   const valueInRange = (step, from, to, roundTo, ease = false) => {

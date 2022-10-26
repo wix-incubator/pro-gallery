@@ -55,6 +55,8 @@ class CssScrollHelper {
     return (
       `${this.isScrollingClassName("y", isScrollingVertically)} ` +
       `${this.isScrollingClassName("x", isScrollingHorizontally)} ` +
+      `${this.pgScrollClassName}-y ` +
+      `${this.pgScrollClassName}-x ` +
       `${this.pgScrollClassName}-y-${scrollTop} ` +
       `${this.pgScrollClassName}-x-${scrollLeft} ` +
       this.pgScrollSteps

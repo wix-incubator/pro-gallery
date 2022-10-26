@@ -41,9 +41,9 @@ class ScrollAnimationHelper {
     return `pgi${shortId}_${idx}`;
   }
 
-  buildScrollClassName(idx, val, itemId, axis) {
+  buildScrollClassName(itemId, axis) {
     const shortId = String(this.galleryId).replace(/[\W]+/g, "").slice(-4);
-    return `${this.pgScrollClassName}${shortId}-${axis}_${val}-${this.pgScrollSteps[idx] + Number(val)}`;
+    return `${this.pgScrollClassName}${shortId}-${axis}`;
   }
 
   isScrollingClassName(axis, isScrolling) {
@@ -77,6 +77,8 @@ class ScrollAnimationHelper {
       // fromPosition:  the distance from the bottom of the screen to start the animation
       // toPosition:  the distance from the bottom of the screen to end the animation
 
+      // debugger;
+
       const createAnimationCss = (step, isExit) => {
         const cssObject = animationCss(step, isExit);
         const res = Object.entries(cssObject)
@@ -87,8 +89,8 @@ class ScrollAnimationHelper {
       const iterations = Math.max(10, Math.round(animationDistanceInPx / 20));
       this.transitionDuration = 400;
 
-      const createAnimationStep = (fromPosition, toPosition, isExit) => {
-        if (toPosition < 0) return [];
+      const createAnimationStep = (position, fromPosition, toPosition, isExit) => {
+        if (position > toPosition || position < fromPosition) return null;
         fromPosition = Math.max(0, fromPosition);
         toPosition = Math.round(toPosition);
         fromPosition = Math.round(fromPosition);
@@ -96,19 +98,33 @@ class ScrollAnimationHelper {
 
         const step = (position - fromPosition) / (toPosition - fromPosition);
 
-
         return createAnimationCss(step, isExit);
       };
 
-      const createAnimationRange = (fromPosition, toPosition, isExit) => {
-        if (toPosition < 0 || toPosition <= fromPosition) {
-          return '';
+      const createSelectorsRange = (fromPosition, toPosition) => {
+        if (toPosition < 0) return [];
+        fromPosition = Math.max(0, fromPosition);
+        let scrollClasses = [];
+        toPosition = Math.round(toPosition);
+        fromPosition = Math.round(fromPosition);
+        const axis = isHorizontalScroll(options) ? "x" : "y";
+
+        while (fromPosition < toPosition) {
+          const largestDividerIdx = this.pgScrollSteps.findIndex(
+            (step) => fromPosition % step === 0 && fromPosition + step <= toPosition
+          ); //eslint-disable-line
+          scrollClasses.push(
+            (options.scrollAnimationReset ? `.${this.isScrollingClassName(axis, true)}` : "") +
+              `${selectorSuffix}`
+          );
+          fromPosition += this.pgScrollSteps[largestDividerIdx];
         }
-        return createAnimationStep(fromPosition, toPosition, isExit);
+        return scrollClasses;
       };
 
       const createScrollClasses = () => {
         const transitionCss = `transition: all ${this.transitionDuration}ms ease !important`;
+        const axis = isHorizontalScroll(options) ? "x" : "y";
 
         const animationRange = Math.round(toPosition - fromPosition);
 
@@ -131,18 +147,16 @@ class ScrollAnimationHelper {
         };
 
         //first batch: animation start value until the range start:
-        addScrollClass(`${transitionCss}; ${createAnimationStep(0, true)}`, [selectorSuffix]);
+        // addScrollClass(`${transitionCss}; ${createAnimationStep(0, true)}`, [selectorSuffix]);
 
-        if (direction === "IN") {
-          addScrollClasses(createAnimationRange(entryAnimationStart, entryAnimationEnd));
-        } else if (direction === "OUT") {
-          addScrollClasses(createAnimationRange(exitAnimationStart, exitAnimationEnd, true));
-        }
+        const scrollCss = createAnimationStep(position, entryAnimationStart, entryAnimationEnd, direction === "OUT");
+        const selector = `${selectorSuffix}`;
+        const fullCss = scrollCss && selector ? { scrollCss, selector } : null;
 
-        const fullCss = Object.entries(scrollClasses)
-          .map(([css, selectors]) => (selectors.length > 0 ? `${selectors.join(",\n")} \n{${css}}\n` : false))
-          .filter(Boolean)
-          .join("\n");
+        // Object.entries(scrollClasses)
+        //   .map(([css, selectors]) => (selectors.length > 0 ? `${selectors.join(",\n")} \n{${css}}\n` : false))
+        //   .filter(Boolean)
+        //   .join("\n");
 
         return fullCss;
       };
@@ -176,52 +190,57 @@ class ScrollAnimationHelper {
     //   direction: "OUT",
     // });
 
-    return (
-      createScrollAnimations({
-        createScrollSelectors: createEntryScrollSelectors,
-        position, 
-        itemId,
-        item,
-        options,
-        containerSize: getContainerSize(options, container),
-        scrollAnimation: options.scrollAnimation,
-        isHorizontalScroll: isHorizontalScroll(options),
-        animationDistanceInPx,
-      })
-      //  +
-      // " \n" +
-      // createScrollAnimations({
-      //   createScrollSelectors: createExitScrollSelectors,
-      //   itemId,
-      //   item,
-      //   options,
-      //   containerSize: getContainerSize(options, container),
-      //   scrollAnimation: options.exitScrollAnimation,
-      //   isHorizontalScroll: isHorizontalScroll(options),
-      //   animationDistanceInPx,
-      // })
-    );
+    const res = createScrollAnimations({
+      createScrollSelectors: createEntryScrollSelectors,
+      position,
+      itemId,
+      item,
+      options,
+      containerSize: getContainerSize(options, container),
+      scrollAnimation: options.scrollAnimation,
+      isHorizontalScroll: isHorizontalScroll(options),
+      animationDistanceInPx,
+    });
+
+    return res;
+    //  +
+    // " \n" +
+    // createScrollAnimations({
+    //   createScrollSelectors: createExitScrollSelectors,
+    //   itemId,
+    //   item,
+    //   options,
+    //   containerSize: getContainerSize(options, container),
+    //   scrollAnimation: options.exitScrollAnimation,
+    //   isHorizontalScroll: isHorizontalScroll(options),
+    //   animationDistanceInPx,
+    // })
   }
 
   calcScrollCssForItem({ position, item, container, options }) {
     const { idx } = item;
     let scrollCss = "";
-    scrollCss += this.createScrollAnimationsIfNeeded({
-      position, 
+    return this.createScrollAnimationsIfNeeded({
+      position,
       idx,
       item,
       container,
       options,
     });
-
-    this.scrollCss[idx] = scrollCss || this.scrollCss[idx];
-
-    return this.scrollCss[idx];
   }
 
-  calcScrollAnimation({top}) {
-    console.log('scrollAnimationHelper calcScrollAnimation', { top });
-    debugger;
+  setCss(cssObject) {
+    for (let item of cssObject) {
+      for (let [selector, css] of Object.entries(item)) {
+      debugger;
+      //TODO - SET THE STYLES ONE BT ONE LIKE THIS https://www.w3schools.com/jsref/prop_html_style.asp
+      document.querySelector(selector).style = css;
+    }
+    }
+  }
+
+  calcScrollAnimation({ top }) {
+    // console.log("scrollAnimationHelper calcScrollAnimation", { top });
     const { galleryId, items, container, options } = this;
     const { exitScrollAnimation, scrollAnimation } = options;
     if (!(items && items.length)) {
@@ -234,17 +253,23 @@ class ScrollAnimationHelper {
       return [];
     }
 
-    const res = items.map((item) => this.calcScrollCssForItem({ position: top, item, container, options }));
-    console.log('scrollAnimationHelper', {scrollAnimation: res})
+    const res = items
+      .map((item) => this.calcScrollCssForItem({ position: top, item, container, options }))
+      .filter(Boolean);
+    if (res.length) {
+      console.log("scrollAnimationHelper", res);
+      this.setCss(res);
+    }
+
     return res;
   }
 
   init({ galleryId, items, container, options }) {
     // console.log('scrollAnimationHelper init', { galleryId, items, container, options })
-      this.galleryId = galleryId;
-      this.items = items;
-      this.container = container;
-      this.options = options;
+    this.galleryId = galleryId;
+    this.items = items;
+    this.container = container;
+    this.options = options;
   }
 }
 
