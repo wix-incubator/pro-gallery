@@ -59,6 +59,7 @@ import {
 import { createOptions as jsonFixedOptions } from './designedPresetGallery';
 import { addMigratedOptions } from '../helpers/optionsConverter';
 import { flattenObject } from '../helpers/optionsUtils';
+import optionsMap from '../helpers/optionsMap';
 
 //#endregion Imports
 
@@ -92,7 +93,11 @@ const addPresetOptions = (options) => {
     }
   } else {
     // new layouts
-    switch (options.galleryLayout) {
+    const layoutIdx =
+      typeof options.galleryLayout === 'undefined'
+        ? options[optionsMap.layoutParams.structure.galleryLayout]
+        : options.galleryLayout; //NEW STYLEPARAMS METHOD
+    switch (layoutIdx) {
       case LAYOUTS.MASONRY:
         return masonryOptions(options);
       case LAYOUTS.GRID:
