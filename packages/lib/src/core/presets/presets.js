@@ -8,7 +8,7 @@ import {
 import {
   fixedOptions as newSPs_alternate,
   createOptions as newSPs_alternateOptions,
-} from './newSPS_alternateGallery';
+} from './newSPs_alternateGallery';
 import {
   fixedOptions as bricks,
   createOptions as bricksOptions,
