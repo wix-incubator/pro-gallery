@@ -26,7 +26,6 @@ import {
 import { SECTIONS, settingsManager } from '../../constants/settings';
 import {
   INPUT_TYPES,
-  flattenObject,
 } from 'pro-gallery-lib';
 import { Divider, Alert } from 'antd';
 import comments from './comments';

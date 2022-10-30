@@ -15,7 +15,7 @@ import {
   Button,
   Divider,
 } from 'antd';
-import {INPUT_TYPES, isInPreset, flatToNested, optionsMap} from 'pro-gallery-lib';
+import {INPUT_TYPES, isInPreset, optionsMap} from 'pro-gallery-lib';
 import ColorPicker from '../ColorPicker/ColorPicker';
 import { settingsManager } from '../../constants/settings';
 

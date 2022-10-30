@@ -8,7 +8,6 @@ import { addPresetOptions } from 'pro-gallery';
 import { SIDEBAR_WIDTH } from '../constants/consts';
 import {
   utils,
-  flatToNested,
 } from 'pro-gallery-lib';
 
 
@@ -29,7 +28,7 @@ export function useGalleryContext(
     let { items, options, container } = params;
 
     container = container || context.container || calcGalleryContainer();
-    const _options = options || context.options || flatToNested(getInitialOptions());
+    const _options = options || context.options || getInitialOptions();
     const url = `https://www.wix.com/_serverless/pro-gallery-blueprints-server/createBlueprint`;
 
     if (!items || !container || !_options) {
@@ -86,10 +85,9 @@ export function useGalleryContext(
   };
 
   const setPreset = (newPreset) => {
-    debugger;
     const newContext = {
       preset: newPreset,
-      options: flatToNested(getInitialOptions(newPreset)),
+      options: getInitialOptions(newPreset),
     };
 
     if (getGallerySettings().useBlueprints) {

@@ -2,8 +2,6 @@ import {
   getLayoutName,
   NEW_PRESETS,
   galleryOptions,
-  flattenObject,
-  flatToNested,
   optionsMap,
   flatV4DefaultOptions,
 } from 'pro-gallery-lib';
@@ -52,9 +50,9 @@ export const isValidOption = (option, value, options) => {
     return false;
   }
   options = { ...flatV4DefaultOptions, ...options };
-  const flatFixedPresetOptions = NEW_PRESETS['newSPs_' + getLayoutName(options[optionsMap.layoutParams.structure.galleryLayout])];
-  options = { ...options, ...flatFixedPresetOptions, }
-  if (option !== optionsMap.layoutParams.structure.galleryLayout && value === flatFixedPresetOptions[option]) {
+  const fixedPresetOptions = NEW_PRESETS['newSPs_' + getLayoutName(options[optionsMap.layoutParams.structure.galleryLayout])];
+  options = { ...options, ...fixedPresetOptions, }
+  if (option !== optionsMap.layoutParams.structure.galleryLayout && value === fixedPresetOptions[option]) {
 
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is as the flatFixedPresetStyles: ${value}`, flatFixedPresetStyles, getLayoutName(options.galleryLayout));
     return false;
@@ -64,7 +62,7 @@ export const isValidOption = (option, value, options) => {
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} has not galleryOptions`);
     return false;
   }
-  if (!galleryOptions[option].isRelevant(flatToNested(options))) {
+  if (!galleryOptions[option].isRelevant(options)) {
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is not relevant`, galleryOptions[option].isRelevant.toString(), options);
     return false;
   }
@@ -89,7 +87,7 @@ export const getOptionsFromUrl = (locationSearchString) => {
         : obj,
         {}
         );
-    return relevantOptions; //flatOptions
+    return relevantOptions; 
   } catch (e) {
     console.error('Cannot getOptionsFromUrl', e);
     return {};
@@ -97,12 +95,11 @@ export const getOptionsFromUrl = (locationSearchString) => {
 };
 
 export const setOptionsInUrl = (options) => {
-  const flatSP = flattenObject(options);
   // console.log(`[STYLE PARAMS - VALIDATION] setting options in the url`, options);
-  const urlParams = Object.entries(flatSP)
+  const urlParams = Object.entries(options)
     .reduce(
       (arr, [option, value]) =>
-        isValidOption(option, value, flatSP)
+        isValidOption(option, value, options)
           ? arr.concat(`${option}=${value}`)
           : arr,
       []
