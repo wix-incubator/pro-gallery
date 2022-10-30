@@ -86,6 +86,7 @@ export function useGalleryContext(
   };
 
   const setPreset = (newPreset) => {
+    debugger;
     const newContext = {
       preset: newPreset,
       options: flatToNested(getInitialOptions(newPreset)),
@@ -99,12 +100,12 @@ export function useGalleryContext(
   };
 
   const setOptions = (newProp, value) => {
-    // console.log(`[OPTIONS - VALIDATION] settings options in the context`, newProp, value, context.options);
-    const options = flatToNested({
+    // console.log(`[OPTIONS - VALIDATION] settings options in the context`, newProp, value, context.options?.layoutParams_crop_enable);
+    const options = {
       ...getInitialOptions(),
       ...getOptionsFromUrl(window.location.search),
       [newProp]: value,
-    })
+    };
     console.log('setting new context and requesting BP', options.layoutParams)
     const newContext = {
       options,
@@ -188,7 +189,7 @@ export function useGalleryContext(
     preset: context.preset,
     setPreset,
     options: addPresetOptions(
-      context.options || flatToNested(getInitialOptions())
+      context.options || getInitialOptions()
     ), //TODO - this is a double even for the normal flow - maybe used for the sidebar somehow?
     setOptions,
     items: context.items,

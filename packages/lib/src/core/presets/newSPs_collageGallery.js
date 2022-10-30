@@ -42,9 +42,9 @@ export const fixedOptions = fixToCollage({});
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToCollage(res);
-  res[optionsMap.layoutParams.targetItemSize.value] = calcTargetItemSize(
+  res.targetItemSize = calcTargetItemSize(
     res,
-    Math.round(res[optionsMap.layoutParams.targetItemSize.value] * 5 + 500)
+    Math.round(res.targetItemSize * 5 + 500)
   );
   return res;
 };

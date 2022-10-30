@@ -44,9 +44,9 @@ export const fixedOptions = fixToGrid({});
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToGrid(res);
-  res[optionsMap.layoutParams.targetItemSize.value] = calcTargetItemSize(
+  res.targetItemSize = calcTargetItemSize(
     res,
-    Math.round(res[optionsMap.layoutParams.targetItemSize.value] * 8.5 + 150)
+    Math.round(res.targetItemSize * 8.5 + 150)
   );
   res = processNumberOfImagesPerRow(res);
   res = processNumberOfImagesPerCol(res);

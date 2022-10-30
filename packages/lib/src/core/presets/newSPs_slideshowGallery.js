@@ -62,7 +62,7 @@ export const fixedOptions = fixToSlideshow({});
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToSlideshow(res);
-  res[optionsMap.layoutParams.targetItemSize.value] = calcTargetItemSize(res);
+  res.targetItemSize = calcTargetItemSize(res);
   res = removeBordersIfNeeded(res);
   return res;
 };

@@ -63,6 +63,6 @@ export const fixedOptions = fixToAlternate({});
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToAlternate(res);
-  res[optionsMap.layoutParams.targetItemSize.value] = calcTargetItemSize(res);
+  res.targetItemSize = calcTargetItemSize(res);
   return res;
 };

@@ -42,6 +42,6 @@ export const fixedOptions = fixToColumn({});
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToColumn(res);
-  res[optionsMap.layoutParams.targetItemSize.value] = calcTargetItemSize(res);
+  res.targetItemSize = calcTargetItemSize(res);
   return res;
 };

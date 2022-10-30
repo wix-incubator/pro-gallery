@@ -35,6 +35,6 @@ export const fixedOptions = fixToPanorama({});
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToPanorama(res);
-  res[optionsMap.layoutParams.targetItemSize.value] = calcTargetItemSize(res);
+  res.targetItemSize = calcTargetItemSize(res);
   return res;
 };

@@ -49,7 +49,7 @@ export const fixedOptions = fixToThumbnail({});
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToThumbnail(res);
-  res[optionsMap.layoutParams.targetItemSize.value] = calcTargetItemSize(res);
+  res.targetItemSize = calcTargetItemSize(res);
   res = removeBordersIfNeeded(res);
   return res;
 };
