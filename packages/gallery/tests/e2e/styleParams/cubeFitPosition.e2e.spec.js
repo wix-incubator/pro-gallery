@@ -1,14 +1,16 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
 const gridFitWithPosition = (position) => {
   return {
-    galleryLayout: GALLERY_CONSTS.layout.GRID,
-    cubeType: GALLERY_CONSTS.cubeType.FIT,
-    cubeFitPosition: position,
+    [optionsMap.layoutParams.structure.galleryLayout]:
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+    [optionsMap.layoutParams.crop.method]:
+      GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
+    [optionsMap.layoutParams.crop.alignment]: position,
   };
 };
 
@@ -20,7 +22,8 @@ const expectGalleryToMatchSnapshot = async (driver) => {
 
 describe('cubeFitPosition - e2e', () => {
   let driver;
-  const { MIDDLE, TOP, BOTTOM, LEFT, RIGHT } = GALLERY_CONSTS.cubeFitPosition;
+  const { MIDDLE, TOP, BOTTOM, LEFT, RIGHT } =
+    GALLERY_CONSTS[optionsMap.layoutParams.crop.alignment];
   beforeAll(async () => {
     driver = new GalleryDriver();
     await driver.openPage();

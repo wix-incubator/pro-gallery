@@ -102,6 +102,7 @@ import behaviourParams_gallery_horizontal_slideTransition from './behaviourParam
 import behaviourParams_gallery_horizontal_autoSlide_behaviour from './behaviourParams_gallery_horizontal_autoSlide_behaviour';
 import behaviourParams_gallery_horizontal_slideshowInfo_buttonsAlignment from './behaviourParams_gallery_horizontal_slideshowInfo_buttonsAlignment';
 import stylingParams_itemResolutionMode from './stylingParams_itemResolutionMode';
+import layoutParams_thumbnails_position from './layoutParams_thumbnails_position';
 
 //NEW STYPEPARAMS METHOD
 
@@ -207,5 +208,6 @@ export default {
   behaviourParams_gallery_horizontal_autoSlide_behaviour,
   behaviourParams_gallery_horizontal_slideshowInfo_buttonsAlignment,
   stylingParams_itemResolutionMode,
+  layoutParams_thumbnails_position,
   //NEW STYPEPARAMS METHOD
 };

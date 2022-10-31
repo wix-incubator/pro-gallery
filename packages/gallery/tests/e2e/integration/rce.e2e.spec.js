@@ -1,6 +1,6 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -17,34 +17,36 @@ describe('RCE Integration test', () => {
   });
   it('should match screenshot with default RCE styles', async () => {
     await driver.navigate({
-      layoutParams: {
-        gallerySpacing: 0,
-        cropRatio: 1,
-      },
-      galleryLayout: 2,
-      gallerySizeType: 'px',
-      gallerySizePx: 300,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      galleryThumbnailsAlignment: 'bottom',
-      isVertical: false,
-      imageMargin: 20,
-      thumbnailSpacings: 0,
-      cubeType: 'fill',
-      enableInfiniteScroll: true,
-      titlePlacement: 'SHOW_ON_HOVER',
-      allowHover: false,
-      itemClick: 'link',
-      fullscreen: false,
-      showArrows: false,
-      gridStyle: 1,
-      loveButton: false,
-      allowSocial: false,
-      allowDownload: false,
-      mobileSwipeAnimation: 'NO_EFFECT',
-      thumbnailSize: 120,
-      gotStyleParams: true,
-      showVideoPlayButton: true,
-      videoPlay: 'onClick',
+      [optionsMap.layoutParams.structure.gallerySpacing]: 0,
+      [optionsMap.layoutParams.crop.ratios]: [1],
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.layoutParams.targetItemSize.units]: 'px',
+      [optionsMap.layoutParams.targetItemSize.value]: 300,
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .VERTICAL,
+      [optionsMap.layoutParams.thumbnails.alignment]: 'bottom',
+      [optionsMap.layoutParams.structure.layoutOrientation]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
+          .HORIZONTAL,
+      [optionsMap.layoutParams.structure.itemSpacing]: 20,
+      [optionsMap.layoutParams.thumbnails.spacing]: 0,
+      [optionsMap.layoutParams.crop.method]:
+        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
+      [optionsMap.behaviourParams.gallery.vertical.loadMore.enable]: false,
+      [optionsMap.layoutParams.info.placement]:
+        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
+      [optionsMap.behaviourParams.item.clickAction]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
+      [optionsMap.layoutParams.navigationArrows.enable]: false,
+      [optionsMap.layoutParams.structure.responsiveMode]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
+          .SET_ITEMS_PER_ROW,
+      [optionsMap.layoutParams.thumbnails.size]: 120,
+      [optionsMap.behaviourParams.item.video.enablePlayButton]: true,
+      [optionsMap.behaviourParams.item.video.playTrigger]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].CLICK,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(400);
@@ -53,32 +55,32 @@ describe('RCE Integration test', () => {
   });
   // it('should match screenshot with mibile and title styles for RCE', async () => {
   //   const styleParams = {
-  //     galleryLayout: 2,
-  //     gallerySizeType: 'px',
-  //     gallerySizePx: 300,
+  //     [optionsMap.layoutParams.structure.galleryLayout]: GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+  //     [optionsMap.layoutParams.targetItemSize.units]: 'px',
+  //     [optionsMap.layoutParams.targetItemSize.value]: 300,
   //     galleryMargin: 0,
-  //     scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+  //     [optionsMap.layoutParams.structure.scrollDirection]: GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
   //     cropRatio: 1,
-  //     galleryThumbnailsAlignment: 'bottom',
-  //     isVertical: false,
-  //     imageMargin: 20,
-  //     thumbnailSpacings: 0,
-  //     cubeType: 'fill',
-  //     enableInfiniteScroll: true,
-  //     titlePlacement: 'SHOW_ON_HOVER',
+  //     [optionsMap.layoutParams.thumbnails.alignment]: 'bottom',
+  //     [optionsMap.layoutParams.structure.layoutOrientation] : GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].HORIZONTAL,
+  //     [optionsMap.layoutParams.structure.itemSpacing]: 20,
+  //     [optionsMap.layoutParams.thumbnails.spacing]: 0,
+  //     [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
+  //     [optionsMap.behaviourParams.gallery.vertical.loadMore.enable]: false,
+  //     [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY
   //     allowHover: false,
-  //     itemClick: 'link',
+  //     [optionsMap.behaviourParams.item.clickAction]: GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
   //     fullscreen: false,
-  //     showArrows: false,
-  //     gridStyle: 1,
+  //     [optionsMap.layoutParams.navigationArrows.enable]: false,
+  //     [optionsMap.layoutParams.structure.responsiveMode]: GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW,
   //     loveButton: false,
   //     allowSocial: false,
   //     allowDownload: false,
   //     mobileSwipeAnimation: 'NO_EFFECT',
-  //     thumbnailSize: 120,
+  //     [optionsMap.layoutParams.thumbnails.size]: 120,
   //     gotStyleParams: true,
-  //     showVideoPlayButton: true,
-  //     videoPlay: 'onClick',
+  //     [optionsMap.behaviourParams.item.video.enablePlayButton]: true,
+  //     [optionsMap.behaviourParams.item.video.playTrigger]: GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].CLICK,
   //   };
   //   await driver.navigate({
   //     ...styleParams,
@@ -87,10 +89,10 @@ describe('RCE Integration test', () => {
   //     allowTitle: true,
   //     galleryTextAlign: 'center',
   //     textsHorizontalPadding: 0,
-  //     imageInfoType: 'NO_BACKGROUND',
-  //     hoveringBehaviour: 'APPEARS',
+  //     [optionsMap.layoutParams.info.layout]: 'NO_BACKGROUND',
+  //     [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]: 'APPEARS',
   //     textsVerticalPadding: 0,
-  //     titlePlacement: 'SHOW_BELOW',
+  //     [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
   //     calculateTextBoxHeightMode: 'AUTOMATIC',
   //   });
   //   await driver.waitFor.hookToBeVisible('item-container');
