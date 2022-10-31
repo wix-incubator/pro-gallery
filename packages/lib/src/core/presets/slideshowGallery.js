@@ -1,6 +1,8 @@
 import LAYOUTS from '../../common/constants/layout';
 import INFO_BEHAVIOUR_ON_HOVER from '../../common/constants/infoBehaviourOnHover';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
+import SCROLL_ANIMATION from '../../common/constants/scrollAnimation';
+
 import {
   calcTargetItemSize,
   removeBordersIfNeeded,
@@ -11,6 +13,7 @@ import disableAnimationsForSlideshowLayouts from './disableAnimationsForSlidesho
 const fixToSlideshow = (options) => {
   let presetOptions = { ...options };
   presetOptions.galleryLayout = LAYOUTS.SLIDESHOW;
+  presetOptions.scrollAnimation = SCROLL_ANIMATION.NO_EFFECT;
   presetOptions.enableInfiniteScroll = true;
   presetOptions = assignByString(
     presetOptions,

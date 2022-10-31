@@ -1,6 +1,7 @@
 import LAYOUTS from '../../common/constants/layout';
 import PLACEMENTS from '../../common/constants/placements';
 import SCROLL_DIRECTION from '../../common/constants/scrollDirection';
+import SCROLL_ANIMATION from '../../common/constants/scrollAnimation';
 import {
   calcTargetItemSize,
   removeBordersIfNeeded,
@@ -10,6 +11,7 @@ import { assignByString } from '../helpers/optionsUtils';
 const fixToThumbnail = (options) => {
   let presetOptions = { ...options };
   presetOptions.galleryLayout = LAYOUTS.THUMBNAIL;
+  presetOptions.scrollAnimation = SCROLL_ANIMATION.NO_EFFECT;
   presetOptions.enableInfiniteScroll = true;
   presetOptions = assignByString(
     presetOptions,
