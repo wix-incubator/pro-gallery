@@ -1,5 +1,5 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
@@ -18,8 +18,9 @@ describe('chooseBestGroup - e2e', () => {
 
   it('should choose best group', async () => {
     await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.COLLAGE,
-      chooseBestGroup: true,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].COLLAGE,
+      [optionsMap.layoutParams.groups.groupByOrientation]: true,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -28,8 +29,9 @@ describe('chooseBestGroup - e2e', () => {
   });
   it('should not choose best group', async () => {
     await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.COLLAGE,
-      chooseBestGroup: false,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].COLLAGE,
+      [optionsMap.layoutParams.groups.groupByOrientation]: false,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);

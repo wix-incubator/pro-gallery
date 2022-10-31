@@ -1,5 +1,5 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 describe('scrollAnimations - e2e', () => {
   let driver;
@@ -13,12 +13,19 @@ describe('scrollAnimations - e2e', () => {
     await driver.closePage();
   });
 
-  Object.keys(GALLERY_CONSTS.scrollAnimations).forEach((animationKey) => {
+  Object.keys(
+    GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation]
+  ).forEach((animationKey) => {
     if (animationKey !== 'NO_EFFECT') {
       it(`should create ${animationKey} animation style tag for each item`, async () => {
         await driver.navigate({
-          galleryLayout: GALLERY_CONSTS.layout.GRID,
-          scrollAnimation: GALLERY_CONSTS.scrollAnimations[animationKey],
+          [optionsMap.layoutParams.structure.galleryLayout]:
+            GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
+              .GRID,
+          [optionsMap.behaviourParams.gallery.scrollAnimation]:
+            GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation][
+              animationKey
+            ],
         });
         await driver.waitFor.hookToBeVisible('item-container');
         const numberOfAnimationStyleTags = await driver.page.evaluate(() => {
@@ -38,8 +45,11 @@ describe('scrollAnimations - e2e', () => {
 
   it(`should not create animation style tag when scrollAnimation is NO_EFFECT`, async () => {
     await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.gallery.scrollAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation]
+          .NO_EFFECT,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const numberOfAnimationStyleTags = await driver.page.evaluate(() => {

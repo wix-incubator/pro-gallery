@@ -1,5 +1,5 @@
 import GalleryDriver from '../../drivers/pptrDriver';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
@@ -23,17 +23,23 @@ describe('behaviourParams_item_secondaryMedia_trigger - e2e', () => {
   });
   it('should not reveal second media on hover', async () => {
     const page = await navigateAndHoverTakeSnapshot(driver, {
-      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      behaviourParams_item_secondaryMedia_trigger:
-        GALLERY_CONSTS.secondaryMediaTrigger.OFF,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
+          .SLIDESHOW,
+      [optionsMap.behaviourParams.item.secondaryMedia.trigger]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger]
+          .OFF,
     });
     expect(page).toMatchImageSnapshot();
   });
   it('should reveal second media on hover', async () => {
     const page = await navigateAndHoverTakeSnapshot(driver, {
-      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-      behaviourParams_item_secondaryMedia_trigger:
-        GALLERY_CONSTS.secondaryMediaTrigger.HOVER,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
+          .SLIDESHOW,
+      [optionsMap.behaviourParams.item.secondaryMedia.trigger]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger]
+          .HOVER,
     });
     expect(page).toMatchImageSnapshot();
   });

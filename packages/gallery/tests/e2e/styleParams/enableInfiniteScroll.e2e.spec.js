@@ -1,5 +1,6 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -16,8 +17,9 @@ describe('enableInfiniteScroll - e2e', () => {
   });
   it('should have "Load More" button when "enableInfiniteScroll" is "false"', async () => {
     await driver.navigate({
-      galleryLayout: 2,
-      enableInfiniteScroll: false,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.gallery.vertical.loadMore.enable]: true,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -25,8 +27,9 @@ describe('enableInfiniteScroll - e2e', () => {
   });
   it('should not have "Load More" button when "enableInfiniteScroll" is "true"', async () => {
     await driver.navigate({
-      galleryLayout: 2,
-      enableInfiniteScroll: true,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.gallery.vertical.loadMore.enable]: false,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');

@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
 
@@ -17,11 +17,13 @@ describe('textBoxWidth - e2e', () => {
   });
   it('should set textBoxWidth(manual)', async () => {
     await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      calculateTextBoxWidthMode:
-        GALLERY_CONSTS.textBoxWidthCalculationOptions.MANUAL,
-      textBoxWidth: 150,
-      titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.layoutParams.info.sizeUnits]:
+        GALLERY_CONSTS[optionsMap.layoutParams.info.sizeUnits].MANUAL,
+      [optionsMap.layoutParams.info.width]: 150,
+      [optionsMap.layoutParams.info.placement]:
+        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].RIGHT,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -29,11 +31,13 @@ describe('textBoxWidth - e2e', () => {
   });
   it('should set textBoxWidth(percent)', async () => {
     await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      calculateTextBoxWidthMode:
-        GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT,
-      textBoxWidthPercent: 30,
-      titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.layoutParams.info.sizeUnits]:
+        GALLERY_CONSTS[optionsMap.layoutParams.info.sizeUnits].PERCENT,
+      [optionsMap.layoutParams.info.width]: 30,
+      [optionsMap.layoutParams.info.placement]:
+        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].RIGHT,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');

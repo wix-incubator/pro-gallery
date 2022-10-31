@@ -1,6 +1,6 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
-// import { GALLERY_CONSTS } from 'pro-gallery-lib';
+// import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -17,11 +17,10 @@ describe('arrowsSize - e2e', () => {
   });
   it('should set arrowsSize', async () => {
     // await driver.navigate({
-    //   galleryLayout: GALLERY_CONSTS.layout.SLIDER,
-    //   arrowsSize: 150,
-    //   layoutParams: {
-    //     cropRatio: 16 / 9,
-    //   },
+    //   [optionsMap.layoutParams.structure.galleryLayout]: GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDER,
+    //   [optionsMap.layoutParams.navigationArrows.size]: 150,
+    //   [optionsMap.layoutParams.crop.ratios] : [16 / 9],
+    //
     // });
     // await driver.waitFor.hookToBeVisible('item-container');
     // const page = await driver.grab.elemScreenshot('.pro-gallery');
