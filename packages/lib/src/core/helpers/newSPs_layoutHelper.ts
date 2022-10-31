@@ -14,6 +14,7 @@ import { default as arrowsPosition } from '../../settings/options/layoutParams_n
 import optionsMap from './optionsMap';
 
 export const calcTargetItemSize = (options, smartValue) => { //NEW STYPEPARAMS METHOD done.
+  console.log('>>>>>>>', options[optionsMap.layoutParams.targetItemSize.value],options[optionsMap.layoutParams.targetItemSize.unit] )
   if (
     options[optionsMap.layoutParams.targetItemSize.unit] === GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].PIXELS &&
     options[optionsMap.layoutParams.targetItemSize.value] > 0
@@ -28,6 +29,8 @@ export const calcTargetItemSize = (options, smartValue) => { //NEW STYPEPARAMS M
     );
   } else if(smartValue > 0) {
     return smartValue;
+  } else {
+    return options[optionsMap.layoutParams.targetItemSize.value];
   }
 };
 
