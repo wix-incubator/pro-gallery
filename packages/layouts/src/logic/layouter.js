@@ -5,6 +5,7 @@ import { Group } from './group.js';
 import { Strip } from './strip.js';
 import { Column } from './column.js';
 import layoutsStore from './layoutsStore.js';
+import { optionsMap } from 'pro-gallery-lib';
 
 export default class Layouter {
   constructor(layoutParams) {
@@ -58,6 +59,8 @@ export default class Layouter {
     if (this.styleParams.isVertical) {
       if (this.styleParams.fixedColumns > 0) {
         numOfCols = this.styleParams.fixedColumns;
+      } else if (this.styleParams[optionsMap.layoutParams.structure.numberOfColumns] > 0) { //NEW STYPEPARAMS METHOD need to check if the proccessNumberOfImagePerRow can be extended to all layouts
+        numOfCols = this.styleParams[optionsMap.layoutParams.structure.numberOfColumns];
       } else {
         // find the number of columns that makes each column width the closet to the targetItemSize
         const numOfColsFloat = galleryWidth / targetItemSize;

@@ -143,9 +143,13 @@ const defaultV4Options = {
           ].NO_EFFECT,
         magnificationValue: 2,
       },
+      secondaryMedia: {
+        trigger: GALLERY_CONSTS.secondaryMediaTrigger.OFF,
+        behaviour: GALLERY_CONSTS.secondaryMediaBehaviour.APPEARS,
+      },
     },
     gallery: {
-      blockContextMenu: true,
+      blockContextMenu: true, //is this actually a default??
       layoutDirection:
         GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
           .LEFT_TO_RIGHT,

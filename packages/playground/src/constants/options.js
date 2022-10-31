@@ -4,6 +4,8 @@ import {
   galleryOptions,
   optionsMap,
   flatV4DefaultOptions,
+  extendNestedOptionsToIncludeOldAndNew,
+  addPresetOptions,
 } from 'pro-gallery-lib';
 
 // Object.entries(galleryOptions).forEach( //NEW STYPEPARAMS METHOD - after the old are gone we can use this again
@@ -20,8 +22,18 @@ export const getInitialOptions = () => {
     ...savedOptions,
   };
 };
-
-const formatValue = (val) => {
+const arrayKeys = [
+  optionsMap.layoutParams.crop.ratios,
+  optionsMap.layoutParams.groups.allowedGroupTypes,
+  optionsMap.layoutParams.groups.repeatingGroupTypes,
+]
+const formatValue = (val, option) => {
+  if(typeof val === 'object') {
+    return val;
+  }
+  if(arrayKeys.includes(option)){
+    return val.split(',')
+  }
   if (String(val) === 'true') {
     return true;
   } else if (String(val) === 'false') {
@@ -77,13 +89,14 @@ export const getOptionsFromUrl = (locationSearchString) => {
     .map((option) => option.split('='))
     .reduce(
       (obj, [option, value]) =>
-      Object.assign(obj, { [option]: formatValue(value) }),
+      Object.assign(obj, { [option]: formatValue(value, option) }),
       {}
-      );
+      );      
+      options = extendNestedOptionsToIncludeOldAndNew(addPresetOptions({newSPs:true, ...options}))
       const relevantOptions = Object.entries(options).reduce(
         (obj, [option, value]) =>
         isValidOption(option, value, options)
-        ? Object.assign(obj, { [option]: formatValue(value) })
+        ? Object.assign(obj, { [option]: formatValue(value, option) })
         : obj,
         {}
         );

@@ -21,12 +21,14 @@ describe('RCE Integration test', () => {
       [optionsMap.layoutParams.crop.ratios]: [1],
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.targetItemSize.unit]: 'px',
+      [optionsMap.layoutParams.targetItemSize.unit]:
+        GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].PIXEL,
       [optionsMap.layoutParams.targetItemSize.value]: 300,
       [optionsMap.layoutParams.structure.scrollDirection]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
           .VERTICAL,
-      [optionsMap.layoutParams.thumbnails.alignment]: 'bottom',
+      [optionsMap.layoutParams.thumbnails.alignment]:
+        GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM,
       [optionsMap.layoutParams.structure.layoutOrientation]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
           .HORIZONTAL,

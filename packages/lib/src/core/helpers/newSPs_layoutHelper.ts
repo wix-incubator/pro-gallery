@@ -37,7 +37,7 @@ export const calcTargetItemSize = (options, smartValue) => { //NEW STYPEPARAMS M
 export const processNumberOfImagesPerRow = (options) => { //NEW STYPEPARAMS METHOD done
   //This will be used in the masonry and grid presets
   let res = {...options}
-  res[optionsMap.layoutParams.structure.numberOfColumns] = 0;
+  res.fixedColumns = 0;
   if (
     res[optionsMap.layoutParams.structure.scrollDirection] ===
     GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL || //relevant for grid, in Masonry its fixed to !oneRow
@@ -46,7 +46,7 @@ export const processNumberOfImagesPerRow = (options) => { //NEW STYPEPARAMS METH
       optionsMap.layoutParams.structure.layoutOrientation
     ].VERTICAL //relevant for masonry, in grid its fixed to vertical.
   ) {
-    res[optionsMap.layoutParams.structure.numberOfColumns] =
+    res.fixedColumns = // a layouter thing
       options[optionsMap.layoutParams.structure.responsiveMode] === GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW
         ? res[optionsMap.layoutParams.structure.numberOfColumns]
         : 0;
