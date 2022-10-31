@@ -21,7 +21,7 @@ describe('RCE Integration test', () => {
       [optionsMap.layoutParams.crop.ratios]: [1],
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.targetItemSize.units]: 'px',
+      [optionsMap.layoutParams.targetItemSize.unit]: 'px',
       [optionsMap.layoutParams.targetItemSize.value]: 300,
       [optionsMap.layoutParams.structure.scrollDirection]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
