@@ -37,7 +37,9 @@ export default class PlaygroundsBlueprintsApi {
   }
 
   onBlueprintReady({blueprint, blueprintChanged}) {
-    this.onBlueprintReadyCallback(blueprint);
+    if(blueprintChanged) {
+      this.onBlueprintReadyCallback(blueprint);
+    }
   }
 
   isUsingCustomInfoElements(){

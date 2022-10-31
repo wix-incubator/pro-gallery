@@ -77,9 +77,7 @@ export function useGalleryContext(
       JSON.stringify(newContext.container) !==
       JSON.stringify({ ...context.container })
     ) {
-      if (getGallerySettings().useBlueprints) {
-        requestNewBlueprint(newContext);
-      }
+      requestNewBlueprint(newContext);
 
       setContext(newContext);
     }
@@ -91,9 +89,8 @@ export function useGalleryContext(
       options: flatToNested(getInitialOptions(newPreset)),
     };
 
-    if (getGallerySettings().useBlueprints) {
       requestNewBlueprint(newContext);
-    }
+    
 
     setContext(newContext);
   };
@@ -109,9 +106,8 @@ export function useGalleryContext(
     const newContext = {
       options,
     };
-    if (getGallerySettings().useBlueprints) {
       requestNewBlueprint(newContext);
-    }
+    
     // console.log(`[OPTIONS - VALIDATION] settings options in the context`, newContext.options);
 
     setContext(newContext);
@@ -119,9 +115,8 @@ export function useGalleryContext(
 
   const setItems = (items) => {
     const newContext = { items };
-    if (getGallerySettings().useBlueprints) {
       requestNewBlueprint(newContext, true);
-    }
+    
 
     setContext(newContext);
   };

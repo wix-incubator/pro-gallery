@@ -6,7 +6,7 @@ import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../.
 import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { createMediaUrl } from '../../utils/itemResizer';
 import {setOptionsInUrl} from '../../constants/options'
-import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
+import { GALLERY_CONSTS, ProGalleryRenderer } from 'pro-gallery';
 import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
 import { BlueprintsManager } from 'pro-gallery-blueprints'
@@ -78,11 +78,7 @@ export function App() {
         }
         break;
       case GALLERY_EVENTS.NEED_MORE_ITEMS:
-        if(gallerySettings.useBlueprints){
           blueprintsManager.needMoreItems(eventData);
-        } else {
-          addItems();
-        }
         break;
       case GALLERY_EVENTS.ITEM_ACTION_TRIGGERED:
         console.log({eventName, eventData, event})
@@ -106,6 +102,9 @@ export function App() {
   }
 
   const createItems = () => {
+    if (isTestingEnvironment(window.location.search)) {
+      return monochromeImages.slice(0,20);
+    }
     const batchSize = numberOfItems || ITEMS_BATCH_SIZE;
     switch (mediaTypes) {
       case 'images':
@@ -227,7 +226,7 @@ export function App() {
   }
 
   const canRender = ()=> {
-    if (!gallerySettings.useBlueprints || blueprint) {
+    if (blueprint) {
       return true;
     } else {
       return false;
@@ -245,20 +244,16 @@ export function App() {
     setOptionsInUrl(options);
   }
 
-  const blueprintProps = gallerySettings.useBlueprints ? getOrInitBlueprint() :
-  {
-    items: getItems(),
-    options,
-    container: getContainer()
-  };
+  const blueprintProps = getOrInitBlueprint();
+
 
   // console.log('Rendering App: ', {options, items, dimensions, showSide, blueprint, blueprintProps})
   const getKeySettings = () => {
-    const { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, navPanelType, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand} = gallerySettings;
-    return { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, navPanelType, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
+    const { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, navPanelType, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand} = gallerySettings;
+    return { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, navPanelType, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
   }
 
-  let GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProGalleryRenderer : ProGallery);
+  let GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : ProGalleryRenderer;
 
   // const shouldRenderLeanGallery = isEligibleForLeanGallery({
   //   items: getItems(),
