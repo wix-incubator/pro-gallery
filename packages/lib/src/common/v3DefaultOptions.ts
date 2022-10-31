@@ -14,6 +14,14 @@ const v3DefaultOptions = {
       },
     },
   },
+  behaviourParams: {
+    item: {
+      secondaryMedia: {
+        behaviour: 'APPEARS',
+        trigger: 'OFF',
+      },
+    },
+  },
   galleryMargin: 0,
   cubeRatio: 1,
   rotatingGroupTypes: '',
