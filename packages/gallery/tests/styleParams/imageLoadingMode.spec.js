@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import sinon from 'sinon';
@@ -8,7 +8,7 @@ import ItemView from '../../src/components/item/itemView';
 describe('options - imageLoadingMode', () => {
   let driver;
 
-  function getSampleItemViewProps(imageLoadingMode, createUrlStub = () => {}) {
+  function getSampleItemViewProps(changeingOptions, createUrlStub = () => {}) {
     driver = new GalleryDriver();
     const sampleItem = testImages[0];
     const sampleItemViewProps = driver.props.itemView(sampleItem);
@@ -16,7 +16,7 @@ describe('options - imageLoadingMode', () => {
       gotFirstScrollEvent: true,
       options: {
         ...sampleItemViewProps.options,
-        imageLoadingMode,
+        ...changeingOptions,
       },
       createUrl: createUrlStub,
     });
@@ -30,7 +30,10 @@ describe('options - imageLoadingMode', () => {
   it('should preload blury image', async () => {
     const createUrlStub = sinon.stub();
     const props = getSampleItemViewProps(
-      GALLERY_CONSTS.loadingMode.BLUR,
+      {
+        [optionsMap.behaviourParams.item.content.loader]:
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader].BLUR,
+      },
       createUrlStub
     );
     await mountAndUpdate(props);
@@ -39,14 +42,21 @@ describe('options - imageLoadingMode', () => {
   it('should preload pixel image (MAIN_COLOR)', async () => {
     const createUrlStub = sinon.stub();
     const props = getSampleItemViewProps(
-      GALLERY_CONSTS.loadingMode.MAIN_COLOR,
+      {
+        [optionsMap.behaviourParams.item.content.loader]:
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader]
+            .MAIN_COLOR,
+      },
       createUrlStub
     );
     await mountAndUpdate(props);
     expect(createUrlStub.withArgs('pixel', 'img').called).to.be.true;
   });
   it('should preload color background (COLOR)', async () => {
-    const props = getSampleItemViewProps(GALLERY_CONSTS.loadingMode.COLOR);
+    const props = getSampleItemViewProps({
+      [optionsMap.behaviourParams.item.content.loader]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader].COLOR,
+    });
     await mountAndUpdate(props);
     const item = driver.find.selector('.load-with-color').length;
     expect(item).to.be.equal(1);

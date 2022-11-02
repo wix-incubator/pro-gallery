@@ -1,10 +1,13 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { mergeNestedObjects } from 'pro-gallery-lib';
+import {
+  mergeNestedObjects,
+  GALLERY_CONSTS,
+  optionsMap,
+} from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 import { getElementDimensions } from '../utils/utils';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 describe('options - imageMargin', () => {
   let driver;
@@ -21,9 +24,12 @@ describe('options - imageMargin', () => {
 
   it('should set use CSS property "margin" to create the spacing when gallery is horizontal', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: 7,
-      imageMargin: 10,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].COLUMN,
+      [optionsMap.layoutParams.structure.itemSpacing]: 10,
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -35,12 +41,18 @@ describe('options - imageMargin', () => {
   it('should use "top" and "left" properties to create the spacing', async () => {
     //in vertical layout the spacing will be set with the "top" and "left" properties and not with "margin"
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: 2,
-      imageMargin: 25,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      gallerySizeType: 'px',
-      gallerySizePx: 390,
-      isVertical: true,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.layoutParams.structure.itemSpacing]: 25,
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .VERTICAL,
+      [optionsMap.layoutParams.targetItemSize.unit]:
+        GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].PIXEL,
+      [optionsMap.layoutParams.targetItemSize.value]: 390,
+      [optionsMap.layoutParams.structure.layoutOrientation]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
+          .VERTICAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -51,7 +63,9 @@ describe('options - imageMargin', () => {
       const dims = getElementDimensions(item);
       if (dims.top === prevDims.top) {
         const spacing = dims.left - (prevDims.left + prevDims.width);
-        expect(spacing).to.eq(initialProps.options.imageMargin);
+        expect(spacing).to.eq(
+          initialProps.options[optionsMap.layoutParams.structure.itemSpacing]
+        );
       }
       prevDims = dims;
     }

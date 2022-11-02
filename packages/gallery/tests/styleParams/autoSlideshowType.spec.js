@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS, viewModeWrapper } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, viewModeWrapper, optionsMap } from 'pro-gallery-lib';
 import { expect } from 'chai';
 import SlideshowView from '../../src/components/gallery/proGallery/slideshowView';
 import GalleryDriver from '../drivers/reactDriver';
@@ -14,7 +14,9 @@ describe('options - autoSlideshowType', () => {
     driver = new GalleryDriver();
     initialProps = driver.props.galleryView();
     Object.assign(initialProps.options, {
-      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .HORIZONTAL,
     });
     clock = sinon.useFakeTimers();
   });
@@ -24,10 +26,13 @@ describe('options - autoSlideshowType', () => {
   });
   it('Should call "next" with the correct value when auto autoSlideshowType set to "INTERVAL"', () => {
     Object.assign(initialProps.options, {
-      isAutoSlideshow: true,
-      autoSlideshowInterval: 1,
-      autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
-      galleryLayout: 4,
+      [optionsMap.behaviourParams.gallery.horizontal.autoSlide.interval]: 1,
+      [optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour]:
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+        ].INTERVAL,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDER,
     });
     galleryViewProps = driver.props.galleryView(initialProps);
     const stub = sinon.stub(SlideshowView.prototype, 'next');
@@ -41,10 +46,13 @@ describe('options - autoSlideshowType', () => {
 
   it('Should call "next" with the correct value when auto autoSlideshowType set to "CONTINUOUS"', () => {
     Object.assign(initialProps.options, {
-      isAutoSlideshow: true,
-      autoSlideshowContinuousSpeed: 200,
-      autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.CONTINUOUS,
-      galleryLayout: 4,
+      [optionsMap.behaviourParams.gallery.horizontal.autoSlide.speed]: 200,
+      [optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour]:
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+        ].CONTINUOUS,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDER,
     });
     galleryViewProps = driver.props.galleryView(initialProps);
     const stub = sinon.stub(SlideshowView.prototype, 'next');

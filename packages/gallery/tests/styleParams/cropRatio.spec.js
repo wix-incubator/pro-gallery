@@ -1,6 +1,10 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { mergeNestedObjects } from 'pro-gallery-lib';
+import {
+  mergeNestedObjects,
+  GALLERY_CONSTS,
+  optionsMap,
+} from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 import { getElementDimensions } from '../utils/utils';
@@ -20,11 +24,10 @@ describe('options - cropRatio', () => {
 
   it('should set cube ratio of 1', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: -1,
-      cubeImages: true,
-      layoutParams: {
-        cropRatio: 1,
-      },
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
+      [optionsMap.layoutParams.crop.enable]: true,
+      [optionsMap.layoutParams.crop.ratios]: [1],
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -36,11 +39,10 @@ describe('options - cropRatio', () => {
   });
   it('should set cube ratio of 2', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: -1,
-      cubeImages: true,
-      layoutParams: {
-        cropRatio: 2,
-      },
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
+      [optionsMap.layoutParams.crop.enable]: true,
+      [optionsMap.layoutParams.crop.ratios]: [2],
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -52,11 +54,10 @@ describe('options - cropRatio', () => {
   });
   it('should not be able to set cube ratio when "cubeImages" is "false"', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: -1,
-      cubeImages: false,
-      layoutParams: {
-        cropRatio: 1,
-      },
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
+      [optionsMap.layoutParams.crop.enable]: false,
+      [optionsMap.layoutParams.crop.ratios]: [1],
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

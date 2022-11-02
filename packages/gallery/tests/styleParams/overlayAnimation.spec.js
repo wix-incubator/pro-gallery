@@ -1,7 +1,10 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { mergeNestedObjects } from 'pro-gallery-lib';
+import {
+  mergeNestedObjects,
+  GALLERY_CONSTS,
+  optionsMap,
+} from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -20,8 +23,11 @@ describe('options - overlayAnimation', () => {
 
   it('should have overlay animation class - "EXPAND"', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      overlayAnimation: GALLERY_CONSTS.overlayAnimations.EXPAND,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
+          .EXPAND,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -31,8 +37,11 @@ describe('options - overlayAnimation', () => {
   });
   it('should have overlay animation class - "FADE IN"', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      overlayAnimation: GALLERY_CONSTS.overlayAnimations.FADE_IN,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
+          .FADE_IN,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -42,8 +51,11 @@ describe('options - overlayAnimation', () => {
   });
   it('should have overlay animation class - "SLIDE UP"', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
+          .SLIDE_UP,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -53,8 +65,11 @@ describe('options - overlayAnimation', () => {
   });
   it('should have overlay animation class - "SLIDE RIGHT"', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_RIGHT,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
+          .SLIDE_RIGHT,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -64,8 +79,11 @@ describe('options - overlayAnimation', () => {
   });
   it('should have overlay animation class - "SLIDE DOWN"', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_DOWN,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
+          .SLIDE_DOWN,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -75,8 +93,11 @@ describe('options - overlayAnimation', () => {
   });
   it('should have overlay animation class - "SLIDE LEFT"', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_LEFT,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
+          .SLIDE_LEFT,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

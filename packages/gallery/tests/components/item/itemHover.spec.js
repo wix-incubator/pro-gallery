@@ -5,6 +5,7 @@ import sinon from 'sinon';
 import GalleryDriver from '../../drivers/reactDriver';
 import { testImages } from '../../drivers/mocks/images-mock';
 import ItemHover from '../../../src/components/item/itemHover';
+import { optionsMap } from 'pro-gallery-lib';
 
 use(spies);
 
@@ -44,8 +45,13 @@ describe('ItemHover', () => {
       renderCustomInfo: undefined,
     });
     Object.assign(sampleItemViewProps.options, {
-      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
-      overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
+      [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
+        ].APPEARS,
+      [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
+          .SLIDE_UP,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(0);
@@ -55,8 +61,13 @@ describe('ItemHover', () => {
       renderCustomInfo: undefined,
     });
     Object.assign(sampleItemViewProps.options, {
-      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
-      overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
+      [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
+        ].APPEARS,
+      [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
+          .SLIDE_UP,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(0);
@@ -66,8 +77,13 @@ describe('ItemHover', () => {
       renderCustomInfo: () => {},
     });
     Object.assign(sampleItemViewProps.options, {
-      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
-      overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
+      [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
+        ].APPEARS,
+      [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
+          .SLIDE_UP,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(0);
@@ -77,7 +93,10 @@ describe('ItemHover', () => {
       renderCustomInfo: () => {},
     });
     Object.assign(sampleItemViewProps.options, {
-      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.DISAPPEARS,
+      [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
+        ].DISAPPEARS,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(1);
@@ -87,7 +106,9 @@ describe('ItemHover', () => {
       renderCustomInfo: () => {},
     });
     Object.assign(sampleItemViewProps.options, {
-      overlayAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,
+      [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
+          .NO_EFFECT,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(1);
@@ -97,8 +118,13 @@ describe('ItemHover', () => {
       renderCustomInfo: () => {},
     });
     Object.assign(sampleItemViewProps.options, {
-      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
-      overlayAnimation: GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
+      [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
+        ].APPEARS,
+      [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
+          .SLIDE_UP,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(1);
