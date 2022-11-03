@@ -7,7 +7,7 @@ import {
   extendNestedOptionsToIncludeOldAndNew,
   addPresetOptions,
 } from 'pro-gallery-lib';
-
+import {optionsList} from './settings'
 // Object.entries(galleryOptions).forEach( //NEW STYPEPARAMS METHOD - after the old are gone we can use this again
 //   ([option, settings]) =>
 //     (flatV4DefaultOptions[option] = settings.default)
@@ -91,7 +91,7 @@ export const getOptionsFromUrl = (locationSearchString) => {
       (obj, [option, value]) =>
       Object.assign(obj, { [option]: formatValue(value, option) }),
       {}
-      );      
+      );
       options = extendNestedOptionsToIncludeOldAndNew(addPresetOptions({newSPs:true, ...options}))
       const relevantOptions = Object.entries(options).reduce(
         (obj, [option, value]) =>
@@ -109,8 +109,7 @@ export const getOptionsFromUrl = (locationSearchString) => {
 
 export const setOptionsInUrl = (options) => {
   // console.log(`[STYLE PARAMS - VALIDATION] setting options in the url`, options);
-  const urlParams = Object.entries(options)
-    .reduce(
+  const urlParams = Object.entries(options).filter(option => optionsList.includes(option[0])).reduce(
       (arr, [option, value]) =>
         isValidOption(option, value, options)
           ? arr.concat(`${option}=${value}`)
