@@ -404,7 +404,7 @@ class GalleryItem {
         1,
         1,
         {
-          quality: 5,
+          quality: 50,
         }
       );
     }
