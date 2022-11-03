@@ -13,6 +13,7 @@ const defaultV4Options = {
     },
     structure: {
       galleryLayout: -1,
+      galleryRatio: { value: 0, includeExternalInfo: false },
       scrollDirection:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
           .VERTICAL,
@@ -56,6 +57,7 @@ const defaultV4Options = {
       size: 120,
       spacing: 4,
       enable: false,
+      position: GALLERY_CONSTS.thumbnailsPosition.OUTSIDE_GALLERY,
       alignment:
         GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM,
     },
@@ -211,6 +213,8 @@ const defaultV4Options = {
     itemShadowOpacityAndColor: '',
     arrowsColor: '',
   },
+  //layouter API params
+  fixedColumns: 0, // determine the number of columns regardless of the screen size (use 0 to ignore)
 };
 
 export default defaultV4Options;
