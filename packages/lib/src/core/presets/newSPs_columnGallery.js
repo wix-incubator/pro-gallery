@@ -35,6 +35,10 @@ const fixToColumn = (options) => {
     GALLERY_CONSTS[
       optionsMap.behaviourParams.gallery.horizontal.slideAnimation
     ].SCROLL;
+
+  //layouter direct API
+  presetOptions.fixedColumns = 0;
+  //layouter direct API
   return presetOptions;
 };
 export const fixedOptions = fixToColumn({});

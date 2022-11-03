@@ -8,10 +8,13 @@ import {
   addPresetOptions,
 } from 'pro-gallery-lib';
 import {optionsList} from './settings'
-// Object.entries(galleryOptions).forEach( //NEW STYPEPARAMS METHOD - after the old are gone we can use this again
-//   ([option, settings]) =>
-//     (flatV4DefaultOptions[option] = settings.default)
-// );
+
+optionsList.forEach( 
+  (option) => {
+    if(galleryOptions[option]?.default !== undefined)
+    return flatV4DefaultOptions[option] = galleryOptions[option].default
+  }
+    );
 
 export const getInitialOptions = () => {
   const savedOptions = getOptionsFromUrl(window.location.search);
@@ -47,17 +50,14 @@ const formatValue = (val, option) => {
 
 export const isValidOption = (option, value, options) => {
   if (!option) {
-
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} is undefined`);
     return false;
   }
   if (typeof value === 'undefined') {
-
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is undefined`);
     return false;
   }
   if (value === flatV4DefaultOptions[option]) {
-
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is as the default: ${value}`);
     return false;
   }
@@ -65,8 +65,7 @@ export const isValidOption = (option, value, options) => {
   const fixedPresetOptions = NEW_PRESETS['newSPs_' + getLayoutName(options[optionsMap.layoutParams.structure.galleryLayout])];
   options = { ...options, ...fixedPresetOptions, }
   if (option !== optionsMap.layoutParams.structure.galleryLayout && value === fixedPresetOptions[option]) {
-
-    // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is as the flatFixedPresetStyles: ${value}`, flatFixedPresetStyles, getLayoutName(options.galleryLayout));
+    // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is as the fixedPresetOptions: ${value}`, fixedPresetOptions, getLayoutName(options.galleryLayout));
     return false;
   }
   if (!galleryOptions[option]) {

@@ -18,14 +18,22 @@ import {
   reverseBooleans,
 } from './migratorStore';
 
-function extendNestedOptionsToIncludeOldAndNew(nestedOptions) {
+function extendNestedOptionsToIncludeOldAndNew(
+  nestedOptions,
+  allowMigratingOldToNewInNewSPs = false
+) {
   let flatOptions = flattenObject(nestedOptions);
-  let populatedFlatOptions = addOldOptions(addMigratedOptions(flatOptions));
+  let populatedFlatOptions = addOldOptions(
+    addMigratedOptions(flatOptions, allowMigratingOldToNewInNewSPs)
+  );
   return { ...flatToNested(populatedFlatOptions), ...populatedFlatOptions };
 }
 
-function addMigratedOptions(flatOptions) {
-  if (flatOptions.newSPs) return flatOptions; // do not convert old to new. new is king
+function addMigratedOptions(
+  flatOptions,
+  allowMigratingOldToNewInNewSPs = false
+) {
+  if (flatOptions.newSPs && !allowMigratingOldToNewInNewSPs) return flatOptions; // do not convert old to new. new is king
   const flat_migrated = migrateOptions(flatOptions);
   let flat_combinedOptions = {
     ...trimUndefinedValues_flat(flat_migrated),
@@ -80,7 +88,6 @@ function migrateOptions(flatOptionsObject) {
   migratedOptions = changeNames(migratedOptions, nameChangedStylingParams);
   delete migratedOptions.enableLeanGallery;
   delete migratedOptions.fullscreen;
-  delete migratedOptions.magicLayoutSeed;
   return migratedOptions;
 }
 

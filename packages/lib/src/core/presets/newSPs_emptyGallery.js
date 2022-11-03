@@ -16,7 +16,7 @@ export const createOptions = (options) => {
   res = fixToEmpty(res);
   res.targetItemSize = calcTargetItemSize(
     res,
-    Math.round(res.targetItemSize * 9 + 100)
+    Math.round(res[optionsMap.layoutParams.targetItemSize.value] * 9 + 100)
   );
   return res;
 };

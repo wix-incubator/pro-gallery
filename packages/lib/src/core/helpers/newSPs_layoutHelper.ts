@@ -305,7 +305,9 @@ export const removeBordersIfNeeded = (options) => { //NEW STYPEPARAMS METHOD don
 
 function processLayouts(options, customExternalInfoRendererExists) {
   let processedOptions = {...options};
-  processedOptions = old_processLayouts(processedOptions, customExternalInfoRendererExists);
+  if(options.wasConvertedToOldOptions) {
+    processedOptions = old_processLayouts(processedOptions, customExternalInfoRendererExists);
+  }
   if (utils.isMobile()) {
     processedOptions = limitImageMargin(processedOptions);
   }

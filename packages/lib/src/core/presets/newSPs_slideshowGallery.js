@@ -55,6 +55,10 @@ const fixToSlideshow = (options) => {
 
   presetOptions[optionsMap.layoutParams.structure.scatter.manualScatter] = '';
   presetOptions[optionsMap.layoutParams.structure.itemSpacing] = 0;
+
+  //layouter direct API
+  presetOptions.fixedColumns = 1;
+  //layouter direct API
   return presetOptions;
 };
 export const fixedOptions = fixToSlideshow({});

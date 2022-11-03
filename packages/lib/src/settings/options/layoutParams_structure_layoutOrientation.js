@@ -17,5 +17,5 @@ export default {
   type: INPUT_TYPES.OPTIONS,
   default:
     GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-      .VERTICAL,
+      .HORIZONTAL,
 };
