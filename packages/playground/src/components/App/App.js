@@ -1,29 +1,18 @@
-import React, { useEffect, Suspense, useState } from "react";
-import { NavigationPanel } from "./PlaygroundNavigationPanel";
-import { useGalleryContext } from "../../hooks/useGalleryContext";
-import {
-  testMedia,
-  testItems,
-  testImages,
-  testVideos,
-  testTexts,
-  monochromeImages,
-} from "./images";
-import {
-  mixAndSlice,
-  isTestingEnvironment,
-  getTotalItemsCountFromUrl,
-} from "../../utils/utils";
-import { SIDEBAR_WIDTH, ITEMS_BATCH_SIZE } from "../../constants/consts";
-import { createMediaUrl } from "../../utils/itemResizer";
-import { setOptionsInUrl } from "../../constants/options";
-import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from "pro-gallery";
-import ExpandableProGallery from "./expandableGallery";
-import SideBarButton from "../SideBar/SideBarButton";
-import { BlueprintsManager } from "pro-gallery-blueprints";
-import BlueprintsApi from "./PlaygroundBlueprintsApi";
-import { utils } from "pro-gallery-lib";
-import { Resizable } from "re-resizable";
+import React, {useEffect, Suspense, useState} from 'react';
+import {NavigationPanel} from './PlaygroundNavigationPanel';
+import {useGalleryContext} from '../../hooks/useGalleryContext';
+import {testMedia, testItems, testImages, testVideos, testTexts, monochromeImages, itemsWithSecondaryMedia} from './images';
+import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../../utils/utils";
+import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
+import { createMediaUrl } from '../../utils/itemResizer';
+import {setOptionsInUrl} from '../../constants/options'
+import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
+import ExpandableProGallery from './expandableGallery';
+import SideBarButton from '../SideBar/SideBarButton';
+import { BlueprintsManager } from 'pro-gallery-blueprints'
+import BlueprintsApi from './PlaygroundBlueprintsApi'
+import {utils} from 'pro-gallery-lib';
+import { Resizable } from 're-resizable';
 
 import "pro-gallery/dist/statics/main.css";
 import s from "./App.module.scss";
@@ -85,6 +74,7 @@ export function App() {
     texts: _mixAndSlice(testTexts, ITEMS_BATCH_SIZE),
     videos: _mixAndSlice(testVideos, ITEMS_BATCH_SIZE),
     images: _mixAndSlice(testImages, ITEMS_BATCH_SIZE),
+    itemsWithSecondaryMedia: _mixAndSlice(itemsWithSecondaryMedia, ITEMS_BATCH_SIZE),
   };
 
   const switchState = () => {
@@ -147,7 +137,9 @@ export function App() {
         return _mixAndSlice(testTexts, batchSize, true);
       case "mixed":
         return _mixAndSlice(testItems, batchSize, true);
-      case "media":
+      case 'itemsWithSecondaryMedia':
+        return _mixAndSlice(itemsWithSecondaryMedia, batchSize, true);
+      case 'media':
       default:
         return _mixAndSlice(testMedia, batchSize, true);
     }

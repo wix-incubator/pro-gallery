@@ -12,7 +12,10 @@ describe('options - shouldIndexDirectShareLinkInSEO', () => {
     const sampleItem = itemsWithDirectShareLink[0];
     const sampleItemViewProps = driver.props.itemView(sampleItem);
     return Object.assign(sampleItemViewProps, {
-      options,
+      options: {
+        ...sampleItemViewProps.options,
+        ...options,
+      },
     });
   }
 

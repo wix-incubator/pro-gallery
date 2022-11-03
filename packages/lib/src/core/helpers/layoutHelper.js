@@ -17,6 +17,7 @@ import { default as GALLERY_CONSTS } from '../../common/constants/index';
 import {assignByString} from './optionsUtils'
 import processTextDimensions from './textBoxDimensionsHelper'
 import { default as slideAnimation } from '../../settings/options/slideAnimation';
+import { default as arrowsPosition } from '../../settings/options/arrowsPosition';
 
 export const calcTargetItemSize = (options, smartCalc = false) => {
   if (
@@ -138,6 +139,7 @@ const setMobileFonts = (options) => {
 
 const forceHoverToShowTextsIfNeeded = (options) =>{
   let _options = {...options}
+  if(options.EXPERIMENTALallowParallelInfos) return _options
   if (
     !hasHoverPlacement(_options.titlePlacement) &&
     _options.hoveringBehaviour !== INFO_BEHAVIOUR_ON_HOVER.NEVER_SHOW
@@ -156,6 +158,23 @@ const blockScrollOnFadeOrDeckScrollAnimations = (options) =>{
     _options.enableScroll = false;
   }
 
+  return _options
+}
+
+const blockVideoControlsOnMouseCursorNavigation = (options) =>{
+  let _options = {...options}
+  if ((options.arrowsPosition === GALLERY_CONSTS.arrowsPosition.MOUSE_CURSOR) && (arrowsPosition.isRelevant(options))) {
+    _options.showVideoControls = false;
+  }
+  return _options
+}
+
+const blockMouseCursorNavigationOnTouchDevice = (options) =>{
+  let _options = {...options}
+  if (utils.isTouch() && (options.arrowsPosition === GALLERY_CONSTS.arrowsPosition.MOUSE_CURSOR) && (arrowsPosition.isRelevant(options))) {
+    _options.showArrows = false;
+
+  }
   return _options
 }
 
@@ -380,6 +399,8 @@ function processLayouts(options, customExternalInfoRendererExists) {
     processedOptions = centerArrowsWhenNeeded(processedOptions); 
     processedOptions = blockCounterByProduct(processedOptions); 
     processedOptions = blockScrollOnFadeOrDeckScrollAnimations(processedOptions); 
+    processedOptions = blockVideoControlsOnMouseCursorNavigation(processedOptions);
+    processedOptions = blockMouseCursorNavigationOnTouchDevice(processedOptions);
 
   return processedOptions;
 }

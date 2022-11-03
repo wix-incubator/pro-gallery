@@ -4,6 +4,7 @@ import {
   isEditMode,
   isPreviewMode,
   isDeviceTypeMobile,
+  isDeviceTypeTouch,
 } from '../window/viewModeWrapper';
 import GALLERY_CONSTS from '../constants';
 
@@ -262,6 +263,19 @@ class Utils {
     };
 
     return this.getOrPutFromCache('isMobile', _isMobile);
+  }
+
+  isTouch() {
+    const _isTouch = () => {
+      const isTouchByProps = isDeviceTypeTouch();
+      const isTouchBrowser =
+        window.navigator?.maxTouchPoints > 0 || // checking if navigator exists because of SSR
+        'ontouchstart' in window.document.documentElement;
+
+      return this.isUndefined(isTouchByProps) ? isTouchBrowser : isTouchByProps;
+    };
+
+    return this.getOrPutFromCache('isTouch', _isTouch);
   }
 
   isTest() {
@@ -696,12 +710,17 @@ class Utils {
   }
 
   getAriaAttributes({ proGalleryRole, proGalleryRegionLabel }) {
-    return {
+    const role = proGalleryRole || 'region';
+    const roledescription =
+      proGalleryRole === 'application' ? 'gallery application' : 'region';
+    const attr = {
       role: proGalleryRole || 'region',
       ['aria-label']: proGalleryRegionLabel,
-      ['aria-roledescription']:
-        proGalleryRole === 'application' ? 'gallery application' : 'region',
     };
+    if (role !== roledescription) {
+      attr['aria-roledescription'] = roledescription;
+    }
+    return attr;
   }
 
   focusGalleryElement(element) {
