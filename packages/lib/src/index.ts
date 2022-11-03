@@ -9,7 +9,9 @@ export { default as v4DefaultOptions } from './common/v4DefaultOptions';
 export { flatV4DefaultOptions } from './common/v4DefaultOptions';
 export { default as coreOptions } from './common/coreOptions';
 export { default as dimensionsHelper } from './core/helpers/dimensionsHelper';
+export { default as newSPs_dimensionsHelper } from './core/helpers/newSPs_dimensionsHelper';
 export { default as processLayouts } from './core/helpers/layoutHelper';
+export { default as newSPs_processLayouts } from './core/helpers/newSPs_layoutHelper';
 export { featureManager } from './core/helpers/versionsHelper';
 export { addPresetOptions } from './core/presets/presets';
 export {

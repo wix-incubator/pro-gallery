@@ -6,7 +6,7 @@ import {
   isConstantVerticalPlacement,
   isHoverPlacement,
 } from '../../common/constants/layoutParams_info_placement';
-
+import { default as old_processLayouts } from './layoutHelper'
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import processTextDimensions from './textBoxDimensionsHelper'
 import { default as slideAnimation } from '../../settings/options/behaviourParams_gallery_horizontal_slideAnimation';
@@ -14,7 +14,6 @@ import { default as arrowsPosition } from '../../settings/options/layoutParams_n
 import optionsMap from './optionsMap';
 
 export const calcTargetItemSize = (options, smartValue) => { //NEW STYPEPARAMS METHOD done.
-  console.log('>>>>>>>', options[optionsMap.layoutParams.targetItemSize.value],options[optionsMap.layoutParams.targetItemSize.unit] )
   if (
     options[optionsMap.layoutParams.targetItemSize.unit] === GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].PIXELS &&
     options[optionsMap.layoutParams.targetItemSize.value] > 0
@@ -306,6 +305,7 @@ export const removeBordersIfNeeded = (options) => { //NEW STYPEPARAMS METHOD don
 
 function processLayouts(options, customExternalInfoRendererExists) {
   let processedOptions = {...options};
+  processedOptions = old_processLayouts(processedOptions, customExternalInfoRendererExists);
   if (utils.isMobile()) {
     processedOptions = limitImageMargin(processedOptions);
   }
