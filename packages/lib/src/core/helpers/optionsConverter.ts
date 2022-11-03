@@ -25,6 +25,7 @@ function extendNestedOptionsToIncludeOldAndNew(nestedOptions) {
 }
 
 function addMigratedOptions(flatOptions) {
+  if (flatOptions.newSPs) return flatOptions; // do not convert old to new. new is king
   const flat_migrated = migrateOptions(flatOptions);
   let flat_combinedOptions = {
     ...trimUndefinedValues_flat(flat_migrated),
@@ -463,11 +464,11 @@ function process_old_to_new_OverlayHoveringBehaviour(obj) {
   switch (_obj[optionsMap.behaviourParams.item.overlay.hoveringBehaviour]) {
     case 'NO_CHANGE':
       _obj[optionsMap.behaviourParams.item.overlay.hoveringBehaviour] =
-        'ALWAYS_VISIBLE';
+        'ALWAYS_SHOW';
       break;
     case 'NEVER_SHOW':
       _obj[optionsMap.behaviourParams.item.overlay.hoveringBehaviour] =
-        'NEVER_VISIBLE';
+        'NEVER_SHOW';
       break;
     default:
       break;

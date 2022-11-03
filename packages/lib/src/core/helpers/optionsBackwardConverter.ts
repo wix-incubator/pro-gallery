@@ -17,6 +17,7 @@ function addOldOptions(flatOptions) {
   let flat_combinedOptions = {
     ...trimUndefinedValues_flat(flat_migrated),
     ...trimUndefinedValues_flat(flatOptions),
+    // ...(flatOptions.newSPs ? trimUndefinedValues_flat(flat_migrated) : {}),
   };
   return flat_combinedOptions;
 }
@@ -433,10 +434,10 @@ function process_new_to_old_OverlayHoveringBehaviour(obj) {
     'hoveringBehaviour'
   );
   switch (_obj['hoveringBehaviour']) {
-    case 'ALWAYS_VISIBLE':
+    case 'ALWAYS_SHOW':
       _obj['hoveringBehaviour'] = 'NO_CHANGE';
       break;
-    case 'NEVER_VISIBLE':
+    case 'NEVER_SHOW':
       _obj['hoveringBehaviour'] = 'NEVER_SHOW';
       break;
     default:
