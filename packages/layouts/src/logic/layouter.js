@@ -352,13 +352,6 @@ export default class Layouter {
           this.recommendedGroupsPerStrip?.[this.strip.idx];
         const remainingGroups = recommendedGroupsInStrip - totalGroupsInStrip;
         if (remainingGroups === 1) {
-          console.log(
-            '[FORCE FULL STRIPS]',
-            `LAST GROUP\n`,
-            `STRIP has ${totalGroupsInStrip} groups, but recommended is ${recommendedGroupsInStrip}\n`,
-            `ITEM #${this.pointer} out of ${this.srcItems.length} GROUP items ${this.groupItems.length}\n`,
-            `recommended size: ${this.groupItems.length}\n`
-          );
           return this.groupItems.length;
         } else {
           return null;
@@ -407,10 +400,6 @@ export default class Layouter {
             this.styleParams.layoutParams.structure.forceFullStrips &&
             !this.recommendedGroupsPerStrip?.[newStripIdx]
           ) {
-            console.log(
-              '[FORCE FULL STRIPS]',
-              `-----------------------------| Starting |----------------------------`
-            );
             const placedItems = this.pointer;
             const placedGroups = this.groupIdx - 1;
             const placedStrips = this.strip.idx;
@@ -420,62 +409,11 @@ export default class Layouter {
             const remainingItems = this.srcItems.length - placedItems;
             const remainingGroups = remainingItems / avgItemsPerGroup;
             const remainingStrips = remainingGroups / avgGroupsPerStrip;
-            console.log(
-              '[FORCE FULL STRIPS]',
-              `STRIP #${placedStrips} Placed ${placedItems} ITEMS in ${placedGroups} GROUPS`
-            );
-            // console.log(
-            //   '[FORCE FULL STRIPS]',
-            //   `Number of placed ITEMS: ${placedItems}`
-            // );
-            // console.log(
-            //   '[FORCE FULL STRIPS]',
-            //   `Number of placed GROUPS: ${placedGroups}`
-            // );
-            // console.log(
-            //   '[FORCE FULL STRIPS]',
-            //   `Number of placed STRIPS: ${placedStrips}`
-            // );
-            console.log(
-              '[FORCE FULL STRIPS]',
-              `Average ITEMS per GROUP: ${avgItemsPerGroup}`
-            );
-            console.log(
-              '[FORCE FULL STRIPS]',
-              `Average GROUPS per STRIP: ${avgGroupsPerStrip}`
-            );
-            console.log(
-              '[FORCE FULL STRIPS]',
-              `Average ITEMS per STRIP: ${avgItemsPerStrip}`
-            );
-            console.log(
-              '[FORCE FULL STRIPS]',
-              `Remaining ITEMS: ${remainingItems}`
-            );
-            console.log(
-              '[FORCE FULL STRIPS]',
-              `Estimated remaining GROUPS: ${remainingGroups}`
-            );
-            console.log(
-              '[FORCE FULL STRIPS]',
-              `Estimated remaining STRIPS: ${remainingStrips}`
-            );
-            console.log(
-              '[FORCE FULL STRIPS]',
-              `Recommended GROUPS per STRIP: ${
-                remainingGroups / remainingStrips
-              }`
-            );
             const maxStripsToFix = 3;
             if (avgItemsPerStrip * maxStripsToFix >= remainingItems) {
               this.recommendedGroupsPerStrip = {
                 [newStripIdx]: Math.floor(remainingGroups / remainingStrips),
               };
-              console.log(
-                '[FORCE FULL STRIPS]',
-                `(SET!) Recommended Groups per Strip: ${this.recommendedGroupsPerStrip[newStripIdx]}`,
-                this.recommendedGroupsPerStrip
-              );
             }
           }
 
