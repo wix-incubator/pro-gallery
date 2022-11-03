@@ -9,8 +9,8 @@ export default {
     options.isVertical &&
     options.groupSize === 1 &&
     options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
-    GALLERY_CONSTS.hasExternalHorizontalPlacement(options.titlePlacement),
+    GALLERY_CONSTS.hasExternalHorizontalPlacement(options.titlePlacement), //NEW STYPEPARAMS METHOD need to change to new sps here
   type: INPUT_TYPES.OPTIONS,
-  options: createOptions('textBoxWidthCalculationOptions'),
-  default: GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT,
+  options: createOptions('textBoxWidthCalculationOptions'), //NEW STYPEPARAMS METHOD need to change to new sp
+  default: GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT, //NEW STYPEPARAMS METHOD need to change to new sp
 };

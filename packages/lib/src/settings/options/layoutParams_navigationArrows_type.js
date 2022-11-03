@@ -6,7 +6,7 @@ export default {
   title: 'Arrows Type',
   isRelevant: (options) =>
     options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-    options.showArrows,
+    options.showArrows, //NEW STYPEPARAMS METHOD use new sps
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Show Navigation Arrows" to "true".',
   type: INPUT_TYPES.OPTIONS,

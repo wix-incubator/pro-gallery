@@ -7,6 +7,7 @@ import {
   isDeviceTypeTouch,
 } from '../window/viewModeWrapper';
 import GALLERY_CONSTS from '../constants';
+import optionsMap from '../../core/helpers/optionsMap';
 
 class Utils {
   constructor() {
@@ -730,6 +731,28 @@ class Utils {
   isMeaningfulString(str) {
     if (typeof str !== 'string') return false;
     return !!str.trim().length;
+  }
+
+  isHeightSetByGallery(options) {
+    const oldSPs_isHeightSetByGallery = (options) => {
+      //NEW STYPEPARAMS METHOD remove when done
+      return (
+        options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
+        options.enableInfiniteScroll
+      );
+    };
+    const newSPs_isHeightSetByGallery = (options) => {
+      return (
+        options[optionsMap.layoutParams.structure.galleryLayout] ===
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
+            .VERTICAL &&
+        !options[optionsMap.behaviourParams.gallery.vertical.loadMore]
+      ); //NEW STYLEPARAMS METHOD POSSIBLE BUG FOUND Could be that I need to add the horizontal gallery ratio thing here....
+    };
+    return (
+      oldSPs_isHeightSetByGallery(options) || //NEW STYPEPARAMS METHOD remove when done
+      newSPs_isHeightSetByGallery(options)
+    );
   }
 }
 

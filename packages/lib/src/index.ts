@@ -2,6 +2,7 @@ export { default as GALLERY_CONSTS } from './common/constants';
 export {
   default as defaultOptions,
   populateWithDefaultOptions,
+  flatDefaultOptions,
 } from './common/defaultOptions';
 export { default as v3DefaultOptions } from './common/v3DefaultOptions';
 export { default as v4DefaultOptions } from './common/v4DefaultOptions';
@@ -31,7 +32,7 @@ export { getLayoutName } from './core/presets/presets';
 export { isInPreset } from './core/presets/presets';
 
 export { default as window } from './common/window/windowWrapper';
-export { default as utils } from './common/utils/index';
+export { default as utils } from './common/utils';
 
 export { viewModeWrapper } from './common/window/viewModeWrapper';
 export { isSiteMode } from './common/window/viewModeWrapper';
