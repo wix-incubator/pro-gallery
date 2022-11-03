@@ -9,6 +9,7 @@ export default {
   title: 'Include External Info in gallery Ratio',
   description: `Set to true with a single row horizontal gallery to include the external info (above or below) in the fixed gallery Ratio`,
   isRelevant: (options) => {
+    //NEW STYPEPARAMS METHOD need to convert to new sp
     const isSingleVerticalItemRendered = options.layoutParams
       .repeatingGroupTypes
       ? options.layoutParams.repeatingGroupTypes === '1'

@@ -1,0 +1,5 @@
+const SECONDARY_MEDIA_BEHAVIOUR = {
+  APPEARS: 'APPEARS',
+} as const;
+
+export default SECONDARY_MEDIA_BEHAVIOUR;

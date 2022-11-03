@@ -63,7 +63,7 @@ export function NavigationArrows({
   } else if (GALLERY_CONSTS.hasExternalBelowPlacement(titlePlacement)) {
     directionFix = 1;
   } else {
-    // if we got here, we should be ITEM_CENTER, taken care of in layoutHelper.js
+    // if we got here, we should be ITEM_CENTER, taken care of in layoutHelper.ts
   }
   const verticalPositionFix = {
     [GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER]: 0,
