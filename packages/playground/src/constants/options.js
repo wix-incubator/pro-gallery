@@ -27,6 +27,7 @@ export const getInitialOptions = () => {
 };
 const arrayKeys = [
   optionsMap.layoutParams.crop.ratios,
+  optionsMap.layoutParams.structure.columnRatios,
   optionsMap.layoutParams.groups.allowedGroupTypes,
   optionsMap.layoutParams.groups.repeatingGroupTypes,
 ]
