@@ -36,6 +36,27 @@ export const calcTargetItemSize = (options, smartValue) => { //NEW STYPEPARAMS M
 export const processNumberOfImagesPerRow = (options) => { //NEW STYPEPARAMS METHOD done
   //This will be used in the masonry and grid presets
   let res = {...options}
+  res = fixColumnsIfNeeded(res);
+  if (
+    res[optionsMap.layoutParams.structure.scrollDirection] ===
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL || //relevant for grid, in Masonry its fixed to !oneRow
+    res[optionsMap.layoutParams.structure.layoutOrientation] ===
+    GALLERY_CONSTS[
+      optionsMap.layoutParams.structure.layoutOrientation
+    ].VERTICAL //relevant for masonry, in grid its fixed to vertical.
+  ) {
+    res[optionsMap.layoutParams.groups.allowedGroupTypes] = [
+      GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['1'],
+    ];
+    res[optionsMap.layoutParams.groups.groupSize] = 1;
+    // res.collageAmount = 0; //doesnt really exist. I'll comment and then remove.
+    res[optionsMap.layoutParams.groups.density] = 0;
+  }
+  return res;
+}
+
+export const fixColumnsIfNeeded = (options) => {
+  let res = {...options}
   res.fixedColumns = 0;
   if (
     res[optionsMap.layoutParams.structure.scrollDirection] ===
@@ -49,12 +70,6 @@ export const processNumberOfImagesPerRow = (options) => { //NEW STYPEPARAMS METH
       options[optionsMap.layoutParams.structure.responsiveMode] === GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW
         ? res[optionsMap.layoutParams.structure.numberOfColumns]
         : 0;
-    res[optionsMap.layoutParams.groups.allowedGroupTypes] = [
-      GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['1'],
-    ];
-    res[optionsMap.layoutParams.groups.groupSize] = 1;
-    // res.collageAmount = 0; //doesnt really exist. I'll comment and then remove.
-    res[optionsMap.layoutParams.groups.density] = 0;
   }
   return res;
 }
