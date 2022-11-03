@@ -92,8 +92,8 @@ import behaviourParams_item_overlay_sizeUnits from './behaviourParams_item_overl
 import behaviourParams_item_content_hoverAnimation from './behaviourParams_item_content_hoverAnimation';
 import behaviourParams_item_content_placementAnimation from './behaviourParams_item_content_placementAnimation';
 import behaviourParams_item_content_loader from './behaviourParams_item_content_loader';
-import behaviourParams_item_secondaryMedia_trigger from './behaviourParams_item_clickAction';
-import behaviourParams_item_secondaryMedia_behaviour from './behaviourParams_item_clickAction';
+import behaviourParams_item_secondaryMedia_trigger from './behaviourParams_item_secondaryMedia_trigger';
+import behaviourParams_item_secondaryMedia_behaviour from './behaviourParams_item_secondaryMedia_behaviour';
 import behaviourParams_gallery_layoutDirection from './behaviourParams_gallery_layoutDirection';
 import behaviourParams_gallery_scrollAnimation from './behaviourParams_gallery_scrollAnimation';
 import behaviourParams_gallery_vertical_loadMore_amount from './behaviourParams_gallery_vertical_loadMore_amount';
