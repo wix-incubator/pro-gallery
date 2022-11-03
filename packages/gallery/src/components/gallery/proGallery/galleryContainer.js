@@ -30,10 +30,6 @@ export class GalleryContainer extends React.Component {
     if (utils.isVerbose()) {
       console.count('[OOISSR] galleryContainer constructor', window.isMock);
     }
-    console.log(
-      '*******************hoveringProps:',
-      props.options.hoveringBehaviour
-    );
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
     this.setGotFirstScrollIfNeeded = this.setGotFirstScrollIfNeeded.bind(this);
     this.toggleLoadMoreItems = this.toggleLoadMoreItems.bind(this);
