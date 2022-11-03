@@ -2,13 +2,29 @@ import { Layouter, ItemsHelper } from 'pro-layouts';
 import {
   populateWithDefaultOptions,
   addPresetOptions,
+  newSPs_processLayouts,
   dimensionsHelper,
+  newSPs_dimensionsHelper,
   processLayouts,
   utils,
   extendNestedOptionsToIncludeOldAndNew,
 } from 'pro-gallery-lib';
 
 class Blueprints {
+  getDimensionsHelper(newSPs) {
+    if (newSPs) {
+      return newSPs_dimensionsHelper;
+    } else {
+      return dimensionsHelper;
+    }
+  }
+  getProcessLayoutsFunc(newSPs) {
+    if (newSPs) {
+      return newSPs_processLayouts;
+    } else {
+      return processLayouts;
+    }
+  }
   createBlueprint({
     params,
     lastParams,
@@ -264,7 +280,7 @@ class Blueprints {
         mergedOldAndNewStyles
       ); //add default for any undefined option
       formattedOptions = extendNestedOptionsToIncludeOldAndNew(
-        processLayouts(
+        this.getProcessLayoutsFunc(fullOptionsOverDefualts.newSPs)(
           addPresetOptions(fullOptionsOverDefualts),
           isUsingCustomInfoElements
         )
@@ -325,7 +341,7 @@ class Blueprints {
         oldOptions,
       })
     ) {
-      dimensionsHelper.updateParams({
+      this.getDimensionsHelper(formattedOptions.newSPs).updateParams({
         options: formattedOptions,
         container,
       });
@@ -333,7 +349,7 @@ class Blueprints {
       formattedContainer = Object.assign(
         {},
         container,
-        dimensionsHelper.getGalleryDimensions()
+        this.getDimensionsHelper(formattedOptions.newSPs).getGalleryDimensions()
       );
     }
     return { formattedContainer, changed };
