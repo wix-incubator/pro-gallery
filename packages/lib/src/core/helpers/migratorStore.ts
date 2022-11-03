@@ -136,6 +136,7 @@ export const nameChangedStylingParams = [
   ['itemShadowSize', optionsMap.stylingParams.itemShadowSize],
   ['itemEnableShadow', optionsMap.stylingParams.itemEnableShadow],
   ['itemBorderRadius', optionsMap.stylingParams.itemBorderRadius],
+  ['itemBorderColor', optionsMap.stylingParams.itemBorderColor],
   ['itemBorderWidth', optionsMap.stylingParams.itemBorderWidth],
 ];
 

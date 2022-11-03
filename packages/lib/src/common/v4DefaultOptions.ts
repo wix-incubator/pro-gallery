@@ -207,6 +207,7 @@ const defaultV4Options = {
     itemBorderWidth: 0,
     itemBorderRadius: 0,
     itemEnableShadow: false,
+    itemBorderColor: '',
     itemShadowBlur: 20,
     itemShadowDirection: 135,
     itemShadowSize: 10,

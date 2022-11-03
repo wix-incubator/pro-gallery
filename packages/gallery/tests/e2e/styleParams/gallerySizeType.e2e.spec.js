@@ -20,8 +20,8 @@ describe('gallerySizeType - e2e', () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.targetItemSize.units]:
-        GALLERY_CONSTS.gallerySizeType.PIXELS,
+      [optionsMap.layoutParams.targetItemSize.unit]:
+        GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].PIXEL,
       [optionsMap.layoutParams.targetItemSize.value]: 600,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -33,8 +33,8 @@ describe('gallerySizeType - e2e', () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.targetItemSize.units]:
-        GALLERY_CONSTS.gallerySizeType.RATIO,
+      [optionsMap.layoutParams.targetItemSize.unit]:
+        GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].PERCENT,
       [optionsMap.layoutParams.targetItemSize.value]: 25,
     });
     await driver.waitFor.hookToBeVisible('item-container');

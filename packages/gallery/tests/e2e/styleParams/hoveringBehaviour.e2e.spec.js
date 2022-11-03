@@ -52,7 +52,7 @@ describe('hoveringBehaviour - e2e', () => {
       [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
         GALLERY_CONSTS[
           optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].NEVER_SHOW,
+        ].ALWAYS_SHOW,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.actions.hover('item-container')[0];

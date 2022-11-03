@@ -562,7 +562,6 @@ function process_new_to_old_GroupTypes(obj) {
 }
 function process_new_to_old_NumberOfColumns(obj) {
   let _obj = obj;
-  _obj.fixedColumns = _obj.fixedColumns || undefined;
   _obj.numberOfImagesPerRow =
     _obj[optionsMap.layoutParams.structure.numberOfColumns];
   delete _obj[optionsMap.layoutParams.structure.numberOfColumns];

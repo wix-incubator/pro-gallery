@@ -641,17 +641,10 @@ function process_old_to_new_NumberOfColumns(obj) {
     return obj;
   }
   let _obj = obj;
-  const fixedColumns = obj['fixedColumns'];
   const numberOfImagesPerRow = obj['numberOfImagesPerRow'];
-  const finalVal =
-    numberOfImagesPerRow >= 0
-      ? numberOfImagesPerRow
-      : fixedColumns >= 0
-      ? fixedColumns
-      : undefined;
+  const finalVal = numberOfImagesPerRow >= 0 ? numberOfImagesPerRow : undefined;
 
   _obj[optionsMap.layoutParams.structure.numberOfColumns] = finalVal;
-  delete _obj['fixedColumns'];
   delete _obj['numberOfImagesPerRow'];
   return _obj;
 }

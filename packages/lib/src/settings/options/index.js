@@ -221,6 +221,7 @@ import stylingParams_itemShadowSize from './stylingParams_itemShadowSize';
 import stylingParams_itemEnableShadow from './stylingParams_itemEnableShadow';
 import stylingParams_itemBorderRadius from './stylingParams_itemBorderRadius';
 import stylingParams_itemBorderWidth from './stylingParams_itemBorderWidth';
+import stylingParams_itemBorderColor from './stylingParams_itemBorderColor';
 // import stylingParams_itemResolutionMode from './stylingParams_itemResolutionMode';
 //NEW STYPEPARAMS METHOD
 
@@ -573,6 +574,7 @@ export default {
   stylingParams_itemShadowSize,
   stylingParams_itemEnableShadow,
   stylingParams_itemBorderRadius,
+  stylingParams_itemBorderColor,
   stylingParams_itemBorderWidth,
   // stylingParams_itemResolutionMode,
   //NEW STYPEPARAMS METHOD

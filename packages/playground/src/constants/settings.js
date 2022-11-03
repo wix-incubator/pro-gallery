@@ -140,6 +140,7 @@ export const optionsBySection = {
     optionsMap.stylingParams.itemEnableShadow,
     optionsMap.stylingParams.itemBorderRadius,
     optionsMap.stylingParams.itemBorderWidth,
+    optionsMap.stylingParams.itemBorderColor,
   ],
   [SECTIONS.ANIMATION]: [
     optionsMap.behaviourParams.item.content.hoverAnimation,

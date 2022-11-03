@@ -15,12 +15,12 @@ import optionsMap from './optionsMap';
 
 export const calcTargetItemSize = (options, smartValue) => { //NEW STYPEPARAMS METHOD done.
   if (
-    options[optionsMap.layoutParams.targetItemSize.unit] === GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].PIXELS &&
+    options[optionsMap.layoutParams.targetItemSize.unit] === GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].PIXEL &&
     options[optionsMap.layoutParams.targetItemSize.value] > 0
   ) {
     return options[optionsMap.layoutParams.targetItemSize.value];
   } else if (
-    options[optionsMap.layoutParams.targetItemSize.unit] === GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].RATIO &&
+    options[optionsMap.layoutParams.targetItemSize.unit] === GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].PERCENT &&
     options[optionsMap.layoutParams.targetItemSize.value] > 0
   ) {
     return (

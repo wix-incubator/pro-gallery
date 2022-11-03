@@ -11,10 +11,11 @@ import {optionsList} from './settings'
 
 optionsList.forEach( 
   (option) => {
-    if(galleryOptions[option]?.default !== undefined)
-    return flatV4DefaultOptions[option] = galleryOptions[option].default
+    if(galleryOptions[option]?.default !== undefined) { 
+    flatV4DefaultOptions[option] = galleryOptions[option].default
+    }
   }
-    );
+);
 
 export const getInitialOptions = () => {
   const savedOptions = getOptionsFromUrl(window.location.search);
