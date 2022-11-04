@@ -1,7 +1,10 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { mergeNestedObjects } from 'pro-gallery-lib';
+import {
+  mergeNestedObjects,
+  GALLERY_CONSTS,
+  optionsMap,
+} from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -20,8 +23,11 @@ describe('options - imageHoverAnimation', () => {
 
   it('should have "Zoom in" animation on items', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.ZOOM_IN,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.item.content.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
+          .ZOOM_IN,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -31,8 +37,11 @@ describe('options - imageHoverAnimation', () => {
   });
   it('should have "Blur" animation on items', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.BLUR,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.item.content.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
+          .BLUR,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -42,8 +51,11 @@ describe('options - imageHoverAnimation', () => {
   });
   it('should have "Greyscale" animation on items', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.GRAYSCALE,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.item.content.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
+          .GRAYSCALE,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -53,8 +65,11 @@ describe('options - imageHoverAnimation', () => {
   });
   it('should have "Shrink" animation on items', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.SHRINK,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.item.content.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
+          .SHRINK,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -64,8 +79,11 @@ describe('options - imageHoverAnimation', () => {
   });
   it('should have "invert" animation on items', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.INVERT,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.item.content.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
+          .INVERT,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -75,8 +93,11 @@ describe('options - imageHoverAnimation', () => {
   });
   it('should have "Color in" animation on items', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.COLOR_IN,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.item.content.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
+          .COLOR_IN,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -86,8 +107,11 @@ describe('options - imageHoverAnimation', () => {
   });
   it('should have "Darkened" animation on items', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      imageHoverAnimation: GALLERY_CONSTS.imageHoverAnimations.DARKENED,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.item.content.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
+          .DARKENED,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

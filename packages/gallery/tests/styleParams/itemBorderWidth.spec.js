@@ -1,7 +1,10 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { mergeNestedObjects } from 'pro-gallery-lib';
+import {
+  mergeNestedObjects,
+  GALLERY_CONSTS,
+  optionsMap,
+} from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -20,9 +23,12 @@ describe('options - itemBorderWidth', () => {
 
   it('should set border-width of 10 to items', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      itemBorderWidth: 10,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .VERTICAL,
+      [optionsMap.stylingParams.itemBorderWidth]: 10,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -32,9 +38,12 @@ describe('options - itemBorderWidth', () => {
   });
   it('should set border-width of 40 to items', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      itemBorderWidth: 40,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .VERTICAL,
+      [optionsMap.stylingParams.itemBorderWidth]: 40,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -44,10 +53,14 @@ describe('options - itemBorderWidth', () => {
   });
   it('should not set border-width to when "cubeType" is "fit"', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      cubeType: GALLERY_CONSTS.cubeType.FIT,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      itemBorderWidth: 40,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.layoutParams.crop.method]:
+        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .VERTICAL,
+      [optionsMap.stylingParams.itemBorderWidth]: 40,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

@@ -1,4 +1,4 @@
-import { utils, GALLERY_CONSTS } from 'pro-gallery-lib';
+import { utils, GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import GalleryDriver from '../../drivers/reactDriver';
@@ -13,8 +13,13 @@ describe('Gallery View', () => {
     driver = new GalleryDriver();
     initialGalleryViewProps = driver.props.galleryView();
     Object.assign(initialGalleryViewProps.options, {
-      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      options: { imageMargin: 10, layoutParams: { gallerySpacing: 5 } },
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .VERTICAL,
+      options: {
+        [optionsMap.layoutParams.structure.itemSpacing]: 10,
+        [optionsMap.layoutParams.structure.gallerySpacing]: 5,
+      },
     });
   });
 

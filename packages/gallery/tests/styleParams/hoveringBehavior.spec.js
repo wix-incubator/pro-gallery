@@ -1,7 +1,10 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { mergeNestedObjects } from 'pro-gallery-lib';
+import {
+  mergeNestedObjects,
+  GALLERY_CONSTS,
+  optionsMap,
+} from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -21,8 +24,12 @@ describe('options - hoveringBehaviour', () => {
   it('should not have class "force-hover" when there is no hover event (when "hoveringBehaviour" is "APPEARS")', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
       // titlePlacement also deals with the hover on items. when it's value is 'SHOW_ON_HOVER', hoveringBehaviour takes controll.
-      titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
-      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
+      [optionsMap.layoutParams.info.placement]:
+        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
+      [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
+        ].APPEARS,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -35,8 +42,12 @@ describe('options - hoveringBehaviour', () => {
   it('should not have class "force-hover" when there is no hover event (when "hoveringBehaviour" is "DISAPPEARS")', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
       // titlePlacement also deals with the hover on items. when it's value is 'SHOW_ON_HOVER', hoveringBehaviour takes controll.
-      titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
-      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.DISAPPEARS,
+      [optionsMap.layoutParams.info.placement]:
+        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
+      [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
+        ].DISAPPEARS,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -47,8 +58,12 @@ describe('options - hoveringBehaviour', () => {
   });
   it('should have class invert-hover when "hoveringBehaviour" is "DISAPPEARS"', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
-      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.DISAPPEARS,
+      [optionsMap.layoutParams.info.placement]:
+        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
+      [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
+        ].DISAPPEARS,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -59,8 +74,12 @@ describe('options - hoveringBehaviour', () => {
   });
   it('should have default class force-hover when "hoveringBehaviour" is "NO_CHANGE"', async () => {
     initialProps.options = mergeNestedObjects(initialProps.options, {
-      titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
-      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE,
+      [optionsMap.layoutParams.info.placement]:
+        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
+      [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
+        ].ALWAYS_SHOW,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

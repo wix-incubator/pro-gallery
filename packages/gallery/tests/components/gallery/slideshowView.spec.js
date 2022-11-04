@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS, viewModeWrapper } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, viewModeWrapper, optionsMap } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/reactDriver';
 import SlideshowView from '../../../src/components/gallery/proGallery/slideshowView';
 import { expect } from 'chai';
@@ -18,7 +18,9 @@ describe('Slideshow View', () => {
       initialGalleryViewProps.options
     );
     Object.assign(initialGalleryViewProps.options, {
-      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .HORIZONTAL,
     });
     clock = sinon.useFakeTimers();
   });
@@ -197,7 +199,7 @@ describe('Slideshow View', () => {
   describe('Thumbnails', () => {
     it('Thumbnails are created if layout is Thumbnails', () => {
       Object.assign(initialGalleryViewProps.options, {
-        hasThumbnails: true,
+        [optionsMap.layoutParams.thumbnails.enable]: true,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
@@ -218,7 +220,10 @@ describe('Slideshow View', () => {
         },
       });
       Object.assign(initialGalleryViewProps.options, {
-        slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
+        [optionsMap.behaviourParams.gallery.horizontal.slideAnimation]:
+          GALLERY_CONSTS[
+            optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+          ].SCROLL,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
@@ -233,7 +238,10 @@ describe('Slideshow View', () => {
         },
       });
       Object.assign(initialGalleryViewProps.options, {
-        slideAnimation: GALLERY_CONSTS.slideAnimations.FADE,
+        [optionsMap.behaviourParams.gallery.horizontal.slideAnimation]:
+          GALLERY_CONSTS[
+            optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+          ].FADE,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
@@ -256,10 +264,14 @@ describe('Slideshow View', () => {
     //To use fake timers you need to set them up. preferably in the beforeEact and afterEach. you can see how to do it in this file.
     it('startAutoSlideshow is called if needed', () => {
       Object.assign(initialGalleryViewProps.options, {
-        isAutoSlideshow: true,
-        autoSlideshowInterval: 1,
-        autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
-        galleryLayout: 4,
+        [optionsMap.behaviourParams.gallery.horizontal.autoSlide.interval]: 1,
+        [optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour]:
+          GALLERY_CONSTS[
+            optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+          ].INTERVAL,
+        [optionsMap.layoutParams.structure.galleryLayout]:
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
+            .SLIDER,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       const stub = sinon.stub(SlideshowView.prototype, 'next');

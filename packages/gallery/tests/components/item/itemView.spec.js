@@ -1,5 +1,9 @@
 //Yonatan Hattav Jun21
-import { GALLERY_CONSTS, mergeNestedObjects } from 'pro-gallery-lib';
+import {
+  optionsMap,
+  GALLERY_CONSTS,
+  mergeNestedObjects,
+} from 'pro-gallery-lib';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import GalleryDriver from '../../drivers/reactDriver';
@@ -54,8 +58,11 @@ describe('Item View', () => {
       sampleItemViewProps.options = mergeNestedObjects(
         sampleItemViewProps.options,
         {
-          itemClick: 'link',
-          videoPlay: 'onClick',
+          [optionsMap.behaviourParams.item.clickAction]:
+            GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
+          [optionsMap.behaviourParams.item.video.playTrigger]:
+            GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
+              .CLICK,
         }
       );
       driver.mount(ItemView, sampleItemViewProps);
@@ -73,7 +80,8 @@ describe('Item View', () => {
       sampleItemViewProps.options = mergeNestedObjects(
         sampleItemViewProps.options,
         {
-          itemClick: 'expand',
+          [optionsMap.behaviourParams.item.clickAction]:
+            GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
         }
       );
       driver.mount(ItemView, sampleItemViewProps);
@@ -87,7 +95,7 @@ describe('Item View', () => {
     // following will always fail for video items. it looks to me like a bug. videos will never have hover on mobile
     // it('should toggleHover onClick when the device is mobile and the onclick is styles to nothing', () => {
     //   const mobileStub = sinon.stub(utils, 'isMobile').returns(true);
-    //   Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'image', options: {itemClick: 'nothing', videoPlay: 'onClick'}});
+    //   Object.assign(sampleItemViewProps, {thumbnailHighlightId: null, type: 'image', options: {[optionsMap.behaviourParams.item.clickAction]: GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING, [optionsMap.behaviourParams.item.video.playTrigger]: GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].CLICK}});
     //   driver.mount(ItemView, sampleItemViewProps);
     //   const spy = sinon.spy(ItemView.prototype, 'props.actions.setCurrentHover');
     //   driver.find.hook('item-wrapper').simulate('click');
@@ -113,8 +121,10 @@ describe('Item View', () => {
       sampleItemViewProps.options = mergeNestedObjects(
         sampleItemViewProps.options,
         {
-          enableVideoPlaceholder: true,
-          galleryLayout: GALLERY_CONSTS.layout.EMPTY,
+          [optionsMap.behaviourParams.item.video.enablePlaceholder]: true,
+          [optionsMap.layoutParams.structure.galleryLayout]:
+            GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
+              .EMPTY,
         }
       );
       driver.mount(ItemView, sampleItemViewProps);
@@ -127,26 +137,28 @@ describe('Item View', () => {
       sampleItemViewProps.options = mergeNestedObjects(
         sampleItemViewProps.options,
         {
-          itemEnableShadow: true,
-          itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
-          itemShadowBlur: 15,
-          itemShadowDirection: 0,
-          itemShadowSize: 18,
-          imageMargin: 5,
-          imageInfoType: 'ATTACHED_BACKGROUND',
+          [optionsMap.stylingParams.itemEnableShadow]: true,
+          [optionsMap.stylingParams.itemShadowOpacityAndColor]:
+            'rgba(0, 0, 0, 0.2)',
+          [optionsMap.stylingParams.itemShadowBlur]: 15,
+          [optionsMap.stylingParams.itemShadowDirection]: 0,
+          [optionsMap.stylingParams.itemShadowSize]: 18,
+          [optionsMap.layoutParams.structure.itemSpacing]: 5,
+          [optionsMap.layoutParams.info.layout]: 'ATTACHED_BACKGROUND',
         }
       );
       driver.mount(ItemView, sampleItemViewProps);
       let style = driver.find.hook('item-container').get(0).props.style;
       expect(style.boxShadow).to.equal('0px -18px 15px rgba(0, 0, 0, 0.2)');
       const updatedOptions = mergeNestedObjects(sampleItemViewProps.options, {
-        itemEnableShadow: false,
-        itemShadowOpacityAndColor: 'rgba(0, 0, 0, 0.2)',
-        itemShadowBlur: 20,
-        itemShadowDirection: 135,
-        itemShadowSize: 10,
-        imageMargin: 5,
-        imageInfoType: 'ATTACHED_BACKGROUND',
+        [optionsMap.stylingParams.itemEnableShadow]: false,
+        [optionsMap.stylingParams.itemShadowOpacityAndColor]:
+          'rgba(0, 0, 0, 0.2)',
+        [optionsMap.stylingParams.itemShadowBlur]: 20,
+        [optionsMap.stylingParams.itemShadowDirection]: 135,
+        [optionsMap.stylingParams.itemShadowSize]: 10,
+        [optionsMap.layoutParams.structure.itemSpacing]: 5,
+        [optionsMap.layoutParams.info.layout]: 'ATTACHED_BACKGROUND',
       });
       driver.set.props({
         options: updatedOptions,
@@ -159,8 +171,8 @@ describe('Item View', () => {
       sampleItemViewProps.options = mergeNestedObjects(
         sampleItemViewProps.options,
         {
-          cubeImages: true,
-          cubeType: 'foo',
+          [optionsMap.layoutParams.crop.enable]: true,
+          [optionsMap.layoutParams.crop.method]: 'foo',
         }
       );
       driver.mount(ItemView, sampleItemViewProps);
@@ -168,7 +180,7 @@ describe('Item View', () => {
         driver.find.hook('item-wrapper').hasClass('cube-type-foo')
       ).to.equal(true);
       const updatedOptions = mergeNestedObjects(sampleItemViewProps.options, {
-        cubeImages: false,
+        [optionsMap.layoutParams.crop.enable]: false,
       });
       driver.set.props({
         options: updatedOptions,
@@ -184,14 +196,15 @@ describe('Item View', () => {
       sampleItemViewProps.options = mergeNestedObjects(
         sampleItemViewProps.options,
         {
-          cubeType: 'fit',
+          [optionsMap.layoutParams.crop.method]:
+            GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
         }
       );
       driver.mount(ItemView, sampleItemViewProps);
       let style = driver.find.hook('item-wrapper').get(0).props.style;
       expect(style.backgroundColor).to.equal('inherit');
       const updatedOptions = mergeNestedObjects(sampleItemViewProps.options, {
-        cubeType: 'foot',
+        [optionsMap.layoutParams.crop.method]: 'foot',
       });
       driver.set.props({
         options: updatedOptions,
