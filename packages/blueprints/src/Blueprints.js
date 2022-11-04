@@ -11,13 +11,6 @@ import {
 } from 'pro-gallery-lib';
 
 class Blueprints {
-  getDimensionsHelper(newSPs) {
-    if (newSPs) {
-      return newSPs_dimensionsHelper;
-    } else {
-      return dimensionsHelper;
-    }
-  }
   getProcessLayoutsFunc(newSPs) {
     if (newSPs) {
       return newSPs_processLayouts;
@@ -341,16 +334,29 @@ class Blueprints {
         oldOptions,
       })
     ) {
-      this.getDimensionsHelper(formattedOptions.newSPs).updateParams({
-        options: formattedOptions,
-        container,
-      });
-      changed = true;
-      formattedContainer = Object.assign(
-        {},
-        container,
-        this.getDimensionsHelper(formattedOptions.newSPs).getGalleryDimensions()
-      );
+      if (formattedOptions.newSPs) {
+        newSPs_dimensionsHelper.updateParams({
+          options: formattedOptions,
+          container,
+        });
+        changed = true;
+        formattedContainer = Object.assign(
+          {},
+          container,
+          newSPs_dimensionsHelper.getGalleryDimensions()
+        );
+      } else {
+        dimensionsHelper.updateParams({
+          options: formattedOptions,
+          container,
+        });
+        changed = true;
+        formattedContainer = Object.assign(
+          {},
+          container,
+          dimensionsHelper.getGalleryDimensions()
+        );
+      }
     }
     return { formattedContainer, changed };
   }
