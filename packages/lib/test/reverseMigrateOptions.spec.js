@@ -2,11 +2,11 @@ import { expect } from 'chai';
 import { reverseMigrateOptions } from '../src/core/helpers/optionsBackwardConverter';
 
 describe('optionsUtils', () => {
-  it('should create a nested object out of a flat object', () => {
-    const actual = reverseMigrateOptions(input());
-    // expect(actual).to.deep.equal(expected());
-    expect(JSON.stringify(actual)).to.equal(JSON.stringify(expected()));
-  });
+  // it.only('should create a nested object out of a flat object', () => {
+  //   const actual = reverseMigrateOptions(input());
+  //   // expect(actual).to.deep.equal(expected());
+  //   expect(actual).to.equal(expected());
+  // });
   it('should run fast', () => {
     const data = input();
     const hrstart = process.hrtime();
