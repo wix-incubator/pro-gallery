@@ -113,7 +113,7 @@ import behaviourParams_gallery_horizontal_autoSlide_interval from './behaviourPa
 import behaviourParams_gallery_horizontal_autoSlide_speed from './behaviourParams_gallery_horizontal_autoSlide_speed';
 import layoutParams_structure_responsiveMode from './layoutParams_structure_responsiveMode';
 import layoutParams_structure_galleryRatio_value from './layoutParams_structure_galleryRatio_value';
-// import layoutParams_structure_galleryRatio_includeExternalInfo from './layoutParams_structure_galleryRatio_includeExternalInfo';
+import layoutParams_structure_galleryRatio_includeExternalInfo from './layoutParams_structure_galleryRatio_includeExternalInfo';
 import layoutParams_targetItemSize_value from './layoutParams_targetItemSize_value';
 import layoutParams_info_width from './layoutParams_info_width';
 import layoutParams_info_height from './layoutParams_info_height';
@@ -184,6 +184,7 @@ import behaviourParams_item_overlay_position from './behaviourParams_item_overla
 import behaviourParams_item_overlay_size from './behaviourParams_item_overlay_size';
 import behaviourParams_item_overlay_sizeUnits from './behaviourParams_item_overlay_sizeUnits';
 import behaviourParams_item_overlay_padding from './behaviourParams_item_overlay_padding';
+import behaviourParams_item_overlay_backgroundColor from './behaviourParams_item_overlay_backgroundColor';
 import behaviourParams_item_content_hoverAnimation from './behaviourParams_item_content_hoverAnimation';
 import behaviourParams_item_content_placementAnimation from './behaviourParams_item_content_placementAnimation';
 import behaviourParams_item_content_loader from './behaviourParams_item_content_loader';
@@ -447,8 +448,8 @@ export default {
     layoutParams_thumbnails_position,
   // layoutParams_structure_galleryRatio_includeExternalInfo,
   [optionsMap.layoutParams.structure.galleryRatio.includeExternalInfo]:
-    // layoutParams_structure_galleryRatio_includeExternalInfo,
-    arrowsColor,
+    layoutParams_structure_galleryRatio_includeExternalInfo,
+
   [optionsMap.stylingParams.arrowsColor]: arrowsColor,
   [optionsMap.layoutParams.navigationArrows.type]:
     layoutParams_navigationArrows_type,
@@ -539,6 +540,7 @@ export default {
   behaviourParams_item_overlay_size,
   behaviourParams_item_overlay_sizeUnits,
   behaviourParams_item_overlay_padding,
+  behaviourParams_item_overlay_backgroundColor,
   behaviourParams_item_content_hoverAnimation,
   behaviourParams_item_content_placementAnimation,
   behaviourParams_item_content_loader,

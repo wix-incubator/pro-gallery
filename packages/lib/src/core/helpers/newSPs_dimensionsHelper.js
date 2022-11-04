@@ -165,9 +165,7 @@ class DimensionsHelper {
             this.container.height =
               this.container.width *
                 this.options[
-                  optionsMap[
-                    optionsMap.layoutParams.structure.galleryRatio.value
-                  ]
+                  optionsMap.layoutParams.structure.galleryRatio.value
                 ] +
               this.getThumbnailHeightDelta();
             break;

@@ -59,6 +59,10 @@ export const nameChangedBehaviourParams = [
   ['overlaySizeType', optionsMap.behaviourParams.item.overlay.sizeUnits],
   ['overlayPadding', optionsMap.behaviourParams.item.overlay.padding],
   [
+    'overlayBackground',
+    optionsMap.behaviourParams.item.overlay.backgroundColor,
+  ],
+  [
     'imageHoverAnimation',
     optionsMap.behaviourParams.item.content.hoverAnimation,
   ],

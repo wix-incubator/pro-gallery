@@ -85,7 +85,6 @@ export function useGalleryContext(
   };
 
   const setPreset = (newPreset) => {
-    debugger;
     const newContext = {
       preset: newPreset,
       options: getInitialOptions(newPreset),
@@ -99,7 +98,6 @@ export function useGalleryContext(
   };
 
   const setOptions = (newProp, value) => {
-    debugger;
     // console.log(`[OPTIONS - VALIDATION] settings options in the context`, newProp, value, context.options?.layoutParams_crop_enable);
     const options = {
       ...getInitialOptions(),

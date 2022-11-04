@@ -1,6 +1,7 @@
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import { createOptions } from '../utils/utils';
+import optionsMap from '../../core/helpers/optionsMap';
 
 export default {
   title: 'Texts Placement',
@@ -39,7 +40,7 @@ export default {
       : Object.values(placementOptions).some((val) => val(options));
   },
   type: INPUT_TYPES.MULTISELECT,
-  default: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
+  default: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
   options: createOptions('placements'),
   description: `Choose the the placement of the texts (title and description) relative to the items in the gallery. 
   Notes: 

@@ -8,7 +8,7 @@ import {
 } from '../../common/constants/layoutParams_info_placement';
 import { default as old_processLayouts } from './layoutHelper'
 import { default as GALLERY_CONSTS } from '../../common/constants';
-import processTextDimensions from './textBoxDimensionsHelper'
+import processTextDimensions from './newSPs_textBoxDimensionsHelper'
 import { default as slideAnimation } from '../../settings/options/behaviourParams_gallery_horizontal_slideAnimation';
 import { default as arrowsPosition } from '../../settings/options/layoutParams_navigationArrows_position';
 import optionsMap from './optionsMap';

@@ -129,6 +129,7 @@ export const optionsBySection = {
     optionsMap.behaviourParams.item.overlay.size,
     optionsMap.behaviourParams.item.overlay.sizeUnits,
     optionsMap.behaviourParams.item.overlay.padding,
+    optionsMap.behaviourParams.item.overlay.backgroundColor,
     optionsMap.layoutParams.info.border.width,
     optionsMap.layoutParams.info.border.color,
     optionsMap.layoutParams.info.border.radius,

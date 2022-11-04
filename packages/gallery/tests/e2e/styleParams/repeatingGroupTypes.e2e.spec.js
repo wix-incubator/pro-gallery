@@ -39,8 +39,6 @@ describe('repeatingGroupTypes - e2e', () => {
         GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['1'],
         GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['2h'],
         GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['2v'],
-        GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['3l'],
-        GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['3r'],
       ],
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
