@@ -13,7 +13,8 @@ import LOADING_WITH_COLOR_MODE from '../../common/constants/loadingWithColorMode
 import SLIDE_ANIMATIONS from '../../common/constants/slideAnimations';
 import GALLERY_SIZE_TYPE from '../../common/constants/gallerySizeType';
 import ARROWS_POSITION from '../../common/constants/arrowsPosition';
-import { default as GALLERY_CONSTS } from '../../common/constants';
+import CROP_TYPE from '../../common/constants/cubeType';
+import { default as GALLERY_CONSTS } from '../../common/constants/index';
 import {assignByString} from './optionsUtils'
 import processTextDimensions from './textBoxDimensionsHelper'
 import { default as slideAnimation } from '../../settings/options/slideAnimation';
@@ -379,6 +380,15 @@ const setTextUnderline = (itemFontOption, textDecorationType, options) => {
   return _options;
 };
 
+const cropItemsWithCropOnlyFillParam = (options) => {
+  let _options = { ...options };
+  if (_options.cropOnlyFill === true) {
+    _options.cubeImages = _options.layoutParams.crop.enable =
+      _options.cubeType === CROP_TYPE.CROP;
+  }
+  return _options;
+};
+
 function processLayouts(options, customExternalInfoRendererExists) {
   let processedOptions = {...options};
   if (utils.isMobile()) {
@@ -403,6 +413,7 @@ function processLayouts(options, customExternalInfoRendererExists) {
     processedOptions = blockScrollOnFadeOrDeckScrollAnimations(processedOptions); 
     processedOptions = blockVideoControlsOnMouseCursorNavigation(processedOptions);
     processedOptions = blockMouseCursorNavigationOnTouchDevice(processedOptions);
+    processedOptions = cropItemsWithCropOnlyFillParam(processedOptions);
 
   return processedOptions;
 }
