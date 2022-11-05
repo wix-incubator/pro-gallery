@@ -1,7 +1,7 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { videoItems } from '../drivers/mocks/items';
 import VideoItem from '../../src/components/item/videos/videoItem';
-import optionsMap from 'pro-gallery-lib';
+import { optionsMap } from 'pro-gallery-lib';
 
 describe('options - showVideoControls', () => {
   let driver;
@@ -16,7 +16,7 @@ describe('options - showVideoControls', () => {
 
   it('should have video with controls when showVideoControls=true', async () => {
     Object.assign(sampleItemViewProps, {
-      [optionsMap.behaviourParams.item.video.loop]: true,
+      loadVideo: true,
     });
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.video.enableControls]: true,
@@ -30,7 +30,7 @@ describe('options - showVideoControls', () => {
 
   it('should not have video with controls when showVideoControls=false', async () => {
     Object.assign(sampleItemViewProps, {
-      [optionsMap.behaviourParams.item.video.loop]: true,
+      loadVideo: true,
     });
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.video.enableControls]: false,

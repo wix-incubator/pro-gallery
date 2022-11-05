@@ -1,5 +1,5 @@
 import React from 'react';
-import { window, utils, GALLERY_CONSTS } from 'pro-gallery-lib';
+import { window, utils, GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import GalleryDebugMessage from './galleryDebugMessage';
 import itemView from '../../item/itemView.js';
 import { getItemsInViewportOrMarginByScrollLocation } from '../../helpers/virtualization';
@@ -200,7 +200,8 @@ class GalleryView extends React.Component {
           id={`pro-gallery-margin-container-${this.props.id}`}
           className={'pro-gallery-margin-container'}
           style={{
-            margin: options.layoutParams.gallerySpacing + 'px',
+            margin:
+              options[optionsMap.layoutParams.structure.gallerySpacing] + 'px',
             height: galleryHeight,
             width: galleryWidth,
             overflow: 'visible',

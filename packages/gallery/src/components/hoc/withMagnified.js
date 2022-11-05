@@ -79,9 +79,11 @@ function withMagnified(WrappedComponent) {
     getMagnifiedDimensions() {
       const {
         style: { innerHeight, innerWidth },
-        options: { behaviourParams },
       } = this.props;
-      const { magnificationValue } = behaviourParams.item.content;
+      const magnificationValue =
+        this.props.options[
+          optionsMap.behaviourParams.item.content.magnificationValue
+        ];
       return {
         magnifiedHeight: innerHeight * magnificationValue,
         magnifiedWidth: innerWidth * magnificationValue,
