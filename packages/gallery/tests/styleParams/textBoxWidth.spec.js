@@ -28,7 +28,7 @@ describe('options - textBoxWidth', () => {
         GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
           .VERTICAL,
       [optionsMap.layoutParams.info.sizeUnits]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.sizeUnits].MANUAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.info.sizeUnits].PIXEL,
       [optionsMap.layoutParams.info.width]: 250,
     });
     driver.mount.proGallery(initialProps);

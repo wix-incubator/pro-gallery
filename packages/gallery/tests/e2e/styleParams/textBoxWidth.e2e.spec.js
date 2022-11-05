@@ -20,7 +20,7 @@ describe('textBoxWidth - e2e', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.info.sizeUnits]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.sizeUnits].MANUAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.info.sizeUnits].PIXEL,
       [optionsMap.layoutParams.info.width]: 150,
       [optionsMap.layoutParams.info.placement]:
         GALLERY_CONSTS[optionsMap.layoutParams.info.placement].RIGHT,
