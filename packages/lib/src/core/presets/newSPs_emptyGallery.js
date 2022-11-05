@@ -22,9 +22,5 @@ export const createOptions = (options) => {
     res,
     Math.round(res[optionsMap.layoutParams.targetItemSize.value] * 9 + 100)
   );
-  console.log(
-    '>>>>>>>>>>>>>empty',
-    options.layoutParams_groups_numberOfGroupsPerRow
-  );
   return res;
 };
