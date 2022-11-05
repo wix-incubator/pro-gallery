@@ -119,7 +119,7 @@ describe('Item View', () => {
   });
   //compunentDidUpdate not tested
   describe('render', () => {
-    it('should have boxshadow if defined', () => {
+    it('should have boxshadow if defined1', () => {
       sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
         [optionsMap.stylingParams.itemEnableShadow]: true,
         [optionsMap.stylingParams.itemShadowOpacityAndColor]:
@@ -131,9 +131,11 @@ describe('Item View', () => {
         [optionsMap.layoutParams.info.layout]: 'ATTACHED_BACKGROUND',
       });
       driver.mount(ItemView, sampleItemViewProps);
-      let style = driver.find.hook('item-container').get(0).props.style;
+      const style = driver.find.hook('item-container').get(0).props.style;
       expect(style.boxShadow).to.equal('0px -18px 15px rgba(0, 0, 0, 0.2)');
-      const updatedOptions = Object.assign(sampleItemViewProps.options, {
+    });
+    it('should have boxshadow if defined2', () => {
+      sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
         [optionsMap.stylingParams.itemEnableShadow]: false,
         [optionsMap.stylingParams.itemShadowOpacityAndColor]:
           'rgba(0, 0, 0, 0.2)',
@@ -143,14 +145,12 @@ describe('Item View', () => {
         [optionsMap.layoutParams.structure.itemSpacing]: 5,
         [optionsMap.layoutParams.info.layout]: 'ATTACHED_BACKGROUND',
       });
-      driver.set.props({
-        options: updatedOptions,
-      });
-      style = driver.find.hook('item-container').get(0).props.style;
+      driver.mount(ItemView, sampleItemViewProps);
+      const style = driver.find.hook('item-container').get(0).props.style;
       expect(style.boxShadow).to.equal(undefined);
     });
 
-    it('item-Wrapper should have class based on cubeType', () => {
+    it('item-Wrapper should have class based on cubeType1', () => {
       sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
         [optionsMap.layoutParams.crop.enable]: true,
         [optionsMap.layoutParams.crop.method]: 'foo',
@@ -159,17 +159,17 @@ describe('Item View', () => {
       expect(
         driver.find.hook('item-wrapper').hasClass('cube-type-foo')
       ).to.equal(true);
-      const updatedOptions = Object.assign(sampleItemViewProps.options, {
+    });
+    it('item-Wrapper should have class based on cubeType2', () => {
+      sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
         [optionsMap.layoutParams.crop.enable]: false,
       });
-      driver.set.props({
-        options: updatedOptions,
-      });
+      driver.mount(ItemView, sampleItemViewProps);
       expect(
         driver.find.hook('item-wrapper').hasClass('cube-type-foo')
       ).to.equal(false);
     });
-    it('should toggle overflowY visible/inherit test2', () => {
+    it('should toggle overflowY inherit test2', () => {
       Object.assign(sampleItemViewProps, {
         style: { bgColor: 'red' },
       });
@@ -178,15 +178,18 @@ describe('Item View', () => {
           GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
       });
       driver.mount(ItemView, sampleItemViewProps);
-      let style = driver.find.hook('item-wrapper').get(0).props.style;
+      const style = driver.find.hook('item-wrapper').get(0).props.style;
       expect(style.backgroundColor).to.equal('inherit');
-      const updatedOptions = Object.assign(sampleItemViewProps.options, {
-        [optionsMap.layoutParams.crop.method]: 'foot',
+    });
+    it('should toggle overflowY visible test2', () => {
+      Object.assign(sampleItemViewProps, {
+        style: { bgColor: 'red' },
       });
-      driver.set.props({
-        options: updatedOptions,
+      sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
+        [optionsMap.layoutParams.crop.method]: 'foot', // this is amazing, ill leave it as is instead of undefined
       });
-      style = driver.find.hook('item-wrapper').get(0).props.style;
+      driver.mount(ItemView, sampleItemViewProps);
+      const style = driver.find.hook('item-wrapper').get(0).props.style;
       expect(style.backgroundColor).to.equal('red');
     });
   });
