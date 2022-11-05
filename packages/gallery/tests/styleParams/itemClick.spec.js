@@ -1,10 +1,6 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import {
-  mergeNestedObjects,
-  GALLERY_CONSTS,
-  optionsMap,
-} from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2, videoItems } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -23,7 +19,7 @@ describe('options - itemClick', () => {
 
   describe('should set the correct role for each "itemClick" value', () => {
     it('expect "role" to be "link" when "itemClick" is "link"', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
       });
@@ -34,7 +30,7 @@ describe('options - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect "role" to be "button" when "itemClick" is "expand"', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
       });
@@ -45,7 +41,7 @@ describe('options - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect "role" to be "button" when "itemClick" is "fullscreen"', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
       });
@@ -56,7 +52,7 @@ describe('options - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect "role" to be "" when "itemClick" is "nothing"', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING,
       });
@@ -78,7 +74,7 @@ describe('options - itemClick', () => {
       };
     });
     it('expect item to have className "clickable" when "itemClick" is "link"', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
       });
@@ -89,7 +85,7 @@ describe('options - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect item to have className "clickable" when "itemClick" is "expand"', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
       });
@@ -100,7 +96,7 @@ describe('options - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect item to have className "clickable" when "itemClick" is "fullscreen"', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
       });
@@ -111,7 +107,7 @@ describe('options - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect item to not have className "clickable" when "itemClick" is "nothing"', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING,
       });
@@ -133,7 +129,7 @@ describe('options - itemClick', () => {
       };
     });
     it('check href when itemClick = link', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
       });
@@ -147,7 +143,7 @@ describe('options - itemClick', () => {
       driver.detach.proGallery();
     });
     it('check href when itemClick = expand', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
       });
@@ -171,7 +167,7 @@ describe('options - itemClick', () => {
     });
 
     it('expect to find video element', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING,
         [optionsMap.behaviourParams.item.video.playTrigger]:
@@ -188,7 +184,7 @@ describe('options - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect not to find video element when "itemClick" is "expand"', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
         [optionsMap.behaviourParams.item.video.playTrigger]:
@@ -204,7 +200,7 @@ describe('options - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect not to find video element when "itemClick" is "fullscreen"', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
         [optionsMap.behaviourParams.item.video.playTrigger]:
@@ -221,7 +217,7 @@ describe('options - itemClick', () => {
       driver.detach.proGallery();
     });
     it('expect not to find video element when "itemClick" is "link"', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
         [optionsMap.behaviourParams.item.video.playTrigger]:
@@ -244,7 +240,7 @@ describe('options - itemClick', () => {
       galleryDriver,
       selector = '.magnified-item-container'
     ) => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].MAGNIFY,
       });

@@ -1,9 +1,5 @@
 //Yonatan Hattav Jun21
-import {
-  optionsMap,
-  GALLERY_CONSTS,
-  mergeNestedObjects,
-} from 'pro-gallery-lib';
+import { optionsMap, GALLERY_CONSTS } from 'pro-gallery-lib';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import GalleryDriver from '../../drivers/reactDriver';
@@ -55,16 +51,13 @@ describe('Item View', () => {
       Object.assign(sampleItemViewProps, {
         type: 'image',
       });
-      sampleItemViewProps.options = mergeNestedObjects(
-        sampleItemViewProps.options,
-        {
-          [optionsMap.behaviourParams.item.clickAction]:
-            GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
-          [optionsMap.behaviourParams.item.video.playTrigger]:
-            GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
-              .CLICK,
-        }
-      );
+      sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
+        [optionsMap.behaviourParams.item.clickAction]:
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
+        [optionsMap.behaviourParams.item.video.playTrigger]:
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
+            .CLICK,
+      });
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
       driver.find.hook('item-wrapper').simulate('click');
@@ -77,13 +70,10 @@ describe('Item View', () => {
         thumbnailHighlightId: null,
         type: 'image',
       });
-      sampleItemViewProps.options = mergeNestedObjects(
-        sampleItemViewProps.options,
-        {
-          [optionsMap.behaviourParams.item.clickAction]:
-            GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
-        }
-      );
+      sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
+        [optionsMap.behaviourParams.item.clickAction]:
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
+      });
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
       driver.find.hook('item-wrapper').simulate('click');
@@ -118,15 +108,11 @@ describe('Item View', () => {
         type: 'video',
         idx: 0,
       });
-      sampleItemViewProps.options = mergeNestedObjects(
-        sampleItemViewProps.options,
-        {
-          [optionsMap.behaviourParams.item.video.enablePlaceholder]: true,
-          [optionsMap.layoutParams.structure.galleryLayout]:
-            GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-              .EMPTY,
-        }
-      );
+      sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
+        [optionsMap.behaviourParams.item.video.enablePlaceholder]: true,
+        [optionsMap.layoutParams.structure.galleryLayout]:
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
+      });
       driver.mount(ItemView, sampleItemViewProps);
       expect(driver.find.selector(VideoItemPlaceholder).length).to.equal(1);
     });
@@ -134,23 +120,20 @@ describe('Item View', () => {
   //compunentDidUpdate not tested
   describe('render', () => {
     it('should have boxshadow if defined', () => {
-      sampleItemViewProps.options = mergeNestedObjects(
-        sampleItemViewProps.options,
-        {
-          [optionsMap.stylingParams.itemEnableShadow]: true,
-          [optionsMap.stylingParams.itemShadowOpacityAndColor]:
-            'rgba(0, 0, 0, 0.2)',
-          [optionsMap.stylingParams.itemShadowBlur]: 15,
-          [optionsMap.stylingParams.itemShadowDirection]: 0,
-          [optionsMap.stylingParams.itemShadowSize]: 18,
-          [optionsMap.layoutParams.structure.itemSpacing]: 5,
-          [optionsMap.layoutParams.info.layout]: 'ATTACHED_BACKGROUND',
-        }
-      );
+      sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
+        [optionsMap.stylingParams.itemEnableShadow]: true,
+        [optionsMap.stylingParams.itemShadowOpacityAndColor]:
+          'rgba(0, 0, 0, 0.2)',
+        [optionsMap.stylingParams.itemShadowBlur]: 15,
+        [optionsMap.stylingParams.itemShadowDirection]: 0,
+        [optionsMap.stylingParams.itemShadowSize]: 18,
+        [optionsMap.layoutParams.structure.itemSpacing]: 5,
+        [optionsMap.layoutParams.info.layout]: 'ATTACHED_BACKGROUND',
+      });
       driver.mount(ItemView, sampleItemViewProps);
       let style = driver.find.hook('item-container').get(0).props.style;
       expect(style.boxShadow).to.equal('0px -18px 15px rgba(0, 0, 0, 0.2)');
-      const updatedOptions = mergeNestedObjects(sampleItemViewProps.options, {
+      const updatedOptions = Object.assign(sampleItemViewProps.options, {
         [optionsMap.stylingParams.itemEnableShadow]: false,
         [optionsMap.stylingParams.itemShadowOpacityAndColor]:
           'rgba(0, 0, 0, 0.2)',
@@ -168,18 +151,15 @@ describe('Item View', () => {
     });
 
     it('item-Wrapper should have class based on cubeType', () => {
-      sampleItemViewProps.options = mergeNestedObjects(
-        sampleItemViewProps.options,
-        {
-          [optionsMap.layoutParams.crop.enable]: true,
-          [optionsMap.layoutParams.crop.method]: 'foo',
-        }
-      );
+      sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
+        [optionsMap.layoutParams.crop.enable]: true,
+        [optionsMap.layoutParams.crop.method]: 'foo',
+      });
       driver.mount(ItemView, sampleItemViewProps);
       expect(
         driver.find.hook('item-wrapper').hasClass('cube-type-foo')
       ).to.equal(true);
-      const updatedOptions = mergeNestedObjects(sampleItemViewProps.options, {
+      const updatedOptions = Object.assign(sampleItemViewProps.options, {
         [optionsMap.layoutParams.crop.enable]: false,
       });
       driver.set.props({
@@ -193,17 +173,14 @@ describe('Item View', () => {
       Object.assign(sampleItemViewProps, {
         style: { bgColor: 'red' },
       });
-      sampleItemViewProps.options = mergeNestedObjects(
-        sampleItemViewProps.options,
-        {
-          [optionsMap.layoutParams.crop.method]:
-            GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
-        }
-      );
+      sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
+        [optionsMap.layoutParams.crop.method]:
+          GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
+      });
       driver.mount(ItemView, sampleItemViewProps);
       let style = driver.find.hook('item-wrapper').get(0).props.style;
       expect(style.backgroundColor).to.equal('inherit');
-      const updatedOptions = mergeNestedObjects(sampleItemViewProps.options, {
+      const updatedOptions = Object.assign(sampleItemViewProps.options, {
         [optionsMap.layoutParams.crop.method]: 'foot',
       });
       driver.set.props({

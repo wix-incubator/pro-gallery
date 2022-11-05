@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import {
   flattenObject,
   flatToNested,
-  mergeNestedObjects,
   mutatingAssignMultipleByStrings,
 } from '../src/core/helpers/optionsUtils';
 
@@ -17,7 +16,7 @@ describe('optionsUtils', () => {
   });
   it('should merge objects properly', () => {
     let expected = merged();
-    let actual = mergeNestedObjects(nested(), nested2());
+    let actual = Object.assign(nested(), nested2());
     expect(actual).to.deep.equal(expected);
   });
   it('should assign multiple strings into the same object', () => {

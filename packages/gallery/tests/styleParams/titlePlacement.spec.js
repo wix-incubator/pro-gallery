@@ -1,10 +1,6 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import {
-  mergeNestedObjects,
-  GALLERY_CONSTS,
-  optionsMap,
-} from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container, customComponents } from '../drivers/mocks/styles';
 
@@ -23,7 +19,7 @@ describe('options - titlePlacement', () => {
   });
 
   it('should place texts below images when "titlePlacement" is "SHOW_BELOW"', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.scrollDirection]:
@@ -39,7 +35,7 @@ describe('options - titlePlacement', () => {
     driver.detach.proGallery();
   });
   it('should place texts above images when "titlePlacement" is "SHOW_ABOVE"', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.scrollDirection]:
@@ -55,7 +51,7 @@ describe('options - titlePlacement', () => {
     driver.detach.proGallery();
   });
   it('should render hover when "titlePlacement" is "SHOW_ON_HOVER"', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.scrollDirection]:

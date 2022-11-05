@@ -1,10 +1,6 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import {
-  mergeNestedObjects,
-  GALLERY_CONSTS,
-  optionsMap,
-} from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -19,7 +15,7 @@ describe('options - overlaySize', () => {
       items: images2,
       options,
     };
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.overlay.position]:
@@ -29,7 +25,7 @@ describe('options - overlaySize', () => {
   });
 
   it('should set the correct overlaySize according to size type - PIXEL', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.behaviourParams.item.overlay.size]: 20,
       [optionsMap.behaviourParams.item.overlay.sizeUnits]:
         GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.sizeUnits].PIXEL,
@@ -43,7 +39,7 @@ describe('options - overlaySize', () => {
   });
 
   it('should set the correct overlaySize according to size type- PERCENT', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       overlaySizeType: 'PERCENT',
       [optionsMap.behaviourParams.item.overlay.size]: 50,
     });

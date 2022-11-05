@@ -1,10 +1,6 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import {
-  mergeNestedObjects,
-  GALLERY_CONSTS,
-  optionsMap,
-} from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2, textItems } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -22,7 +18,7 @@ describe('options - cubeType', () => {
   });
 
   it('should set class "cube-type-fit" to "item-wrapper"(hook) when "cubeType" is "fit"', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.layoutParams.crop.enable]: true,
@@ -36,7 +32,7 @@ describe('options - cubeType', () => {
     driver.detach.proGallery();
   });
   it('should set class "cube-type-fill" to "item-wrapper"(hook) when "cubeType" is "fill"', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.layoutParams.crop.enable]: true,
@@ -50,7 +46,7 @@ describe('options - cubeType', () => {
     driver.detach.proGallery();
   });
   it('should set class "grid-fit" to "image-item"(hook) when "cubeType" is "fit"', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.layoutParams.crop.enable]: true,
@@ -65,7 +61,7 @@ describe('options - cubeType', () => {
   });
   it('should set "backgroundColor" to "transparent" on text items when "cubeType" is "fill"', async () => {
     initialProps.items = textItems;
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.layoutParams.crop.enable]: true,
@@ -81,7 +77,7 @@ describe('options - cubeType', () => {
   });
   it('should set "backgroundColor" to "inherit" on text items when "cubeType" is "fit"', async () => {
     initialProps.items = textItems;
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.layoutParams.crop.enable]: true,

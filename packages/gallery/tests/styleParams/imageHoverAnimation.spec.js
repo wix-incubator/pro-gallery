@@ -1,10 +1,6 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import {
-  mergeNestedObjects,
-  GALLERY_CONSTS,
-  optionsMap,
-} from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -22,7 +18,7 @@ describe('options - imageHoverAnimation', () => {
   });
 
   it('should have "Zoom in" animation on items', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.content.hoverAnimation]:
@@ -36,7 +32,7 @@ describe('options - imageHoverAnimation', () => {
     driver.detach.proGallery();
   });
   it('should have "Blur" animation on items', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.content.hoverAnimation]:
@@ -50,7 +46,7 @@ describe('options - imageHoverAnimation', () => {
     driver.detach.proGallery();
   });
   it('should have "Greyscale" animation on items', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.content.hoverAnimation]:
@@ -64,7 +60,7 @@ describe('options - imageHoverAnimation', () => {
     driver.detach.proGallery();
   });
   it('should have "Shrink" animation on items', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.content.hoverAnimation]:
@@ -78,7 +74,7 @@ describe('options - imageHoverAnimation', () => {
     driver.detach.proGallery();
   });
   it('should have "invert" animation on items', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.content.hoverAnimation]:
@@ -92,7 +88,7 @@ describe('options - imageHoverAnimation', () => {
     driver.detach.proGallery();
   });
   it('should have "Color in" animation on items', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.content.hoverAnimation]:
@@ -106,7 +102,7 @@ describe('options - imageHoverAnimation', () => {
     driver.detach.proGallery();
   });
   it('should have "Darkened" animation on items', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.content.hoverAnimation]:

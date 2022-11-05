@@ -1,10 +1,6 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import {
-  mergeNestedObjects,
-  GALLERY_CONSTS,
-  optionsMap,
-} from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -22,7 +18,7 @@ describe('options - hasThumbnails', () => {
   });
 
   it('should render thumbnails element when "hasThumbnails" and the gallery is horizontal"', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.layoutParams.thumbnails.enable]: true,
@@ -37,7 +33,7 @@ describe('options - hasThumbnails', () => {
     driver.detach.proGallery();
   });
   it('should not render thumbnails element when "hasThumbnails" is "true" and the gallery is vertical', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.layoutParams.thumbnails.enable]: true,
@@ -52,7 +48,7 @@ describe('options - hasThumbnails', () => {
     driver.detach.proGallery();
   });
   it('should not render thumbnails element when "hasThumbnails" is "false"', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.layoutParams.thumbnails.enable]: false,

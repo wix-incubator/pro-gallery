@@ -1,10 +1,6 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import {
-  mergeNestedObjects,
-  GALLERY_CONSTS,
-  optionsMap,
-} from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { videoItems } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -22,7 +18,7 @@ describe('options - videoPlay', () => {
   });
 
   it('should play videos automaticaly', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.behaviourParams.item.video.playTrigger]:
         GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO,
       [optionsMap.layoutParams.structure.galleryLayout]:
@@ -43,7 +39,7 @@ describe('options - videoPlay', () => {
     });
 
     it('should not have video elements intially (with no hover event)', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.video.playTrigger]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
             .HOVER,
@@ -57,7 +53,7 @@ describe('options - videoPlay', () => {
       driver.detach.proGallery();
     });
     it('should have video element on hover', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.video.playTrigger]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
             .HOVER,
@@ -80,7 +76,7 @@ describe('options - videoPlay', () => {
     });
 
     it('should not have video elements intially (with no click event)', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.video.playTrigger]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
             .CLICK,
@@ -94,7 +90,7 @@ describe('options - videoPlay', () => {
       driver.detach.proGallery();
     });
     it('should have video element on click', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.video.playTrigger]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
             .CLICK,

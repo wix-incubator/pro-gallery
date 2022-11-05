@@ -1,11 +1,7 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { images2 } from '../drivers/mocks/items';
-import {
-  mergeNestedObjects,
-  GALLERY_CONSTS,
-  optionsMap,
-} from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { options, container } from '../drivers/mocks/styles';
 
 const getExpectedCalcExpression = (expectedInfoSpace) => {
@@ -28,7 +24,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
   beforeEach(() => {
     driver = new GalleryDriver();
     //base layout styles for entire test-suite
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
           .SLIDESHOW,
@@ -52,7 +48,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
 
   it('Should not render the arrows when not enough info space', async () => {
     // Exact style params relevant to this sub-test
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.info.height]: 38, // info height is 39 when default, so slideshowInfoSize < arrowsSize
       [optionsMap.layoutParams.navigationArrows.verticalAlignment]:
         GALLERY_CONSTS[
@@ -65,7 +61,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
 
   it('Checks if "INFO_CENTER" has correct distance from top for SlideShow', async () => {
     // Exact style params relevant to this sub-test
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.navigationArrows.verticalAlignment]:
         GALLERY_CONSTS[
           optionsMap.layoutParams.navigationArrows.verticalAlignment
@@ -85,7 +81,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
 
   it('Checks if "ITEM_CENTER" has correct distance from top for SlideShow', async () => {
     // Exact style params relevant to this sub-test
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.navigationArrows.verticalAlignment]:
         GALLERY_CONSTS[
           optionsMap.layoutParams.navigationArrows.verticalAlignment
@@ -98,7 +94,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
 
   it('Checks if "IMAGE_CENTER" has correct distance from top for SlideShow', async () => {
     // Exact style params relevant to this sub-test
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.navigationArrows.verticalAlignment]:
         GALLERY_CONSTS[
           optionsMap.layoutParams.navigationArrows.verticalAlignment

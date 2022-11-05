@@ -1,11 +1,7 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
-import {
-  mergeNestedObjects,
-  GALLERY_CONSTS,
-  optionsMap,
-} from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 describe('options - slideAnimation', () => {
   let initialProps;
@@ -38,7 +34,7 @@ describe('options - slideAnimation', () => {
       driver.detach.proGallery();
     });
     it('should set the correct "Fade" animation styles to the items', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.layoutParams.structure.galleryLayout]:
           GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
             .SLIDESHOW,
@@ -69,7 +65,7 @@ describe('options - slideAnimation', () => {
       expect(1).toEqual(1);
     });
     it('should not have Fade animation styles when "slideAnimations" is "Scroll"', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.layoutParams.structure.galleryLayout]:
           GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
             .SLIDESHOW,
@@ -100,7 +96,7 @@ describe('options - slideAnimation', () => {
       driver.detach.proGallery();
     });
     it('should set the correct "Fade" animation styles to the items', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.layoutParams.structure.galleryLayout]:
           GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
             .THUMBNAIL,
@@ -128,7 +124,7 @@ describe('options - slideAnimation', () => {
       );
     });
     it('should not have Fade animation styles when "slideAnimations" is "Scroll"', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
+      initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.layoutParams.structure.galleryLayout]:
           GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
             .THUMBNAIL,
