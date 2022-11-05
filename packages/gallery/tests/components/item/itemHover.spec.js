@@ -39,7 +39,7 @@ describe('ItemHover', () => {
     });
   });
 
-  it('should rendered hover inner only when needed', () => {
+  it('should rendered hover inner only when needed appreas, not hovered', () => {
     Object.assign(sampleItemViewProps, {
       itemWasHovered: false,
       renderCustomInfo: undefined,
@@ -55,7 +55,8 @@ describe('ItemHover', () => {
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(0);
-
+  });
+  it('should rendered hover inner only when needed appreas, hovered', () => {
     Object.assign(sampleItemViewProps, {
       itemWasHovered: true,
       renderCustomInfo: undefined,
@@ -71,7 +72,8 @@ describe('ItemHover', () => {
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(0);
-
+  });
+  it('should rendered hover inner only when needed appreas, not hovered with custom', () => {
     Object.assign(sampleItemViewProps, {
       itemWasHovered: false,
       renderCustomInfo: () => {},
@@ -87,7 +89,8 @@ describe('ItemHover', () => {
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(0);
-
+  });
+  it('should rendered hover inner only when needed dissapears, not hovered', () => {
     Object.assign(sampleItemViewProps, {
       itemWasHovered: false,
       renderCustomInfo: () => {},
@@ -97,22 +100,31 @@ describe('ItemHover', () => {
         GALLERY_CONSTS[
           optionsMap.behaviourParams.item.overlay.hoveringBehaviour
         ].DISAPPEARS,
+      [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
+          .SLIDE_UP,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(1);
-
+  });
+  it('should rendered hover inner only when needed, dissapears, not hovered, no effect', () => {
     Object.assign(sampleItemViewProps, {
       itemWasHovered: false,
       renderCustomInfo: () => {},
     });
     Object.assign(sampleItemViewProps.options, {
+      [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
+        ].DISAPPEARS,
       [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
         GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
           .NO_EFFECT,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(1);
-
+  });
+  it('should rendered hover inner only when needed appears hovered slideup wiht custom info', () => {
     Object.assign(sampleItemViewProps, {
       itemWasHovered: true,
       renderCustomInfo: () => {},
