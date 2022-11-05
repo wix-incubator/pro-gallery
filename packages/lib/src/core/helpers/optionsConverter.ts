@@ -228,8 +228,8 @@ function process_old_to_new_gallerySpacing(obj) {
   }
   let _obj = obj;
   let spacingVal;
-  if (_obj['layoutParams.gallerySpacing'] >= 0) {
-    spacingVal = _obj['layoutParams.gallerySpacing'];
+  if (_obj['layoutParams_gallerySpacing'] >= 0) {
+    spacingVal = _obj['layoutParams_gallerySpacing'];
   } else if (_obj['galleryMargin'] >= 0) {
     spacingVal = _obj['galleryMargin'];
   }

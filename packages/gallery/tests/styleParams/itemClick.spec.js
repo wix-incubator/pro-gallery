@@ -235,7 +235,7 @@ describe('options - itemClick', () => {
     });
   });
 
-  describe('itemClick = "MAGNIFY"', async () => {
+  describe('itemClick = "MAGNIFY"', () => {
     const mountAndGetMagnifiedItems = async (
       galleryDriver,
       selector = '.magnified-item-container'

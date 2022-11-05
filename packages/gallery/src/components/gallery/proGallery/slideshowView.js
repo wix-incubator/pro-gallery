@@ -1048,7 +1048,10 @@ class SlideshowView extends React.Component {
       margin:
         -1 *
         (this.props.options.imageMargin / 2 -
-          this.props.options[optionsMap.layoutParams.structure.gallerySpacing]),
+          (this.props.options.galleryMargin ||
+            this.props.options[
+              optionsMap.layoutParams.structure.gallerySpacing
+            ])),
       width: this.props.container.width,
       height: this.props.container.height,
     };

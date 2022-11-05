@@ -171,7 +171,7 @@ describe('Item View', () => {
     });
     it('should toggle overflowY inherit test2', () => {
       Object.assign(sampleItemViewProps, {
-        style: { bgColor: 'red' },
+        style: { ...sampleItemViewProps.style, bgColor: 'red' },
       });
       sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
         [optionsMap.layoutParams.crop.method]:
@@ -183,10 +183,11 @@ describe('Item View', () => {
     });
     it('should toggle overflowY visible test2', () => {
       Object.assign(sampleItemViewProps, {
-        style: { bgColor: 'red' },
+        style: { ...sampleItemViewProps.style, bgColor: 'red' },
       });
       sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
-        [optionsMap.layoutParams.crop.method]: 'foot', // this is amazing, ill leave it as is instead of undefined
+        [optionsMap.layoutParams.crop.method]:
+          GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL, // this is amazing, ill leave it as is instead of undefined
       });
       driver.mount(ItemView, sampleItemViewProps);
       const style = driver.find.hook('item-wrapper').get(0).props.style;

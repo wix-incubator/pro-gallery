@@ -10,7 +10,7 @@ const getExpectedCalcExpression = (expectedInfoSpace) => {
 
 describe('styleParam - arrowsVerticalPosition', () => {
   let driver;
-  const initialProps = {
+  let initialProps = {
     container,
     items: images2,
     options,
@@ -23,6 +23,16 @@ describe('styleParam - arrowsVerticalPosition', () => {
 
   beforeEach(() => {
     driver = new GalleryDriver();
+    initialProps = {
+      container,
+      items: images2,
+      options,
+      customComponents: {
+        customHoverRenderer: () => {},
+        customInfoRenderer: () => {},
+        customSlideshowInfoRenderer: () => {},
+      },
+    };
     //base layout styles for entire test-suite
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
@@ -73,7 +83,8 @@ describe('styleParam - arrowsVerticalPosition', () => {
     const { height: galleryHeight } = galleryContainer.props().style;
     const { top } = navArrows.props().style;
     const expectedInfoSpace =
-      (-1 * galleryHeight) / 2 + initialProps.options.textBoxHeight / 2;
+      (-1 * galleryHeight) / 2 +
+      initialProps.options[optionsMap.layoutParams.info.height] / 2;
     expect(top.replace(/\s/g, '')).to.eq(
       getExpectedCalcExpression(expectedInfoSpace)
     );
@@ -85,7 +96,8 @@ describe('styleParam - arrowsVerticalPosition', () => {
       [optionsMap.layoutParams.navigationArrows.verticalAlignment]:
         GALLERY_CONSTS[
           optionsMap.layoutParams.navigationArrows.verticalAlignment
-        ].INFO_CENTER,
+        ].ITEM_CENTER,
+      [optionsMap.layoutParams.info.height]: 39,
     });
     const navArrows = await mountGalleryAndGetArrows(initialProps);
     const { top } = navArrows.props().style;
@@ -102,7 +114,8 @@ describe('styleParam - arrowsVerticalPosition', () => {
     });
     const navArrows = await mountGalleryAndGetArrows(initialProps);
     const { top } = navArrows.props().style;
-    const expectedInfoSpace = initialProps.options.textBoxHeight / 2;
+    const expectedInfoSpace =
+      initialProps.options[optionsMap.layoutParams.info.height] / 2;
     expect(top.replace(/\s/g, '')).to.eq(
       getExpectedCalcExpression(expectedInfoSpace)
     );

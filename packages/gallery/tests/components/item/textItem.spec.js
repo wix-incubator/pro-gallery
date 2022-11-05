@@ -32,7 +32,9 @@ describe('Text Item', () => {
           GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
       },
     });
-    Object.assign(textItemProps, { style: { bgColor: 'red' } });
+    Object.assign(textItemProps, {
+      style: { ...textItemProps.style, bgColor: 'red' },
+    });
     galleryDriver.mount(TextItem, textItemProps);
     const style = galleryDriver.find
       .class('gallery-item-loaded.text-item')
@@ -41,7 +43,9 @@ describe('Text Item', () => {
   });
 
   it('should resize itself', () => {
-    Object.assign(textItemProps, { style: { maxWidth: 100, maxHeight: 100 } });
+    Object.assign(textItemProps, {
+      style: { ...textItemProps.style, maxWidth: 100, maxHeight: 100 },
+    });
     galleryDriver.mount(TextItem, textItemProps);
     const style = galleryDriver.find
       .class('gallery-item-loaded.text-item')

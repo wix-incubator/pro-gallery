@@ -23,7 +23,7 @@ describe('options - showVideoControls', () => {
     });
     driver.mount(VideoItem, sampleItemViewProps);
     await driver.update(200);
-    console.log(driver.find.selector('ReactPlayer').props());
+    // console.log(driver.find.selector('ReactPlayer').props());
     const playerProps = driver.find.selector('ReactPlayer').props();
     expect(playerProps.controls).toBe(true);
   });
@@ -37,7 +37,7 @@ describe('options - showVideoControls', () => {
     });
     driver.mount(VideoItem, sampleItemViewProps);
     await driver.update(200);
-    console.log(driver.find.selector('ReactPlayer').props());
+    // console.log(driver.find.selector('ReactPlayer').props());
     const playerProps = driver.find.selector('ReactPlayer').props();
     expect(playerProps.controls).toBe(false);
   });

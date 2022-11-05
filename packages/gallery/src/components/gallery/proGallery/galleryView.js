@@ -201,7 +201,10 @@ class GalleryView extends React.Component {
           className={'pro-gallery-margin-container'}
           style={{
             margin:
-              options[optionsMap.layoutParams.structure.gallerySpacing] + 'px',
+              (this.props.options.galleryMargin ||
+                this.props.options[
+                  optionsMap.layoutParams.structure.gallerySpacing
+                ]) + 'px',
             height: galleryHeight,
             width: galleryWidth,
             overflow: 'visible',
