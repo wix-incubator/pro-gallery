@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap, utils } from 'pro-gallery-lib';
 import ImageRenderer from './imageRenderer';
 
 class ImageItem extends React.Component {
@@ -211,7 +211,7 @@ class ImageItem extends React.Component {
 
       const shouldRenderHighResImages = !this.props.isPrerenderMode;
       const imageType =
-        options.stylingParams?.itemResolutionMode ===
+        options[optionsMap.stylingParams.itemResolutionMode] ===
         GALLERY_CONSTS.itemResolutionMode.FULL
           ? GALLERY_CONSTS.urlSizes.FULL
           : GALLERY_CONSTS.urlSizes.MULTI;
