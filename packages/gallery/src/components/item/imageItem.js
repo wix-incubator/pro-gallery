@@ -152,6 +152,8 @@ class ImageItem extends React.Component {
           }
         : {};
 
+      const loadingStyles = {visibility: 'hidden'};
+
       if (!isHighResImageLoaded && !isTransparent) {
         let preload = null;
         const preloadProps = {
@@ -233,6 +235,7 @@ class ImageItem extends React.Component {
             ...imageSizing,
             ...blockDownloadStyles,
             ...(!shouldRenderHighResImages && preloadStyles),
+            ...(!isHighResImageLoaded && loadingStyles),
           }}
           {...imageProps}
           customImageRenderer={this.props.customComponents?.customImageRenderer}
