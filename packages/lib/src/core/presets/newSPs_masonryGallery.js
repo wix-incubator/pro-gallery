@@ -35,11 +35,11 @@ export const createOptions = (options) => {
     res[optionsMap.layoutParams.structure.layoutOrientation] ===
     GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
       .VERTICAL;
-  res[optionsMap.layoutParams.targetItemSize.value] = calcTargetItemSize(
+  res.targetItemSize = calcTargetItemSize(
     res,
     isVerticalOrientation
-      ? res[optionsMap.layoutParams.targetItemSize.value] * 8 + 200
-      : res[optionsMap.layoutParams.targetItemSize.value] * 5 + 200
+      ? res.targetItemSize * 8 + 200
+      : res.targetItemSize * 5 + 200
   );
   if (featureManager.supports.fixedColumnsInMasonry) {
     res = processNumberOfImagesPerRow(res);

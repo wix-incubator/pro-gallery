@@ -52,7 +52,11 @@ const fixToMix = (options) => {
   presetOptions[optionsMap.layoutParams.groups.numberOfGroupsPerRow] = 0;
   presetOptions[optionsMap.layoutParams.structure.groupsOrder] =
     GALLERY_CONSTS[optionsMap.layoutParams.structure.groupsOrder].BY_HEIGHT;
-  // presetOptions.rotatingCropRatios = ''; //NEW STYLEPARAMS METHOD
+
+  //layouter direct API
+  presetOptions.fixedColumns = 1;
+  //layouter direct API
+
   return presetOptions;
 };
 export const fixedOptions = fixToMix({});
@@ -60,6 +64,6 @@ export const fixedOptions = fixToMix({});
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToMix(res);
-  res[optionsMap.layoutParams.targetItemSize.value] = calcTargetItemSize(res);
+  res.targetItemSize = calcTargetItemSize(res);
   return res;
 };

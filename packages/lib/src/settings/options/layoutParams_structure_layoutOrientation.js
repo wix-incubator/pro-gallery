@@ -15,5 +15,7 @@ export default {
     'Set a Vertical gallery ("Scroll Direction" as "Vertical").',
   options: createOptions('isVertical'), //NEW STYPEPARAMS METHOD need to change to the right const
   type: INPUT_TYPES.OPTIONS,
-  default: false,
+  default:
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
+      .HORIZONTAL,
 };

@@ -35,6 +35,10 @@ const fixToColumn = (options) => {
     GALLERY_CONSTS[
       optionsMap.behaviourParams.gallery.horizontal.slideAnimation
     ].SCROLL;
+
+  //layouter direct API
+  presetOptions.fixedColumns = 0;
+  //layouter direct API
   return presetOptions;
 };
 export const fixedOptions = fixToColumn({});
@@ -42,6 +46,6 @@ export const fixedOptions = fixToColumn({});
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToColumn(res);
-  res[optionsMap.layoutParams.targetItemSize.value] = calcTargetItemSize(res);
+  res.targetItemSize = calcTargetItemSize(res);
   return res;
 };
