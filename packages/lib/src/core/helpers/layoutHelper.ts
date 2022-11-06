@@ -318,6 +318,8 @@ const addMarginsToSupportShadows = (options) => {
       (_options.itemShadowSize || 0) +
         (_options.itemShadowBlur || 0)
     );
+    _options.layoutParams_gallerySpacing = _gallerySpacing;
+    _options.galleryMargin = _gallerySpacing;
     _options = assignByString(_options, 'layoutParams_gallerySpacing', _gallerySpacing)
   }
   return _options;

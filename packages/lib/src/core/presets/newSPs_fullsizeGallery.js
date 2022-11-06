@@ -21,7 +21,7 @@ const fixToFullsize = (options) => {
   presetOptions[optionsMap.layoutParams.structure.layoutOrientation] =
     GALLERY_CONSTS[
       optionsMap.layoutParams.structure.layoutOrientation
-    ].VERTICAL;
+    ].HORIZONTAL;
   presetOptions[optionsMap.layoutParams.groups.groupSize] = 1;
   presetOptions[optionsMap.layoutParams.groups.allowedGroupTypes] = [
     GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['1'],
@@ -46,6 +46,6 @@ export const fixedOptions = fixToFullsize({});
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToFullsize(res);
-  res[optionsMap.layoutParams.targetItemSize.value] = calcTargetItemSize(res);
+  res.targetItemSize = calcTargetItemSize(res);
   return res;
 };

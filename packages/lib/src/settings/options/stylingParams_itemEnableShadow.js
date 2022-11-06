@@ -15,7 +15,8 @@ export default {
         .VERTICAL &&
     !(
       layoutParams_crop_method.isRelevant(options) &&
-      options.cubeType === GALLERY_CONSTS.cubeType.FIT
+      options[optionsMap.layoutParams.crop.method] ===
+        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
     ) &&
     ((layoutParams_info_layout.isRelevant(options) &&
       options[optionsMap.layoutParams.info.layout] ===
@@ -23,8 +24,7 @@ export default {
           .ATTACHED_BACKGROUND) ||
       (layoutParams_info_placement.isRelevant(options) &&
         options[optionsMap.layoutParams.info.placement] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.info.placement]
-            .SHOW_ON_HOVER)),
+          GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY)),
   // as this is kind of a big is relevant I am leaving this old form here for refference in case there are bugs here
   // isRelevant: (options) =>
   //   !(options.cubeImages && options.cubeType === GALLERY_CONSTS.cubeType.FIT) &&

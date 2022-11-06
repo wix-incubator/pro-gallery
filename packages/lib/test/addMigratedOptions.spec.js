@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { addMigratedOptions } from '../src/core/helpers/optionsConverter';
 import GALLERY_CONSTS from '../src/common/constants';
 
-describe('optionsUtils', () => {
+describe('addMigratedOptions', () => {
   it('should create a nested object out of a flat object', () => {
     const actual = addMigratedOptions(input());
     expect(actual).to.deep.equal(expected());
@@ -423,6 +423,7 @@ function expected() {
     responsive: false,
     targetItemSize: 650,
     layoutParams_structure_galleryLayout: 0,
+    layoutParams_structure_gallerySpacing: 0,
     layoutParams_structure_itemSpacing: 10,
     layoutParams_crop_enable: false,
     layoutParams_crop_enableSmartCrop: false,

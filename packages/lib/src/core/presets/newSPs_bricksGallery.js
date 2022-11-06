@@ -58,6 +58,9 @@ const fixToBricks = (options) => {
   presetOptions[optionsMap.layoutParams.crop.ratios] = [
     0.707, 1.414, 1.414, 0.707,
   ];
+  //layouter direct API
+  presetOptions.fixedColumns = 1;
+  //layouter direct API
   return presetOptions;
 };
 
@@ -66,6 +69,6 @@ export const fixedOptions = fixToBricks({});
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToBricks(res);
-  res[optionsMap.layoutParams.targetItemSize.value] = calcTargetItemSize(res);
+  res.targetItemSize = calcTargetItemSize(res);
   return res;
 };

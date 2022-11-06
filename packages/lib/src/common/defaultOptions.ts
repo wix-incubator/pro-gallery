@@ -6,6 +6,7 @@ import {
   flatToNested,
 } from '../core/helpers/optionsUtils';
 
+import { flatV4DefaultOptions } from './v4DefaultOptions';
 const defaultOptions = mergeNestedObjects(coreOptions, {
   layoutParams: {
     repeatingGroupTypes: '',
@@ -94,13 +95,16 @@ export const flatDefaultOptions = flattenObject(defaultOptions);
 
 export function populateWithDefaultOptions(options) {
   const flatOptions = flattenObject(options);
-  const mergedOptions = Object.assign({}, flatDefaultOptions, flatOptions);
+  const flatDefaults = options.newSPs
+    ? flatV4DefaultOptions
+    : flatDefaultOptions;
+  const mergedOptions = Object.assign({}, flatDefaults, flatOptions);
   Object.keys(mergedOptions).forEach((key) => {
     if (typeof mergedOptions[key] === 'undefined') {
       mergedOptions[key] = defaultOptions[key];
     }
   });
-  return flatToNested(mergedOptions);
+  return { ...flatToNested(mergedOptions), ...mergedOptions };
 }
 
 export default defaultOptions;

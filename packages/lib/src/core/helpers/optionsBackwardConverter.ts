@@ -17,7 +17,9 @@ function addOldOptions(flatOptions) {
   let flat_combinedOptions = {
     ...trimUndefinedValues_flat(flat_migrated),
     ...trimUndefinedValues_flat(flatOptions),
+    // ...(flatOptions.newSPs ? trimUndefinedValues_flat(flat_migrated) : {}),
   };
+  flat_combinedOptions.wasConvertedToOldOptions = true;
   return flat_combinedOptions;
 }
 
@@ -433,10 +435,10 @@ function process_new_to_old_OverlayHoveringBehaviour(obj) {
     'hoveringBehaviour'
   );
   switch (_obj['hoveringBehaviour']) {
-    case 'ALWAYS_VISIBLE':
+    case 'ALWAYS_SHOW':
       _obj['hoveringBehaviour'] = 'NO_CHANGE';
       break;
-    case 'NEVER_VISIBLE':
+    case 'NEVER_SHOW':
       _obj['hoveringBehaviour'] = 'NEVER_SHOW';
       break;
     default:
@@ -560,7 +562,6 @@ function process_new_to_old_GroupTypes(obj) {
 }
 function process_new_to_old_NumberOfColumns(obj) {
   let _obj = obj;
-  _obj.fixedColumns = _obj.fixedColumns || undefined;
   _obj.numberOfImagesPerRow =
     _obj[optionsMap.layoutParams.structure.numberOfColumns];
   delete _obj[optionsMap.layoutParams.structure.numberOfColumns];

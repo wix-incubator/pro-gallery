@@ -59,6 +59,10 @@ export const nameChangedBehaviourParams = [
   ['overlaySizeType', optionsMap.behaviourParams.item.overlay.sizeUnits],
   ['overlayPadding', optionsMap.behaviourParams.item.overlay.padding],
   [
+    'overlayBackground',
+    optionsMap.behaviourParams.item.overlay.backgroundColor,
+  ],
+  [
     'imageHoverAnimation',
     optionsMap.behaviourParams.item.content.hoverAnimation,
   ],
@@ -136,6 +140,7 @@ export const nameChangedStylingParams = [
   ['itemShadowSize', optionsMap.stylingParams.itemShadowSize],
   ['itemEnableShadow', optionsMap.stylingParams.itemEnableShadow],
   ['itemBorderRadius', optionsMap.stylingParams.itemBorderRadius],
+  ['itemBorderColor', optionsMap.stylingParams.itemBorderColor],
   ['itemBorderWidth', optionsMap.stylingParams.itemBorderWidth],
 ];
 
