@@ -15,7 +15,7 @@ import v4DefaultOptions from '../src/common/v4DefaultOptions';
 
 describe('Styles processing', () => {
   //one way
-  it.only('should migrated new options to old ones', () => {
+  it('should migrated new options to old ones', () => {
     let old = reverseMigrateOptions(flattenObject(defaultOptions_new()));
     expect(flatToNested(old)).to.eql(defaultOptions_old());
   });
