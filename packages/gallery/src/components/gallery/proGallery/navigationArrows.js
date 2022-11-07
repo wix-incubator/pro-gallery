@@ -41,7 +41,7 @@ export function NavigationArrows({
     customNavArrowsRenderer,
     arrowsColor: arrowsColor,
     arrowsSize: arrowsSize,
-    arrowsType: [optionsMap.layoutParams.navigationArrows.type],
+    arrowsType: options[optionsMap.layoutParams.navigationArrows.type],
     containerStyleType:
       options[optionsMap.layoutParams.navigationArrows.container.type],
   });
