@@ -8,6 +8,7 @@ import {
   addPresetOptions,
 } from 'pro-gallery-lib';
 import {optionsList} from './settings'
+import deeplyEqual from 'deep-equal';
 
 optionsList.forEach( 
   (option) => {
@@ -55,18 +56,22 @@ export const isValidOption = (option, value, options) => {
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} is undefined`);
     return false;
   }
+  if (!(option.includes('layoutParams_') || option.includes('behaviourParams_') || option.includes('stylingParams_'))) {
+    // console.log(`[STYLE PARAMS - VALIDATION] ${option} is not a new flat option`);
+    return false;
+  }
   if (typeof value === 'undefined') {
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is undefined`);
     return false;
   }
-  if (value === flatV4DefaultOptions[option]) {
+  if (deeplyEqual(value,flatV4DefaultOptions[option])) {
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is as the default: ${value}`);
     return false;
   }
   options = { ...flatV4DefaultOptions, ...options };
   const fixedPresetOptions = NEW_PRESETS['newSPs_' + getLayoutName(options[optionsMap.layoutParams.structure.galleryLayout])];
   options = { ...options, ...fixedPresetOptions, }
-  if (option !== optionsMap.layoutParams.structure.galleryLayout && value === fixedPresetOptions[option]) {
+  if (option !== optionsMap.layoutParams.structure.galleryLayout && deeplyEqual(value, fixedPresetOptions[option])) {
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is as the fixedPresetOptions: ${value}`, fixedPresetOptions, getLayoutName(options.galleryLayout));
     return false;
   }
