@@ -316,7 +316,14 @@ export const removeBordersIfNeeded = (options) => { //NEW STYPEPARAMS METHOD don
   return _options
 }
 
-
+const cropItemsWithCropOnlyFillParam = (options) => {
+  let _options = { ...options };
+  if (_options[optionsMap.layoutParams.crop.cropOnlyFill]) {
+    _options[optionsMap.layoutParams.crop.enable] =
+      _options[optionsMap.layoutParams.crop.method] === GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL;
+  }
+  return _options;
+};
 
 function processLayouts(options, customExternalInfoRendererExists) {
   let processedOptions = {...options};
@@ -341,6 +348,7 @@ function processLayouts(options, customExternalInfoRendererExists) {
     processedOptions = blockScrollOnFadeOrDeckScrollAnimations(processedOptions); 
     processedOptions = blockVideoControlsOnMouseCursorNavigation(processedOptions);
     processedOptions = blockMouseCursorNavigationOnTouchDevice(processedOptions);
+    processedOptions = cropItemsWithCropOnlyFillParam(processedOptions);
 
   return processedOptions;
 }
