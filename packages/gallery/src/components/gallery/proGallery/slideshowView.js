@@ -5,6 +5,7 @@ import {
   utils,
   isEditMode,
   isPreviewMode,
+  optionsMap,
 } from 'pro-gallery-lib';
 import GroupView from '../../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
@@ -966,8 +967,6 @@ class SlideshowView extends React.Component {
       const { galleryHeight, galleryWidth, height, width } =
         this.props.container;
       const { galleryThumbnailsAlignment } = this.props.options;
-      const { position: navigationPanelPosition } =
-        this.props.options.layoutParams.thumbnails;
       const customNavigationPanelInlineStyles =
         getCustomNavigationPanelInlineStyles({
           galleryHeight,
@@ -975,7 +974,8 @@ class SlideshowView extends React.Component {
           height,
           width,
           galleryThumbnailsAlignment,
-          navigationPanelPosition,
+          navigationPanelPosition:
+            this.props.options[optionsMap.layoutParams.thumbnails.position],
         });
       navigationPanel = (
         <div
@@ -999,12 +999,12 @@ class SlideshowView extends React.Component {
         />
       );
     }
-    const { position: navigationPanelPosition } =
-      this.props.options.layoutParams.thumbnails;
+
     const { galleryThumbnailsAlignment } = this.props.options;
     const navigationPanels = [];
     if (
-      navigationPanelPosition === GALLERY_CONSTS.thumbnailsPosition.ON_GALLERY
+      this.props.options[optionsMap.layoutParams.thumbnails.position] ===
+      GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].ON_GALLERY
     ) {
       navigationPanels[0] = false;
       navigationPanels[1] = navigationPanel;
@@ -1048,7 +1048,10 @@ class SlideshowView extends React.Component {
       margin:
         -1 *
         (this.props.options.imageMargin / 2 -
-          this.props.options.layoutParams.gallerySpacing),
+          (this.props.options.galleryMargin ||
+            this.props.options[
+              optionsMap.layoutParams.structure.gallerySpacing
+            ])),
       width: this.props.container.width,
       height: this.props.container.height,
     };

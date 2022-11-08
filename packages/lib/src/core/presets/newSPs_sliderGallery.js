@@ -45,7 +45,7 @@ export const fixedOptions = fixToSlider({});
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToSlider(res);
-  res[optionsMap.layoutParams.targetItemSize.value] = calcTargetItemSize(res);
+  res.targetItemSize = calcTargetItemSize(res);
   res = removeBordersIfNeeded(res);
   return res;
 };

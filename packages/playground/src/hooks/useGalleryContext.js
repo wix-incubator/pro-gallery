@@ -8,7 +8,6 @@ import { addPresetOptions } from 'pro-gallery';
 import { SIDEBAR_WIDTH } from '../constants/consts';
 import {
   utils,
-  flatToNested,
 } from 'pro-gallery-lib';
 
 
@@ -29,7 +28,7 @@ export function useGalleryContext(
     let { items, options, container } = params;
 
     container = container || context.container || calcGalleryContainer();
-    const _options = options || context.options || flatToNested(getInitialOptions());
+    const _options = options || context.options || getInitialOptions();
     const url = `https://www.wix.com/_serverless/pro-gallery-blueprints-server/createBlueprint`;
 
     if (!items || !container || !_options) {
@@ -88,7 +87,7 @@ export function useGalleryContext(
   const setPreset = (newPreset) => {
     const newContext = {
       preset: newPreset,
-      options: flatToNested(getInitialOptions(newPreset)),
+      options: getInitialOptions(newPreset),
     };
 
     if (getGallerySettings().useBlueprints) {
@@ -99,12 +98,12 @@ export function useGalleryContext(
   };
 
   const setOptions = (newProp, value) => {
-    // console.log(`[OPTIONS - VALIDATION] settings options in the context`, newProp, value, context.options);
-    const options = flatToNested({
+    // console.log(`[OPTIONS - VALIDATION] settings options in the context`, newProp, value, context.options?.layoutParams_crop_enable);
+    const options = {
       ...getInitialOptions(),
       ...getOptionsFromUrl(window.location.search),
       [newProp]: value,
-    })
+    };
     console.log('setting new context and requesting BP', options.layoutParams)
     const newContext = {
       options,
@@ -188,7 +187,7 @@ export function useGalleryContext(
     preset: context.preset,
     setPreset,
     options: addPresetOptions(
-      context.options || flatToNested(getInitialOptions())
+      context.options || getInitialOptions()
     ), //TODO - this is a double even for the normal flow - maybe used for the sidebar somehow?
     setOptions,
     items: context.items,

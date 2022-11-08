@@ -1,5 +1,6 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -16,8 +17,9 @@ describe('imageMargin - e2e', () => {
   });
   it('should create a margin between items ', async () => {
     await driver.navigate({
-      galleryLayout: 2,
-      imageMargin: 20,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.layoutParams.structure.itemSpacing]: 20,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(2000);
@@ -26,8 +28,9 @@ describe('imageMargin - e2e', () => {
   });
   it('should not create a margin between items when "imageMargin" is "0"', async () => {
     await driver.navigate({
-      galleryLayout: 2,
-      imageMargin: 0,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.layoutParams.structure.itemSpacing]: 0,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(2000);

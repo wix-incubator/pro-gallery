@@ -318,6 +318,8 @@ const addMarginsToSupportShadows = (options) => {
       (_options.itemShadowSize || 0) +
         (_options.itemShadowBlur || 0)
     );
+    _options.layoutParams_gallerySpacing = _gallerySpacing;
+    _options.galleryMargin = _gallerySpacing;
     _options = assignByString(_options, 'layoutParams_gallerySpacing', _gallerySpacing)
   }
   return _options;
@@ -381,8 +383,7 @@ const setTextUnderline = (itemFontOption, textDecorationType, options) => {
 const cropItemsWithCropOnlyFillParam = (options) => {
   let _options = { ...options };
   if (_options.cropOnlyFill === true) {
-    _options.cubeImages = _options.layoutParams.crop.enable =
-      _options.cubeType === CROP_TYPE.CROP;
+    _options.cubeImages = _options.cubeType === CROP_TYPE.CROP;
   }
   return _options;
 };

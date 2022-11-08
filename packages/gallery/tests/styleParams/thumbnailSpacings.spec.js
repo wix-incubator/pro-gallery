@@ -1,7 +1,6 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { mergeNestedObjects } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -19,9 +18,11 @@ describe('options - thumbnailSpacings', () => {
   });
 
   it('should set "thumbnailSpacing" of "10"', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
-      thumbnailSpacings: 10,
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
+          .THUMBNAIL,
+      [optionsMap.layoutParams.thumbnails.spacing]: 10,
     });
     const mock = {
       marginLeft: 10,
@@ -34,9 +35,11 @@ describe('options - thumbnailSpacings', () => {
     driver.detach.proGallery();
   });
   it('should set "thumbnailSpacing" of "30"', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
-      thumbnailSpacings: 30,
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
+          .THUMBNAIL,
+      [optionsMap.layoutParams.thumbnails.spacing]: 30,
     });
     const mock = {
       marginLeft: 30,

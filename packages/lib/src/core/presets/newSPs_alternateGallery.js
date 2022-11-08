@@ -55,7 +55,9 @@ const fixToAlternate = (options) => {
     GALLERY_CONSTS[optionsMap.layoutParams.structure.groupsOrder].BY_HEIGHT;
   // presetOptions.rotatingCropRatios = ''; //merged with crop.ratio(s) in the new method
   // presetOptions.slideshowLoop = false; //ALTERNATE is strictly vertical, this is irrelevant.
-
+  //layouter direct API
+  presetOptions.fixedColumns = 1;
+  //layouter direct API
   return presetOptions;
 };
 export const fixedOptions = fixToAlternate({});
@@ -63,6 +65,6 @@ export const fixedOptions = fixToAlternate({});
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToAlternate(res);
-  res[optionsMap.layoutParams.targetItemSize.value] = calcTargetItemSize(res);
+  res.targetItemSize = calcTargetItemSize(res);
   return res;
 };

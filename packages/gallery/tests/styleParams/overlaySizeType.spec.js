@@ -1,7 +1,6 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { mergeNestedObjects } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -16,17 +15,20 @@ describe('options - overlaySize', () => {
       items: images2,
       options,
     };
-    initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      overlayPosition: GALLERY_CONSTS.overlayPositions.LEFT,
-      overlayPadding: 0,
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.item.overlay.position]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.position].LEFT,
+      [optionsMap.behaviourParams.item.overlay.padding]: 0,
     });
   });
 
   it('should set the correct overlaySize according to size type - PIXEL', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
-      overlaySize: 20,
-      overlaySizeType: 'PIXEL',
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.behaviourParams.item.overlay.size]: 20,
+      [optionsMap.behaviourParams.item.overlay.sizeUnits]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.sizeUnits].PIXEL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -37,9 +39,9 @@ describe('options - overlaySize', () => {
   });
 
   it('should set the correct overlaySize according to size type- PERCENT', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
+    initialProps.options = Object.assign(initialProps.options, {
       overlaySizeType: 'PERCENT',
-      overlaySize: 50,
+      [optionsMap.behaviourParams.item.overlay.size]: 50,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

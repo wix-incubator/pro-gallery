@@ -7,7 +7,7 @@ const fixToCollage = (options) => {
   let presetOptions = { ...options };
   presetOptions[optionsMap.layoutParams.structure.galleryLayout] =
     GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].COLLAGE;
-  presetOptions[optionsMap.layoutParams.crop.enable] = true;
+  presetOptions[optionsMap.layoutParams.crop.enable] = false;
   GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY;
   presetOptions[optionsMap.layoutParams.groups.groupSize] = 3;
   presetOptions[optionsMap.layoutParams.thumbnails.enable] = false;
@@ -35,6 +35,10 @@ const fixToCollage = (options) => {
     GALLERY_CONSTS[
       optionsMap.behaviourParams.gallery.horizontal.slideAnimation
     ].SCROLL;
+
+  //layouter direct API
+  presetOptions.fixedColumns = 0;
+  //layouter direct API
   return presetOptions;
 };
 export const fixedOptions = fixToCollage({});
@@ -42,9 +46,9 @@ export const fixedOptions = fixToCollage({});
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToCollage(res);
-  res[optionsMap.layoutParams.targetItemSize.value] = calcTargetItemSize(
+  res.targetItemSize = calcTargetItemSize(
     res,
-    Math.round(res[optionsMap.layoutParams.targetItemSize.value] * 5 + 500)
+    Math.round(res.targetItemSize * 5 + 500)
   );
   return res;
 };

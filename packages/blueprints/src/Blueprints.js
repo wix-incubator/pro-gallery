@@ -2,13 +2,22 @@ import { Layouter, ItemsHelper } from 'pro-layouts';
 import {
   populateWithDefaultOptions,
   addPresetOptions,
+  newSPs_processLayouts,
   dimensionsHelper,
+  newSPs_dimensionsHelper,
   processLayouts,
   utils,
   extendNestedOptionsToIncludeOldAndNew,
 } from 'pro-gallery-lib';
 
 class Blueprints {
+  getProcessLayoutsFunc(newSPs) {
+    if (newSPs) {
+      return newSPs_processLayouts;
+    } else {
+      return processLayouts;
+    }
+  }
   createBlueprint({
     params,
     lastParams,
@@ -264,7 +273,7 @@ class Blueprints {
         mergedOldAndNewStyles
       ); //add default for any undefined option
       formattedOptions = extendNestedOptionsToIncludeOldAndNew(
-        processLayouts(
+        this.getProcessLayoutsFunc(fullOptionsOverDefualts.newSPs)(
           addPresetOptions(fullOptionsOverDefualts),
           isUsingCustomInfoElements
         )
@@ -325,16 +334,29 @@ class Blueprints {
         oldOptions,
       })
     ) {
-      dimensionsHelper.updateParams({
-        options: formattedOptions,
-        container,
-      });
-      changed = true;
-      formattedContainer = Object.assign(
-        {},
-        container,
-        dimensionsHelper.getGalleryDimensions()
-      );
+      if (formattedOptions.newSPs) {
+        newSPs_dimensionsHelper.updateParams({
+          options: formattedOptions,
+          container,
+        });
+        changed = true;
+        formattedContainer = Object.assign(
+          {},
+          container,
+          newSPs_dimensionsHelper.getGalleryDimensions()
+        );
+      } else {
+        dimensionsHelper.updateParams({
+          options: formattedOptions,
+          container,
+        });
+        changed = true;
+        formattedContainer = Object.assign(
+          {},
+          container,
+          dimensionsHelper.getGalleryDimensions()
+        );
+      }
     }
     return { formattedContainer, changed };
   }

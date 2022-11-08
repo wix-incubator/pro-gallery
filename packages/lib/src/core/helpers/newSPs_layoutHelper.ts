@@ -6,21 +6,21 @@ import {
   isConstantVerticalPlacement,
   isHoverPlacement,
 } from '../../common/constants/layoutParams_info_placement';
-
+import { default as old_processLayouts } from './layoutHelper'
 import { default as GALLERY_CONSTS } from '../../common/constants';
-import processTextDimensions from './textBoxDimensionsHelper'
+import processTextDimensions from './newSPs_textBoxDimensionsHelper'
 import { default as slideAnimation } from '../../settings/options/behaviourParams_gallery_horizontal_slideAnimation';
 import { default as arrowsPosition } from '../../settings/options/layoutParams_navigationArrows_position';
 import optionsMap from './optionsMap';
 
 export const calcTargetItemSize = (options, smartValue) => { //NEW STYPEPARAMS METHOD done.
   if (
-    options[optionsMap.layoutParams.targetItemSize.unit] === GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].PIXELS &&
+    options[optionsMap.layoutParams.targetItemSize.unit] === GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].PIXEL &&
     options[optionsMap.layoutParams.targetItemSize.value] > 0
   ) {
     return options[optionsMap.layoutParams.targetItemSize.value];
   } else if (
-    options[optionsMap.layoutParams.targetItemSize.unit] === GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].RATIO &&
+    options[optionsMap.layoutParams.targetItemSize.unit] === GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].PERCENT &&
     options[optionsMap.layoutParams.targetItemSize.value] > 0
   ) {
     return (
@@ -28,13 +28,15 @@ export const calcTargetItemSize = (options, smartValue) => { //NEW STYPEPARAMS M
     );
   } else if(smartValue > 0) {
     return smartValue;
+  } else {
+    return options[optionsMap.layoutParams.targetItemSize.value];
   }
 };
 
 export const processNumberOfImagesPerRow = (options) => { //NEW STYPEPARAMS METHOD done
   //This will be used in the masonry and grid presets
   let res = {...options}
-  res[optionsMap.layoutParams.structure.numberOfColumns] = 0;
+  res = fixColumnsIfNeeded(res);
   if (
     res[optionsMap.layoutParams.structure.scrollDirection] ===
     GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL || //relevant for grid, in Masonry its fixed to !oneRow
@@ -43,16 +45,31 @@ export const processNumberOfImagesPerRow = (options) => { //NEW STYPEPARAMS METH
       optionsMap.layoutParams.structure.layoutOrientation
     ].VERTICAL //relevant for masonry, in grid its fixed to vertical.
   ) {
-    res[optionsMap.layoutParams.structure.numberOfColumns] =
-      options[optionsMap.layoutParams.structure.responsiveMode] === GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW
-        ? res[optionsMap.layoutParams.structure.numberOfColumns]
-        : 0;
     res[optionsMap.layoutParams.groups.allowedGroupTypes] = [
       GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['1'],
     ];
     res[optionsMap.layoutParams.groups.groupSize] = 1;
     // res.collageAmount = 0; //doesnt really exist. I'll comment and then remove.
     res[optionsMap.layoutParams.groups.density] = 0;
+  }
+  return res;
+}
+
+export const fixColumnsIfNeeded = (options) => {
+  let res = {...options}
+  res.fixedColumns = 0;
+  if (
+    res[optionsMap.layoutParams.structure.scrollDirection] ===
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL || //relevant for grid, in Masonry its fixed to !oneRow
+    res[optionsMap.layoutParams.structure.layoutOrientation] ===
+    GALLERY_CONSTS[
+      optionsMap.layoutParams.structure.layoutOrientation
+    ].VERTICAL //relevant for masonry, in grid its fixed to vertical.
+  ) {
+    res.fixedColumns = // a layouter thing
+      options[optionsMap.layoutParams.structure.responsiveMode] === GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW
+        ? res[optionsMap.layoutParams.structure.numberOfColumns]
+        : 0;
   }
   return res;
 }
@@ -299,10 +316,20 @@ export const removeBordersIfNeeded = (options) => { //NEW STYPEPARAMS METHOD don
   return _options
 }
 
-
+const cropItemsWithCropOnlyFillParam = (options) => {
+  let _options = { ...options };
+  if (_options[optionsMap.layoutParams.crop.cropOnlyFill]) {
+    _options[optionsMap.layoutParams.crop.enable] =
+      _options[optionsMap.layoutParams.crop.method] === GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL;
+  }
+  return _options;
+};
 
 function processLayouts(options, customExternalInfoRendererExists) {
   let processedOptions = {...options};
+  if(options.wasConvertedToOldOptions) {
+    processedOptions = old_processLayouts(processedOptions, customExternalInfoRendererExists);
+  }
   if (utils.isMobile()) {
     processedOptions = limitImageMargin(processedOptions);
   }
@@ -321,6 +348,7 @@ function processLayouts(options, customExternalInfoRendererExists) {
     processedOptions = blockScrollOnFadeOrDeckScrollAnimations(processedOptions); 
     processedOptions = blockVideoControlsOnMouseCursorNavigation(processedOptions);
     processedOptions = blockMouseCursorNavigationOnTouchDevice(processedOptions);
+    processedOptions = cropItemsWithCropOnlyFillParam(processedOptions);
 
   return processedOptions;
 }

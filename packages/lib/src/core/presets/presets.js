@@ -54,6 +54,10 @@ import {
   createOptions as magicOptions,
 } from './magicGallery';
 import {
+  fixedOptions as newSPs_magic,
+  createOptions as newSPs_magicOptions,
+} from './newSPs_magicGallery';
+import {
   fixedOptions as masonry,
   createOptions as masonryOptions,
 } from './masonryGallery';
@@ -166,7 +170,7 @@ const addPresetOptions = (options) => {
           return newSPs_columnOptions(options);
         case LAYOUTS.MAGIC:
           console.error('NEW SP METHOD MAGIC NOT SUPPORTED WITH NEW SPS yet');
-          return magicOptions(options);
+          return newSPs_magicOptions(options);
         case LAYOUTS.FULLSIZE:
           return newSPs_fullsizeOptions(options);
         case LAYOUTS.BRICKS:
@@ -240,6 +244,7 @@ const NEW_PRESETS = {
   newSPs_empty,
   newSPs_mix,
   newSPs_fullsize,
+  newSPs_magic,
   alternate,
   bricks,
   collage,

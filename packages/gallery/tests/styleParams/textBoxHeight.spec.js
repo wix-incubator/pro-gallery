@@ -1,7 +1,6 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { mergeNestedObjects } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container, customComponents } from '../drivers/mocks/styles';
 
@@ -20,11 +19,15 @@ describe('options - textBoxHeight', () => {
   });
 
   it('should set "textBoxHeight" of "250"', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      textBoxHeight: 250,
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.layoutParams.info.placement]:
+        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .VERTICAL,
+      [optionsMap.layoutParams.info.height]: 250,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
