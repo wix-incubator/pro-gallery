@@ -160,7 +160,10 @@ export default class ScrollIndicator extends React.Component {
       this.props.scrollBase > 0
         ? this.props.scrollBase
         : 0;
-    const scrollPosition = this.props.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL ? this.state.scrollTop - verticalScrollBase : this.state.scrollLeft;
+    const scrollPosition =
+      this.props.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL
+        ? this.state.scrollTop - verticalScrollBase
+        : this.state.scrollLeft;
     const { id } = this.props;
     return (
       <div
