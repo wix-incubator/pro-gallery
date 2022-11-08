@@ -7,7 +7,7 @@ describe('reverseMigrateOptions', () => {
   //   // expect(actual).to.deep.equal(expected());
   //   expect(actual).to.equal(expected());
   // });
-  it('should run fast', () => {
+  it.skip('should run fast', () => {
     const data = input();
     const hrstart = process.hrtime();
     reverseMigrateOptions(data);
