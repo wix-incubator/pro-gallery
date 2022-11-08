@@ -14,7 +14,9 @@ export default {
       );
     } else {
       return (
-        options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+        options[optionsMap.layoutParams.structure.scrollDirection] ===
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .HORIZONTAL
       ); //NEW STYPEPARAMS METHOD change this to new sps
     }
   },

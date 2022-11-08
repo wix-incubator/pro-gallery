@@ -701,8 +701,9 @@ class SlideshowView extends React.Component {
   createGallery() {
     // When arrows are set outside of the gallery, gallery is resized (in dimensionsHelper -> getGalleryWidth) and needs to be positioned accordingly
     const galleryStyleForExternalArrows =
-      this.props.options.scrollDirection ===
-        GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+      this.props.options[optionsMap.layoutParams.structure.scrollDirection] ===
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .HORIZONTAL &&
       this.props.options.arrowsPosition ===
         GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
         ? {
