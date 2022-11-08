@@ -73,8 +73,7 @@ export default class ScrollIndicator extends React.Component {
           GALLERY_CONSTS.scrollDirection.HORIZONTAL
         ) {
           this.setState({
-            scrollTop: left,
-            scrollLeft: left,
+            scrollLeft: Math.round(left),
           });
           this.props.getMoreItemsIfNeeded(left);
           this.debouncedOnScroll({ left });
@@ -111,7 +110,7 @@ export default class ScrollIndicator extends React.Component {
           this.props.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL
         ) {
           this.setState({
-            scrollTop: top,
+            scrollTop: Math.round(top),
           });
           this.props.getMoreItemsIfNeeded(top);
         }
