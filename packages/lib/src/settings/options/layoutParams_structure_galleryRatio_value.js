@@ -6,11 +6,17 @@ export default {
   title: 'Gallery Ratio',
   description: `This option allows horizontally scrolled galleries to link their height to the width of the gallery by the provided ratio`,
   isRelevant: (options) => {
-    return (
-      options[optionsMap.layoutParams.structure.scrollDirection] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-        .HORIZONTAL
-    );
+    if (options.newSPs) {
+      return (
+        options[optionsMap.layoutParams.structure.scrollDirection] ===
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .HORIZONTAL
+      );
+    } else {
+      return (
+        options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL //NEW STYPEPARAMS METHOD replace to new sp scrollDirection
+      );
+    }
   },
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal")',
