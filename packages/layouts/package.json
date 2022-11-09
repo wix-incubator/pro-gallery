@@ -43,6 +43,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "pro-gallery-lib": "4.1.71"
+    "pro-gallery-lib": "4.1.72"
   }
 }
