@@ -18,6 +18,7 @@ export function NavigationArrows({
 }) {
   const {
     isRTL,
+    scrollDirection,
     imageMargin,
     arrowsPadding,
     arrowsPosition,
@@ -32,8 +33,6 @@ export function NavigationArrows({
       optionsMap.layoutParams.navigationArrows.mouseCursorContainerMaxWidth
     ];
 
-  const scrollDirection =
-    options[optionsMap.layoutParams.structure.scrollDirection];
   const {
     arrowRenderer: renderArrowSvg,
     navArrowsContainerWidth,
@@ -103,9 +102,7 @@ export function NavigationArrows({
       };
 
   const arrowsPos =
-    scrollDirection ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-        .HORIZONTAL &&
+    scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
     arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
       ? `-${20 + navArrowsContainerWidth}px`
       : `${imageMargin / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
