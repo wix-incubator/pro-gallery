@@ -2,7 +2,6 @@ import {
   GALLERY_CONSTS,
   VirtualizationSettings,
   Options,
-  optionsMap,
 } from 'pro-gallery-lib';
 
 export function getItemsInViewportOrMarginByActiveGroup({
@@ -29,9 +28,7 @@ export function getItemsInViewportOrMarginByActiveGroup({
   } = virtualizationSettings || {};
 
   const isHorizontal =
-    options[optionsMap.layoutParams.structure.scrollDirection] ===
-    GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-      .HORIZONTAL;
+    options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
   const isScrollable =
     !isHorizontal ||
     options.slideAnimation === GALLERY_CONSTS.slideAnimations.SCROLL;
@@ -119,9 +116,7 @@ export function getItemsInViewportOrMarginByScrollLocation({
     }));
   }
   const isHorizontal =
-    options[optionsMap.layoutParams.structure.scrollDirection] ===
-    GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-      .HORIZONTAL;
+    options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
   const size = isHorizontal ? galleryWidth : galleryHeight;
   const unit = isHorizontal ? 'width' : 'height';
 
