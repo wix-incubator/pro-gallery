@@ -76,7 +76,7 @@ jobs:
       # run: echo "this is a push to master"
       run: |
         git checkout master
-        lerna publish patch --exact  --yes
+        lerna publish --exact prerelease --dist-tag next --yes
         npm run changelog
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
