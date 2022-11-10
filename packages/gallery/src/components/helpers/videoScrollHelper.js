@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS, window } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap, window } from 'pro-gallery-lib';
 import {
   isWithinPaddingVertically,
   isWithinPaddingHorizontally,
@@ -54,7 +54,7 @@ class VideoScrollHelper {
     this.videoPlay = videoPlay;
     this.videoLoop = videoLoop;
     this.itemClick = itemClick;
-    this.scrollDirection = scrollDirection;
+    this[optionsMap.layoutParams.structure.scrollDirection] = scrollDirection;
     this.currentItemCount = galleryStructure.galleryItems.length;
     this.videoItems = [];
     galleryStructure.galleryItems.forEach((item) => {
@@ -285,7 +285,10 @@ class VideoScrollHelper {
       padding: videoPlayVerticalTolerance,
     });
     let visibleHorizontally;
-    if (this.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) {
+    if (
+      this[optionsMap.layoutParams.structure.scrollDirection] ===
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL
+    ) {
       visibleHorizontally = true;
     } else {
       visibleHorizontally = isWithinPaddingHorizontally({

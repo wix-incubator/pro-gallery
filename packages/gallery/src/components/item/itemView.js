@@ -674,8 +674,9 @@ class ItemView extends React.Component {
       options,
       settings = {},
     } = this.props;
-    const { scrollDirection, imageMargin, isRTL, slideAnimation } = options;
-
+    const { imageMargin, isRTL, slideAnimation } = options;
+    const scrollDirection =
+      options[optionsMap.layoutParams.structure.scrollDirection];
     const containerStyleByoptions = getContainerStyle(options);
 
     const itemStyles = {
@@ -683,7 +684,9 @@ class ItemView extends React.Component {
       position: 'absolute',
       bottom: 'auto',
       margin:
-        scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+        scrollDirection ===
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .HORIZONTAL
           ? imageMargin / 2 + 'px'
           : 0,
       cursor: this.isItemClickable(options),
