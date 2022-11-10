@@ -18,7 +18,7 @@ it('version numbers in all pacakages remain the same', () => {
   expect(uniqVersionNumbers).toContain(lernaVersion)
 })
 
-it('consumption of dependencies in every pacakge is done with the same version number', () => {
+it.skip('consumption of dependencies in every pacakge is done with the same version number', () => {
   const packageNames = packageFolderNames
     .map(pJsonPath)
     .map(json)
