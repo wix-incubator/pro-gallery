@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import {
   calcTargetItemSize,
   fixColumnsIfNeeded,
