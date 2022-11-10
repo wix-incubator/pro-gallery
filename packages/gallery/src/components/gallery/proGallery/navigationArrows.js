@@ -18,7 +18,6 @@ export function NavigationArrows({
 }) {
   const {
     isRTL,
-    scrollDirection,
     imageMargin,
     arrowsPadding,
     arrowsPosition,
@@ -28,6 +27,8 @@ export function NavigationArrows({
     arrowsColor,
     arrowsSize,
   } = options;
+  const scrollDirection =
+    options[optionsMap.layoutParams.structure.scrollDirection];
   const mouseCursorContainerMaxWidth =
     options[
       optionsMap.layoutParams.navigationArrows.mouseCursorContainerMaxWidth
