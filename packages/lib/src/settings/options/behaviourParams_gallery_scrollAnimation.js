@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import { createOptions } from '../utils/utils';
@@ -24,5 +23,5 @@ export default {
   type: INPUT_TYPES.OPTIONS,
   default:
     GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation]
-      .NO_EFFECT, //NEW STYPEPARAMS METHOD one source
+      .NO_EFFECT, //one source
 };

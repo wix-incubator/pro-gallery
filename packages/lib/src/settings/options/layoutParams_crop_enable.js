@@ -1,5 +1,3 @@
-//NEW STYPEPARAMS METHOD
-
 import { INPUT_TYPES } from '../utils/constants';
 
 export default {

@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import { createOptions } from '../utils/utils';
@@ -15,7 +14,7 @@ export default {
   type: INPUT_TYPES.OPTIONS,
   default:
     GALLERY_CONSTS[optionsMap.behaviourParams.gallery.vertical.loadMore.amount]
-      .ALL, //NEW STYPEPARAMS METHOD one source
+      .ALL, //one source
   options: createOptions(
     optionsMap.behaviourParams.gallery.vertical.loadMore.amount
   ),

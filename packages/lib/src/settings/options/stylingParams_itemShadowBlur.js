@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { default as stylingParams_itemEnableShadow } from './stylingParams_itemEnableShadow';
 import optionsMap from '../../core/helpers/optionsMap';
@@ -14,5 +13,5 @@ export default {
     );
   },
   type: INPUT_TYPES.NUMBER,
-  default: 20, //NEW STYPEPARAMS METHOD one source
+  default: 20, //one source
 };

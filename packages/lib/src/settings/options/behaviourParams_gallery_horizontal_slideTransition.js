@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import optionsMap from '../../core/helpers/optionsMap';
@@ -20,5 +19,5 @@ export default {
   default:
     GALLERY_CONSTS[
       optionsMap.behaviourParams.gallery.horizontal.slideTransition
-    ].EASE, //NEW STYPEPARAMS METHOD one source
+    ].EASE, //one source
 };

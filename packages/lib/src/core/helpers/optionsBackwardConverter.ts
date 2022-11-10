@@ -17,7 +17,6 @@ function addOldOptions(flatOptions) {
   let flat_combinedOptions = {
     ...trimUndefinedValues_flat(flat_migrated),
     ...trimUndefinedValues_flat(flatOptions),
-    // ...(flatOptions.newSPs ? trimUndefinedValues_flat(flat_migrated) : {}),
   };
   flat_combinedOptions.wasConvertedToOldOptions = true;
   return flat_combinedOptions;

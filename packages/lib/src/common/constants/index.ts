@@ -61,7 +61,6 @@ import autoSlideBehaviour from './autoSlideBehaviour';
 import secondaryMediaTrigger from './secondaryMediaTrigger';
 import secondaryMediaBehaviour from './secondaryMediaBehaviour';
 
-//NEW STYPEPARAMS METHOD
 import layoutParams_crop_method from './layoutParams_crop_method';
 import layoutParams_crop_alignment from './layoutParams_crop_alignment';
 import layoutParams_structure_galleryLayout from './layoutParams_structure_galleryLayout';
@@ -118,7 +117,7 @@ export default {
   galleryTextAlign,
   gridStyle,
   cubeFitPosition,
-  groupTypes,
+  groupTypes, //v5 TODO THIS IS IMPORTANT. USED BY THE DEFAULTS
   imageHoverAnimations,
   infoBehaviourOnHover,
   infoType,

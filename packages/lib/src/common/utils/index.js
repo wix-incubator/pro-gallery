@@ -734,25 +734,12 @@ class Utils {
   }
 
   isHeightSetByGallery(options) {
-    const oldSPs_isHeightSetByGallery = (options) => {
-      //NEW STYPEPARAMS METHOD remove when done
-      return (
-        options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
-        options.enableInfiniteScroll
-      );
-    };
-    const newSPs_isHeightSetByGallery = (options) => {
-      return (
-        options[optionsMap.layoutParams.structure.galleryLayout] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-            .VERTICAL &&
-        !options[optionsMap.behaviourParams.gallery.vertical.loadMore]
-      ); //NEW STYLEPARAMS METHOD POSSIBLE BUG FOUND Could be that I need to add the horizontal gallery ratio thing here....
-    };
     return (
-      oldSPs_isHeightSetByGallery(options) || //NEW STYPEPARAMS METHOD remove when done
-      newSPs_isHeightSetByGallery(options)
-    );
+      options[optionsMap.layoutParams.structure.galleryLayout] ===
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
+          .VERTICAL &&
+      !options[optionsMap.behaviourParams.gallery.vertical.loadMore]
+    ); //v5 TODO!!! NEW STYLEPARAMS METHOD POSSIBLE BUG FOUND Could be that I need to add the horizontal gallery ratio thing here....
   }
 }
 

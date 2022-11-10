@@ -85,7 +85,7 @@ export default class BlueprintsManager {
         this.createBlueprint({ items });
         // work with the new items...
       }
-    } else if (this.existingBlueprint.options.slideshowLoop || this.existingBlueprint.options[optionsMap.behaviourParams.gallery.horizontal.loop] ) { //NEW STYPEPARAMS METHOD remove when not needed
+    } else if (this.existingBlueprint.options[optionsMap.behaviourParams.gallery.horizontal.loop] ) { 
       this.duplicateItemsAndCreateBlueprint();
     }
   }
@@ -173,15 +173,12 @@ export default class BlueprintsManager {
     const { items, options } = params;
     const { totalItemsCount } = this.currentState;
     const loopThreshold = 30;
-    const oldScrollDirection = options.scrollDirection //NEW STYPEPARAMS METHOD remove when not needed
-    const newScrollDirection = options[optionsMap.layoutParams.structure.scrollDirection]
-    const slideshowLoop = options.slideshowLoop || options[optionsMap.behaviourParams.gallery.horizontal.loop]//NEW STYPEPARAMS METHOD remove when not needed
     // If we've reached last items (no more items in server), and there are less items than the threshold
     const numOfItemsCondition = items.length < loopThreshold && items.length === totalItemsCount;
     // If the gallery is a horizontal scrolling gallery
-    const isHorizontalScrolling = oldScrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL || newScrollDirection === GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].HORIZONTAL;
+    const isHorizontalScrolling = options[optionsMap.layoutParams.structure.scrollDirection] === GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].HORIZONTAL;
     // If slideshowLoop is True and both conditions are True as well then we duplicate number of items to reach threshold
-    if (slideshowLoop && numOfItemsCondition && isHorizontalScrolling){
+    if (options[optionsMap.behaviourParams.gallery.horizontal.loop] && numOfItemsCondition && isHorizontalScrolling){
       const duplicateFactor = Math.ceil(loopThreshold / items.length) - 1;
       return {...params, items: this.duplicateGalleryItems({items, duplicateFactor})};
     }

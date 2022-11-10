@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import optionsMap from '../../core/helpers/optionsMap';
@@ -31,5 +30,5 @@ export default {
   //   (options.imageInfoType === GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND ||
   //     options.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_HOVER),
   type: INPUT_TYPES.BOOLEAN,
-  default: false, //NEW STYPEPARAMS METHOD one source
+  default: false, //one source
 };

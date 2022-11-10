@@ -122,7 +122,6 @@ import layoutParams_navigationArrows_mouseCursorContainerMaxWidth from './layout
 import behaviourParams_item_secondaryMedia_trigger from './behaviourParams_item_secondaryMedia_trigger';
 import behaviourParams_item_secondaryMedia_behaviour from './behaviourParams_item_secondaryMedia_behaviour';
 
-//NEW STYPEPARAMS METHOD
 import layoutParams_groups_density from './layoutParams_groups_density';
 import layoutParams_groups_groupByOrientation from './layoutParams_groups_groupByOrientation';
 import layoutParams_groups_numberOfGroupsPerRow from './layoutParams_groups_numberOfGroupsPerRow';

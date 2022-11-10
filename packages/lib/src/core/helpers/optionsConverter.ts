@@ -33,7 +33,7 @@ function addMigratedOptions(
   flatOptions,
   allowMigratingOldToNewInNewSPs = false
 ) {
-  if (flatOptions.newSPs && !allowMigratingOldToNewInNewSPs) return flatOptions; // do not convert old to new. new is king
+  if (!allowMigratingOldToNewInNewSPs) return flatOptions; // do not convert old to new. new is king
   const flat_migrated = migrateOptions(flatOptions);
   let flat_combinedOptions = {
     ...trimUndefinedValues_flat(flat_migrated),

@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { createOptions } from '../utils/utils';
 import optionsMap from '../../core/helpers/optionsMap';
