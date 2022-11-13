@@ -37,12 +37,19 @@ class VideoItemWrapper extends React.Component {
   }
 
   mightPlayVideo() {
-    const { videoPlay } = this.props.options;
+    const videoPlayTrigger =
+      this.props.options[optionsMap.behaviourParams.item.video.playTrigger];
     const { hasLink } = this.props;
     if (this.props.isVideoPlaceholder) {
       return false;
     }
-    if (videoPlay === 'hover' || videoPlay === 'auto') {
+    if (
+      videoPlayTrigger ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
+          .HOVER ||
+      videoPlayTrigger ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO
+    ) {
       return true;
     } else if (
       this.props.options[optionsMap.behaviourParams.item.clickAction] ===
@@ -114,7 +121,9 @@ class VideoItemWrapper extends React.Component {
   render() {
     const hover = this.props.hover;
     const showVideoPlayButton =
-      !this.props.hidePlay && this.props.options.showVideoPlayButton;
+      this.props.options[
+        optionsMap.behaviourParams.item.video.enablePlayButton
+      ];
     const videoPlaceholder = this.createVideoPlaceholder(showVideoPlayButton);
 
     const VideoItem = this.VideoItem;

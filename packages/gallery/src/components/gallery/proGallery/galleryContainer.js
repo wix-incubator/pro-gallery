@@ -390,8 +390,9 @@ export class GalleryContainer extends React.Component {
       galleryStructure: this.galleryStructure,
       galleryWidth: container.galleryWidth,
       scrollBase: container.scrollBase,
-      videoPlay: options.videoPlay,
-      videoLoop: options.videoLoop,
+      videoPlayTrigger:
+        options[optionsMap.behaviourParams.item.video.playTrigger],
+      videoLoop: options[optionsMap.behaviourParams.item.video.loop],
       scrollDirection:
         options[optionsMap.layoutParams.structure.scrollDirection],
       cb: this.setPlayingIdxState,

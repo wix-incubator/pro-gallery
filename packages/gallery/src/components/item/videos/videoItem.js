@@ -169,7 +169,7 @@ class VideoItem extends React.Component {
     const attributes = {
       controlsList: 'nodownload',
       disablePictureInPicture: 'true',
-      muted: !this.props.options.videoSound,
+      muted: !this.props.options[optionsMap.behaviourParams.item.video.volume],
       preload: 'metadata',
       style: getStyle(isCrop, isWiderThenContainer),
       type: 'video/mp4',
@@ -193,9 +193,13 @@ class VideoItem extends React.Component {
         alt={
           typeof this.props.alt === 'string' ? this.props.alt : 'untitled video'
         }
-        loop={!!this.props.options.videoLoop}
+        loop={!!this.props.options[optionsMap.behaviourParams.item.video.loop]}
         ref={(player) => (this.video = player)}
-        volume={this.props.options.videoSound ? 0.8 : 0}
+        volume={
+          this.props.options[optionsMap.behaviourParams.item.video.volume]
+            ? 0.8
+            : 0
+        }
         playing={this.state.shouldPlay}
         onEnded={() => {
           this.setState({ isPlaying: false });
@@ -213,7 +217,11 @@ class VideoItem extends React.Component {
             videoError: e,
           });
         }}
-        playbackRate={Number(this.props.options.videoSpeed) || 1}
+        playbackRate={
+          Number(
+            this.props.options[optionsMap.behaviourParams.item.video.speed]
+          ) || 1
+        }
         onStart={() => {
           if (!this.state.playedOnce) {
             this.setState({ playedOnce: true });
@@ -237,7 +245,11 @@ class VideoItem extends React.Component {
             this.setState({ shouldPlay: false });
           }
         }}
-        controls={this.props.options.showVideoControls}
+        controls={
+          this.props.options[
+            optionsMap.behaviourParams.item.video.enableControls
+          ]
+        }
         config={{
           file: {
             attributes,

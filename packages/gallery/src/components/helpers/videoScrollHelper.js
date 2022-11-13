@@ -26,7 +26,7 @@ class VideoScrollHelper {
     this.play = this.play.bind(this);
     this.stop = this.stop.bind(this);
     this.isVisible = this.isVisible.bind(this);
-    this.videoPlay = undefined;
+    this.videoPlayTrigger = undefined;
     this.setPlayingVideos = config.setPlayingVideos;
     this.lastVideoPlayed = -1;
     this.videoRatingMap = new Map();
@@ -43,13 +43,13 @@ class VideoScrollHelper {
     galleryStructure,
     galleryWidth,
     scrollBase,
-    videoPlay,
+    videoPlayTrigger,
     videoLoop,
     scrollDirection,
   }) {
     this.galleryWidth = galleryWidth;
     this.scrollBase = scrollBase;
-    this.videoPlay = videoPlay;
+    this.videoPlayTrigger = videoPlayTrigger;
     this.videoLoop = videoLoop;
     this[optionsMap.layoutParams.structure.scrollDirection] = scrollDirection;
     this.currentItemCount = galleryStructure.galleryItems.length;
@@ -108,7 +108,11 @@ class VideoScrollHelper {
   }
 
   itemHovered(idx) {
-    if (this.videoPlay !== 'hover') return;
+    if (
+      this.videoPlayTrigger !==
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER
+    )
+      return;
     if (this.IdxExistsInVideoItems(idx)) {
       this.play(idx);
     } else {
@@ -117,7 +121,11 @@ class VideoScrollHelper {
   }
 
   itemClicked(idx) {
-    if (this.videoPlay !== 'onClick') return;
+    if (
+      this.videoPlayTrigger !==
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].CLICK
+    )
+      return;
     if (this.IdxExistsInVideoItems(idx)) {
       if (this.currentPlayingIdx === idx) {
         this.stop();
@@ -299,7 +307,10 @@ class VideoScrollHelper {
   }
 
   shouldAutoPlay() {
-    return this.videoPlay === 'auto';
+    return (
+      this.videoPlayTrigger ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO
+    );
   }
   allowedLoop() {
     return this.videoLoop === true;
