@@ -276,7 +276,6 @@ class ItemView extends React.Component {
   shouldShowHoverOnMobile() {
     if (utils.isMobile()) {
       const {
-        titlePlacement,
         hoveringBehaviour,
         itemClick,
         alwaysShowHover,
@@ -295,7 +294,9 @@ class ItemView extends React.Component {
         return true;
       } else if (
         this.props.customComponents.customHoverRenderer &&
-        GALLERY_CONSTS.hasHoverPlacement(titlePlacement) &&
+        GALLERY_CONSTS.hasHoverPlacement(
+          this.props.options[optionsMap.layoutParams.info.placement]
+        ) &&
         hoveringBehaviour !== GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW &&
         isNewMobileSettings &&
         (allowDescription || allowTitle || isStoreGallery)
@@ -529,12 +530,12 @@ class ItemView extends React.Component {
   getRightInfoElementIfNeeded() {
     if (
       GALLERY_CONSTS.hasExternalRightPlacement(
-        this.props.options.titlePlacement,
+        this.props.options[optionsMap.layoutParams.info.border.placement],
         this.props.idx
       )
     ) {
       return this.getExternalInfoElement(
-        GALLERY_CONSTS.placements.SHOW_ON_THE_RIGHT,
+        GALLERY_CONSTS[optionsMap.layoutParams.info.border.placement].RIGHT,
         'gallery-item-right-info'
       );
     } else {
@@ -545,12 +546,12 @@ class ItemView extends React.Component {
   getLeftInfoElementIfNeeded() {
     if (
       GALLERY_CONSTS.hasExternalLeftPlacement(
-        this.props.options.titlePlacement,
+        this.props.options[optionsMap.layoutParams.info.border.placement],
         this.props.idx
       )
     ) {
       return this.getExternalInfoElement(
-        GALLERY_CONSTS.placements.SHOW_ON_THE_LEFT,
+        GALLERY_CONSTS[optionsMap.layoutParams.info.border.placement].LEFT,
         'gallery-item-left-info'
       );
     } else {
@@ -561,12 +562,12 @@ class ItemView extends React.Component {
   getBottomInfoElementIfNeeded() {
     if (
       GALLERY_CONSTS.hasExternalBelowPlacement(
-        this.props.options.titlePlacement,
+        this.props.options[optionsMap.layoutParams.info.border.placement],
         this.props.idx
       )
     ) {
       return this.getExternalInfoElement(
-        GALLERY_CONSTS.placements.SHOW_BELOW,
+        GALLERY_CONSTS[optionsMap.layoutParams.info.border.placement].BELOW,
         'gallery-item-bottom-info'
       );
     } else {
@@ -577,12 +578,12 @@ class ItemView extends React.Component {
   getTopInfoElementIfNeeded() {
     if (
       GALLERY_CONSTS.hasExternalAbovePlacement(
-        this.props.options.titlePlacement,
+        this.props.options[optionsMap.layoutParams.info.border.placement],
         this.props.idx
       )
     ) {
       return this.getExternalInfoElement(
-        GALLERY_CONSTS.placements.SHOW_ABOVE,
+        GALLERY_CONSTS[optionsMap.layoutParams.info.border.placement].ABOVE,
         'gallery-item-top-info'
       );
     } else {
@@ -599,7 +600,8 @@ class ItemView extends React.Component {
     //if there is no url for videos and images, we will not render the itemWrapper
     //but will render the info element if exists, with the whole size of the item
     const infoHeight =
-      options.textBoxHeight + (this.hasRequiredMediaUrl ? 0 : style.height);
+      options[optionsMap.layoutParams.info.height] +
+      (this.hasRequiredMediaUrl ? 0 : style.height);
     const infoWidth =
       style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
@@ -624,7 +626,7 @@ class ItemView extends React.Component {
             placement,
             options,
             style.height,
-            options.textBoxHeight
+            options[optionsMap.layoutParams.info.height]
           ),
           ...slideAnimationStyles,
         }}
@@ -987,9 +989,10 @@ class ItemView extends React.Component {
 
     //if (there is an url for video items and image items) OR text item (text item do not use media url)
     this.hasRequiredMediaUrl = url || type === 'text';
-    //if titlePlacement !== SHOW_ON_HOVER and !this.hasRequiredMediaUrl, we will NOT render the itemWrapper (but will render the info element with the whole size of the item)
+    //if info placement !== OVERLAY and !this.hasRequiredMediaUrl, we will NOT render the itemWrapper (but will render the info element with the whole size of the item)
     const isItemWrapperEmpty =
-      options.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER &&
+      options[optionsMap.layoutParams.info.border.placement] !==
+        GALLERY_CONSTS[optionsMap.layoutParams.info.border.placement].OVERLAY &&
       !this.hasRequiredMediaUrl;
     const innerDiv = (
       <div
@@ -1018,11 +1021,11 @@ class ItemView extends React.Component {
           style={{
             ...getImageStyle(this.props.options),
             ...(GALLERY_CONSTS.hasExternalRightPlacement(
-              this.props.options.titlePlacement,
+              this.props.options[optionsMap.layoutParams.info.border.placement],
               this.props.idx
             ) && { float: 'left' }),
             ...(GALLERY_CONSTS.hasExternalLeftPlacement(
-              this.props.options.titlePlacement,
+              this.props.options[optionsMap.layoutParams.info.border.placement],
               this.props.idx
             ) && { float: 'right' }),
           }}

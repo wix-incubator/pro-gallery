@@ -16,8 +16,7 @@ export function NavigationArrows({
   next,
   id,
 }) {
-  const { isRTL, imageMargin, titlePlacement, textBoxHeight, arrowsColor } =
-    options;
+  const { isRTL, imageMargin, arrowsColor } = options;
   const arrowsPosition =
     options[optionsMap.layoutParams.navigationArrows.position];
   const arrowsPadding =
@@ -48,7 +47,7 @@ export function NavigationArrows({
 
   const { galleryHeight } = container;
   const { galleryWidth } = container;
-  const infoHeight = textBoxHeight;
+  const infoHeight = options[optionsMap.layoutParams.info.height];
   const imageHeight = galleryHeight - infoHeight;
 
   // the nav arrows parent container top edge is imageMargin/2 ABOVE the actual view, that calculates the middle point of gallery
@@ -56,9 +55,17 @@ export function NavigationArrows({
 
   // Determines the direction fix, the direction in which we move the nav arrows 'vertical position fix' pixels
   let directionFix;
-  if (GALLERY_CONSTS.hasExternalAbovePlacement(titlePlacement)) {
+  if (
+    GALLERY_CONSTS.hasExternalAbovePlacement(
+      options[optionsMap.layoutParams.info.placement]
+    )
+  ) {
     directionFix = -1;
-  } else if (GALLERY_CONSTS.hasExternalBelowPlacement(titlePlacement)) {
+  } else if (
+    GALLERY_CONSTS.hasExternalBelowPlacement(
+      options[optionsMap.layoutParams.info.placement]
+    )
+  ) {
     directionFix = 1;
   } else {
     // if we got here, we should be ITEM_CENTER, taken care of in layoutHelper.ts

@@ -809,7 +809,7 @@ class SlideshowView extends React.Component {
       return false;
     }
     const {
-      options: { galleryTextAlign, textBoxHeight },
+      options: { galleryTextAlign },
     } = this.props;
 
     const imageMargin =
@@ -838,7 +838,9 @@ class SlideshowView extends React.Component {
         aria-pressed={this.state.pauseAutoSlideshowClicked}
         tabIndex={0}
         style={{
-          top: `calc(100% - ${textBoxHeight}px + 3px)`,
+          top: `calc(100% - ${
+            this.props.options[optionsMap.layoutParams.info.height]
+          }px + 3px)`,
           ...side,
         }}
       >
@@ -857,7 +859,7 @@ class SlideshowView extends React.Component {
     }
     const {
       totalItemsCount,
-      options: { galleryTextAlign, textBoxHeight },
+      options: { galleryTextAlign },
     } = this.props;
 
     const imageMargin =
@@ -877,7 +879,9 @@ class SlideshowView extends React.Component {
         className={'auto-slideshow-counter'}
         data-hook="auto-slideshow-counter"
         style={{
-          top: `calc(100% - ${textBoxHeight}px + 3px)`,
+          top: `calc(100% - ${
+            this.props.options[optionsMap.layoutParams.info.height]
+          }px + 3px)`,
           ...side,
         }}
       >

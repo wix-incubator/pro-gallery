@@ -86,7 +86,6 @@ const arrowsWillFitPosition = ({
   container,
   customNavArrowsRenderer,
 }) => {
-  const { textBoxHeight } = options;
   const { height } = container;
   // Calc of Nav arrows container's height
   const arrowData = getArrowIconData(
@@ -99,7 +98,7 @@ const arrowsWillFitPosition = ({
     containerStyleType:
       options[optionsMap.layoutParams.navigationArrows.container.type],
   });
-  const infoHeight = textBoxHeight;
+  const infoHeight = options[optionsMap.layoutParams.info.height];
   const parentHeightByVerticalPosition = {
     [[optionsMap.layoutParams.navigationArrows.verticalAlignment].INFO_CENTER]:
       infoHeight,
