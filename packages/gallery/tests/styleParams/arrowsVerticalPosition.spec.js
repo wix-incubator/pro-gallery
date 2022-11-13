@@ -26,7 +26,11 @@ describe('styleParam - arrowsVerticalPosition', () => {
     initialProps = {
       container,
       items: images2,
-      options,
+      options: {
+        ...options,
+        [optionsMap.layoutParams.info.placement]:
+          GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
+      },
       customComponents: {
         customHoverRenderer: () => {},
         customInfoRenderer: () => {},
