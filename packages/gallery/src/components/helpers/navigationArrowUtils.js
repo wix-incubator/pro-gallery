@@ -100,12 +100,12 @@ const arrowsWillFitPosition = ({
   });
   const infoHeight = options[optionsMap.layoutParams.info.height];
   const parentHeightByVerticalPosition = {
-    [[optionsMap.layoutParams.navigationArrows.verticalAlignment].INFO_CENTER]:
-      infoHeight,
-    [[optionsMap.layoutParams.navigationArrows.verticalAlignment].IMAGE_CENTER]:
-      height - infoHeight,
-    [[optionsMap.layoutParams.navigationArrows.verticalAlignment].ITEM_CENTER]:
-      height,
+    [GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
+      .INFO_CENTER]: infoHeight,
+    [GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
+      .IMAGE_CENTER]: height - infoHeight,
+    [GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
+      .ITEM_CENTER]: height,
   };
   const parentHeight =
     parentHeightByVerticalPosition[
