@@ -27,7 +27,6 @@ class VideoScrollHelper {
     this.stop = this.stop.bind(this);
     this.isVisible = this.isVisible.bind(this);
     this.videoPlay = undefined;
-    this.itemClick = undefined;
     this.setPlayingVideos = config.setPlayingVideos;
     this.lastVideoPlayed = -1;
     this.videoRatingMap = new Map();
@@ -46,14 +45,12 @@ class VideoScrollHelper {
     scrollBase,
     videoPlay,
     videoLoop,
-    itemClick,
     scrollDirection,
   }) {
     this.galleryWidth = galleryWidth;
     this.scrollBase = scrollBase;
     this.videoPlay = videoPlay;
     this.videoLoop = videoLoop;
-    this.itemClick = itemClick;
     this[optionsMap.layoutParams.structure.scrollDirection] = scrollDirection;
     this.currentItemCount = galleryStructure.galleryItems.length;
     this.videoItems = [];
@@ -121,7 +118,6 @@ class VideoScrollHelper {
 
   itemClicked(idx) {
     if (this.videoPlay !== 'onClick') return;
-    // if (this.itemClick !== 'nothing') return;
     if (this.IdxExistsInVideoItems(idx)) {
       if (this.currentPlayingIdx === idx) {
         this.stop();

@@ -1,6 +1,6 @@
 export { getSlideAnimationStyles, getCustomInfoRendererProps, getLinkParams };
 
-import { GALLERY_CONSTS, utils, isSEOMode } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, utils, isSEOMode, optionsMap } from 'pro-gallery-lib';
 
 function getSlideAnimationStyles(
   { idx, activeIndex, options, container },
@@ -64,7 +64,10 @@ function getLinkParams({
   noFollowForSEO,
 }) {
   const isSEO = isSEOMode();
-  if (options.itemClick === GALLERY_CONSTS.itemClick.LINK) {
+  if (
+    options[optionsMap.behaviourParams.item.clickAction] ===
+    GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK
+  ) {
     const { url, target } = directLink || {};
     const shouldUseNofollow = isSEO && noFollowForSEO;
     const shouldUseDirectLink = !!(url && target);
@@ -74,8 +77,8 @@ function getLinkParams({
       : {};
     return linkParams;
   } else if (
-    options.itemClick === GALLERY_CONSTS.itemClick.FULLSCREEN ||
-    options.itemClick === GALLERY_CONSTS.itemClick.EXPAND
+    options[optionsMap.behaviourParams.item.clickAction] ===
+    GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION
   ) {
     // place share link as the navigation item
     const url = directShareLink;

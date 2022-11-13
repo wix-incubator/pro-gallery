@@ -183,11 +183,6 @@ class ItemView extends React.Component {
   }
 
   onItemClick(e, clickTarget, shouldPreventDefault = true) {
-    if (
-      utils.isFunction(utils.get(window, 'galleryWixCodeApi.onItemClicked'))
-    ) {
-      window.galleryWixCodeApi.onItemClicked(this.props); //TODO remove after OOI is fully integrated
-    }
     this.props.actions.eventsListener(
       GALLERY_CONSTS.events.ITEM_CLICKED,
       { ...this.props, clickTarget },
@@ -218,7 +213,8 @@ class ItemView extends React.Component {
     const useDirectLink = !!(
       url &&
       target &&
-      this.props.options.itemClick === 'link'
+      this.props.options[optionsMap.behaviourParams.item.clickAction] ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK
     );
     const shouldUseDirectLinkOnMobile =
       this.shouldShowHoverOnMobile() &&
@@ -277,7 +273,6 @@ class ItemView extends React.Component {
     if (utils.isMobile()) {
       const {
         hoveringBehaviour,
-        itemClick,
         alwaysShowHover,
         previewHover,
         allowDescription,
@@ -290,7 +285,11 @@ class ItemView extends React.Component {
       ) {
         return false;
       }
-      if (itemClick === 'nothing' && this.props.type !== 'video') {
+      if (
+        this.props.options[optionsMap.behaviourParams.item.clickAction] ===
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING &&
+        this.props.type !== 'video'
+      ) {
         return true;
       } else if (
         this.props.customComponents.customHoverRenderer &&
@@ -314,8 +313,11 @@ class ItemView extends React.Component {
   }
   shouldShowSecondMediaOnMobile() {
     if (utils.isMobile()) {
-      const { itemClick } = this.props.options;
-      if (itemClick === 'nothing' && this.props.type !== 'video') {
+      if (
+        this.props.options[optionsMap.behaviourParams.item.clickAction] ===
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING &&
+        this.props.type !== 'video'
+      ) {
         return (
           this.props.options[
             optionsMap.behaviourParams.item.secondaryMedia.trigger
@@ -663,7 +665,7 @@ class ItemView extends React.Component {
   itemHasLink() {
     const { linkData, linkUrl } = this.props;
     const itemDoesntHaveLink =
-      linkData.type === undefined && (linkUrl === undefined || linkUrl === ''); //when itemClick is 'link' but no link was added to this specific item
+      linkData.type === undefined && (linkUrl === undefined || linkUrl === ''); //when itemClickAction is 'LINK' but no link was added to this specific item
     return !itemDoesntHaveLink;
   }
 
@@ -813,10 +815,12 @@ class ItemView extends React.Component {
   }
 
   isItemClickable(options) {
-    const itemDoesntHaveLink = !this.itemHasLink(); //when itemClick is 'link' but no link was added to this specific item
+    const itemDoesntHaveLink = !this.itemHasLink(); //when itemClickAction is 'LINK' but no link was added to this specific item
 
-    return options.itemClick === GALLERY_CONSTS.itemClick.NOTHING ||
-      (options.itemClick === GALLERY_CONSTS.itemClick.LINK &&
+    return options[optionsMap.behaviourParams.item.clickAction] ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING ||
+      (options[optionsMap.behaviourParams.item.clickAction] ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK &&
         itemDoesntHaveLink)
       ? false
       : true;
@@ -973,11 +977,10 @@ class ItemView extends React.Component {
   }
 
   getItemAriaRole() {
-    switch (this.props.options.itemClick) {
-      case 'expand':
-      case 'fullscreen':
+    switch (this.props.options[optionsMap.behaviourParams.item.clickAction]) {
+      case GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION:
         return 'button';
-      case 'link':
+      case GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK:
         return 'link';
       default:
         return '';

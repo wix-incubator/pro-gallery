@@ -1,5 +1,5 @@
 import React from 'react';
-import { utils, isEditMode } from 'pro-gallery-lib';
+import { utils, isEditMode, optionsMap, GALLERY_CONSTS } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
@@ -37,16 +37,23 @@ class VideoItemWrapper extends React.Component {
   }
 
   mightPlayVideo() {
-    const { videoPlay, itemClick } = this.props.options;
+    const { videoPlay } = this.props.options;
     const { hasLink } = this.props;
     if (this.props.isVideoPlaceholder) {
       return false;
     }
     if (videoPlay === 'hover' || videoPlay === 'auto') {
       return true;
-    } else if (itemClick === 'nothing') {
+    } else if (
+      this.props.options[optionsMap.behaviourParams.item.clickAction] ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING
+    ) {
       return true;
-    } else if (itemClick === 'link' && !hasLink) {
+    } else if (
+      this.props.options[optionsMap.behaviourParams.item.clickAction] ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK &&
+      !hasLink
+    ) {
       return true;
     }
     // }
