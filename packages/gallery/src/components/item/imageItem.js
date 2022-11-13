@@ -47,7 +47,11 @@ class ImageItem extends React.Component {
       'gallery-item-visible',
       'gallery-item',
       'gallery-item-preloaded',
-      options.cubeImages && options.cubeType === 'fit' ? 'grid-fit' : '',
+      options.cubeImages &&
+      options[optionsMap.layoutParams.crop.method] ===
+        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
+        ? 'grid-fit'
+        : '',
       options.imageLoadingMode === GALLERY_CONSTS.loadingMode.COLOR &&
       !isTransparent
         ? `load-with-color ${isHighResImageLoaded ? 'image-loaded' : ''}`

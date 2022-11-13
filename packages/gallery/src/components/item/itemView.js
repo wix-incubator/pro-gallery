@@ -764,11 +764,16 @@ class ItemView extends React.Component {
     const styles = {};
     if (type === 'text') {
       styles.backgroundColor =
-        options.cubeType !== 'fit' ? 'transparent' : 'inherit';
+        options[optionsMap.layoutParams.crop.method] !==
+        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
+          ? 'transparent'
+          : 'inherit';
     } else {
       styles.backgroundColor =
-        (options.cubeType !== 'fit' ? style.bgColor : 'inherit') ||
-        'transparent';
+        (options[optionsMap.layoutParams.crop.method] !==
+        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
+          ? style.bgColor
+          : 'inherit') || 'transparent';
     }
 
     if (
@@ -888,7 +893,10 @@ class ItemView extends React.Component {
     const classes = ['gallery-item-wrapper', 'visible'];
 
     if (options.cubeImages) {
-      classes.push('cube-type-' + options.cubeType);
+      classes.push(
+        'cube-type-' +
+          options[optionsMap.layoutParams.crop.method].toLowerCase()
+      );
     }
     if (type === 'text') {
       classes.push('gallery-item-wrapper-text');

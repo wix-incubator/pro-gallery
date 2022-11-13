@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, window, utils, optionsMap } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import getStyle from './getStyle';
 
@@ -155,7 +155,9 @@ class VideoItem extends React.Component {
 
     // adding 1 pixel to compensate for the difference we have sometimes from layouter in grid fill
     const isCrop =
-      this.props.options.cubeImages && this.props.options.cubeType === 'fill';
+      this.props.options.cubeImages &&
+      this.props.options[optionsMap.layoutParams.crop.method] ===
+        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL;
 
     const url = this.props.videoUrl
       ? this.props.videoUrl
