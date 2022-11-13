@@ -17,3 +17,4 @@ export { GALLERY_CONSTS } from 'pro-gallery-lib';
 export { addPresetOptions } from 'pro-gallery-lib';
 export { defaultOptions } from 'pro-gallery-lib';
 export { flatDefaultOptions } from 'pro-gallery-lib';
+export { clickable } from './components/helpers/mouseCursorPosition';

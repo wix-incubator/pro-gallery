@@ -1,7 +1,7 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom';
-import { GALLERY_CONSTS, optionsMap, utils } from 'pro-gallery-lib';
-import { CursorController } from '../../helpers/mouseCursorPosition';
+import { GALLERY_CONSTS, utils, optionsMap } from 'pro-gallery-lib';
+import { ArrowFollower } from '../../helpers/mouseCursorPosition';
 import {
   getArrowBoxStyle,
   getArrowsRenderData,
@@ -143,10 +143,13 @@ export function NavigationArrows({
           nextContainerStyle,
           isRTL,
           hideLeftArrow,
+          hideRightArrow,
           arrowBoxStyle,
           navArrowsContainerWidth,
           navArrowsContainerHeight,
           navigationArrowPortalId,
+          mouseCursorContainerMaxWidth,
+          id,
         }}
       />
     );
@@ -226,19 +229,37 @@ export function ArrowButton({
 }
 
 export function ArrowButtonWithCursorController(props) {
+  const {
+    directionIsLeft,
+    next,
+    mouseCursorContainerMaxWidth,
+    hideLeftArrow,
+    hideRightArrow,
+    renderArrowSvg,
+  } = props;
+  const isTheOnlyArrow = hideLeftArrow || hideRightArrow;
   return (
-    <CursorController>
-      {({ containerRef, position, isMouseEnter }) => (
-        <ArrowButton
-          cursor={{
-            containerRef,
-            position,
-            isMouseEnter,
+    <ArrowFollower
+      id={props.id}
+      mouseCursorContainerMaxWidth={mouseCursorContainerMaxWidth}
+      onNavigate={() => next({ direction: directionIsLeft ? -1 : 1 })}
+      direction={directionIsLeft ? 'left' : 'right'}
+      isTheOnlyArrow={isTheOnlyArrow}
+    >
+      {(x, y) => (
+        <div
+          style={{
+            position: 'absolute',
+            top: y,
+            left: x,
+            transition: 'all 0.2s ease',
+            pointerEvents: 'none',
           }}
-          {...props}
-        />
+        >
+          {renderArrowSvg(directionIsLeft ? 'left' : 'right')}
+        </div>
       )}
-    </CursorController>
+    </ArrowFollower>
   );
 }
 
