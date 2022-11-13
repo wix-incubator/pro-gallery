@@ -155,7 +155,7 @@ class VideoItem extends React.Component {
 
     // adding 1 pixel to compensate for the difference we have sometimes from layouter in grid fill
     const isCrop =
-      this.props.options.cubeImages &&
+      this.props.options[optionsMap.layoutParams.crop.enable] &&
       this.props.options[optionsMap.layoutParams.crop.method] ===
         GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL;
 

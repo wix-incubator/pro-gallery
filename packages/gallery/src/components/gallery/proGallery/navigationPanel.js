@@ -118,8 +118,10 @@ class NavigationPanel extends React.Component {
                     {...thumbnailItem.renderProps()}
                     options={{
                       ...options,
-                      cubeType: 'fill',
-                      cubeImages: true,
+                      [optionsMap.layoutParams.crop.method]:
+                        GALLERY_CONSTS[optionsMap.layoutParams.crop.method]
+                          .FILL,
+                      [optionsMap.layoutParams.crop.enable]: true,
                     }}
                     actions={{}}
                     imageDimensions={{

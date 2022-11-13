@@ -892,7 +892,7 @@ class ItemView extends React.Component {
     const { options, type } = this.props;
     const classes = ['gallery-item-wrapper', 'visible'];
 
-    if (options.cubeImages) {
+    if (options[optionsMap.layoutParams.crop.enable]) {
       classes.push(
         'cube-type-' +
           options[optionsMap.layoutParams.crop.method].toLowerCase()
