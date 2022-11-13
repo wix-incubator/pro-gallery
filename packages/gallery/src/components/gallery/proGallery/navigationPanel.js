@@ -83,8 +83,8 @@ class NavigationPanel extends React.Component {
           {items.map(({ thumbnailItem, location, idx }) => {
             const highlighted = idx === activeIndex;
             const itemStyle = {
-              width: [optionsMap.layoutParams.thumbnails.size],
-              height: [optionsMap.layoutParams.thumbnails.size],
+              width: options[optionsMap.layoutParams.thumbnails.size],
+              height: options[optionsMap.layoutParams.thumbnails.size],
               marginLeft: options[optionsMap.layoutParams.thumbnails.spacing],
               marginTop: options[optionsMap.layoutParams.thumbnails.spacing],
               overflow: 'hidden',

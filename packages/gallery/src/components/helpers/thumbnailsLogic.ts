@@ -93,8 +93,10 @@ export function getThumbnailsData({
     options[optionsMap.layoutParams.thumbnails.size] +
     options[optionsMap.layoutParams.thumbnails.spacing] * 2;
   const horizontalThumbnails =
-    thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM ||
-    thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.TOP;
+    thumbnailAlignment ===
+      GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM ||
+    thumbnailAlignment ===
+      GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP;
   const { width, height } = getThumbnailsContainerSize({
     horizontalThumbnails,
     containerWidth,
@@ -239,16 +241,22 @@ function getThumbnailsContainerMargin({
   thumbnailSpacings: number;
 }) {
   const horizontalThumbnails =
-    thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM ||
-    thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.TOP;
+    thumbnailAlignment ===
+      GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM ||
+    thumbnailAlignment ===
+      GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP;
   if (horizontalThumbnails) {
-    const isTop = thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.TOP;
+    const isTop =
+      thumbnailAlignment ===
+      GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP;
     return {
       marginTop: isTop ? 0 : thumbnailSpacings,
       marginBottom: isTop ? thumbnailSpacings : 0,
     };
   }
-  const isLeft = thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.LEFT;
+  const isLeft =
+    thumbnailAlignment ===
+    GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT;
   return {
     marginLeft: isLeft ? 0 : thumbnailSpacings,
     marginRight: isLeft ? thumbnailSpacings : 0,
@@ -267,8 +275,10 @@ function getThumbnailLocation({
   isRTL: boolean;
 }) {
   const horizontalThumbnails =
-    thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM ||
-    thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.TOP;
+    thumbnailAlignment ===
+      GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM ||
+    thumbnailAlignment ===
+      GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP;
   const offsetSize = offset * thumbnailSizeWithSpacing;
   if (horizontalThumbnails) {
     return {
