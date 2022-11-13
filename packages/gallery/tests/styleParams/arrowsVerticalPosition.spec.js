@@ -29,7 +29,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
       options: {
         ...options,
         [optionsMap.layoutParams.info.placement]:
-          GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
+          GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW, //v5 TODO test w/o and remove, should be handled by the new addPresetStyles of slideshow.
       },
       customComponents: {
         customHoverRenderer: () => {},
