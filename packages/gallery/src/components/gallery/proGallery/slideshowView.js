@@ -190,9 +190,12 @@ class SlideshowView extends React.Component {
       if (
         avoidIndividualNavigation &&
         GALLERY_CONSTS.isLayout('GRID')(this.props.options) &&
-        this.props.options.numberOfImagesPerCol
+        this.props.options[optionsMap.layoutParams.structure.numberOfGridRows]
       ) {
-        direction *= this.props.options.numberOfImagesPerCol;
+        direction *=
+          this.props.options[
+            optionsMap.layoutParams.structure.numberOfGridRows
+          ];
       }
       return this.nextItem({
         direction,
