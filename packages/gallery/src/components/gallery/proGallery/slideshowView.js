@@ -179,7 +179,10 @@ class SlideshowView extends React.Component {
     }
     this.removeArrowsIfNeeded();
 
-    if (avoidIndividualNavigation && this.props.options.groupSize > 1) {
+    if (
+      avoidIndividualNavigation &&
+      this.props.options[optionsMap.layoutParams.groups.groupSize] > 1
+    ) {
       return this.nextGroup({
         direction,
         scrollDuration,
@@ -223,7 +226,7 @@ class SlideshowView extends React.Component {
       (initiator === 'nextItem' &&
         !ignoreScrollPosition &&
         avoidIndividualNavigation &&
-        !(this.props.options.groupSize > 1))
+        !(this.props.options[optionsMap.layoutParams.groups.groupSize] > 1))
     ) {
       const key = initiator === 'nextGroup' ? 'groups' : 'galleryItems';
       nextIndex = this.getCenteredItemOrGroupIdxByScroll(key) + direction;
@@ -278,7 +281,7 @@ class SlideshowView extends React.Component {
         scrollingUpTheGallery
       );
 
-      if (this.props.options.groupSize === 1) {
+      if (this.props.options[optionsMap.layoutParams.groups.groupSize] === 1) {
         const skipToSlide = this.skipFromSlide - this.props.totalItemsCount;
 
         if (nextItem >= this.skipFromSlide) {
