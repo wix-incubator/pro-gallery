@@ -530,12 +530,12 @@ class ItemView extends React.Component {
   getRightInfoElementIfNeeded() {
     if (
       GALLERY_CONSTS.hasExternalRightPlacement(
-        this.props.options[optionsMap.layoutParams.info.border.placement],
+        this.props.options[optionsMap.layoutParams.info.placement],
         this.props.idx
       )
     ) {
       return this.getExternalInfoElement(
-        GALLERY_CONSTS[optionsMap.layoutParams.info.border.placement].RIGHT,
+        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].RIGHT,
         'gallery-item-right-info'
       );
     } else {
@@ -546,12 +546,12 @@ class ItemView extends React.Component {
   getLeftInfoElementIfNeeded() {
     if (
       GALLERY_CONSTS.hasExternalLeftPlacement(
-        this.props.options[optionsMap.layoutParams.info.border.placement],
+        this.props.options[optionsMap.layoutParams.info.placement],
         this.props.idx
       )
     ) {
       return this.getExternalInfoElement(
-        GALLERY_CONSTS[optionsMap.layoutParams.info.border.placement].LEFT,
+        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].LEFT,
         'gallery-item-left-info'
       );
     } else {
@@ -562,12 +562,12 @@ class ItemView extends React.Component {
   getBottomInfoElementIfNeeded() {
     if (
       GALLERY_CONSTS.hasExternalBelowPlacement(
-        this.props.options[optionsMap.layoutParams.info.border.placement],
+        this.props.options[optionsMap.layoutParams.info.placement],
         this.props.idx
       )
     ) {
       return this.getExternalInfoElement(
-        GALLERY_CONSTS[optionsMap.layoutParams.info.border.placement].BELOW,
+        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
         'gallery-item-bottom-info'
       );
     } else {
@@ -578,12 +578,12 @@ class ItemView extends React.Component {
   getTopInfoElementIfNeeded() {
     if (
       GALLERY_CONSTS.hasExternalAbovePlacement(
-        this.props.options[optionsMap.layoutParams.info.border.placement],
+        this.props.options[optionsMap.layoutParams.info.placement],
         this.props.idx
       )
     ) {
       return this.getExternalInfoElement(
-        GALLERY_CONSTS[optionsMap.layoutParams.info.border.placement].ABOVE,
+        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].ABOVE,
         'gallery-item-top-info'
       );
     } else {
@@ -991,8 +991,8 @@ class ItemView extends React.Component {
     this.hasRequiredMediaUrl = url || type === 'text';
     //if info placement !== OVERLAY and !this.hasRequiredMediaUrl, we will NOT render the itemWrapper (but will render the info element with the whole size of the item)
     const isItemWrapperEmpty =
-      options[optionsMap.layoutParams.info.border.placement] !==
-        GALLERY_CONSTS[optionsMap.layoutParams.info.border.placement].OVERLAY &&
+      options[optionsMap.layoutParams.info.placement] !==
+        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY &&
       !this.hasRequiredMediaUrl;
     const innerDiv = (
       <div
@@ -1021,11 +1021,11 @@ class ItemView extends React.Component {
           style={{
             ...getImageStyle(this.props.options),
             ...(GALLERY_CONSTS.hasExternalRightPlacement(
-              this.props.options[optionsMap.layoutParams.info.border.placement],
+              this.props.options[optionsMap.layoutParams.info.placement],
               this.props.idx
             ) && { float: 'left' }),
             ...(GALLERY_CONSTS.hasExternalLeftPlacement(
-              this.props.options[optionsMap.layoutParams.info.border.placement],
+              this.props.options[optionsMap.layoutParams.info.placement],
               this.props.idx
             ) && { float: 'right' }),
           }}

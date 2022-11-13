@@ -5,7 +5,7 @@ export function getContainerStyle(options) {
     ...((options[optionsMap.layoutParams.info.layout] ===
       GALLERY_CONSTS[optionsMap.layoutParams.info.layout].ATTACHED_BACKGROUND ||
       GALLERY_CONSTS.hasHoverPlacement(
-        options[optionsMap.layoutParams.info.border.placement]
+        options[optionsMap.layoutParams.info.placement]
       )) && {
       ...getBorderStyle(
         options.itemBorderRadius,
@@ -37,7 +37,7 @@ function boxShadow(options) {
 export function getImageStyle(options) {
   return {
     ...(!GALLERY_CONSTS.hasHoverPlacement(
-      options[optionsMap.layoutParams.info.border.placement]
+      options[optionsMap.layoutParams.info.placement]
     ) &&
       (options[optionsMap.layoutParams.info.layout] ===
         GALLERY_CONSTS[optionsMap.layoutParams.info.layout].NO_BACKGROUND ||
