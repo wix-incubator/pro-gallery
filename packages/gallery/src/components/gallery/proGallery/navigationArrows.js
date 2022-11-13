@@ -16,17 +16,12 @@ export function NavigationArrows({
   next,
   id,
 }) {
-  const {
-    isRTL,
-    imageMargin,
-    arrowsPadding,
-    arrowsPosition,
-    arrowsVerticalPosition,
-    titlePlacement,
-    textBoxHeight,
-    arrowsColor,
-    arrowsSize,
-  } = options;
+  const { isRTL, imageMargin, titlePlacement, textBoxHeight, arrowsColor } =
+    options;
+  const arrowsPosition =
+    options[optionsMap.layoutParams.navigationArrows.position];
+  const arrowsPadding =
+    options[optionsMap.layoutParams.navigationArrows.padding];
   const scrollDirection =
     options[optionsMap.layoutParams.structure.scrollDirection];
   const mouseCursorContainerMaxWidth =
@@ -41,13 +36,15 @@ export function NavigationArrows({
   } = getArrowsRenderData({
     customNavArrowsRenderer,
     arrowsColor: arrowsColor,
-    arrowsSize: arrowsSize,
+    arrowsSize: options[optionsMap.layoutParams.navigationArrows.size],
     arrowsType: options[optionsMap.layoutParams.navigationArrows.type],
     containerStyleType:
       options[optionsMap.layoutParams.navigationArrows.container.type],
   });
   const mouseCursorEnabled =
-    arrowsPosition === GALLERY_CONSTS.arrowsPosition.MOUSE_CURSOR;
+    arrowsPosition ===
+    GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
+      .MOUSE_CURSOR;
 
   const { galleryHeight } = container;
   const { galleryWidth } = container;
@@ -67,12 +64,13 @@ export function NavigationArrows({
     // if we got here, we should be ITEM_CENTER, taken care of in layoutHelper.ts
   }
   const verticalPositionFix = {
-    [GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER]: 0,
-    [GALLERY_CONSTS.arrowsVerticalPosition.IMAGE_CENTER]:
-      infoHeight * directionFix,
-    [GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER]:
-      -imageHeight * directionFix,
-  }[arrowsVerticalPosition];
+    [GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
+      .ITEM_CENTER]: 0,
+    [GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
+      .IMAGE_CENTER]: infoHeight * directionFix,
+    [GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
+      .INFO_CENTER]: -imageHeight * directionFix,
+  }[options[optionsMap.layoutParams.navigationArrows.verticalAlignment]];
   const arrowBoxStyle = getArrowBoxStyle({
     type: options[optionsMap.layoutParams.navigationArrows.container.type],
     backgroundColor:
@@ -106,7 +104,9 @@ export function NavigationArrows({
     scrollDirection ===
       GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
         .HORIZONTAL &&
-    arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
+    arrowsPosition ===
+      GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
+        .OUTSIDE_GALLERY
       ? `-${20 + navArrowsContainerWidth}px`
       : `${imageMargin / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
   // imageMargin effect the margin of the main div ('pro-gallery-parent-container') that SlideshowView is rendering, so the arrows should be places accordingly

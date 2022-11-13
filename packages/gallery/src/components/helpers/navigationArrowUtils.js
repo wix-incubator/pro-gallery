@@ -33,14 +33,13 @@ const getArrowsSizeData = ({
   };
 };
 
-export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
-  const {
-    customNavArrowsRenderer,
-    arrowsColor,
-    arrowsSize,
-    arrowsType,
-    containerStyleType,
-  } = arrowsDataRelevantArgs;
+export const getArrowsRenderData = ({
+  customNavArrowsRenderer,
+  arrowsColor,
+  arrowsSize,
+  arrowsType,
+  containerStyleType,
+}) => {
   const arrowData = getArrowIconData(arrowsType);
   const { navArrowsContainerWidth, navArrowsContainerHeight, scalePercentage } =
     getArrowsSizeData({
@@ -82,37 +81,47 @@ export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
 };
 
 // Function that checks if the nav arrows parent-container is large enough for them
-const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
-  const { arrowsVerticalPosition, textBoxHeight, arrowsSize } =
-    arrowsWillFitPositionRelevantArgs.options;
-  const { options } = arrowsWillFitPositionRelevantArgs;
-  const { height } = arrowsWillFitPositionRelevantArgs.container;
-  const { customNavArrowsRenderer } = arrowsWillFitPositionRelevantArgs;
+const arrowsWillFitPosition = ({
+  options,
+  container,
+  customNavArrowsRenderer,
+}) => {
+  const { textBoxHeight } = options;
+  const { height } = container;
   // Calc of Nav arrows container's height
   const arrowData = getArrowIconData(
     options[optionsMap.layoutParams.navigationArrows.type]
   );
   const { navArrowsContainerHeight } = getArrowsSizeData({
     customNavArrowsRenderer,
-    arrowsSize,
+    arrowsSize: options[optionsMap.layoutParams.navigationArrows.size],
     svgData: arrowData,
     containerStyleType:
       options[optionsMap.layoutParams.navigationArrows.container.type],
   });
   const infoHeight = textBoxHeight;
   const parentHeightByVerticalPosition = {
-    INFO_CENTER: infoHeight,
-    IMAGE_CENTER: height - infoHeight,
-    ITEM_CENTER: height,
+    [[optionsMap.layoutParams.navigationArrows.verticalAlignment].INFO_CENTER]:
+      infoHeight,
+    [[optionsMap.layoutParams.navigationArrows.verticalAlignment].IMAGE_CENTER]:
+      height - infoHeight,
+    [[optionsMap.layoutParams.navigationArrows.verticalAlignment].ITEM_CENTER]:
+      height,
   };
-  const parentHeight = parentHeightByVerticalPosition[arrowsVerticalPosition];
+  const parentHeight =
+    parentHeightByVerticalPosition[
+      options[optionsMap.layoutParams.navigationArrows.verticalAlignment]
+    ];
   return parentHeight >= navArrowsContainerHeight;
 };
 
 // function to Determine whether we should render the navigation arrows
 export const shouldRenderNavArrows = (props) => {
   const shouldRenderArrowsRelevantArgs = getShouldRenderArrowsArgs(props);
-  const { showArrows } = shouldRenderArrowsRelevantArgs.options;
+  const navigationArrowsEnabled =
+    shouldRenderArrowsRelevantArgs.options[
+      optionsMap.layoutParams.navigationArrows.enable
+    ];
 
   const { galleryWidth } = shouldRenderArrowsRelevantArgs.container;
   const { isPrerenderMode, galleryStructure, customNavArrowsRenderer } =
@@ -125,7 +134,7 @@ export const shouldRenderNavArrows = (props) => {
   const isGalleryWiderThanRenderedItems =
     galleryStructure.width <= galleryWidth;
   return (
-    !!showArrows &&
+    !!navigationArrowsEnabled &&
     !isPrerenderMode &&
     arrowsWillFitPosition(arrowsWillFitPositionRelevantArgs) &&
     !isGalleryWiderThanRenderedItems

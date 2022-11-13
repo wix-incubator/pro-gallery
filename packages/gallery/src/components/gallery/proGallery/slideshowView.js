@@ -710,12 +710,15 @@ class SlideshowView extends React.Component {
       this.props.options[optionsMap.layoutParams.structure.scrollDirection] ===
         GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
           .HORIZONTAL &&
-      this.props.options.arrowsPosition ===
-        GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
+      this.props.options[optionsMap.layoutParams.navigationArrows.position] ===
+        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
+          .OUTSIDE_GALLERY
         ? {
             overflow: 'visible',
             left:
-              this.props.options.arrowsSize +
+              this.props.options[
+                optionsMap.layoutParams.navigationArrows.size
+              ] +
               40 +
               this.props.options.imageMargin / 2,
           }
