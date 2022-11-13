@@ -366,7 +366,7 @@ export class GalleryContainer extends React.Component {
 
     this.galleryStructure = ItemsHelper.convertToGalleryItems(structure, {
       // TODO use same objects in the memory when the galleryItems are changed
-      thumbnailSize: options.thumbnailSize,
+      thumbnailSize: options[optionsMap.layoutParams.thumbnails.size],
       sharpParams: options.sharpParams,
       createMediaUrl,
     });

@@ -33,7 +33,7 @@ class NavigationPanel extends React.Component {
       this.props.activeIndex,
       clearedGalleryItems.length
     );
-    const { thumbnailSize, thumbnailSpacings } = options;
+
     const {
       horizontalThumbnails,
       items,
@@ -83,10 +83,10 @@ class NavigationPanel extends React.Component {
           {items.map(({ thumbnailItem, location, idx }) => {
             const highlighted = idx === activeIndex;
             const itemStyle = {
-              width: thumbnailSize,
-              height: thumbnailSize,
-              marginLeft: thumbnailSpacings,
-              marginTop: thumbnailSpacings,
+              width: [optionsMap.layoutParams.thumbnails.size],
+              height: [optionsMap.layoutParams.thumbnails.size],
+              marginLeft: options[optionsMap.layoutParams.thumbnails.spacing],
+              marginTop: options[optionsMap.layoutParams.thumbnails.spacing],
               overflow: 'hidden',
               backgroundImage: `url(${thumbnailItem.createUrl(
                 GALLERY_CONSTS.urlSizes.THUMBNAIL,
@@ -149,7 +149,8 @@ class NavigationPanel extends React.Component {
     const navigationRelevantProps = {
       navigationPanelPosition:
         this.props.options[optionsMap.layoutParams.thumbnails.position],
-      thumbnailAlignment: this.props.options.galleryThumbnailsAlignment,
+      thumbnailAlignment:
+        this.props.options[optionsMap.layoutParams.thumbnails.alignment],
       options: this.props.options,
       galleryStructure: this.props.galleryStructure,
       settings: this.props.settings,
@@ -198,18 +199,18 @@ const getCustomNavigationPanelDimensions = ({
   navigationPanelPosition,
 }) => {
   switch (galleryThumbnailsAlignment) {
-    case 'top': //TODO use CONSTS if available
+    case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP:
       return getHorizontalNavigationPanelDimensions(
         { galleryHeight, galleryWidth, height, width, navigationPanelPosition },
         false
       );
-    case 'bottom':
+    case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM:
       return getHorizontalNavigationPanelDimensions(
         { galleryHeight, galleryWidth, height, width, navigationPanelPosition },
         true
       );
-    case 'right':
-    case 'left':
+    case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].RIGHT:
+    case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT:
       return getVerticalNavigationPanelDimensions({
         galleryHeight,
         galleryWidth,
@@ -253,10 +254,11 @@ const getNavigationPanelOnGalleryPositionStyles = ({
   navigationPanelPosition,
 }) => {
   if (
-    navigationPanelPosition === GALLERY_CONSTS.thumbnailsPosition.ON_GALLERY
+    navigationPanelPosition ===
+    GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].ON_GALLERY
   ) {
     let onGalleryStyles = { position: 'absolute' };
-    onGalleryStyles[galleryThumbnailsAlignment] = 0;
+    onGalleryStyles[galleryThumbnailsAlignment.toLowerCase()] = 0;
     return onGalleryStyles;
   }
 };

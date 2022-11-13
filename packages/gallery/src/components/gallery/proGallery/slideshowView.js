@@ -963,7 +963,7 @@ class SlideshowView extends React.Component {
   };
 
   getNavigationPanelArray() {
-    if (!this.props.options.hasThumbnails) {
+    if (!this.props.options[optionsMap.layoutParams.thumbnails.enable]) {
       return [false, false];
     }
 
@@ -973,14 +973,14 @@ class SlideshowView extends React.Component {
     if (customNavigationPanelRenderer) {
       const { galleryHeight, galleryWidth, height, width } =
         this.props.container;
-      const { galleryThumbnailsAlignment } = this.props.options;
       const customNavigationPanelInlineStyles =
         getCustomNavigationPanelInlineStyles({
           galleryHeight,
           galleryWidth,
           height,
           width,
-          galleryThumbnailsAlignment,
+          galleryThumbnailsAlignment:
+            this.props.options[optionsMap.layoutParams.thumbnails.alignment],
           navigationPanelPosition:
             this.props.options[optionsMap.layoutParams.thumbnails.position],
         });
@@ -1007,7 +1007,6 @@ class SlideshowView extends React.Component {
       );
     }
 
-    const { galleryThumbnailsAlignment } = this.props.options;
     const navigationPanels = [];
     if (
       this.props.options[optionsMap.layoutParams.thumbnails.position] ===
@@ -1018,14 +1017,17 @@ class SlideshowView extends React.Component {
       return navigationPanels;
     } else {
       //OUTSIDE_GALLERY
-      switch (galleryThumbnailsAlignment) {
-        case 'top':
-        case 'left':
+      switch (
+        this.props.options[optionsMap.layoutParams.thumbnails.alignment]
+      ) {
+        case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP:
+        case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT:
           navigationPanels[0] = navigationPanel;
           navigationPanels[1] = false;
           break;
-        case 'right':
-        case 'bottom':
+        case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].RIGHT:
+        case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment]
+          .BOTTOM:
           navigationPanels[0] = false;
           navigationPanels[1] = navigationPanel;
           break;
@@ -1038,7 +1040,7 @@ class SlideshowView extends React.Component {
     let classNames = 'pro-gallery-parent-container';
     if (GALLERY_CONSTS.isLayout('SLIDER')(this.props.options)) {
       classNames += ' gallery-slider';
-    } else if (this.props.options.hasThumbnails) {
+    } else if (this.props.options[optionsMap.layoutParams.thumbnails.enable]) {
       classNames += ' gallery-thumbnails';
     } else if (GALLERY_CONSTS.isLayout('COLUMN')(this.props.options)) {
       classNames += ' gallery-columns';

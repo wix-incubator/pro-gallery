@@ -1,4 +1,9 @@
-import { GalleryProps, GALLERY_CONSTS, utils } from 'pro-gallery-lib';
+import {
+  GalleryProps,
+  GALLERY_CONSTS,
+  optionsMap,
+  utils,
+} from 'pro-gallery-lib';
 import { CSSProperties } from 'react';
 
 function calculateActiveIndexOffset({
@@ -77,14 +82,16 @@ export function getThumbnailsData({
     prevActiveIndex,
   });
   const activeIndexWithOffset = activeIndexOffsetMemory! + activeIndex;
-  const { thumbnailSize, isRTL, thumbnailSpacings } = options;
+  const { isRTL } = options;
 
   if (utils.isVerbose()) {
     console.log('creating thumbnails for idx', activeIndex);
   }
 
   const withInfiniteScroll = false; // this is not supported yet
-  const thumbnailSizeWithSpacing = thumbnailSize + thumbnailSpacings * 2;
+  const thumbnailSizeWithSpacing =
+    options[optionsMap.layoutParams.thumbnails.size] +
+    options[optionsMap.layoutParams.thumbnails.spacing] * 2;
   const horizontalThumbnails =
     thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM ||
     thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.TOP;
@@ -131,7 +138,7 @@ export function getThumbnailsData({
 
   const thumbnailsMargins = getThumbnailsContainerMargin({
     thumbnailAlignment,
-    thumbnailSpacings,
+    thumbnailSpacings: options[optionsMap.layoutParams.thumbnails.spacing],
   });
   return {
     items: itemToDisplay.map(({ item, thumbnailItem, idx }, index) => {
