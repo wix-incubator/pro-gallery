@@ -490,7 +490,9 @@ export class GalleryContainer extends React.Component {
             ],
           isContinuousScrolling,
           autoSlideshowContinuousSpeed:
-            this.state.options.autoSlideshowContinuousSpeed,
+            this.state.options[
+              optionsMap.behaviourParams.gallery.horizontal.autoSlide.speed
+            ],
           imageMargin: this.state.options.imageMargin,
         };
         this.currentScrollData = scrollToItemImp(scrollParams);
@@ -559,7 +561,9 @@ export class GalleryContainer extends React.Component {
             ],
           isContinuousScrolling,
           autoSlideshowContinuousSpeed:
-            this.state.options.autoSlideshowContinuousSpeed,
+            this.state.options[
+              optionsMap.behaviourParams.gallery.horizontal.autoSlide.speed
+            ],
           imageMargin: this.state.options.imageMargin,
         };
         this.currentScrollData = scrollToGroupImp(scrollParams);
@@ -912,7 +916,9 @@ export class GalleryContainer extends React.Component {
   onMouseEnter() {
     if (
       this.currentScrollData?.isContinuousScrolling &&
-      this.state.options.pauseAutoSlideshowOnHover
+      this.state.options[
+        optionsMap.behaviourParams.gallery.horizontal.autoSlide.pauseOnHover
+      ]
     ) {
       haltScroll(this.currentScrollData);
     }

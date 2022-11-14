@@ -453,26 +453,46 @@ class SlideshowView extends React.Component {
   }
 
   canStartAutoSlideshow(options) {
-    return options.isAutoSlideshow && !this.state.shouldBlockAutoSlideshow;
+    return (
+      options[
+        optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+      ] !==
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+        ].OFF && !this.state.shouldBlockAutoSlideshow
+    );
   }
 
   startAutoSlideshowIfNeeded(options) {
     this.clearAutoSlideshowInterval();
     if (this.canStartAutoSlideshow(options)) {
       if (
-        options.autoSlideshowType ===
-          GALLERY_CONSTS.autoSlideshowTypes.CONTINUOUS &&
-        options.autoSlideshowContinuousSpeed > 0
+        options[
+          optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+        ] ===
+          GALLERY_CONSTS[
+            optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+          ].CONTINUOUS &&
+        options[optionsMap.behaviourParams.gallery.horizontal.autoSlide.speed] >
+          0
       ) {
         this.autoScrollToNextItem();
       } else if (
-        options.autoSlideshowType ===
-          GALLERY_CONSTS.autoSlideshowTypes.INTERVAL &&
-        options.autoSlideshowInterval > 0
+        options[
+          optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+        ] ===
+          GALLERY_CONSTS[
+            optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+          ].INTERVAL &&
+        options[
+          optionsMap.behaviourParams.gallery.horizontal.autoSlide.interval
+        ] > 0
       ) {
         this.autoSlideshowInterval = setInterval(
           this.autoScrollToNextItem,
-          options.autoSlideshowInterval * 1000
+          options[
+            optionsMap.behaviourParams.gallery.horizontal.autoSlide.interval
+          ] * 1000
         );
       }
     }
@@ -489,8 +509,12 @@ class SlideshowView extends React.Component {
           : 1;
 
       if (
-        options.autoSlideshowType ===
-        GALLERY_CONSTS.autoSlideshowTypes.CONTINUOUS
+        options[
+          optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+        ] ===
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+        ].CONTINUOUS
       ) {
         this._next({
           direction,
@@ -498,7 +522,12 @@ class SlideshowView extends React.Component {
           isContinuousScrolling: true,
         });
       } else if (
-        options.autoSlideshowType === GALLERY_CONSTS.autoSlideshowTypes.INTERVAL
+        options[
+          optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+        ] ===
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+        ].INTERVAL
       ) {
         this._next({
           direction,
@@ -1185,7 +1214,10 @@ class SlideshowView extends React.Component {
       isInFocus,
     } = this.state;
     const shouldPauseDueToHover =
-      isGalleryInHover && options.pauseAutoSlideshowOnHover;
+      isGalleryInHover &&
+      options[
+        optionsMap.behaviourParams.gallery.horizontal.autoSlide.pauseOnHover
+      ];
     const shouldPauseDueToFocus = isInFocus && settings?.isAccessible;
     let shouldBlock =
       !isInView ||
@@ -1244,16 +1276,36 @@ class SlideshowView extends React.Component {
     if (isEditMode() || isPreviewMode()) {
       if (
         //check that the change is related to the slideshow settings
-        this.props.options.isAutoSlideshow !== props.options.isAutoSlideshow ||
-        this.props.options.autoSlideshowInterval !==
-          props.options.autoSlideshowInterval
+        ((this.props.options[
+          optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+        ] !==
+          GALLERY_CONSTS[
+            optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+          ].OFF) !==
+          props.options[
+            optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+          ]) !==
+          GALLERY_CONSTS[
+            optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+          ].OFF ||
+        this.props.options[
+          optionsMap.behaviourParams.gallery.horizontal.autoSlide.interval
+        ] !==
+          props.options[
+            optionsMap.behaviourParams.gallery.horizontal.autoSlide.interval
+          ]
       ) {
         this.startAutoSlideshowIfNeeded(props.options);
       }
     }
 
     this.shouldCreateSlideShowPlayButton =
-      props.options.isAutoSlideshow && props.options.playButtonForAutoSlideShow;
+      props.options[
+        optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+      ] !==
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+        ].OFF && props.options.playButtonForAutoSlideShow;
   }
 
   removeArrowsIfNeeded() {

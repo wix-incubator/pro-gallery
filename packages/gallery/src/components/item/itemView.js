@@ -873,16 +873,7 @@ class ItemView extends React.Component {
       COLOR_IN,
       DARKENED,
     } = GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation];
-    console.log({
-      MAIN_COLOR,
-      ZOOM_IN,
-      BLUR,
-      GRAYSCALE,
-      SHRINK,
-      INVERT,
-      COLOR_IN,
-      DARKENED,
-    });
+
     const isHovered = this.simulateHover();
     const classNames = {
       'gallery-item-container': true,
