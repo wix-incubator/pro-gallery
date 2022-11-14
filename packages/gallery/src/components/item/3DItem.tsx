@@ -56,6 +56,7 @@ export default class ThreeDItem extends React.Component<Props, State> {
       });
     this.sceneManager.sun();
     this.sceneManager.addGround();
+    this.sceneManager.loadHDR('/hdr/brown_photostudio_02_2k.hdr');
   });
   componentDidMount = async () => {
     await ThreeDManager.init();
