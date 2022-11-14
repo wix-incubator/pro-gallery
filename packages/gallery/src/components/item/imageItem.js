@@ -84,14 +84,16 @@ class ImageItem extends React.Component {
     const { imageDimensions, options, createUrl, id } = this.props;
 
     let imageAnimationUrl = null;
-    switch (options.scrollAnimation) {
-      case GALLERY_CONSTS.scrollAnimations.BLUR:
+    switch (options[optionsMap.behaviourParams.gallery.scrollAnimation]) {
+      case GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation]
+        .BLUR:
         imageAnimationUrl = createUrl(
           GALLERY_CONSTS.urlSizes.RESIZED,
           GALLERY_CONSTS.urlTypes.LOW_RES
         );
         break;
-      case GALLERY_CONSTS.scrollAnimations.MAIN_COLOR:
+      case GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation]
+        .MAIN_COLOR:
         imageAnimationUrl = createUrl(
           GALLERY_CONSTS.urlSizes.PIXEL,
           GALLERY_CONSTS.urlTypes.HIGH_RES
@@ -143,7 +145,8 @@ class ImageItem extends React.Component {
     const image = () => {
       const imagesComponents = [];
       const blockDownloadStyles =
-        utils.isMobile() && !this.props.options.allowContextMenu
+        utils.isMobile() &&
+        this.props.options[optionsMap.behaviourParams.gallery.blockContextMenu]
           ? {
               '-webkit-user-select': 'none',
               '-webkit-touch-callout': 'none',

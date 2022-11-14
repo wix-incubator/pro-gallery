@@ -997,7 +997,10 @@ class ItemView extends React.Component {
   }
 
   onContextMenu(e) {
-    if (!utils.isDev() && !this.props.options.allowContextMenu) {
+    if (
+      !utils.isDev() &&
+      this.props.options[optionsMap.behaviourParams.gallery.blockContextMenu]
+    ) {
       e.preventDefault(e);
     }
   }

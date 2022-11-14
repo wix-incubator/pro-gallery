@@ -87,7 +87,8 @@ function getLinkParams({
     // place share link as the navigation item
     const url = directShareLink;
     const shouldUseDirectShareLink = !!url;
-    const shouldUseNofollow = !options.shouldIndexDirectShareLinkInSEO;
+    const shouldUseNofollow =
+      !options[optionsMap.behaviourParams.gallery.enableIndexingShareLinks];
     const seoLinkParams = shouldUseNofollow ? { rel: 'nofollow' } : {};
     const linkParams = shouldUseDirectShareLink
       ? { href: url, 'data-cancel-link': true, ...seoLinkParams }

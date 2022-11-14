@@ -290,7 +290,9 @@ class GalleryView extends React.Component {
       this.props.galleryStructure.height > this.props.container.height;
 
     if (shouldShowButton) {
-      const buttonText = options.loadMoreButtonText || 'Load More';
+      const buttonText =
+        options[optionsMap.behaviourParams.gallery.vertical.loadMore.text] ||
+        'Load More';
       showMoreButton = (
         <div
           className={

@@ -64,10 +64,12 @@ class CssScrollHelper {
     if (!(items && items.length)) {
       return [];
     }
-    const scrollAnimation = options.scrollAnimation;
+    const scrollAnimation =
+      options[optionsMap.behaviourParams.gallery.scrollAnimation];
     if (
-      !scrollAnimation ||
-      scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT
+      scrollAnimation ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation]
+        .NO_EFFECT
     ) {
       return [];
     }
@@ -216,17 +218,28 @@ class CssScrollHelper {
   }
 
   createScrollAnimationsIfNeeded({ idx, options, createScrollSelectors }) {
-    const { scrollAnimation } = options;
+    const scrollAnimation =
+      options[optionsMap.behaviourParams.gallery.scrollAnimation];
+    const {
+      NO_EFFECT,
+      FADE_IN,
+      GRAYSCALE,
+      SLIDE_UP,
+      EXPAND,
+      SHRINK,
+      ZOOM_OUT,
+      ONE_COLOR,
+      MAIN_COLOR,
+      BLUR,
+    } = GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation];
+
     const isRTL =
       options[optionsMap.behaviourParams.gallery.layoutDirection] ===
       GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
         .RIGHT_TO_LEFT;
     const scrollDirection =
       options[optionsMap.layoutParams.structure.scrollDirection];
-    if (
-      !scrollAnimation ||
-      scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT
-    ) {
+    if (scrollAnimation === NO_EFFECT) {
       return '';
     }
 
@@ -238,10 +251,7 @@ class CssScrollHelper {
 
     let scrollAnimationCss = '';
     // notice: these 2 animations must have the blurry image
-    if (
-      scrollAnimation === GALLERY_CONSTS.scrollAnimations.MAIN_COLOR ||
-      scrollAnimation === GALLERY_CONSTS.scrollAnimations.BLUR
-    ) {
+    if (scrollAnimation === MAIN_COLOR || scrollAnimation === BLUR) {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
@@ -255,7 +265,7 @@ class CssScrollHelper {
         ) + `{filter: opacity(0) !important;}`;
     }
 
-    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.FADE_IN) {
+    if (scrollAnimation === FADE_IN) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
         `{filter: opacity(0); transition: filter 1.${_randomDuration}s ease-in !important;}`;
@@ -264,7 +274,7 @@ class CssScrollHelper {
         `{filter: opacity(1) !important;}`;
     }
 
-    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.GRAYSCALE) {
+    if (scrollAnimation === GRAYSCALE) {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
@@ -280,7 +290,7 @@ class CssScrollHelper {
         ) + `{filter: grayscale(0) !important;}`;
     }
 
-    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.SLIDE_UP) {
+    if (scrollAnimation === SLIDE_UP) {
       const axis =
         scrollDirection ===
         GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
@@ -296,7 +306,7 @@ class CssScrollHelper {
         `{transform: translate${axis}(0) !important;}`;
     }
 
-    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.EXPAND) {
+    if (scrollAnimation === EXPAND) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
         `{transform: scale(0.95); transition: transform 1s cubic-bezier(.13,.78,.53,.92) ${_randomDelay}ms !important;}`;
@@ -305,7 +315,7 @@ class CssScrollHelper {
         `{transform: scale(1) !important;}`;
     }
 
-    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.SHRINK) {
+    if (scrollAnimation === SHRINK) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
         `{transform: scale(1.05); transition: transform 1s cubic-bezier(.13,.78,.53,.92) ${_randomDelay}ms !important;}`;
@@ -314,7 +324,7 @@ class CssScrollHelper {
         `{transform: scale(1) !important;}`;
     }
 
-    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.ZOOM_OUT) {
+    if (scrollAnimation === ZOOM_OUT) {
       scrollAnimationCss +=
         createScrollSelectors(
           animationPreparationPadding,
@@ -328,7 +338,7 @@ class CssScrollHelper {
         ) + `{transform: scale(1) !important;}`;
     }
 
-    if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.ONE_COLOR) {
+    if (scrollAnimation === ONE_COLOR) {
       const oneColorAnimationColor =
         options.oneColorAnimationColor && options.oneColorAnimationColor.value
           ? options.oneColorAnimationColor.value
