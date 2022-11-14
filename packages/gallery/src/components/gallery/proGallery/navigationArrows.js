@@ -16,7 +16,6 @@ export function NavigationArrows({
   next,
   id,
 }) {
-  const { arrowsColor } = options;
   const itemSpacing = options[optionsMap.layoutParams.structure.itemSpacing];
   const isRTL =
     options[optionsMap.behaviourParams.gallery.layoutDirection] ===
@@ -39,7 +38,7 @@ export function NavigationArrows({
     navArrowsContainerHeight,
   } = getArrowsRenderData({
     customNavArrowsRenderer,
-    arrowsColor: arrowsColor,
+    arrowsColor: options[optionsMap.stylingParams.arrowsColor], //v5 TODO - get this in the nav arrows options
     arrowsSize: options[optionsMap.layoutParams.navigationArrows.size],
     arrowsType: options[optionsMap.layoutParams.navigationArrows.type],
     containerStyleType:

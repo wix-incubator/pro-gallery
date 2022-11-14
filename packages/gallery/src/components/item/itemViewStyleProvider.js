@@ -8,9 +8,9 @@ export function getContainerStyle(options) {
         options[optionsMap.layoutParams.info.placement]
       )) && {
       ...getBorderStyle(
-        options.itemBorderRadius,
-        options.itemBorderWidth,
-        options.itemBorderColor
+        options[optionsMap.stylingParams.itemBorderRadius],
+        options[optionsMap.stylingParams.itemBorderWidth],
+        options[optionsMap.stylingParams.itemBorderColor]
       ),
       ...boxShadow(options),
     }),
@@ -19,15 +19,18 @@ export function getContainerStyle(options) {
 
 function boxShadow(options) {
   let _boxShadow = {};
-  if (options.itemEnableShadow) {
-    const { itemShadowBlur, itemShadowDirection, itemShadowSize } = options;
+  if (options[optionsMap.stylingParams.itemEnableShadow]) {
+    const itemShadowBlur = options[optionsMap.stylingParams.itemShadowBlur];
+    const itemShadowDirection =
+      options[optionsMap.stylingParams.itemShadowDirection];
+    const itemShadowSize = options[optionsMap.stylingParams.itemShadowSize];
     const alpha =
       ((-1 * (Number(itemShadowDirection) - 90)) / 360) * 2 * Math.PI;
     const shadowX = Math.round(itemShadowSize * Math.cos(alpha));
     const shadowY = Math.round(-1 * itemShadowSize * Math.sin(alpha));
     _boxShadow = {
       boxShadow: `${shadowX}px ${shadowY}px ${itemShadowBlur}px ${utils.formatColor(
-        options.itemShadowOpacityAndColor
+        options[optionsMap.stylingParams.itemShadowOpacityAndColor]
       )}`,
     };
   }
@@ -45,9 +48,9 @@ export function getImageStyle(options) {
           GALLERY_CONSTS[optionsMap.layoutParams.info.layout]
             .SEPARATED_BACKGROUND) && {
         ...getBorderStyle(
-          options.itemBorderRadius,
-          options.itemBorderWidth,
-          options.itemBorderColor
+          options[optionsMap.stylingParams.itemBorderRadius],
+          options[optionsMap.stylingParams.itemBorderWidth],
+          options[optionsMap.stylingParams.itemBorderColor]
         ),
       }),
   };

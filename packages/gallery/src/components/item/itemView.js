@@ -819,7 +819,7 @@ class ItemView extends React.Component {
 
     styles.height = height + 'px';
     styles.width = width + 'px';
-    styles.margin = -options.itemBorderWidth + 'px';
+    styles.margin = -options[optionsMap.stylingParams.itemBorderWidth] + 'px';
 
     const itemWrapperStyles = {
       ...styles,
