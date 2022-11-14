@@ -861,7 +861,6 @@ class ItemView extends React.Component {
       options[optionsMap.behaviourParams.item.overlay.hoverAnimation];
     const contentHoverAnimation =
       options[optionsMap.behaviourParams.item.content.hoverAnimation];
-    console.log('>>>>>>>>>>>>.', contentHoverAnimation);
     const { FADE_IN, EXPAND, SLIDE_UP, SLIDE_RIGHT, SLIDE_DOWN, SLIDE_LEFT } =
       GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation];
     const {
