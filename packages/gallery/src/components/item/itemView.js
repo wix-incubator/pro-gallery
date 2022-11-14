@@ -694,7 +694,9 @@ class ItemView extends React.Component {
       options,
       settings = {},
     } = this.props;
-    const { imageMargin, slideAnimation } = options;
+    const { imageMargin } = options;
+    const slideAnimation =
+      options[optionsMap.behaviourParams.gallery.horizontal.slideAnimation];
     const isRTL =
       options[optionsMap.behaviourParams.gallery.layoutDirection] ===
       GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
@@ -740,7 +742,9 @@ class ItemView extends React.Component {
 
     let slideAnimationStyles;
     switch (slideAnimation) {
-      case GALLERY_CONSTS.slideAnimations.FADE:
+      case GALLERY_CONSTS[
+        optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+      ].FADE:
         slideAnimationStyles = {
           left: isRTL ? 'auto' : 0,
           right: !isRTL ? 'auto' : 0,
@@ -748,7 +752,9 @@ class ItemView extends React.Component {
           zIndex: activeIndex === idx ? 0 : 1,
         };
         break;
-      case GALLERY_CONSTS.slideAnimations.DECK:
+      case GALLERY_CONSTS[
+        optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+      ].DECK:
         slideAnimationStyles = {
           left: isRTL ? 'auto' : 0,
           right: !isRTL ? 'auto' : 0,
@@ -801,8 +807,8 @@ class ItemView extends React.Component {
     }
 
     if (
-      options[optionsMap.behaviourParams.item.overlay.hoverAnimation] ===
-      GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
+      options[optionsMap.behaviourParams.item.content.hoverAnimation] ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
         .MAIN_COLOR
     ) {
       styles.background = `url(${createUrl(
@@ -855,6 +861,7 @@ class ItemView extends React.Component {
       options[optionsMap.behaviourParams.item.overlay.hoverAnimation];
     const contentHoverAnimation =
       options[optionsMap.behaviourParams.item.content.hoverAnimation];
+    console.log('>>>>>>>>>>>>.', contentHoverAnimation);
     const { FADE_IN, EXPAND, SLIDE_UP, SLIDE_RIGHT, SLIDE_DOWN, SLIDE_LEFT } =
       GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation];
     const {
@@ -867,6 +874,16 @@ class ItemView extends React.Component {
       COLOR_IN,
       DARKENED,
     } = GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation];
+    console.log({
+      MAIN_COLOR,
+      ZOOM_IN,
+      BLUR,
+      GRAYSCALE,
+      SHRINK,
+      INVERT,
+      COLOR_IN,
+      DARKENED,
+    });
     const isHovered = this.simulateHover();
     const classNames = {
       'gallery-item-container': true,

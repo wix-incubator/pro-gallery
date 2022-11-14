@@ -81,7 +81,10 @@ class SlideshowView extends React.Component {
     const { slideAnimation } = this.props.options;
 
     if (
-      slideAnimation !== GALLERY_CONSTS.slideAnimations.SCROLL ||
+      slideAnimation !==
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+        ].SCROLL ||
       !this.scrollElement
     ) {
       return false;
@@ -90,11 +93,20 @@ class SlideshowView extends React.Component {
   }
 
   isScrollEnd() {
-    const { slideshowLoop, slideAnimation } = this.props.options;
+    const slideAnimation =
+      this.props.options[
+        optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+      ];
     if (
-      slideshowLoop ||
-      slideAnimation === GALLERY_CONSTS.slideAnimations.FADE ||
-      slideAnimation === GALLERY_CONSTS.slideAnimations.DECK
+      this.props.options[optionsMap.behaviourParams.gallery.horizontal.loop] ||
+      slideAnimation ===
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+        ].FADE ||
+      slideAnimation ===
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+        ].DECK
     ) {
       return false;
     }
@@ -122,15 +134,21 @@ class SlideshowView extends React.Component {
   }
 
   isFirstItemFullyVisible() {
-    return !this.props.options.slideshowLoop && this.isScrollStart();
+    return (
+      !this.props.options[optionsMap.behaviourParams.gallery.horizontal.loop] &&
+      this.isScrollStart()
+    );
   }
   isLastItemFullyVisible() {
-    return !this.props.options.slideshowLoop && this.isScrollEnd();
+    return (
+      !this.props.options[optionsMap.behaviourParams.gallery.horizontal.loop] &&
+      this.isScrollEnd()
+    );
   }
 
   isLastItem() {
     return (
-      !this.props.options.slideshowLoop &&
+      !this.props.options[optionsMap.behaviourParams.gallery.horizontal.loop] &&
       this.state.activeIndex >= this.props.totalItemsCount - 1
     );
   }
@@ -185,8 +203,12 @@ class SlideshowView extends React.Component {
     let ignoreScrollPosition = false;
 
     if (
-      this.props.options.slideAnimation !==
-      GALLERY_CONSTS.slideAnimations.SCROLL
+      this.props.options[
+        optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+      ] !==
+      GALLERY_CONSTS[
+        optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+      ].SCROLL
     ) {
       scrollDuration = 0;
       ignoreScrollPosition = true;
@@ -252,7 +274,9 @@ class SlideshowView extends React.Component {
       }
       nextIndex += direction;
 
-      if (!this.props.options.slideshowLoop) {
+      if (
+        !this.props.options[optionsMap.behaviourParams.gallery.horizontal.loop]
+      ) {
         nextIndex = Math.min(
           this.props.galleryStructure.items.length - 1,
           nextIndex
@@ -394,7 +418,11 @@ class SlideshowView extends React.Component {
     return {
       scrollMarginCorrection: this.getStyles().margin || 0,
       _scrollDuration:
-        scrollDuration || this.props.options.scrollDuration || 400,
+        scrollDuration ||
+        this.props.options[
+          optionsMap.behaviourParams.gallery.horizontal.navigationDuration
+        ] ||
+        400,
     };
   }
 
@@ -670,9 +698,14 @@ class SlideshowView extends React.Component {
           return group.rendered
             ? React.createElement(GroupView, {
                 activeIndex: this.state.activeIndex,
-                slideAnimation: this.props.options.slideAnimation,
+                slideAnimation:
+                  this.props.options[
+                    optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+                  ],
                 allowLoop:
-                  this.props.options.slideshowLoop &&
+                  this.props.options[
+                    optionsMap.behaviourParams.gallery.horizontal.loop
+                  ] &&
                   this.props.galleryStructure.width >
                     this.props.container.width,
                 ...group.renderProps(galleryConfig),
@@ -704,7 +737,13 @@ class SlideshowView extends React.Component {
               .RIGHT_TO_LEFT
               ? ' rtl '
               : ' ltr '
-          } ${this.props.options.scrollSnap ? ' scroll-snap ' : ''} `}
+          } ${
+            this.props.options[
+              optionsMap.behaviourParams.gallery.horizontal.enableScrollSnap
+            ]
+              ? ' scroll-snap '
+              : ''
+          } `}
           key={'column' + c}
           style={columnStyle}
         >
@@ -764,7 +803,11 @@ class SlideshowView extends React.Component {
         id={this.props.galleryContainerId}
         className={
           'pro-gallery inline-styles one-row hide-scrollbars ' +
-          (this.props.options.enableScroll ? ' slider ' : '') +
+          (this.props.options[
+            optionsMap.behaviourParams.gallery.horizontal.blockScroll
+          ]
+            ? ''
+            : ' slider ') +
           (this.props.settings?.isAccessible ? ' accessible ' : '') +
           (this.props.options[
             optionsMap.behaviourParams.gallery.layoutDirection

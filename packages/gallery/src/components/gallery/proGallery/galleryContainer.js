@@ -291,14 +291,18 @@ export class GalleryContainer extends React.Component {
   }
 
   getIsScrollLessGallery(options) {
-    const { slideAnimation } = options;
+    const slideAnimation =
+      options[optionsMap.behaviourParams.gallery.horizontal.slideAnimation];
     const scrollDirection =
       options[optionsMap.layoutParams.structure.scrollDirection];
     return (
       scrollDirection ===
         GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
           .HORIZONTAL &&
-      slideAnimation !== GALLERY_CONSTS.slideAnimations.SCROLL
+      slideAnimation !==
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+        ].SCROLL
     );
   }
 
@@ -480,7 +484,10 @@ export class GalleryContainer extends React.Component {
           scrollingElement,
           horizontalElement,
           durationInMS,
-          slideTransition: this.state.options.slideTransition,
+          slideTransition:
+            this.state.options[
+              optionsMap.behaviourParams.gallery.horizontal.slideTransition
+            ],
           isContinuousScrolling,
           autoSlideshowContinuousSpeed:
             this.state.options.autoSlideshowContinuousSpeed,
@@ -546,7 +553,10 @@ export class GalleryContainer extends React.Component {
           scrollingElement,
           horizontalElement,
           durationInMS,
-          slideTransition: this.state.options.slideTransition,
+          slideTransition:
+            this.state.options[
+              optionsMap.behaviourParams.gallery.horizontal.slideTransition
+            ],
           isContinuousScrolling,
           autoSlideshowContinuousSpeed:
             this.state.options.autoSlideshowContinuousSpeed,

@@ -34,7 +34,10 @@ export function getItemsInViewportOrMarginByActiveGroup({
       .HORIZONTAL;
   const isScrollable =
     !isHorizontal ||
-    options.slideAnimation === GALLERY_CONSTS.slideAnimations.SCROLL;
+    options[optionsMap.behaviourParams.gallery.horizontal.slideAnimation] ===
+      GALLERY_CONSTS[
+        optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+      ].SCROLL;
   if (!enabled) {
     return groups.map((group) => ({
       group,

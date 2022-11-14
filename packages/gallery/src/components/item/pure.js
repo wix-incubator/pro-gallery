@@ -15,13 +15,17 @@ function getSlideAnimationStyles(
     display: 'block',
   };
   switch (slideAnimation) {
-    case GALLERY_CONSTS.slideAnimations.FADE:
+    case GALLERY_CONSTS[
+      optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+    ].FADE:
       return {
         ...baseStyles,
         transition: `opacity 600ms ease`,
         opacity: activeIndex === idx ? 1 : 0,
       };
-    case GALLERY_CONSTS.slideAnimations.DECK: {
+    case GALLERY_CONSTS[
+      optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+    ].DECK: {
       const rtlFix = isRTL ? 1 : -1;
       if (activeIndex < idx) {
         //the slides behind the deck
