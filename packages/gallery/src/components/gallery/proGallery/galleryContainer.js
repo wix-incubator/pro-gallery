@@ -407,14 +407,8 @@ export class GalleryContainer extends React.Component {
     const layoutParams = {
       items: items,
       container,
-      styleParams: options,
+      options,
       gotScrollEvent: true,
-      options: {
-        showAllItems: true,
-        skipVisibilitiesCalc: true,
-        useLayoutStore: false,
-        createLayoutOnInit: false,
-      },
     };
 
     this.createCssLayoutsIfNeeded(layoutParams);
@@ -465,7 +459,12 @@ export class GalleryContainer extends React.Component {
       try {
         const scrollParams = {
           scrollMarginCorrection,
-          isRTL: this.state.options.isRTL,
+          isRTL:
+            this.state.options[
+              optionsMap.behaviourParams.gallery.layoutDirection
+            ] ===
+            GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+              .RIGHT_TO_LEFT,
           scrollDirection:
             this.state.options[
               optionsMap.layoutParams.structure.scrollDirection
@@ -492,7 +491,6 @@ export class GalleryContainer extends React.Component {
           this.currentScrollData = null;
         });
       } catch (e) {
-        //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
         console.error(
           'error:',
           e,
@@ -527,7 +525,12 @@ export class GalleryContainer extends React.Component {
       try {
         const scrollParams = {
           scrollMarginCorrection,
-          isRTL: this.state.options.isRTL,
+          isRTL:
+            this.state.options[
+              optionsMap.behaviourParams.gallery.layoutDirection
+            ] ===
+            GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+              .RIGHT_TO_LEFT,
           scrollDirection:
             this.state.options[
               optionsMap.layoutParams.structure.scrollDirection
@@ -554,7 +557,6 @@ export class GalleryContainer extends React.Component {
           this.currentScrollData = null;
         });
       } catch (e) {
-        //added console.error to debug sentry error 'Cannot read property 'isRTL' of undefined in pro-gallery-statics'
         console.error(
           'error:',
           e,
@@ -816,7 +818,12 @@ export class GalleryContainer extends React.Component {
       } else {
         //more items can be fetched from the server
         //TODO - add support for horizontal galleries
-        const { isRTL } = this.state.options;
+        const isRTL =
+          this.state.options[
+            optionsMap.behaviourParams.gallery.layoutDirection
+          ] ===
+          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+            .RIGHT_TO_LEFT;
         const scrollDirection =
           this.state.options[optionsMap.layoutParams.structure.scrollDirection];
         const galleryEnd =
@@ -937,7 +944,13 @@ export class GalleryContainer extends React.Component {
               optionsMap.layoutParams.structure.scrollDirection
             ]
           }
-          isRTL={this.props.options.isRTL}
+          isRTL={
+            this.props.options[
+              optionsMap.behaviourParams.gallery.layoutDirection
+            ] ===
+            GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+              .RIGHT_TO_LEFT
+          }
           totalWidth={this.galleryStructure.width}
           scrollBase={this.props.container.scrollBase}
           scrollingElement={this._scrollingElement}

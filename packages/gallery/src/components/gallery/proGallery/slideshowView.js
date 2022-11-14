@@ -55,8 +55,14 @@ class SlideshowView extends React.Component {
       activeIndex: props.activeIndex || 0,
       isInView: true,
       pauseAutoSlideshowClicked: false,
-      hideLeftArrow: !props.options.isRTL,
-      hideRightArrow: props.options.isRTL,
+      hideLeftArrow:
+        props.options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+          .LEFT_TO_RIGHT,
+      hideRightArrow:
+        props.options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+          .RIGHT_TO_LEFT,
       shouldBlockAutoSlideshow: false,
       isInFocus: false,
     };
@@ -153,14 +159,22 @@ class SlideshowView extends React.Component {
     isKeyboardNavigation = false,
     isContinuousScrolling = false,
   }) {
-    const scrollingUpTheGallery = this.props.options.isRTL
-      ? direction <= -1
-      : direction >= 1;
+    const scrollingUpTheGallery =
+      this.props.options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+        .RIGHT_TO_LEFT
+        ? direction <= -1
+        : direction >= 1;
     if (this.shouldBlockNext({ scrollingUpTheGallery })) {
       this.clearAutoSlideshowInterval();
       return;
     }
-    direction *= this.props.options.isRTL ? -1 : 1;
+    direction *=
+      this.props.options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+        .RIGHT_TO_LEFT
+        ? -1
+        : 1;
     const activeElement = document.activeElement;
     const galleryItemIsFocused =
       activeElement.className &&
@@ -439,7 +453,12 @@ class SlideshowView extends React.Component {
   autoScrollToNextItem = () => {
     if (!isEditMode() && (this.props.isInViewport || isPreviewMode())) {
       const { options } = this.props;
-      const direction = options.isRTL ? -1 : 1;
+      const direction =
+        options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+          .RIGHT_TO_LEFT
+          ? -1
+          : 1;
 
       if (
         options.autoSlideshowType ===
@@ -678,7 +697,13 @@ class SlideshowView extends React.Component {
           data-hook="gallery-column"
           id={`gallery-horizontal-scroll-${this.props.id}`}
           className={`gallery-horizontal-scroll gallery-column hide-scrollbars ${
-            this.props.options.isRTL ? ' rtl ' : ' ltr '
+            this.props.options[
+              optionsMap.behaviourParams.gallery.layoutDirection
+            ] ===
+            GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+              .RIGHT_TO_LEFT
+              ? ' rtl '
+              : ' ltr '
           } ${this.props.options.scrollSnap ? ' scroll-snap ' : ''} `}
           key={'column' + c}
           style={columnStyle}
@@ -741,7 +766,13 @@ class SlideshowView extends React.Component {
           'pro-gallery inline-styles one-row hide-scrollbars ' +
           (this.props.options.enableScroll ? ' slider ' : '') +
           (this.props.settings?.isAccessible ? ' accessible ' : '') +
-          (this.props.options.isRTL ? ' rtl ' : ' ltr ')
+          (this.props.options[
+            optionsMap.behaviourParams.gallery.layoutDirection
+          ] ===
+          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+            .RIGHT_TO_LEFT
+            ? ' rtl '
+            : ' ltr ')
         }
         style={galleryStyle}
       >
@@ -907,7 +938,10 @@ class SlideshowView extends React.Component {
     }
   };
   createOrGetCustomNavigationPanelAPI = () => {
-    const isRTL = this.props.options.isRTL;
+    const isRTL =
+      this.props.options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+        .RIGHT_TO_LEFT;
     return (
       this.navigationPanelAPI ||
       (this.navigationPanelAPI = {
@@ -1086,7 +1120,15 @@ class SlideshowView extends React.Component {
   }
 
   scrollPosition() {
-    return (this.props.options.isRTL ? -1 : 1) * this.scrollElement.scrollLeft;
+    return (
+      (this.props.options[
+        optionsMap.behaviourParams.gallery.layoutDirection
+      ] ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+        .RIGHT_TO_LEFT
+        ? -1
+        : 1) * this.scrollElement.scrollLeft
+    );
   }
 
   //-----------------------------------------| REACT |--------------------------------------------//
@@ -1172,7 +1214,10 @@ class SlideshowView extends React.Component {
   }
 
   removeArrowsIfNeeded() {
-    const { isRTL } = this.props.options;
+    const isRTL =
+      this.props.options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+        .RIGHT_TO_LEFT;
     const { hideLeftArrow, hideRightArrow } = this.state;
 
     const isScrollStart = this.isScrollStart();

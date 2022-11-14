@@ -82,7 +82,10 @@ export function getThumbnailsData({
     prevActiveIndex,
   });
   const activeIndexWithOffset = activeIndexOffsetMemory! + activeIndex;
-  const { isRTL } = options;
+  const isRTL =
+    options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+    GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+      .RIGHT_TO_LEFT;
 
   if (utils.isVerbose()) {
     console.log('creating thumbnails for idx', activeIndex);

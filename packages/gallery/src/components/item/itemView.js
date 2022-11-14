@@ -694,7 +694,11 @@ class ItemView extends React.Component {
       options,
       settings = {},
     } = this.props;
-    const { imageMargin, isRTL, slideAnimation } = options;
+    const { imageMargin, slideAnimation } = options;
+    const isRTL =
+      options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+        .RIGHT_TO_LEFT;
     const scrollDirection =
       options[optionsMap.layoutParams.structure.scrollDirection];
     const containerStyleByoptions = getContainerStyle(options);

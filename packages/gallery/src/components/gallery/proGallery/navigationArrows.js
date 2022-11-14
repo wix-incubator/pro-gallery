@@ -16,7 +16,11 @@ export function NavigationArrows({
   next,
   id,
 }) {
-  const { isRTL, imageMargin, arrowsColor } = options;
+  const { imageMargin, arrowsColor } = options;
+  const isRTL =
+    options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+    GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+      .RIGHT_TO_LEFT;
   const arrowsPosition =
     options[optionsMap.layoutParams.navigationArrows.position];
   const arrowsPadding =

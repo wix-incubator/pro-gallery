@@ -6,7 +6,11 @@ function getSlideAnimationStyles(
   { idx, activeIndex, options, container },
   overrideDeckTransition = false
 ) {
-  const { isRTL, slideAnimation } = options;
+  const { slideAnimation } = options;
+  const isRTL =
+    options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+    GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+      .RIGHT_TO_LEFT;
   const baseStyles = {
     display: 'block',
   };

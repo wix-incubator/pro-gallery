@@ -41,7 +41,13 @@ class GalleryView extends React.Component {
         case 37: //left
           newIdx = findNeighborItem(
             idx,
-            this.props.options.isRTL ? 'right' : 'left'
+            this.props.options[
+              optionsMap.behaviourParams.gallery.layoutDirection
+            ] ===
+              GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+                .RIGHT_TO_LEFT
+              ? 'right'
+              : 'left'
           );
           break;
         case 40: //down
@@ -60,7 +66,13 @@ class GalleryView extends React.Component {
         case 39: //right
           newIdx = findNeighborItem(
             idx,
-            this.props.options.isRTL ? 'left' : 'right'
+            this.props.options[
+              optionsMap.behaviourParams.gallery.layoutDirection
+            ] ===
+              GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+                .RIGHT_TO_LEFT
+              ? 'left'
+              : 'right'
           );
           break;
         case 27: //esc
@@ -189,7 +201,11 @@ class GalleryView extends React.Component {
             ? ' one-row slider hide-scrollbars '
             : '') +
           (settings?.isAccessible ? ' accessible ' : '') +
-          (options.isRTL ? ' rtl ' : ' ltr ')
+          (options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+            .RIGHT_TO_LEFT
+            ? ' rtl '
+            : ' ltr ')
         }
         style={{
           height: galleryHeight,

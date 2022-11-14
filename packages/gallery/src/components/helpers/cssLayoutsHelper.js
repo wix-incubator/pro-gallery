@@ -1,3 +1,4 @@
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { cssScrollHelper } from './cssScrollHelper.js';
 
 // // const CDN_URL = 'https://static.wixstatic.com/media/';
@@ -17,13 +18,16 @@ const createItemId = ({ galleryId, item }) => {
     item
   )}`;
 };
-const createExactCssForItems = (id = '', galleryItems, styleParams) => {
-  const { isRTL } = styleParams;
+const createExactCssForItems = (id = '', galleryItems, options) => {
+  const isRTL =
+    options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+    GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+      .RIGHT_TO_LEFT;
 
   let cssStr = '';
   galleryItems.forEach((item) => {
     const itemId = createItemId({ galleryId: id, item });
-    const style = getImageStyle(item, styleParams);
+    const style = getImageStyle(item, options);
     const T = `top:${style.top}px;`;
     const L = isRTL
       ? `right:${style.left}px;left:auto;`
@@ -83,8 +87,6 @@ const createExactCssForItems = (id = '', galleryItems, styleParams) => {
 
 export const createCssLayouts = ({ galleryItems, layoutParams, id }) => {
   const exactCss = [];
-  exactCss.push(
-    createExactCssForItems(id, galleryItems, layoutParams.styleParams)
-  );
+  exactCss.push(createExactCssForItems(id, galleryItems, layoutParams.options));
   return exactCss;
 };

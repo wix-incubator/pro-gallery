@@ -216,7 +216,11 @@ class CssScrollHelper {
   }
 
   createScrollAnimationsIfNeeded({ idx, options, createScrollSelectors }) {
-    const { isRTL, scrollAnimation } = options;
+    const { scrollAnimation } = options;
+    const isRTL =
+      options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+        .RIGHT_TO_LEFT;
     const scrollDirection =
       options[optionsMap.layoutParams.structure.scrollDirection];
     if (

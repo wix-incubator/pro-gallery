@@ -60,7 +60,11 @@ class NavigationPanel extends React.Component {
         className={
           'pro-gallery inline-styles thumbnails-gallery ' +
           (horizontalThumbnails ? ' one-row hide-scrollbars ' : '') +
-          (options.isRTL ? ' rtl ' : ' ltr ') +
+          (options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+            .RIGHT_TO_LEFT
+            ? ' rtl '
+            : ' ltr ') +
           (settings?.isAccessible ? ' accessible ' : '')
         }
         style={{
