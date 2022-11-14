@@ -1,8 +1,7 @@
 import GalleryDriver from '../drivers/reactDriver';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
-import { mergeNestedObjects } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 describe('options - slideAnimation', () => {
   let initialProps;
@@ -35,9 +34,14 @@ describe('options - slideAnimation', () => {
       driver.detach.proGallery();
     });
     it('should set the correct "Fade" animation styles to the items', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
-        galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-        slideAnimation: GALLERY_CONSTS.slideAnimations.FADE,
+      initialProps.options = Object.assign(initialProps.options, {
+        [optionsMap.layoutParams.structure.galleryLayout]:
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
+            .SLIDESHOW,
+        [optionsMap.behaviourParams.gallery.horizontal.slideAnimation]:
+          GALLERY_CONSTS[
+            optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+          ].FADE,
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -61,9 +65,14 @@ describe('options - slideAnimation', () => {
       expect(1).toEqual(1);
     });
     it('should not have Fade animation styles when "slideAnimations" is "Scroll"', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
-        galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
-        slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
+      initialProps.options = Object.assign(initialProps.options, {
+        [optionsMap.layoutParams.structure.galleryLayout]:
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
+            .SLIDESHOW,
+        [optionsMap.behaviourParams.gallery.horizontal.slideAnimation]:
+          GALLERY_CONSTS[
+            optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+          ].SCROLL,
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -87,9 +96,14 @@ describe('options - slideAnimation', () => {
       driver.detach.proGallery();
     });
     it('should set the correct "Fade" animation styles to the items', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
-        galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
-        slideAnimation: GALLERY_CONSTS.slideAnimations.FADE,
+      initialProps.options = Object.assign(initialProps.options, {
+        [optionsMap.layoutParams.structure.galleryLayout]:
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
+            .THUMBNAIL,
+        [optionsMap.behaviourParams.gallery.horizontal.slideAnimation]:
+          GALLERY_CONSTS[
+            optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+          ].FADE,
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -110,9 +124,14 @@ describe('options - slideAnimation', () => {
       );
     });
     it('should not have Fade animation styles when "slideAnimations" is "Scroll"', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
-        galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
-        slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
+      initialProps.options = Object.assign(initialProps.options, {
+        [optionsMap.layoutParams.structure.galleryLayout]:
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
+            .THUMBNAIL,
+        [optionsMap.behaviourParams.gallery.horizontal.slideAnimation]:
+          GALLERY_CONSTS[
+            optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+          ].SCROLL,
       });
       driver.mount.proGallery(initialProps);
       await driver.update();

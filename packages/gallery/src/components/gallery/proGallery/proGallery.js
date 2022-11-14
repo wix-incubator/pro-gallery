@@ -1,36 +1,15 @@
 import '../../../common/utils/polyfills';
 import React from 'react';
-import { viewModeWrapper, utils } from 'pro-gallery-lib';
+import { utils } from 'pro-gallery-lib';
 import Gallery from './galleryContainer.js';
 
 import '../../../versionLogger';
 
 export default class ProGallery extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
-    this.init(props);
     if (utils.isLocal() && !utils.isTest()) {
       console.log('PRO GALLERY DEV');
-    }
-  }
-
-  init(props) {
-    if (typeof props.viewMode !== 'undefined') {
-      viewModeWrapper.setViewMode(props.viewMode);
-    }
-    if (typeof props.deviceType !== 'undefined') {
-      viewModeWrapper.setDeviceType(props.deviceType);
-    }
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (this.props.viewMode !== nextProps.viewMode) {
-      utils.dumpCache();
-      viewModeWrapper.setViewMode(nextProps.viewMode);
-    }
-    if (this.props.deviceType !== nextProps.deviceType) {
-      utils.dumpCache();
-      viewModeWrapper.setDeviceType(nextProps.deviceType);
     }
   }
 

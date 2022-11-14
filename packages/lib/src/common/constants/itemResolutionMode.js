@@ -1,6 +1,0 @@
-const ITEM_RESOLUTION_MODE = {
-  FULL: 'FULL',
-  SCALED_DOWN: 'SCALED_DOWN',
-};
-
-export default ITEM_RESOLUTION_MODE;

@@ -1,6 +1,7 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { videoItems } from '../drivers/mocks/items';
 import VideoItem from '../../src/components/item/videos/videoItem';
+import { optionsMap } from 'pro-gallery-lib';
 
 describe('options - showVideoControls', () => {
   let driver;
@@ -18,11 +19,11 @@ describe('options - showVideoControls', () => {
       loadVideo: true,
     });
     Object.assign(sampleItemViewProps.options, {
-      showVideoControls: true,
+      [optionsMap.behaviourParams.item.video.enableControls]: true,
     });
     driver.mount(VideoItem, sampleItemViewProps);
     await driver.update(200);
-    console.log(driver.find.selector('ReactPlayer').props());
+    // console.log(driver.find.selector('ReactPlayer').props());
     const playerProps = driver.find.selector('ReactPlayer').props();
     expect(playerProps.controls).toBe(true);
   });
@@ -32,11 +33,11 @@ describe('options - showVideoControls', () => {
       loadVideo: true,
     });
     Object.assign(sampleItemViewProps.options, {
-      showVideoControls: false,
+      [optionsMap.behaviourParams.item.video.enableControls]: false,
     });
     driver.mount(VideoItem, sampleItemViewProps);
     await driver.update(200);
-    console.log(driver.find.selector('ReactPlayer').props());
+    // console.log(driver.find.selector('ReactPlayer').props());
     const playerProps = driver.find.selector('ReactPlayer').props();
     expect(playerProps.controls).toBe(false);
   });

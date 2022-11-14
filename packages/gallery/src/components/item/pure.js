@@ -1,23 +1,31 @@
 export { getSlideAnimationStyles, getCustomInfoRendererProps, getLinkParams };
 
-import { GALLERY_CONSTS, utils, isSEOMode } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, utils, isSEOMode, optionsMap } from 'pro-gallery-lib';
 
 function getSlideAnimationStyles(
   { idx, activeIndex, options, container },
   overrideDeckTransition = false
 ) {
-  const { isRTL, slideAnimation } = options;
+  const { slideAnimation } = options;
+  const isRTL =
+    options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+    GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+      .RIGHT_TO_LEFT;
   const baseStyles = {
     display: 'block',
   };
   switch (slideAnimation) {
-    case GALLERY_CONSTS.slideAnimations.FADE:
+    case GALLERY_CONSTS[
+      optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+    ].FADE:
       return {
         ...baseStyles,
         transition: `opacity 600ms ease`,
         opacity: activeIndex === idx ? 1 : 0,
       };
-    case GALLERY_CONSTS.slideAnimations.DECK: {
+    case GALLERY_CONSTS[
+      optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+    ].DECK: {
       const rtlFix = isRTL ? 1 : -1;
       if (activeIndex < idx) {
         //the slides behind the deck
@@ -64,7 +72,10 @@ function getLinkParams({
   noFollowForSEO,
 }) {
   const isSEO = isSEOMode();
-  if (options.itemClick === GALLERY_CONSTS.itemClick.LINK) {
+  if (
+    options[optionsMap.behaviourParams.item.clickAction] ===
+    GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK
+  ) {
     const { url, target } = directLink || {};
     const shouldUseNofollow = isSEO && noFollowForSEO;
     const shouldUseDirectLink = !!(url && target);
@@ -74,13 +85,14 @@ function getLinkParams({
       : {};
     return linkParams;
   } else if (
-    options.itemClick === GALLERY_CONSTS.itemClick.FULLSCREEN ||
-    options.itemClick === GALLERY_CONSTS.itemClick.EXPAND
+    options[optionsMap.behaviourParams.item.clickAction] ===
+    GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION
   ) {
     // place share link as the navigation item
     const url = directShareLink;
     const shouldUseDirectShareLink = !!url;
-    const shouldUseNofollow = !options.shouldIndexDirectShareLinkInSEO;
+    const shouldUseNofollow =
+      !options[optionsMap.behaviourParams.gallery.enableIndexingShareLinks];
     const seoLinkParams = shouldUseNofollow ? { rel: 'nofollow' } : {};
     const linkParams = shouldUseDirectShareLink
       ? { href: url, 'data-cancel-link': true, ...seoLinkParams }

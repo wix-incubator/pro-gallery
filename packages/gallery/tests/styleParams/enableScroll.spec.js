@@ -1,7 +1,6 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { mergeNestedObjects } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -18,10 +17,13 @@ describe('options - enableScroll', () => {
   });
 
   it('should set class "slider" when "enableScroll" is "true"', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
-      enableScroll: true,
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .HORIZONTAL,
+      [optionsMap.behaviourParams.gallery.horizontal.blockScroll]: false,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -30,10 +32,13 @@ describe('options - enableScroll', () => {
     driver.detach.proGallery();
   });
   it('should not set class "slider" when "enableScroll" is "false"', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
-      enableScroll: false,
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .HORIZONTAL,
+      [optionsMap.behaviourParams.gallery.horizontal.blockScroll]: true,
     });
 
     driver.mount.proGallery(initialProps);

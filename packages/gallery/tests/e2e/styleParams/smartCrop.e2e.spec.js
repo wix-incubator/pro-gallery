@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
 
@@ -18,13 +18,13 @@ describe('smartCrop - e2e', () => {
 
   it('should crop according to original image ratio', async () => {
     await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      smartCrop: true,
-      cubeImages: true,
-      layoutParams: {
-        cropRatio: 2,
-      },
-      cubeType: GALLERY_CONSTS.cubeType.CROP,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
+      [optionsMap.layoutParams.crop.enableSmartCrop]: true,
+      [optionsMap.layoutParams.crop.enable]: true,
+      [optionsMap.layoutParams.crop.ratios]: [2],
+      [optionsMap.layoutParams.crop.method]:
+        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -33,13 +33,13 @@ describe('smartCrop - e2e', () => {
   });
   it('should not use smart crop', async () => {
     await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      smartCrop: false,
-      cubeImages: true,
-      layoutParams: {
-        cropRatio: 2,
-      },
-      cubeType: GALLERY_CONSTS.cubeType.CROP,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
+      [optionsMap.layoutParams.crop.enableSmartCrop]: false,
+      [optionsMap.layoutParams.crop.enable]: true,
+      [optionsMap.layoutParams.crop.ratios]: [2],
+      [optionsMap.layoutParams.crop.method]:
+        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
