@@ -5,6 +5,7 @@ import { Group } from './group.js';
 import { Strip } from './strip.js';
 import { Column } from './column.js';
 import layoutsStore from './layoutsStore.js';
+import { optionsMap } from 'pro-gallery-lib';
 
 export default class Layouter {
   constructor(layoutParams) {
@@ -186,7 +187,7 @@ export default class Layouter {
               this.strip = new Strip({
                 idx: this.strips.length + 1,
                 container: this.container,
-                groupsPerStrip: this.styleParams.groupsPerStrip,
+                [optionsMap.layoutParams.groups.numberOfGroupsPerRow]: this.styleParams[optionsMap.layoutParams.groups.numberOfGroupsPerRow],
                 scrollDirection: this.styleParams.scrollDirection,
                 targetItemSize: this.targetItemSize,
               });
@@ -241,7 +242,7 @@ export default class Layouter {
       this.strip = new Strip({
         idx: 1,
         container: this.container,
-        groupsPerStrip: this.styleParams.groupsPerStrip,
+        [optionsMap.layoutParams.groups.numberOfGroupsPerRow]: this.styleParams[optionsMap.layoutParams.groups.numberOfGroupsPerRow],
         scrollDirection: this.styleParams.scrollDirection,
         targetItemSize: this.targetItemSize,
       });
@@ -382,7 +383,7 @@ export default class Layouter {
           this.strip = new Strip({
             idx: this.strip.idx + 1,
             container: this.container,
-            groupsPerStrip: this.styleParams.groupsPerStrip,
+            [optionsMap.layoutParams.groups.numberOfGroupsPerRow]: this.styleParams[optionsMap.layoutParams.groups.numberOfGroupsPerRow],
             scrollDirection: this.styleParams.scrollDirection,
             targetItemSize: this.targetItemSize,
           });
@@ -577,11 +578,8 @@ export default class Layouter {
   getMaxGroupSize() {
     let _maxGroupSize = 1;
     try {
-      const groupTypes =
-        typeof this.styleParams.groupTypes === 'string' &&
-        this.styleParams.groupTypes.length > 0
-          ? this.styleParams.groupTypes.split(',')
-          : this.styleParams.groupTypes;
+      const groupTypes = this.styleParams[optionsMap.layoutParams.groups.allowedGroupTypes];
+        
       _maxGroupSize =
         groupTypes.length > 0
           ? groupTypes.reduce(
@@ -589,7 +587,7 @@ export default class Layouter {
               1
             )
           : Number(groupTypes);
-      _maxGroupSize = Math.min(_maxGroupSize, this.styleParams.groupSize);
+      _maxGroupSize = Math.min(_maxGroupSize, this.styleParams[optionsMap.layoutParams.groups.groupSize]);
     } catch (e) {
       console.error("couldn't calculate max group size - returing 3 (?)", e);
       _maxGroupSize = 3;

@@ -2,6 +2,7 @@ import {
   flattenObject,
   flatToNested,
   extendNestedOptionsToIncludeOldAndNew,
+  optionsMap,
 } from 'pro-gallery-lib';
 
 class Utils {
@@ -94,8 +95,8 @@ class Utils {
       layoutParams: {
         gallerySpacing: 0,
         cropRatio: 1,
-        repeatingGroupTypes: '',
       },
+      [optionsMap.layoutParams.groups.repeatingGroupTypes]: [],
       cubeImages: false,
       cubeType: 'fill',
       rotatingCropRatios: '',
@@ -103,9 +104,19 @@ class Utils {
       imageMargin: 10,
       scatter: 0,
       rotatingScatter: '',
-      chooseBestGroup: true,
+      [optionsMap.layoutParams.groups.groupByOrientation]: true,
       groupSize: 3,
-      groupTypes: '1,2h,2v,3h,3v,3t,3b,3l,3r',
+      [optionsMap.layoutParams.groups.allowedGroupTypes]: [
+        '1',
+        '2h',
+        '2v',
+        '3h',
+        '3v',
+        '3t',
+        '3b',
+        '3l',
+        '3r',
+      ],
       isVertical: true,
       minItemSize: 120,
       scrollDirection: 0,
