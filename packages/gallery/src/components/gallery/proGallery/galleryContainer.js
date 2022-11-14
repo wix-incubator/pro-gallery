@@ -418,7 +418,10 @@ export class GalleryContainer extends React.Component {
     };
 
     this.createCssLayoutsIfNeeded(layoutParams);
-    this.createDynamicStyles(options, isPrerenderMode);
+    this.createDynamicStyles(
+      options[optionsMap.behaviourParams.item.overlay.backgroundColor],
+      isPrerenderMode
+    );
 
     const newState = {
       items,
@@ -652,7 +655,7 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  createDynamicStyles({ overlayBackground }, isPrerenderMode) {
+  createDynamicStyles(overlayBackground, isPrerenderMode) {
     const useSSROpacity =
       isPrerenderMode && !this.props.settings.disableSSROpacity;
     this.dynamicStyles = `

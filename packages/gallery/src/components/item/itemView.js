@@ -233,8 +233,11 @@ class ItemView extends React.Component {
 
   isClickOnCurrentHoveredItem = () =>
     this.state.isCurrentHover || // this single item was already hovered.
-    this.props.options.hoveringBehaviour ===
-      GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE; // all the items are always 'already' hovered
+    this.props.options[
+      optionsMap.behaviourParams.item.overlay.hoveringBehaviour
+    ] ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour]
+        .ALWAYS_SHOW; // all the items are always 'already' hovered
 
   handleHoverClickOnMobile(e) {
     if (this.isClickOnCurrentHoveredItem()) {
@@ -272,16 +275,22 @@ class ItemView extends React.Component {
   shouldShowHoverOnMobile() {
     if (utils.isMobile()) {
       const {
-        hoveringBehaviour,
         alwaysShowHover,
         previewHover,
         allowDescription,
         allowTitle,
         isStoreGallery,
       } = this.props.options;
+      const hoveringBehaviour =
+        this.props.options[
+          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
+        ];
       const isNewMobileSettings = featureManager.supports.mobileSettings;
       if (
-        hoveringBehaviour === GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW
+        hoveringBehaviour ===
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
+        ].NEVER_SHOW
       ) {
         return false;
       }
@@ -296,7 +305,10 @@ class ItemView extends React.Component {
         GALLERY_CONSTS.hasHoverPlacement(
           this.props.options[optionsMap.layoutParams.info.placement]
         ) &&
-        hoveringBehaviour !== GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW &&
+        hoveringBehaviour !==
+          GALLERY_CONSTS[
+            optionsMap.behaviourParams.item.overlay.hoveringBehaviour
+          ].NEVER_SHOW &&
         isNewMobileSettings &&
         (allowDescription || allowTitle || isStoreGallery)
       ) {
@@ -342,14 +354,13 @@ class ItemView extends React.Component {
   shouldHover() {
     //see if this could be decided in the preset
     const { options } = this.props;
-    const {
-      alwaysShowHover,
-      previewHover,
-      hoveringBehaviour,
-      overlayAnimation,
-    } = options;
-    const { NEVER_SHOW, APPEARS } = GALLERY_CONSTS.infoBehaviourOnHover;
-    const { NO_EFFECT } = GALLERY_CONSTS.overlayAnimations;
+    const { alwaysShowHover, previewHover } = options;
+    const hoveringBehaviour =
+      options[optionsMap.behaviourParams.item.overlay.hoveringBehaviour];
+    const { NEVER_SHOW, APPEARS } =
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour];
+    const { NO_EFFECT } =
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation];
 
     if (hoveringBehaviour === NEVER_SHOW) {
       return false;
@@ -359,11 +370,12 @@ class ItemView extends React.Component {
       return true;
     } else if (
       hoveringBehaviour === APPEARS &&
-      overlayAnimation === NO_EFFECT &&
+      options[optionsMap.behaviourParams.item.overlay.hoverAnimation] ===
+        NO_EFFECT &&
       !this.state.itemWasHovered
     ) {
-      //when there is no overlayAnimation, we want to render the itemHover only on first hover and on (and not before)
-      //when there is a specific overlayAnimation, to support the animation we should render the itemHover before any hover activity.
+      //when there is no overlayHoverAnimation, we want to render the itemHover only on first hover and on (and not before)
+      //when there is a specific overlayHoverAnimation, to support the animation we should render the itemHover before any hover activity.
       return false;
     } else if (utils.isMobile()) {
       return this.shouldShowHoverOnMobile();
@@ -657,8 +669,12 @@ class ItemView extends React.Component {
   simulateOverlayHover() {
     return (
       this.simulateHover() ||
-      this.props.options.hoveringBehaviour ===
-        GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE
+      this.props.options[
+        optionsMap.behaviourParams.item.overlay.hoveringBehaviour
+      ] ===
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
+        ].ALWAYS_SHOW
     );
   }
 
@@ -781,8 +797,9 @@ class ItemView extends React.Component {
     }
 
     if (
-      options.imageHoverAnimation ===
-      GALLERY_CONSTS.imageHoverAnimations.MAIN_COLOR
+      options[optionsMap.behaviourParams.item.overlay.hoverAnimation] ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
+        .MAIN_COLOR
     ) {
       styles.background = `url(${createUrl(
         GALLERY_CONSTS.urlSizes.PIXEL,
@@ -828,9 +845,24 @@ class ItemView extends React.Component {
 
   getItemContainerClass() {
     const { options } = this.props;
-    const imagePlacementAnimation = options.imagePlacementAnimation;
-    const overlayAnimation = options.overlayAnimation;
-    const imageHoverAnimation = options.imageHoverAnimation;
+    const contentPlacementAnimation =
+      options[optionsMap.behaviourParams.item.content.placementAnimation];
+    const overlayHoverAnimation =
+      options[optionsMap.behaviourParams.item.overlay.hoverAnimation];
+    const contentHoverAnimation =
+      options[optionsMap.behaviourParams.item.content.hoverAnimation];
+    const { FADE_IN, EXPAND, SLIDE_UP, SLIDE_RIGHT, SLIDE_DOWN, SLIDE_LEFT } =
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation];
+    const {
+      MAIN_COLOR,
+      ZOOM_IN,
+      BLUR,
+      GRAYSCALE,
+      SHRINK,
+      INVERT,
+      COLOR_IN,
+      DARKENED,
+    } = GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation];
     const isHovered = this.simulateHover();
     const classNames = {
       'gallery-item-container': true,
@@ -844,45 +876,35 @@ class ItemView extends React.Component {
       'simulate-hover': this.simulateHover(),
       'hide-hover': !this.simulateHover() && utils.isMobile(),
       'invert-hover':
-        options.hoveringBehaviour ===
-        GALLERY_CONSTS.infoBehaviourOnHover.DISAPPEARS,
+        options[optionsMap.behaviourParams.item.overlay.hoveringBehaviour] ===
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
+        ].DISAPPEARS,
 
       //animations
       'animation-slide':
-        imagePlacementAnimation ===
-        GALLERY_CONSTS.imagePlacementAnimations.SLIDE,
+        contentPlacementAnimation ===
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.item.content.placementAnimation
+        ].SLIDE,
 
       //overlay animations
-      'hover-animation-fade-in':
-        overlayAnimation === GALLERY_CONSTS.overlayAnimations.FADE_IN,
-      'hover-animation-expand':
-        overlayAnimation === GALLERY_CONSTS.overlayAnimations.EXPAND,
-      'hover-animation-slide-up':
-        overlayAnimation === GALLERY_CONSTS.overlayAnimations.SLIDE_UP,
-      'hover-animation-slide-right':
-        overlayAnimation === GALLERY_CONSTS.overlayAnimations.SLIDE_RIGHT,
-      'hover-animation-slide-down':
-        overlayAnimation === GALLERY_CONSTS.overlayAnimations.SLIDE_DOWN,
-      'hover-animation-slide-left':
-        overlayAnimation === GALLERY_CONSTS.overlayAnimations.SLIDE_LEFT,
+      'hover-animation-fade-in': overlayHoverAnimation === FADE_IN,
+      'hover-animation-expand': overlayHoverAnimation === EXPAND,
+      'hover-animation-slide-up': overlayHoverAnimation === SLIDE_UP,
+      'hover-animation-slide-right': overlayHoverAnimation === SLIDE_RIGHT,
+      'hover-animation-slide-down': overlayHoverAnimation === SLIDE_DOWN,
+      'hover-animation-slide-left': overlayHoverAnimation === SLIDE_LEFT,
 
       //image hover animations
-      'main-color-on-hover':
-        imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.MAIN_COLOR,
-      'zoom-in-on-hover':
-        imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.ZOOM_IN,
-      'blur-on-hover':
-        imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.BLUR,
-      'grayscale-on-hover':
-        imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.GRAYSCALE,
-      'shrink-on-hover':
-        imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.SHRINK,
-      'invert-on-hover':
-        imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.INVERT,
-      'color-in-on-hover':
-        imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.COLOR_IN,
-      'darkened-on-hover':
-        imageHoverAnimation === GALLERY_CONSTS.imageHoverAnimations.DARKENED,
+      'main-color-on-hover': contentHoverAnimation === MAIN_COLOR,
+      'zoom-in-on-hover': contentHoverAnimation === ZOOM_IN,
+      'blur-on-hover': contentHoverAnimation === BLUR,
+      'grayscale-on-hover': contentHoverAnimation === GRAYSCALE,
+      'shrink-on-hover': contentHoverAnimation === SHRINK,
+      'invert-on-hover': contentHoverAnimation === INVERT,
+      'color-in-on-hover': contentHoverAnimation === COLOR_IN,
+      'darkened-on-hover': contentHoverAnimation === DARKENED,
 
       'pro-gallery-mobile-indicator': utils.isMobile(),
     };

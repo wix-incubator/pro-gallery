@@ -52,7 +52,8 @@ class ImageItem extends React.Component {
         GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
         ? 'grid-fit'
         : '',
-      options.imageLoadingMode === GALLERY_CONSTS.loadingMode.COLOR &&
+      options[optionsMap.behaviourParams.item.content.loader] ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader].COLOR &&
       !isTransparent
         ? `load-with-color ${isHighResImageLoaded ? 'image-loaded' : ''}`
         : '',
@@ -165,8 +166,9 @@ class ImageItem extends React.Component {
           loading: 'eager',
           ...imageProps,
         };
-        switch (options.imageLoadingMode) {
-          case GALLERY_CONSTS.loadingMode.BLUR:
+        switch (options[optionsMap.behaviourParams.item.content.loader]) {
+          case GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader]
+            .BLUR:
             preload = (
               <ImageRenderer
                 alt=""
@@ -187,7 +189,8 @@ class ImageItem extends React.Component {
               />
             );
             break;
-          case GALLERY_CONSTS.loadingMode.MAIN_COLOR:
+          case GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader]
+            .MAIN_COLOR:
             preload = (
               <ImageRenderer
                 alt=""
