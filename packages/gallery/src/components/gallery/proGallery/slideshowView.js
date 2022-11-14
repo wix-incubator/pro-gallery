@@ -911,20 +911,29 @@ class SlideshowView extends React.Component {
     if (!this.shouldCreateSlideShowPlayButton) {
       return false;
     }
-    const {
-      options: { galleryTextAlign },
-    } = this.props;
 
+    const slideshowInfoAlignment =
+      this.props.options[
+        optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
+          .buttonsAlignment
+      ];
     const imageMargin =
       this.props.options.imageMargin / 2 + (this.isFullWidthGallery() ? 50 : 0);
 
     const side =
-      galleryTextAlign === 'right'
+      slideshowInfoAlignment ===
+      GALLERY_CONSTS[
+        optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
+          .buttonsAlignment
+      ].RIGHT
         ? { left: `${imageMargin / 2}px` }
         : {
             right: `${
               imageMargin / 2 +
-              (this.props.options.allowSlideshowCounter
+              (this.props.options[
+                optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
+                  .enableCounter
+              ]
                 ? this.calcSlideshowCounterWidth()
                 : 0)
             }px`,
@@ -957,14 +966,20 @@ class SlideshowView extends React.Component {
   }
 
   createSlideShowNumbers() {
-    if (!this.props.options.allowSlideshowCounter) {
+    if (
+      !this.props.options[
+        optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
+          .enableCounter
+      ]
+    ) {
       return false;
     }
-    const {
-      totalItemsCount,
-      options: { galleryTextAlign },
-    } = this.props;
-
+    const { totalItemsCount } = this.props;
+    const slideshowInfoAlignment =
+      this.props.options[
+        optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
+          .buttonsAlignment
+      ];
     const imageMargin =
       this.props.options.imageMargin / 2 + (this.isFullWidthGallery() ? 50 : 0);
 
@@ -973,7 +988,11 @@ class SlideshowView extends React.Component {
       : imageMargin / 2;
 
     const side =
-      galleryTextAlign === 'right'
+      slideshowInfoAlignment ===
+      GALLERY_CONSTS[
+        optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
+          .buttonsAlignment
+      ].RIGHT
         ? { left: `${leftMargin}px` }
         : { right: `${imageMargin / 2}px` };
 
@@ -1305,7 +1324,11 @@ class SlideshowView extends React.Component {
       ] !==
         GALLERY_CONSTS[
           optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-        ].OFF && props.options.playButtonForAutoSlideShow;
+        ].OFF &&
+      props.options[
+        optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
+          .enablePlayButton
+      ];
   }
 
   removeArrowsIfNeeded() {
