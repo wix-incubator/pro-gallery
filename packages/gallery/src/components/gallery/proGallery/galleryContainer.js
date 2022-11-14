@@ -493,7 +493,8 @@ export class GalleryContainer extends React.Component {
             this.state.options[
               optionsMap.behaviourParams.gallery.horizontal.autoSlide.speed
             ],
-          imageMargin: this.state.options.imageMargin,
+          itemSpacing:
+            this.state.options[optionsMap.layoutParams.structure.itemSpacing],
         };
         this.currentScrollData = scrollToItemImp(scrollParams);
         return this.currentScrollData.scrollDeffered.promise.then(() => {
@@ -564,7 +565,8 @@ export class GalleryContainer extends React.Component {
             this.state.options[
               optionsMap.behaviourParams.gallery.horizontal.autoSlide.speed
             ],
-          imageMargin: this.state.options.imageMargin,
+          itemSpacing:
+            this.state.options[optionsMap.layoutParams.structure.itemSpacing],
         };
         this.currentScrollData = scrollToGroupImp(scrollParams);
         return this.currentScrollData.scrollDeffered.promise.then(() => {

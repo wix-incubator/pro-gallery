@@ -129,8 +129,10 @@ class SlideshowView extends React.Component {
 
   getScrollElementWidth() {
     const { galleryStructure } = this.props;
-    const { imageMargin } = this.props.options;
-    return galleryStructure.width - imageMargin / 2;
+    return (
+      galleryStructure.width -
+      this.props.options[optionsMap.layoutParams.structure.itemSpacing] / 2
+    );
   }
 
   isFirstItemFullyVisible() {
@@ -813,7 +815,10 @@ class SlideshowView extends React.Component {
                 optionsMap.layoutParams.navigationArrows.size
               ] +
               40 +
-              this.props.options.imageMargin / 2,
+              this.props.options[
+                optionsMap.layoutParams.structure.itemSpacing
+              ] /
+                2,
           }
         : {};
     const mouseCursorContainerStyle = {
@@ -917,8 +922,9 @@ class SlideshowView extends React.Component {
         optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
           .buttonsAlignment
       ];
-    const imageMargin =
-      this.props.options.imageMargin / 2 + (this.isFullWidthGallery() ? 50 : 0);
+    const calculatedItemSpacing =
+      this.props.options[optionsMap.layoutParams.structure.itemSpacing] / 2 +
+      (this.isFullWidthGallery() ? 50 : 0);
 
     const side =
       slideshowInfoAlignment ===
@@ -926,10 +932,10 @@ class SlideshowView extends React.Component {
         optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
           .buttonsAlignment
       ].RIGHT
-        ? { left: `${imageMargin / 2}px` }
+        ? { left: `${calculatedItemSpacing / 2}px` }
         : {
             right: `${
-              imageMargin / 2 +
+              calculatedItemSpacing / 2 +
               (this.props.options[
                 optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
                   .enableCounter
@@ -980,12 +986,13 @@ class SlideshowView extends React.Component {
         optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
           .buttonsAlignment
       ];
-    const imageMargin =
-      this.props.options.imageMargin / 2 + (this.isFullWidthGallery() ? 50 : 0);
+    const calculatedItemSpacing =
+      this.props.options[optionsMap.layoutParams.structure.itemSpacing] / 2 +
+      (this.isFullWidthGallery() ? 50 : 0);
 
     const leftMargin = this.shouldCreateSlideShowPlayButton
-      ? imageMargin / 2 + 25
-      : imageMargin / 2;
+      ? calculatedItemSpacing / 2 + 25
+      : calculatedItemSpacing / 2;
 
     const side =
       slideshowInfoAlignment ===
@@ -994,7 +1001,7 @@ class SlideshowView extends React.Component {
           .buttonsAlignment
       ].RIGHT
         ? { left: `${leftMargin}px` }
-        : { right: `${imageMargin / 2}px` };
+        : { right: `${calculatedItemSpacing / 2}px` };
 
     return (
       <div
@@ -1188,11 +1195,8 @@ class SlideshowView extends React.Component {
     return {
       margin:
         -1 *
-        (this.props.options.imageMargin / 2 -
-          (this.props.options.galleryMargin ||
-            this.props.options[
-              optionsMap.layoutParams.structure.gallerySpacing
-            ])),
+        (this.props.options[optionsMap.layoutParams.structure.itemSpacing] / 2 -
+          this.props.options[optionsMap.layoutParams.structure.gallerySpacing]),
       width: this.props.container.width,
       height: this.props.container.height,
     };

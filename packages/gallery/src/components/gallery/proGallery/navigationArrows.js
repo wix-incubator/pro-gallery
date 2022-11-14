@@ -16,7 +16,8 @@ export function NavigationArrows({
   next,
   id,
 }) {
-  const { imageMargin, arrowsColor } = options;
+  const { arrowsColor } = options;
+  const itemSpacing = options[optionsMap.layoutParams.structure.itemSpacing];
   const isRTL =
     options[optionsMap.behaviourParams.gallery.layoutDirection] ===
     GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
@@ -54,8 +55,8 @@ export function NavigationArrows({
   const infoHeight = options[optionsMap.layoutParams.info.height];
   const imageHeight = galleryHeight - infoHeight;
 
-  // the nav arrows parent container top edge is imageMargin/2 ABOVE the actual view, that calculates the middle point of gallery
-  const galleryVerticalCenter = `50% + ${imageMargin / 4}px`;
+  // the nav arrows parent container top edge is itemSpacing/2 ABOVE the actual view, that calculates the middle point of gallery
+  const galleryVerticalCenter = `50% + ${itemSpacing / 4}px`;
 
   // Determines the direction fix, the direction in which we move the nav arrows 'vertical position fix' pixels
   let directionFix;
@@ -119,8 +120,8 @@ export function NavigationArrows({
       GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
         .OUTSIDE_GALLERY
       ? `-${20 + navArrowsContainerWidth}px`
-      : `${imageMargin / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
-  // imageMargin effect the margin of the main div ('pro-gallery-parent-container') that SlideshowView is rendering, so the arrows should be places accordingly
+      : `${itemSpacing / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
+  // itemSpacing effect the margin of the main div ('pro-gallery-parent-container') that SlideshowView is rendering, so the arrows should be places accordingly
   // arrowsPadding relevant only for arrowsPosition.ON_GALLERY
 
   const prevContainerStyle = { left: mouseCursorEnabled ? 0 : arrowsPos };

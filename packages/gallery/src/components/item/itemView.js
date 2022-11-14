@@ -694,7 +694,7 @@ class ItemView extends React.Component {
       options,
       settings = {},
     } = this.props;
-    const { imageMargin } = options;
+    const itemSpacing = options[optionsMap.layoutParams.structure.itemSpacing];
     const slideAnimation =
       options[optionsMap.behaviourParams.gallery.horizontal.slideAnimation];
     const isRTL =
@@ -713,7 +713,7 @@ class ItemView extends React.Component {
         scrollDirection ===
         GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
           .HORIZONTAL
-          ? imageMargin / 2 + 'px'
+          ? itemSpacing / 2 + 'px'
           : 0,
       cursor: this.isItemClickable(options),
     };
