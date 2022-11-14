@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS, window } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap, window } from 'pro-gallery-lib';
 import {
   isWithinPaddingVertically,
   isWithinPaddingHorizontally,
@@ -26,8 +26,7 @@ class VideoScrollHelper {
     this.play = this.play.bind(this);
     this.stop = this.stop.bind(this);
     this.isVisible = this.isVisible.bind(this);
-    this.videoPlay = undefined;
-    this.itemClick = undefined;
+    this.videoPlayTrigger = undefined;
     this.setPlayingVideos = config.setPlayingVideos;
     this.lastVideoPlayed = -1;
     this.videoRatingMap = new Map();
@@ -44,17 +43,15 @@ class VideoScrollHelper {
     galleryStructure,
     galleryWidth,
     scrollBase,
-    videoPlay,
+    videoPlayTrigger,
     videoLoop,
-    itemClick,
     scrollDirection,
   }) {
     this.galleryWidth = galleryWidth;
     this.scrollBase = scrollBase;
-    this.videoPlay = videoPlay;
+    this.videoPlayTrigger = videoPlayTrigger;
     this.videoLoop = videoLoop;
-    this.itemClick = itemClick;
-    this.scrollDirection = scrollDirection;
+    this[optionsMap.layoutParams.structure.scrollDirection] = scrollDirection;
     this.currentItemCount = galleryStructure.galleryItems.length;
     this.videoItems = [];
     galleryStructure.galleryItems.forEach((item) => {
@@ -111,7 +108,11 @@ class VideoScrollHelper {
   }
 
   itemHovered(idx) {
-    if (this.videoPlay !== 'hover') return;
+    if (
+      this.videoPlayTrigger !==
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER
+    )
+      return;
     if (this.IdxExistsInVideoItems(idx)) {
       this.play(idx);
     } else {
@@ -120,8 +121,11 @@ class VideoScrollHelper {
   }
 
   itemClicked(idx) {
-    if (this.videoPlay !== 'onClick') return;
-    // if (this.itemClick !== 'nothing') return;
+    if (
+      this.videoPlayTrigger !==
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].CLICK
+    )
+      return;
     if (this.IdxExistsInVideoItems(idx)) {
       if (this.currentPlayingIdx === idx) {
         this.stop();
@@ -285,7 +289,10 @@ class VideoScrollHelper {
       padding: videoPlayVerticalTolerance,
     });
     let visibleHorizontally;
-    if (this.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) {
+    if (
+      this[optionsMap.layoutParams.structure.scrollDirection] ===
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL
+    ) {
       visibleHorizontally = true;
     } else {
       visibleHorizontally = isWithinPaddingHorizontally({
@@ -300,7 +307,10 @@ class VideoScrollHelper {
   }
 
   shouldAutoPlay() {
-    return this.videoPlay === 'auto';
+    return (
+      this.videoPlayTrigger ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO
+    );
   }
   allowedLoop() {
     return this.videoLoop === true;

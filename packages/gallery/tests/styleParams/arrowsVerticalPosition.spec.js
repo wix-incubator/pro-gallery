@@ -26,7 +26,12 @@ describe('styleParam - arrowsVerticalPosition', () => {
     initialProps = {
       container,
       items: images2,
-      options,
+      options: {
+        ...options,
+        [optionsMap.layoutParams.structure.itemSpacing]: 0, //v5 TODO test w/o and remove, should be handled by the new addPresetStyles of slideshow.
+        [optionsMap.layoutParams.info.placement]:
+          GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW, //v5 TODO test w/o and remove, should be handled by the new addPresetStyles of slideshow.
+      },
       customComponents: {
         customHoverRenderer: () => {},
         customInfoRenderer: () => {},
