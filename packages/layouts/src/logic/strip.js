@@ -1,3 +1,5 @@
+import { optionsMap } from 'pro-gallery-lib';
+
 export class Strip {
   constructor(config) {
     this.ratio = 0;
@@ -7,7 +9,8 @@ export class Strip {
     this.isFullWidth = true;
 
     this.idx = config.idx;
-    this.groupsPerStrip = config.groupsPerStrip;
+    this[optionsMap.layoutParams.groups.numberOfGroupsPerRow] =
+      config[optionsMap.layoutParams.groups.numberOfGroupsPerRow];
     this.scrollDirection = config.scrollDirection;
     this.targetItemSize = config.targetItemSize;
     this.container = config.container;
@@ -31,7 +34,7 @@ export class Strip {
   }
 
   canRemainIncomplete() {
-    if (this.groupsPerStrip > 0) {
+    if (this[optionsMap.layoutParams.groups.numberOfGroupsPerRow] > 0) {
       return false;
     } else {
       return this.targetItemSize * 1.5 < this.height;
@@ -66,8 +69,9 @@ export class Strip {
       return false;
     }
 
-    const { groupsPerStrip, scrollDirection, targetItemSize } = this;
-
+    const { scrollDirection, targetItemSize } = this;
+    const groupsPerStrip =
+      this[optionsMap.layoutParams.groups.numberOfGroupsPerRow];
     if (groupsPerStrip > 0) {
       return this.groups.length >= groupsPerStrip;
     }
