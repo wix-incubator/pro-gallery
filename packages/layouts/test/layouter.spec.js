@@ -4,7 +4,6 @@ import Layouter from '../src/logic/layouter.js';
 import { testImages } from './images-mock.js';
 import { expect } from 'chai';
 import deepFreeze from 'deep-freeze';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import { optionsMap } from 'pro-gallery-lib';
 
 const getItems = (count) => deepFreeze(testImages.slice(0, count));
@@ -25,7 +24,7 @@ describe('Layouter', () => {
       [optionsMap.layoutParams.structure.gallerySpacing]: 0,
       [optionsMap.layoutParams.crop.ratios]: [1],
       [optionsMap.layoutParams.groups.repeatingGroupTypes]: [],
-      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      [optionsMap.layoutParams.structure.scrollDirection]: 'VERTICAL',
       isVertical: false,
       targetItemSize: 200,
       [optionsMap.layoutParams.groups.groupSize]: 3,
@@ -390,13 +389,13 @@ describe('Layouter', () => {
       const items = getItems(100);
       container.galleryHeight = 500;
 
-      styleParams.scrollDirection = GALLERY_CONSTS.scrollDirection.VERTICAL;
+      styleParams[optionsMap.layoutParams.structure.scrollDirection] = 'VERTICAL';
       styleParams[optionsMap.layoutParams.structure.itemSpacing] = 0;
 
       gallery = getLayout({ items, container, styleParams });
       expect(gallery.height).to.be.above(container.galleryHeight);
 
-      styleParams.scrollDirection = GALLERY_CONSTS.scrollDirection.HORIZONTAL;
+      styleParams[optionsMap.layoutParams.structure.scrollDirection] = 'HORIZONTAL';
       gallery = getLayout({ items, container, styleParams });
       expect(gallery.height).to.equal(container.galleryHeight);
     });

@@ -106,7 +106,7 @@ class Utils {
       groupTypes: '1,2h,2v,3h,3v,3t,3b,3l,3r',
       isVertical: true,
       minItemSize: 120,
-      scrollDirection: 0,
+      [optionsMap.layoutParams.structure.scrollDirection]: 'VERTICAL',
       targetItemSize: 500,
       collageDensity: 50,
       fixedColumns: 0,
@@ -143,7 +143,8 @@ class Utils {
     }
     if (
       styleParams.externalInfoHeight >= 0 &&
-      styleParams.scrollDirection === 1
+      styleParams[optionsMap.layoutParams.structure.scrollDirection] ===
+        'HORIZONTAL'
     ) {
       convertedContainer.galleryHeight -= styleParams.externalInfoHeight;
     }

@@ -48,7 +48,7 @@ export class Group {
 
     if (config.styleParams) {
       const { styleParams } = config;
-      this.scrollDirection = styleParams.scrollDirection;
+      this.scrollDirection = styleParams[optionsMap.layoutParams.structure.scrollDirection];
       this.cubeType = styleParams[optionsMap.layoutParams.crop.method];
       this.cubeImages = styleParams[optionsMap.layoutParams.crop.enable];
       this.isVertical = styleParams.isVertical;
@@ -126,7 +126,7 @@ export class Group {
   round() {
     //round all sizes to full pixels
     
-    if (this.isLastGroup && this.scrollDirection === 0) {
+    if (this.isLastGroup && this.scrollDirection === 'VERTICAL') {
       this.width = this.stripWidth - this.left;
     } else {
       this.width = Math.round(this.width);
