@@ -25,7 +25,7 @@ export class Item {
       const { styleParams } = config;
       this.cubeType = styleParams[optionsMap.layoutParams.crop.method];
       this.cubeImages = styleParams[optionsMap.layoutParams.crop.enable];
-      this._cropRatio = styleParams.layoutParams.cropRatio;
+      this._cropRatio = styleParams[optionsMap.layoutParams.crop.ratios];
       this.rotatingCropRatios = styleParams.rotatingCropRatios;
       this.smartCrop =
         styleParams[optionsMap.layoutParams.crop.enableSmartCrop];
@@ -459,7 +459,7 @@ export class Item {
     }
 
     if (!ratio) {
-      ratio = this._cropRatio || this.ratio;
+      ratio = (this._cropRatio && this._cropRatio[0]) || this.ratio;
     }
 
     if (this.dynamicCropRatios !== null && typeof ratio === 'string') {
