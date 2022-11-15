@@ -55,8 +55,8 @@ export class Group {
       this.minItemSize = styleParams.minItemSize;
       this.collageAmount = styleParams.collageAmount;
       this.collageDensity = styleParams[optionsMap.layoutParams.groups.density];
-      this.groupTypes = String(styleParams.groupTypes);
-      this.repeatingGroupTypes = String(styleParams.layoutParams.repeatingGroupTypes);
+      this.groupTypes = String(styleParams[optionsMap.layoutParams.groups.allowedGroupTypes]);
+      this.repeatingGroupTypes = String(styleParams[optionsMap.layoutParams.groups.repeatingGroupTypes]);
       this.rotatingCropRatios = String(styleParams.rotatingCropRatios);
       this.chooseBestGroup = styleParams[optionsMap.layoutParams.groups.groupByOrientation];
       this.externalInfoHeight = styleParams.externalInfoHeight;

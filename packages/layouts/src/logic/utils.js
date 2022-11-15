@@ -2,6 +2,7 @@ import {
   flattenObject,
   flatToNested,
   extendNestedOptionsToIncludeOldAndNew,
+  optionsMap,
 } from 'pro-gallery-lib';
 
 class Utils {
@@ -94,8 +95,8 @@ class Utils {
       layoutParams: {
         gallerySpacing: 0,
         cropRatio: 1,
-        repeatingGroupTypes: '',
       },
+      [optionsMap.layoutParams.groups.repeatingGroupTypes]: [],
       cubeImages: false,
       cubeType: 'fill',
       rotatingCropRatios: '',

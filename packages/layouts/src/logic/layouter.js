@@ -579,10 +579,10 @@ export default class Layouter {
     let _maxGroupSize = 1;
     try {
       const groupTypes =
-        typeof this.styleParams.groupTypes === 'string' &&
-        this.styleParams.groupTypes.length > 0
-          ? this.styleParams.groupTypes.split(',')
-          : this.styleParams.groupTypes;
+        typeof this.styleParams[optionsMap.layoutParams.groups.allowedGroupTypes] === 'string' &&
+        this.styleParams[optionsMap.layoutParams.groups.allowedGroupTypes].length > 0
+          ? this.styleParams[optionsMap.layoutParams.groups.allowedGroupTypes].split(',')
+          : this.styleParams[optionsMap.layoutParams.groups.allowedGroupTypes];
       _maxGroupSize =
         groupTypes.length > 0
           ? groupTypes.reduce(
