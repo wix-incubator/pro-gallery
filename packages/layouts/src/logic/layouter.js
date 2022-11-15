@@ -458,7 +458,7 @@ export default class Layouter {
     if (this.styleParams.forceFullHeight) {
       const stretchRatio = this.container.galleryHeight / this.galleryHeight;
       this.items.map((item) => {
-        item.cubeImages = true;
+        item[optionsMap.layoutParams.crop.enable] = true;
         item.cropRatio = item.ratio = item.width / (item.height * stretchRatio);
         item.height *= stretchRatio;
         return item;

@@ -1,3 +1,4 @@
+import { optionsMap } from 'pro-gallery-lib';
 import { utils } from './utils';
 
 export class Item {
@@ -23,7 +24,8 @@ export class Item {
     if (config.styleParams) {
       const { styleParams } = config;
       this.cubeType = styleParams.cubeType;
-      this.cubeImages = styleParams.cubeImages;
+      this[optionsMap.layoutParams.crop.enable] =
+        styleParams[optionsMap.layoutParams.crop.enable];
       this._cropRatio = styleParams.layoutParams.cropRatio;
       this.rotatingCropRatios = styleParams.rotatingCropRatios;
       this.smartCrop = styleParams.smartCrop;
@@ -303,7 +305,10 @@ export class Item {
 
   get width() {
     let width;
-    if (this.cubeImages && this.ratio >= this.cropRatio) {
+    if (
+      this[optionsMap.layoutParams.crop.enable] &&
+      this.ratio >= this.cropRatio
+    ) {
       width = this.style.cubedWidth || this.orgHeight * this.cropRatio;
     } else {
       width = this.orgWidth;
@@ -335,7 +340,10 @@ export class Item {
 
   get height() {
     let height;
-    if (this.cubeImages && this.ratio < this.cropRatio) {
+    if (
+      this[optionsMap.layoutParams.crop.enable] &&
+      this.ratio < this.cropRatio
+    ) {
       height = this.style.cubedHeight || this.orgWidth / this.cropRatio;
     } else {
       height = this.orgHeight;
@@ -375,7 +383,8 @@ export class Item {
   }
 
   get dimensions() {
-    const isGridFit = this.cubeImages && this.cubeType === 'fit';
+    const isGridFit =
+      this[optionsMap.layoutParams.crop.enable] && this.cubeType === 'fit';
 
     let targetWidth = this.width;
     let targetHeight = this.height;
@@ -401,7 +410,7 @@ export class Item {
       this.useMaxDimensions &&
       (this.width > this.maxWidth || this.height > this.maxHeight)
     ) {
-      if (this.cubeImages) {
+      if (this[optionsMap.layoutParams.crop.enable]) {
         setTargetDimensions(!isLandscape, this.cropRatio);
       } else {
         setTargetDimensions(!isLandscape, this.ratio);
@@ -570,7 +579,7 @@ export class Item {
       ratio: this.ratio,
       dimensions: this.dimensions,
       cropRatio: this.cropRatio,
-      isCropped: this.cubeImages,
+      isCropped: this[optionsMap.layoutParams.crop.enable],
       cropType: this.cubeType,
       height: this.height,
       maxHeight: this.maxHeight,

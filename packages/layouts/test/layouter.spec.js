@@ -31,7 +31,7 @@ describe('Layouter', () => {
       targetItemSize: 200,
       [optionsMap.layoutParams.groups.groupSize]: 3,
       [optionsMap.layoutParams.groups.allowedGroupTypes]: ['1','2h','2v','3t','3b','3l','3r','3v','3h'],
-      cubeImages: false,
+      [optionsMap.layoutParams.crop.enable]: false,
       cubeType: 'fill',
       smartCrop: false,
       [optionsMap.layoutParams.groups.groupByOrientation]: true,
@@ -182,7 +182,7 @@ describe('Layouter', () => {
       const allowedRounding = 2; //the number of pixels that can change due to rounding
 
       const items = getItems(100);
-      styleParams.cubeImages = true;
+      styleParams[optionsMap.layoutParams.crop.enable] = true;
       styleParams.imageMargin = 0;
 
       for (const ratio of [0.25, 0.5, 1, 2, 4]) {
@@ -440,12 +440,12 @@ describe('Layouter', () => {
       }
     });
 
-    // cubeImages
-    it('should have all images in their original ratio if cubeImages is false', () => {
+    // [optionsMap.layoutParams.crop.enable]
+    it('should have all images in their original ratio if [optionsMap.layoutParams.crop.enable] is false', () => {
       const allowedRounding = 2; //the number of pixels that can change due to rounding
 
       const items = getItems(100); //todo - something breaks when using exactly 100 images
-      styleParams.cubeImages = false;
+      styleParams[optionsMap.layoutParams.crop.enable] = false;
       styleParams.imageMargin = 0;
       styleParams[optionsMap.layoutParams.groups.density] = 0.8;
 
@@ -472,7 +472,7 @@ describe('Layouter', () => {
 
       expect(isOriginalDimensions).to.be.true;
 
-      styleParams.cubeImages = true;
+      styleParams[optionsMap.layoutParams.crop.enable] = true;
 
       gallery = getLayout({ items, container, styleParams });
       const isCroppedCorrectly = gallery.columns[0].groups.reduce(
@@ -503,7 +503,7 @@ describe('Layouter', () => {
 
       const items = getItems(100);
       styleParams.layoutParams.cropRatio = 2;
-      styleParams.cubeImages = true;
+      styleParams[optionsMap.layoutParams.crop.enable] = true;
       styleParams.smartCrop = true;
       styleParams.imageMargin = 0;
 
@@ -677,7 +677,7 @@ describe('Layouter', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
       styleParams.rotatingCropRatios = '2,1.5,1.2,0.5,1';
       styleParams.layoutParams.cropRatio = '1';
-      styleParams.cubeImages = true;
+      styleParams[optionsMap.layoutParams.crop.enable] = true;
       styleParams.smartCrop = false;
       styleParams.isVertical = true;
 
@@ -701,7 +701,7 @@ describe('Layouter', () => {
     const ratio = 1;
     styleParams.layoutParams.cropRatio = ratio;
     styleParams.cubeType = 'min';
-    styleParams.cubeImages = true;
+    styleParams[optionsMap.layoutParams.crop.enable] = true;
     styleParams.smartCrop = false;
     styleParams.isVertical = true;
 
@@ -718,7 +718,7 @@ describe('Layouter', () => {
     const ratio = 1;
     styleParams.layoutParams.cropRatio = ratio;
     styleParams.cubeType = 'max';
-    styleParams.cubeImages = true;
+    styleParams[optionsMap.layoutParams.crop.enable] = true;
     styleParams.smartCrop = false;
     styleParams.isVertical = true;
 
@@ -761,7 +761,7 @@ describe('Layouter', () => {
       const items = getItems(100);
 
       styleParams.isVertical = true;
-      styleParams.cubeImages = true;
+      styleParams[optionsMap.layoutParams.crop.enable] = true;
       styleParams.layoutParams.cropRatio = 1;
       styleParams[optionsMap.layoutParams.groups.groupSize] = 1;
 

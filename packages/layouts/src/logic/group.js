@@ -50,7 +50,7 @@ export class Group {
       const { styleParams } = config;
       this.scrollDirection = styleParams.scrollDirection;
       this.cubeType = styleParams.cubeType;
-      this.cubeImages = styleParams.cubeImages;
+      this[optionsMap.layoutParams.crop.enable] = styleParams[optionsMap.layoutParams.crop.enable];
       this.isVertical = styleParams.isVertical;
       this.minItemSize = styleParams.minItemSize;
       this.collageAmount = styleParams.collageAmount;
@@ -115,7 +115,7 @@ export class Group {
 
   setCubedHeight(height) {
     const shouldUseFixedHeight =
-      this.cubeImages &&
+      this[optionsMap.layoutParams.crop.enable] &&
       this[optionsMap.layoutParams.groups.groupSize] === 1 &&
       ['fill', 'fit'].includes(this.cubeType) &&
       this[optionsMap.layoutParams.groups.repeatingGroupTypes].length === 0 &&
