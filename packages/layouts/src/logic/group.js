@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { optionsMap } from 'pro-gallery-lib';
 import { Item } from './item.js';
 
 const GROUP_TYPES_BY_RATIOS_V = {
@@ -53,7 +54,7 @@ export class Group {
       this.isVertical = styleParams.isVertical;
       this.minItemSize = styleParams.minItemSize;
       this.collageAmount = styleParams.collageAmount;
-      this.collageDensity = styleParams.collageDensity;
+      this[optionsMap.layoutParams.groups.density] = styleParams[optionsMap.layoutParams.groups.density];
       this.groupTypes = String(styleParams.groupTypes);
       this.repeatingGroupTypes = String(styleParams.layoutParams.repeatingGroupTypes);
       this.rotatingCropRatios = String(styleParams.rotatingCropRatios);
@@ -289,10 +290,10 @@ export class Group {
       }
 
       //---------| Calc collage density
-      if (this.collageDensity >= 0) {
+      if (this[optionsMap.layoutParams.groups.density] >= 0) {
         //th new calculation of the collage amount
 
-        const collageDensity = this.collageDensity;
+        const collageDensity = this[optionsMap.layoutParams.groups.density];
 
         //use the collage amount to determine the optional groupsize
         const maxGroupType = parseInt(groupTypes[groupTypes.length - 1]);

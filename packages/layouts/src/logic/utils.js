@@ -2,6 +2,7 @@ import {
   flattenObject,
   flatToNested,
   extendNestedOptionsToIncludeOldAndNew,
+  optionsMap,
 } from 'pro-gallery-lib';
 
 class Utils {
@@ -110,7 +111,7 @@ class Utils {
       minItemSize: 120,
       scrollDirection: 0,
       targetItemSize: 500,
-      collageDensity: 50,
+      [optionsMap.layoutParams.groups.density]: 50,
       fixedColumns: 0,
       columnWidths: '',
     };
