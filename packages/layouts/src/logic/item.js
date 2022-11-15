@@ -40,7 +40,8 @@ export class Item {
       this.smartCrop =
         styleParams[optionsMap.layoutParams.crop.enableSmartCrop];
       this.useMaxDimensions =
-        styleParams.useMaxDimensions && this.itemType !== 'text';
+        styleParams[optionsMap.layoutParams.structure.enableStreching] &&
+        this.itemType !== 'text';
       this.cubeFitPosition =
         styleParams[optionsMap.layoutParams.crop.alignment];
     }
