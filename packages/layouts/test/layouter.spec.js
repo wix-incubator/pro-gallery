@@ -22,9 +22,7 @@ describe('Layouter', () => {
   beforeEach(() => {
     const items = getItems();
     styleParams = {
-      layoutParams: { 
-        gallerySpacing: 0,
-      },
+      [optionsMap.layoutParams.structure.gallerySpacing]: 0,
       [optionsMap.layoutParams.crop.ratios]: [1],
       [optionsMap.layoutParams.groups.repeatingGroupTypes]: [],
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,

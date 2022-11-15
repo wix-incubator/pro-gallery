@@ -92,9 +92,7 @@ class Utils {
     }
     //default styleParams
     const defaultLayouterSP = {
-      layoutParams: {
-        gallerySpacing: 0,
-      },
+      [optionsMap.layoutParams.structure.gallerySpacing]: 0,
       [optionsMap.layoutParams.groups.repeatingGroupTypes]: [],
       [optionsMap.layoutParams.crop.enable]: false,
       [optionsMap.layoutParams.crop.method]: 'FILL',
@@ -131,7 +129,8 @@ class Utils {
       convertedContainer.galleryWidth =
         container.width +
         ((styleParams.imageMargin / 2 || 0) -
-          (styleParams.layoutParams.gallerySpacing || 0)) *
+          (styleParams[optionsMap.layoutParams.structure.gallerySpacing] ||
+            0)) *
           2;
       delete convertedContainer.width;
     }
@@ -139,7 +138,7 @@ class Utils {
       convertedContainer.galleryHeight =
         container.height +
         ((styleParams.imageMargin / 2 || 0) -
-          (styleParams.layoutParams.gallerySpacing || 0));
+          (styleParams[optionsMap.layoutParams.structure.gallerySpacing] || 0));
       delete convertedContainer.height;
     }
     if (
