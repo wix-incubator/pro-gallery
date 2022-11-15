@@ -25,10 +25,10 @@ describe('Layouter', () => {
       [optionsMap.layoutParams.crop.ratios]: [1],
       [optionsMap.layoutParams.groups.repeatingGroupTypes]: [],
       [optionsMap.layoutParams.structure.scrollDirection]: 'VERTICAL',
-      isVertical: false,
+      [optionsMap.layoutParams.structure.layoutOrientation]: 'HORIZONTAL',
       targetItemSize: 200,
       [optionsMap.layoutParams.groups.groupSize]: 3,
-      groupTypes: '1,2h,2v,3t,3b,3l,3r,3v,3h',
+      [optionsMap.layoutParams.groups.allowedGroupTypes]: ['1','2h','2v','3t','3b','3l','3r','3v','3h'],
       [optionsMap.layoutParams.crop.enable]: false,
       [optionsMap.layoutParams.crop.method]: 'FILL',
       [optionsMap.layoutParams.crop.enableSmartCrop]: false,
@@ -36,9 +36,9 @@ describe('Layouter', () => {
       collageAmount: 0.9,
       collageDensity: 0.9,
       minItemSize: 20,
-      imageMargin: 10,
-      scatter: 0,
-      rotatingScatter: '',
+      [optionsMap.layoutParams.structure.itemSpacing]: 10,
+      [optionsMap.layoutParams.structure.scatter.randomScatter]: 0,
+      [optionsMap.layoutParams.structure.scatter.manualScatter]: '',
       fixedColumns: 0,
     };
 
@@ -132,7 +132,7 @@ describe('Layouter', () => {
     //targetItemSize
     it('should have taller Strips as targetItemSize increases', () => {
       const items = getItems(100);
-      styleParams.isVertical = false;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'HORIZONTAL';
 
       let lastGroupHeight = 0;
       for (const size of [100, 200, 300, 400]) {
@@ -152,7 +152,7 @@ describe('Layouter', () => {
     //targetItemSize
     it('should have all groups in a Columns gallery narrower than targetItemSize', () => {
       const items = getItems(100);
-      styleParams.isVertical = true;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
       styleParams.galleryWidth = 1200;
 
       let lastGroupWidth = 0;
@@ -214,7 +214,7 @@ describe('Layouter', () => {
     //fixedColumns
     it('should have fixed number of columns if specified', () => {
       const items = getItems(100);
-      styleParams.isVertical = true;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
 
       for (const num of [1, 5, 10, 20]) {
         styleParams.fixedColumns = num;
@@ -313,7 +313,7 @@ describe('Layouter', () => {
     //minItemSize
     it('should have all Strips GalleryLayout images larger than minItemSize', () => {
       const items = getItems(100);
-      styleParams.isVertical = false;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'HORIZONTAL';
       styleParams[optionsMap.layoutParams.structure.itemSpacing] = 0;
 
       const minItemSizes = [10, 50, 100, 200, 300, 400];
@@ -337,7 +337,7 @@ describe('Layouter', () => {
     //minItemSize
     it('should have all Columns GalleryLayout images larger than minItemSize', () => {
       const items = getItems(100);
-      styleParams.isVertical = true;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
       styleParams.galleryWidth = 4000;
       styleParams[optionsMap.layoutParams.structure.itemSpacing] = 0;
       styleParams[optionsMap.layoutParams.groups.density] = 1;
@@ -375,11 +375,11 @@ describe('Layouter', () => {
       styleParams.fixedColumns = 0;
       container.galleryWidth = 1000;
 
-      styleParams.isVertical = true;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
       gallery = getLayout({ items, container, styleParams });
       expect(gallery.columns.length).to.equal(5);
 
-      styleParams.isVertical = false;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'HORIZONTAL';
       gallery = getLayout({ items, container, styleParams });
       expect(gallery.columns.length).to.equal(1);
     });
@@ -403,7 +403,7 @@ describe('Layouter', () => {
     // repeatingGroupTypes
     it('should have groups from the rotating groups types by their order ', () => {
       const items = getItems(100);
-      styleParams.isVertical = false;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'HORIZONTAL';
 
       const groupTypes = [
         ['1'],
@@ -675,7 +675,7 @@ describe('Layouter', () => {
       styleParams[optionsMap.layoutParams.crop.ratios] = ['2','1.5','1.2','0.5','1'];
       styleParams[optionsMap.layoutParams.crop.enable] = true;
       styleParams[optionsMap.layoutParams.crop.enableSmartCrop] = false;
-      styleParams.isVertical = true;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
 
       const rotatingCropRatiosArr = styleParams[optionsMap.layoutParams.crop.ratios];
 
@@ -699,7 +699,7 @@ describe('Layouter', () => {
     styleParams[optionsMap.layoutParams.crop.method] = 'MIN';
     styleParams[optionsMap.layoutParams.crop.enable] = true;
     styleParams[optionsMap.layoutParams.crop.enableSmartCrop] = false;
-    styleParams.isVertical = true;
+    styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
 
     gallery = getLayout({ items, container, styleParams });
     gallery.items.forEach((item) => {
@@ -716,7 +716,7 @@ describe('Layouter', () => {
     styleParams[optionsMap.layoutParams.crop.method] = 'MAX';
     styleParams[optionsMap.layoutParams.crop.enable] = true;
     styleParams[optionsMap.layoutParams.crop.enableSmartCrop] = false;
-    styleParams.isVertical = true;
+    styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
 
     gallery = getLayout({ items, container, styleParams });
     gallery.items.forEach((item) => {
@@ -730,7 +730,7 @@ describe('Layouter', () => {
     it('findLastVisibleItemIdx should work', () => {
       const items = getItems(100);
 
-      styleParams.isVertical = true;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
       styleParams.fixedColumns = 1;
       styleParams[optionsMap.layoutParams.groups.groupSize] = 1;
 
@@ -756,7 +756,7 @@ describe('Layouter', () => {
 
       const items = getItems(100);
 
-      styleParams.isVertical = true;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
       styleParams[optionsMap.layoutParams.crop.enable] = true;
       styleParams[optionsMap.layoutParams.crop.ratios] = [1];
       styleParams[optionsMap.layoutParams.groups.groupSize] = 1;

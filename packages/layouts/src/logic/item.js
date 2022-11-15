@@ -37,8 +37,10 @@ export class Item {
         styleParams[optionsMap.layoutParams.structure.itemSpacing];
       this.gallerySpacing =
         styleParams[optionsMap.layoutParams.structure.gallerySpacing];
-      this.scatter = styleParams.scatter;
-      this.rotatingScatter = styleParams.rotatingScatter;
+      this.scatter =
+        styleParams[optionsMap.layoutParams.structure.scatter.randomScatter];
+      this.rotatingScatter =
+        styleParams[optionsMap.layoutParams.structure.scatter.manualScatter];
       this.smartCrop =
         styleParams[optionsMap.layoutParams.crop.enableSmartCrop];
       this.useMaxDimensions =

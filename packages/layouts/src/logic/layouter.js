@@ -56,7 +56,7 @@ export default class Layouter {
 
   calcNumberOfColumns(galleryWidth, targetItemSize) {
     let numOfCols = 1;
-    if (this.styleParams.isVertical) {
+    if (this.styleParams[optionsMap.layoutParams.structure.layoutOrientation] === 'VERTICAL') {
       if (this.styleParams.fixedColumns > 0) {
         numOfCols = this.styleParams.fixedColumns;
       
@@ -117,7 +117,7 @@ export default class Layouter {
       if (this.useLayoutStore) {
         Object.assign(this, layoutsStore.layout);
       } else {
-        if (this.styleParams.isVertical) {
+        if (this.styleParams[optionsMap.layoutParams.structure.layoutOrientation] === 'VERTICAL') {
           //---------------------| COLUMNS GALLERY |----------------------//
           //remove items from the last 3 groups;
           const lastGroups = this.groups.slice(-3);
@@ -253,7 +253,7 @@ export default class Layouter {
         this.galleryWidth,
         this.targetItemSize
       );
-      this.targetItemSize = this.styleParams.isVertical
+      this.targetItemSize = this.styleParams[optionsMap.layoutParams.structure.layoutOrientation] === 'VERTICAL'
         ? Math.floor(this.galleryWidth / this.numOfCols)
         : this.targetItemSize;
 
@@ -370,7 +370,7 @@ export default class Layouter {
       this.groupItems = [];
 
       //resize and fit the group in the strip / column
-      if (!this.styleParams.isVertical) {
+      if (this.styleParams[optionsMap.layoutParams.structure.layoutOrientation] === 'HORIZONTAL') {
         //---------------------| STRIPS GALLERY |----------------------//
 
         if (this.strip.isFull(this.group, this.isLastImage)) {

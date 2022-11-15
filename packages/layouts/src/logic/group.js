@@ -51,7 +51,7 @@ export class Group {
       this.scrollDirection = styleParams[optionsMap.layoutParams.structure.scrollDirection];
       this.cubeType = styleParams[optionsMap.layoutParams.crop.method];
       this.cubeImages = styleParams[optionsMap.layoutParams.crop.enable];
-      this.isVertical = styleParams.isVertical;
+      this.layoutOrientation = styleParams[optionsMap.layoutParams.structure.layoutOrientation];
       this.minItemSize = styleParams.minItemSize;
       this.collageAmount = styleParams.collageAmount;
       this.collageDensity = styleParams[optionsMap.layoutParams.groups.density];
@@ -81,7 +81,7 @@ export class Group {
   }
 
   resize() {
-    if (this.isVertical) {
+    if (this.layoutOrientation === 'VERTICAL') {
       this.resizeToWidth(this.targetItemSize);
     } else {
       this.resizeToHeight(this.targetItemSize);
@@ -224,7 +224,7 @@ export class Group {
       // } else if (this.isLastItems) {
       //   return this.groupTypes.split(',')[0] || '1';
     } else {
-      //isVertical - is the gallery vertical (pinterest style) or horizontal (flickr style)
+      //layoutOrientation === 'VERTICAL' - is the gallery vertical (pinterest style) or horizontal (flickr style)
 
       //---------| Find the best groupType for each ratios case
       //optional types:
@@ -245,7 +245,7 @@ export class Group {
       //  3l  => ppp,plp,ppl,pll (vertical only)
       //  3r  => ppp,plp,lpp,llp (vertical only)
 
-      const isV = this.isVertical;
+      const isV = this.layoutOrientation === 'VERTICAL';
       let optionalTypes; //optional groupTypes (separated by ,). 1 is always optional
 
       if (this.chooseBestGroup) {
