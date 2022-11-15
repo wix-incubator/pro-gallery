@@ -97,7 +97,7 @@ class Utils {
         cropRatio: 1,
       },
       [optionsMap.layoutParams.groups.repeatingGroupTypes]: [],
-      cubeImages: false,
+      [optionsMap.layoutParams.crop.enable]: false,
       [optionsMap.layoutParams.crop.method]: 'FILL',
       rotatingCropRatios: '',
       smartCrop: false,

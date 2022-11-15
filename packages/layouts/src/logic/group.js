@@ -50,7 +50,7 @@ export class Group {
       const { styleParams } = config;
       this.scrollDirection = styleParams.scrollDirection;
       this.cubeType = styleParams[optionsMap.layoutParams.crop.method];
-      this.cubeImages = styleParams.cubeImages;
+      this.cubeImages = styleParams[optionsMap.layoutParams.crop.enable];
       this.isVertical = styleParams.isVertical;
       this.minItemSize = styleParams.minItemSize;
       this.collageAmount = styleParams.collageAmount;

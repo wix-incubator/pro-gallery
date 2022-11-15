@@ -24,7 +24,7 @@ export class Item {
     if (config.styleParams) {
       const { styleParams } = config;
       this.cubeType = styleParams[optionsMap.layoutParams.crop.method];
-      this.cubeImages = styleParams.cubeImages;
+      this.cubeImages = styleParams[optionsMap.layoutParams.crop.enable];
       this._cropRatio = styleParams.layoutParams.cropRatio;
       this.rotatingCropRatios = styleParams.rotatingCropRatios;
       this.smartCrop = styleParams.smartCrop;
@@ -36,7 +36,8 @@ export class Item {
       this.smartCrop = styleParams.smartCrop;
       this.useMaxDimensions =
         styleParams.useMaxDimensions && this.itemType !== 'text';
-      this.cubeFitPosition = styleParams.cubeFitPosition;
+      this.cubeFitPosition =
+        styleParams[optionsMap.layoutParams.crop.alignment];
     }
 
     this._groupOffset = {
