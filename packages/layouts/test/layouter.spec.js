@@ -289,22 +289,22 @@ describe('Layouter', () => {
       const items = getItems(100);
 
       const groupTypes = [
-        '1',
-        '1,2h,2v',
-        '1,3b,3l,3r',
-        '1,2h,2v,3v,3h',
-        '1,3t,3b',
-        '1,3v,3h',
-        '1,3r,3b,3v,3h',
-        '1,2h,2v,3v,3h,3l,3b',
+        ['1'],
+        ['1','2h','2v'],
+        ['1','3b','3l','3r'],
+        ['1','2h','2v','3v','3h'],
+        ['1','3t','3b'],
+        ['1','3v','3h'],
+        ['1','3r','3b','3v','3h'],
+        ['1','2h','2v','3v','3h','3l','3b'],
       ]; //groupType '1' must always be an option
 
       for (const type of groupTypes) {
-        styleParams.groupTypes = type;
+        styleParams[optionsMap.layoutParams.groups.allowedGroupTypes] = type;
         gallery = getLayout({ items, container, styleParams });
 
         const isWithinTypes = gallery.columns[0].groups.reduce((g, group) => {
-          const inTypes = styleParams.groupTypes.indexOf(group.type) >= 0;
+          const inTypes = styleParams[optionsMap.layoutParams.groups.allowedGroupTypes].indexOf(group.type) >= 0;
           return g && inTypes;
         }, true);
 
@@ -536,7 +536,7 @@ describe('Layouter', () => {
     // chooseBestGroup
     it('should not allow ugly groups if chooseBestGroup is true ', () => {
       const items = getItems(99);
-      styleParams.groupTypes = '3t,3r,3l,3b'; //without 1
+      styleParams[optionsMap.layoutParams.groups.allowedGroupTypes] = ['3t','3r','3l','3b']; //without 1
       styleParams.groupSize = 3;
       styleParams[optionsMap.layoutParams.groups.density] = 1;
       styleParams.minItemSize = 10;
@@ -595,7 +595,7 @@ describe('Layouter', () => {
       styleParams.galleryWidth = 4000;
       styleParams.targetItemSize = 1000;
       styleParams.groupSize = 3;
-      styleParams.groupTypes = '1,2h,2v,3r,3t,3l,3b,3v,3h';
+      styleParams[optionsMap.layoutParams.groups.allowedGroupTypes] = ['1','2h','2v','3r','3t','3l','3b','3v','3h'];
 
       for (const margin of [0, 30, 40, 80]) {
         styleParams.imageMargin = margin * 2;

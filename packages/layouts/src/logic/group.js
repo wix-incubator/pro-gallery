@@ -55,7 +55,7 @@ export class Group {
       this.minItemSize = styleParams.minItemSize;
       this.collageAmount = styleParams.collageAmount;
       this[optionsMap.layoutParams.groups.density] = styleParams[optionsMap.layoutParams.groups.density];
-      this.groupTypes = String(styleParams.groupTypes);
+      this[optionsMap.layoutParams.groups.allowedGroupTypes] = styleParams[optionsMap.layoutParams.groups.allowedGroupTypes];
       this.repeatingGroupTypes = String(styleParams.layoutParams.repeatingGroupTypes);
       this.rotatingCropRatios = String(styleParams.rotatingCropRatios);
       this[optionsMap.layoutParams.groups.groupByOrientation] = styleParams[optionsMap.layoutParams.groups.groupByOrientation];
@@ -271,9 +271,9 @@ export class Group {
       let groupTypes = optionalTypes.length > 0 ? optionalTypes.split(',') : [];
 
       //---------| Override with specifically defined group types
-      if (this.groupTypes) {
-        // let groupTypesArr = union(['1'], this.groupTypes.split(','));
-        const groupTypesArr = this.groupTypes.split(',');
+      if (this[optionsMap.layoutParams.groups.allowedGroupTypes]) {
+        // let groupTypesArr = union(['1'], this[optionsMap.layoutParams.groups.allowedGroupTypes].split(','));
+        const groupTypesArr = this[optionsMap.layoutParams.groups.allowedGroupTypes]
 
         if (groupTypesArr.length > 1) {
           groupTypes = groupTypes.filter(
