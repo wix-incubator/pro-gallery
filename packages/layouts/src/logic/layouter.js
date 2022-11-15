@@ -257,13 +257,14 @@ export default class Layouter {
         ? Math.floor(this.galleryWidth / this.numOfCols)
         : this.targetItemSize;
 
-      const { columnWidths, externalInfoWidth } =
+      const { externalInfoWidth } =
         this.styleParams;
+        const columnWidths = this.styleParams[optionsMap.layoutParams.structure.columnRatios]
         const imageMargin = this.styleParams[optionsMap.layoutParams.structure.itemSpacing]
       const {cropRatio} = this.styleParams.layoutParams;
       let columnWidthsArr = false;
       if (columnWidths && columnWidths.length > 0) {
-        columnWidthsArr = columnWidths.split(',').map(Number);
+        columnWidthsArr = columnWidths.map(Number);
         while (columnWidthsArr.length < this.numOfCols) {
           columnWidthsArr.push(...columnWidthsArr);
         }

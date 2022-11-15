@@ -110,7 +110,7 @@ class Utils {
       targetItemSize: 500,
       collageDensity: 50,
       fixedColumns: 0,
-      columnWidths: '',
+      [optionsMap.layoutParams.structure.columnRatios]: [],
     };
     const fullMigratedAndOld =
       extendNestedOptionsToIncludeOldAndNew(styleParams);
