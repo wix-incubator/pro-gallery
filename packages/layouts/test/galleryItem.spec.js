@@ -2,6 +2,7 @@ import GalleryItem from '../src/classes/galleryItem';
 import { expect } from 'chai';
 import { schemeSample } from './itemSchemeSample';
 import { pick } from 'lodash';
+import { optionsMap, GALLERY_CONSTS } from 'pro-gallery-lib';
 
 describe('GalleryItem ', () => {
   let galleryItem;
@@ -90,7 +91,9 @@ describe('GalleryItem ', () => {
     });
     galleryItem = new GalleryItem(config);
     expect(galleryItem.cubeType).equal('aaa');
-    expect(antiGalleryItem.cubeType).equal('fill');
+    expect(antiGalleryItem.cubeType).equal(
+      GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL
+    );
   });
   // it('createFromWixImage', () => {
   //   Object.assign(config, { orderIndex: 1 });

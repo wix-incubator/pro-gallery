@@ -32,7 +32,7 @@ describe('Layouter', () => {
       [optionsMap.layoutParams.groups.groupSize]: 3,
       [optionsMap.layoutParams.groups.allowedGroupTypes]: ['1','2h','2v','3t','3b','3l','3r','3v','3h'],
       [optionsMap.layoutParams.crop.enable]: false,
-      cubeType: 'fill',
+      [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
       smartCrop: false,
       [optionsMap.layoutParams.groups.groupByOrientation]: true,
       collageAmount: 0.9,
@@ -661,7 +661,7 @@ describe('Layouter', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
       styleParams.layoutParams.cropRatio = 1;
       styleParams.cropOnlyFill = true;
-      styleParams.cubeType = 'fit';
+      styleParams[optionsMap.layoutParams.crop.method] = GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT;
       styleParams.cropItems = true;
       styleParams.smartCrop = false;
 
@@ -700,7 +700,7 @@ describe('Layouter', () => {
     const items = getItems(100); //todo - something breaks when using exactly 100 images
     const ratio = 1;
     styleParams.layoutParams.cropRatio = ratio;
-    styleParams.cubeType = 'min';
+    styleParams[optionsMap.layoutParams.crop.method] = GALLERY_CONSTS[optionsMap.layoutParams.crop.method].MIN;
     styleParams[optionsMap.layoutParams.crop.enable] = true;
     styleParams.smartCrop = false;
     styleParams.isVertical = true;
@@ -717,7 +717,7 @@ describe('Layouter', () => {
     const items = getItems(100); //todo - something breaks when using exactly 100 images
     const ratio = 1;
     styleParams.layoutParams.cropRatio = ratio;
-    styleParams.cubeType = 'max';
+    styleParams[optionsMap.layoutParams.crop.method] = GALLERY_CONSTS[optionsMap.layoutParams.crop.method].MAX;
     styleParams[optionsMap.layoutParams.crop.enable] = true;
     styleParams.smartCrop = false;
     styleParams.isVertical = true;

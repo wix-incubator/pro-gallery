@@ -3,6 +3,7 @@ import {
   flatToNested,
   extendNestedOptionsToIncludeOldAndNew,
   optionsMap,
+  GALLERY_CONSTS,
 } from 'pro-gallery-lib';
 
 class Utils {
@@ -98,7 +99,8 @@ class Utils {
       },
       [optionsMap.layoutParams.groups.repeatingGroupTypes]: [],
       [optionsMap.layoutParams.crop.enable]: false,
-      cubeType: 'fill',
+      [optionsMap.layoutParams.crop.method]:
+        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
       rotatingCropRatios: '',
       smartCrop: false,
       imageMargin: 10,

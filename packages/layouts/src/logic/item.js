@@ -1,4 +1,4 @@
-import { optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { utils } from './utils';
 
 export class Item {
@@ -19,11 +19,13 @@ export class Item {
     this.idx = config.idx;
     this.inGroupIdx = config.inGroupIdx;
     this.container = config.container;
-    this.cubeType = 'fill';
+    this[optionsMap.layoutParams.crop.method] =
+      GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL;
 
     if (config.styleParams) {
       const { styleParams } = config;
-      this.cubeType = styleParams.cubeType;
+      this[optionsMap.layoutParams.crop.method] =
+        styleParams[optionsMap.layoutParams.crop.method];
       this[optionsMap.layoutParams.crop.enable] =
         styleParams[optionsMap.layoutParams.crop.enable];
       this._cropRatio = styleParams.layoutParams.cropRatio;
@@ -384,7 +386,9 @@ export class Item {
 
   get dimensions() {
     const isGridFit =
-      this[optionsMap.layoutParams.crop.enable] && this.cubeType === 'fit';
+      this[optionsMap.layoutParams.crop.enable] &&
+      this[optionsMap.layoutParams.crop.method] ===
+        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT;
 
     let targetWidth = this.width;
     let targetHeight = this.height;
@@ -458,7 +462,12 @@ export class Item {
     if (!ratio && typeof this._cropRatio === 'function') {
       ratio = this._cropRatio();
     }
-    if (!ratio && this.cropOnlyFill && this.cubeType === 'fit') {
+    if (
+      !ratio &&
+      this.cropOnlyFill &&
+      this[optionsMap.layoutParams.crop.method] ===
+        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
+    ) {
       ratio = this.ratio;
     }
 
@@ -515,9 +524,15 @@ export class Item {
       }
     }
 
-    if (this.cubeType === 'min') {
+    if (
+      this[optionsMap.layoutParams.crop.method] ===
+      GALLERY_CONSTS[optionsMap.layoutParams.crop.method].MIN
+    ) {
       ratio = Math.max(ratio, this.orgRatio);
-    } else if (this.cubeType === 'max') {
+    } else if (
+      this[optionsMap.layoutParams.crop.method] ===
+      GALLERY_CONSTS[optionsMap.layoutParams.crop.method].MAX
+    ) {
       ratio = Math.min(ratio, this.orgRatio);
     }
 
@@ -580,7 +595,7 @@ export class Item {
       dimensions: this.dimensions,
       cropRatio: this.cropRatio,
       isCropped: this[optionsMap.layoutParams.crop.enable],
-      cropType: this.cubeType,
+      cropType: this[optionsMap.layoutParams.crop.method],
       height: this.height,
       maxHeight: this.maxHeight,
       outerHeight: this.outerHeight,

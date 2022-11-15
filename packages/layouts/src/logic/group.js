@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { Item } from './item.js';
 
 const GROUP_TYPES_BY_RATIOS_V = {
@@ -49,7 +49,7 @@ export class Group {
     if (config.styleParams) {
       const { styleParams } = config;
       this.scrollDirection = styleParams.scrollDirection;
-      this.cubeType = styleParams.cubeType;
+      this[optionsMap.layoutParams.crop.method] = styleParams[optionsMap.layoutParams.crop.method];
       this[optionsMap.layoutParams.crop.enable] = styleParams[optionsMap.layoutParams.crop.enable];
       this.isVertical = styleParams.isVertical;
       this.minItemSize = styleParams.minItemSize;
@@ -117,7 +117,7 @@ export class Group {
     const shouldUseFixedHeight =
       this[optionsMap.layoutParams.crop.enable] &&
       this[optionsMap.layoutParams.groups.groupSize] === 1 &&
-      ['fill', 'fit'].includes(this.cubeType) &&
+      [GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL, GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT].includes(this[optionsMap.layoutParams.crop.method]) &&
       this[optionsMap.layoutParams.groups.repeatingGroupTypes].length === 0 &&
       this.rotatingCropRatios.length === 0;
     this.cubedHeight = shouldUseFixedHeight ? height : null;
