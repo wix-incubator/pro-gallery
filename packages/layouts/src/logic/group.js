@@ -62,7 +62,7 @@ export class Group {
       this.externalInfoHeight = styleParams.externalInfoHeight;
       this.externalInfoWidth = styleParams.externalInfoWidth;
       this.imageMargin = styleParams.imageMargin;
-      this.groupSize = styleParams.groupSize;
+      this.groupSize = styleParams[optionsMap.layoutParams.groups.groupSize];
     }
 
     this.visible = true;

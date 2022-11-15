@@ -105,7 +105,7 @@ class Utils {
       scatter: 0,
       rotatingScatter: '',
       chooseBestGroup: true,
-      groupSize: 3,
+      [optionsMap.layoutParams.groups.groupSize]: 3,
       groupTypes: '1,2h,2v,3h,3v,3t,3b,3l,3r',
       isVertical: true,
       minItemSize: 120,

@@ -30,7 +30,7 @@ describe('Layouter', () => {
       scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
       isVertical: false,
       targetItemSize: 200,
-      groupSize: 3,
+      [optionsMap.layoutParams.groups.groupSize]: 3,
       groupTypes: '1,2h,2v,3t,3b,3l,3r,3v,3h',
       cubeImages: false,
       cubeType: 'fill',
@@ -273,11 +273,11 @@ describe('Layouter', () => {
       const items = getItems(100);
 
       for (const size of [1, 2, 3]) {
-        styleParams.groupSize = size;
+        styleParams[optionsMap.layoutParams.groups.groupSize] = size;
         gallery = getLayout({ items, container, styleParams });
 
         const isWithinSize = gallery.columns[0].groups.reduce((g, group) => {
-          const inSize = group.items.length <= styleParams.groupSize;
+          const inSize = group.items.length <= styleParams[optionsMap.layoutParams.groups.groupSize];
           return g && inSize;
         }, true);
 
@@ -538,7 +538,7 @@ describe('Layouter', () => {
     it('should not allow ugly groups if chooseBestGroup is true ', () => {
       const items = getItems(99);
       styleParams[optionsMap.layoutParams.groups.allowedGroupTypes] = ['3t','3r','3l','3b']; //without 1
-      styleParams.groupSize = 3;
+      styleParams[optionsMap.layoutParams.groups.groupSize] = 3;
       styleParams[optionsMap.layoutParams.groups.density] = 1;
       styleParams.minItemSize = 10;
       styleParams.targetItemSize = 1000;
@@ -562,7 +562,7 @@ describe('Layouter', () => {
       const items = getItems(100);
       styleParams.galleryWidth = 4000;
       styleParams.targetItemSize = 500;
-      styleParams.groupSize = 1;
+      styleParams[optionsMap.layoutParams.groups.groupSize] = 1;
 
       for (const margin of [10, 50, 100, 200]) {
         styleParams.imageMargin = margin * 2;
@@ -595,7 +595,7 @@ describe('Layouter', () => {
       const items = getItems(100);
       styleParams.galleryWidth = 4000;
       styleParams.targetItemSize = 1000;
-      styleParams.groupSize = 3;
+      styleParams[optionsMap.layoutParams.groups.groupSize] = 3;
       styleParams[optionsMap.layoutParams.groups.allowedGroupTypes] = ['1','2h','2v','3r','3t','3l','3b','3v','3h'];
 
       for (const margin of [0, 30, 40, 80]) {
@@ -737,7 +737,7 @@ describe('Layouter', () => {
 
       styleParams.isVertical = true;
       styleParams.fixedColumns = 1;
-      styleParams.groupSize = 1;
+      styleParams[optionsMap.layoutParams.groups.groupSize] = 1;
 
       container.galleryWidth = 1000;
 
@@ -764,7 +764,7 @@ describe('Layouter', () => {
       styleParams.isVertical = true;
       styleParams.cubeImages = true;
       styleParams.layoutParams.cropRatio = 1;
-      styleParams.groupSize = 1;
+      styleParams[optionsMap.layoutParams.groups.groupSize] = 1;
 
       container.galleryWidth = 1000;
 

@@ -590,7 +590,7 @@ export default class Layouter {
               1
             )
           : Number(groupTypes);
-      _maxGroupSize = Math.min(_maxGroupSize, this.styleParams.groupSize);
+      _maxGroupSize = Math.min(_maxGroupSize, this.styleParams[optionsMap.layoutParams.groups.groupSize]);
     } catch (e) {
       console.error("couldn't calculate max group size - returing 3 (?)", e);
       _maxGroupSize = 3;
