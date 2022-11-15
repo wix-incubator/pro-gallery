@@ -56,7 +56,7 @@ export class Group {
       this.collageAmount = styleParams.collageAmount;
       this[optionsMap.layoutParams.groups.density] = styleParams[optionsMap.layoutParams.groups.density];
       this[optionsMap.layoutParams.groups.allowedGroupTypes] = styleParams[optionsMap.layoutParams.groups.allowedGroupTypes];
-      this.repeatingGroupTypes = String(styleParams.layoutParams.repeatingGroupTypes);
+      this[optionsMap.layoutParams.groups.repeatingGroupTypes] = styleParams[optionsMap.layoutParams.groups.repeatingGroupTypes];
       this.rotatingCropRatios = String(styleParams.rotatingCropRatios);
       this[optionsMap.layoutParams.groups.groupByOrientation] = styleParams[optionsMap.layoutParams.groups.groupByOrientation];
       this.externalInfoHeight = styleParams.externalInfoHeight;
@@ -118,7 +118,7 @@ export class Group {
       this.cubeImages &&
       this.groupSize === 1 &&
       ['fill', 'fit'].includes(this.cubeType) &&
-      this.repeatingGroupTypes.length === 0 &&
+      this[optionsMap.layoutParams.groups.repeatingGroupTypes].length === 0 &&
       this.rotatingCropRatios.length === 0;
     this.cubedHeight = shouldUseFixedHeight ? height : null;
   }
@@ -217,8 +217,8 @@ export class Group {
 
   getGroupType(forcedGroupSize) {
     //---------| Override with specifically defined rotating group types (ignores everything else)
-    if (this.repeatingGroupTypes) {
-      const groupTypesArr = String(this.repeatingGroupTypes).split(',');
+    if (this[optionsMap.layoutParams.groups.repeatingGroupTypes].length > 0) {
+      const groupTypesArr = this[optionsMap.layoutParams.groups.repeatingGroupTypes];
       return groupTypesArr[this.idx % groupTypesArr.length];
 
       // } else if (this.isLastItems) {
