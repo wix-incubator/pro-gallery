@@ -34,7 +34,7 @@ describe('Layouter', () => {
       groupTypes: '1,2h,2v,3t,3b,3l,3r,3v,3h',
       [optionsMap.layoutParams.crop.enable]: false,
       [optionsMap.layoutParams.crop.method]: 'FILL',
-      smartCrop: false,
+      [optionsMap.layoutParams.crop.enableSmartCrop]: false,
       chooseBestGroup: true,
       collageAmount: 0.9,
       collageDensity: 0.9,
@@ -505,7 +505,7 @@ describe('Layouter', () => {
       const items = getItems(100);
       styleParams.layoutParams.cropRatio = 2;
       styleParams[optionsMap.layoutParams.crop.enable] = true;
-      styleParams.smartCrop = true;
+      styleParams[optionsMap.layoutParams.crop.enableSmartCrop] = true;
       styleParams.imageMargin = 0;
 
       gallery = getLayout({ items, container, styleParams });
@@ -647,7 +647,7 @@ describe('Layouter', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
       styleParams.layoutParams.cropRatio = () => Math.random();
       styleParams.cropItems = true;
-      styleParams.smartCrop = false;
+      styleParams[optionsMap.layoutParams.crop.enableSmartCrop] = false;
 
       gallery = getLayout({ items, container, styleParams });
 
@@ -664,7 +664,7 @@ describe('Layouter', () => {
       styleParams.cropOnlyFill = true;
       styleParams[optionsMap.layoutParams.crop.method] = 'FIT';
       styleParams.cropItems = true;
-      styleParams.smartCrop = false;
+      styleParams[optionsMap.layoutParams.crop.enableSmartCrop] = false;
 
       gallery = getLayout({ items, container, styleParams });
 
@@ -679,7 +679,7 @@ describe('Layouter', () => {
       styleParams.rotatingCropRatios = '2,1.5,1.2,0.5,1';
       styleParams.layoutParams.cropRatio = '1';
       styleParams[optionsMap.layoutParams.crop.enable] = true;
-      styleParams.smartCrop = false;
+      styleParams[optionsMap.layoutParams.crop.enableSmartCrop] = false;
       styleParams.isVertical = true;
 
       const rotatingCropRatiosArr = styleParams.rotatingCropRatios.split(',');
@@ -703,7 +703,7 @@ describe('Layouter', () => {
     styleParams.layoutParams.cropRatio = ratio;
     styleParams[optionsMap.layoutParams.crop.method] = 'MIN';
     styleParams[optionsMap.layoutParams.crop.enable] = true;
-    styleParams.smartCrop = false;
+    styleParams[optionsMap.layoutParams.crop.enableSmartCrop] = false;
     styleParams.isVertical = true;
 
     gallery = getLayout({ items, container, styleParams });
@@ -720,7 +720,7 @@ describe('Layouter', () => {
     styleParams.layoutParams.cropRatio = ratio;
     styleParams[optionsMap.layoutParams.crop.method] = 'MAX';
     styleParams[optionsMap.layoutParams.crop.enable] = true;
-    styleParams.smartCrop = false;
+    styleParams[optionsMap.layoutParams.crop.enableSmartCrop] = false;
     styleParams.isVertical = true;
 
     gallery = getLayout({ items, container, styleParams });

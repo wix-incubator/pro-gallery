@@ -100,7 +100,7 @@ class Utils {
       [optionsMap.layoutParams.crop.enable]: false,
       [optionsMap.layoutParams.crop.method]: 'FILL',
       rotatingCropRatios: '',
-      smartCrop: false,
+      [optionsMap.layoutParams.crop.enableSmartCrop]: false,
       imageMargin: 10,
       scatter: 0,
       rotatingScatter: '',

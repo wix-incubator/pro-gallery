@@ -27,13 +27,15 @@ export class Item {
       this.cubeImages = styleParams[optionsMap.layoutParams.crop.enable];
       this._cropRatio = styleParams.layoutParams.cropRatio;
       this.rotatingCropRatios = styleParams.rotatingCropRatios;
-      this.smartCrop = styleParams.smartCrop;
+      this.smartCrop =
+        styleParams[optionsMap.layoutParams.crop.enableSmartCrop];
       this.cropOnlyFill = styleParams.cropOnlyFill;
       this.imageMargin = styleParams.imageMargin;
       this.gallerySpacing = styleParams.layoutParams.gallerySpacing;
       this.scatter = styleParams.scatter;
       this.rotatingScatter = styleParams.rotatingScatter;
-      this.smartCrop = styleParams.smartCrop;
+      this.smartCrop =
+        styleParams[optionsMap.layoutParams.crop.enableSmartCrop];
       this.useMaxDimensions =
         styleParams.useMaxDimensions && this.itemType !== 'text';
       this.cubeFitPosition =
