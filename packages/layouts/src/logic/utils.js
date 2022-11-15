@@ -104,7 +104,7 @@ class Utils {
       imageMargin: 10,
       scatter: 0,
       rotatingScatter: '',
-      chooseBestGroup: true,
+      [optionsMap.layoutParams.groups.groupByOrientation]: true,
       groupSize: 3,
       groupTypes: '1,2h,2v,3h,3v,3t,3b,3l,3r',
       isVertical: true,

@@ -34,7 +34,7 @@ describe('Layouter', () => {
       cubeImages: false,
       cubeType: 'fill',
       smartCrop: false,
-      chooseBestGroup: true,
+      [optionsMap.layoutParams.groups.groupByOrientation]: true,
       collageAmount: 0.9,
       [optionsMap.layoutParams.groups.density]: 0.9,
       minItemSize: 20,
@@ -543,7 +543,7 @@ describe('Layouter', () => {
       styleParams.targetItemSize = 1000;
 
       for (const chooseBestGroup of [true, false]) {
-        styleParams.chooseBestGroup = chooseBestGroup;
+        styleParams[optionsMap.layoutParams.groups.groupByOrientation] = chooseBestGroup;
 
         gallery = getLayout({ items, container, styleParams });
         const isWithinTypes = gallery.columns[0].groups.reduce((g, group) => {

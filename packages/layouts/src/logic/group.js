@@ -58,7 +58,7 @@ export class Group {
       this.groupTypes = String(styleParams.groupTypes);
       this.repeatingGroupTypes = String(styleParams.layoutParams.repeatingGroupTypes);
       this.rotatingCropRatios = String(styleParams.rotatingCropRatios);
-      this.chooseBestGroup = styleParams.chooseBestGroup;
+      this[optionsMap.layoutParams.groups.groupByOrientation] = styleParams[optionsMap.layoutParams.groups.groupByOrientation];
       this.externalInfoHeight = styleParams.externalInfoHeight;
       this.externalInfoWidth = styleParams.externalInfoWidth;
       this.imageMargin = styleParams.imageMargin;
@@ -248,7 +248,7 @@ export class Group {
       const isV = this.isVertical;
       let optionalTypes; //optional groupTypes (separated by ,). 1 is always optional
 
-      if (this.chooseBestGroup) {
+      if (this[optionsMap.layoutParams.groups.groupByOrientation]) {
         //map the group to l=landscape and p=portrait
         //create a string to state the images group's type
         const ratios = this.items
