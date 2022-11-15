@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
 
@@ -18,13 +18,16 @@ describe('itemShadow - e2e', () => {
 
   it('should have box-shadow to the items', async () => {
     await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      itemEnableShadow: true,
-      itemShadowDirection: 50,
-      itemShadowSize: 20,
-      itemShadowBlur: 5,
-      itemShadowOpacityAndColor: 'rgba(250,0,0,1)',
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .VERTICAL,
+      [optionsMap.stylingParams.itemEnableShadow]: true,
+      [optionsMap.stylingParams.itemShadowDirection]: 50,
+      [optionsMap.stylingParams.itemShadowSize]: 20,
+      [optionsMap.stylingParams.itemShadowBlur]: 5,
+      [optionsMap.stylingParams.itemShadowOpacityAndColor]: 'rgba(250,0,0,1)',
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);

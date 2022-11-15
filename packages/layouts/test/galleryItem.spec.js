@@ -1,5 +1,7 @@
 import GalleryItem from '../src/classes/galleryItem';
 import { expect } from 'chai';
+import { schemeSample } from './itemSchemeSample';
+import { pick } from 'lodash';
 
 describe('GalleryItem ', () => {
   let galleryItem;
@@ -355,5 +357,67 @@ describe('GalleryItem ', () => {
   it('getDataForShop snapshot', () => {
     expect(galleryItem.getDataForShop().itemHeight).to.equal(1000);
     expect(galleryItem.getDataForShop().itemWidth).to.equal(1920);
+  });
+});
+
+describe('GalleryItem - secondary media', () => {
+  const sampleItem = {
+    metadata: {
+      height: 3032,
+      width: 2021,
+      focalPoint: [0.1, 0.9],
+    },
+    itemId: 'aa0c3adcc23504ac822d5c3ed5f3b6a1',
+    url: 'https://static.wixstatic.com/media/8bb438_6ad0d6b1ab9b4f8ea4f93389a3d68a4d.jpg',
+    secondaryMedia: {
+      metadata: {
+        height: 5600,
+        width: 3737,
+        focalPoint: [0.9, 0.1],
+      },
+      itemId: '2d3b675ea857dc41158bad3b28300824',
+      url: 'https://static.wixstatic.com/media/8bb438_78ff5e32500d48cdaa22a3f446d68216.jpg',
+    },
+  };
+
+  const config = {
+    dto: sampleItem,
+    scheme: schemeSample,
+  };
+  const schemProps = [
+    'id',
+    'idx',
+    'type',
+    'style',
+    'width',
+    'maxWidth',
+    'infoWidth',
+    'height',
+    'maxHeight',
+    'infoHeight',
+    'margins',
+    'ratio',
+    'cropRatio',
+    'cubeImages',
+    'cubeType',
+    'offset',
+    'group',
+    'orientation',
+    'visibility',
+  ];
+  const item = new GalleryItem(config);
+
+  it('should set hasSecondaryMedia to true', () => {
+    expect(item.hasSecondaryMedia).to.equal(true);
+  });
+
+  it('Should process secondary item scheme correctly', () => {
+    const result = pick(item.secondaryMediaItem, schemProps);
+    const expected = {
+      ...pick(item, schemProps),
+      maxWidth: sampleItem.secondaryMedia.metadata.width,
+      maxHeight: sampleItem.secondaryMedia.metadata.height,
+    };
+    expect(result).to.deep.equal(expected);
   });
 });

@@ -1,7 +1,6 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { mergeNestedObjects } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -17,10 +16,13 @@ describe('options - scrollSnap', () => {
     };
   });
   it('should set class "scroll-snap"', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      scrollSnap: true,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
+      [optionsMap.behaviourParams.gallery.horizontal.enableScrollSnap]: true,
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -30,10 +32,13 @@ describe('options - scrollSnap', () => {
   });
 
   it('should not set class "scroll-snap"', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
-      scrollSnap: false,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
+      [optionsMap.behaviourParams.gallery.horizontal.enableScrollSnap]: false,
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

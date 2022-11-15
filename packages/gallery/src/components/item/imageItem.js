@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap, utils } from 'pro-gallery-lib';
 import ImageRenderer from './imageRenderer';
 
 class ImageItem extends React.Component {
@@ -47,8 +47,13 @@ class ImageItem extends React.Component {
       'gallery-item-visible',
       'gallery-item',
       'gallery-item-preloaded',
-      options.cubeImages && options.cubeType === 'fit' ? 'grid-fit' : '',
-      options.imageLoadingMode === GALLERY_CONSTS.loadingMode.COLOR &&
+      options[optionsMap.layoutParams.crop.enable] &&
+      options[optionsMap.layoutParams.crop.method] ===
+        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
+        ? 'grid-fit'
+        : '',
+      options[optionsMap.behaviourParams.item.content.loader] ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader].COLOR &&
       !isTransparent
         ? `load-with-color ${isHighResImageLoaded ? 'image-loaded' : ''}`
         : '',
@@ -79,14 +84,16 @@ class ImageItem extends React.Component {
     const { imageDimensions, options, createUrl, id } = this.props;
 
     let imageAnimationUrl = null;
-    switch (options.scrollAnimation) {
-      case GALLERY_CONSTS.scrollAnimations.BLUR:
+    switch (options[optionsMap.behaviourParams.gallery.scrollAnimation]) {
+      case GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation]
+        .BLUR:
         imageAnimationUrl = createUrl(
           GALLERY_CONSTS.urlSizes.RESIZED,
           GALLERY_CONSTS.urlTypes.LOW_RES
         );
         break;
-      case GALLERY_CONSTS.scrollAnimations.MAIN_COLOR:
+      case GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation]
+        .MAIN_COLOR:
         imageAnimationUrl = createUrl(
           GALLERY_CONSTS.urlSizes.PIXEL,
           GALLERY_CONSTS.urlTypes.HIGH_RES
@@ -138,7 +145,8 @@ class ImageItem extends React.Component {
     const image = () => {
       const imagesComponents = [];
       const blockDownloadStyles =
-        utils.isMobile() && !this.props.options.allowContextMenu
+        utils.isMobile() &&
+        this.props.options[optionsMap.behaviourParams.gallery.blockContextMenu]
           ? {
               '-webkit-user-select': 'none',
               '-webkit-touch-callout': 'none',
@@ -161,8 +169,9 @@ class ImageItem extends React.Component {
           loading: 'eager',
           ...imageProps,
         };
-        switch (options.imageLoadingMode) {
-          case GALLERY_CONSTS.loadingMode.BLUR:
+        switch (options[optionsMap.behaviourParams.item.content.loader]) {
+          case GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader]
+            .BLUR:
             preload = (
               <ImageRenderer
                 alt=""
@@ -183,7 +192,8 @@ class ImageItem extends React.Component {
               />
             );
             break;
-          case GALLERY_CONSTS.loadingMode.MAIN_COLOR:
+          case GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader]
+            .MAIN_COLOR:
             preload = (
               <ImageRenderer
                 alt=""
@@ -211,7 +221,7 @@ class ImageItem extends React.Component {
 
       const shouldRenderHighResImages = !this.props.isPrerenderMode;
       const imageType =
-        options.stylingParams?.itemResolutionMode ===
+        options[optionsMap.stylingParams.itemResolutionMode] ===
         GALLERY_CONSTS.itemResolutionMode.FULL
           ? GALLERY_CONSTS.urlSizes.FULL
           : GALLERY_CONSTS.urlSizes.MULTI;

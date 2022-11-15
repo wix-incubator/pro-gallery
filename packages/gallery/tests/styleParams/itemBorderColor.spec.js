@@ -1,7 +1,6 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { mergeNestedObjects } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -19,11 +18,14 @@ describe('options - itemBorderColor', () => {
   });
 
   it('should set border-color of "rgba(0,0,0,1)" to the items', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      itemBorderWidth: 1,
-      itemBorderColor: 'rgba(0,0,0,1)',
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .VERTICAL,
+      [optionsMap.stylingParams.itemBorderWidth]: 1,
+      [optionsMap.stylingParams.itemBorderColor]: 'rgba(0,0,0,1)',
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -33,11 +35,14 @@ describe('options - itemBorderColor', () => {
     driver.detach.proGallery();
   });
   it('should set border-color of "rgba(23,110,23,1)" to items', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      itemBorderWidth: 1,
-      itemBorderColor: 'rgba(23,110,23,1)',
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .VERTICAL,
+      [optionsMap.stylingParams.itemBorderWidth]: 1,
+      [optionsMap.stylingParams.itemBorderColor]: 'rgba(23,110,23,1)',
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
