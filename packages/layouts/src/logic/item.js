@@ -29,7 +29,8 @@ export class Item {
       this.rotatingCropRatios = styleParams.rotatingCropRatios;
       this.smartCrop =
         styleParams[optionsMap.layoutParams.crop.enableSmartCrop];
-      this.cropOnlyFill = styleParams.cropOnlyFill;
+      this.cropOnlyFill =
+        styleParams[optionsMap.layoutParams.crop.cropOnlyFill];
       this.imageMargin = styleParams.imageMargin;
       this.gallerySpacing = styleParams.layoutParams.gallerySpacing;
       this.scatter = styleParams.scatter;
