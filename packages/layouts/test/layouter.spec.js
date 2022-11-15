@@ -5,6 +5,7 @@ import { testImages } from './images-mock.js';
 import { expect } from 'chai';
 import deepFreeze from 'deep-freeze';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { optionsMap } from 'pro-gallery-lib';
 
 const getItems = (count) => deepFreeze(testImages.slice(0, count));
 const getGroupCount = (layout) =>
@@ -257,7 +258,7 @@ describe('Layouter', () => {
       let lastGroupCount = itemCount;
 
       for (const collageDensity of collageDensities) {
-        styleParams.collageDensity = collageDensity;
+        styleParams[optionsMap.layoutParams.groups.density] = collageDensity;
         gallery = getLayout({ items, container, styleParams });
         const groupCount = getGroupCount(gallery);
 
@@ -342,7 +343,7 @@ describe('Layouter', () => {
       styleParams.isVertical = true;
       styleParams.galleryWidth = 4000;
       styleParams.imageMargin = 0;
-      styleParams.collageDensity = 1;
+      styleParams[optionsMap.layoutParams.groups.density] = 1;
 
       const minItemSizes = [10, 50, 100, 200, 300];
 
@@ -447,7 +448,7 @@ describe('Layouter', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
       styleParams.cubeImages = false;
       styleParams.imageMargin = 0;
-      styleParams.collageDensity = 0.8;
+      styleParams[optionsMap.layoutParams.groups.density] = 0.8;
 
       gallery = getLayout({ items, container, styleParams });
       const isOriginalDimensions = gallery.columns[0].groups.reduce(
@@ -538,12 +539,12 @@ describe('Layouter', () => {
       const items = getItems(99);
       styleParams.groupTypes = '3t,3r,3l,3b'; //without 1
       styleParams.groupSize = 3;
-      styleParams.collageDensity = 1;
+      styleParams[optionsMap.layoutParams.groups.density] = 1;
       styleParams.minItemSize = 10;
       styleParams.targetItemSize = 1000;
 
       for (const chooseBestGroup of [true, false]) {
-        styleParams.chooseBestGroup = chooseBestGroup;
+        styleParams[optionsMap.layoutParams.groups.groupByOrientation] = chooseBestGroup;
 
         gallery = getLayout({ items, container, styleParams });
         const isWithinTypes = gallery.columns[0].groups.reduce((g, group) => {

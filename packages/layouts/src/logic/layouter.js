@@ -5,6 +5,7 @@ import { Group } from './group.js';
 import { Strip } from './strip.js';
 import { Column } from './column.js';
 import layoutsStore from './layoutsStore.js';
+import { optionsMap } from 'pro-gallery-lib';
 
 export default class Layouter {
   constructor(layoutParams) {
@@ -186,7 +187,7 @@ export default class Layouter {
               this.strip = new Strip({
                 idx: this.strips.length + 1,
                 container: this.container,
-                groupsPerStrip: this.styleParams.groupsPerStrip,
+                groupsPerStrip: this.styleParams[optionsMap.layoutParams.groups.groupsPerStrip],
                 scrollDirection: this.styleParams.scrollDirection,
                 targetItemSize: this.targetItemSize,
               });
@@ -241,7 +242,7 @@ export default class Layouter {
       this.strip = new Strip({
         idx: 1,
         container: this.container,
-        groupsPerStrip: this.styleParams.groupsPerStrip,
+        groupsPerStrip: this.styleParams[optionsMap.layoutParams.groups.groupsPerStrip],
         scrollDirection: this.styleParams.scrollDirection,
         targetItemSize: this.targetItemSize,
       });
@@ -382,7 +383,7 @@ export default class Layouter {
           this.strip = new Strip({
             idx: this.strip.idx + 1,
             container: this.container,
-            groupsPerStrip: this.styleParams.groupsPerStrip,
+            groupsPerStrip: this.styleParams[optionsMap.layoutParams.groups.groupsPerStrip],
             scrollDirection: this.styleParams.scrollDirection,
             targetItemSize: this.targetItemSize,
           });

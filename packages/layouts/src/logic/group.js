@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { optionsMap } from 'pro-gallery-lib';
 import { Item } from './item.js';
 
 const GROUP_TYPES_BY_RATIOS_V = {
@@ -53,11 +54,11 @@ export class Group {
       this.isVertical = styleParams.isVertical;
       this.minItemSize = styleParams.minItemSize;
       this.collageAmount = styleParams.collageAmount;
-      this.collageDensity = styleParams.collageDensity;
+      this.collageDensity = styleParams[optionsMap.layoutParams.groups.density];
       this.groupTypes = String(styleParams.groupTypes);
       this.repeatingGroupTypes = String(styleParams.layoutParams.repeatingGroupTypes);
       this.rotatingCropRatios = String(styleParams.rotatingCropRatios);
-      this.chooseBestGroup = styleParams.chooseBestGroup;
+      this.chooseBestGroup = styleParams[optionsMap.layoutParams.groups.groupByOrientation];
       this.externalInfoHeight = styleParams.externalInfoHeight;
       this.externalInfoWidth = styleParams.externalInfoWidth;
       this.imageMargin = styleParams.imageMargin;
