@@ -224,7 +224,7 @@ export default class Layouter {
           Math.floor(gallerySizeVal) +
           Math.ceil(
             2 *
-              (this.styleParams.imageMargin / 2 -
+              (this.styleParams[optionsMap.layoutParams.structure.itemSpacing] / 2 -
                 this.styleParams[optionsMap.layoutParams.structure.gallerySpacing])
           );
       }
@@ -257,8 +257,9 @@ export default class Layouter {
         ? Math.floor(this.galleryWidth / this.numOfCols)
         : this.targetItemSize;
 
-      const { columnWidths, externalInfoWidth, imageMargin } =
+      const { columnWidths, externalInfoWidth } =
         this.styleParams;
+        const imageMargin = this.styleParams[optionsMap.layoutParams.structure.itemSpacing]
       const {cropRatio} = this.styleParams.layoutParams;
       let columnWidthsArr = false;
       if (columnWidths && columnWidths.length > 0) {
@@ -406,7 +407,7 @@ export default class Layouter {
           if (this.styleParams.scrollDirection === 1) {
             this.strip.height =
               this.container.galleryHeight +
-              (this.styleParams.imageMargin / 2 -
+              (this.styleParams[optionsMap.layoutParams.structure.itemSpacing] / 2 -
                 this.styleParams[optionsMap.layoutParams.structure.gallerySpacing]);
           } else if (this.strip.canRemainIncomplete()) {
             //stretching the this.strip to the full width will make it too high - so make it as high as the targetItemSize and not stretch
@@ -476,7 +477,7 @@ export default class Layouter {
     this.colWidth = Math.floor(this.galleryWidth / this.numOfCols);
     this.height =
       this.galleryHeight -
-      (this.styleParams.imageMargin / 2 - this.styleParams[optionsMap.layoutParams.structure.gallerySpacing]) * 2;
+      (this.styleParams[optionsMap.layoutParams.structure.itemSpacing] / 2 - this.styleParams[optionsMap.layoutParams.structure.gallerySpacing]) * 2;
 
     this.width = this.lastGroup.left + this.lastGroup.width;
 

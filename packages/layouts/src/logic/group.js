@@ -61,7 +61,7 @@ export class Group {
       this.chooseBestGroup = styleParams[optionsMap.layoutParams.groups.groupByOrientation];
       this.externalInfoHeight = styleParams.externalInfoHeight;
       this.externalInfoWidth = styleParams.externalInfoWidth;
-      this.imageMargin = styleParams.imageMargin;
+      this.imageMargin = styleParams[optionsMap.layoutParams.structure.itemSpacing];
       this.groupSize = styleParams[optionsMap.layoutParams.groups.groupSize];
     }
 

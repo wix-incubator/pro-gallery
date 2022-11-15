@@ -98,7 +98,7 @@ class Utils {
       [optionsMap.layoutParams.crop.method]: 'FILL',
       [optionsMap.layoutParams.crop.ratios]: [1],
       [optionsMap.layoutParams.crop.enableSmartCrop]: false,
-      imageMargin: 10,
+      [optionsMap.layoutParams.structure.itemSpacing]: 10,
       scatter: 0,
       rotatingScatter: '',
       chooseBestGroup: true,
@@ -128,7 +128,7 @@ class Utils {
     if (container.width >= 0 && !(container.galleryWidth >= 0)) {
       convertedContainer.galleryWidth =
         container.width +
-        ((styleParams.imageMargin / 2 || 0) -
+        ((styleParams[optionsMap.layoutParams.structure.itemSpacing] / 2 || 0) -
           (styleParams[optionsMap.layoutParams.structure.gallerySpacing] ||
             0)) *
           2;
@@ -137,7 +137,7 @@ class Utils {
     if (container.height >= 0 && !(container.galleryHeight >= 0)) {
       convertedContainer.galleryHeight =
         container.height +
-        ((styleParams.imageMargin / 2 || 0) -
+        ((styleParams[optionsMap.layoutParams.structure.itemSpacing] / 2 || 0) -
           (styleParams[optionsMap.layoutParams.structure.gallerySpacing] || 0));
       delete convertedContainer.height;
     }

@@ -33,7 +33,8 @@ export class Item {
         styleParams[optionsMap.layoutParams.crop.enableSmartCrop];
       this.cropOnlyFill =
         styleParams[optionsMap.layoutParams.crop.cropOnlyFill];
-      this.imageMargin = styleParams.imageMargin;
+      this.imageMargin =
+        styleParams[optionsMap.layoutParams.structure.itemSpacing];
       this.gallerySpacing =
         styleParams[optionsMap.layoutParams.structure.gallerySpacing];
       this.scatter = styleParams.scatter;
