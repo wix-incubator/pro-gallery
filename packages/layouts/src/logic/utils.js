@@ -105,7 +105,7 @@ class Utils {
       scatter: 0,
       rotatingScatter: '',
       [optionsMap.layoutParams.groups.groupByOrientation]: true,
-      groupSize: 3,
+      [optionsMap.layoutParams.groups.groupSize]: 3,
       [optionsMap.layoutParams.groups.allowedGroupTypes]: [
         '1',
         '2h',

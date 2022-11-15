@@ -62,7 +62,7 @@ export class Group {
       this.externalInfoHeight = styleParams.externalInfoHeight;
       this.externalInfoWidth = styleParams.externalInfoWidth;
       this.imageMargin = styleParams.imageMargin;
-      this.groupSize = styleParams.groupSize;
+      this[optionsMap.layoutParams.groups.groupSize] = styleParams[optionsMap.layoutParams.groups.groupSize];
     }
 
     this.visible = true;
@@ -116,7 +116,7 @@ export class Group {
   setCubedHeight(height) {
     const shouldUseFixedHeight =
       this.cubeImages &&
-      this.groupSize === 1 &&
+      this[optionsMap.layoutParams.groups.groupSize] === 1 &&
       ['fill', 'fit'].includes(this.cubeType) &&
       this[optionsMap.layoutParams.groups.repeatingGroupTypes].length === 0 &&
       this.rotatingCropRatios.length === 0;
