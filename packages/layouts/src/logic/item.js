@@ -1,3 +1,4 @@
+import { optionsMap } from 'pro-gallery-lib';
 import { utils } from './utils';
 
 export class Item {
@@ -18,11 +19,11 @@ export class Item {
     this.idx = config.idx;
     this.inGroupIdx = config.inGroupIdx;
     this.container = config.container;
-    this.cubeType = 'fill';
+    this.cubeType = 'FILL';
 
     if (config.styleParams) {
       const { styleParams } = config;
-      this.cubeType = styleParams.cubeType;
+      this.cubeType = styleParams[optionsMap.layoutParams.crop.method];
       this.cubeImages = styleParams.cubeImages;
       this._cropRatio = styleParams.layoutParams.cropRatio;
       this.rotatingCropRatios = styleParams.rotatingCropRatios;
@@ -375,7 +376,7 @@ export class Item {
   }
 
   get dimensions() {
-    const isGridFit = this.cubeImages && this.cubeType === 'fit';
+    const isGridFit = this.cubeImages && this.cubeType === 'FIT';
 
     let targetWidth = this.width;
     let targetHeight = this.height;
@@ -449,7 +450,7 @@ export class Item {
     if (!ratio && typeof this._cropRatio === 'function') {
       ratio = this._cropRatio();
     }
-    if (!ratio && this.cropOnlyFill && this.cubeType === 'fit') {
+    if (!ratio && this.cropOnlyFill && this.cubeType === 'FIT') {
       ratio = this.ratio;
     }
 
@@ -506,9 +507,9 @@ export class Item {
       }
     }
 
-    if (this.cubeType === 'min') {
+    if (this.cubeType === 'MIN') {
       ratio = Math.max(ratio, this.orgRatio);
-    } else if (this.cubeType === 'max') {
+    } else if (this.cubeType === 'MAX') {
       ratio = Math.min(ratio, this.orgRatio);
     }
 

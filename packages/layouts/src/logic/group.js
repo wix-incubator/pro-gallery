@@ -49,7 +49,7 @@ export class Group {
     if (config.styleParams) {
       const { styleParams } = config;
       this.scrollDirection = styleParams.scrollDirection;
-      this.cubeType = styleParams.cubeType;
+      this.cubeType = styleParams[optionsMap.layoutParams.crop.method];
       this.cubeImages = styleParams.cubeImages;
       this.isVertical = styleParams.isVertical;
       this.minItemSize = styleParams.minItemSize;
@@ -117,7 +117,7 @@ export class Group {
     const shouldUseFixedHeight =
       this.cubeImages &&
       this.groupSize === 1 &&
-      ['fill', 'fit'].includes(this.cubeType) &&
+      ['FILL', 'FIT'].includes(this.cubeType) &&
       this.repeatingGroupTypes.length === 0 &&
       this.rotatingCropRatios.length === 0;
     this.cubedHeight = shouldUseFixedHeight ? height : null;
