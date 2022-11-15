@@ -2,7 +2,6 @@ import {
   flattenObject,
   flatToNested,
   extendNestedOptionsToIncludeOldAndNew,
-  optionsMap,
   GALLERY_CONSTS,
 } from 'pro-gallery-lib';
 
@@ -97,18 +96,18 @@ class Utils {
         gallerySpacing: 0,
         cropRatio: 1,
       },
-      [optionsMap.layoutParams.groups.repeatingGroupTypes]: [],
-      [optionsMap.layoutParams.crop.enable]: false,
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
+      ['layoutParams_groups_repeatingGroupTypes']: [],
+      ['layoutParams_crop_enable']: false,
+      ['layoutParams_crop_method']:
+        GALLERY_CONSTS['layoutParams_crop_method'].FILL,
       rotatingCropRatios: '',
       smartCrop: false,
       imageMargin: 10,
       scatter: 0,
       rotatingScatter: '',
-      [optionsMap.layoutParams.groups.groupByOrientation]: true,
-      [optionsMap.layoutParams.groups.groupSize]: 3,
-      [optionsMap.layoutParams.groups.allowedGroupTypes]: [
+      ['layoutParams_groups_groupByOrientation']: true,
+      ['layoutParams_groups_groupSize']: 3,
+      ['layoutParams_groups_allowedGroupTypes']: [
         '1',
         '2h',
         '2v',
@@ -123,7 +122,7 @@ class Utils {
       minItemSize: 120,
       scrollDirection: 0,
       targetItemSize: 500,
-      [optionsMap.layoutParams.groups.density]: 50,
+      ['layoutParams_groups_density']: 50,
       fixedColumns: 0,
       columnWidths: '',
     };

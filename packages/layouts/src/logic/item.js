@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import { utils } from './utils';
 
 export class Item {
@@ -19,15 +19,15 @@ export class Item {
     this.idx = config.idx;
     this.inGroupIdx = config.inGroupIdx;
     this.container = config.container;
-    this[optionsMap.layoutParams.crop.method] =
-      GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL;
+    this['layoutParams_crop_method'] =
+      GALLERY_CONSTS['layoutParams_crop_method'].FILL;
 
     if (config.styleParams) {
       const { styleParams } = config;
-      this[optionsMap.layoutParams.crop.method] =
-        styleParams[optionsMap.layoutParams.crop.method];
-      this[optionsMap.layoutParams.crop.enable] =
-        styleParams[optionsMap.layoutParams.crop.enable];
+      this['layoutParams_crop_method'] =
+        styleParams['layoutParams_crop_method'];
+      this['layoutParams_crop_enable'] =
+        styleParams['layoutParams_crop_enable'];
       this._cropRatio = styleParams.layoutParams.cropRatio;
       this.rotatingCropRatios = styleParams.rotatingCropRatios;
       this.smartCrop = styleParams.smartCrop;
@@ -307,10 +307,7 @@ export class Item {
 
   get width() {
     let width;
-    if (
-      this[optionsMap.layoutParams.crop.enable] &&
-      this.ratio >= this.cropRatio
-    ) {
+    if (this['layoutParams_crop_enable'] && this.ratio >= this.cropRatio) {
       width = this.style.cubedWidth || this.orgHeight * this.cropRatio;
     } else {
       width = this.orgWidth;
@@ -342,10 +339,7 @@ export class Item {
 
   get height() {
     let height;
-    if (
-      this[optionsMap.layoutParams.crop.enable] &&
-      this.ratio < this.cropRatio
-    ) {
+    if (this['layoutParams_crop_enable'] && this.ratio < this.cropRatio) {
       height = this.style.cubedHeight || this.orgWidth / this.cropRatio;
     } else {
       height = this.orgHeight;
@@ -386,9 +380,9 @@ export class Item {
 
   get dimensions() {
     const isGridFit =
-      this[optionsMap.layoutParams.crop.enable] &&
-      this[optionsMap.layoutParams.crop.method] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT;
+      this['layoutParams_crop_enable'] &&
+      this['layoutParams_crop_method'] ===
+        GALLERY_CONSTS['layoutParams_crop_method'].FIT;
 
     let targetWidth = this.width;
     let targetHeight = this.height;
@@ -414,7 +408,7 @@ export class Item {
       this.useMaxDimensions &&
       (this.width > this.maxWidth || this.height > this.maxHeight)
     ) {
-      if (this[optionsMap.layoutParams.crop.enable]) {
+      if (this['layoutParams_crop_enable']) {
         setTargetDimensions(!isLandscape, this.cropRatio);
       } else {
         setTargetDimensions(!isLandscape, this.ratio);
@@ -465,8 +459,8 @@ export class Item {
     if (
       !ratio &&
       this.cropOnlyFill &&
-      this[optionsMap.layoutParams.crop.method] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
+      this['layoutParams_crop_method'] ===
+        GALLERY_CONSTS['layoutParams_crop_method'].FIT
     ) {
       ratio = this.ratio;
     }
@@ -525,13 +519,13 @@ export class Item {
     }
 
     if (
-      this[optionsMap.layoutParams.crop.method] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.crop.method].MIN
+      this['layoutParams_crop_method'] ===
+      GALLERY_CONSTS['layoutParams_crop_method'].MIN
     ) {
       ratio = Math.max(ratio, this.orgRatio);
     } else if (
-      this[optionsMap.layoutParams.crop.method] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.crop.method].MAX
+      this['layoutParams_crop_method'] ===
+      GALLERY_CONSTS['layoutParams_crop_method'].MAX
     ) {
       ratio = Math.min(ratio, this.orgRatio);
     }
@@ -594,8 +588,8 @@ export class Item {
       ratio: this.ratio,
       dimensions: this.dimensions,
       cropRatio: this.cropRatio,
-      isCropped: this[optionsMap.layoutParams.crop.enable],
-      cropType: this[optionsMap.layoutParams.crop.method],
+      isCropped: this['layoutParams_crop_enable'],
+      cropType: this['layoutParams_crop_method'],
       height: this.height,
       maxHeight: this.maxHeight,
       outerHeight: this.outerHeight,

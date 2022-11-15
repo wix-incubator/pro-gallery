@@ -5,7 +5,6 @@ import { Group } from './group.js';
 import { Strip } from './strip.js';
 import { Column } from './column.js';
 import layoutsStore from './layoutsStore.js';
-import { optionsMap } from 'pro-gallery-lib';
 
 export default class Layouter {
   constructor(layoutParams) {
@@ -187,7 +186,7 @@ export default class Layouter {
               this.strip = new Strip({
                 idx: this.strips.length + 1,
                 container: this.container,
-                [optionsMap.layoutParams.groups.numberOfGroupsPerRow]: this.styleParams[optionsMap.layoutParams.groups.numberOfGroupsPerRow],
+                ['layoutParams_groups_numberOfGroupsPerRow']: this.styleParams['layoutParams_groups_numberOfGroupsPerRow'],
                 scrollDirection: this.styleParams.scrollDirection,
                 targetItemSize: this.targetItemSize,
               });
@@ -242,7 +241,7 @@ export default class Layouter {
       this.strip = new Strip({
         idx: 1,
         container: this.container,
-        [optionsMap.layoutParams.groups.numberOfGroupsPerRow]: this.styleParams[optionsMap.layoutParams.groups.numberOfGroupsPerRow],
+        ['layoutParams_groups_numberOfGroupsPerRow']: this.styleParams['layoutParams_groups_numberOfGroupsPerRow'],
         scrollDirection: this.styleParams.scrollDirection,
         targetItemSize: this.targetItemSize,
       });
@@ -383,7 +382,7 @@ export default class Layouter {
           this.strip = new Strip({
             idx: this.strip.idx + 1,
             container: this.container,
-            [optionsMap.layoutParams.groups.numberOfGroupsPerRow]: this.styleParams[optionsMap.layoutParams.groups.numberOfGroupsPerRow],
+            ['layoutParams_groups_numberOfGroupsPerRow']: this.styleParams['layoutParams_groups_numberOfGroupsPerRow'],
             scrollDirection: this.styleParams.scrollDirection,
             targetItemSize: this.targetItemSize,
           });
@@ -458,7 +457,7 @@ export default class Layouter {
     if (this.styleParams.forceFullHeight) {
       const stretchRatio = this.container.galleryHeight / this.galleryHeight;
       this.items.map((item) => {
-        item[optionsMap.layoutParams.crop.enable] = true;
+        item['layoutParams_crop_enable'] = true;
         item.cropRatio = item.ratio = item.width / (item.height * stretchRatio);
         item.height *= stretchRatio;
         return item;
@@ -579,7 +578,7 @@ export default class Layouter {
     let _maxGroupSize = 1;
     try {
       const groupTypes =
-        this.styleParams[optionsMap.layoutParams.groups.allowedGroupTypes];
+        this.styleParams['layoutParams_groups_allowedGroupTypes'];
       _maxGroupSize =
         groupTypes.length > 0
           ? groupTypes.reduce(
@@ -587,7 +586,7 @@ export default class Layouter {
               1
             )
           : Number(groupTypes);
-      _maxGroupSize = Math.min(_maxGroupSize, this.styleParams[optionsMap.layoutParams.groups.groupSize]);
+      _maxGroupSize = Math.min(_maxGroupSize, this.styleParams['layoutParams_groups_groupSize']);
     } catch (e) {
       console.error("couldn't calculate max group size - returing 3 (?)", e);
       _maxGroupSize = 3;
