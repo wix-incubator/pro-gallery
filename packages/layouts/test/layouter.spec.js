@@ -675,13 +675,12 @@ describe('Layouter', () => {
     // rotatingCropRatios
     it('should crop items according to rotatingCropRatios if defined', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
-      styleParams.rotatingCropRatios = '2,1.5,1.2,0.5,1';
-      styleParams[optionsMap.layoutParams.crop.ratios] = [1];
+      styleParams[optionsMap.layoutParams.crop.ratios] = ['2','1.5','1.2','0.5','1'];
       styleParams[optionsMap.layoutParams.crop.enable] = true;
       styleParams[optionsMap.layoutParams.crop.enableSmartCrop] = false;
       styleParams.isVertical = true;
 
-      const rotatingCropRatiosArr = styleParams.rotatingCropRatios.split(',');
+      const rotatingCropRatiosArr = styleParams[optionsMap.layoutParams.crop.ratios];
 
       gallery = getLayout({ items, container, styleParams });
       gallery.items.forEach((item, i) => {

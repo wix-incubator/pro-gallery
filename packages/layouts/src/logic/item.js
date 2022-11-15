@@ -26,7 +26,9 @@ export class Item {
       this.cubeType = styleParams[optionsMap.layoutParams.crop.method];
       this.cubeImages = styleParams[optionsMap.layoutParams.crop.enable];
       this._cropRatio = styleParams[optionsMap.layoutParams.crop.ratios];
-      this.rotatingCropRatios = styleParams.rotatingCropRatios;
+      this.rotatingCropRatios =
+        styleParams[optionsMap.layoutParams.crop.ratios].length > 1 &&
+        styleParams[optionsMap.layoutParams.crop.ratios];
       this.smartCrop =
         styleParams[optionsMap.layoutParams.crop.enableSmartCrop];
       this.cropOnlyFill =
@@ -446,8 +448,8 @@ export class Item {
     let ratio;
     if (this.rotatingCropRatio) {
       ratio = this.rotatingCropRatio;
-    } else if (this.rotatingCropRatios && this.rotatingCropRatios.length > 0) {
-      const cropRatiosArr = String(this.rotatingCropRatios).split(',');
+    } else if (this.rotatingCropRatios && this.rotatingCropRatios.length > 1) {
+      const cropRatiosArr = this.rotatingCropRatios;
       ratio = this.rotatingCropRatio =
         cropRatiosArr[this.idx % cropRatiosArr.length];
     }

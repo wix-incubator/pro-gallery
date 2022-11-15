@@ -94,12 +94,11 @@ class Utils {
     const defaultLayouterSP = {
       layoutParams: {
         gallerySpacing: 0,
-        cropRatio: 1,
       },
       [optionsMap.layoutParams.groups.repeatingGroupTypes]: [],
       [optionsMap.layoutParams.crop.enable]: false,
       [optionsMap.layoutParams.crop.method]: 'FILL',
-      rotatingCropRatios: '',
+      [optionsMap.layoutParams.crop.ratios]: [1],
       [optionsMap.layoutParams.crop.enableSmartCrop]: false,
       imageMargin: 10,
       scatter: 0,

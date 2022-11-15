@@ -57,7 +57,7 @@ export class Group {
       this.collageDensity = styleParams[optionsMap.layoutParams.groups.density];
       this.groupTypes = String(styleParams[optionsMap.layoutParams.groups.allowedGroupTypes]);
       this.repeatingGroupTypes = String(styleParams[optionsMap.layoutParams.groups.repeatingGroupTypes]);
-      this.rotatingCropRatios = String(styleParams.rotatingCropRatios);
+      this.rotatingCropRatios = styleParams[optionsMap.layoutParams.crop.ratios];
       this.chooseBestGroup = styleParams[optionsMap.layoutParams.groups.groupByOrientation];
       this.externalInfoHeight = styleParams.externalInfoHeight;
       this.externalInfoWidth = styleParams.externalInfoWidth;
@@ -119,7 +119,7 @@ export class Group {
       this.groupSize === 1 &&
       ['FILL', 'FIT'].includes(this.cubeType) &&
       this.repeatingGroupTypes.length === 0 &&
-      this.rotatingCropRatios.length === 0;
+      this.rotatingCropRatios.length < 2;
     this.cubedHeight = shouldUseFixedHeight ? height : null;
   }
 
