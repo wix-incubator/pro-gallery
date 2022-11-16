@@ -208,7 +208,7 @@ export default class Layouter {
       this.groups = [];
       this.strips = [];
 
-      if (this.styleParams.forceFullHeight) {
+      if (this.styleParams.forceFullHeight) { //v5 TODO check and remove this API
         this.targetItemSize = Math.sqrt(
           (this.container.galleryHeight * this.container.galleryWidth) /
             this.srcItems.length
@@ -261,7 +261,7 @@ export default class Layouter {
         this.styleParams;
         const columnWidths = this.styleParams[optionsMap.layoutParams.structure.columnRatios]
         const imageMargin = this.styleParams[optionsMap.layoutParams.structure.itemSpacing]
-      const {cropRatio} = this.styleParams.layoutParams;
+      const cropRatio = this.styleParams[optionsMap.layoutParams.crop.ratios];
       let columnWidthsArr = false;
       if (columnWidths && columnWidths.length > 0) {
         columnWidthsArr = columnWidths.map(Number);
@@ -299,7 +299,7 @@ export default class Layouter {
           colWidth -= infoWidth;
           fixedCubeHeight =
             fixedCubeHeight ||
-            (this.targetItemSize - infoWidth - imageMargin) / cropRatio +
+            (this.targetItemSize - infoWidth - imageMargin) / cropRatio[0] + //v5 check how this works if there are multiple ratios or if this is a function......wtf
               imageMargin; //calc the cube height only once
           //add space for info on the side
           return new Column(idx, colWidth, curLeft, fixedCubeHeight, infoWidth);
@@ -457,7 +457,7 @@ export default class Layouter {
       this.pointer++;
     }
 
-    if (this.styleParams.forceFullHeight) {
+    if (this.styleParams.forceFullHeight) { //v5 TODO check and remove this API
       const stretchRatio = this.container.galleryHeight / this.galleryHeight;
       this.items.map((item) => {
         item.cubeImages = true;
