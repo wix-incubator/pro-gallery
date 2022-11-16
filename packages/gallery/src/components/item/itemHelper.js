@@ -4,6 +4,7 @@ import {
   isSiteMode,
   isSEOMode,
   GALLERY_CONSTS,
+  optionsMap,
 } from 'pro-gallery-lib';
 
 function shouldChangeActiveElement() {
@@ -78,8 +79,9 @@ export function changeActiveElementIfNeeded({
 
 export function shouldCreateVideoPlaceholder(options) {
   return (
-    options.enableVideoPlaceholder &&
+    options[optionsMap.behaviourParams.item.video.enablePlaceholder] &&
     (!utils.isSingleItemHorizontalDisplay(options) ||
-      options.videoPlay !== GALLERY_CONSTS.videoPlay.AUTO)
+      options[optionsMap.behaviourParams.item.video.playTrigger] !==
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO)
   );
 }

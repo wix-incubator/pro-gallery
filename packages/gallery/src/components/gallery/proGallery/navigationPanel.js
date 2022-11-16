@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap, utils } from 'pro-gallery-lib';
 
 import TextItem from '../../item/textItem.js';
 
@@ -33,7 +33,7 @@ class NavigationPanel extends React.Component {
       this.props.activeIndex,
       clearedGalleryItems.length
     );
-    const { thumbnailSize, thumbnailSpacings } = options;
+
     const {
       horizontalThumbnails,
       items,
@@ -60,7 +60,11 @@ class NavigationPanel extends React.Component {
         className={
           'pro-gallery inline-styles thumbnails-gallery ' +
           (horizontalThumbnails ? ' one-row hide-scrollbars ' : '') +
-          (options.isRTL ? ' rtl ' : ' ltr ') +
+          (options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+            .RIGHT_TO_LEFT
+            ? ' rtl '
+            : ' ltr ') +
           (settings?.isAccessible ? ' accessible ' : '')
         }
         style={{
@@ -83,10 +87,10 @@ class NavigationPanel extends React.Component {
           {items.map(({ thumbnailItem, location, idx }) => {
             const highlighted = idx === activeIndex;
             const itemStyle = {
-              width: thumbnailSize,
-              height: thumbnailSize,
-              marginLeft: thumbnailSpacings,
-              marginTop: thumbnailSpacings,
+              width: options[optionsMap.layoutParams.thumbnails.size],
+              height: options[optionsMap.layoutParams.thumbnails.size],
+              marginLeft: options[optionsMap.layoutParams.thumbnails.spacing],
+              marginTop: options[optionsMap.layoutParams.thumbnails.spacing],
               overflow: 'hidden',
               backgroundImage: `url(${thumbnailItem.createUrl(
                 GALLERY_CONSTS.urlSizes.THUMBNAIL,
@@ -118,8 +122,10 @@ class NavigationPanel extends React.Component {
                     {...thumbnailItem.renderProps()}
                     options={{
                       ...options,
-                      cubeType: 'fill',
-                      cubeImages: true,
+                      [optionsMap.layoutParams.crop.method]:
+                        GALLERY_CONSTS[optionsMap.layoutParams.crop.method]
+                          .FILL,
+                      [optionsMap.layoutParams.crop.enable]: true,
                     }}
                     actions={{}}
                     imageDimensions={{
@@ -144,11 +150,11 @@ class NavigationPanel extends React.Component {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
-    const { position: navigationPanelPosition } =
-      this.props.options.layoutParams.thumbnails;
     const navigationRelevantProps = {
-      navigationPanelPosition,
-      thumbnailAlignment: this.props.options.galleryThumbnailsAlignment,
+      navigationPanelPosition:
+        this.props.options[optionsMap.layoutParams.thumbnails.position],
+      thumbnailAlignment:
+        this.props.options[optionsMap.layoutParams.thumbnails.alignment],
       options: this.props.options,
       galleryStructure: this.props.galleryStructure,
       settings: this.props.settings,
@@ -164,7 +170,10 @@ const getHorizontalNavigationPanelDimensions = ({
   galleryHeight,
   navigationPanelPosition,
 }) => {
-  if (navigationPanelPosition === 'ON_GALLERY') {
+  if (
+    navigationPanelPosition ===
+    GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].ON_GALLERY
+  ) {
     return {};
   } else {
     return { width: width, height: height - galleryHeight };
@@ -176,7 +185,10 @@ const getVerticalNavigationPanelDimensions = ({
   galleryWidth,
   navigationPanelPosition,
 }) => {
-  if (navigationPanelPosition === 'ON_GALLERY') {
+  if (
+    navigationPanelPosition ===
+    GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].ON_GALLERY
+  ) {
     return {};
   } else {
     return { width: width - galleryWidth, height: height };
@@ -191,18 +203,18 @@ const getCustomNavigationPanelDimensions = ({
   navigationPanelPosition,
 }) => {
   switch (galleryThumbnailsAlignment) {
-    case 'top': //TODO use CONSTS if available
+    case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP:
       return getHorizontalNavigationPanelDimensions(
         { galleryHeight, galleryWidth, height, width, navigationPanelPosition },
         false
       );
-    case 'bottom':
+    case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM:
       return getHorizontalNavigationPanelDimensions(
         { galleryHeight, galleryWidth, height, width, navigationPanelPosition },
         true
       );
-    case 'right':
-    case 'left':
+    case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].RIGHT:
+    case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT:
       return getVerticalNavigationPanelDimensions({
         galleryHeight,
         galleryWidth,
@@ -246,10 +258,11 @@ const getNavigationPanelOnGalleryPositionStyles = ({
   navigationPanelPosition,
 }) => {
   if (
-    navigationPanelPosition === GALLERY_CONSTS.thumbnailsPosition.ON_GALLERY
+    navigationPanelPosition ===
+    GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].ON_GALLERY
   ) {
     let onGalleryStyles = { position: 'absolute' };
-    onGalleryStyles[galleryThumbnailsAlignment] = 0;
+    onGalleryStyles[galleryThumbnailsAlignment.toLowerCase()] = 0;
     return onGalleryStyles;
   }
 };

@@ -1,7 +1,6 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { mergeNestedObjects } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -16,17 +15,20 @@ describe('options - overlaySize', () => {
       items: images2,
       options,
     };
-    initialProps.options = mergeNestedObjects(initialProps.options, {
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      overlaySize: 50,
-      overlaySizeType: 'PIXEL',
-      overlayPadding: 30,
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.item.overlay.size]: 50,
+      [optionsMap.behaviourParams.item.overlay.sizeUnits]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.sizeUnits].PIXEL,
+      [optionsMap.behaviourParams.item.overlay.padding]: 30,
     });
   });
 
   it('should set the correct overlayPosition - TOP position', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
-      overlayPosition: GALLERY_CONSTS.overlayPositions.TOP,
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.behaviourParams.item.overlay.position]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.position].TOP,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -38,8 +40,9 @@ describe('options - overlaySize', () => {
   });
 
   it('should set the correct overlayPosition - RIGHT position', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
-      overlayPosition: GALLERY_CONSTS.overlayPositions.RIGHT,
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.behaviourParams.item.overlay.position]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.position].RIGHT,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

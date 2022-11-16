@@ -1,6 +1,6 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -17,9 +17,12 @@ describe('gridStyle - e2e', () => {
   });
   it('should set number of columns according to container size (not numberOfImagesPerRow)', async () => {
     await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      gridStyle: GALLERY_CONSTS.gridStyle.FIT_TO_SCREEN,
-      numberOfImagesPerRow: 2,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.layoutParams.structure.responsiveMode]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
+          .FIT_TO_SCREEN,
+      [optionsMap.layoutParams.structure.numberOfColumns]: 2,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -27,9 +30,12 @@ describe('gridStyle - e2e', () => {
   });
   it('should set fixed number of columns (numberOfImagesPerRow)', async () => {
     await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      gridStyle: GALLERY_CONSTS.gridStyle.SET_ITEMS_PER_ROW,
-      numberOfImagesPerRow: 2,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.layoutParams.structure.responsiveMode]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
+          .SET_ITEMS_PER_ROW,
+      [optionsMap.layoutParams.structure.numberOfColumns]: 2,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.partialScreenshot();

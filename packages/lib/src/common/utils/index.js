@@ -4,8 +4,10 @@ import {
   isEditMode,
   isPreviewMode,
   isDeviceTypeMobile,
+  isDeviceTypeTouch,
 } from '../window/viewModeWrapper';
 import GALLERY_CONSTS from '../constants';
+import optionsMap from '../../core/helpers/optionsMap';
 
 class Utils {
   constructor() {
@@ -264,6 +266,19 @@ class Utils {
     return this.getOrPutFromCache('isMobile', _isMobile);
   }
 
+  isTouch() {
+    const _isTouch = () => {
+      const isTouchByProps = isDeviceTypeTouch();
+      const isTouchBrowser =
+        window.navigator?.maxTouchPoints > 0 || // checking if navigator exists because of SSR
+        'ontouchstart' in window.document.documentElement;
+
+      return this.isUndefined(isTouchByProps) ? isTouchBrowser : isTouchByProps;
+    };
+
+    return this.getOrPutFromCache('isTouch', _isTouch);
+  }
+
   isTest() {
     try {
       return window.isTest;
@@ -321,7 +336,7 @@ class Utils {
 
   // TODO : Replace with isPrerender mode
   isSSR() {
-    return typeof global.window === 'undefined';
+    return typeof global?.window === 'undefined';
   }
 
   isOOI() {
@@ -696,12 +711,17 @@ class Utils {
   }
 
   getAriaAttributes({ proGalleryRole, proGalleryRegionLabel }) {
-    return {
+    const role = proGalleryRole || 'region';
+    const roledescription =
+      proGalleryRole === 'application' ? 'gallery application' : 'region';
+    const attr = {
       role: proGalleryRole || 'region',
       ['aria-label']: proGalleryRegionLabel,
-      ['aria-roledescription']:
-        proGalleryRole === 'application' ? 'gallery application' : 'region',
     };
+    if (role !== roledescription) {
+      attr['aria-roledescription'] = roledescription;
+    }
+    return attr;
   }
 
   focusGalleryElement(element) {
@@ -711,6 +731,28 @@ class Utils {
   isMeaningfulString(str) {
     if (typeof str !== 'string') return false;
     return !!str.trim().length;
+  }
+
+  isHeightSetByGallery(options) {
+    const oldSPs_isHeightSetByGallery = (options) => {
+      //NEW STYPEPARAMS METHOD remove when done
+      return (
+        options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
+        options.enableInfiniteScroll
+      );
+    };
+    const newSPs_isHeightSetByGallery = (options) => {
+      return (
+        options[optionsMap.layoutParams.structure.galleryLayout] ===
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
+            .VERTICAL &&
+        !options[optionsMap.behaviourParams.gallery.vertical.loadMore]
+      ); //NEW STYLEPARAMS METHOD POSSIBLE BUG FOUND Could be that I need to add the horizontal gallery ratio thing here....
+    };
+    return (
+      oldSPs_isHeightSetByGallery(options) || //NEW STYPEPARAMS METHOD remove when done
+      newSPs_isHeightSetByGallery(options)
+    );
   }
 }
 

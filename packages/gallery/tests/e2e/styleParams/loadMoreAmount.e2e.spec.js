@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
 
@@ -17,9 +17,13 @@ describe('loadMoreAmount - e2e', () => {
   });
   it('Should increase the height of the gallery container to fit all items', async () => {
     await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.GRID,
-      enableInfiniteScroll: false,
-      loadMoreAmount: GALLERY_CONSTS.loadMoreAmount.ALL,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.gallery.vertical.loadMore.enable]: true,
+      [optionsMap.behaviourParams.gallery.vertical.loadMore.amount]:
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.gallery.vertical.loadMore.amount
+        ].ALL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.actions.click('show-more');
@@ -30,10 +34,10 @@ describe('loadMoreAmount - e2e', () => {
 
   // it('Should increase the height of the gallery container to show the next section of the gallery', async () => {
   //   await driver.navigate({
-  //     galleryLayout: GALLERY_CONSTS.layout.GRID,
-  //     enableInfiniteScroll: false,
-  //     gridStyle: GALLERY_CONSTS.gridStyle.SET_ITEMS_PER_ROW,
-  //     loadMoreAmount: GALLERY_CONSTS.loadMoreAmount.PARTIAL,
+  //     [optionsMap.layoutParams.structure.galleryLayout]: GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+  //     [optionsMap.behaviourParams.gallery.vertical.loadMore.enable]: true,
+  //     [optionsMap.layoutParams.structure.responsiveMode]: GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW,
+  //     [optionsMap.behaviourParams.gallery.vertical.loadMore.amount]: GALLERY_CONSTS[optionsMap.behaviourParams.gallery.vertical.loadMore.amount].PARTIAL,
   //   });
   //   await driver.waitFor.hookToBeVisible('item-container');
   //   await driver.waitFor.timer(200);

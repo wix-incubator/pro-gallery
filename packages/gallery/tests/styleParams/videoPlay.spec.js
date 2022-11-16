@@ -1,7 +1,6 @@
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { mergeNestedObjects } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { videoItems } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -19,9 +18,11 @@ describe('options - videoPlay', () => {
   });
 
   it('should play videos automaticaly', async () => {
-    initialProps.options = mergeNestedObjects(initialProps.options, {
-      videoPlay: GALLERY_CONSTS.videoPlay.AUTO,
-      galleyLayout: GALLERY_CONSTS.layout.GRID,
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.behaviourParams.item.video.playTrigger]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -38,9 +39,12 @@ describe('options - videoPlay', () => {
     });
 
     it('should not have video elements intially (with no hover event)', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
-        videoPlay: GALLERY_CONSTS.videoPlay.HOVER,
-        galleyLayout: GALLERY_CONSTS.layout.GRID,
+      initialProps.options = Object.assign(initialProps.options, {
+        [optionsMap.behaviourParams.item.video.playTrigger]:
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
+            .HOVER,
+        [optionsMap.layoutParams.structure.galleryLayout]:
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -49,9 +53,12 @@ describe('options - videoPlay', () => {
       driver.detach.proGallery();
     });
     it('should have video element on hover', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
-        videoPlay: GALLERY_CONSTS.videoPlay.HOVER,
-        galleyLayout: GALLERY_CONSTS.layout.GRID,
+      initialProps.options = Object.assign(initialProps.options, {
+        [optionsMap.behaviourParams.item.video.playTrigger]:
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
+            .HOVER,
+        [optionsMap.layoutParams.structure.galleryLayout]:
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -69,9 +76,12 @@ describe('options - videoPlay', () => {
     });
 
     it('should not have video elements intially (with no click event)', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
-        videoPlay: GALLERY_CONSTS.videoPlay.ON_CLICK,
-        galleyLayout: GALLERY_CONSTS.layout.GRID,
+      initialProps.options = Object.assign(initialProps.options, {
+        [optionsMap.behaviourParams.item.video.playTrigger]:
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
+            .CLICK,
+        [optionsMap.layoutParams.structure.galleryLayout]:
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -80,10 +90,14 @@ describe('options - videoPlay', () => {
       driver.detach.proGallery();
     });
     it('should have video element on click', async () => {
-      initialProps.options = mergeNestedObjects(initialProps.options, {
-        videoPlay: GALLERY_CONSTS.videoPlay.ON_CLICK,
-        galleyLayout: GALLERY_CONSTS.layout.GRID,
-        itemClick: GALLERY_CONSTS.itemClick.NOTHING,
+      initialProps.options = Object.assign(initialProps.options, {
+        [optionsMap.behaviourParams.item.video.playTrigger]:
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
+            .CLICK,
+        [optionsMap.layoutParams.structure.galleryLayout]:
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+        [optionsMap.behaviourParams.item.clickAction]:
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING,
       });
       driver.mount.proGallery(initialProps);
       await driver.update();

@@ -4,7 +4,7 @@ import {
 } from '../../common/constants/placements';
 import INFO_TYPE from '../../common/constants/infoType';
 import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWidthCalculationOptions';
-import { default as GALLERY_CONSTS } from '../../common/constants/index';
+import { default as GALLERY_CONSTS } from '../../common/constants';
 
 const processTextDimensions = (options, customExternalInfoRendererExists) => {
   let _options = { ...options };
