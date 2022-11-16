@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { GALLERY_CONSTS, } from 'pro-gallery-lib';
 import { Item } from './item.js';
 
 const GROUP_TYPES_BY_RATIOS_V = {
@@ -48,20 +49,20 @@ export class Group {
     if (config.styleParams) {
       const { styleParams } = config;
       this.scrollDirection = styleParams.scrollDirection;
-      this.cubeType = styleParams.cubeType;
-      this.cubeImages = styleParams.cubeImages;
+      this['layoutParams_crop_method'] = styleParams['layoutParams_crop_method'];
+      this['layoutParams_crop_enable'] = styleParams['layoutParams_crop_enable'];
       this.isVertical = styleParams.isVertical;
       this.minItemSize = styleParams.minItemSize;
       this.collageAmount = styleParams.collageAmount;
-      this.collageDensity = styleParams.collageDensity;
-      this.groupTypes = String(styleParams.groupTypes);
-      this.repeatingGroupTypes = String(styleParams.layoutParams.repeatingGroupTypes);
+      this['layoutParams_groups_density'] = styleParams['layoutParams_groups_density'];
+      this['layoutParams_groups_allowedGroupTypes'] = styleParams['layoutParams_groups_allowedGroupTypes'];
+      this['layoutParams_groups_repeatingGroupTypes'] = styleParams['layoutParams_groups_repeatingGroupTypes'];
       this.rotatingCropRatios = String(styleParams.rotatingCropRatios);
-      this.chooseBestGroup = styleParams.chooseBestGroup;
+      this['layoutParams_groups_groupByOrientation'] = styleParams['layoutParams_groups_groupByOrientation'];
       this.externalInfoHeight = styleParams.externalInfoHeight;
       this.externalInfoWidth = styleParams.externalInfoWidth;
       this.imageMargin = styleParams.imageMargin;
-      this.groupSize = styleParams.groupSize;
+      this['layoutParams_groups_groupSize'] = styleParams['layoutParams_groups_groupSize'];
     }
 
     this.visible = true;
@@ -114,10 +115,10 @@ export class Group {
 
   setCubedHeight(height) {
     const shouldUseFixedHeight =
-      this.cubeImages &&
-      this.groupSize === 1 &&
-      ['fill', 'fit'].includes(this.cubeType) &&
-      this.repeatingGroupTypes.length === 0 &&
+      this['layoutParams_crop_enable'] &&
+      this['layoutParams_groups_groupSize'] === 1 &&
+      [GALLERY_CONSTS['layoutParams_crop_method'].FILL, GALLERY_CONSTS['layoutParams_crop_method'].FIT].includes(this['layoutParams_crop_method']) &&
+      this['layoutParams_groups_repeatingGroupTypes'].length === 0 &&
       this.rotatingCropRatios.length === 0;
     this.cubedHeight = shouldUseFixedHeight ? height : null;
   }
@@ -216,8 +217,8 @@ export class Group {
 
   getGroupType(forcedGroupSize) {
     //---------| Override with specifically defined rotating group types (ignores everything else)
-    if (this.repeatingGroupTypes) {
-      const groupTypesArr = String(this.repeatingGroupTypes).split(',');
+    if (this['layoutParams_groups_repeatingGroupTypes'].length > 0) {
+      const groupTypesArr = this['layoutParams_groups_repeatingGroupTypes'];
       return groupTypesArr[this.idx % groupTypesArr.length];
 
       // } else if (this.isLastItems) {
@@ -247,7 +248,7 @@ export class Group {
       const isV = this.isVertical;
       let optionalTypes; //optional groupTypes (separated by ,). 1 is always optional
 
-      if (this.chooseBestGroup) {
+      if (this['layoutParams_groups_groupByOrientation']) {
         //map the group to l=landscape and p=portrait
         //create a string to state the images group's type
         const ratios = this.items
@@ -270,9 +271,9 @@ export class Group {
       let groupTypes = optionalTypes.length > 0 ? optionalTypes.split(',') : [];
 
       //---------| Override with specifically defined group types
-      if (this.groupTypes) {
-        // let groupTypesArr = union(['1'], this.groupTypes.split(','));
-        const groupTypesArr = this.groupTypes.split(',');
+      if (this['layoutParams_groups_allowedGroupTypes']) {
+        // let groupTypesArr = union(['1'], this['layoutParams_groups_allowedGroupTypes'].split(','));
+        const groupTypesArr = this['layoutParams_groups_allowedGroupTypes']
 
         if (groupTypesArr.length > 1) {
           groupTypes = groupTypes.filter(
@@ -289,10 +290,10 @@ export class Group {
       }
 
       //---------| Calc collage density
-      if (this.collageDensity >= 0) {
+      if (this['layoutParams_groups_density'] >= 0) {
         //th new calculation of the collage amount
 
-        const collageDensity = this.collageDensity;
+        const collageDensity = this['layoutParams_groups_density'];
 
         //use the collage amount to determine the optional groupsize
         const maxGroupType = parseInt(groupTypes[groupTypes.length - 1]);
