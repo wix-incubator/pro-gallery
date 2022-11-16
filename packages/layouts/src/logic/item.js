@@ -44,7 +44,7 @@ export class Item {
       this.smartCrop =
         styleParams[optionsMap.layoutParams.crop.enableSmartCrop];
       this.useMaxDimensions =
-        styleParams[optionsMap.layoutParams.structure.enableStreching] &&
+        !styleParams[optionsMap.layoutParams.structure.enableStreching] &&
         this.itemType !== 'text';
       this.cubeFitPosition =
         styleParams[optionsMap.layoutParams.crop.alignment];
