@@ -1,10 +1,12 @@
 import { expect } from 'chai';
 import createLayout from '../src/logic/create-layout';
 import Layouter from '../src/logic/layouter';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { optionsMap } from 'pro-gallery-lib';
 
 const getLayoutParams = () => ({
-  styleParams: { scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL },
+  styleParams: {
+    [optionsMap.layoutParams.structure.scrollDirection]: 'HORIZONTAL',
+  },
   container: { width: 100 },
   items: [{ id: '0', width: 50, height: 100 }],
 });

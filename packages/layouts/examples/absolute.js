@@ -1,10 +1,10 @@
-import {createLayout} from 'pro-layouts';
+import { createLayout } from 'pro-layouts';
 
 //create random colored boxes
 function generateUUID() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
     const r = Math.floor(Math.random() * 16) || 0;
-    return (c === 'x' ? r.toString(16) : c);
+    return c === 'x' ? r.toString(16) : c;
   });
 }
 function rnd(from, to) {
@@ -16,7 +16,14 @@ for (let i = 0; i < 100; i++) {
     id: generateUUID(),
     width: rnd(500, 1500),
     height: rnd(500, 1500),
-    bgColor: 'rgba(' + rnd(100, 255) + ',' + rnd(100, 255) + ',' + rnd(100, 255) + ',1)'
+    bgColor:
+      'rgba(' +
+      rnd(100, 255) +
+      ',' +
+      rnd(100, 255) +
+      ',' +
+      rnd(100, 255) +
+      ',1)',
   });
 }
 
@@ -24,18 +31,18 @@ const styleParams = {
   rowSize: 500,
   isColumnsLayout: false,
   itemSpacing: 20,
-  allowedGroupTypes: ['1', '2v', '3v']
+  allowedGroupTypes: ['1', '2v', '3v'],
   //add more style params here
 };
 const container = {
   width: window.innerWidth,
-  height: window.innerHeight
+  height: window.innerHeight,
 };
 
 const layoutParams = {
   items,
   styleParams,
-  container
+  container,
 };
 
 const layout = createLayout(layoutParams);

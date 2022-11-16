@@ -90,7 +90,7 @@ describe('GalleryItem ', () => {
     });
     galleryItem = new GalleryItem(config);
     expect(galleryItem.cubeType).equal('aaa');
-    expect(antiGalleryItem.cubeType).equal('fill');
+    expect(antiGalleryItem.cubeType).equal('FILL');
   });
   // it('createFromWixImage', () => {
   //   Object.assign(config, { orderIndex: 1 });
