@@ -99,7 +99,7 @@ class Utils {
       [optionsMap.layoutParams.crop.ratios]: [1],
       [optionsMap.layoutParams.crop.enableSmartCrop]: false,
       [optionsMap.layoutParams.structure.itemSpacing]: 10,
-      scatter: 0,
+      [optionsMap.layoutParams.structure.scatter.randomScatter]: 0,
       [optionsMap.layoutParams.structure.scatter.manualScatter]: '',
       [optionsMap.layoutParams.groups.groupByOrientation]: true,
       [optionsMap.layoutParams.groups.groupSize]: 3,
@@ -122,7 +122,7 @@ class Utils {
       fixedColumns: 0,
       [optionsMap.layoutParams.structure.columnRatios]: [],
     };
-    const fullMigratedAndOld =
+    const fullMigratedAndOld = //v5 TODO remove migrations
       extendNestedOptionsToIncludeOldAndNew(styleParams);
     const populatedWithDefault = populateWithDefaultOptions(fullMigratedAndOld);
     return extendNestedOptionsToIncludeOldAndNew(populatedWithDefault);

@@ -65,7 +65,6 @@ describe('Layouter', () => {
 
   describe('items', () => {
     it('should include all items in original order', () => {
-      styleParams.galleryWidth = 500;
       styleParams[optionsMap.layoutParams.targetItemSize.minimum] = 160;
 
       for (const size of [10, 50, 100]) {
@@ -81,7 +80,6 @@ describe('Layouter', () => {
 
     it('should have items offsets and dimensions calculated correctly', () => {
       const items = getItems(100);
-      styleParams.galleryWidth = 4000;
       styleParams.targetItemSize = 500;
       styleParams[optionsMap.layoutParams.groups.repeatingGroupTypes] = ['1','2h','2v','3r','3t','3l','3b','3v','3h'];
       styleParams[optionsMap.layoutParams.structure.itemSpacing] = 0;
@@ -152,7 +150,6 @@ describe('Layouter', () => {
     it('should have all groups in a Columns gallery narrower than targetItemSize', () => {
       const items = getItems(100);
       styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
-      styleParams.galleryWidth = 1200;
 
       let lastGroupWidth = 0;
       for (const size of [10, 50, 100, 200, 300, 400]) {
@@ -318,7 +315,6 @@ describe('Layouter', () => {
     it('should have all Columns GalleryLayout images larger than minItemSize', () => {
       const items = getItems(100);
       styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
-      styleParams.galleryWidth = 4000;
       styleParams[optionsMap.layoutParams.structure.itemSpacing] = 0;
       styleParams[optionsMap.layoutParams.groups.density] = 1;
 
@@ -536,7 +532,6 @@ describe('Layouter', () => {
     // imageMargin (between groups)
     it('should have spaces between groups equal to imageMargin', () => {
       const items = getItems(100);
-      styleParams.galleryWidth = 4000;
       styleParams.targetItemSize = 500;
       styleParams[optionsMap.layoutParams.groups.groupSize] = 1;
 
@@ -569,7 +564,6 @@ describe('Layouter', () => {
     //TODO fix this test once the playground is complete
     it('should have spaces between items in a group equal to imageMargin', () => {
       const items = getItems(100);
-      styleParams.galleryWidth = 4000;
       styleParams.targetItemSize = 1000;
       styleParams[optionsMap.layoutParams.groups.groupSize] = 3;
       styleParams[optionsMap.layoutParams.groups.allowedGroupTypes] = ['1','2h','2v','3r','3t','3l','3b','3v','3h'];
