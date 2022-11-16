@@ -52,8 +52,7 @@ export class Group {
       this.cubeType = styleParams[optionsMap.layoutParams.crop.method];
       this.cubeImages = styleParams[optionsMap.layoutParams.crop.enable];
       this.layoutOrientation = styleParams[optionsMap.layoutParams.structure.layoutOrientation];
-      this.minItemSize = styleParams.minItemSize;
-      this.collageAmount = styleParams.collageAmount;
+      this.minItemSize = styleParams[optionsMap.layoutParams.targetItemSize.minimum];
       this.collageDensity = styleParams[optionsMap.layoutParams.groups.density];
       this.groupTypes = String(styleParams[optionsMap.layoutParams.groups.allowedGroupTypes]);
       this.repeatingGroupTypes = String(styleParams[optionsMap.layoutParams.groups.repeatingGroupTypes]);

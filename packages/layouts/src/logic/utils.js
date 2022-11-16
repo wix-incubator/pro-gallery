@@ -101,7 +101,7 @@ class Utils {
       [optionsMap.layoutParams.structure.itemSpacing]: 10,
       scatter: 0,
       [optionsMap.layoutParams.structure.scatter.manualScatter]: '',
-      chooseBestGroup: true,
+      [optionsMap.layoutParams.groups.groupByOrientation]: true,
       [optionsMap.layoutParams.groups.groupSize]: 3,
       [optionsMap.layoutParams.groups.allowedGroupTypes]: [
         '1',
@@ -115,10 +115,10 @@ class Utils {
         '3r',
       ],
       [optionsMap.layoutParams.structure.layoutOrientation]: 'VERTICAL',
-      minItemSize: 120,
+      [optionsMap.layoutParams.targetItemSize.minimum]: 120,
       [optionsMap.layoutParams.structure.scrollDirection]: 'VERTICAL',
       targetItemSize: 500,
-      collageDensity: 50,
+      [optionsMap.layoutParams.groups.density]: 50,
       fixedColumns: 0,
       [optionsMap.layoutParams.structure.columnRatios]: [],
     };

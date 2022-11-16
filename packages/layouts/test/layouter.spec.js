@@ -32,10 +32,9 @@ describe('Layouter', () => {
       [optionsMap.layoutParams.crop.enable]: false,
       [optionsMap.layoutParams.crop.method]: 'FILL',
       [optionsMap.layoutParams.crop.enableSmartCrop]: false,
-      chooseBestGroup: true,
-      collageAmount: 0.9,
-      collageDensity: 0.9,
-      minItemSize: 20,
+      [optionsMap.layoutParams.groups.groupByOrientation]: true,
+      [optionsMap.layoutParams.groups.density]: 0.9,
+      [optionsMap.layoutParams.targetItemSize.minimum]: 20,
       [optionsMap.layoutParams.structure.itemSpacing]: 10,
       [optionsMap.layoutParams.structure.scatter.randomScatter]: 0,
       [optionsMap.layoutParams.structure.scatter.manualScatter]: '',
@@ -67,7 +66,7 @@ describe('Layouter', () => {
   describe('items', () => {
     it('should include all items in original order', () => {
       styleParams.galleryWidth = 500;
-      styleParams.minItemSize = 160;
+      styleParams[optionsMap.layoutParams.targetItemSize.minimum] = 160;
 
       for (const size of [10, 50, 100]) {
         const items = getItems(size);
@@ -224,25 +223,6 @@ describe('Layouter', () => {
       }
     });
 
-    //collageAmount
-    it('should have more items in groups when the collageAmount increases', () => {
-      const itemCount = 100;
-      const items = getItems(itemCount);
-      const collageAmounts = Array.from({ length: 11 }, (_, i) => i).map(
-        (i) => i / 10
-      );
-      let lastGroupCount = itemCount;
-
-      for (const collageAmount of collageAmounts) {
-        styleParams.collageAmount = collageAmount;
-        gallery = getLayout({ items, container, styleParams });
-        const groupCount = getGroupCount(gallery);
-
-        expect(groupCount).not.to.be.above(lastGroupCount);
-
-        lastGroupCount = groupCount;
-      }
-    });
 
     //collageDensity
     it('should have more items in groups when the collageDensity increases', () => {
@@ -320,15 +300,15 @@ describe('Layouter', () => {
 
       for (const size of minItemSizes) {
         styleParams.targetItemSize = size * 4; //targetItemSize must be greater than minItemSize (otherwise the images' proportions will affect the minDimension)
-        styleParams.minItemSize = size;
+        styleParams[optionsMap.layoutParams.targetItemSize.minimum] = size;
         gallery = getLayout({ items, container, styleParams });
 
         const minItemSize = gallery.columns[0].groups.reduce((g, group) => {
           return group.items.reduce((i, item) => {
             const minDimension = Math.min(item.width, item.height);
             return Math.min(i, minDimension);
-          }, styleParams.minItemSize);
-        }, styleParams.minItemSize);
+          }, styleParams[optionsMap.layoutParams.targetItemSize.minimum]);
+        }, styleParams[optionsMap.layoutParams.targetItemSize.minimum]);
 
         expect(minItemSize).not.to.be.below(size);
       }
@@ -346,7 +326,7 @@ describe('Layouter', () => {
 
       for (const size of minItemSizes) {
         styleParams.targetItemSize = size * 8; //targetItemSize must be greater than minItemSize (otherwise the images' proportions will affect the minDimension)
-        styleParams.minItemSize = size;
+        styleParams[optionsMap.layoutParams.targetItemSize.minimum] = size;
         gallery = getLayout({ items, container, styleParams });
 
         const minItemSize = gallery.columns.reduce((c, column) => {
@@ -358,11 +338,11 @@ describe('Layouter', () => {
                 group.items.reduce((i, item) => {
                   const maxDimension = Math.max(item.width, item.height);
                   return Math.min(i, maxDimension);
-                }, styleParams.minItemSize)
+                }, styleParams[optionsMap.layoutParams.targetItemSize.minimum])
               );
-            }, styleParams.minItemSize)
+            }, styleParams[optionsMap.layoutParams.targetItemSize.minimum])
           );
-        }, styleParams.minItemSize);
+        }, styleParams[optionsMap.layoutParams.targetItemSize.minimum]);
 
         expect(minItemSize).not.to.be.below(size);
       }
@@ -536,7 +516,7 @@ describe('Layouter', () => {
       styleParams[optionsMap.layoutParams.groups.allowedGroupTypes] = ['3t','3r','3l','3b']; //without 1
       styleParams[optionsMap.layoutParams.groups.groupSize] = 3;
       styleParams[optionsMap.layoutParams.groups.density] = 1;
-      styleParams.minItemSize = 10;
+      styleParams[optionsMap.layoutParams.targetItemSize.minimum] = 10;
       styleParams.targetItemSize = 1000;
 
       for (const chooseBestGroup of [true, false]) {

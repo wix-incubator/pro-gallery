@@ -79,7 +79,7 @@ export default class Layouter {
 
   findShortestColumn(columns, groupIdx) {
     let minCol = columns[0];
-    if (this.styleParams.placeGroupsLtr) {
+    if (this.styleParams[optionsMap.layoutParams.structure.groupsOrder] === 'LEFT_TO_RIGHT') {
       minCol = columns[groupIdx % columns.length];
     } else {
       let minColH = -1;
