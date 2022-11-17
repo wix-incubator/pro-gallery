@@ -23,7 +23,6 @@ const options = {
     GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
       .HORIZONTAL,
   fixedColumns: 0,
-  magicLayoutSeed: 1,
   [optionsMap.layoutParams.structure.itemSpacing]: 10,
   [optionsMap.layoutParams.groups.numberOfGroupsPerRow]: 0,
   [optionsMap.layoutParams.crop.enable]: false,

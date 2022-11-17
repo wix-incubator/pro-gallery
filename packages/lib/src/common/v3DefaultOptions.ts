@@ -133,6 +133,5 @@ const v3DefaultOptions = {
   autoSlideshowContinuousSpeed: 200,
   //duplicated from lib
   magnificationLevel: 2,
-  magicLayoutSeed: 1,
 };
 export default v3DefaultOptions;

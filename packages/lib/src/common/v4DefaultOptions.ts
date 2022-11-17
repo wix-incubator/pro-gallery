@@ -215,7 +215,6 @@ const defaultV4Options = {
     arrowsColor: '',
   },
   //layouter API params
-  magicLayoutSeed: 1,
   fixedColumns: 0, // determine the number of columns regardless of the screen size (use 0 to ignore)
 };
 

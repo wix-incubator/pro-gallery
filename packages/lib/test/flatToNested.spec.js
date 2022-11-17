@@ -254,7 +254,6 @@ function input() {
     arrowsVerticalPosition: 'ITEM_CENTER',
     arrowsPadding: 23,
     thumbnailSize: 120,
-    magicLayoutSeed: 1,
     imagePlacementAnimation: 'NO_EFFECT',
     calculateTextBoxWidthMode: 'PERCENT',
     textBoxWidth: 200,
