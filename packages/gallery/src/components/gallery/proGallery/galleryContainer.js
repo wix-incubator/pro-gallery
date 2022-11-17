@@ -64,7 +64,7 @@ export class GalleryContainer extends React.Component {
       isInHover: false,
       isInViewport: true,
     };
-
+    //dummy
     this.state = initialState;
     this.layoutCss = [];
 
