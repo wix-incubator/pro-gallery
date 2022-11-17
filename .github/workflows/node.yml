@@ -5,7 +5,7 @@ name: Test
 
 on:
   push:
-    branches: [ master ]
+    branches: [ v4ReleaseBranch ]
   pull_request:
     branches: [ master ]
 
@@ -71,11 +71,11 @@ jobs:
         echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-    - name: Push to master
+    - name: Push to v4ReleaseBranch
       if: github.event_name == 'push'
       # run: echo "this is a push to master"
       run: |
-        git checkout master
+        git checkout v4ReleaseBranch
         lerna publish patch --exact  --yes
         npm run changelog
       env:
