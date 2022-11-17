@@ -703,10 +703,13 @@ class Utils {
 
   isSingleItemHorizontalDisplay(options) {
     return (
-      options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-      options.groupSize === 1 &&
-      options.cubeImages &&
-      options.layoutParams.cropRatio === '100%/100%'
+      options.scrollDirection ===
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .HORIZONTAL &&
+      options[optionsMap.layoutParams.groups.groupSize] === 1 &&
+      options[optionsMap.layoutParams.crop.enable] &&
+      options[optionsMap.layoutParams.crop.ratios].length === 1 &&
+      options[optionsMap.layoutParams.crop.ratios][0] === '100%/100%'
     );
   }
 

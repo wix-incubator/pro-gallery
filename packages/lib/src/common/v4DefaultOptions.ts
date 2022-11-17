@@ -57,7 +57,9 @@ const defaultV4Options = {
       size: 120,
       spacing: 4,
       enable: false,
-      position: GALLERY_CONSTS.thumbnailsPosition.OUTSIDE_GALLERY,
+      position:
+        GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position]
+          .OUTSIDE_GALLERY,
       alignment:
         GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM,
     },
@@ -146,8 +148,13 @@ const defaultV4Options = {
         magnificationValue: 2,
       },
       secondaryMedia: {
-        trigger: GALLERY_CONSTS.secondaryMediaTrigger.OFF,
-        behaviour: GALLERY_CONSTS.secondaryMediaBehaviour.APPEARS,
+        trigger:
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger]
+            .OFF,
+        behaviour:
+          GALLERY_CONSTS[
+            optionsMap.behaviourParams.item.secondaryMedia.behaviour
+          ].APPEARS,
       },
     },
     gallery: {
