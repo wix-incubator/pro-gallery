@@ -4,7 +4,7 @@ import Layouter from '../src/logic/layouter.js';
 import { testImages } from './images-mock.js';
 import { expect } from 'chai';
 import deepFreeze from 'deep-freeze';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { optionsMap } from 'pro-gallery-lib';
 
 const getItems = (count) => deepFreeze(testImages.slice(0, count));
 const getGroupCount = (layout) =>
@@ -21,26 +21,23 @@ describe('Layouter', () => {
   beforeEach(() => {
     const items = getItems();
     styleParams = {
-      layoutParams: { 
-        gallerySpacing: 0,
-        cropRatio: 1,
-        repeatingGroupTypes: '',
-      },
-      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
-      isVertical: false,
+      [optionsMap.layoutParams.structure.gallerySpacing]: 0,
+      [optionsMap.layoutParams.crop.ratios]: [1],
+      [optionsMap.layoutParams.groups.repeatingGroupTypes]: [],
+      [optionsMap.layoutParams.structure.scrollDirection]: 'VERTICAL',
+      [optionsMap.layoutParams.structure.layoutOrientation]: 'HORIZONTAL',
       targetItemSize: 200,
-      groupSize: 3,
-      groupTypes: '1,2h,2v,3t,3b,3l,3r,3v,3h',
-      cubeImages: false,
-      cubeType: 'fill',
-      smartCrop: false,
-      chooseBestGroup: true,
-      collageAmount: 0.9,
-      collageDensity: 0.9,
-      minItemSize: 20,
-      imageMargin: 10,
-      scatter: 0,
-      rotatingScatter: '',
+      [optionsMap.layoutParams.groups.groupSize]: 3,
+      [optionsMap.layoutParams.groups.allowedGroupTypes]: ['1','2h','2v','3t','3b','3l','3r','3v','3h'],
+      [optionsMap.layoutParams.crop.enable]: false,
+      [optionsMap.layoutParams.crop.method]: 'FILL',
+      [optionsMap.layoutParams.crop.enableSmartCrop]: false,
+      [optionsMap.layoutParams.groups.groupByOrientation]: true,
+      [optionsMap.layoutParams.groups.density]: 0.9,
+      [optionsMap.layoutParams.targetItemSize.minimum]: 20,
+      [optionsMap.layoutParams.structure.itemSpacing]: 10,
+      [optionsMap.layoutParams.structure.scatter.randomScatter]: 0,
+      [optionsMap.layoutParams.structure.scatter.manualScatter]: '',
       fixedColumns: 0,
     };
 
@@ -68,8 +65,7 @@ describe('Layouter', () => {
 
   describe('items', () => {
     it('should include all items in original order', () => {
-      styleParams.galleryWidth = 500;
-      styleParams.minItemSize = 160;
+      styleParams[optionsMap.layoutParams.targetItemSize.minimum] = 160;
 
       for (const size of [10, 50, 100]) {
         const items = getItems(size);
@@ -84,10 +80,9 @@ describe('Layouter', () => {
 
     it('should have items offsets and dimensions calculated correctly', () => {
       const items = getItems(100);
-      styleParams.galleryWidth = 4000;
       styleParams.targetItemSize = 500;
-      styleParams.layoutParams.repeatingGroupTypes = '1,2h,2v,3r,3t,3l,3b,3v,3h';
-      styleParams.imageMargin = 0;
+      styleParams[optionsMap.layoutParams.groups.repeatingGroupTypes] = ['1','2h','2v','3r','3t','3l','3b','3v','3h'];
+      styleParams[optionsMap.layoutParams.structure.itemSpacing] = 0;
 
       gallery = getLayout({ items, container, styleParams });
 
@@ -134,7 +129,7 @@ describe('Layouter', () => {
     //targetItemSize
     it('should have taller Strips as targetItemSize increases', () => {
       const items = getItems(100);
-      styleParams.isVertical = false;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'HORIZONTAL';
 
       let lastGroupHeight = 0;
       for (const size of [100, 200, 300, 400]) {
@@ -154,8 +149,7 @@ describe('Layouter', () => {
     //targetItemSize
     it('should have all groups in a Columns gallery narrower than targetItemSize', () => {
       const items = getItems(100);
-      styleParams.isVertical = true;
-      styleParams.galleryWidth = 1200;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
 
       let lastGroupWidth = 0;
       for (const size of [10, 50, 100, 200, 300, 400]) {
@@ -182,11 +176,11 @@ describe('Layouter', () => {
       const allowedRounding = 2; //the number of pixels that can change due to rounding
 
       const items = getItems(100);
-      styleParams.cubeImages = true;
-      styleParams.imageMargin = 0;
+      styleParams[optionsMap.layoutParams.crop.enable] = true;
+      styleParams[optionsMap.layoutParams.structure.itemSpacing] = 0;
 
       for (const ratio of [0.25, 0.5, 1, 2, 4]) {
-        styleParams.layoutParams.cropRatio = ratio;
+        styleParams[optionsMap.layoutParams.crop.ratios] = [ratio];
         gallery = getLayout({ items, container, styleParams });
 
         const isCroppedCorrectly = gallery.columns[0].groups.reduce(
@@ -216,7 +210,7 @@ describe('Layouter', () => {
     //fixedColumns
     it('should have fixed number of columns if specified', () => {
       const items = getItems(100);
-      styleParams.isVertical = true;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
 
       for (const num of [1, 5, 10, 20]) {
         styleParams.fixedColumns = num;
@@ -226,25 +220,6 @@ describe('Layouter', () => {
       }
     });
 
-    //collageAmount
-    it('should have more items in groups when the collageAmount increases', () => {
-      const itemCount = 100;
-      const items = getItems(itemCount);
-      const collageAmounts = Array.from({ length: 11 }, (_, i) => i).map(
-        (i) => i / 10
-      );
-      let lastGroupCount = itemCount;
-
-      for (const collageAmount of collageAmounts) {
-        styleParams.collageAmount = collageAmount;
-        gallery = getLayout({ items, container, styleParams });
-        const groupCount = getGroupCount(gallery);
-
-        expect(groupCount).not.to.be.above(lastGroupCount);
-
-        lastGroupCount = groupCount;
-      }
-    });
 
     //collageDensity
     it('should have more items in groups when the collageDensity increases', () => {
@@ -257,7 +232,7 @@ describe('Layouter', () => {
       let lastGroupCount = itemCount;
 
       for (const collageDensity of collageDensities) {
-        styleParams.collageDensity = collageDensity;
+        styleParams[optionsMap.layoutParams.groups.density] = collageDensity;
         gallery = getLayout({ items, container, styleParams });
         const groupCount = getGroupCount(gallery);
 
@@ -272,11 +247,11 @@ describe('Layouter', () => {
       const items = getItems(100);
 
       for (const size of [1, 2, 3]) {
-        styleParams.groupSize = size;
+        styleParams[optionsMap.layoutParams.groups.groupSize] = size;
         gallery = getLayout({ items, container, styleParams });
 
         const isWithinSize = gallery.columns[0].groups.reduce((g, group) => {
-          const inSize = group.items.length <= styleParams.groupSize;
+          const inSize = group.items.length <= styleParams[optionsMap.layoutParams.groups.groupSize];
           return g && inSize;
         }, true);
 
@@ -289,22 +264,22 @@ describe('Layouter', () => {
       const items = getItems(100);
 
       const groupTypes = [
-        '1',
-        '1,2h,2v',
-        '1,3b,3l,3r',
-        '1,2h,2v,3v,3h',
-        '1,3t,3b',
-        '1,3v,3h',
-        '1,3r,3b,3v,3h',
-        '1,2h,2v,3v,3h,3l,3b',
+        ['1'],
+        ['1','2h','2v'],
+        ['1','3b','3l','3r'],
+        ['1','2h','2v','3v','3h'],
+        ['1','3t','3b'],
+        ['1','3v','3h'],
+        ['1','3r','3b','3v','3h'],
+        ['1','2h','2v','3v','3h','3l','3b'],
       ]; //groupType '1' must always be an option
 
       for (const type of groupTypes) {
-        styleParams.groupTypes = type;
+        styleParams[optionsMap.layoutParams.groups.allowedGroupTypes] = type;
         gallery = getLayout({ items, container, styleParams });
 
         const isWithinTypes = gallery.columns[0].groups.reduce((g, group) => {
-          const inTypes = styleParams.groupTypes.indexOf(group.type) >= 0;
+          const inTypes = styleParams[optionsMap.layoutParams.groups.allowedGroupTypes].indexOf(group.type) >= 0;
           return g && inTypes;
         }, true);
 
@@ -315,22 +290,22 @@ describe('Layouter', () => {
     //minItemSize
     it('should have all Strips GalleryLayout images larger than minItemSize', () => {
       const items = getItems(100);
-      styleParams.isVertical = false;
-      styleParams.imageMargin = 0;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'HORIZONTAL';
+      styleParams[optionsMap.layoutParams.structure.itemSpacing] = 0;
 
       const minItemSizes = [10, 50, 100, 200, 300, 400];
 
       for (const size of minItemSizes) {
         styleParams.targetItemSize = size * 4; //targetItemSize must be greater than minItemSize (otherwise the images' proportions will affect the minDimension)
-        styleParams.minItemSize = size;
+        styleParams[optionsMap.layoutParams.targetItemSize.minimum] = size;
         gallery = getLayout({ items, container, styleParams });
 
         const minItemSize = gallery.columns[0].groups.reduce((g, group) => {
           return group.items.reduce((i, item) => {
             const minDimension = Math.min(item.width, item.height);
             return Math.min(i, minDimension);
-          }, styleParams.minItemSize);
-        }, styleParams.minItemSize);
+          }, styleParams[optionsMap.layoutParams.targetItemSize.minimum]);
+        }, styleParams[optionsMap.layoutParams.targetItemSize.minimum]);
 
         expect(minItemSize).not.to.be.below(size);
       }
@@ -339,16 +314,15 @@ describe('Layouter', () => {
     //minItemSize
     it('should have all Columns GalleryLayout images larger than minItemSize', () => {
       const items = getItems(100);
-      styleParams.isVertical = true;
-      styleParams.galleryWidth = 4000;
-      styleParams.imageMargin = 0;
-      styleParams.collageDensity = 1;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
+      styleParams[optionsMap.layoutParams.structure.itemSpacing] = 0;
+      styleParams[optionsMap.layoutParams.groups.density] = 1;
 
       const minItemSizes = [10, 50, 100, 200, 300];
 
       for (const size of minItemSizes) {
         styleParams.targetItemSize = size * 8; //targetItemSize must be greater than minItemSize (otherwise the images' proportions will affect the minDimension)
-        styleParams.minItemSize = size;
+        styleParams[optionsMap.layoutParams.targetItemSize.minimum] = size;
         gallery = getLayout({ items, container, styleParams });
 
         const minItemSize = gallery.columns.reduce((c, column) => {
@@ -360,11 +334,11 @@ describe('Layouter', () => {
                 group.items.reduce((i, item) => {
                   const maxDimension = Math.max(item.width, item.height);
                   return Math.min(i, maxDimension);
-                }, styleParams.minItemSize)
+                }, styleParams[optionsMap.layoutParams.targetItemSize.minimum])
               );
-            }, styleParams.minItemSize)
+            }, styleParams[optionsMap.layoutParams.targetItemSize.minimum])
           );
-        }, styleParams.minItemSize);
+        }, styleParams[optionsMap.layoutParams.targetItemSize.minimum]);
 
         expect(minItemSize).not.to.be.below(size);
       }
@@ -377,11 +351,11 @@ describe('Layouter', () => {
       styleParams.fixedColumns = 0;
       container.galleryWidth = 1000;
 
-      styleParams.isVertical = true;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
       gallery = getLayout({ items, container, styleParams });
       expect(gallery.columns.length).to.equal(5);
 
-      styleParams.isVertical = false;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'HORIZONTAL';
       gallery = getLayout({ items, container, styleParams });
       expect(gallery.columns.length).to.equal(1);
     });
@@ -391,13 +365,13 @@ describe('Layouter', () => {
       const items = getItems(100);
       container.galleryHeight = 500;
 
-      styleParams.scrollDirection = GALLERY_CONSTS.scrollDirection.VERTICAL;
-      styleParams.imageMargin = 0;
+      styleParams[optionsMap.layoutParams.structure.scrollDirection] = 'VERTICAL';
+      styleParams[optionsMap.layoutParams.structure.itemSpacing] = 0;
 
       gallery = getLayout({ items, container, styleParams });
       expect(gallery.height).to.be.above(container.galleryHeight);
 
-      styleParams.scrollDirection = GALLERY_CONSTS.scrollDirection.HORIZONTAL;
+      styleParams[optionsMap.layoutParams.structure.scrollDirection] = 'HORIZONTAL';
       gallery = getLayout({ items, container, styleParams });
       expect(gallery.height).to.equal(container.galleryHeight);
     });
@@ -405,27 +379,27 @@ describe('Layouter', () => {
     // repeatingGroupTypes
     it('should have groups from the rotating groups types by their order ', () => {
       const items = getItems(100);
-      styleParams.isVertical = false;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'HORIZONTAL';
 
       const groupTypes = [
-        '1',
-        '1,2h,2v',
-        '1,3b,1,3r',
-        '1,2h,2v,3v,3h',
-        '1,3t,3b',
-        '1,3v,3h',
-        '1,3r,2h,3v,3h',
-        '2h,2v,3v,3h,3l,3b',
+        ['1'],
+        ['1','2h','2v'],
+        ['1','3b','1','3r'],
+        ['1','2h','2v','3v','3h'],
+        ['1','3t','3b'],
+        ['1','3v','3h'],
+        ['1','3r','2h','3v','3h'],
+        ['2h','2v','3v','3h','3l','3b'],
       ];
 
       for (const type of groupTypes) {
-        styleParams.layoutParams.repeatingGroupTypes = type;
+        styleParams[optionsMap.layoutParams.groups.repeatingGroupTypes] = type;
         gallery = getLayout({ items, container, styleParams });
 
         const isWithinTypes = gallery.columns[0].groups.reduce(
           (g, group, idx) => {
             const repeatingGroupTypes =
-              styleParams.layoutParams.repeatingGroupTypes.split(',');
+              styleParams[optionsMap.layoutParams.groups.repeatingGroupTypes];
             const expectedType =
               repeatingGroupTypes[idx % repeatingGroupTypes.length];
             const groupType = group.type;
@@ -445,9 +419,9 @@ describe('Layouter', () => {
       const allowedRounding = 2; //the number of pixels that can change due to rounding
 
       const items = getItems(100); //todo - something breaks when using exactly 100 images
-      styleParams.cubeImages = false;
-      styleParams.imageMargin = 0;
-      styleParams.collageDensity = 0.8;
+      styleParams[optionsMap.layoutParams.crop.enable] = false;
+      styleParams[optionsMap.layoutParams.structure.itemSpacing] = 0;
+      styleParams[optionsMap.layoutParams.groups.density] = 0.8;
 
       gallery = getLayout({ items, container, styleParams });
       const isOriginalDimensions = gallery.columns[0].groups.reduce(
@@ -472,8 +446,7 @@ describe('Layouter', () => {
 
       expect(isOriginalDimensions).to.be.true;
 
-      styleParams.cubeImages = true;
-
+      styleParams[optionsMap.layoutParams.crop.enable] = true;
       gallery = getLayout({ items, container, styleParams });
       const isCroppedCorrectly = gallery.columns[0].groups.reduce(
         (g, group) => {
@@ -483,10 +456,10 @@ describe('Layouter', () => {
               const isItemCroppedCorrectly =
                 (image.width - allowedRounding) /
                   (image.height + allowedRounding) <=
-                  styleParams.layoutParams.cropRatio &&
+                  styleParams[optionsMap.layoutParams.crop.ratios][0] &&
                 (image.width + allowedRounding) /
                   (image.height - allowedRounding) >=
-                  styleParams.layoutParams.cropRatio;
+                  styleParams[optionsMap.layoutParams.crop.ratios][0];
               return i && isItemCroppedCorrectly;
             }, true)
           );
@@ -502,10 +475,10 @@ describe('Layouter', () => {
       const allowedRounding = 2; //the number of pixels that can change due to rounding
 
       const items = getItems(100);
-      styleParams.layoutParams.cropRatio = 2;
-      styleParams.cubeImages = true;
-      styleParams.smartCrop = true;
-      styleParams.imageMargin = 0;
+      styleParams[optionsMap.layoutParams.crop.ratios] = [2];
+      styleParams[optionsMap.layoutParams.crop.enable] = true;
+      styleParams[optionsMap.layoutParams.crop.enableSmartCrop] = true;
+      styleParams[optionsMap.layoutParams.structure.itemSpacing] = 0;
 
       gallery = getLayout({ items, container, styleParams });
       const isCroppedCorrectly = gallery.columns[0].groups.reduce(
@@ -514,8 +487,8 @@ describe('Layouter', () => {
             g &&
             group.items.reduce((i, image) => {
               const cropRatio = image.isLandscape
-                ? styleParams.layoutParams.cropRatio
-                : 1 / styleParams.layoutParams.cropRatio;
+                ? styleParams[optionsMap.layoutParams.crop.ratios][0]
+                : 1 / styleParams[optionsMap.layoutParams.crop.ratios][0];
               const isItemCroppedCorrectly =
                 (image.width - allowedRounding) /
                   (image.height + allowedRounding) <=
@@ -536,14 +509,14 @@ describe('Layouter', () => {
     // chooseBestGroup
     it('should not allow ugly groups if chooseBestGroup is true ', () => {
       const items = getItems(99);
-      styleParams.groupTypes = '3t,3r,3l,3b'; //without 1
-      styleParams.groupSize = 3;
-      styleParams.collageDensity = 1;
-      styleParams.minItemSize = 10;
+      styleParams[optionsMap.layoutParams.groups.allowedGroupTypes] = ['3t','3r','3l','3b']; //without 1
+      styleParams[optionsMap.layoutParams.groups.groupSize] = 3;
+      styleParams[optionsMap.layoutParams.groups.density] = 1;
+      styleParams[optionsMap.layoutParams.targetItemSize.minimum] = 10;
       styleParams.targetItemSize = 1000;
 
       for (const chooseBestGroup of [true, false]) {
-        styleParams.chooseBestGroup = chooseBestGroup;
+        styleParams[optionsMap.layoutParams.groups.groupByOrientation] = chooseBestGroup;
 
         gallery = getLayout({ items, container, styleParams });
         const isWithinTypes = gallery.columns[0].groups.reduce((g, group) => {
@@ -559,12 +532,11 @@ describe('Layouter', () => {
     // imageMargin (between groups)
     it('should have spaces between groups equal to imageMargin', () => {
       const items = getItems(100);
-      styleParams.galleryWidth = 4000;
       styleParams.targetItemSize = 500;
-      styleParams.groupSize = 1;
+      styleParams[optionsMap.layoutParams.groups.groupSize] = 1;
 
       for (const margin of [10, 50, 100, 200]) {
-        styleParams.imageMargin = margin * 2;
+        styleParams[optionsMap.layoutParams.structure.itemSpacing] = margin * 2;
         gallery = getLayout({ items, container, styleParams });
 
         let lastItem = false;
@@ -592,13 +564,12 @@ describe('Layouter', () => {
     //TODO fix this test once the playground is complete
     it('should have spaces between items in a group equal to imageMargin', () => {
       const items = getItems(100);
-      styleParams.galleryWidth = 4000;
       styleParams.targetItemSize = 1000;
-      styleParams.groupSize = 3;
-      styleParams.groupTypes = '1,2h,2v,3r,3t,3l,3b,3v,3h';
+      styleParams[optionsMap.layoutParams.groups.groupSize] = 3;
+      styleParams[optionsMap.layoutParams.groups.allowedGroupTypes] = ['1','2h','2v','3r','3t','3l','3b','3v','3h'];
 
       for (const margin of [0, 30, 40, 80]) {
-        styleParams.imageMargin = margin * 2;
+        styleParams[optionsMap.layoutParams.structure.itemSpacing] = margin * 2;
         gallery = getLayout({ items, container, styleParams });
 
         let marginDiff = 0;
@@ -630,8 +601,8 @@ describe('Layouter', () => {
     // repeatingGroupTypes
     it('should type groups according to repeatingGroupTypes if defined', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
-      styleParams.layoutParams.repeatingGroupTypes = '2h,3v,3b,3t,1,2h,2v';
-      const repeatingGroupTypesArr = styleParams.layoutParams.repeatingGroupTypes.split(',');
+      styleParams[optionsMap.layoutParams.groups.repeatingGroupTypes] = ['2h','3v','3b','3t','1','2h','2v'];
+      const repeatingGroupTypesArr = styleParams[optionsMap.layoutParams.groups.repeatingGroupTypes];
 
       gallery = getLayout({ items, container, styleParams });
       gallery.groups.forEach((group, g) => {
@@ -644,9 +615,9 @@ describe('Layouter', () => {
     // functional cropRatio
     it('should crop items according to the cropRatio function if defined', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
-      styleParams.layoutParams.cropRatio = () => Math.random();
+      styleParams[optionsMap.layoutParams.crop.ratios] = () => Math.random();
       styleParams.cropItems = true;
-      styleParams.smartCrop = false;
+      styleParams[optionsMap.layoutParams.crop.enableSmartCrop] = false;
 
       gallery = getLayout({ items, container, styleParams });
 
@@ -659,11 +630,11 @@ describe('Layouter', () => {
     // crop only fill
     it('should not crop items if cropOnlyFill is true and cropType is fit', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
-      styleParams.layoutParams.cropRatio = 1;
-      styleParams.cropOnlyFill = true;
-      styleParams.cubeType = 'fit';
+      styleParams[optionsMap.layoutParams.crop.ratios] = [1];
+      styleParams[optionsMap.layoutParams.crop.cropOnlyFill] = true;
+      styleParams[optionsMap.layoutParams.crop.method] = 'FIT';
       styleParams.cropItems = true;
-      styleParams.smartCrop = false;
+      styleParams[optionsMap.layoutParams.crop.enableSmartCrop] = false;
 
       gallery = getLayout({ items, container, styleParams });
 
@@ -675,13 +646,12 @@ describe('Layouter', () => {
     // rotatingCropRatios
     it('should crop items according to rotatingCropRatios if defined', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
-      styleParams.rotatingCropRatios = '2,1.5,1.2,0.5,1';
-      styleParams.layoutParams.cropRatio = '1';
-      styleParams.cubeImages = true;
-      styleParams.smartCrop = false;
-      styleParams.isVertical = true;
+      styleParams[optionsMap.layoutParams.crop.ratios] = ['2','1.5','1.2','0.5','1'];
+      styleParams[optionsMap.layoutParams.crop.enable] = true;
+      styleParams[optionsMap.layoutParams.crop.enableSmartCrop] = false;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
 
-      const rotatingCropRatiosArr = styleParams.rotatingCropRatios.split(',');
+      const rotatingCropRatiosArr = styleParams[optionsMap.layoutParams.crop.ratios];
 
       gallery = getLayout({ items, container, styleParams });
       gallery.items.forEach((item, i) => {
@@ -699,11 +669,11 @@ describe('Layouter', () => {
   it('should not find ratios under 1 when "cubeType" is "min"', () => {
     const items = getItems(100); //todo - something breaks when using exactly 100 images
     const ratio = 1;
-    styleParams.layoutParams.cropRatio = ratio;
-    styleParams.cubeType = 'min';
-    styleParams.cubeImages = true;
-    styleParams.smartCrop = false;
-    styleParams.isVertical = true;
+    styleParams[optionsMap.layoutParams.crop.ratios] = [ratio];
+    styleParams[optionsMap.layoutParams.crop.method] = 'MIN';
+    styleParams[optionsMap.layoutParams.crop.enable] = true;
+    styleParams[optionsMap.layoutParams.crop.enableSmartCrop] = false;
+    styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
 
     gallery = getLayout({ items, container, styleParams });
     gallery.items.forEach((item) => {
@@ -716,11 +686,11 @@ describe('Layouter', () => {
   it('should not find ratios above 1 when "cubeType" is "max"', () => {
     const items = getItems(100); //todo - something breaks when using exactly 100 images
     const ratio = 1;
-    styleParams.layoutParams.cropRatio = ratio;
-    styleParams.cubeType = 'max';
-    styleParams.cubeImages = true;
-    styleParams.smartCrop = false;
-    styleParams.isVertical = true;
+    styleParams[optionsMap.layoutParams.crop.ratios] = [ratio];
+    styleParams[optionsMap.layoutParams.crop.method] = 'MAX';
+    styleParams[optionsMap.layoutParams.crop.enable] = true;
+    styleParams[optionsMap.layoutParams.crop.enableSmartCrop] = false;
+    styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
 
     gallery = getLayout({ items, container, styleParams });
     gallery.items.forEach((item) => {
@@ -734,9 +704,9 @@ describe('Layouter', () => {
     it('findLastVisibleItemIdx should work', () => {
       const items = getItems(100);
 
-      styleParams.isVertical = true;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
       styleParams.fixedColumns = 1;
-      styleParams.groupSize = 1;
+      styleParams[optionsMap.layoutParams.groups.groupSize] = 1;
 
       container.galleryWidth = 1000;
 
@@ -760,10 +730,10 @@ describe('Layouter', () => {
 
       const items = getItems(100);
 
-      styleParams.isVertical = true;
-      styleParams.cubeImages = true;
-      styleParams.layoutParams.cropRatio = 1;
-      styleParams.groupSize = 1;
+      styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
+      styleParams[optionsMap.layoutParams.crop.enable] = true;
+      styleParams[optionsMap.layoutParams.crop.ratios] = [1];
+      styleParams[optionsMap.layoutParams.groups.groupSize] = 1;
 
       container.galleryWidth = 1000;
 
