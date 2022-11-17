@@ -75,7 +75,7 @@ jobs:
       if: github.event_name == 'push'
       # run: echo "this is a push to master"
       run: |
-        git checkout master
+        git checkout v4ReleaseBranch
         lerna publish patch --exact  --yes
         npm run changelog
       env:
