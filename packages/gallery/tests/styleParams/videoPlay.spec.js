@@ -63,7 +63,7 @@ describe('options - videoPlay', () => {
       driver.mount.proGallery(initialProps);
       await driver.update();
       const itemContainer = driver.find.hook('item-container').at(0);
-      itemContainer.simulate('mouseover');
+      itemContainer.simulate('mouseEnter');
       const videoItem = driver.find.tag('video');
       expect(videoItem).to.have.lengthOf(2);
       driver.detach.proGallery();
