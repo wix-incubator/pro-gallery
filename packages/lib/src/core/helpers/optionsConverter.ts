@@ -86,7 +86,6 @@ function migrateOptions(flatOptionsObject) {
   ///----------- STYLING -------------///
 
   migratedOptions = changeNames(migratedOptions, nameChangedStylingParams);
-  delete migratedOptions.enableLeanGallery;
   delete migratedOptions.fullscreen;
   return migratedOptions;
 }
