@@ -53,7 +53,7 @@ import {
 import {
   fixedOptions as thumbnails,
   createOptions as thumbnailsOptions,
-} from './thumbnailGallery';
+} from './thumbnailsGallery';
 
 import {
   fixedOptions as empty,
