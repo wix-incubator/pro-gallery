@@ -453,7 +453,7 @@ class ItemView extends React.Component {
     );
   }
 
-  get3dItem(dimensions) {
+  get3dItem(imageDimensions) {
     const props = utils.pick(this.props, [
       'gotFirstScrollEvent',
       'calculatedAlt',
@@ -476,7 +476,7 @@ class ItemView extends React.Component {
       <ThreeDItem
         {...props}
         key="3dItem"
-        dimensions={dimensions}
+        imageDimensions={imageDimensions}
         actions={{
           ...this.props.actions,
           setItemLoaded: this.setItemLoaded,

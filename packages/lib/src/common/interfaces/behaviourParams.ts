@@ -6,6 +6,7 @@ export interface BehaviourParams {
 export interface Item {
   clickAction?: 'NOTHING' | 'LINK' | 'ACTION' | 'MAGNIFY';
   video?: Video;
+  threeDimensionalScene?: ThreeDimensionalScene;
   overlay?: Overlay;
   content?: Content;
   secondaryMedia?: SecondaryMedia;
@@ -42,6 +43,29 @@ export interface Video {
   enablePlayButton?: boolean;
   enableControls?: boolean;
   enablePlaceholder?: boolean;
+}
+
+export interface ThreeDimensionalScene {
+  transform?: Transform;
+  keepPosterAfterObjectLoad?: boolean;
+  controls?: Controls;
+}
+
+export interface Dimensions {
+  x?: number;
+  y?: number;
+  z?: number;
+}
+
+export interface Transform {
+  rotation?: Dimensions;
+  scale?: Dimensions;
+  translation?: Dimensions;
+}
+export interface Controls {
+  enableZoom?: boolean;
+  enableRotate?: boolean;
+  enablePan?: boolean;
 }
 
 export interface Overlay {

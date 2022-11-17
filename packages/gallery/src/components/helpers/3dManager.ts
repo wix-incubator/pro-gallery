@@ -1,3 +1,4 @@
+import { utils } from 'pro-gallery-lib';
 import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 type Three = typeof import('three');
 type GLTFLoader = typeof import('three/examples/jsm/loaders/GLTFLoader');
@@ -11,23 +12,24 @@ type Extensions = {
   rgbELoader: RGBELoader;
 };
 
-export function create3DManager() {
-  let THREE_PROMISE: Promise<Three> | null = null;
+const utils_singleInstance = utils.singleInstance as <
+  T extends (...args: any[]) => any
+>(
+  fn: T
+) => T;
 
-  let EXTENSIONS_PROMISE: Promise<Extensions> | null = null;
+export function create3DManager() {
+  let isInitialized = false;
   return {
-    init() {
-      if (THREE_PROMISE) {
-        return THREE_PROMISE;
-      }
-      THREE_PROMISE = new Promise((resolve, reject) => {
+    init: utils_singleInstance(() => {
+      const THREE_PROMISE = new Promise((resolve, reject) => {
         import('three')
           .then((three) => {
             resolve(three);
           })
           .catch(reject);
       });
-      EXTENSIONS_PROMISE = new Promise<Extensions>((resolve, reject) =>
+      const EXTENSIONS_PROMISE = new Promise<Extensions>((resolve, reject) =>
         Promise.all([
           import('three/examples/jsm/loaders/GLTFLoader'),
           import('three/examples/jsm/loaders/DRACOLoader'),
@@ -44,40 +46,107 @@ export function create3DManager() {
           })
           .catch(reject)
       );
-
-      return THREE_PROMISE;
-    },
+      const awaitLoad = Promise.all([THREE_PROMISE, EXTENSIONS_PROMISE]);
+      awaitLoad.then(() => {
+        isInitialized = true;
+      });
+      return {
+        THREE: THREE_PROMISE,
+        EXTENSIONS: EXTENSIONS_PROMISE,
+        awaitLoad,
+      };
+    }),
     get isInitialized() {
-      return THREE_PROMISE !== null;
+      return isInitialized;
     },
-    async render(element: HTMLElement) {
-      if (!THREE_PROMISE) {
-        await this.init();
-      }
-      const three = (await THREE_PROMISE) as Three;
-      const extensions = (await EXTENSIONS_PROMISE) as Extensions;
-      return createSceneManager(three, element, extensions);
+    async render(
+      element: HTMLElement,
+      canvas: HTMLCanvasElement = element.appendChild(
+        document.createElement('canvas')
+      )
+    ) {
+      const { THREE, EXTENSIONS } = this.init();
+      const three = (await THREE) as Three;
+      const extensions = (await EXTENSIONS) as Extensions;
+      return createSceneManager(three, element, canvas, extensions);
     },
   };
 }
 
 export const ThreeDManager = create3DManager();
 
+interface ManagerInstance {
+  stop(): void;
+  opacity: number;
+  loadBackground(url: string): void;
+  loadTextureAsLightmap(url: string): void;
+  addByDirectionalLights(
+    intensity?: number,
+    color?: number
+  ): {
+    remove(): void;
+  };
+  sun(
+    intensity?: number,
+    color?: number
+  ): {
+    remove(): void;
+  };
+  addAmbientLight(
+    intensity?: number,
+    color?: number
+  ): {
+    remove(): void;
+  };
+  load3DModel(url: string): Promise<{
+    remove(): void;
+  }>;
+  loadHDR(url: string): Promise<{
+    remove(): void;
+  }>;
+  addGround(opacity?: number): {
+    remove(): void;
+  };
+  setRotation(
+    x: number | undefined,
+    y: number | undefined,
+    z: number | undefined
+  ): void;
+  setCameraPosition(
+    x: number | undefined,
+    y: number | undefined,
+    z: number | undefined
+  ): void;
+  setScale(
+    x: number | undefined,
+    y: number | undefined,
+    z: number | undefined
+  ): void;
+}
+
 export function createSceneManager(
   three: typeof import('three'),
-  element: HTMLElement,
+  container: HTMLElement,
+  canvas: HTMLCanvasElement,
   extensions: Extensions
-) {
-  const renderer = new three.WebGLRenderer({ antialias: true, alpha: true });
+): ManagerInstance {
+  const renderer = new three.WebGLRenderer({
+    antialias: true,
+    alpha: true,
+    canvas,
+  });
   renderer.setClearColor(0x000000, 0);
   const scene = new three.Scene();
   const dracoLoader = new extensions.dracoLoader.DRACOLoader();
   const gltfLoader = new extensions.gltfLoader.GLTFLoader();
   gltfLoader.setDRACOLoader(dracoLoader);
-  const width = element.clientWidth;
-  const height = element.clientHeight;
+  const width = container.clientWidth;
+  const height = container.clientHeight;
   const camera = new three.PerspectiveCamera(75, width / height, 0.1, 1000);
-  const controls = new extensions.orbitControls.OrbitControls(camera, element);
+  const controls = new extensions.orbitControls.OrbitControls(
+    camera,
+    container
+  );
   controls.target.set(0, 0, 0);
   camera.position.set(0, 0, 0.8);
   controls.enableDamping = true;
@@ -87,7 +156,6 @@ export function createSceneManager(
   controls.minDistance = 0.65;
   controls.autoRotate = true;
   renderer.setSize(width, height);
-  element.appendChild(renderer.domElement);
   renderer.domElement.style.position = 'absolute';
   renderer.domElement.style.userSelect = 'none';
   renderer.domElement.style.transition = 'opacity 0.3s ease-in-out';
@@ -99,6 +167,9 @@ export function createSceneManager(
     if (stop) {
       return;
     }
+    canvas.width = container.clientWidth;
+    canvas.height = container.clientHeight;
+    renderer.setSize(container.clientWidth, container.clientHeight);
     requestAnimationFrame(animate);
     controls.update();
     renderer.render(scene, camera);
@@ -117,12 +188,12 @@ export function createSceneManager(
       opacity = value;
       renderer.domElement.style.opacity = opacity.toString();
     },
-    loadBackground(url: string) {
+    loadBackground(url) {
       const backgroundTexture = new three.TextureLoader().load(url);
       scene.background = backgroundTexture;
       scene.environment = backgroundTexture;
     },
-    loadTextureAsLightmap(url: string) {
+    loadTextureAsLightmap(url) {
       const lightmapTexture = new three.TextureLoader().load(url);
       scene.traverse((child) => {
         if (child instanceof three.Mesh) {
@@ -166,7 +237,7 @@ export function createSceneManager(
         },
       };
     },
-    async load3DModel(url: string) {
+    async load3DModel(url) {
       const gltf = await new Promise<GLTF>((resolve) => {
         gltfLoader.load(url, resolve);
       });
@@ -203,7 +274,7 @@ export function createSceneManager(
         },
       };
     },
-    async loadHDR(url: string) {
+    async loadHDR(url) {
       const hdrLoader = new extensions.rgbELoader.RGBELoader();
       const hdr = await new Promise<THREE.Texture>((resolve) => {
         hdrLoader.load(url, resolve);
@@ -232,6 +303,15 @@ export function createSceneManager(
           scene.remove(ground);
         },
       };
+    },
+    setRotation(x, y, z) {
+      controls.target.set(x ?? 0, y ?? 0, z ?? 0);
+    },
+    setCameraPosition(x, y, z) {
+      camera.position.set(x ?? 0, y ?? 0, z ?? 0);
+    },
+    setScale(x, y, z) {
+      scene.scale.set(x ?? 1, y ?? 1, z ?? 1);
     },
   };
 }
