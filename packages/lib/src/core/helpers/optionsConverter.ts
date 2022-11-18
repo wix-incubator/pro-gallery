@@ -4,7 +4,7 @@ import {
   flatToNested,
 } from './optionsUtils';
 
-import { isLayout } from '../../common/constants/layout';
+import { isLayout } from '../../common/constants/layoutParams_structure_galleryLayout';
 import optionsMap from './optionsMap';
 import { addOldOptions } from './optionsBackwardConverter';
 import {
