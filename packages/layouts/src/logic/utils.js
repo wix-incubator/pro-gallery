@@ -1,9 +1,4 @@
-import {
-  flattenObject,
-  flatToNested,
-  extendNestedOptionsToIncludeOldAndNew,
-  optionsMap,
-} from 'pro-gallery-lib';
+import { optionsMap } from 'pro-gallery-lib';
 
 class Utils {
   constructor() {
@@ -80,15 +75,13 @@ class Utils {
   addDefaultStyleParams(styleParams) {
     function populateWithDefaultOptions(options) {
       //This will override only undefined values with default values
-      const flatDefault = flattenObject(defaultLayouterSP);
-      const flatOptions = flattenObject(options);
-      const mergedOptions = Object.assign({}, flatDefault, flatOptions);
+      const mergedOptions = Object.assign({}, defaultLayouterSP, options);
       Object.keys(mergedOptions).forEach((key) => {
         if (typeof mergedOptions[key] === 'undefined') {
           mergedOptions[key] = defaultLayouterSP[key];
         }
       });
-      return flatToNested(mergedOptions);
+      return mergedOptions;
     }
     //default styleParams
     const defaultLayouterSP = {
@@ -122,10 +115,8 @@ class Utils {
       fixedColumns: 0,
       [optionsMap.layoutParams.structure.columnRatios]: [],
     };
-    const fullMigratedAndOld = //v5 TODO remove migrations
-      extendNestedOptionsToIncludeOldAndNew(styleParams);
-    const populatedWithDefault = populateWithDefaultOptions(fullMigratedAndOld);
-    return extendNestedOptionsToIncludeOldAndNew(populatedWithDefault);
+
+    return populateWithDefaultOptions(styleParams);
   }
 
   convertContainer(container, styleParams) {
