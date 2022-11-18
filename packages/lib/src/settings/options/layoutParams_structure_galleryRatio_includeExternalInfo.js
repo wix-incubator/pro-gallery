@@ -4,7 +4,7 @@ import { INPUT_TYPES } from '../utils/constants';
 import {
   isConstantVerticalPlacement,
   isHoverPlacement,
-} from '../../common/constants/placements';
+} from '../../common/constants/layoutParams_info_placement';
 import optionsMap from '../../core/helpers/optionsMap';
 export default {
   title: 'Include External Info in gallery Ratio',

@@ -1,7 +1,7 @@
 import {
   hasExternalVerticalPlacement,
   hasExternalHorizontalPlacement,
-} from '../../common/constants/placements';
+} from '../../common/constants/layoutParams_info_placement';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import optionsMap from './optionsMap';
 

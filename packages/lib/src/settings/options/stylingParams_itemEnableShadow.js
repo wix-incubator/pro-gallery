@@ -24,11 +24,6 @@ export default {
       (layoutParams_info_placement.isRelevant(options) &&
         options[optionsMap.layoutParams.info.placement] ===
           GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY)),
-  // as this is kind of a big is relevant I am leaving this old form here for refference in case there are bugs here
-  // isRelevant: (options) =>
-  //   !(options.cubeImages && options.cubeType === GALLERY_CONSTS.cubeType.FIT) &&
-  //   (options.imageInfoType === GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND ||
-  //     options.titlePlacement === GALLERY_CONSTS.placements.SHOW_ON_HOVER),
   type: INPUT_TYPES.BOOLEAN,
   default: false, //one source
 };
