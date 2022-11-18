@@ -10,17 +10,23 @@ export default {
   title: 'Include External Info in gallery Ratio',
   description: `Set to true with a single row horizontal gallery to include the external info (above or below) in the fixed gallery Ratio`,
   isRelevant: (options) => {
-    const isSingleVerticalItemRendered = options[
-      optionsMap.layoutParams.groups.repeatingGroupTypes
-    ]
-      ? options[optionsMap.layoutParams.groups.repeatingGroupTypes].join('') ===
-        '1'
-      : options[optionsMap.layoutParams.groups.allowedGroupTypes].join('') ===
-        '1';
+    const isSingleVerticalItemRendered =
+      options[optionsMap.layoutParams.groups.repeatingGroupTypes].length > 1
+        ? options[optionsMap.layoutParams.groups.repeatingGroupTypes].join(
+            ''
+          ) === '1'
+        : options[optionsMap.layoutParams.groups.allowedGroupTypes].join('') ===
+          '1';
     const filteredPlacement = options[optionsMap.layoutParams.info.placement] // filtering hover since it doesn't affect this
       .split(',')
       .filter((placement) => !isHoverPlacement(placement))
       .join(',');
+    console.log(
+      isSingleVerticalItemRendered,
+      isConstantVerticalPlacement(filteredPlacement),
+      galleryRatioValue.isRelevant(options),
+      options[optionsMap.layoutParams.structure.galleryRatio.value] > 0
+    );
     return (
       isSingleVerticalItemRendered &&
       isConstantVerticalPlacement(filteredPlacement) &&
