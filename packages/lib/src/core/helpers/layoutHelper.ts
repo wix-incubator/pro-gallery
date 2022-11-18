@@ -6,7 +6,6 @@ import {
   isConstantVerticalPlacement,
   isHoverPlacement,
 } from '../../common/constants/layoutParams_info_placement';
-import { default as old_processLayouts } from './layoutHelper'
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import processTextDimensions from './textBoxDimensionsHelper'
 import { default as slideAnimation } from '../../settings/options/behaviourParams_gallery_horizontal_slideAnimation';
@@ -327,9 +326,6 @@ const cropItemsWithCropOnlyFillParam = (options) => {
 
 function processLayouts(options, customExternalInfoRendererExists) {
   let processedOptions = {...options};
-  if(options.wasConvertedToOldOptions) {
-    processedOptions = old_processLayouts(processedOptions, customExternalInfoRendererExists);
-  }
   if (utils.isMobile()) {
     processedOptions = limitImageMargin(processedOptions);
   }
