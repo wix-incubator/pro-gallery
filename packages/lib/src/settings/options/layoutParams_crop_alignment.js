@@ -9,7 +9,7 @@ export default {
   isRelevant: (options) =>
     options[optionsMap.layoutParams.crop.enable] &&
     options[optionsMap.layoutParams.crop.method] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.crop.enable].FIT,
+      GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
   isRelevantDescription: 'Set `Crop Images` to true and `Crop Method` to FIT',
   type: INPUT_TYPES.OPTIONS,
   options: createOptions('layoutParams_crop_alignment'),
