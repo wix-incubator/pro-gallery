@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { optionsMap } from '../src/core/helpers/optionsMap';
 import { populateWithDefaultOptions } from '../src/common/defaultOptions';
+import optionsMap from '../src/core/helpers/optionsMap';
 
 describe('defaultOptions', () => {
   it('should populate missing properties with default properties and should leave defined properties as they are', () => {
