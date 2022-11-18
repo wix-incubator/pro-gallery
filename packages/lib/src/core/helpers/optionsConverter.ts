@@ -18,22 +18,13 @@ import {
   reverseBooleans,
 } from './migratorStore';
 
-function extendNestedOptionsToIncludeOldAndNew(
-  nestedOptions,
-  allowMigratingOldToNewInNewSPs = false
-) {
+function extendNestedOptionsToIncludeOldAndNew(nestedOptions) {
   let flatOptions = flattenObject(nestedOptions);
-  let populatedFlatOptions = addOldOptions(
-    addMigratedOptions(flatOptions, allowMigratingOldToNewInNewSPs)
-  );
+  let populatedFlatOptions = addOldOptions(addMigratedOptions(flatOptions));
   return { ...flatToNested(populatedFlatOptions), ...populatedFlatOptions };
 }
 
-function addMigratedOptions(
-  flatOptions,
-  allowMigratingOldToNewInNewSPs = false
-) {
-  if (!allowMigratingOldToNewInNewSPs) return flatOptions; // do not convert old to new. new is king
+function addMigratedOptions(flatOptions) {
   const flat_migrated = migrateOptions(flatOptions);
   let flat_combinedOptions = {
     ...trimUndefinedValues_flat(flat_migrated),

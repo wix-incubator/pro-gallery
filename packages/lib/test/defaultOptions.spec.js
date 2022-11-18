@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { optionsMap } from '../dist/esm-types';
+import { optionsMap } from '../src/core/helpers/optionsMap';
 import { populateWithDefaultOptions } from '../src/common/defaultOptions';
 
 describe('defaultOptions', () => {
