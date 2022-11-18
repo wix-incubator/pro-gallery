@@ -289,7 +289,7 @@ export class GalleryContainer extends React.Component {
       GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL
     );
   }
-
+  //dummy v5 TODO
   getIsScrollLessGallery(options) {
     const slideAnimation =
       options[optionsMap.behaviourParams.gallery.horizontal.slideAnimation];
