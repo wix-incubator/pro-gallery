@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container, customComponents } from '../drivers/mocks/styles';
 
-describe('options - titlePlacement', () => {
+describe('options - layoutParams_info_placement', () => {
   let driver;
   let initialProps;
 
@@ -18,7 +18,7 @@ describe('options - titlePlacement', () => {
     };
   });
 
-  it('should place texts below images when "titlePlacement" is "SHOW_BELOW"', async () => {
+  it('should place texts below images when "layoutParams_info_placement" is "BELOW"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -34,7 +34,7 @@ describe('options - titlePlacement', () => {
     expect(items).to.have.lengthOf(6);
     driver.detach.proGallery();
   });
-  it('should place texts above images when "titlePlacement" is "SHOW_ABOVE"', async () => {
+  it('should place texts above images when "layoutParams_info_placement" is "ABOVE"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -50,7 +50,7 @@ describe('options - titlePlacement', () => {
     expect(items).to.have.lengthOf(6);
     driver.detach.proGallery();
   });
-  it('should render hover when "titlePlacement" is "SHOW_ON_HOVER"', async () => {
+  it('should render hover when "layoutParams_info_placement" is "OVERLAY"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,

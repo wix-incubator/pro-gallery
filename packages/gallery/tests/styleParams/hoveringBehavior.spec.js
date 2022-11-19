@@ -19,7 +19,7 @@ describe('options - hoveringBehaviour', () => {
 
   it('should not have class "force-hover" when there is no hover event (when "hoveringBehaviour" is "APPEARS")', async () => {
     initialProps.options = Object.assign(initialProps.options, {
-      // titlePlacement also deals with the hover on items. when it's value is 'SHOW_ON_HOVER', hoveringBehaviour takes controll.
+      // layoutParams_info_placement also deals with the hover on items. when it's value is 'OVERLAY', hoveringBehaviour takes controll.
       [optionsMap.layoutParams.info.placement]:
         GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
       [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
@@ -37,7 +37,7 @@ describe('options - hoveringBehaviour', () => {
 
   it('should not have class "force-hover" when there is no hover event (when "hoveringBehaviour" is "DISAPPEARS")', async () => {
     initialProps.options = Object.assign(initialProps.options, {
-      // titlePlacement also deals with the hover on items. when it's value is 'SHOW_ON_HOVER', hoveringBehaviour takes controll.
+      // layoutParams_info_placement also deals with the hover on items. when it's value is 'OVERLAY', hoveringBehaviour takes controll.
       [optionsMap.layoutParams.info.placement]:
         GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
       [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:

@@ -4,7 +4,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('titlePlacement - e2e', () => {
+describe('layoutParams_info_placement - e2e', () => {
   let driver;
 
   beforeAll(async () => {

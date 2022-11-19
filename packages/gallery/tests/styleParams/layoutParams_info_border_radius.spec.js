@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container, customComponents } from '../drivers/mocks/styles';
 
-describe('options - textBoxBorderColor', () => {
+describe('options - layoutParams_info_border_radius', () => {
   let driver;
   let initialProps;
 
@@ -17,8 +17,7 @@ describe('options - textBoxBorderColor', () => {
       customComponents,
     };
   });
-
-  it('should set border-color to the text container when "layoutParams_info_layout" is "SEPARATED_BACKGROUND"', async () => {
+  it('should set border-radius to the text container when "layoutParams_info_layout" is "SEPARATED_BACKGROUND"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -30,8 +29,7 @@ describe('options - textBoxBorderColor', () => {
           .VERTICAL,
       [optionsMap.layoutParams.info.placement]:
         GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
-      [optionsMap.layoutParams.info.border.color]: { value: 'rgba(0,0,0,0)' },
-      [optionsMap.stylingParams.itemBorderWidth]: 1,
+      [optionsMap.layoutParams.info.border.radius]: 10,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -39,10 +37,11 @@ describe('options - textBoxBorderColor', () => {
       .selector('.gallery-item-bottom-info')
       .at(0)
       .parent();
-    expect(textsStyles.props().style.borderColor).to.be.undefined;
+    expect(textsStyles.props().style.borderRadius).to.eq(10);
     driver.detach.proGallery();
   });
-  it('should not set border-color to the text container when "layoutParams_info_layout" is not "SEPARATED_BACKGROUND"', async () => {
+
+  it('should not set border-radius to the text container when "layoutParams_info_layout" is not "SEPARATED_BACKGROUND"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -53,7 +52,7 @@ describe('options - textBoxBorderColor', () => {
           .VERTICAL,
       [optionsMap.layoutParams.info.placement]:
         GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
-      [optionsMap.layoutParams.info.border.color]: { value: 'rgba(0,0,0,0)' },
+      [optionsMap.layoutParams.info.border.width]: 10,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -61,7 +60,7 @@ describe('options - textBoxBorderColor', () => {
       .selector('.gallery-item-bottom-info')
       .at(0)
       .parent();
-    expect(textsStyles.props().style.borderColor).to.eq(undefined);
+    expect(textsStyles.props().style.borderRadius).to.eq(undefined);
     driver.detach.proGallery();
   });
 });

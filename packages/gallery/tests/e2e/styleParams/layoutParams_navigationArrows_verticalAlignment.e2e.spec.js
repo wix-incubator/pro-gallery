@@ -6,13 +6,13 @@ expect.extend({ toMatchImageSnapshot });
 
 // gets relevant layout style params
 const getLayoutStylesByVerticalPosition = (
-  titlePlacement,
+  layoutParams_info_placement,
   layoutParams_navigationArrows_verticalAlignment
 ) => {
   return {
     [optionsMap.layoutParams.structure.galleryLayout]:
       GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDER,
-    [optionsMap.layoutParams.info.placement]: titlePlacement,
+    [optionsMap.layoutParams.info.placement]: layoutParams_info_placement,
     [optionsMap.layoutParams.navigationArrows.size]: 60,
     [optionsMap.layoutParams.navigationArrows.verticalAlignment]:
       layoutParams_navigationArrows_verticalAlignment,
