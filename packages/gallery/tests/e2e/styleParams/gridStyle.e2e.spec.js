@@ -15,7 +15,7 @@ describe('gridStyle - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('should set number of columns according to container size (not numberOfImagesPerRow)', async () => {
+  it('should set number of columns according to container size (not layoutParams_structure_numberOfColumns)', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -28,7 +28,7 @@ describe('gridStyle - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should set fixed number of columns (numberOfImagesPerRow)', async () => {
+  it('should set fixed number of columns (layoutParams_structure_numberOfColumns)', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,

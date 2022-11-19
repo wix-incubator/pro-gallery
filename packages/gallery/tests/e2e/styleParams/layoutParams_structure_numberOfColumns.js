@@ -4,7 +4,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('numberOfImagesPerRow - e2e', () => {
+describe('layoutParams_structure_numberOfColumns - e2e', () => {
   let driver;
 
   beforeAll(async () => {
