@@ -4,7 +4,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('chooseBestGroup - e2e', () => {
+describe('layoutParams_groups_groupByOrientation - e2e', () => {
   let driver;
 
   beforeAll(async () => {

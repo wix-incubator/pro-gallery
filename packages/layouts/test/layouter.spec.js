@@ -506,8 +506,8 @@ describe('Layouter', () => {
       expect(isCroppedCorrectly).to.be.true;
     });
 
-    // chooseBestGroup
-    it('should not allow ugly groups if chooseBestGroup is true ', () => {
+    // layoutParams_groups_groupByOrientation
+    it('should not allow ugly groups if layoutParams_groups_groupByOrientation is true ', () => {
       const items = getItems(99);
       styleParams[optionsMap.layoutParams.groups.allowedGroupTypes] = ['3t','3r','3l','3b']; //without 1
       styleParams[optionsMap.layoutParams.groups.groupSize] = 3;
@@ -515,8 +515,8 @@ describe('Layouter', () => {
       styleParams[optionsMap.layoutParams.targetItemSize.minimum] = 10;
       styleParams.targetItemSize = 1000;
 
-      for (const chooseBestGroup of [true, false]) {
-        styleParams[optionsMap.layoutParams.groups.groupByOrientation] = chooseBestGroup;
+      for (const layoutParams_groups_groupByOrientation of [true, false]) {
+        styleParams[optionsMap.layoutParams.groups.groupByOrientation] = layoutParams_groups_groupByOrientation;
 
         gallery = getLayout({ items, container, styleParams });
         const isWithinTypes = gallery.columns[0].groups.reduce((g, group) => {
@@ -525,7 +525,7 @@ describe('Layouter', () => {
           return g && isType;
         }, true);
 
-        expect(isWithinTypes).to.not.equal(chooseBestGroup);
+        expect(isWithinTypes).to.not.equal(layoutParams_groups_groupByOrientation);
       }
     });
 
