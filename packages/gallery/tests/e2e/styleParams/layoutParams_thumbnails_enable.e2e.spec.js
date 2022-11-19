@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('hasThumbnails - e2e', () => {
+describe('layoutParams_thumbnails_enable - e2e', () => {
   let driver;
 
   beforeAll(async () => {
@@ -15,7 +15,7 @@ describe('hasThumbnails - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('should not have thumbnails when "hasThumbnails" is "false" and gallery is horizontal scroll', async () => {
+  it('should not have thumbnails when "layoutParams_thumbnails_enable" is "false" and gallery is horizontal scroll', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
@@ -29,7 +29,7 @@ describe('hasThumbnails - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should not have thumbnails when "hasThumbnails" is "true" and gallery is vertical scroll', async () => {
+  it('should not have thumbnails when "layoutParams_thumbnails_enable" is "true" and gallery is vertical scroll', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
@@ -43,7 +43,7 @@ describe('hasThumbnails - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should have thumbnails when "hasThumbnails" is "true" and gallery is horizontal scroll', async () => {
+  it('should have thumbnails when "layoutParams_thumbnails_enable" is "true" and gallery is horizontal scroll', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
