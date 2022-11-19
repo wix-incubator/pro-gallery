@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
-describe('options - arrowsSize', () => {
+describe('options - layoutParams_navigationArrows_size', () => {
   let driver;
   let initialProps;
 
@@ -17,7 +17,7 @@ describe('options - arrowsSize', () => {
     };
   });
 
-  it('should set the correct arrowsSize', async () => {
+  it('should set the correct layoutParams_navigationArrows_size', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
@@ -35,7 +35,7 @@ describe('options - arrowsSize', () => {
     expect(transform).to.eq(`scaleX(1) scale(${arrowFinalSize})`);
     driver.detach.proGallery();
   });
-  it('should set the position of arrows according to arrowsSize', async () => {
+  it('should set the position of arrows according to layoutParams_navigationArrows_size', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]

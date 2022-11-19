@@ -64,7 +64,7 @@ describe('styleParam - arrowsVerticalPosition', () => {
   it('Should not render the arrows when not enough info space', async () => {
     // Exact style params relevant to this sub-test
     initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.info.height]: 38, // info height is 39 when default, so slideshowInfoSize < arrowsSize
+      [optionsMap.layoutParams.info.height]: 38, // info height is 39 when default, so slideshowInfoSize < layoutParams_navigationArrows_size
       [optionsMap.layoutParams.navigationArrows.verticalAlignment]:
         GALLERY_CONSTS[
           optionsMap.layoutParams.navigationArrows.verticalAlignment

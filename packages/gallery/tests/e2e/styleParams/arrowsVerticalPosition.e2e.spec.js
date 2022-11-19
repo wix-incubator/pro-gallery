@@ -35,7 +35,7 @@ async function grabSnapshotAndCompare() {
 // Relevant to entire test suite (both 'describe's)
 let driver;
 
-describe('arrowsPosition with info below - e2e', () => {
+describe('layoutParams_navigationArrows_position with info below - e2e', () => {
   beforeAll(async () => {
     driver = new GalleryDriver();
     await driver.openPage();
@@ -76,7 +76,7 @@ describe('arrowsPosition with info below - e2e', () => {
   });
 });
 
-describe('arrowsPosition with info above - e2e', () => {
+describe('layoutParams_navigationArrows_position with info above - e2e', () => {
   beforeAll(async () => {
     driver = new GalleryDriver();
     await driver.openPage();

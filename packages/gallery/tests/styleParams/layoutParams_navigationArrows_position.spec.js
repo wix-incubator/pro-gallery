@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
-describe('options - arrowsPosition', () => {
+describe('options - layoutParams_navigationArrows_position', () => {
   let driver;
   let initialProps;
 
@@ -17,7 +17,7 @@ describe('options - arrowsPosition', () => {
     };
   });
 
-  it('should calculate gallery width accroding to "arrowsPosition" ("OUTSIDE_GALLERY")', async () => {
+  it('should calculate gallery width accroding to "layoutParams_navigationArrows_position" ("OUTSIDE_GALLERY")', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
@@ -42,7 +42,7 @@ describe('options - arrowsPosition', () => {
     expect(width).to.eq(newWidth);
     driver.detach.proGallery();
   });
-  it('should have original container width (arrowsPosition = "OUTSIDE_GALLERY")', async () => {
+  it('should have original container width (layoutParams_navigationArrows_position = "OUTSIDE_GALLERY")', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]

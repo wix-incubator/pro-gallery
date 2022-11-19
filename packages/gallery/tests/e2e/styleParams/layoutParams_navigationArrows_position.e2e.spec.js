@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('arrowsPosition - e2e', () => {
+describe('layoutParams_navigationArrows_position - e2e', () => {
   let driver;
 
   beforeAll(async () => {

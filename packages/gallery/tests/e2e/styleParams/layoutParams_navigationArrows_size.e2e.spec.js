@@ -4,7 +4,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('arrowsSize - e2e', () => {
+describe('layoutParams_navigationArrows_size - e2e', () => {
   let driver;
 
   beforeAll(async () => {
@@ -15,7 +15,7 @@ describe('arrowsSize - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('should set arrowsSize', async () => {
+  it('should set layoutParams_navigationArrows_size', async () => {
     // await driver.navigate({
     //   [optionsMap.layoutParams.structure.galleryLayout]: GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDER,
     //   [optionsMap.layoutParams.navigationArrows.size]: 150,
