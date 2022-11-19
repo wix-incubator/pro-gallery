@@ -344,8 +344,8 @@ describe('Layouter', () => {
       }
     });
 
-    // isVertical
-    it('should create vertical layouts if isVertical is true', () => {
+    // layoutParams_structure_layoutOrientation is VERTICAL
+    it('should create vertical layouts if layoutParams_structure_layoutOrientation is VERTICAL', () => {
       const items = getItems(100);
       styleParams.targetItemSize = 200;
       styleParams.fixedColumns = 0;

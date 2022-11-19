@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('isVertical - e2e', () => {
+describe('layoutParams_structure_layoutOrientation - e2e', () => {
   let driver;
 
   beforeAll(async () => {
@@ -15,7 +15,7 @@ describe('isVertical - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('should render a gallery with vertical orientation when "isVertical" is "true"', async () => {
+  it('should render a gallery with vertical orientation when "layoutParams_structure_layoutOrientation is VERTICAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].MASONRY,
@@ -27,7 +27,7 @@ describe('isVertical - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should render a gallery with horizontal orientation when "isVertical" is "false"', async () => {
+  it('should render a gallery with horizontal orientation when "layoutParams_structure_layoutOrientation is HORIZONTAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].MASONRY,
