@@ -4,7 +4,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('rotatingCropRatios - e2e', () => {
+describe('multiple layoutParams_crop_ratios - e2e', () => {
   let driver;
 
   beforeAll(async () => {

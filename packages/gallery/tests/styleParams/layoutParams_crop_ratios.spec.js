@@ -5,7 +5,7 @@ import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 import { getElementDimensions } from '../utils/utils';
 
-describe('options - cropRatio', () => {
+describe('options - layoutParams_crop_ratios', () => {
   let driver;
   let initialProps;
 

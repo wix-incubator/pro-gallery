@@ -40,7 +40,7 @@ describe('layoutParams_crop_enable - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should have a "cropRatio" of "2"', async () => {
+  it('should have a "layoutParams_crop_ratios" of "2"', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]: -1,
       [optionsMap.layoutParams.crop.enable]: true,

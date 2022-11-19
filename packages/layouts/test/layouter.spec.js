@@ -171,7 +171,7 @@ describe('Layouter', () => {
       }
     });
 
-    //cropRatio
+    //layoutParams_crop_ratios
     it('should have all images in a grid gallery in the required ratio', () => {
       const allowedRounding = 2; //the number of pixels that can change due to rounding
 
@@ -486,16 +486,16 @@ describe('Layouter', () => {
           return (
             g &&
             group.items.reduce((i, image) => {
-              const cropRatio = image.isLandscape
+              const layoutParams_crop_ratios = image.isLandscape
                 ? styleParams[optionsMap.layoutParams.crop.ratios][0]
                 : 1 / styleParams[optionsMap.layoutParams.crop.ratios][0];
               const isItemCroppedCorrectly =
                 (image.width - allowedRounding) /
                   (image.height + allowedRounding) <=
-                  cropRatio &&
+                  layoutParams_crop_ratios &&
                 (image.width + allowedRounding) /
                   (image.height - allowedRounding) >=
-                  cropRatio;
+                  layoutParams_crop_ratios;
               return i && isItemCroppedCorrectly;
             }, true)
           );
@@ -612,8 +612,8 @@ describe('Layouter', () => {
       }, true);
     });
 
-    // functional cropRatio
-    it('should crop items according to the cropRatio function if defined', () => {
+    // functional layoutParams_crop_ratios
+    it('should crop items according to the layoutParams_crop_ratios function if defined', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
       styleParams[optionsMap.layoutParams.crop.ratios] = () => Math.random();
       styleParams.cropItems = true;
@@ -643,8 +643,8 @@ describe('Layouter', () => {
       });
     });
 
-    // rotatingCropRatios
-    it('should crop items according to rotatingCropRatios if defined', () => {
+    // multiple layoutParams_crop_ratios
+    it('should crop items according to multiple layoutParams_crop_ratios if defined', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
       styleParams[optionsMap.layoutParams.crop.ratios] = ['2','1.5','1.2','0.5','1'];
       styleParams[optionsMap.layoutParams.crop.enable] = true;

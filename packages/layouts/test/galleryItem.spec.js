@@ -397,7 +397,7 @@ describe('GalleryItem - secondary media', () => {
     'infoHeight',
     'margins',
     'ratio',
-    'cropRatio',
+    'layoutParams_crop_ratios',
     'layoutParams_crop_enable',
     'layoutParams_crop_method',
     'offset',
