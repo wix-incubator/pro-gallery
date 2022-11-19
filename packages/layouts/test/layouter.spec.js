@@ -221,8 +221,8 @@ describe('Layouter', () => {
     });
 
 
-    //collageDensity
-    it('should have more items in groups when the collageDensity increases', () => {
+    //layoutParams_groups_density
+    it('should have more items in groups when the layoutParams_groups_density increases', () => {
       const itemCount = 100;
       const items = getItems(itemCount);
 
@@ -231,8 +231,8 @@ describe('Layouter', () => {
       );
       let lastGroupCount = itemCount;
 
-      for (const collageDensity of collageDensities) {
-        styleParams[optionsMap.layoutParams.groups.density] = collageDensity;
+      for (const layoutParams_groups_density of collageDensities) {
+        styleParams[optionsMap.layoutParams.groups.density] = layoutParams_groups_density;
         gallery = getLayout({ items, container, styleParams });
         const groupCount = getGroupCount(gallery);
 

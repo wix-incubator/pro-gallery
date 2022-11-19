@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('collageDensity - e2e', () => {
+describe('layoutParams_groups_density - e2e', () => {
   let driver;
 
   beforeAll(async () => {
@@ -15,7 +15,7 @@ describe('collageDensity - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('should have collageDensity of 0', async () => {
+  it('should have layoutParams_groups_density of 0', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
@@ -26,7 +26,7 @@ describe('collageDensity - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
 
-  it('should have collageDensity of 1', async () => {
+  it('should have layoutParams_groups_density of 1', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,

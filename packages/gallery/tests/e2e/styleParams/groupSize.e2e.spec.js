@@ -39,7 +39,7 @@ describe('groupSize - e2e', () => {
     // expect to have groups of 1
     expect(page).toMatchImageSnapshot();
   });
-  it('should have groups of 1 item (restricted by collageDensity)', async () => {
+  it('should have groups of 1 item (restricted by layoutParams_groups_density)', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
@@ -48,7 +48,7 @@ describe('groupSize - e2e', () => {
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
-    //expect to have groups of 1 despite groupSize = 3 (because of collageDensity)
+    //expect to have groups of 1 despite groupSize = 3 (because of layoutParams_groups_density)
     expect(page).toMatchImageSnapshot();
   });
   it('should have groups of 1 item (restricted by groupsPerStrip)', async () => {
@@ -63,7 +63,7 @@ describe('groupSize - e2e', () => {
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.partialScreenshot();
-    //expect to have groups of 1 despite groupSize = 3 (because of collageDensity)
+    //expect to have groups of 1 despite groupSize = 3 (because of layoutParams_groups_density)
     expect(page).toMatchImageSnapshot();
   });
 });
