@@ -3,8 +3,7 @@ import {
   NEW_PRESETS,
   galleryOptions,
   optionsMap,
-  flatV4DefaultOptions,
-  extendNestedOptionsToIncludeOldAndNew,
+  defaultOptions,
   addPresetOptions,
 } from 'pro-gallery-lib';
 import {optionsList} from './settings'
@@ -13,7 +12,7 @@ import deeplyEqual from 'deep-equal';
 optionsList.forEach( 
   (option) => {
     if(galleryOptions[option]?.default !== undefined) { 
-    flatV4DefaultOptions[option] = galleryOptions[option].default
+    defaultOptions[option] = galleryOptions[option].default
     }
   }
 );
@@ -22,8 +21,7 @@ export const getInitialOptions = () => {
   const savedOptions = getOptionsFromUrl(window.location.search);
 
   return {
-    newSPs: true,
-    ...flatV4DefaultOptions,
+    ...defaultOptions,
     ...savedOptions,
   };
 };
@@ -64,12 +62,12 @@ export const isValidOption = (option, value, options) => {
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is undefined`);
     return false;
   }
-  if (deeplyEqual(value,flatV4DefaultOptions[option])) {
+  if (deeplyEqual(value,defaultOptions[option])) {
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is as the default: ${value}`);
     return false;
   }
-  options = { ...flatV4DefaultOptions, ...options };
-  const fixedPresetOptions = NEW_PRESETS['newSPs_' + getLayoutName(options[optionsMap.layoutParams.structure.galleryLayout])];
+  options = { ...defaultOptions, ...options };
+  const fixedPresetOptions = NEW_PRESETS[getLayoutName(options[optionsMap.layoutParams.structure.galleryLayout])];
   options = { ...options, ...fixedPresetOptions, }
   if (option !== optionsMap.layoutParams.structure.galleryLayout && deeplyEqual(value, fixedPresetOptions[option])) {
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is as the fixedPresetOptions: ${value}`, fixedPresetOptions, getLayoutName(options.galleryLayout));
@@ -98,7 +96,7 @@ export const getOptionsFromUrl = (locationSearchString) => {
       Object.assign(obj, { [option]: formatValue(value, option) }),
       {}
       );
-      options = extendNestedOptionsToIncludeOldAndNew(addPresetOptions({newSPs:true, ...options}))
+      options = addPresetOptions(options)
       const relevantOptions = Object.entries(options).reduce(
         (obj, [option, value]) =>
         isValidOption(option, value, options)

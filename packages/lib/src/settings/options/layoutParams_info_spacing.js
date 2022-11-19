@@ -1,16 +1,19 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
+import optionsMap from '../../core/helpers/optionsMap';
 
-const { SHOW_ABOVE, SHOW_BELOW } = GALLERY_CONSTS.placements;
+const { ABOVE, BELOW } = GALLERY_CONSTS[optionsMap.layoutParams.info.placement];
 
 export default {
   title: 'Text Space From Image',
   isRelevantDescription:
     'Set "Choose info layout" to "Separated Background" and set "Texts Placement" to contain "Show Above" or "Show Below".',
   isRelevant: (options) =>
-    options.imageInfoType === GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND &&
-    [SHOW_ABOVE, SHOW_BELOW].indexOf(options.titlePlacement) > -1,
+    options[optionsMap.layoutParams.info.layout] ===
+      GALLERY_CONSTS[optionsMap.layoutParams.info.layout]
+        .SEPARATED_BACKGROUND &&
+    [ABOVE, BELOW].indexOf(options[optionsMap.layoutParams.info.placement]) >
+      -1,
   type: INPUT_TYPES.NUMBER,
   default: 10,
   description: `Set the space between the item and the texts in the gallery. Note that this option is relevant

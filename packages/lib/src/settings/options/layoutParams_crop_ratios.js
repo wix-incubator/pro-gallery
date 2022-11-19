@@ -10,23 +10,14 @@ export default {
   description: `Crop each image according to the corresponding crop ratio as indicated in this string. This will create a pattern of cropped images`,
   isRelevantDescription: 'Set "Crop Images" to "true".',
   isRelevant: (options) => {
-    if (options.newSPs) {
-      return (
-        options[optionsMap.layoutParams.crop.enable] &&
-        (!options[optionsMap.layoutParams.crop.cropOnlyFill] ||
-          (options[optionsMap.layoutParams.crop.cropOnlyFill] &&
-            options[optionsMap.layoutParams.crop.method] ===
-              GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL))
-      );
-    } else {
-      return (
-        options.cubeImages &&
-        (!options.cropOnlyFill ||
-          (options.cropOnlyFill &&
-            options.cubeType === GALLERY_CONSTS.cubeType.CROP))
-      );
-    }
+    return (
+      options[optionsMap.layoutParams.crop.enable] &&
+      (!options[optionsMap.layoutParams.crop.cropOnlyFill] ||
+        (options[optionsMap.layoutParams.crop.cropOnlyFill] &&
+          options[optionsMap.layoutParams.crop.method] ===
+            GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL))
+    );
   },
-  type: INPUT_TYPES.NUMBER, //NEW STYPEPARAMS METHOD This should be an array of. The input type here is more of a playground UI. we must change that.
+  type: INPUT_TYPES.NUMBER, //v5 TODO This should be an array of. The input type here is more of a playground UI. we must change that.
   default: [1],
 };

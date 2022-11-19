@@ -17,9 +17,6 @@ import { Resizable } from 're-resizable';
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
-// import { LeanGallery, isEligibleForLeanGallery } from 'lean-gallery';
-import 'lean-gallery/dist/styles/leanGallery.css';
-
 // //dummy commit
 const SideBar = React.lazy(() => import('../SideBar'));
 
@@ -260,17 +257,6 @@ export function App() {
 
   let GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProGalleryRenderer : ProGallery);
 
-  // const shouldRenderLeanGallery = isEligibleForLeanGallery({
-  //   items: getItems(),
-  //   styles: options,
-  //   totalItemsCount: getTotalItemsCount()
-  // });
-
-  // if(!shouldRenderLeanGallery) {
-  //   GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProGalleryRenderer : ProGallery);
-  // } else {
-  //   GalleryComponent = LeanGallery;
-  // };
 
   window.playgroundItems = getItems();
 

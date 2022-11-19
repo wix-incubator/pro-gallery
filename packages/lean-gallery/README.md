@@ -1,1 +1,0 @@
-# Pro Gallery - Lean Gallery

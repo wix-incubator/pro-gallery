@@ -13,7 +13,7 @@ import {
 import { Form } from 'antd';
 
 import {
-  List,
+  // List,
   Switch,
   Select,
   InputNumber,
@@ -33,7 +33,6 @@ import { throttle } from '../../utils/utils';
 import { isValidOption } from '../../constants/options';
 import s from './SideBar.module.scss';
 import { GALLERY_CONSTS } from 'pro-gallery';
-// import { notEligibleReasons, isEligibleForLeanGallery } from 'lean-gallery';
 
 import 'antd/dist/antd.css';
 import { getContainerUrlParams } from "./helper";
@@ -259,7 +258,7 @@ function SideBar({ items, blueprintsManager, visible }) {
               <Button shape="circle" icon={<ArrowRightOutlined />} target="_blank" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
             </Form.Item>
             {isDev && <Form.Item label="Simulate Local SSR" labelAlign="left">
-              <Button shape="circle" icon={<BugOutlined />} target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useCustomNavigationPanel=${gallerySettings.useCustomNavigationPanel}&useBlueprints=${gallerySettings.useBlueprints}&${getContainerUrlParams(gallerySettings)}&${Object.entries(options).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
+              <Button shape="circle" icon={<BugOutlined />} target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowSSR=true&useCustomNavigationPanel=${gallerySettings.useCustomNavigationPanel}&useBlueprints=${gallerySettings.useBlueprints}&${getContainerUrlParams(gallerySettings)}&${Object.entries(options).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
             </Form.Item>}
           </Form>
         </Collapse.Panel>
@@ -268,25 +267,6 @@ function SideBar({ items, blueprintsManager, visible }) {
           <Community/>
         </Suspense>
         </Collapse.Panel>
-        {isDev && <Collapse.Panel header="Lean Gallery" key="lean">
-          <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
-            <Form.Item label="Allow Lean Gallery" labelAlign="left">
-              <Switch checked={!!options.allowLeanGallery} onChange={e => setOptions('allowLeanGallery', !!e)} />
-            </Form.Item>
-            {
-              // isEligibleForLeanGallery({ items, styles: options }) ?
-              //   <Alert key={'leanGalleryAllowed'} message={'RENDERING LEAN GALLERY'} type="success" />  
-              //   :
-                <List
-                  size="small"
-                  header="CAN NOT RENDER LEAN GALLERY"
-                  bordered
-                  // dataSource={notEligibleReasons({ items, styles: options })}
-                  renderItem={item => <List.Item>{item}</List.Item>}
-                />
-            }
-          </Form>
-        </Collapse.Panel>}
         {isDev && <Collapse.Panel header="ToDos" key="todos">
           {comments.map((comment, idx) => <Alert key={idx} message={comment} type="info" />)}
           </Collapse.Panel>}
