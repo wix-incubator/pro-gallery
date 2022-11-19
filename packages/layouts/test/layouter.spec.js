@@ -361,7 +361,7 @@ describe('Layouter', () => {
     });
 
     // scrollDirection
-    it('should create one long row of items if scrollDirection is horizontal', () => {
+    it('should create one long row of items if layoutParams_structure_scrollDirection is horizontal', () => {
       const items = getItems(100);
       container.galleryHeight = 500;
 

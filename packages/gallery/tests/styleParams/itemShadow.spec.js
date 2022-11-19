@@ -80,7 +80,7 @@ describe.skip('options - itemShadow', () => {
     driver.detach.proGallery();
   });
 
-  it('should set the right "gallerySpacing"', async () => {
+  it('should set the right "layoutParams_structure_gallerySpacing"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,

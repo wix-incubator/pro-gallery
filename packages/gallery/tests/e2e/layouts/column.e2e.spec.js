@@ -15,7 +15,7 @@ describe('column - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('column - scrollDirection = vertical', async () => {
+  it('column - layoutParams_structure_scrollDirection = VERTICAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].COLUMN,
@@ -28,7 +28,7 @@ describe('column - e2e', () => {
     const page = await driver.grab.screenshot();
     expect(page).toMatchImageSnapshot();
   });
-  it('column - scrollDirection = horizontal', async () => {
+  it('column - layoutParams_structure_scrollDirection = HORIZONTAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].COLUMN,

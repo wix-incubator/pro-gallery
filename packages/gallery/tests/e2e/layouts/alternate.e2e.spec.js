@@ -15,7 +15,7 @@ describe('alternate - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('alternate layout - scrollDirection = vertical', async () => {
+  it('alternate layout - layoutParams_structure_scrollDirection = VERTICAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
@@ -29,7 +29,7 @@ describe('alternate - e2e', () => {
     const page = await driver.grab.partialScreenshot();
     expect(page).toMatchImageSnapshot();
   });
-  it('alternate layout - scrollDirection = horizontal', async () => {
+  it('alternate layout - layoutParams_structure_scrollDirection = HORIZONTAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]

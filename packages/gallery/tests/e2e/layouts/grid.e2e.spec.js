@@ -15,7 +15,7 @@ describe('grid - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('grid - scrollDirection = vertical', async () => {
+  it('grid - layoutParams_structure_scrollDirection = VERTICAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -28,7 +28,7 @@ describe('grid - e2e', () => {
     const page = await driver.grab.screenshot();
     expect(page).toMatchImageSnapshot();
   });
-  it('grid - scrollDirection = horizontal', async () => {
+  it('grid - layoutParams_structure_scrollDirection = HORIZONTAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,

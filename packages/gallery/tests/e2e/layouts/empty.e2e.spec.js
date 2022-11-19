@@ -15,7 +15,7 @@ describe('empty - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('empty - scrollDirection = vertical', async () => {
+  it('empty - layoutParams_structure_scrollDirection = VERTICAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
@@ -28,7 +28,7 @@ describe('empty - e2e', () => {
     const page = await driver.grab.screenshot();
     expect(page).toMatchImageSnapshot();
   });
-  it('empty - scrollDirection = horizontal', async () => {
+  it('empty - layoutParams_structure_scrollDirection = HORIZONTAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,

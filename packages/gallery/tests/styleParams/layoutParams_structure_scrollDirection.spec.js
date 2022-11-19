@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
-describe('options - scrollDirection', () => {
+describe('options - layoutParams_structure_scrollDirection', () => {
   let driver;
   let initialProps;
 
@@ -16,7 +16,7 @@ describe('options - scrollDirection', () => {
     };
   });
 
-  it('should render element ".gallery-horizontal-scroll" when "scrollDirection" is horizontal', async () => {
+  it('should render element ".gallery-horizontal-scroll" when "layoutParams_structure_scrollDirection" is horizontal', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.scrollDirection]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
@@ -30,7 +30,7 @@ describe('options - scrollDirection', () => {
     expect(elem).to.have.lengthOf(1);
     driver.detach.proGallery();
   });
-  it('should render element ".pro-gallery-margin-container" when "scrollDirection" is vertical', async () => {
+  it('should render element ".pro-gallery-margin-container" when "layoutParams_structure_scrollDirection" is vertical', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.scrollDirection]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
@@ -44,7 +44,7 @@ describe('options - scrollDirection', () => {
     expect(elem).to.have.lengthOf(1);
     driver.detach.proGallery();
   });
-  it('should set margin on items to "0px" when scrollDirection is false(vertical)', async () => {
+  it('should set margin on items to "0px" when layoutParams_structure_scrollDirection vertical', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.scrollDirection]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]

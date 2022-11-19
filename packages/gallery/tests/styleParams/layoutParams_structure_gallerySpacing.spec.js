@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
-describe('options - gallerySpacing', () => {
+describe('options - layoutParams_structure_gallerySpacing', () => {
   let driver;
   let initialProps;
 
