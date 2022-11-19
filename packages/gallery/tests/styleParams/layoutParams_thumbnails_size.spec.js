@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
-describe('options - thumbnailSize', () => {
+describe('options - layoutParams_thumbnails_size', () => {
   let driver;
   let initialProps;
   beforeEach(() => {
@@ -15,7 +15,7 @@ describe('options - thumbnailSize', () => {
       options,
     };
   });
-  it('should "thumbnailSize" of "300"', async () => {
+  it('should "layoutParams_thumbnails_size" of "300"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
@@ -29,7 +29,7 @@ describe('options - thumbnailSize', () => {
     expect(height).to.eq(300);
     driver.detach.proGallery();
   });
-  it('should "thumbnailSize" of "150"', async () => {
+  it('should "layoutParams_thumbnails_size" of "150"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
@@ -43,7 +43,7 @@ describe('options - thumbnailSize', () => {
     expect(height).to.eq(150);
     driver.detach.proGallery();
   });
-  it('should set the gallery height for thumbnailSize=300', async () => {
+  it('should set the gallery height for layoutParams_thumbnails_size=300', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
@@ -62,7 +62,7 @@ describe('options - thumbnailSize', () => {
     driver.detach.proGallery();
   });
 
-  it('should set the gallery width for thumbnailSize=300', async () => {
+  it('should set the gallery width for layoutParams_thumbnails_size=300', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]

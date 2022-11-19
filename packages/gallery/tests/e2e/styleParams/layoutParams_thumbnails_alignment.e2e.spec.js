@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('galleryThumbnailsAlignment - e2e', () => {
+describe('layoutParams_thumbnails_alignment - e2e', () => {
   let driver;
 
   beforeAll(async () => {
