@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('imageInfoType - e2e', () => {
+describe('layoutParams_info_layout - e2e', () => {
   let driver;
 
   beforeAll(async () => {
@@ -15,7 +15,7 @@ describe('imageInfoType - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('should apply styles to image only (imageInfoType = "NO_BACKGROUND")', async () => {
+  it('should apply styles to image only (layoutParams_info_layout = "NO_BACKGROUND")', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -34,7 +34,7 @@ describe('imageInfoType - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should attach texts and image and apply styles to both as one container (imageInfoType = "ATTACHED_BACKGROUND")', async () => {
+  it('should attach texts and image and apply styles to both as one container (layoutParams_info_layout = "ATTACHED_BACKGROUND")', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -53,7 +53,7 @@ describe('imageInfoType - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should separate texts and image (imageInfoType = "SEPARATED_BACKGROUND")', async () => {
+  it('should separate texts and image (layoutParams_info_layout = "SEPARATED_BACKGROUND")', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -73,7 +73,7 @@ describe('imageInfoType - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should not show styles to texts and image (imageInfoType = "SEPARATED_BACKGROUND")', async () => {
+  it('should not show styles to texts and image (layoutParams_info_layout = "SEPARATED_BACKGROUND")', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,

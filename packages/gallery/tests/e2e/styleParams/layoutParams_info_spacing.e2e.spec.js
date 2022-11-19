@@ -4,7 +4,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('textImageSpace - e2e', () => {
+describe('layoutParams_info_spacing - e2e', () => {
   let driver;
 
   beforeAll(async () => {

@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container, customComponents } from '../drivers/mocks/styles';
 
-describe('options - textImageSpace', () => {
+describe('options - layoutParams_info_spacing', () => {
   let driver;
   let initialProps;
 
@@ -38,7 +38,7 @@ describe('options - textImageSpace', () => {
       .selector('.gallery-item-bottom-info')
       .at(0)
       .parent();
-    // expect marginTop to equal textImageSpace value.
+    // expect marginTop to equal layoutParams_info_spacing value.
     expect(item.props().style.marginTop).to.eq(20);
     driver.detach.proGallery();
   });
@@ -59,11 +59,11 @@ describe('options - textImageSpace', () => {
     driver.mount.proGallery(initialProps);
     await driver.update();
     const item = driver.find.selector('.gallery-item-top-info').at(0).parent();
-    // expect marginBottom to equal textImageSpace value.
+    // expect marginBottom to equal layoutParams_info_spacing value.
     expect(item.props().style.marginBottom).to.eq(20);
     driver.detach.proGallery();
   });
-  it('should not set when "imageInfoType" is not "SEPARATED_BACKGROUND"', async () => {
+  it('should not set when "layoutParams_info_layout" is not "SEPARATED_BACKGROUND"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,

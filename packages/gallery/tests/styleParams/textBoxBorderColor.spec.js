@@ -18,7 +18,7 @@ describe('options - textBoxBorderColor', () => {
     };
   });
 
-  it('should set border-color to the text container when "imageInfoType" is "SEPARATED_BACKGROUND"', async () => {
+  it('should set border-color to the text container when "layoutParams_info_layout" is "SEPARATED_BACKGROUND"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -42,7 +42,7 @@ describe('options - textBoxBorderColor', () => {
     expect(textsStyles.props().style.borderColor).to.be.undefined;
     driver.detach.proGallery();
   });
-  it('should not set border-color to the text container when "imageInfoType" is not "SEPARATED_BACKGROUND"', async () => {
+  it('should not set border-color to the text container when "layoutParams_info_layout" is not "SEPARATED_BACKGROUND"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,

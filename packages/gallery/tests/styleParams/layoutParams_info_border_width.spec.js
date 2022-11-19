@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container, customComponents } from '../drivers/mocks/styles';
 
-describe('options - textBoxBorderWidth', () => {
+describe('options - layoutParams_info_border_width', () => {
   let driver;
   let initialProps;
 
@@ -18,7 +18,7 @@ describe('options - textBoxBorderWidth', () => {
     };
   });
 
-  it('should set border-width to the text container when "imageInfoType" is "SEPARATED_BACKGROUND"', async () => {
+  it('should set border-width to the text container when "layoutParams_info_layout" is "SEPARATED_BACKGROUND"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -41,7 +41,7 @@ describe('options - textBoxBorderWidth', () => {
     expect(textsStyles.props().style.borderWidth).to.eq('10px');
     driver.detach.proGallery();
   });
-  it('should not set border-width to the text container when "imageInfoType" is not "SEPARATED_BACKGROUND"', async () => {
+  it('should not set border-width to the text container when "layoutParams_info_layout" is not "SEPARATED_BACKGROUND"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
