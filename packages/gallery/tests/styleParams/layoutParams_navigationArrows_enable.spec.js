@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
-describe('options - showArrows', () => {
+describe('options - layoutParams_navigationArrows_enable', () => {
   let driver;
   let initialProps;
   beforeEach(() => {
