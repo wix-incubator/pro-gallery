@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('groupSize - e2e', () => {
+describe('layoutParams_groups_groupSize - e2e', () => {
   let driver;
 
   beforeAll(async () => {
@@ -15,7 +15,7 @@ describe('groupSize - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('should have max group size of 3 (groupSize=3)', async () => {
+  it('should have max group size of 3 (layoutParams_groups_groupSize=3)', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
@@ -27,7 +27,7 @@ describe('groupSize - e2e', () => {
     // expect to have groups of max 3
     expect(page).toMatchImageSnapshot();
   });
-  it('should have max group size of 1 (groupSize=1)', async () => {
+  it('should have max group size of 1 (layoutParams_groups_groupSize=1)', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
@@ -48,7 +48,7 @@ describe('groupSize - e2e', () => {
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
-    //expect to have groups of 1 despite groupSize = 3 (because of layoutParams_groups_density)
+    //expect to have groups of 1 despite layoutParams_groups_groupSize = 3 (because of layoutParams_groups_density)
     expect(page).toMatchImageSnapshot();
   });
   it('should have groups of 1 item (restricted by layoutParams_groups_numberOfGroupsPerRow)', async () => {
@@ -63,7 +63,7 @@ describe('groupSize - e2e', () => {
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.partialScreenshot();
-    //expect to have groups of 1 despite groupSize = 3 (because of layoutParams_groups_density)
+    //expect to have groups of 1 despite layoutParams_groups_groupSize = 3 (because of layoutParams_groups_density)
     expect(page).toMatchImageSnapshot();
   });
 });

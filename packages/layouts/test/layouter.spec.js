@@ -242,8 +242,8 @@ describe('Layouter', () => {
       }
     });
 
-    //groupSize
-    it('should have all groups at maximum groupSize items', () => {
+    //layoutParams_groups_groupSize
+    it('should have all groups at maximum layoutParams_groups_groupSize items', () => {
       const items = getItems(100);
 
       for (const size of [1, 2, 3]) {
