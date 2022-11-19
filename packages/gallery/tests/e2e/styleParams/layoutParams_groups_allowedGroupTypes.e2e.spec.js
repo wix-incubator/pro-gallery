@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('groupTypes - e2e', () => {
+describe('layoutParams_groups_allowedGroupTypes - e2e', () => {
   let driver;
 
   beforeAll(async () => {

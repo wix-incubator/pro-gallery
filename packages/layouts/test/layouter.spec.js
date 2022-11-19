@@ -259,11 +259,11 @@ describe('Layouter', () => {
       }
     });
 
-    //groupTypes
+    //layoutParams_groups_allowedGroupTypes
     it('should have groups only from the optional groups types ', () => {
       const items = getItems(100);
 
-      const groupTypes = [
+      const layoutParams_groups_allowedGroupTypes = [
         ['1'],
         ['1','2h','2v'],
         ['1','3b','3l','3r'],
@@ -274,7 +274,7 @@ describe('Layouter', () => {
         ['1','2h','2v','3v','3h','3l','3b'],
       ]; //groupType '1' must always be an option
 
-      for (const type of groupTypes) {
+      for (const type of layoutParams_groups_allowedGroupTypes) {
         styleParams[optionsMap.layoutParams.groups.allowedGroupTypes] = type;
         gallery = getLayout({ items, container, styleParams });
 
@@ -381,7 +381,7 @@ describe('Layouter', () => {
       const items = getItems(100);
       styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'HORIZONTAL';
 
-      const groupTypes = [
+      const layoutParams_groups_allowedGroupTypes = [
         ['1'],
         ['1','2h','2v'],
         ['1','3b','1','3r'],
@@ -392,7 +392,7 @@ describe('Layouter', () => {
         ['2h','2v','3v','3h','3l','3b'],
       ];
 
-      for (const type of groupTypes) {
+      for (const type of layoutParams_groups_allowedGroupTypes) {
         styleParams[optionsMap.layoutParams.groups.repeatingGroupTypes] = type;
         gallery = getLayout({ items, container, styleParams });
 
