@@ -8,7 +8,7 @@ const getExpectedCalcExpression = (expectedInfoSpace) => {
   return `calc(50%+0px-19.5px-${expectedInfoSpace}px)`;
 };
 
-describe('styleParam - arrowsVerticalPosition', () => {
+describe('styleParam - layoutParams_navigationArrows_verticalAlignment', () => {
   let driver;
   let initialProps = {
     container,
