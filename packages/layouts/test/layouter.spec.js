@@ -376,7 +376,7 @@ describe('Layouter', () => {
       expect(gallery.height).to.equal(container.galleryHeight);
     });
 
-    // repeatingGroupTypes
+    // layoutParams_groups_repeatingGroupTypes
     it('should have groups from the rotating groups types by their order ', () => {
       const items = getItems(100);
       styleParams[optionsMap.layoutParams.structure.layoutOrientation] = 'HORIZONTAL';
@@ -398,10 +398,10 @@ describe('Layouter', () => {
 
         const isWithinTypes = gallery.columns[0].groups.reduce(
           (g, group, idx) => {
-            const repeatingGroupTypes =
+            const layoutParams_groups_repeatingGroupTypes =
               styleParams[optionsMap.layoutParams.groups.repeatingGroupTypes];
             const expectedType =
-              repeatingGroupTypes[idx % repeatingGroupTypes.length];
+              layoutParams_groups_repeatingGroupTypes[idx % layoutParams_groups_repeatingGroupTypes.length];
             const groupType = group.type;
             expect(expectedType).to.equal(groupType);
             const isType = expectedType === groupType;
@@ -598,8 +598,8 @@ describe('Layouter', () => {
       }
     });
 
-    // repeatingGroupTypes
-    it('should type groups according to repeatingGroupTypes if defined', () => {
+    // layoutParams_groups_repeatingGroupTypes
+    it('should type groups according to layoutParams_groups_repeatingGroupTypes if defined', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
       styleParams[optionsMap.layoutParams.groups.repeatingGroupTypes] = ['2h','3v','3b','3t','1','2h','2v'];
       const repeatingGroupTypesArr = styleParams[optionsMap.layoutParams.groups.repeatingGroupTypes];

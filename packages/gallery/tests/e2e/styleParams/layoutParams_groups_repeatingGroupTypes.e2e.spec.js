@@ -4,7 +4,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('repeatingGroupTypes - e2e', () => {
+describe('layoutParams_groups_repeatingGroupTypes - e2e', () => {
   let driver;
 
   beforeAll(async () => {
