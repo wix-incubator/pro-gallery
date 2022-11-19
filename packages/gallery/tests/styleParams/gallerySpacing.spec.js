@@ -36,7 +36,7 @@ describe('options - gallerySpacing', () => {
     expect(margin).to.eq('20px');
     driver.detach.proGallery();
   });
-  it('should set the gallery with a margin of (gallerySpacing - (imageMargin / 2)) in a horizontal gallery', async () => {
+  it('should set the gallery with a margin of (gallerySpacing - (itemSpacing / 2)) in a horizontal gallery', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.gallerySpacing]: 20,
 
@@ -53,7 +53,7 @@ describe('options - gallerySpacing', () => {
       .selector('.pro-gallery-parent-container')
       .getDOMNode();
     const margin = getComputedStyle(galleryContainer).margin;
-    // expect the margin to be (gallerySpacing - (imageMargin / 2)
+    // expect the margin to be (gallerySpacing - (itemSpacing / 2)
     expect(margin).to.eq('15px');
     driver.detach.proGallery();
   });

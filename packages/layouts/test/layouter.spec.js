@@ -529,8 +529,8 @@ describe('Layouter', () => {
       }
     });
 
-    // imageMargin (between groups)
-    it('should have spaces between groups equal to imageMargin', () => {
+    // itemSpacing (between groups)
+    it('should have spaces between groups equal to itemSpacing', () => {
       const items = getItems(100);
       styleParams.targetItemSize = 500;
       styleParams[optionsMap.layoutParams.groups.groupSize] = 1;
@@ -560,9 +560,9 @@ describe('Layouter', () => {
       }
     });
 
-    // imageMargin (within groups)
+    // itemSpacing (within groups)
     //TODO fix this test once the playground is complete
-    it('should have spaces between items in a group equal to imageMargin', () => {
+    it('should have spaces between items in a group equal to itemSpacing', () => {
       const items = getItems(100);
       styleParams.targetItemSize = 1000;
       styleParams[optionsMap.layoutParams.groups.groupSize] = 3;
