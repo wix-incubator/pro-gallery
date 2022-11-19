@@ -42,7 +42,7 @@ describe('itemBorder - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
 
-  it('should not have any border style when "cubeType" is "FIT"', async () => {
+  it('should not have any border style when "layoutParams_crop_method" is "FIT"', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,

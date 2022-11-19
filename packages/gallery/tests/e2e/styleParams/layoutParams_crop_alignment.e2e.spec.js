@@ -20,7 +20,7 @@ const expectGalleryToMatchSnapshot = async (driver) => {
   expect(page).toMatchImageSnapshot();
 };
 
-describe('cubeFitPosition - e2e', () => {
+describe('layoutParams_crop_alignment - e2e', () => {
   let driver;
   const { MIDDLE, TOP, BOTTOM, LEFT, RIGHT } =
     GALLERY_CONSTS[optionsMap.layoutParams.crop.alignment];

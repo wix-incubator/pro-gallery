@@ -51,7 +51,7 @@ describe.skip('options - itemBorderRadius', () => {
     expect(item.props().style.borderRadius).to.eq(40);
     driver.detach.proGallery();
   });
-  it('should not set border-radius to when "cubeType" is "fit"', async () => {
+  it('should not set border-radius to when "layoutParams_crop_method" is "fit"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,

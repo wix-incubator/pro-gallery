@@ -17,7 +17,7 @@ describe('options - cubeImages', () => {
     };
   });
 
-  it('should allow to "cubeType" to set class to "itemWrapper"', async () => {
+  it('should allow to "layoutParams_crop_method" to set class to "itemWrapper"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
@@ -32,7 +32,7 @@ describe('options - cubeImages', () => {
     expect(itemWrappers.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
-  it('should not allow to "cubeType" to set class to "itemWrapper"', async () => {
+  it('should not allow to "layoutParams_crop_method" to set class to "itemWrapper"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,

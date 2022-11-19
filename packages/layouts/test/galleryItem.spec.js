@@ -84,13 +84,13 @@ describe('GalleryItem ', () => {
     expect(galleryItem.id).equal('8b72558253b2502b401bb46e5599f22a');
     expect(antiGalleryItem.id).equal(undefined);
   });
-  it('cubeType is fill if scheme.cropType is undefined', () => {
+  it('layoutParams_crop_method is fill if scheme.cropType is undefined', () => {
     Object.assign(config, {
       scheme: { cropType: 'aaa', dto: { directLink: {} } },
     });
     galleryItem = new GalleryItem(config);
-    expect(galleryItem.cubeType).equal('aaa');
-    expect(antiGalleryItem.cubeType).equal('FILL');
+    expect(galleryItem.layoutParams_crop_method).equal('aaa');
+    expect(antiGalleryItem.layoutParams_crop_method).equal('FILL');
   });
   // it('createFromWixImage', () => {
   //   Object.assign(config, { orderIndex: 1 });
@@ -399,7 +399,7 @@ describe('GalleryItem - secondary media', () => {
     'ratio',
     'cropRatio',
     'cubeImages',
-    'cubeType',
+    'layoutParams_crop_method',
     'offset',
     'group',
     'orientation',

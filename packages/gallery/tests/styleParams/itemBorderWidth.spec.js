@@ -49,7 +49,7 @@ describe.skip('options - itemBorderWidth', () => {
     expect(item.props().style.borderWidth).to.eq('40px');
     driver.detach.proGallery();
   });
-  it('should not set border-width to when "cubeType" is "fit"', async () => {
+  it('should not set border-width to when "layoutParams_crop_method" is "fit"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,

@@ -666,7 +666,7 @@ describe('Layouter', () => {
     });
   });
 
-  it('should not find ratios under 1 when "cubeType" is "min"', () => {
+  it('should not find ratios under 1 when "layoutParams_crop_method" is "min"', () => {
     const items = getItems(100); //todo - something breaks when using exactly 100 images
     const ratio = 1;
     styleParams[optionsMap.layoutParams.crop.ratios] = [ratio];
@@ -683,7 +683,7 @@ describe('Layouter', () => {
     }, true);
   });
 
-  it('should not find ratios above 1 when "cubeType" is "max"', () => {
+  it('should not find ratios above 1 when "layoutParams_crop_method" is "max"', () => {
     const items = getItems(100); //todo - something breaks when using exactly 100 images
     const ratio = 1;
     styleParams[optionsMap.layoutParams.crop.ratios] = [ratio];

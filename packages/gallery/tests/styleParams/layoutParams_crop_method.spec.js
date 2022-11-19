@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2, textItems } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
-describe('options - cubeType', () => {
+describe('options - layoutParams_crop_method', () => {
   let driver;
   let initialProps;
 
@@ -17,7 +17,7 @@ describe('options - cubeType', () => {
     };
   });
 
-  it('should set class "cube-type-fit" to "item-wrapper"(hook) when "cubeType" is "fit"', async () => {
+  it('should set class "cube-type-fit" to "item-wrapper"(hook) when "layoutParams_crop_method" is "fit"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
@@ -31,7 +31,7 @@ describe('options - cubeType', () => {
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
-  it('should set class "cube-type-fill" to "item-wrapper"(hook) when "cubeType" is "fill"', async () => {
+  it('should set class "cube-type-fill" to "item-wrapper"(hook) when "layoutParams_crop_method" is "fill"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
@@ -45,7 +45,7 @@ describe('options - cubeType', () => {
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
-  it('should set class "grid-fit" to "image-item"(hook) when "cubeType" is "fit"', async () => {
+  it('should set class "grid-fit" to "image-item"(hook) when "layoutParams_crop_method" is "fit"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
@@ -59,7 +59,7 @@ describe('options - cubeType', () => {
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
-  it('should set "backgroundColor" to "transparent" on text items when "cubeType" is "fill"', async () => {
+  it('should set "backgroundColor" to "transparent" on text items when "layoutParams_crop_method" is "fill"', async () => {
     initialProps.items = textItems;
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
@@ -75,7 +75,7 @@ describe('options - cubeType', () => {
     expect(backgroundColor).to.eq('transparent');
     driver.detach.proGallery();
   });
-  it('should set "backgroundColor" to "inherit" on text items when "cubeType" is "fit"', async () => {
+  it('should set "backgroundColor" to "inherit" on text items when "layoutParams_crop_method" is "fit"', async () => {
     initialProps.items = textItems;
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
