@@ -628,7 +628,7 @@ describe('Layouter', () => {
     });
 
     // crop only fill
-    it('should not crop items if cropOnlyFill is true and cropType is fit', () => {
+    it('should not crop items if layoutParams_crop_cropOnlyFill is true and cropType is fit', () => {
       const items = getItems(100); //todo - something breaks when using exactly 100 images
       styleParams[optionsMap.layoutParams.crop.ratios] = [1];
       styleParams[optionsMap.layoutParams.crop.cropOnlyFill] = true;

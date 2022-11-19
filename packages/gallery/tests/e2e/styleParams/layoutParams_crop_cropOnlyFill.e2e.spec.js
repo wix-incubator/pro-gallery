@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('cropOnlyFill - e2e', () => {
+describe('layoutParams_crop_cropOnlyFill - e2e', () => {
   let driver;
 
   beforeAll(async () => {
