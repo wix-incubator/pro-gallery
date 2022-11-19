@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('gridStyle - e2e', () => {
+describe('layoutParams_structure_responsiveMode - e2e', () => {
   let driver;
 
   beforeAll(async () => {
