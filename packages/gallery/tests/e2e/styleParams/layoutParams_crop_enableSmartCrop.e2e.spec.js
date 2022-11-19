@@ -4,7 +4,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('smartCrop - e2e', () => {
+describe('layoutParams_crop_enableSmartCrop - e2e', () => {
   let driver;
 
   beforeAll(async () => {

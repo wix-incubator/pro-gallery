@@ -470,8 +470,8 @@ describe('Layouter', () => {
       expect(isCroppedCorrectly).to.be.true;
     });
 
-    // smartCrop
-    it('should crop images according to their original proportions if smartCrop is true', () => {
+    // layoutParams_crop_enableSmartCrop
+    it('should crop images according to their original proportions if layoutParams_crop_enableSmartCrop is true', () => {
       const allowedRounding = 2; //the number of pixels that can change due to rounding
 
       const items = getItems(100);
