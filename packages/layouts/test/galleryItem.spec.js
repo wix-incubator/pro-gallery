@@ -398,7 +398,7 @@ describe('GalleryItem - secondary media', () => {
     'margins',
     'ratio',
     'cropRatio',
-    'cubeImages',
+    'layoutParams_crop_enable',
     'layoutParams_crop_method',
     'offset',
     'group',

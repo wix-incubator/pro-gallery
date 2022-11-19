@@ -48,7 +48,7 @@ describe('options - cropRatio', () => {
     expect(width).to.eq(height * 2);
     driver.detach.proGallery();
   });
-  it('should not be able to set cube ratio when "cubeImages" is "false"', async () => {
+  it('should not be able to set cube ratio when "layoutParams_crop_enable" is "false"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,

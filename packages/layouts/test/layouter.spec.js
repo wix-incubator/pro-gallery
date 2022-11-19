@@ -414,8 +414,8 @@ describe('Layouter', () => {
       }
     });
 
-    // cubeImages
-    it('should have all images in their original ratio if cubeImages is false', () => {
+    // layoutParams_crop_enable
+    it('should have all images in their original ratio if layoutParams_crop_enable is false', () => {
       const allowedRounding = 2; //the number of pixels that can change due to rounding
 
       const items = getItems(100); //todo - something breaks when using exactly 100 images
