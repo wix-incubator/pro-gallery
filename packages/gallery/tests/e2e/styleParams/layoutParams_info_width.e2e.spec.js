@@ -4,7 +4,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('textBoxWidth - e2e', () => {
+describe('layoutParams_info_width - e2e', () => {
   let driver;
 
   beforeAll(async () => {
@@ -15,7 +15,7 @@ describe('textBoxWidth - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('should set textBoxWidth(manual)', async () => {
+  it('should set layoutParams_info_width(manual)', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -29,7 +29,7 @@ describe('textBoxWidth - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should set textBoxWidth(percent)', async () => {
+  it('should set layoutParams_info_width(percent)', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,

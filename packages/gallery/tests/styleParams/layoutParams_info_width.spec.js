@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container, customComponents } from '../drivers/mocks/styles';
 
-describe('options - textBoxWidth', () => {
+describe('options - layoutParams_info_width', () => {
   let driver;
   let initialProps;
 
@@ -18,7 +18,7 @@ describe('options - textBoxWidth', () => {
     };
   });
 
-  it('should set "textBoxWidth" of "250"(manual)', async () => {
+  it('should set "layoutParams_info_width" of "250"(manual)', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
