@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
-describe('options - thumbnailSpacings', () => {
+describe('options - layoutParams_thumbnails_spacings', () => {
   let driver;
   let initialProps;
 
@@ -17,7 +17,7 @@ describe('options - thumbnailSpacings', () => {
     };
   });
 
-  it('should set "thumbnailSpacing" of "10"', async () => {
+  it('should set "layoutParams_thumbnails_spacing" of "10"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
@@ -34,7 +34,7 @@ describe('options - thumbnailSpacings', () => {
     expect(item.props().style).to.include(mock);
     driver.detach.proGallery();
   });
-  it('should set "thumbnailSpacing" of "30"', async () => {
+  it('should set "layoutParams_thumbnails_spacing" of "30"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
