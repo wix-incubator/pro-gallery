@@ -4,7 +4,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('textBoxHeight - e2e', () => {
+describe('layoutParams_info_height - e2e', () => {
   let driver;
 
   beforeAll(async () => {
@@ -15,7 +15,7 @@ describe('textBoxHeight - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('should set textBoxHeight', async () => {
+  it('should set layoutParams_info_height', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
