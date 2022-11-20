@@ -27,17 +27,8 @@ describe('options - shouldIndexDirectShareLinkInSEO', () => {
       .props();
     return linkProps;
   }
-  it('should use "rel" attribute for preventing seo indexing - itemClick = expand', async () => {
-    const sample = getSampleItemViewProps({
-      [optionsMap.behaviourParams.gallery.enableIndexingShareLinks]: false,
-      [optionsMap.behaviourParams.item.clickAction]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
-    });
-    const linkProps = await mountUpdateAndGetLinkProps(sample);
-    expect(linkProps).to.include({ rel: 'nofollow' });
-  });
 
-  it('should not use "rel" attribute for preventing seo indexing - itemClick = expand', async () => {
+  it('should not use "rel" attribute for preventing seo indexing - behaviourParams_item_clickAction = action', async () => {
     const sample = getSampleItemViewProps({
       [optionsMap.behaviourParams.gallery.enableIndexingShareLinks]: true,
       [optionsMap.behaviourParams.item.clickAction]:
@@ -47,7 +38,7 @@ describe('options - shouldIndexDirectShareLinkInSEO', () => {
     expect(linkProps).to.not.include({ rel: 'nofollow' });
   });
 
-  it('should use "rel" attribute for preventing seo indexing - itemClick = fullscreen', async () => {
+  it('should use "rel" attribute for preventing seo indexing - behaviourParams_item_clickAction = action', async () => {
     const sample = getSampleItemViewProps({
       [optionsMap.behaviourParams.item.clickAction]:
         GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
@@ -55,15 +46,5 @@ describe('options - shouldIndexDirectShareLinkInSEO', () => {
     });
     const linkProps = await mountUpdateAndGetLinkProps(sample);
     expect(linkProps).to.include({ rel: 'nofollow' });
-  });
-
-  it('should not use "rel" attribute for preventing seo indexing - itemClick = fullscreen', async () => {
-    const sample = getSampleItemViewProps({
-      [optionsMap.behaviourParams.item.clickAction]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
-      [optionsMap.behaviourParams.gallery.enableIndexingShareLinks]: true,
-    });
-    const linkProps = await mountUpdateAndGetLinkProps(sample);
-    expect(linkProps).to.not.include({ rel: 'nofollow' });
   });
 });

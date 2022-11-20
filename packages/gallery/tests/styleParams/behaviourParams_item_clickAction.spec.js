@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2, videoItems } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
-describe('options - itemClick', () => {
+describe('options - behaviourParams_item_clickAction', () => {
   let driver;
   let initialProps;
 
@@ -17,8 +17,8 @@ describe('options - itemClick', () => {
     };
   });
 
-  describe('should set the correct role for each "itemClick" value', () => {
-    it('expect "role" to be "link" when "itemClick" is "link"', async () => {
+  describe('should set the correct role for each "behaviourParams_item_clickAction" value', () => {
+    it('expect "role" to be "link" when "behaviourParams_item_clickAction" is "link"', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
@@ -29,7 +29,8 @@ describe('options - itemClick', () => {
       expect(item.props().role).to.eq('link');
       driver.detach.proGallery();
     });
-    it('expect "role" to be "button" when "itemClick" is "expand"', async () => {
+
+    it('expect "role" to be "button" when "behaviourParams_item_clickAction" is "ACTION"', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
@@ -40,18 +41,7 @@ describe('options - itemClick', () => {
       expect(item.props().role).to.eq('button');
       driver.detach.proGallery();
     });
-    it('expect "role" to be "button" when "itemClick" is "fullscreen"', async () => {
-      initialProps.options = Object.assign(initialProps.options, {
-        [optionsMap.behaviourParams.item.clickAction]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
-      });
-      driver.mount.proGallery(initialProps);
-      await driver.update();
-      const item = driver.find.hook('item-container').at(3);
-      expect(item.props().role).to.eq('button');
-      driver.detach.proGallery();
-    });
-    it('expect "role" to be "" when "itemClick" is "nothing"', async () => {
+    it('expect "role" to be "" when "behaviourParams_item_clickAction" is "nothing"', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING,
@@ -64,7 +54,7 @@ describe('options - itemClick', () => {
     });
   });
 
-  describe('should set className "clickable" when "itemClick" is "expand/fullscreen/link"', () => {
+  describe('should set className "clickable" when "behaviourParams_item_clickAction" is "action/link"', () => {
     beforeEach(() => {
       driver = new GalleryDriver();
       initialProps = {
@@ -73,7 +63,7 @@ describe('options - itemClick', () => {
         options,
       };
     });
-    it('expect item to have className "clickable" when "itemClick" is "link"', async () => {
+    it('expect item to have className "clickable" when "behaviourParams_item_clickAction" is "link"', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
@@ -84,7 +74,7 @@ describe('options - itemClick', () => {
       expect(item.hasClass('clickable')).to.be.true;
       driver.detach.proGallery();
     });
-    it('expect item to have className "clickable" when "itemClick" is "expand"', async () => {
+    it('expect item to have className "clickable" when "behaviourParams_item_clickAction" is "action"', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
@@ -95,18 +85,14 @@ describe('options - itemClick', () => {
       expect(item.hasClass('clickable')).to.be.true;
       driver.detach.proGallery();
     });
-    it('expect item to have className "clickable" when "itemClick" is "fullscreen"', async () => {
-      initialProps.options = Object.assign(initialProps.options, {
-        [optionsMap.behaviourParams.item.clickAction]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
-      });
+    it('expect "role" to be "" when "itemClick" is "nothing"', async () => {
       driver.mount.proGallery(initialProps);
       await driver.update();
       const item = driver.find.hook('item-container').at(3);
       expect(item.hasClass('clickable')).to.be.true;
       driver.detach.proGallery();
     });
-    it('expect item to not have className "clickable" when "itemClick" is "nothing"', async () => {
+    it('expect item to not have className "clickable" when "behaviourParams_item_clickAction" is "nothing"', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING,
@@ -119,7 +105,7 @@ describe('options - itemClick', () => {
     });
   });
 
-  describe('should set href link only when "itemClick" is set to "link"', () => {
+  describe('should set href link only when "behaviourParams_item_clickAction" is set to "link"', () => {
     beforeEach(() => {
       driver = new GalleryDriver();
       initialProps = {
@@ -128,7 +114,7 @@ describe('options - itemClick', () => {
         options,
       };
     });
-    it('check href when itemClick = link', async () => {
+    it('check href when behaviourParams_item_clickAction = link', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
@@ -142,7 +128,7 @@ describe('options - itemClick', () => {
       expect(item.props().href).to.not.be.undefined;
       driver.detach.proGallery();
     });
-    it('check href when itemClick = expand', async () => {
+    it('check href when behaviourParams_item_clickAction = action', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
@@ -156,7 +142,7 @@ describe('options - itemClick', () => {
       driver.detach.proGallery();
     });
   });
-  describe('should play video onClick in gallery only when itemClick is nothing and videoPlay is onClick', () => {
+  describe('should play video onClick in gallery only when behaviourParams_item_clickAction is nothing and videoPlay is onClick', () => {
     beforeEach(() => {
       driver = new GalleryDriver();
       initialProps = {
@@ -183,23 +169,8 @@ describe('options - itemClick', () => {
       expect(driver.find.tag('video').length).to.eq(2); //all videos load after the first interaction (2 in the items array)
       driver.detach.proGallery();
     });
-    it('expect not to find video element when "itemClick" is "expand"', async () => {
-      initialProps.options = Object.assign(initialProps.options, {
-        [optionsMap.behaviourParams.item.clickAction]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
-        [optionsMap.behaviourParams.item.video.playTrigger]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
-            .CLICK,
-      });
-      driver.mount.proGallery(initialProps);
-      await driver.update();
-      await driver.update(100);
-      const item = driver.find.hook('item-wrapper').at(0);
-      item.simulate('click');
-      expect(driver.find.tag('video').length).to.eq(0);
-      driver.detach.proGallery();
-    });
-    it('expect not to find video element when "itemClick" is "fullscreen"', async () => {
+
+    it('expect not to find video element when "behaviourParams_item_clickAction" is "action"', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
@@ -216,7 +187,7 @@ describe('options - itemClick', () => {
 
       driver.detach.proGallery();
     });
-    it('expect not to find video element when "itemClick" is "link"', async () => {
+    it('expect not to find video element when "behaviourParams_item_clickAction" is "link"', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
@@ -235,7 +206,7 @@ describe('options - itemClick', () => {
     });
   });
 
-  describe('itemClick = "MAGNIFY"', () => {
+  describe('behaviourParams_item_clickAction = "MAGNIFY"', () => {
     const mountAndGetMagnifiedItems = async (
       galleryDriver,
       selector = '.magnified-item-container'
