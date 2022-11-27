@@ -51,11 +51,7 @@ export interface ThreeDimensionalScene {
   controls?: Controls;
 }
 
-export interface Dimensions {
-  x?: number;
-  y?: number;
-  z?: number;
-}
+export type Dimensions = `x${number}y${number}z${number}`;
 
 export interface Transform {
   rotation?: Dimensions;

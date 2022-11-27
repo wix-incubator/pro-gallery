@@ -35,33 +35,15 @@ interface State {
 
 function mapSceneToStyleParams(scene: ThreeDimensionalScene, options: Options) {
   return {
-    behaviourParams_item_threeDimensionalScene_transform_rotation_x:
-      scene.transform?.rotation?.x ||
-      options.behaviourParams_item_threeDimensionalScene_transform_rotation_x,
-    behaviourParams_item_threeDimensionalScene_transform_rotation_y:
-      scene.transform?.rotation?.y ||
-      options.behaviourParams_item_threeDimensionalScene_transform_rotation_y,
-    behaviourParams_item_threeDimensionalScene_transform_rotation_z:
-      scene.transform?.rotation?.z ||
-      options.behaviourParams_item_threeDimensionalScene_transform_rotation_z,
-    behaviourParams_item_threeDimensionalScene_transform_scale_x:
-      scene.transform?.scale?.x ||
-      options.behaviourParams_item_threeDimensionalScene_transform_scale_x,
-    behaviourParams_item_threeDimensionalScene_transform_scale_y:
-      scene.transform?.scale?.y ||
-      options.behaviourParams_item_threeDimensionalScene_transform_scale_y,
-    behaviourParams_item_threeDimensionalScene_transform_scale_z:
-      scene.transform?.scale?.z ||
-      options.behaviourParams_item_threeDimensionalScene_transform_scale_z,
-    behaviourParams_item_threeDimensionalScene_transform_translation_x:
-      scene.transform?.translation?.x ||
-      options.behaviourParams_item_threeDimensionalScene_transform_translation_x,
-    behaviourParams_item_threeDimensionalScene_transform_translation_y:
-      scene.transform?.translation?.y ||
-      options.behaviourParams_item_threeDimensionalScene_transform_translation_y,
-    behaviourParams_item_threeDimensionalScene_transform_translation_z:
-      scene.transform?.translation?.z ||
-      options.behaviourParams_item_threeDimensionalScene_transform_translation_z,
+    behaviourParams_item_threeDimensionalScene_transform_rotation:
+      scene.transform?.rotation ||
+      options.behaviourParams_item_threeDimensionalScene_transform_rotation,
+    behaviourParams_item_threeDimensionalScene_transform_scale:
+      scene.transform?.scale ||
+      options.behaviourParams_item_threeDimensionalScene_transform_scale,
+    behaviourParams_item_threeDimensionalScene_transform_translation:
+      scene.transform?.translation ||
+      options.behaviourParams_item_threeDimensionalScene_transform_translation,
     behaviourParams_item_threeDimensionalScene_controls_enablePan:
       scene.controls?.enablePan ||
       options.behaviourParams_item_threeDimensionalScene_controls_enablePan,
@@ -93,7 +75,7 @@ export default class ThreeDItem extends ImageItem {
     return mapSceneToStyleParams(scene, options);
   }
 
-  handleHighResImageLoad = () => {
+  handleHighResImageLoad = (): void => {
     try {
       this.props.actions.setItemLoaded();
     } catch (e) {
@@ -131,21 +113,18 @@ export default class ThreeDItem extends ImageItem {
     if (!sceneManager) {
       return;
     }
-    sceneManager.setCameraPosition(
-      params.behaviourParams_item_threeDimensionalScene_transform_translation_x,
-      params.behaviourParams_item_threeDimensionalScene_transform_translation_y,
-      params.behaviourParams_item_threeDimensionalScene_transform_translation_z
+    const rotation = GALLERY_CONSTS.parse3DDimensions(
+      params.behaviourParams_item_threeDimensionalScene_transform_rotation
     );
-    sceneManager.setRotation(
-      params.behaviourParams_item_threeDimensionalScene_transform_rotation_x,
-      params.behaviourParams_item_threeDimensionalScene_transform_rotation_y,
-      params.behaviourParams_item_threeDimensionalScene_transform_rotation_z
+    const scale = GALLERY_CONSTS.parse3DDimensions(
+      params.behaviourParams_item_threeDimensionalScene_transform_scale
     );
-    sceneManager.setScale(
-      params.behaviourParams_item_threeDimensionalScene_transform_scale_x,
-      params.behaviourParams_item_threeDimensionalScene_transform_scale_y,
-      params.behaviourParams_item_threeDimensionalScene_transform_scale_z
+    const translation = GALLERY_CONSTS.parse3DDimensions(
+      params.behaviourParams_item_threeDimensionalScene_transform_translation
     );
+    sceneManager.setCameraPosition(translation.x, translation.y, translation.z);
+    sceneManager.setRotation(rotation.x, rotation.y, rotation.z);
+    sceneManager.setScale(scale.x, scale.y, scale.z);
   };
 
   componentDidMount = (): void => {

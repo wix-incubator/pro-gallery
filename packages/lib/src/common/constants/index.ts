@@ -1,7 +1,7 @@
 import arrowsPosition from './arrowsPosition';
 import arrowsVerticalPosition from './arrowsVerticalPosition';
 import cubeType from './cubeType';
-import dimensions from './dimensions';
+import dimensions, { parse3DDimensions } from './dimensions';
 import events from './events';
 import deviceType from './deviceType';
 import gallerySizeType from './gallerySizeType';
@@ -209,5 +209,6 @@ export default {
   behaviourParams_gallery_horizontal_slideshowInfo_buttonsAlignment,
   stylingParams_itemResolutionMode,
   layoutParams_thumbnails_position,
+  parse3DDimensions,
   //NEW STYPEPARAMS METHOD
 };
