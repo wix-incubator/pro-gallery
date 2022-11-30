@@ -1053,6 +1053,7 @@ class ItemView extends React.Component {
         data-hook="item-container"
         key={'item-container-' + id}
         style={this.getItemContainerStyles()}
+        onClick={this.onItemWrapperClick}
       >
         {this.getTopInfoElementIfNeeded()}
         {this.getLeftInfoElementIfNeeded()}
@@ -1076,7 +1077,6 @@ class ItemView extends React.Component {
               key={'item-wrapper-' + id}
               id={'item-wrapper-' + id}
               style={this.getItemWrapperStyles()}
-              onClick={this.onItemWrapperClick}
             >
               {this.getItemInner()}
             </div>
