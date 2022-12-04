@@ -299,5 +299,5 @@ export function ArrowsContainer({
       </div>
     );
   }
-  return <>{children}</>;
+  return <div>{children}</div>;
 }
