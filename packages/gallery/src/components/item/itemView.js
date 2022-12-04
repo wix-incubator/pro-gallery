@@ -72,8 +72,8 @@ class ItemView extends React.Component {
     this.getItemWrapperClass = this.getItemWrapperClass.bind(this);
     this.getItemContainerTabIndex = this.getItemContainerTabIndex.bind(this);
     this.isIconTag = this.isIconTag.bind(this);
-    this.onMouseOver = this.onMouseOver.bind(this);
-    this.onMouseOut = this.onMouseOut.bind(this);
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.checkIfCurrentHoverChanged =
@@ -97,7 +97,7 @@ class ItemView extends React.Component {
     );
   }
 
-  onMouseOver() {
+  onMouseEnter() {
     if (!utils.isMobile()) {
       this.props.actions.eventsListener(
         GALLERY_CONSTS.events.HOVER_SET,
@@ -106,7 +106,7 @@ class ItemView extends React.Component {
     }
   }
 
-  onMouseOut() {
+  onMouseLeave() {
     if (!utils.isMobile()) {
       this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
     }
@@ -1077,8 +1077,8 @@ class ItemView extends React.Component {
         onContextMenu={(e) => this.onContextMenu(e)}
         id={cssScrollHelper.getSellectorDomId(this.props)}
         ref={(e) => (this.itemContainer = e)}
-        onMouseOver={this.onMouseOver}
-        onMouseOut={this.onMouseOut}
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseLeave}
         onFocus={this.onFocus}
         onBlur={this.onBlur} // The onblur event is the opposite of the onfocus event.
         onKeyDown={this.onContainerKeyDown}
