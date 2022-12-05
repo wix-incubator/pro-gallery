@@ -62,6 +62,7 @@ export interface Controls {
   enableZoom?: boolean;
   enableRotate?: boolean;
   enablePan?: boolean;
+  enableAutoRotate?: boolean;
 }
 
 export interface Overlay {

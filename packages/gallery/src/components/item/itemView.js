@@ -469,6 +469,7 @@ class ItemView extends React.Component {
       'isTransparent',
       'style',
       'customComponents',
+      'scene',
       'activeIndex',
     ]);
 

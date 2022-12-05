@@ -1,24 +1,19 @@
 import { INPUT_TYPES } from '../utils/constants';
 
-function createTransformOptions(name: string, axis: 'x' | 'y' | 'z') {
+function createTransformOptions(name: string, defaultValue = 0) {
   return {
-    [`behaviourParams_item_transform_${name}_${axis}`]: {
-      title: `3D Scene Transform ${name} Axis ${axis.toUpperCase()}`,
+    [`behaviourParams_item_threeDimensionalScene_transform_${name}`]: {
+      title: `3D Scene Transform ${name}`,
       isRelevant: () => true,
-      type: INPUT_TYPES.NUMBER,
-      description: `Set 3D item transform ${name} axis ${axis.toUpperCase()}`,
+      type: INPUT_TYPES.TRANSFORM,
+      description: `Set 3D item transform ${name}`,
+      default: `${defaultValue}x${defaultValue}y${defaultValue}z${defaultValue}`,
     },
   };
 }
 
 export default {
-  ...createTransformOptions('rotation', 'x'),
-  ...createTransformOptions('rotation', 'y'),
-  ...createTransformOptions('rotation', 'z'),
-  ...createTransformOptions('scale', 'x'),
-  ...createTransformOptions('scale', 'y'),
-  ...createTransformOptions('scale', 'z'),
-  ...createTransformOptions('translation', 'x'),
-  ...createTransformOptions('translation', 'y'),
-  ...createTransformOptions('translation', 'z'),
+  ...createTransformOptions('rotation'),
+  ...createTransformOptions('scale', 1),
+  ...createTransformOptions('translation'),
 };

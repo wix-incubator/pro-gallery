@@ -224,6 +224,8 @@ import stylingParams_itemBorderRadius from './stylingParams_itemBorderRadius';
 import stylingParams_itemBorderWidth from './stylingParams_itemBorderWidth';
 import stylingParams_itemBorderColor from './stylingParams_itemBorderColor';
 import behaviourParams_item_threeDimensionalScene_transform from './behaviourParams_item_threeDimensionalScene_transform';
+import behaviourParams_item_threeDimensionalScene_keepPosterAfterObjectLoad from './behaviourParams_item_threeDimensionalScene_keepPosterAfterObjectLoad';
+import behaviourParams_item_threeDimensionalScene_controls from './behaviourParams_item_threeDimensionalScene_controls';
 // import stylingParams_itemResolutionMode from './stylingParams_itemResolutionMode';
 //NEW STYPEPARAMS METHOD
 
@@ -580,7 +582,9 @@ export default {
   stylingParams_itemBorderColor,
   stylingParams_itemBorderWidth,
   // stylingParams_itemResolutionMode,
+  behaviourParams_item_threeDimensionalScene_keepPosterAfterObjectLoad,
   ...behaviourParams_item_threeDimensionalScene_transform,
+  ...behaviourParams_item_threeDimensionalScene_controls,
   //NEW STYPEPARAMS METHOD
 };
 // TODO = add the options:

@@ -77,6 +77,7 @@ export interface GenericItem {
 //   type: string;
 //   url: string;
 //   focalPoint?: [number, number];
+//  scene?: ThreeDimensionalScene;
 //}
 //
 // interface GenericMetadata {

@@ -2023,7 +2023,7 @@ const test3D = [
       height: 1080,
       type: '3d',
       poster: {
-        url: 'https://static.wixstatic.com/media/0d72ac_7c7a5b89485a4062ba36ed97b6ac9615f000.jpg',
+        url: window.location.origin + '/3d/cow.png',
         width: 1920,
         height: 1080,
       },
@@ -2041,35 +2041,22 @@ const test3D = [
       height: 1080,
       type: '3d',
       poster: {
-        url: 'https://static.wixstatic.com/media/0d72ac_c7b0d48d722642cfa03bb2bab58bd1c4f000.jpg',
+        url: window.location.origin + '/3d/nike_air_jordan.png',
         width: 1920,
         height: 1080,
+      },
+      scene: {
+        transform: {
+          rotation: 'x20y90z0'
+        }
       },
       background: {
         type: 'color',
         color: '#4287f5',
       }
     }
-  },
-  {
-    itemId: 'd19570fa-e97f-4b3d-b8ad-4e24b3a9a1c',
-    url: window.location.origin + '/3d/cow.glb',
-    metadata: {
-      width: 1920,
-      height: 1080,
-      type: '3d',
-      poster: {
-        url: 'https://static.wixstatic.com/media/8bb438_5ec836c505f445dfab711a56e67fc502.jpg',
-        width: 1920,
-        height: 1080,
-      },
-      background: {
-        type: 'css',
-        color: 'radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(175,70,252,1) 100%)',
-      }
-    }
-  },
-]
+  }
+];
 
 const itemsWithSecondaryMedia = [
   {
@@ -2090,8 +2077,6 @@ const itemsWithSecondaryMedia = [
       url: 'https://static.wixstatic.com/media/8bb438_ff062a651e174cf5926fe5c088be1099.jpg'
     }
   },
-  
-  
   {
     metadata: {
       height: 1280,
@@ -2124,7 +2109,6 @@ const itemsWithSecondaryMedia = [
         width: 3737,
         focalPoint: [0.9, 0.1],
       },
-      
       itemId: '2d3b675ea857dc41158bad3b28300824',
       url: 'https://static.wixstatic.com/media/8bb438_78ff5e32500d48cdaa22a3f446d68216.jpg',
     }
@@ -2133,6 +2117,10 @@ const itemsWithSecondaryMedia = [
 ];
 const testMedia = [...testImages, ...testVideos];
 const testItems = [...testMedia, ...testTexts];
+const mixed3D = [
+  ...test3D,
+  ...testMedia.slice(0, 4),
+]
 
 export {
   testMedia,
@@ -2141,6 +2129,7 @@ export {
   testTexts,
   testItems,
   test3D,
+  mixed3D,
   monochromeImages,
   itemsWithSecondaryMedia,
 };

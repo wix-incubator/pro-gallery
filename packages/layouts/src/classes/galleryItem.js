@@ -152,6 +152,7 @@ class GalleryItem {
       videoUrl: this.videoUrl,
       isExternalVideo: this.isExternalVideo,
       hasSecondaryMedia: this.hasSecondaryMedia,
+      scene: this.scene,
       ...config,
     };
     if (this.hasSecondaryMedia) {
@@ -646,6 +647,10 @@ class GalleryItem {
         ? this.metadata.posters[this.metadata.posters.length - 1]
         : null)
     );
+  }
+
+  get scene() {
+    return this.metadata.scene;
   }
 
   get qualities() {
