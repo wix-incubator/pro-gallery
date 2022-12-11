@@ -2,6 +2,7 @@ export { default as GALLERY_CONSTS } from './common/constants';
 export {
   default as defaultOptions,
   populateWithDefaultOptions,
+  flatDefaultOptions,
 } from './common/defaultOptions';
 export { default as v4DefaultOptions } from './common/v4DefaultOptions';
 export { flatV4DefaultOptions } from './common/v4DefaultOptions';
@@ -53,7 +54,8 @@ export { CustomComponents } from './common/interfaces/CustomComponents';
 export { ScrollingElement } from './common/interfaces/ScrollingElement';
 export { Structure } from './common/interfaces/Structure';
 export { GalleryProps, GalleryState } from './common/interfaces/galleryTypes';
-export { Options } from './common/interfaces/options';
+export { Options as NestedOptions } from './common/interfaces/options';
+export { FlattenOptions as Options } from './common/interfaces/flatten';
 export { GalleryRendererProps } from './common/interfaces/galleryRendererTypes';
 export { VirtualizationSettings } from './common/interfaces/virtualization';
 export { PlayTrigger } from './common/interfaces/behaviourParams';
