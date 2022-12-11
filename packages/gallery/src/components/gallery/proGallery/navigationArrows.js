@@ -299,5 +299,9 @@ export function ArrowsContainer({
       </div>
     );
   }
-  return <div>{children}</div>;
+  return React.Fragment ? (
+    <React.Fragment>{children}</React.Fragment>
+  ) : (
+    <div>{children}</div>
+  );
 }
