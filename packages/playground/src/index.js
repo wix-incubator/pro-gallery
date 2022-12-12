@@ -1,9 +1,9 @@
-import './utils/polyfills';
+import "./utils/polyfills";
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {App} from './components/App/App';
-import {GalleryProvider} from './hooks/GalleryContext';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { App } from "./components/App/App";
+import { GalleryProvider } from "./hooks/GalleryContext";
 
 const Root = () => (
   <GalleryProvider>
@@ -11,4 +11,4 @@ const Root = () => (
   </GalleryProvider>
 );
 
-ReactDOM.render(<Root />, document.getElementById('root'));
+ReactDOM.createRoot(document.getElementById("root")).render(<Root />);
