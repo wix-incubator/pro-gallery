@@ -751,7 +751,7 @@ class Utils {
     };
     return (
       oldSPs_isHeightSetByGallery(options) || //NEW STYPEPARAMS METHOD remove when done
-      newSPs_isHeightSetByGallery(options)
+      (options.newSPs && newSPs_isHeightSetByGallery(options))
     );
   }
 }
