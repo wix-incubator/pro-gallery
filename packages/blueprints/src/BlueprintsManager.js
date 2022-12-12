@@ -174,8 +174,8 @@ export default class BlueprintsManager {
     const { totalItemsCount } = this.currentState;
     const loopThreshold = 30;
     const oldScrollDirection = options.scrollDirection //NEW STYPEPARAMS METHOD remove when not needed
-    const newScrollDirection = options[optionsMap.layoutParams.structure.scrollDirection]
-    const slideshowLoop = options.slideshowLoop || options[optionsMap.behaviourParams.gallery.horizontal.loop]//NEW STYPEPARAMS METHOD remove when not needed
+    const newScrollDirection = (options.newSPs && options[optionsMap.layoutParams.structure.scrollDirection])
+    const slideshowLoop = options.slideshowLoop ||  (options.newSPs && options[optionsMap.behaviourParams.gallery.horizontal.loop])//NEW STYPEPARAMS METHOD remove when not needed
     // If we've reached last items (no more items in server), and there are less items than the threshold
     const numOfItemsCondition = items.length < loopThreshold && items.length === totalItemsCount;
     // If the gallery is a horizontal scrolling gallery
