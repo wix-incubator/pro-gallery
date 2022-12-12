@@ -85,7 +85,7 @@ export default class BlueprintsManager {
         this.createBlueprint({ items });
         // work with the new items...
       }
-    } else if (this.existingBlueprint.options.slideshowLoop || this.existingBlueprint.options[optionsMap.behaviourParams.gallery.horizontal.loop] ) { //NEW STYPEPARAMS METHOD remove when not needed
+    } else if (this.existingBlueprint.options.slideshowLoop || this.existingBlueprint.options.newSPs && this.existingBlueprint.options[optionsMap.behaviourParams.gallery.horizontal.loop] ) { //NEW STYPEPARAMS METHOD remove when not needed
       this.duplicateItemsAndCreateBlueprint();
     }
   }
