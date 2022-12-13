@@ -3,7 +3,7 @@ import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
-describe('options - slideAnimation', () => {
+describe('options - behaviourParams_gallery_horizontal_slideAnimation', () => {
   let initialProps;
   const notCurrentFadeAnimationStylesMock = {
     opacity: 0,
@@ -64,7 +64,7 @@ describe('options - slideAnimation', () => {
       );
       expect(1).toEqual(1);
     });
-    it('should not have Fade animation styles when "slideAnimations" is "Scroll"', async () => {
+    it('should not have Fade animation styles when "behaviourParams_gallery_horizontal_slideAnimation" is "Scroll"', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.layoutParams.structure.galleryLayout]:
           GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
@@ -123,7 +123,7 @@ describe('options - slideAnimation', () => {
         notCurrentFadeAnimationStylesMock
       );
     });
-    it('should not have Fade animation styles when "slideAnimations" is "Scroll"', async () => {
+    it('should not have Fade animation styles when "behaviourParams_gallery_horizontal_slideAnimation" is "Scroll"', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.layoutParams.structure.galleryLayout]:
           GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]

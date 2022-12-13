@@ -4,7 +4,7 @@ import SlideshowView from '../../src/components/gallery/proGallery/slideshowView
 import GalleryDriver from '../drivers/reactDriver';
 import sinon from 'sinon';
 
-describe('options - autoSlideshowType', () => {
+describe('options - behaviourParams_gallery_horizontal_autoSlide_behaviour', () => {
   let driver;
   let galleryViewProps;
   let clock;
@@ -24,7 +24,7 @@ describe('options - autoSlideshowType', () => {
   afterEach(() => {
     clock.restore();
   });
-  it('Should call "next" with the correct value when auto autoSlideshowType set to "INTERVAL"', () => {
+  it('Should call "next" with the correct value when auto behaviourParams_gallery_horizontal_autoSlide_behaviour set to "INTERVAL"', () => {
     Object.assign(initialProps.options, {
       [optionsMap.behaviourParams.gallery.horizontal.autoSlide.interval]: 1,
       [optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour]:
@@ -44,7 +44,7 @@ describe('options - autoSlideshowType', () => {
     viewModeWrapper.setViewMode(GALLERY_CONSTS.viewMode.SITE);
   });
 
-  it('Should call "next" with the correct value when auto autoSlideshowType set to "CONTINUOUS"', () => {
+  it('Should call "next" with the correct value when auto behaviourParams_gallery_horizontal_autoSlide_behaviour set to "CONTINUOUS"', () => {
     Object.assign(initialProps.options, {
       [optionsMap.behaviourParams.gallery.horizontal.autoSlide.speed]: 200,
       [optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour]:
