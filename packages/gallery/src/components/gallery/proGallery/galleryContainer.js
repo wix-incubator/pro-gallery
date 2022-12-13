@@ -968,7 +968,7 @@ export class GalleryContainer extends React.Component {
       >
         <ScrollIndicator
           id={this.props.id}
-          scrollDirection={
+          galleryScrollDirection={
             this.props.options[
               optionsMap.layoutParams.structure.scrollDirection
             ]
