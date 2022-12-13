@@ -16,7 +16,7 @@ describe('layoutParams_targetItemSize_unit - e2e', () => {
     await driver.closePage();
   });
 
-  it('when "layoutParams_targetItemSize_unit" set to "PIXELS" the width of each item or group should be approximately the value', async () => {
+  it('when "layoutParams_targetItemSize_unit" set to "PIXELS"', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -29,7 +29,7 @@ describe('layoutParams_targetItemSize_unit - e2e', () => {
     expect(page).toMatchImageSnapshot();
   });
 
-  it('when "layoutParams_targetItemSize_unit" set to "RATIO" the width of each item or group should be approximately the value in percentage (from the gallery total width).', async () => {
+  it('when "layoutParams_targetItemSize_unit" set to "PERCENT"', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
