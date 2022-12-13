@@ -4,7 +4,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('itemShadow - e2e', () => {
+describe('stylingParams_itemShadow - e2e', () => {
   let driver;
 
   beforeAll(async () => {
