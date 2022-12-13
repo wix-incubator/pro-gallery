@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('isRTL - e2e', () => {
+describe('behaviourParams_gallery_vertical_loadMore_enable - e2e', () => {
   let driver;
 
   beforeAll(async () => {
@@ -15,25 +15,21 @@ describe('isRTL - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('should render a left to right gallery', async () => {
+  it('should have "Load More" button when "behaviourParams_gallery_vertical_loadMore_enable" is "false"', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
-      [optionsMap.behaviourParams.gallery.layoutDirection]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-          .LEFT_TO_RIGHT,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.gallery.vertical.loadMore.enable]: true,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should render a right to left gallery', async () => {
+  it('should not have "Load More" button when "behaviourParams_gallery_vertical_loadMore_enable" is "true"', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
-      [optionsMap.behaviourParams.gallery.layoutDirection]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-          .RIGHT_TO_LEFT,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.gallery.vertical.loadMore.enable]: false,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');

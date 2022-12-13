@@ -1,7 +1,7 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
-describe('scrollAnimations - e2e', () => {
+describe('behaviourParams_gallery_scrollAnimation - e2e', () => {
   let driver;
 
   beforeAll(async () => {
@@ -43,7 +43,7 @@ describe('scrollAnimations - e2e', () => {
     }
   });
 
-  it(`should not create animation style tag when scrollAnimation is NO_EFFECT`, async () => {
+  it(`should not create animation style tag when behaviourParams_gallery_scrollAnimation is NO_EFFECT`, async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,

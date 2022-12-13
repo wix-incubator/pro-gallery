@@ -5,7 +5,7 @@ import { images2 } from '../drivers/mocks/items';
 import { options } from '../drivers/mocks/styles';
 import { getElementDimensions } from '../utils/utils';
 
-describe('options - enableInfiniteScroll', () => {
+describe('options - behaviourParams_gallery_vertical_loadMore_enable', () => {
   let driver;
   let initialProps;
 
@@ -22,7 +22,7 @@ describe('options - enableInfiniteScroll', () => {
     };
   });
 
-  it('should render "Show More" button when "enableInfiniteScroll" is "false"', async () => {
+  it('should render "Show More" button when "behaviourParams_gallery_vertical_loadMore_enable" is "false"', async () => {
     // make sure to give the right params to make a vertical gallery for the test
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
@@ -39,7 +39,7 @@ describe('options - enableInfiniteScroll', () => {
     expect(showMoreBtn).to.have.lengthOf(1);
     driver.detach.proGallery();
   });
-  it('should not render "Show More" button when "enableInfiniteScroll" is "true"', async () => {
+  it('should not render "Show More" button when "behaviourParams_gallery_vertical_loadMore_enable" is "true"', async () => {
     // make sure to give the right params to make a vertical gallery for the test
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
@@ -56,7 +56,7 @@ describe('options - enableInfiniteScroll', () => {
     expect(showMoreBtn).to.have.lengthOf(0);
     driver.detach.proGallery();
   });
-  it('should not render "Show More" button in a horizontal gallery when "enableInfiniteScroll" is false', async () => {
+  it('should not render "Show More" button in a horizontal gallery when "behaviourParams_gallery_vertical_loadMore_enable" is false', async () => {
     // make sure to give the right params to make a horizontal gallery for the test
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
@@ -73,7 +73,7 @@ describe('options - enableInfiniteScroll', () => {
     expect(showMoreBtn).to.have.lengthOf(0);
     driver.detach.proGallery();
   });
-  it('should set the gallery height (container.height - show-more-container" height) when "enableInfiniteScroll" "false"', async () => {
+  it('should set the gallery height (container.height - show-more-container" height) when "behaviourParams_gallery_vertical_loadMore_enable" "false"', async () => {
     // make sure to give the right params to make a vertical gallery for the test
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:

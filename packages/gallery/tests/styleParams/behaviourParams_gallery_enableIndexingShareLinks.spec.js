@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { itemsWithDirectShareLink } from '../drivers/mocks/items';
 import ItemView from '../../src/components/item/itemView';
 
-describe('options - shouldIndexDirectShareLinkInSEO', () => {
+describe('options - behaviourParams_gallery_enableIndexingShareLinks', () => {
   let driver;
 
   function getSampleItemViewProps(options) {

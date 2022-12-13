@@ -4,7 +4,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('loadMoreAmount - e2e', () => {
+describe('behaviourParams_gallery_vertical_loadMore_amount - e2e', () => {
   let driver;
 
   beforeAll(async () => {

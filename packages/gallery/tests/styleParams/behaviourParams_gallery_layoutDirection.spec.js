@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
-describe('options - isRTL', () => {
+describe('options - behaviourParams_gallery_layoutDirection', () => {
   let driver;
   let initialProps;
 
