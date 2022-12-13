@@ -4,7 +4,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('minItemSize - e2e', () => {
+describe('layoutParams_targetItemSize_minimum - e2e', () => {
   let driver;
 
   beforeAll(async () => {

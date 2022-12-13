@@ -4,7 +4,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('textBoxBorder - e2e', () => {
+describe('layoutParams_info_border - e2e', () => {
   let driver;
 
   beforeAll(async () => {

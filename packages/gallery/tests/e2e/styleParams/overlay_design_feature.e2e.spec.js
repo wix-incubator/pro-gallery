@@ -4,7 +4,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('overlayDesign - e2e', () => {
+describe('overlay design - e2e', () => {
   let driver;
 
   beforeAll(async () => {

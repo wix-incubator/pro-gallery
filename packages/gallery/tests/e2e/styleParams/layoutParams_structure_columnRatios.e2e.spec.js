@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('columnWidths - e2e', () => {
+describe('layoutParams_structure_columnRatios - e2e', () => {
   let driver;
 
   beforeAll(async () => {
@@ -15,7 +15,7 @@ describe('columnWidths - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('should set the width of each column according to the values in "columnWidths" in repeating order', async () => {
+  it('should set the width of each column according to the values in "layoutParams_structure_columnRatios" in repeating order', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
