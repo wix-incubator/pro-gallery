@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('hoveringBehaviour - e2e', () => {
+describe('behaviourParams_item_overlay_hoveringBehaviour - e2e', () => {
   let driver;
 
   beforeAll(async () => {
@@ -15,7 +15,7 @@ describe('hoveringBehaviour - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('should show hover container on hover event when "hoveringBehaviour" is "APPEAR', async () => {
+  it('should show hover container on hover event when "behaviourParams_item_overlay_hoveringBehaviour" is "APPEARS', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -30,7 +30,7 @@ describe('hoveringBehaviour - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should make hover state disapear on hover (reverse-hover) when "hoveringBehaviour" is "DISAPPEARS', async () => {
+  it('should make hover state disapear on hover (reverse-hover) when "behaviourParams_item_overlay_hoveringBehaviour" is "DISAPPEARS', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -45,7 +45,7 @@ describe('hoveringBehaviour - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should set all items in constant hover state when "hoveringBehaviour" is "NO_CHANGE"', async () => {
+  it('should set all items in constant hover state when "behaviourParams_item_overlay_hoveringBehaviour" is "ALWAYS_SHOW"', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,

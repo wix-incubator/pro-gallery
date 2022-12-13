@@ -4,7 +4,7 @@ import { toMatchImageSnapshot } from '../../drivers/matchers';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('overlayBackground - e2e', () => {
+describe('behaviourParams_item_overlay_backgroundColor - e2e', () => {
   let driver;
 
   beforeAll(async () => {
@@ -16,7 +16,7 @@ describe('overlayBackground - e2e', () => {
     await driver.closePage();
   });
 
-  it('should set the correct "overlayBackground" ("red")', async () => {
+  it('should set the correct "behaviourParams_item_overlay_backgroundColor" ("red")', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,

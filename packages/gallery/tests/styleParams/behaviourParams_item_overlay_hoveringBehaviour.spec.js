@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
-describe('options - hoveringBehaviour', () => {
+describe('options - behaviourParams_item_overlay_hoveringBehaviour', () => {
   let driver;
   let initialProps;
 
@@ -17,7 +17,7 @@ describe('options - hoveringBehaviour', () => {
     };
   });
 
-  it('should not have class "force-hover" when there is no hover event (when "hoveringBehaviour" is "APPEARS")', async () => {
+  it('should not have class "force-hover" when there is no hover event (when "behaviourParams_item_overlay_hoveringBehaviour" is "APPEARS")', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       // layoutParams_info_placement also deals with the hover on items. when it's value is 'OVERLAY', hoveringBehaviour takes controll.
       [optionsMap.layoutParams.info.placement]:
@@ -35,7 +35,7 @@ describe('options - hoveringBehaviour', () => {
     driver.detach.proGallery();
   });
 
-  it('should not have class "force-hover" when there is no hover event (when "hoveringBehaviour" is "DISAPPEARS")', async () => {
+  it('should not have class "force-hover" when there is no hover event (when "behaviourParams_item_overlay_hoveringBehaviour" is "DISAPPEARS")', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       // layoutParams_info_placement also deals with the hover on items. when it's value is 'OVERLAY', hoveringBehaviour takes controll.
       [optionsMap.layoutParams.info.placement]:
@@ -52,7 +52,7 @@ describe('options - hoveringBehaviour', () => {
     expect(item.find('.force-hover').length).to.eq(0);
     driver.detach.proGallery();
   });
-  it('should have class invert-hover when "hoveringBehaviour" is "DISAPPEARS"', async () => {
+  it('should have class invert-hover when "behaviourParams_item_overlay_hoveringBehaviour" is "DISAPPEARS"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.info.placement]:
         GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
@@ -68,7 +68,7 @@ describe('options - hoveringBehaviour', () => {
     expect(item.hasClass('invert-hover')).to.be.true;
     driver.detach.proGallery();
   });
-  it('should have default class force-hover when "hoveringBehaviour" is "NO_CHANGE"', async () => {
+  it('should have default class force-hover when "behaviourParams_item_overlay_hoveringBehaviour" is "ALWAYS_SHOW"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.info.placement]:
         GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,

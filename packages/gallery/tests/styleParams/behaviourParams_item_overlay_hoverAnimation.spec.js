@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
-describe('options - overlayAnimation', () => {
+describe('options - behaviourParams_item_overlay_hoverAnimation', () => {
   let driver;
   let initialProps;
 
@@ -17,7 +17,7 @@ describe('options - overlayAnimation', () => {
     };
   });
 
-  it('should have overlay animation class - "EXPAND"', async () => {
+  it('should have overlay hover animation class - "EXPAND"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -31,7 +31,7 @@ describe('options - overlayAnimation', () => {
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
-  it('should have overlay animation class - "FADE IN"', async () => {
+  it('should have overlay hover animation class - "FADE IN"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -45,7 +45,7 @@ describe('options - overlayAnimation', () => {
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
-  it('should have overlay animation class - "SLIDE UP"', async () => {
+  it('should have overlay hover animation class - "SLIDE UP"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -59,7 +59,7 @@ describe('options - overlayAnimation', () => {
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
-  it('should have overlay animation class - "SLIDE RIGHT"', async () => {
+  it('should have overlay hover animation class - "SLIDE RIGHT"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -73,7 +73,7 @@ describe('options - overlayAnimation', () => {
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
-  it('should have overlay animation class - "SLIDE DOWN"', async () => {
+  it('should have overlay hover animation class - "SLIDE DOWN"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -87,7 +87,7 @@ describe('options - overlayAnimation', () => {
     expect(items.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
-  it('should have overlay animation class - "SLIDE LEFT"', async () => {
+  it('should have overlay hover animation class - "SLIDE LEFT"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
