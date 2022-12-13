@@ -9,7 +9,7 @@ const mountAndGetPreloadElements = (driver, sampleItemProps) => {
   return driver.find.selector('.gallery-item-video.image-item');
 };
 
-describe('options - enableVideoPlaceholder ', () => {
+describe('options - behaviourParams_item_video_enablePlaceholder ', () => {
   let driver;
   let sampleItem;
   let sampleItemViewProps;
@@ -27,7 +27,7 @@ describe('options - enableVideoPlaceholder ', () => {
     });
   });
 
-  it('should not remove video placeholder when "enableVideoPlaceholder=true"', async () => {
+  it('should not remove video placeholder when "behaviourParams_item_video_enablePlaceholder=true"', async () => {
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.video.enablePlaceholder]: true,
     });
@@ -37,7 +37,7 @@ describe('options - enableVideoPlaceholder ', () => {
     );
     expect(placeholders.length).to.equal(1);
   });
-  it('should not remove video placeholder when "enableVideoPlaceholder=false"', async () => {
+  it('should not remove video placeholder when "behaviourParams_item_video_enablePlaceholder=false"', async () => {
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.video.enablePlaceholder]: false,
     });

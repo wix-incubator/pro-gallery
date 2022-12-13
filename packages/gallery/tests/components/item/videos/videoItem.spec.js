@@ -86,7 +86,6 @@ describe('Video Item ', () => {
     );
     stub.restore();
 
-    //!utils.isMobile() && videoPlay !== 'onClick'
     stub = sinon.stub(utils, 'isMobile').returns(false);
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.video.playTrigger]:

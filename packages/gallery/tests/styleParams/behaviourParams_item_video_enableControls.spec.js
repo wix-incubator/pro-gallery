@@ -3,7 +3,7 @@ import { videoItems } from '../drivers/mocks/items';
 import VideoItem from '../../src/components/item/videos/videoItem';
 import { optionsMap } from 'pro-gallery-lib';
 
-describe('options - showVideoControls', () => {
+describe('options - behaviourParams_item_video_enableControls', () => {
   let driver;
   let sampleItem;
   let sampleItemViewProps;
@@ -14,7 +14,7 @@ describe('options - showVideoControls', () => {
     sampleItemViewProps = driver.props.itemView(sampleItem);
   });
 
-  it('should have video with controls when showVideoControls=true', async () => {
+  it('should have video with controls when behaviourParams_item_video_enableControls=true', async () => {
     Object.assign(sampleItemViewProps, {
       loadVideo: true,
     });
@@ -28,7 +28,7 @@ describe('options - showVideoControls', () => {
     expect(playerProps.controls).toBe(true);
   });
 
-  it('should not have video with controls when showVideoControls=false', async () => {
+  it('should not have video with controls when behaviourParams_item_video_enableControls=false', async () => {
     Object.assign(sampleItemViewProps, {
       loadVideo: true,
     });

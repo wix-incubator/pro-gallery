@@ -142,7 +142,7 @@ describe('options - behaviourParams_item_clickAction', () => {
       driver.detach.proGallery();
     });
   });
-  describe('should play video onClick in gallery only when behaviourParams_item_clickAction is nothing and videoPlay is onClick', () => {
+  describe('should play video onClick in gallery only when behaviourParams_item_clickAction is nothing and behaviourParams_item_video_playTrigger is CLICK', () => {
     beforeEach(() => {
       driver = new GalleryDriver();
       initialProps = {

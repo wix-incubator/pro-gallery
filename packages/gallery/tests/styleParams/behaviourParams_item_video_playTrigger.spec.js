@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { videoItems } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
-describe('options - videoPlay', () => {
+describe('options - behaviourParams_item_video_playTrigger', () => {
   let driver;
   let initialProps;
 
@@ -33,7 +33,7 @@ describe('options - videoPlay', () => {
     driver.detach.proGallery();
   });
 
-  describe('VideoPlay - HOVER', () => {
+  describe('behaviourParams_item_video_playTrigger - HOVER', () => {
     beforeEach(() => {
       driver = new GalleryDriver();
     });
@@ -70,7 +70,7 @@ describe('options - videoPlay', () => {
     });
   });
 
-  describe('VideoPlay - ONCLICK', () => {
+  describe('behaviourParams_item_video_playTrigger - CLICK', () => {
     beforeEach(() => {
       driver = new GalleryDriver();
     });
