@@ -4,7 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('layoutParams_targetItemSize_unit - e2e', () => {
+describe('layoutParams_targetItemSize_unit  - e2e', () => {
   let driver;
 
   beforeAll(async () => {
