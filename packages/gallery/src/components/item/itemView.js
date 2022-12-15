@@ -1130,7 +1130,7 @@ class ItemView extends React.Component {
 
   render() {
     // eslint-disable-next-line
-    console.log('itemview v4 hotfix')
+    console.log('itemview v4 hotfix 2')
     return this.composeItem();
   }
 }
