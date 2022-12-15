@@ -237,24 +237,6 @@ const createMediaUrl = ({
   } else if (createMultiple) {
     return [
       {
-        type: originalUrl.match(/[^.]\w*$/)[0],
-        url: createProcessedImageUrl({
-          ...params,
-          useWebp: false,
-          devicePixelRatio: 1,
-        }),
-        dpr: [1, 2]
-          .map(
-            (dpr) =>
-              createProcessedImageUrl({
-                ...params,
-                useWebp: false,
-                devicePixelRatio: dpr,
-              }) + ` ${dpr}x`,
-          )
-          .join(', '),
-      },
-      {
         type: 'webp',
         url: createProcessedImageUrl({
           ...params,
@@ -267,6 +249,24 @@ const createMediaUrl = ({
               createProcessedImageUrl({
                 ...params,
                 useWebp: true,
+                devicePixelRatio: dpr,
+              }) + ` ${dpr}x`,
+          )
+          .join(', '),
+      },
+      {
+        type: originalUrl.match(/[^.]\w*$/)[0],
+        url: createProcessedImageUrl({
+          ...params,
+          useWebp: false,
+          devicePixelRatio: 1,
+        }),
+        dpr: [1, 2]
+          .map(
+            (dpr) =>
+              createProcessedImageUrl({
+                ...params,
+                useWebp: false,
                 devicePixelRatio: dpr,
               }) + ` ${dpr}x`,
           )
