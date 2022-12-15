@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 
 export default {
@@ -9,6 +8,6 @@ export default {
   min: 0,
   max: 1,
   step: 0.01,
-  default: 0, //NEW STYPEPARAMS METHOD use defaults from one source of truth
+  default: 0, //one source
   description: `Videos are muted by default in the gallery, assign a decimal value 0-1 to set the initial volume`,
 };

@@ -128,7 +128,8 @@ export function NavigationArrows({
 
   const useDropShadow =
     options[optionsMap.layoutParams.navigationArrows.container.type] ===
-    GALLERY_CONSTS.arrowsContainerStyleType.SHADOW;
+    GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type]
+      .SHADOW;
   const arrowsBaseClasses = [
     'nav-arrows-container',
     useDropShadow ? 'drop-shadow' : '',

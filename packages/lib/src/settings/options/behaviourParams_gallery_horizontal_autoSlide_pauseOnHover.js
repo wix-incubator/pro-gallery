@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import { default as autoSlideBehaviour } from './behaviourParams_gallery_horizontal_autoSlide_behaviour';
@@ -17,6 +16,6 @@ export default {
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Auto Slide behaviour".',
   type: INPUT_TYPES.BOOLEAN,
-  default: true, //NEW STYPEPARAMS METHOD one source
+  default: true, //one source
   description: `Pause "Auto Slide" when hovering over the gallery`,
 };

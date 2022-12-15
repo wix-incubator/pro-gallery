@@ -1,5 +1,5 @@
 import { Layouter, GalleryItem, ItemsHelper } from 'pro-layouts';
-import { window, addOldOptions, flatV4DefaultOptions } from 'pro-gallery-lib';
+import { window, addOldOptions, defaultOptions } from 'pro-gallery-lib';
 import { testImages } from './mocks/images-mock.js';
 import { mount, shallow, configure } from 'enzyme';
 import { GalleryContainer } from '../../src/components/gallery/proGallery/galleryContainer'; //import GalleryContainer before the connect (without redux)
@@ -39,7 +39,7 @@ class galleryDriver {
       },
     };
 
-    this.options = { ...flatV4DefaultOptions, targetItemSize: 320 };
+    this.options = { ...defaultOptions, targetItemSize: 320 };
 
     this.scroll = {
       top: 0,

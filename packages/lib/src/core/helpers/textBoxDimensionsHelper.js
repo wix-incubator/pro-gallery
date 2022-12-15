@@ -1,22 +1,21 @@
 import {
   hasExternalVerticalPlacement,
   hasExternalHorizontalPlacement,
-} from '../../common/constants/placements';
-import INFO_TYPE from '../../common/constants/infoType';
-import TEXT_BOX_WIDTH_CALCULATION_OPTIONS from '../../common/constants/textBoxWidthCalculationOptions';
+} from '../../common/constants/layoutParams_info_placement';
 import { default as GALLERY_CONSTS } from '../../common/constants';
+import optionsMap from './optionsMap';
 
 const processTextDimensions = (options, customExternalInfoRendererExists) => {
   let _options = { ...options };
 
-  _options.textBoxHeight = getTextBoxAboveOrBelowHeight(
+  _options[optionsMap.layoutParams.info.height] = getTextBoxAboveOrBelowHeight(
     _options,
     customExternalInfoRendererExists
   );
 
   _options.externalInfoHeight = getHeightFromOptions(
     _options,
-    _options.textBoxHeight
+    _options[optionsMap.layoutParams.info.height]
   );
 
   _options.externalInfoWidth = getTextBoxRightOrLeftWidth(
@@ -26,15 +25,18 @@ const processTextDimensions = (options, customExternalInfoRendererExists) => {
   return _options;
 };
 
-function getHeightFromOptions(options, textBoxHeight) {
-  let additionalHeight = textBoxHeight;
+function getHeightFromOptions(options, infoHeight) {
+  let additionalHeight = infoHeight;
   if (
-    textBoxHeight > 0 &&
-    hasExternalVerticalPlacement(options.titlePlacement) &&
-    options.imageInfoType === INFO_TYPE.SEPARATED_BACKGROUND
+    infoHeight > 0 &&
+    hasExternalVerticalPlacement(
+      options[optionsMap.layoutParams.info.placement]
+    ) &&
+    options[optionsMap.layoutParams.info.layout] ===
+      GALLERY_CONSTS[optionsMap.layoutParams.info.layout].SEPARATED_BACKGROUND
   ) {
-    additionalHeight += options.textImageSpace;
-    additionalHeight += options.textBoxBorderWidth * 2;
+    additionalHeight += options[optionsMap.layoutParams.info.spacing];
+    additionalHeight += options[optionsMap.layoutParams.info.border.width] * 2;
   }
   return additionalHeight;
 }
@@ -43,30 +45,35 @@ function getTextBoxRightOrLeftWidth(options, customExternalInfoRendererExists) {
   if (!shouldShowTextRightOrLeft(options, customExternalInfoRendererExists)) {
     return 0;
   }
-  const { calculateTextBoxWidthMode, textBoxWidth, textBoxWidthPercent } =
-    options;
   let width = 0;
   if (
-    calculateTextBoxWidthMode === TEXT_BOX_WIDTH_CALCULATION_OPTIONS.PERCENT
+    options[optionsMap.layoutParams.info.sizeUnits] ===
+    GALLERY_CONSTS[optionsMap.layoutParams.info.sizeUnits].PERCENT
   ) {
-    width = Math.min(100, Math.max(0, textBoxWidthPercent)) / 100;
+    width =
+      Math.min(100, Math.max(0, options[optionsMap.layoutParams.info.width])) /
+      100;
   } else {
-    width = textBoxWidth;
+    width = options[optionsMap.layoutParams.info.width];
   }
   return width;
 }
 
 function shouldShowTextRightOrLeft(options, customExternalInfoRendererExists) {
-  const { scrollDirection, isVertical, groupSize, titlePlacement } = options;
-
   const allowedByLayoutConfig =
-    scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
-    isVertical &&
-    groupSize === 1;
+    options[optionsMap.layoutParams.structure.scrollDirection] ===
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+        .VERTICAL &&
+    options[optionsMap.layoutParams.structure.layoutOrientation] ===
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
+        .VERTICAL &&
+    options[optionsMap.layoutParams.groups.groupSize] === 1;
 
   return (
     allowedByLayoutConfig &&
-    hasExternalHorizontalPlacement(titlePlacement) &&
+    hasExternalHorizontalPlacement(
+      options[optionsMap.layoutParams.info.placement]
+    ) &&
     customExternalInfoRendererExists
   );
 }
@@ -80,7 +87,7 @@ function getTextBoxAboveOrBelowHeight(
   ) {
     return 0;
   }
-  return options.textBoxHeight;
+  return options[optionsMap.layoutParams.info.height];
 }
 
 function shouldShowTextBoxAboveOrBelow(
@@ -88,8 +95,9 @@ function shouldShowTextBoxAboveOrBelow(
   customExternalInfoRendererExists
 ) {
   return (
-    hasExternalVerticalPlacement(options.titlePlacement) &&
-    customExternalInfoRendererExists
+    hasExternalVerticalPlacement(
+      options[optionsMap.layoutParams.info.placement]
+    ) && customExternalInfoRendererExists
   );
 }
 

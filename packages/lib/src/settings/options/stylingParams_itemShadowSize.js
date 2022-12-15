@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { default as stylingParams_itemEnableShadow } from './stylingParams_itemEnableShadow';
 import optionsMap from '../../core/helpers/optionsMap';
@@ -11,5 +10,5 @@ export default {
     stylingParams_itemEnableShadow.isRelevant(options) &&
     options[optionsMap.stylingParams.itemEnableShadow],
   type: INPUT_TYPES.NUMBER,
-  default: 10, //NEW STYPEPARAMS METHOD one source
+  default: 10, //one source
 };

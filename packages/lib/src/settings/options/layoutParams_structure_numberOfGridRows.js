@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import optionsMap from '../../core/helpers/optionsMap';
@@ -13,5 +12,5 @@ export default {
       .HORIZONTAL,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal").',
-  default: 1, //NEW STYPEPARAMS METHOD use 1 source of truth for defaults
+  default: 1, //one source
 };

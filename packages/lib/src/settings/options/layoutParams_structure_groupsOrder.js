@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import optionsMap from '../../core/helpers/optionsMap';
@@ -16,5 +15,5 @@ export default {
         .VERTICAL,
   isRelevantDescription:
     'Set "Gallery Orientation" to "Columns" & "Scroll Direction" to "Vertical".',
-  default: 'BY_HEIGHT', //NEW STYPEPARAMS METHOD create and use the right const. this is not a boolean anymore
+  default: 'BY_HEIGHT',
 };

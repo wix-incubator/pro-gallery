@@ -1,5 +1,3 @@
-//NEW STYPEPARAMS METHOD
-
 const CROP_METHODS = {
   FILL: 'FILL',
   FIT: 'FIT',

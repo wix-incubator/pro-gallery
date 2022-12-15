@@ -28,7 +28,6 @@ export interface Gallery {
   enableIndexingShareLinks?: boolean;
   vertical?: Vertical;
   horizontal?: Horizontal;
-  // allowLeanGallery?: 'behaviourParams_gallery_enableLeanGallery', //think about removing this!
 }
 export interface SecondaryMedia {
   trigger: 'OFF' | 'HOVER';

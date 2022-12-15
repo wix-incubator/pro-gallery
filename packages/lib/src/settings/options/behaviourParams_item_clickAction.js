@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { createOptions } from '../utils/utils';
 import { default as GALLERY_CONSTS } from '../../common/constants';

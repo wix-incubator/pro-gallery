@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import { createOptions } from '../utils/utils';
@@ -12,13 +11,13 @@ export default {
         .HORIZONTAL &&
     options[optionsMap.layoutParams.groups.groupSize] === 1 &&
     options[optionsMap.layoutParams.crop.enable] &&
-    options[optionsMap.layoutParams.crop.ratios] === ['100%/100%'], //NEW STYPEPARAMS METHOD check that this works
+    options[optionsMap.layoutParams.crop.ratios] === ['100%/100%'], //v5 TODO check that this works
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal"), set "Max Group Size" to "1" and set "Crop Images" to true.',
   type: INPUT_TYPES.OPTIONS,
   default:
     GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation]
-      .SCROLL, //NEW STYPEPARAMS METHOD one source
+      .SCROLL, //one source
   options: createOptions(
     optionsMap.behaviourParams.gallery.horizontal.slideAnimation
   ),

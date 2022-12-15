@@ -177,12 +177,12 @@ describe('Slideshow View', () => {
       });
       // constants determining the gallery's height
       const galleryHeight = initialGalleryViewProps.container.galleryHeight;
-      const imageMargin =
+      const itemSpacing =
         initialGalleryViewProps.options[
           optionsMap.layoutParams.structure.itemSpacing
         ]; // assigning the height parameter as in this.props.container to gallery's height
       Object.assign(initialGalleryViewProps.container, {
-        height: galleryHeight - imageMargin,
+        height: galleryHeight - itemSpacing,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);

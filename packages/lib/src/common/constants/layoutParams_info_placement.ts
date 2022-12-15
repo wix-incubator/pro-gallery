@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 const PLACEMENTS = {
   OVERLAY: 'OVERLAY',
   ABOVE: 'ABOVE',
@@ -8,55 +7,68 @@ const PLACEMENTS = {
   ALTERNATE_HORIZONTALLY: 'ALTERNATE_HORIZONTALLY',
   ALTERNATE_VERTICALLY: 'ALTERNATE_VERTICALLY',
 };
-
-const hasHoverPlacement = (placement) =>
+export const hasHoverPlacement = (placement: string) =>
   String(placement).includes(PLACEMENTS.OVERLAY);
-const hasExternalAbovePlacement = (placement, idx) =>
+
+export const hasExternalAbovePlacement = (placement: string, idx: number) =>
   String(placement).includes(PLACEMENTS.ABOVE) ||
   (idx % 2 === 0 &&
     String(placement).includes(PLACEMENTS.ALTERNATE_VERTICALLY));
-const hasExternalBelowPlacement = (placement, idx) =>
+
+export const hasExternalBelowPlacement = (placement: string, idx: number) =>
   String(placement).includes(PLACEMENTS.BELOW) ||
   (idx % 2 === 1 &&
     String(placement).includes(PLACEMENTS.ALTERNATE_VERTICALLY));
-const hasExternalRightPlacement = (placement, idx) =>
+
+export const hasExternalRightPlacement = (placement: string, idx: number) =>
   String(placement).includes(PLACEMENTS.RIGHT) ||
-  idx % 2 === 0 ||
+  (idx % 2 === 0 &&
+    String(placement).includes(PLACEMENTS.ALTERNATE_HORIZONTALLY));
+
+export const hasExternalLeftPlacement = (placement: string, idx: number) =>
+  idx % 2 === 1 &&
   String(placement).includes(PLACEMENTS.ALTERNATE_HORIZONTALLY);
-const hasExternalLeftPlacement = (placement, idx) =>
-  idx % 2 === 1 ||
-  String(placement).includes(PLACEMENTS.ALTERNATE_HORIZONTALLY);
-const hasExternalVerticalPlacement = (placement) =>
+
+export const hasExternalVerticalPlacement = (placement: string) =>
   hasExternalAbovePlacement(placement, 0) ||
   hasExternalBelowPlacement(placement, 1);
-const hasExternalHorizontalPlacement = (placement) =>
+
+export const hasExternalHorizontalPlacement = (placement: string) =>
   hasExternalRightPlacement(placement, 0) ||
   hasExternalLeftPlacement(placement, 1);
 
-const isExternalVerticalPlacement = (placement) =>
+export const isExternalVerticalPlacement = (placement: string) =>
   hasExternalVerticalPlacement(placement) &&
   !hasExternalHorizontalPlacement(placement) &&
   !hasHoverPlacement(placement);
-const isExternalHorizontalPlacement = (placement) =>
+
+export const isExternalHorizontalPlacement = (placement: string) =>
   hasExternalHorizontalPlacement(placement) &&
   !hasExternalVerticalPlacement(placement) &&
   !hasHoverPlacement(placement);
-const isExternalAbovePlacement = (placement) =>
+
+export const isExternalAbovePlacement = (placement?: string) =>
   String(placement) === PLACEMENTS.ABOVE;
-const isExternalBelowPlacement = (placement) =>
+
+export const isExternalBelowPlacement = (placement?: string) =>
   String(placement) === PLACEMENTS.BELOW;
-const isExternalAboveOrBelowSinglePlacement = (placement) =>
+
+export const isExternalAboveOrBelowSinglePlacement = (placement?: string) =>
   isExternalAbovePlacement(placement) || isExternalBelowPlacement(placement);
-const isHoverPlacement = (placement) =>
+
+export const isHoverPlacement = (placement: string) =>
   String(placement) === PLACEMENTS.OVERLAY;
-const isExternalRightPlacement = (placement) =>
+
+export const isExternalRightPlacement = (placement: string) =>
   String(placement) === PLACEMENTS.RIGHT;
-const isExternalLeftPlacement = (placement) =>
+
+export const isExternalLeftPlacement = (placement: string) =>
   String(placement) === PLACEMENTS.LEFT;
 
-const isConstantVerticalPlacement = (placement) => {
+export const isConstantVerticalPlacement = (placement: string) => {
   const placementArray = placement.split(',');
   const firstPlacement = placementArray.shift();
+
   return (
     isExternalAboveOrBelowSinglePlacement(firstPlacement) &&
     placementArray.every((placement) => placement === firstPlacement)
@@ -64,21 +76,3 @@ const isConstantVerticalPlacement = (placement) => {
 };
 
 export default PLACEMENTS;
-
-export {
-  hasExternalAbovePlacement,
-  hasExternalBelowPlacement,
-  hasHoverPlacement,
-  hasExternalRightPlacement,
-  hasExternalLeftPlacement,
-  hasExternalVerticalPlacement,
-  hasExternalHorizontalPlacement,
-  isExternalAbovePlacement,
-  isExternalBelowPlacement,
-  isHoverPlacement,
-  isExternalRightPlacement,
-  isExternalLeftPlacement,
-  isExternalVerticalPlacement,
-  isExternalHorizontalPlacement,
-  isConstantVerticalPlacement,
-};

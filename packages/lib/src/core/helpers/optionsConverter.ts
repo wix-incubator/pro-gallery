@@ -4,7 +4,7 @@ import {
   flatToNested,
 } from './optionsUtils';
 
-import { isLayout } from '../../common/constants/layout';
+import { isLayout } from '../../common/constants/layoutParams_structure_galleryLayout';
 import optionsMap from './optionsMap';
 import { addOldOptions } from './optionsBackwardConverter';
 import {
@@ -18,22 +18,13 @@ import {
   reverseBooleans,
 } from './migratorStore';
 
-function extendNestedOptionsToIncludeOldAndNew(
-  nestedOptions,
-  allowMigratingOldToNewInNewSPs = false
-) {
+function extendNestedOptionsToIncludeOldAndNew(nestedOptions) {
   let flatOptions = flattenObject(nestedOptions);
-  let populatedFlatOptions = addOldOptions(
-    addMigratedOptions(flatOptions, allowMigratingOldToNewInNewSPs)
-  );
+  let populatedFlatOptions = addOldOptions(addMigratedOptions(flatOptions));
   return { ...flatToNested(populatedFlatOptions), ...populatedFlatOptions };
 }
 
-function addMigratedOptions(
-  flatOptions,
-  allowMigratingOldToNewInNewSPs = false
-) {
-  if (flatOptions.newSPs && !allowMigratingOldToNewInNewSPs) return flatOptions; // do not convert old to new. new is king
+function addMigratedOptions(flatOptions) {
   const flat_migrated = migrateOptions(flatOptions);
   let flat_combinedOptions = {
     ...trimUndefinedValues_flat(flat_migrated),
@@ -86,7 +77,6 @@ function migrateOptions(flatOptionsObject) {
   ///----------- STYLING -------------///
 
   migratedOptions = changeNames(migratedOptions, nameChangedStylingParams);
-  delete migratedOptions.enableLeanGallery;
   delete migratedOptions.fullscreen;
   return migratedOptions;
 }

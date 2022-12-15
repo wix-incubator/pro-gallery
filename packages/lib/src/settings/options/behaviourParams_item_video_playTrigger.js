@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import { createOptions } from '../utils/utils';
@@ -33,5 +32,5 @@ export default {
   options: createOptions(optionsMap.behaviourParams.item.video.playTrigger),
   type: INPUT_TYPES.OPTIONS,
   default:
-    GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER, //NEW STYPEPARAMS METHOD create one source of truth
+    GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER, //one source
 };

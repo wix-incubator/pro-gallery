@@ -19,7 +19,9 @@ describe('layoutParams_navigationArrows_type - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  Object.keys(GALLERY_CONSTS.arrowsType).forEach((arrowValue) => {
+  Object.keys(
+    GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.type]
+  ).forEach((arrowValue) => {
     it(`should display ${arrowValue}`, async () => {
       await driver.navigate({
         [optionsMap.layoutParams.structure.galleryLayout]:

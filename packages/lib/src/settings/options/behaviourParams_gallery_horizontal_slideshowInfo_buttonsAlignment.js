@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import { createOptions } from '../utils/utils';
@@ -13,7 +12,7 @@ export default {
     GALLERY_CONSTS[
       optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
         .buttonsAlignment
-    ].CENTER, //NEW STYPEPARAMS METHOD one source
+    ].CENTER, //one source
   options: createOptions(
     optionsMap.behaviourParams.gallery.horizontal.slideshowInfo.buttonsAlignment
   ),

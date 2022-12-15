@@ -78,8 +78,10 @@ class SlideshowView extends React.Component {
   }
 
   isScrollStart() {
-    const { slideAnimation } = this.props.options;
-
+    const slideAnimation =
+      this.props.options[
+        optionsMap.behaviourParams.gallery.horizontal.slideAnimation
+      ];
     if (
       slideAnimation !==
         GALLERY_CONSTS[

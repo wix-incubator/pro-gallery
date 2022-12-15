@@ -2,22 +2,12 @@ import { Layouter, ItemsHelper } from 'pro-layouts';
 import {
   populateWithDefaultOptions,
   addPresetOptions,
-  newSPs_processLayouts,
   dimensionsHelper,
-  newSPs_dimensionsHelper,
   processLayouts,
   utils,
-  extendNestedOptionsToIncludeOldAndNew,
 } from 'pro-gallery-lib';
 
 class Blueprints {
-  getProcessLayoutsFunc(newSPs) {
-    if (newSPs) {
-      return newSPs_processLayouts;
-    } else {
-      return processLayouts;
-    }
-  }
   createBlueprint({
     params,
     lastParams,
@@ -267,17 +257,11 @@ class Blueprints {
     let changed = false;
     let formattedOptions;
     if (optionsHaveChanged(options, oldOptions)) {
-      const mergedOldAndNewStyles =
-        extendNestedOptionsToIncludeOldAndNew(options); //add both old and new options
-      const fullOptionsOverDefualts = populateWithDefaultOptions(
-        mergedOldAndNewStyles
-      ); //add default for any undefined option
-      formattedOptions = extendNestedOptionsToIncludeOldAndNew(
-        this.getProcessLayoutsFunc(fullOptionsOverDefualts.newSPs)(
-          addPresetOptions(fullOptionsOverDefualts),
-          isUsingCustomInfoElements
-        )
-      ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
+      const optionsOverDefaults = populateWithDefaultOptions(options); //add default for any undefined option
+      formattedOptions = processLayouts(
+        addPresetOptions(optionsOverDefaults),
+        isUsingCustomInfoElements
+      );
       changed = true;
     }
 
@@ -334,29 +318,16 @@ class Blueprints {
         oldOptions,
       })
     ) {
-      if (formattedOptions.newSPs) {
-        newSPs_dimensionsHelper.updateParams({
-          options: formattedOptions,
-          container,
-        });
-        changed = true;
-        formattedContainer = Object.assign(
-          {},
-          container,
-          newSPs_dimensionsHelper.getGalleryDimensions()
-        );
-      } else {
-        dimensionsHelper.updateParams({
-          options: formattedOptions,
-          container,
-        });
-        changed = true;
-        formattedContainer = Object.assign(
-          {},
-          container,
-          dimensionsHelper.getGalleryDimensions()
-        );
-      }
+      dimensionsHelper.updateParams({
+        options: formattedOptions,
+        container,
+      });
+      changed = true;
+      formattedContainer = Object.assign(
+        {},
+        container,
+        dimensionsHelper.getGalleryDimensions()
+      );
     }
     return { formattedContainer, changed };
   }

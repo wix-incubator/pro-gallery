@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const {
+const { //v5 TODO check if this file is used...
     spawn,
     execSync
 } = require('child_process');
@@ -23,7 +23,6 @@ const PROJECTS = {
     LAYOUTS: 'layouts',
     FULLSCREEN: 'fullscreen',
     PLAYGROUND: 'playground',
-    LEAN_GALLERY: 'lean-gallery',
 };
 const CHANGELOG = 'changelog.md';
 const VERSION_LOGGER = 'packages/gallery/src/versionLogger.js';
