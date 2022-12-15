@@ -1,118 +1,281 @@
-import cloneDeep from 'lodash.clonedeep';
+/* eslint-disable no-debugger */
+const WIX_MEDIA_PREFIX = 'https://static.wixstatic.com/media/';
 
-export function formatValue(val) {
-  if (!isNaN(Number(val))) {
-    return Number(val);
-  } else if (val === 'true') {
-    return true;
-  } else if (val === 'false') {
-    return false;
-  }
-  if (val === 'undefined') {
-    return undefined;
+const isExternalUrl = (url) => {
+  const isFullUrl = /(^https?)|(^data)|(^blob)/.test(url);
+  const isWixMedia = url.indexOf(WIX_MEDIA_PREFIX) === 0;
+  const isResizePrevented = url.indexOf('preventResize') > 0;
+  return isFullUrl && (!isWixMedia || isResizePrevented);
+};
+
+const prefixUrlIfNeeded = (originalUrl) => {
+  if (isExternalUrl(originalUrl)) {
+    return originalUrl;
   } else {
-    return String(val);
+    return WIX_MEDIA_PREFIX + originalUrl;
   }
-}
-
-export function shuffle(array) {
-  var currentIndex = array.length,
-    temporaryValue,
-    randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
-
-function generateUUID() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-    const r = Math.floor(Math.random() * 16) || 0;
-    return c === 'x' ? r.toString(16) : c;
-  });
-}
-
-export function mixAndSlice(array, length, startIdx = 0, customMetadata = {}) {
-  let result = [];
-  if (array.length > 0) {
-    const rnd = (num) => Math.floor(Math.random() * num);
-    while (result.length < length) {
-      const idx = rnd(array.length);
-      const itemIdx = startIdx + result.length + 1;
-      let item = cloneDeep(array[idx]);
-      // Object.assign(item, array[idx]);
-      item.itemId = generateUUID() + '_' + String(result.length);
-      item.metadata.title = (
-        customMetadata.customTitle || `Item ${itemIdx}`
-      ).replace('#', itemIdx);
-      item.metadata.alt = (
-        customMetadata.customAlt || `Item ${itemIdx}`
-      ).replace('#', itemIdx);
-      item.metadata.description = customMetadata.loremDescription
-        ? createLoremIpsum(rnd(80) + 20)
-        : (customMetadata.customDescription || '').replace('#', itemIdx); //`Description #${result.length + 1}: ${createLoremIpsum(rnd(80) + 20)}`;
-      // console.log('ITEM CREATED', item, array[idx]);
-      result.push(item);
-    }
-  }
-  return result;
-}
-
-export const debounce = (callback, wait) => {
-  let timeout;
-  return (...args) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      callback.apply(this, args);
-    }, wait);
-  };
 };
 
-export const throttle = (callback, limit) => {
-  let wait = false;
-  let callAfterWait = false;
-  return (...args) => {
-    if (!wait) {
-      callAfterWait = false;
-      callback.apply(this, args);
-      wait = true;
-      setTimeout(() => {
-        callAfterWait && callback.apply(this, args);
-        wait = false;
-      }, limit);
+const removeResizeParams = (originalUrl) => {
+  const isResizePrevented = originalUrl.indexOf('preventResize') >= 0;
+  if (isResizePrevented) return originalUrl;
+  originalUrl = originalUrl.replace(WIX_MEDIA_PREFIX, '');
+  const resizingParamerterRegex = /(\/v\d\/(fill|fit|crop)\/(((w|h|x|y|scl|al|q)_[cf\d]*),?)*){1,}/;
+  const resizingParametersPosition = resizingParamerterRegex.exec(originalUrl);
+  if (resizingParametersPosition && resizingParametersPosition.index > 0) {
+    return originalUrl.substr(0, resizingParametersPosition.index);
+  } else {
+    return originalUrl;
+  }
+};
+
+const createProcessedVideoUrl = ({ item, originalUrl, requiredHeight }) => {
+  let videoUrl = originalUrl;
+
+  if (item.qualities && item.qualities.length) {
+    let suffix = '/';
+
+    const mp4Qualities = item.qualities.filter(
+      (video) => video.formats[0] === 'mp4',
+    );
+    // search for the first quality bigger that the required one
+    if (
+      mp4Qualities.length > 1 &&
+      mp4Qualities[0].height > mp4Qualities[1].height
+    ) {
+      // some have reversed quality order. not sure how or when this happened
+      mp4Qualities.reverse();
+    }
+    // eslint-disable-next-line no-cond-assign
+    for (let quality, q = 0; (quality = mp4Qualities[q]); q++) {
+      if (quality.height >= requiredHeight || !mp4Qualities[q + 1]) {
+        suffix += quality.quality; // e.g. 720p
+        // eslint-disable-next-line no-cond-assign
+        for (let format, i = 0; (format = quality.formats[i]); i++) {
+          videoUrl =
+            window.location.protocol +
+            '//video.wixstatic.com/video/' +
+            item.url +
+            suffix +
+            '/' +
+            format +
+            '/file.' +
+            format;
+        }
+        break;
+      }
+    }
+
+    return videoUrl;
+  }
+};
+
+const createProcessedImageUrl = ({
+  item,
+  originalUrl,
+  resizeMethod,
+  requiredWidth,
+  requiredHeight,
+  sharpParams = {},
+  focalPoint = [0.5, 0.5],
+  useWebp = false,
+  devicePixelRatio = 1,
+}) => {
+  const isTransparent = () => {
+    return originalUrl.indexOf('.png') > 0 || originalUrl.indexOf('.gif') > 0;
+  };
+
+  const addSharpParams = () => {
+    // calc default quality
+
+    if (!sharpParams.quality) {
+      sharpParams.quality = 90;
+    }
+
+    // don't allow quality above 90 till we have proper UI indication
+    sharpParams.quality = Math.min(90, sharpParams.quality);
+
+    if (sharpParams.allowUsm === true) {
+      sharpParams.usm.usm_a = Math.min(
+        5,
+        Math.max(0, sharpParams.usm.usm_a || 0),
+      );
+      sharpParams.usm.usm_r = Math.min(
+        128,
+        Math.max(0, sharpParams.usm.usm_r || 0),
+      ); // should be max 500 - but it's returning a 404
+      sharpParams.usm.usm_t = Math.min(
+        1,
+        Math.max(0, sharpParams.usm.usm_t || 0),
+      );
+    }
+
+    let retUrl = '';
+
+    retUrl += ',q_' + sharpParams.quality;
+
+    if (sharpParams.blur && !isTransparent()) {
+      //the blur looks bad in pngs
+      retUrl += ',blur_' + sharpParams.blur;
+    }
+
+    retUrl +=
+      sharpParams.usm && sharpParams.usm.usm_r
+        ? ',usm_' +
+          sharpParams.usm.usm_r.toFixed(2) +
+          '_' +
+          sharpParams.usm.usm_a.toFixed(2) +
+          '_' +
+          sharpParams.usm.usm_t.toFixed(2)
+        : '';
+
+    return retUrl;
+  };
+
+  const calcCropParams = () => {
+    let scale;
+    let x;
+    let y;
+    let orgW;
+    let orgH;
+    const requiredRatio = requiredWidth / requiredHeight;
+    const itemRatio = item.maxWidth / item.maxHeight;
+
+    // find the scale
+    if (itemRatio > requiredRatio) {
+      // wide image (relative to required ratio
+      scale = requiredHeight / item.maxHeight;
+      orgW = Math.floor(requiredHeight * itemRatio);
+      y = 0;
+      x = Math.round(orgW * focalPoint[0] - requiredWidth / 2);
+      x = Math.min(orgW - requiredWidth, x);
+      x = Math.max(0, x);
     } else {
-      callAfterWait = true;
+      // narrow image
+
+      scale = requiredWidth / item.maxWidth;
+      orgH = Math.floor(requiredWidth / itemRatio);
+      x = 0;
+      y = Math.round(orgH * focalPoint[1] - requiredHeight / 2);
+      y = Math.min(orgH - requiredHeight, y);
+      y = Math.max(0, y);
+    }
+
+    // make sure scale is not lower than needed
+    // scale must be higher to prevent cases that there will be white margins (or 404)
+    scale = (Math.ceil(scale * 100) / 100).toFixed(2);
+
+    return { x, y, scale };
+  };
+
+  const addResizeParams = () => {
+    if (!focalPoint || focalPoint.every((f) => f === 0.5)) {
+      resizeMethod = resizeMethod === 'fill' ? 'fill' : 'fit';
+      if (requiredHeight <= 1 && requiredWidth <= 1) resizeMethod = 'fill';
+      return `/v1/${resizeMethod}/w_${requiredWidth},h_${requiredHeight}`;
+    } else {
+      const { x, y, scale } = calcCropParams(
+        item,
+        requiredWidth,
+        requiredHeight,
+        focalPoint,
+      );
+      return `/v1/crop/w_${requiredWidth},h_${requiredHeight},x_${x},y_${y},scl_${scale}`;
     }
   };
-};
-export const isTestingEnvironment = (url) => {
-  return url.indexOf('isTestEnvironment=true') > -1;
+
+  const addFilename = () => {
+    return (
+      '/' +
+      (useWebp ? originalUrl.replace(/[^.]\w*$/, 'webp') : originalUrl).match(
+        /[^/][\w.]*$/,
+      )[0]
+    );
+  };
+
+  requiredWidth = Math.ceil(requiredWidth * devicePixelRatio);
+  requiredHeight = Math.ceil(requiredHeight * devicePixelRatio);
+
+  let retUrl = prefixUrlIfNeeded(originalUrl);
+
+  retUrl += addResizeParams();
+  retUrl += addSharpParams();
+  retUrl += addFilename();
+
+  return retUrl;
 };
 
-export const getTotalItemsCountFromUrl = (url) => {
-  const urlParams = new URLSearchParams(url);
-  const totalItemsCount = urlParams.get('totalItemsCount');
+const createMediaUrl = ({
+                          item,
+                          originalUrl,
+                          resizeMethod,
+                          requiredWidth,
+                          requiredHeight,
+                          sharpParams,
+                          focalPoint,
+                          createMultiple
+                        }) => {
+  const hasImageToken = item.dto.imageToken || item.dto.token;
 
-  return totalItemsCount;
+  originalUrl = removeResizeParams(originalUrl);
+
+  const params = {
+    item,
+    originalUrl,
+    resizeMethod,
+    requiredWidth,
+    requiredHeight,
+    sharpParams,
+    focalPoint,
+  };
+  if (resizeMethod === 'video') {
+    return createProcessedVideoUrl(params);
+  } else if (isExternalUrl(originalUrl)) {
+    return originalUrl;
+  } else if (resizeMethod === 'full' && !hasImageToken) {
+    return prefixUrlIfNeeded(originalUrl);
+  } else if (createMultiple) {
+    return [
+      {
+        type: 'webp',
+        url: createProcessedImageUrl({
+          ...params,
+          useWebp: true,
+          devicePixelRatio: 1,
+        }),
+        dpr: [1, 2]
+          .map(
+            (dpr) =>
+              createProcessedImageUrl({
+                ...params,
+                useWebp: true,
+                devicePixelRatio: dpr,
+              }) + ` ${dpr}x`,
+          )
+          .join(', '),
+      },
+      {
+        type: originalUrl.match(/[^.]\w*$/)[0],
+        url: createProcessedImageUrl({
+          ...params,
+          useWebp: false,
+          devicePixelRatio: 1,
+        }),
+        dpr: [1, 2]
+          .map(
+            (dpr) =>
+              createProcessedImageUrl({
+                ...params,
+                useWebp: false,
+                devicePixelRatio: dpr,
+              }) + ` ${dpr}x`,
+          )
+          .join(', '),
+      },
+    ];
+  } else {
+    return createProcessedImageUrl(params);
+  }
 };
 
-export const createLoremIpsum = (numOfWords) => {
-  const rnd = (num) => Math.floor(Math.random() * num);
-  const lorem = `Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Integer quis auctor elit sed vulputate In est ante in nibh Tortor pretium viverra suspendisse potenti nullam ac Elementum pulvinar etiam non quam lacus suspendisse faucibus interdum A iaculis at erat pellentesque adipiscing commodo elit at imperdiet Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque sit Integer eget aliquet nibh praesent tristique magna At tellus at urna condimentum mattis Sit amet nulla facilisi morbi tempus iaculis urna id volutpat Amet tellus cras adipiscing enim eu turpis egestas pretium Consectetur lorem donec massa sapien faucibus Egestas quis ipsum suspendisse ultrices gravida dictum Sed velit dignissim sodales ut eu sem integer vitae Quam lacus suspendisse faucibus interdum posuere Arcu vitae elementum curabitur vitae Felis bibendum ut tristique et egestas quis ipsum suspendisse ultrices Gravida quis blandit turpis cursus Nibh nisl condimentum id venenatis a condimentum vitae sapien pellentesque Arcu cursus vitae congue mauris Elementum eu facilisis sed odio morbi quis commodo odio Massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada Nunc id cursus metus aliquam eleifend mi in Commodo viverra maecenas accumsan lacus vel facilisis volutpat est velit Lectus urna duis convallis convallis tellus id interdum velit laoreet Purus viverra accumsan in nisl nisi scelerisque eu Morbi leo urna molestie at elementum eu facilisis sed odio Bibendum ut tristique et egestas quis Nam libero justo laoreet sit amet cursus sit Scelerisque in dictum non consectetur a erat nam at Blandit turpis cursus in hac habitasse platea dictumst quisque sagittis Tincidunt id aliquet risus feugiat in ante metus dictum at Leo vel fringilla est ullamcorper eget nulla Mauris augue neque gravida in fermentum et sollicitudin ac orci Integer quis auctor elit sed vulputate mi sit amet mauris Semper quis lectus nulla at volutpat Massa sed elementum tempus egestas sed sed Pharetra et ultrices neque ornare aenean euismod elementum nisi Quis varius quam quisque id diam vel quam elementum pulvinar Neque vitae tempus quam pellentesque nec nam aliquam sem At volutpat diam ut venenatis tellus in metus Nisl nisi scelerisque eu ultrices vitae auctor Nunc lobortis mattis aliquam faucibus Ultricies integer quis auctor elit sed vulputate mi sit amet Mattis rhoncus urna neque viverra justo nec ultrices dui sapien Vulputate ut pharetra sit amet aliquam id diam maecenas ultricies Nulla porttitor massa id neque aliquam vestibulum Vitae turpis massa sed elementum tempus Senectus et netus et malesuada Amet volutpat consequat mauris nunc congue nisi vitae suscipit Facilisis sed odio morbi quis commodo odio Sed blandit libero volutpat sed cras ornare arcu dui vivamus Odio ut enim blandit volutpat maecenas volutpat blandit aliquam etiam Dui accumsan sit amet nulla Et molestie ac feugiat sed lectus vestibulum mattis ullamcorper Ut sem nulla pharetra diam sit amet nisl suscipit adipiscing Velit scelerisque in dictum non Ornare aenean euismod elementum nisi quis eleifend quam adipiscing vitae Aliquet eget sit amet tellus cras adipiscing enim Euismod nisi porta lorem mollis aliquam ut Elit ullamcorper dignissim cras tincidunt lobortis feugiat Id cursus metus aliquam eleifend mi in nulla Faucibus vitae aliquet nec ullamcorper sit amet risus Cras semper auctor neque vitae tempus Vitae congue mauris rhoncus aenean vel elit scelerisque Est ante in nibh mauris cursus mattis molestie a Morbi leo urna molestie at elementum eu facilisis sed odio Turpis egestas sed tempus urna et pharetra pharetra massa massa Velit sed ullamcorper morbi tincidunt ornare massa eget Ac placerat vestibulum lectus mauris ultrices eros in cursus turpis Eu mi bibendum neque egestas congue quisque Egestas diam in arcu cursus euismod quis viverra Id aliquet risus feugiat in ante`;
-  const words = lorem.toLowerCase().split(' ');
-  const totalWords = words.length;
-
-  const start = rnd(totalWords - numOfWords - 1);
-  const end = start + numOfWords;
-  return words.slice(start, end).join(' ');
-};
+export { createMediaUrl };
