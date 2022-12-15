@@ -324,7 +324,7 @@ class GalleryView extends React.Component {
   render() {
     if (utils.isVerbose()) {
       console.count('galleryView render');
-      console.time('Rendering Gallery took ');
+      console.time('Rendering Gallery took 2');
       console.log('[DEBUG_RENDER] GalleryView options', this.props.options);
       console.log(
         '[DEBUG_RENDER] GalleryView props changed',
