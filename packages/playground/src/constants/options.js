@@ -77,7 +77,6 @@ export const isValidOption = (option, value, options) => {
   }
   if (!galleryOptions[option]) {
 
-    // console.log(`[STYLE PARAMS - VALIDATION] ${option} has not galleryOptions`);
     return false;
   }
   if (!galleryOptions[option].isRelevant(options)) {
