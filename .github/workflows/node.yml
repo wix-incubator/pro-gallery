@@ -5,9 +5,9 @@ name: Test
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, V4_Final ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, V4_Final ]
 
 jobs:
   lint:
@@ -75,7 +75,7 @@ jobs:
       if: github.event_name == 'push'
       # run: echo "this is a push to master"
       run: |
-        git checkout master
+        git checkout $env:GITHUB_REF_NAME
         lerna publish patch --exact  --yes --registry https://registry.npmjs.org
         npm run changelog
       env:
