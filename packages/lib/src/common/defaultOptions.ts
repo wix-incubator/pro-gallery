@@ -1,5 +1,6 @@
 import GALLERY_CONSTS from './constants';
 import coreOptions from './coreOptions';
+import { Options } from './interfaces/options';
 import {
   mergeNestedObjects,
   flattenObject,
@@ -34,6 +35,19 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
       secondaryMedia: {
         trigger: GALLERY_CONSTS.secondaryMediaTrigger.OFF,
         behaviour: GALLERY_CONSTS.secondaryMediaBehaviour.APPEARS,
+      },
+      threeDimensionalScene: {
+        controls: {
+          enableAutoRotate: false,
+          enablePan: true,
+          enableRotate: true,
+          enableZoom: false,
+        },
+        transform: {
+          rotation: 'x0y0z0',
+          scale: 'x1y1z1',
+          position: 'x0y0z0',
+        },
       },
     },
   },
@@ -89,7 +103,7 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   cubeFitPosition: GALLERY_CONSTS.cubeFitPosition.MIDDLE,
   //migrated: keep here or it will still break users of this (no dependency on refactor)
   magnificationLevel: 2,
-});
+} as Options);
 
 export const flatDefaultOptions = flattenObject(defaultOptions);
 

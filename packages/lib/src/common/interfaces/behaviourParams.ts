@@ -47,7 +47,6 @@ export interface Video {
 
 export interface ThreeDimensionalScene {
   transform?: Transform;
-  keepPosterAfterObjectLoad?: boolean;
   controls?: Controls;
 }
 
@@ -56,7 +55,7 @@ export type Dimensions = `x${number}y${number}z${number}`;
 export interface Transform {
   rotation?: Dimensions;
   scale?: Dimensions;
-  translation?: Dimensions;
+  position?: Dimensions;
 }
 export interface Controls {
   enableZoom?: boolean;

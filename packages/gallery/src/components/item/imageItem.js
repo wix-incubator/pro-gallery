@@ -74,7 +74,7 @@ class ImageItem extends React.Component {
         style={imageDimensions}
         {...extraProps}
       >
-        {imageRenderer()}
+        {imageRenderer?.()}
         {extraNodes}
       </div>
     );

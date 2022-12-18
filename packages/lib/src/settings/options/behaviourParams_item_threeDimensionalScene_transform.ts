@@ -15,5 +15,5 @@ function createTransformOptions(name: string, defaultValue = 0) {
 export default {
   ...createTransformOptions('rotation'),
   ...createTransformOptions('scale', 1),
-  ...createTransformOptions('translation'),
+  ...createTransformOptions('position'),
 };

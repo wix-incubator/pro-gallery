@@ -41,9 +41,9 @@ function mapSceneToStyleParams(scene: ThreeDimensionalScene, options: Options) {
     behaviourParams_item_threeDimensionalScene_transform_scale:
       scene.transform?.scale ||
       options.behaviourParams_item_threeDimensionalScene_transform_scale,
-    behaviourParams_item_threeDimensionalScene_transform_translation:
-      scene.transform?.translation ||
-      options.behaviourParams_item_threeDimensionalScene_transform_translation,
+    behaviourParams_item_threeDimensionalScene_transform_position:
+      scene.transform?.position ||
+      options.behaviourParams_item_threeDimensionalScene_transform_position,
     behaviourParams_item_threeDimensionalScene_controls_enablePan:
       scene.controls?.enablePan ||
       options.behaviourParams_item_threeDimensionalScene_controls_enablePan,
@@ -56,9 +56,6 @@ function mapSceneToStyleParams(scene: ThreeDimensionalScene, options: Options) {
     behaviourParams_item_threeDimensionalScene_controls_enableAutoRotate:
       scene.controls?.enableAutoRotate ||
       options.behaviourParams_item_threeDimensionalScene_controls_enableAutoRotate,
-    behaviourParams_item_threeDimensionalScene_keepPosterAfterObjectLoad:
-      scene.keepPosterAfterObjectLoad ||
-      options.behaviourParams_item_threeDimensionalScene_keepPosterAfterObjectLoad,
   };
 }
 export default class ThreeDItem extends ImageItem {
@@ -124,13 +121,13 @@ export default class ThreeDItem extends ImageItem {
     const scale = GALLERY_CONSTS.parse3DDimensions(
       params.behaviourParams_item_threeDimensionalScene_transform_scale
     );
-    const translation = GALLERY_CONSTS.parse3DDimensions(
-      params.behaviourParams_item_threeDimensionalScene_transform_translation
+    const position = GALLERY_CONSTS.parse3DDimensions(
+      params.behaviourParams_item_threeDimensionalScene_transform_position
     );
     sceneManager.model.transform.setPosition(
-      translation.x,
-      translation.y,
-      translation.z
+      position.x,
+      position.y,
+      position.z
     );
     sceneManager.model.transform.setRotation(
       rotation.x,
@@ -143,6 +140,8 @@ export default class ThreeDItem extends ImageItem {
       params.behaviourParams_item_threeDimensionalScene_controls_enableRotate;
     sceneManager.camera.enableZoom =
       params.behaviourParams_item_threeDimensionalScene_controls_enableZoom;
+    sceneManager.camera.enableAutoRotate =
+      params.behaviourParams_item_threeDimensionalScene_controls_enableAutoRotate;
 
     sceneManager.model.transform.setScale(scale.x, scale.y, scale.z);
   };
@@ -156,6 +155,7 @@ export default class ThreeDItem extends ImageItem {
       this.start3D();
     }
   };
+
   trigger3D = (): void => {
     this.start3D();
   };
@@ -171,19 +171,13 @@ export default class ThreeDItem extends ImageItem {
         };
   }
 
-  get shouldShowImage(): boolean {
-    return (
-      this.sceneParams
-        .behaviourParams_item_threeDimensionalScene_keepPosterAfterObjectLoad ||
-      this.state.viewMode === 'image'
-    );
-  }
   render(): JSX.Element {
+    const { viewMode } = this.state;
     const canvas = (
       <canvas width={'100%'} height={'100%'} ref={this.canvasRef} />
     );
 
-    const imageRenderer = this.shouldShowImage ? this.imageElement : () => null;
+    const imageRenderer = viewMode === 'image' && this.imageElement;
     const imageContainerClassNames = this.containerClassNames;
     const animationOverlay = this.animationOverlay;
 
