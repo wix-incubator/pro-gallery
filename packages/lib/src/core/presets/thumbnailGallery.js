@@ -16,6 +16,7 @@ const fixToThumbnail = (options) => {
     'layoutParams_cropRatio',
     '100%/100%'
   );
+  presetOptions.layoutParams_cropRatio = '100%/100%';
   presetOptions.cubeImages = true;
   presetOptions.titlePlacement = PLACEMENTS.SHOW_ON_HOVER;
   presetOptions.scrollDirection = SCROLL_DIRECTION.HORIZONTAL;
