@@ -196,36 +196,36 @@ const addPresetOptions = (options) => {
     const layoutIdx = options.galleryLayout;
     switch (layoutIdx) {
       case LAYOUTS.MASONRY:
-        return masonryOptions(options);
+        return masonryOptions(newSPs_masonryOptions(options));
       case LAYOUTS.GRID:
-        return gridOptions(options);
+        return gridOptions(newSPs_gridOptions(options));
       case LAYOUTS.THUMBNAIL:
-        return thumbnailsOptions(options);
+        return thumbnailsOptions(newSPs_thumbnailsOptions(options));
       case LAYOUTS.SLIDER:
-        return sliderOptions(options);
+        return sliderOptions(newSPs_sliderOptions(options));
       case LAYOUTS.SLIDESHOW:
-        return slideshowOptions(options);
+        return slideshowOptions(newSPs_slideshowOptions(options));
       case LAYOUTS.PANORAMA:
-        return panoramaOptions(options);
+        return panoramaOptions(newSPs_panoramaOptions(options));
       case LAYOUTS.COLUMN:
-        return columnOptions(options);
+        return columnOptions(newSPs_columnOptions(options));
       case LAYOUTS.MAGIC:
-        return magicOptions(options);
+        return magicOptions(newSPs_magicOptions(options));
       case LAYOUTS.FULLSIZE:
-        return fullsizeOptions(options);
+        return fullsizeOptions(newSPs_fullsizeOptions(options));
       case LAYOUTS.BRICKS:
-        return bricksOptions(options);
+        return bricksOptions(newSPs_bricksOptions(options));
       case LAYOUTS.MIX:
-        return mixOptions(options);
+        return mixOptions(newSPs_mixOptions(options));
       case LAYOUTS.ALTERNATE:
-        return alternateOptions(options);
+        return alternateOptions(newSPs_alternateOptions(options));
       case LAYOUTS.EMPTY:
-        return emptyOptions(options);
+        return emptyOptions(newSPs_emptyOptions(options));
       case LAYOUTS.JSON_FIXED:
         return jsonFixedOptions(options);
       case LAYOUTS.COLLAGE:
       default:
-        return collageOptions(options);
+        return collageOptions(newSPs_collageOptions(options));
     }
   }
 };
