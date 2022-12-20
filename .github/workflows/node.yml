@@ -75,7 +75,7 @@ jobs:
       if: github.event_name == 'push'
       # run: echo "this is a push to master"
       run: |
-        git checkout $env:GITHUB_REF_NAME
+        git checkout ${{ github.ref_name }}
         lerna publish patch --exact  --yes --registry https://registry.npmjs.org
         npm run changelog
       env:
