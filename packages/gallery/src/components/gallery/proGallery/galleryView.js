@@ -327,7 +327,7 @@ class GalleryView extends React.Component {
       console.time('Rendering Gallery took ');
       console.log('[DEBUG_RENDER] GalleryView options', this.props.options);
       console.log(
-        '[DEBUG_RENDER] GalleryView props changed',
+        '[DEBUG_RENDER] GalleryView props have changed',
         utils.printableObjectsDiff(this.lastProps || {}, this.props)
       );
       this.lastProps = { ...this.props };
