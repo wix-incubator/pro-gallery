@@ -65,7 +65,7 @@ describe('Item View', () => {
       stub.restore();
     });
 
-    it('should onItemClicked for items with expand', () => {
+    it('should onItemClicked for items with ACTION', () => {
       Object.assign(sampleItemViewProps, {
         thumbnailHighlightId: null,
         type: 'image',

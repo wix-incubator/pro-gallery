@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { createOptions } from '../utils/utils';
 import { default as GALLERY_CONSTS } from '../../common/constants';
@@ -13,7 +12,7 @@ export default {
     GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
   isRelevantDescription:
     'Set a Vertical gallery ("Scroll Direction" as "Vertical").',
-  options: createOptions('isVertical'), //NEW STYPEPARAMS METHOD need to change to the right const
+  options: createOptions(optionsMap.layoutParams.structure.layoutOrientation),
   type: INPUT_TYPES.OPTIONS,
   default:
     GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]

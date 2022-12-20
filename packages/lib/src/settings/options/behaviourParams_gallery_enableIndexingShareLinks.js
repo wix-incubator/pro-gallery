@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import optionsMap from '../../core/helpers/optionsMap';
@@ -12,5 +11,5 @@ export default {
   isRelevantDescription:
     'Item Click Action must be an external Action (ACTION)',
   type: INPUT_TYPES.BOOLEAN,
-  default: true, //NEW STYPEPARAMS METHOD one source
+  default: true, //one source
 };

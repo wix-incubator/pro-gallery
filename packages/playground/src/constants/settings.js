@@ -41,7 +41,6 @@ export const SECTIONS_ORDER = {
 export const optionsBySection = {
   [SECTIONS.PRESET]: [optionsMap.layoutParams.structure.galleryLayout],
   [SECTIONS.LAYOUT]: [
-    // 'allowLeanGallery',
     optionsMap.layoutParams.structure.scrollDirection,
     optionsMap.layoutParams.structure.galleryRatio.value,
     optionsMap.layoutParams.structure.galleryRatio.includeExternalInfo,

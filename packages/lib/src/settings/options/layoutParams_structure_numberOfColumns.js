@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import optionsMap from '../../core/helpers/optionsMap';
@@ -14,7 +13,9 @@ export default {
     options[optionsMap.layoutParams.structure.layoutOrientation] ===
       GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
         .VERTICAL &&
-    options.gridStyle === 1, //NEW STYPEPARAMS METHOD need to change to the new sp method
+    options[optionsMap.layoutParams.structure.responsiveMode] ===
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
+        .SET_ITEMS_PER_ROW,
   type: INPUT_TYPES.NUMBER,
   default: 3,
   description: `This sets the number of items per row in the gallery. Note that this option relies on a number of options, the gallery must be

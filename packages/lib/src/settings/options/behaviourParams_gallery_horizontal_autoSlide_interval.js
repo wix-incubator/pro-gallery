@@ -8,28 +8,18 @@ export default {
   min: 2,
   max: 30,
   isRelevant: (options) => {
-    if (options.newSPs) {
-      return (
-        autoSlideBehaviour.isRelevant(options) &&
-        options[
+    return (
+      autoSlideBehaviour.isRelevant(options) &&
+      options[
+        optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+      ] ===
+        GALLERY_CONSTS[
           optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-        ] ===
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-          ].INTERVAL
-      );
-    } else {
-      return (
-        options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && //NEW STYPEPARAMS METHOD use new sps
-        options.behaviourParams.gallery.horizontal.autoSlide.behaviour ===
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-          ].INTERVAL
-      );
-    }
+        ].INTERVAL
+    );
   },
   type: INPUT_TYPES.NUMBER,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Auto slide Behaviour" to "INTERVAL".',
-  default: 4, //NEW STYPEPARAMS METHOD one source
+  default: 4, //one source
 };

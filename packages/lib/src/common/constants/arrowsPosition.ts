@@ -1,7 +1,0 @@
-const ARROWS_POSITION = {
-  ON_GALLERY: 0,
-  OUTSIDE_GALLERY: 1,
-  MOUSE_CURSOR: 2,
-} as const;
-
-export default ARROWS_POSITION;

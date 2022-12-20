@@ -10,7 +10,7 @@ export default {
     'Not relevant when arowsPosition is MOUSE_CURSOR and mouseCursorContainerMaxWidth is 100',
   type: INPUT_TYPES.OPTIONS,
   default:
-    GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger].OFF, //NEW STYPEPARAMS METHOD need one source
+    GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger].OFF, //one source
   options: createOptions(
     optionsMap.behaviourParams.item.secondaryMedia.trigger
   ),

@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 
 export default {
@@ -7,5 +6,5 @@ export default {
   isRelevant: () => true,
   isRelevantDescription: 'Always relevant.',
   type: INPUT_TYPES.BOOLEAN,
-  default: false, //NEW STYPEPARAMS METHOD one source
+  default: false, //one source
 };

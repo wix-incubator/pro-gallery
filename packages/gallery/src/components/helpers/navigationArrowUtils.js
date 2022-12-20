@@ -9,7 +9,10 @@ const getArrowsSizeData = ({
   containerStyleType,
 }) => {
   const isLandscape = svgData.width / svgData.height > 1;
-  if (containerStyleType === GALLERY_CONSTS.arrowsContainerStyleType.BOX) {
+  if (
+    containerStyleType ===
+    GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type].BOX
+  ) {
     const sizeData = {
       navArrowsContainerWidth: arrowsSize,
       navArrowsContainerHeight: arrowsSize,
@@ -50,7 +53,9 @@ export const getArrowsRenderData = ({
     });
   if (customNavArrowsRenderer) {
     const size =
-      containerStyleType === GALLERY_CONSTS.arrowsContainerStyleType.BOX
+      containerStyleType ===
+      GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type]
+        .BOX
         ? arrowsSize / 2.4
         : arrowsSize;
     const customRenderer = (position) => (
@@ -152,7 +157,8 @@ const getShouldRenderArrowsArgs = (props) => {
 };
 
 const getArrowIconData = (
-  arrowType = GALLERY_CONSTS.arrowsType.DEFAULT_ARROW
+  arrowType = GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.type]
+    .DEFAULT_ARROW
 ) => {
   const {
     DEFAULT_ARROW,
@@ -162,7 +168,7 @@ const getArrowIconData = (
     ARROW_5,
     ARROW_6,
     ARROW_7,
-  } = GALLERY_CONSTS.arrowsType;
+  } = GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.type];
   let arrowData;
   switch (arrowType) {
     case ARROW_2:
@@ -192,7 +198,8 @@ const getArrowIconData = (
 };
 
 export const getArrowBoxStyle = ({ type, backgroundColor, borderRadius }) => {
-  return type === GALLERY_CONSTS.arrowsContainerStyleType.BOX
+  return type ===
+    GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type].BOX
     ? {
         backgroundColor: backgroundColor,
         borderRadius: `${borderRadius}%`,
