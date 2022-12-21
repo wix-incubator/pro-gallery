@@ -1130,7 +1130,7 @@ class ItemView extends React.Component {
 
   render() {
     // eslint-disable-next-line
-    console.log('HOTFIX V4_Final PR 29')
+    console.log('HOTFIX V4_Final BEST HOTFIX EVER 2')
     return this.composeItem();
   }
 }
