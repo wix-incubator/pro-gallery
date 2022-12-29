@@ -6,7 +6,10 @@ function getSlideAnimationStyles(
   { idx, activeIndex, options, container },
   overrideDeckTransition = false
 ) {
-  const { slideAnimation } = options;
+  const {
+    [optionsMap.behaviourParams.gallery.horizontal.slideAnimation]:
+      slideAnimation,
+  } = options;
   const isRTL =
     options[optionsMap.behaviourParams.gallery.layoutDirection] ===
     GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
