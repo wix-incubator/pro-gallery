@@ -1,5 +1,5 @@
 import React from 'react';
-import { utils, isEditMode, optionsMap, GALLERY_CONSTS } from 'pro-gallery-lib';
+import { utils, isEditMode } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
@@ -37,30 +37,16 @@ class VideoItemWrapper extends React.Component {
   }
 
   mightPlayVideo() {
-    const videoPlayTrigger =
-      this.props.options[optionsMap.behaviourParams.item.video.playTrigger];
+    const { videoPlay, itemClick } = this.props.options;
     const { hasLink } = this.props;
     if (this.props.isVideoPlaceholder) {
       return false;
     }
-    if (
-      videoPlayTrigger ===
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
-          .HOVER ||
-      videoPlayTrigger ===
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO
-    ) {
+    if (videoPlay === 'hover' || videoPlay === 'auto') {
       return true;
-    } else if (
-      this.props.options[optionsMap.behaviourParams.item.clickAction] ===
-      GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING
-    ) {
+    } else if (itemClick === 'nothing') {
       return true;
-    } else if (
-      this.props.options[optionsMap.behaviourParams.item.clickAction] ===
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK &&
-      !hasLink
-    ) {
+    } else if (itemClick === 'link' && !hasLink) {
       return true;
     }
     // }
@@ -121,9 +107,7 @@ class VideoItemWrapper extends React.Component {
   render() {
     const hover = this.props.hover;
     const showVideoPlayButton =
-      this.props.options[
-        optionsMap.behaviourParams.item.video.enablePlayButton
-      ];
+      !this.props.hidePlay && this.props.options.showVideoPlayButton;
     const videoPlaceholder = this.createVideoPlaceholder(showVideoPlayButton);
 
     const VideoItem = this.VideoItem;
