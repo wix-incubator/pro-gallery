@@ -183,9 +183,7 @@ class GalleryView extends React.Component {
         id={this.props.galleryContainerId}
         className={
           'pro-gallery inline-styles ' +
-          (options[optionsMap.layoutParams.structure.scrollDirection] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-            .HORIZONTAL
+          (options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
             ? ' one-row slider hide-scrollbars '
             : '') +
           (settings?.isAccessible ? ' accessible ' : '') +

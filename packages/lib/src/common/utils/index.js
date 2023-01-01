@@ -703,9 +703,7 @@ class Utils {
 
   isSingleItemHorizontalDisplay(options) {
     return (
-      options[optionsMap.layoutParams.structure.scrollDirection] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL &&
+      options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
       options.groupSize === 1 &&
       options.cubeImages &&
       options.layoutParams.cropRatio === '100%/100%'
@@ -739,9 +737,8 @@ class Utils {
     const oldSPs_isHeightSetByGallery = (options) => {
       //NEW STYPEPARAMS METHOD remove when done
       return (
-        options[optionsMap.layoutParams.structure.scrollDirection] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-            .VERTICAL && options.enableInfiniteScroll
+        options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
+        options.enableInfiniteScroll
       );
     };
     const newSPs_isHeightSetByGallery = (options) => {

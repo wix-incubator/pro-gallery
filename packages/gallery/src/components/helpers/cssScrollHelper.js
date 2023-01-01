@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS, window, utils, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
 
 class CssScrollHelper {
   constructor() {
@@ -72,9 +72,7 @@ class CssScrollHelper {
       return [];
     }
     this.screenSize =
-      options[optionsMap.layoutParams.structure.scrollDirection] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-        .HORIZONTAL
+      options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
         ? Math.min(
             window.outerWidth,
             window.screen.width,
@@ -82,9 +80,7 @@ class CssScrollHelper {
           )
         : Math.min(window.outerHeight, window.screen.height);
     if (
-      options[optionsMap.layoutParams.structure.scrollDirection] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL &&
+      options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
       utils.isMobile()
     ) {
       this.screenSize += 50;
@@ -97,9 +93,7 @@ class CssScrollHelper {
     this.minHeight = 0 - maxStep;
     this.maxHeight =
       (Math.ceil(
-        ((options[optionsMap.layoutParams.structure.scrollDirection] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL
+        ((options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
           ? right
           : top) +
           this.screenSize) /
@@ -125,15 +119,11 @@ class CssScrollHelper {
 
   createScrollSelectorsFunction({ id, item, options }) {
     const imageTop =
-      options[optionsMap.layoutParams.structure.scrollDirection] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-        .HORIZONTAL
+      options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
         ? item.offset.left - this.screenSize
         : item.offset.top - this.screenSize;
     const imageBottom =
-      options[optionsMap.layoutParams.structure.scrollDirection] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-        .HORIZONTAL
+      options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
         ? item.offset.left + item.width
         : item.offset.top + item.height;
     const minStep = this.pgScrollSteps[this.pgScrollSteps.length - 1];
@@ -216,9 +206,8 @@ class CssScrollHelper {
   }
 
   createScrollAnimationsIfNeeded({ idx, options, createScrollSelectors }) {
-    const { isRTL, scrollAnimation } = options;
-    const scrollDirection =
-      options[optionsMap.layoutParams.structure.scrollDirection];
+    const { isRTL, scrollDirection, scrollAnimation } = options;
+
     if (
       !scrollAnimation ||
       scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT
@@ -278,9 +267,7 @@ class CssScrollHelper {
 
     if (scrollAnimation === GALLERY_CONSTS.scrollAnimations.SLIDE_UP) {
       const axis =
-        scrollDirection ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL
+        scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
           ? 'X'
           : 'Y';
       const direction = isRTL ? '-' : '';

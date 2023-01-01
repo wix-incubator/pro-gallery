@@ -20,9 +20,7 @@ export default {
       );
     } else {
       return (
-        options[optionsMap.layoutParams.structure.scrollDirection] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-            .HORIZONTAL && //NEW STYPEPARAMS METHOD use new sps
+        options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && //NEW STYPEPARAMS METHOD use new sps
         options.behaviourParams.gallery.horizontal.autoSlide.behaviour ===
           GALLERY_CONSTS[
             optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour

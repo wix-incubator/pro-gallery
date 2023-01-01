@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS, optionsMap, window } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, window } from 'pro-gallery-lib';
 import {
   isWithinPaddingVertically,
   isWithinPaddingHorizontally,
@@ -285,10 +285,7 @@ class VideoScrollHelper {
       padding: videoPlayVerticalTolerance,
     });
     let visibleHorizontally;
-    if (
-      this.scrollDirection ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL
-    ) {
+    if (this.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) {
       visibleHorizontally = true;
     } else {
       visibleHorizontally = isWithinPaddingHorizontally({
