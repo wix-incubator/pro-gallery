@@ -40,7 +40,7 @@ export function scrollToItemImp(scrollParams) {
   if (fixedScroll !== true) {
     //scroll to specific item
     if (utils.isVerbose()) {
-      console.log('Scrolling to items #' + itemIdx);
+      console.log('Scrolling to items # ' + itemIdx);
     }
 
     const item = items.find((itm) => itm.idx === itemIdx);
