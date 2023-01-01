@@ -1,5 +1,4 @@
 {
-  "private": false,
   "name": "pro-layouts",
   "sideEffects": false,
   "version": "5.0.2",
@@ -43,6 +42,6 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "pro-gallery-lib": "5.0.2"
+    "pro-gallery-lib": "workspace:*"
   }
 }

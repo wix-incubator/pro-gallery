@@ -1,5 +1,4 @@
 {
-  "private": false,
   "name": "pro-gallery",
   "version": "5.0.2",
   "sideEffects": [
@@ -38,9 +37,9 @@
   "dependencies": {
     "@vimeo/player": "2.8.2",
     "hls.js": "^1.1.5",
-    "pro-gallery-blueprints": "5.0.2",
-    "pro-gallery-lib": "5.0.2",
-    "pro-layouts": "5.0.2",
+    "pro-gallery-blueprints": "workspace:*",
+    "pro-gallery-lib": "workspace:*",
+    "pro-layouts": "workspace:*",
     "react-player": "^2.6.2"
   },
   "peerDependencies": {

@@ -20,7 +20,7 @@ const formatBranchName = branch => {
 }
 
 const generateSubdomains = subdomain => {
-  const { version } = require('../lerna.json');
+  const { version } = require('../packages/gallery/package.json');
   const { GITHUB_HEAD_REF, GITHUB_SHA } = process.env;
   const isVersionSpecific = shouldPublishVersionSpecific(GITHUB_HEAD_REF);
 
