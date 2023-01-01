@@ -10,7 +10,7 @@
     "test": "echo 'no test in wix CI'",
     "deploy": "node scripts/build.js",
     "lint": "eslint src/**/*.js",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "yarn run lint --fix",
     "start-playground": "node scripts/start.js"
   },
   "dependencies": {
@@ -22,10 +22,10 @@
     "image-client-api": "^1.3130.0",
     "lodash.clonedeep": "^4.5.0",
     "moment": "2.29.2",
-    "pro-gallery": "5.0.2",
-    "pro-gallery-blueprints": "5.0.2",
-    "pro-gallery-lib": "5.0.2",
-    "pro-layouts": "5.0.2",
+    "pro-gallery": "workspace:*",
+    "pro-gallery-blueprints": "workspace:*",
+    "pro-gallery-lib": "workspace:*",
+    "pro-layouts": "workspace:*",
     "re-resizable": "^6.8.0",
     "react": "^16.8.6",
     "react-color": "^2.17.3",

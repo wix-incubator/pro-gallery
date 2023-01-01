@@ -20,7 +20,7 @@ const formatBranchName = branch => {
 }
 
 const generateSubdomains = subdomain => {
-  const { version } = require('../lerna.json');
+  const { version } = require('../packages/gallery/package.json');
   const { GITHUB_HEAD_REF, GITHUB_SHA } = process.env;
   const isVersionSpecific = shouldPublishVersionSpecific(GITHUB_HEAD_REF);
 
@@ -50,19 +50,6 @@ const generateSubdomains = subdomain => {
 
   return subdomains;
 };
-
-function build() {
-  const buildCommand = 'npm run build';
-  console.log(chalk.magenta(`Running: "${buildCommand}"`));
-  exec(buildCommand);
-}
-
-function getLatestCommit(commitSha) {
-    const gitCommand = `git log --pretty=format${commitSha}`;
-    return execSync(gitCommand, {
-        stdio: 'pipe'
-    });
-}
 
 function shouldPublishVersionSpecific(commit) {
     const regex = /^v\d.\d{1,2}.\d{1,3}$/gm;
