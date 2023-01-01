@@ -1,6 +1,7 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -18,13 +19,11 @@ describe('options - hasThumbnails', () => {
   });
 
   it('should render thumbnails element when "hasThumbnails" and the gallery is horizontal"', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
-      [optionsMap.layoutParams.thumbnails.enable]: true,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
+      onRow: true,
+      hasThumbnails: true,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -33,13 +32,11 @@ describe('options - hasThumbnails', () => {
     driver.detach.proGallery();
   });
   it('should not render thumbnails element when "hasThumbnails" is "true" and the gallery is vertical', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
-      [optionsMap.layoutParams.thumbnails.enable]: true,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
+      onRow: false,
+      hasThumbnails: true,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -48,13 +45,11 @@ describe('options - hasThumbnails', () => {
     driver.detach.proGallery();
   });
   it('should not render thumbnails element when "hasThumbnails" is "false"', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
-      [optionsMap.layoutParams.thumbnails.enable]: false,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
+      onRow: true,
+      hasThumbnails: false,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

@@ -1,6 +1,6 @@
 const ITEM_SIZE_UNITS = {
   SMART: 'SMART',
-  PIXEL: 'PIXEL',
+  PIXELS: 'PIXEL',
   PERCENT: 'PERCENT',
 };
 

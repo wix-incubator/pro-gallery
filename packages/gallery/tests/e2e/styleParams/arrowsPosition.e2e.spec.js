@@ -1,6 +1,6 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -17,12 +17,8 @@ describe('arrowsPosition - e2e', () => {
   });
   it('should have navigation arrows inside the gallery ', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
-      [optionsMap.layoutParams.navigationArrows.position]:
-        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
-          .ON_GALLERY,
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      arrowsPosition: GALLERY_CONSTS.arrowsPosition.ON_GALLERY,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -30,12 +26,8 @@ describe('arrowsPosition - e2e', () => {
   });
   it('should have navigation arrows outside the gallery ', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
-      [optionsMap.layoutParams.navigationArrows.position]:
-        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
-          .OUTSIDE_GALLERY,
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      arrowsPosition: GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');

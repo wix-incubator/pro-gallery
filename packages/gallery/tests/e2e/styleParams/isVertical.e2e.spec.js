@@ -1,6 +1,5 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -17,11 +16,8 @@ describe('isVertical - e2e', () => {
   });
   it('should render a gallery with vertical orientation when "isVertical" is "true"', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].MASONRY,
-      [optionsMap.layoutParams.structure.layoutOrientation]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-          .VERTICAL,
+      galleryLayout: 1,
+      isVertical: true,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -29,11 +25,8 @@ describe('isVertical - e2e', () => {
   });
   it('should render a gallery with horizontal orientation when "isVertical" is "false"', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].MASONRY,
-      [optionsMap.layoutParams.structure.layoutOrientation]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-          .HORIZONTAL,
+      galleryLayout: 1,
+      isVertical: false,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');

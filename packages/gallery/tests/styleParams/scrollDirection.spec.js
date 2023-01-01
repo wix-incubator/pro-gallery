@@ -1,8 +1,9 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 describe('options - scrollDirection', () => {
   let driver;
   let initialProps;
@@ -17,12 +18,9 @@ describe('options - scrollDirection', () => {
   });
 
   it('should render element ".gallery-horizontal-scroll" when "scrollDirection" is horizontal', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
+      galleryLayout: 2,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -31,12 +29,9 @@ describe('options - scrollDirection', () => {
     driver.detach.proGallery();
   });
   it('should render element ".pro-gallery-margin-container" when "scrollDirection" is vertical', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      galleryLayout: 2,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -45,12 +40,9 @@ describe('options - scrollDirection', () => {
     driver.detach.proGallery();
   });
   it('should set margin on items to "0px" when scrollDirection is false(vertical)', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      galleryLayout: 2,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

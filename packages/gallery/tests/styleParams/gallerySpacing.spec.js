@@ -1,8 +1,9 @@
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 describe('options - gallerySpacing', () => {
   let driver;
@@ -18,14 +19,11 @@ describe('options - gallerySpacing', () => {
   });
 
   it('should set the gallery with a margin of 20px in a vertical gallery', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.gallerySpacing]: 20,
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      layoutParams: { gallerySpacing: 20 },
+      galleryLayout: 2,
 
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -37,15 +35,12 @@ describe('options - gallerySpacing', () => {
     driver.detach.proGallery();
   });
   it('should set the gallery with a margin of (gallerySpacing - (imageMargin / 2)) in a horizontal gallery', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.gallerySpacing]: 20,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      layoutParams: { gallerySpacing: 20 },
 
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.structure.itemSpacing]: 10,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+      galleryLayout: 2,
+      imageMargin: 10,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

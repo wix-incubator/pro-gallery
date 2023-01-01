@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
 
@@ -17,12 +17,8 @@ describe('alternate - e2e', () => {
   });
   it('alternate layout - scrollDirection = vertical', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .ALTERNATE,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+      galleryLayout: GALLERY_CONSTS.layout.ALTERNATE,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(400);
@@ -31,12 +27,8 @@ describe('alternate - e2e', () => {
   });
   it('alternate layout - scrollDirection = horizontal', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .ALTERNATE,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+      galleryLayout: GALLERY_CONSTS.layout.ALTERNATE,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(400);

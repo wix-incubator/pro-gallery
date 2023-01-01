@@ -1,6 +1,5 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -18,11 +17,12 @@ describe('cubeImages - e2e', () => {
 
   it('should fit images inside the containers', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]: -1,
-      [optionsMap.layoutParams.crop.enable]: true,
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
-      [optionsMap.layoutParams.crop.ratios]: [1],
+      galleryLayout: -1,
+      cubeImages: true,
+      cubeType: 'fit',
+      layoutParams: {
+        cropRatio: 1,
+      },
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -30,11 +30,12 @@ describe('cubeImages - e2e', () => {
   });
   it('should crop the images and fill the containers', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]: -1,
-      [optionsMap.layoutParams.crop.enable]: true,
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
-      [optionsMap.layoutParams.crop.ratios]: [1],
+      galleryLayout: -1,
+      cubeImages: true,
+      cubeType: 'fill',
+      layoutParams: {
+        cropRatio: 1,
+      },
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -42,11 +43,12 @@ describe('cubeImages - e2e', () => {
   });
   it('should have a "cropRatio" of "2"', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]: -1,
-      [optionsMap.layoutParams.crop.enable]: true,
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
-      [optionsMap.layoutParams.crop.ratios]: [2],
+      galleryLayout: -1,
+      cubeImages: true,
+      cubeType: 'fill',
+      layoutParams: {
+        cropRatio: 2,
+      },
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');

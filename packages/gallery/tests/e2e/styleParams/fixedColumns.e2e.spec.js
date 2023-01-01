@@ -1,6 +1,6 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -17,16 +17,11 @@ describe('fixedColumns - e2e', () => {
   });
   it('should set fixedColimns of "1"', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
-      [optionsMap.layoutParams.groups.groupSize]: 1,
-      [optionsMap.layoutParams.structure.layoutOrientation]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-          .VERTICAL,
-      [optionsMap.layoutParams.structure.numberOfColumns]: 1,
-      [optionsMap.layoutParams.structure.responsiveMode]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
-          .SET_ITEMS_PER_ROW,
+      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
+      groupSize: 1,
+      isVertical: true,
+      fixedColumns: 1,
+      gridStyle: 1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.partialScreenshot();
@@ -34,16 +29,11 @@ describe('fixedColumns - e2e', () => {
   });
   it('should set fixedColimns of "2"', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
-      [optionsMap.layoutParams.groups.groupSize]: 1,
-      [optionsMap.layoutParams.structure.layoutOrientation]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-          .VERTICAL,
-      [optionsMap.layoutParams.structure.numberOfColumns]: 2,
-      [optionsMap.layoutParams.structure.responsiveMode]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
-          .SET_ITEMS_PER_ROW,
+      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
+      groupSize: 1,
+      isVertical: true,
+      fixedColumns: 2,
+      gridStyle: 1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -51,16 +41,11 @@ describe('fixedColumns - e2e', () => {
   });
   it('should set fixedColimns of "3"', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
-      [optionsMap.layoutParams.groups.groupSize]: 1,
-      [optionsMap.layoutParams.structure.layoutOrientation]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-          .VERTICAL,
-      [optionsMap.layoutParams.structure.numberOfColumns]: 3,
-      [optionsMap.layoutParams.structure.responsiveMode]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
-          .SET_ITEMS_PER_ROW,
+      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
+      groupSize: 1,
+      isVertical: true,
+      fixedColumns: 3,
+      gridStyle: 1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');

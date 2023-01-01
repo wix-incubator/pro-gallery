@@ -58,7 +58,6 @@ export default class Layouter {
     if (this.styleParams.isVertical) {
       if (this.styleParams.fixedColumns > 0) {
         numOfCols = this.styleParams.fixedColumns;
-      
       } else {
         // find the number of columns that makes each column width the closet to the targetItemSize
         const numOfColsFloat = galleryWidth / targetItemSize;

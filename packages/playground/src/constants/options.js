@@ -1,45 +1,28 @@
 import {
   getLayoutName,
   NEW_PRESETS,
+  defaultOptions,
   galleryOptions,
-  optionsMap,
-  flatV4DefaultOptions,
-  extendNestedOptionsToIncludeOldAndNew,
-  addPresetOptions,
+  flattenObject,
+  flatToNested,
 } from 'pro-gallery-lib';
-import {optionsList} from './settings'
-import deeplyEqual from 'deep-equal';
 
-optionsList.forEach( 
-  (option) => {
-    if(galleryOptions[option]?.default !== undefined) { 
-    flatV4DefaultOptions[option] = galleryOptions[option].default
-    }
-  }
+
+const _defaultOptions = flattenObject(defaultOptions);
+Object.entries(galleryOptions).forEach(
+  ([option, settings]) =>
+    (_defaultOptions[option] = settings.default)
 );
 
 export const getInitialOptions = () => {
   const savedOptions = getOptionsFromUrl(window.location.search);
-
   return {
-    newSPs: true,
-    ...flatV4DefaultOptions,
+    ..._defaultOptions,
     ...savedOptions,
   };
 };
-const arrayKeys = [
-  optionsMap.layoutParams.crop.ratios,
-  optionsMap.layoutParams.structure.columnRatios,
-  optionsMap.layoutParams.groups.allowedGroupTypes,
-  optionsMap.layoutParams.groups.repeatingGroupTypes,
-]
-const formatValue = (val, option) => {
-  if(typeof val === 'object') {
-    return val;
-  }
-  if(arrayKeys.includes(option)){
-    return val.split(',')
-  }
+
+const formatValue = (val) => {
   if (String(val) === 'true') {
     return true;
   } else if (String(val) === 'false') {
@@ -53,26 +36,26 @@ const formatValue = (val, option) => {
 
 export const isValidOption = (option, value, options) => {
   if (!option) {
+
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} is undefined`);
     return false;
   }
-  if (!(option.includes('layoutParams_') || option.includes('behaviourParams_') || option.includes('stylingParams_'))) {
-    // console.log(`[STYLE PARAMS - VALIDATION] ${option} is not a new flat option`);
-    return false;
-  }
   if (typeof value === 'undefined') {
+
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is undefined`);
     return false;
   }
-  if (deeplyEqual(value,flatV4DefaultOptions[option])) {
+  if (value === _defaultOptions[option]) {
+
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is as the default: ${value}`);
     return false;
   }
-  options = { ...flatV4DefaultOptions, ...options };
-  const fixedPresetOptions = NEW_PRESETS['newSPs_' + getLayoutName(options[optionsMap.layoutParams.structure.galleryLayout])];
-  options = { ...options, ...fixedPresetOptions, }
-  if (option !== optionsMap.layoutParams.structure.galleryLayout && deeplyEqual(value, fixedPresetOptions[option])) {
-    // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is as the fixedPresetOptions: ${value}`, fixedPresetOptions, getLayoutName(options.galleryLayout));
+  options = { ..._defaultOptions, ...options };
+  const flatFixedPresetOptions = flattenObject(NEW_PRESETS[getLayoutName(options.galleryLayout)]);
+  options = { ...options, ...flatFixedPresetOptions, }
+  if (option !== 'galleryLayout' && value === flatFixedPresetOptions[option]) {
+
+    // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is as the flatFixedPresetStyles: ${value}`, flatFixedPresetStyles, getLayoutName(options.galleryLayout));
     return false;
   }
   if (!galleryOptions[option]) {
@@ -80,7 +63,7 @@ export const isValidOption = (option, value, options) => {
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} has not galleryOptions`);
     return false;
   }
-  if (!galleryOptions[option].isRelevant(options)) {
+  if (!galleryOptions[option].isRelevant(flatToNested(options))) {
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is not relevant`, galleryOptions[option].isRelevant.toString(), options);
     return false;
   }
@@ -95,18 +78,17 @@ export const getOptionsFromUrl = (locationSearchString) => {
     .map((option) => option.split('='))
     .reduce(
       (obj, [option, value]) =>
-      Object.assign(obj, { [option]: formatValue(value, option) }),
+      Object.assign(obj, { [option]: formatValue(value) }),
       {}
       );
-      options = extendNestedOptionsToIncludeOldAndNew(addPresetOptions({newSPs:true, ...options}))
       const relevantOptions = Object.entries(options).reduce(
         (obj, [option, value]) =>
         isValidOption(option, value, options)
-        ? Object.assign(obj, { [option]: formatValue(value, option) })
+        ? Object.assign(obj, { [option]: formatValue(value) })
         : obj,
         {}
         );
-    return relevantOptions; 
+    return relevantOptions; //flatOptions
   } catch (e) {
     console.error('Cannot getOptionsFromUrl', e);
     return {};
@@ -114,10 +96,12 @@ export const getOptionsFromUrl = (locationSearchString) => {
 };
 
 export const setOptionsInUrl = (options) => {
+  const flatSP = flattenObject(options);
   // console.log(`[STYLE PARAMS - VALIDATION] setting options in the url`, options);
-  const urlParams = Object.entries(options).filter(option => optionsList.includes(option[0])).reduce(
+  const urlParams = Object.entries(flatSP)
+    .reduce(
       (arr, [option, value]) =>
-        isValidOption(option, value, options)
+        isValidOption(option, value, flatSP)
           ? arr.concat(`${option}=${value}`)
           : arr,
       []

@@ -1,7 +1,7 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom';
-import { GALLERY_CONSTS, utils, optionsMap } from 'pro-gallery-lib';
-import { ArrowFollower } from '../../helpers/mouseCursorPosition';
+import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
+import { CursorController } from '../../helpers/mouseCursorPosition';
 import {
   getArrowBoxStyle,
   getArrowsRenderData,
@@ -23,15 +23,16 @@ export function NavigationArrows({
     arrowsPadding,
     arrowsPosition,
     arrowsVerticalPosition,
+    layoutParams,
     titlePlacement,
     textBoxHeight,
     arrowsColor,
     arrowsSize,
   } = options;
-  const mouseCursorContainerMaxWidth =
-    options[
-      optionsMap.layoutParams.navigationArrows.mouseCursorContainerMaxWidth
-    ];
+  const {
+    container: { type, backgroundColor, borderRadius },
+    mouseCursorContainerMaxWidth,
+  } = layoutParams.navigationArrows;
 
   const {
     arrowRenderer: renderArrowSvg,
@@ -41,9 +42,8 @@ export function NavigationArrows({
     customNavArrowsRenderer,
     arrowsColor: arrowsColor,
     arrowsSize: arrowsSize,
-    arrowsType: options[optionsMap.layoutParams.navigationArrows.type],
-    containerStyleType:
-      options[optionsMap.layoutParams.navigationArrows.container.type],
+    arrowsType: layoutParams.navigationArrows.type,
+    containerStyleType: type,
   });
   const mouseCursorEnabled =
     arrowsPosition === GALLERY_CONSTS.arrowsPosition.MOUSE_CURSOR;
@@ -73,13 +73,9 @@ export function NavigationArrows({
       -imageHeight * directionFix,
   }[arrowsVerticalPosition];
   const arrowBoxStyle = getArrowBoxStyle({
-    type: options[optionsMap.layoutParams.navigationArrows.container.type],
-    backgroundColor:
-      options[
-        optionsMap.layoutParams.navigationArrows.container.backgroundColor
-      ],
-    borderRadius:
-      options[optionsMap.layoutParams.navigationArrows.container.borderRadius],
+    type,
+    backgroundColor,
+    borderRadius,
   });
   const containerStyle = mouseCursorEnabled
     ? {
@@ -112,9 +108,7 @@ export function NavigationArrows({
   const prevContainerStyle = { left: mouseCursorEnabled ? 0 : arrowsPos };
   const nextContainerStyle = { right: mouseCursorEnabled ? 0 : arrowsPos };
 
-  const useDropShadow =
-    options[optionsMap.layoutParams.navigationArrows.container.type] ===
-    GALLERY_CONSTS.arrowsContainerStyleType.SHADOW;
+  const useDropShadow = type === GALLERY_CONSTS.arrowsContainerStyleType.SHADOW;
   const arrowsBaseClasses = [
     'nav-arrows-container',
     useDropShadow ? 'drop-shadow' : '',

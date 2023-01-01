@@ -1,6 +1,7 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -18,15 +19,11 @@ describe('options - arrowsPosition', () => {
   });
 
   it('should calculate gallery width accroding to "arrowsPosition" ("OUTSIDE_GALLERY")', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
-      [optionsMap.layoutParams.navigationArrows.position]:
-        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
-          .OUTSIDE_GALLERY,
-      [optionsMap.layoutParams.navigationArrows.size]: 40,
-      [optionsMap.layoutParams.structure.itemSpacing]: 0, // fixed in slideshow
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      arrowsPosition: GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY,
+      arrowsSize: 40,
+      imageMargin: 0, // fixed in slideshow
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -36,22 +33,18 @@ describe('options - arrowsPosition', () => {
     const newWidth =
       initialProps.container.width -
       2 *
-        (initialProps.options[optionsMap.layoutParams.navigationArrows.size] +
+        (initialProps.options.arrowsSize +
           40 +
-          initialProps.options[optionsMap.layoutParams.structure.itemSpacing]);
+          initialProps.options.imageMargin);
     expect(width).to.eq(newWidth);
     driver.detach.proGallery();
   });
   it('should have original container width (arrowsPosition = "OUTSIDE_GALLERY")', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
-      [optionsMap.layoutParams.navigationArrows.position]:
-        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
-          .ON_GALLERY,
-      [optionsMap.layoutParams.navigationArrows.size]: 40,
-      [optionsMap.layoutParams.structure.itemSpacing]: 0, // fixed in slideshow
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      arrowsPosition: GALLERY_CONSTS.arrowsPosition.ON_GALLERY,
+      arrowsSize: 40,
+      imageMargin: 0, // fixed in slideshow
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

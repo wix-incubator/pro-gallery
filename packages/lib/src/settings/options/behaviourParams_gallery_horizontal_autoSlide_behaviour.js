@@ -5,19 +5,8 @@ import optionsMap from '../../core/helpers/optionsMap';
 
 export default {
   title: 'Auto slide Behaviour',
-  isRelevant: (options) => {
-    if (options.newSPs) {
-      return (
-        options[optionsMap.layoutParams.structure.scrollDirection] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL
-      );
-    } else {
-      return (
-        options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
-      ); //NEW STYPEPARAMS METHOD change this to new sps
-    }
-  },
+  isRelevant: (sp) =>
+    sp.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL, //NEW STYPEPARAMS METHOD change this to new sps
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Auto Slide" to "true".',
   type: INPUT_TYPES.OPTIONS,

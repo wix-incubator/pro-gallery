@@ -1,6 +1,7 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -18,11 +19,9 @@ describe('options - arrowsSize', () => {
   });
 
   it('should set the correct arrowsSize', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
-      [optionsMap.layoutParams.navigationArrows.size]: 50,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      arrowsSize: 50,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -30,30 +29,21 @@ describe('options - arrowsSize', () => {
       '.nav-arrows-container .slideshow-arrow'
     );
     const { transform } = arrowImage.props().style;
-    const arrowFinalSize =
-      initialProps.options[optionsMap.layoutParams.navigationArrows.size] / 23;
+    const arrowFinalSize = initialProps.options.arrowsSize / 23;
     expect(transform).to.eq(`scaleX(1) scale(${arrowFinalSize})`);
     driver.detach.proGallery();
   });
   it('should set the position of arrows according to arrowsSize', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
-      [optionsMap.layoutParams.navigationArrows.size]: 50,
-      [optionsMap.layoutParams.navigationArrows.position]:
-        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
-          .OUTSIDE_GALLERY,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      arrowsSize: 50,
+      arrowsPosition: GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
     const arrowContainer = driver.find.selector('.nav-arrows-container');
     const { right } = arrowContainer.props().style;
-    expect(right).to.eq(
-      `-${
-        20 + initialProps.options[optionsMap.layoutParams.navigationArrows.size]
-      }px`
-    );
+    expect(right).to.eq(`-${20 + initialProps.options.arrowsSize}px`);
     driver.detach.proGallery();
   });
 });

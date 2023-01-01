@@ -4,7 +4,6 @@ import spies from 'chai-spies';
 import GalleryDriver from '../../drivers/reactDriver';
 import { testImages } from '../../drivers/mocks/images-mock';
 import sinon from 'sinon';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 use(spies);
 
@@ -26,15 +25,8 @@ describe('Text Item', () => {
   });
 
   it('should set background color', () => {
-    Object.assign(textItemProps, {
-      options: {
-        [optionsMap.layoutParams.crop.method]:
-          GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
-      },
-    });
-    Object.assign(textItemProps, {
-      style: { ...textItemProps.style, bgColor: 'red' },
-    });
+    Object.assign(textItemProps, { options: { cubeType: 'fit' } });
+    Object.assign(textItemProps, { style: { bgColor: 'red' } });
     galleryDriver.mount(TextItem, textItemProps);
     const style = galleryDriver.find
       .class('gallery-item-loaded.text-item')
@@ -43,9 +35,7 @@ describe('Text Item', () => {
   });
 
   it('should resize itself', () => {
-    Object.assign(textItemProps, {
-      style: { ...textItemProps.style, maxWidth: 100, maxHeight: 100 },
-    });
+    Object.assign(textItemProps, { style: { maxWidth: 100, maxHeight: 100 } });
     galleryDriver.mount(TextItem, textItemProps);
     const style = galleryDriver.find
       .class('gallery-item-loaded.text-item')

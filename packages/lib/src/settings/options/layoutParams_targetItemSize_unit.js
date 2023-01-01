@@ -10,6 +10,6 @@ export default {
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].SMART,
   options: createOptions('gallerySizeType'),
-  isRelevant: () => true,
+  isRelevant: () => true, //NEW STYPEPARAMS METHOD why is this different from the value isRelevant??????
   isRelevantDescription: 'Always relevant.',
 };

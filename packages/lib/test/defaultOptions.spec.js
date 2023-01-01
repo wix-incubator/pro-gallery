@@ -17,12 +17,11 @@ describe('defaultOptions', () => {
     expect(flatDefaultOptions).to.eql(expected);
     let customOptions = { layoutParams: { structure: { galleryLayout: 5 } } };
     const migrated = extendNestedOptionsToIncludeOldAndNew(customOptions);
-    delete migrated.wasConvertedToOldOptions;
     const flat = flattenObject(migrated);
     Object.keys(flat).forEach((key) =>
       flat[key] === undefined ? delete flat[key] : {}
     );
-    expect(Object.keys(flat).length).to.eql(2); //this object should contains only 2 defined options (the old and new galleryLayout) + the wasConvertedOption
+    expect(Object.keys(flat).length).to.eql(2); //this object should contains only 2 defined options (the old and new galleryLayout)
     let populated = populateWithDefaultOptions(migrated);
     expect(populated.galleryLayout).to.eql(5); //this should be 5 and not the default (-1)
     expect(populated.slideshowInfoSize).to.eql(200);

@@ -6,7 +6,6 @@ import {
   utils,
   isEditMode,
   isPreviewMode,
-  optionsMap,
 } from 'pro-gallery-lib';
 import MagnifiedImage from './imageWithMagnified.js';
 import withSecondaryMedia from '../hoc/withSecondMedia.js';
@@ -316,11 +315,8 @@ class ItemView extends React.Component {
       const { itemClick } = this.props.options;
       if (itemClick === 'nothing' && this.props.type !== 'video') {
         return (
-          this.props.options[
-            optionsMap.behaviourParams.item.secondaryMedia.trigger
-          ] ===
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger]
-            .HOVER
+          this.props.options.behaviourParams.item.secondaryMedia.trigger ===
+          GALLERY_CONSTS.secondaryMediaTrigger.HOVER
         );
       } else {
         return false;

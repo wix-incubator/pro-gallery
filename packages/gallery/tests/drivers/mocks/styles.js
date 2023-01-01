@@ -1,6 +1,4 @@
-import { migrateOptions } from 'pro-gallery-lib';
-
-const options = migrateOptions({
+const options = {
   layoutParams: {
     gallerySpacing: 0,
     cropRatio: 1,
@@ -103,7 +101,7 @@ const options = migrateOptions({
   shouldIndexDirectShareLinkInSEO: true,
   slideTransition: 'ease',
   enableVideoPlaceholder: true,
-});
+};
 
 const container = {
   width: 1150,

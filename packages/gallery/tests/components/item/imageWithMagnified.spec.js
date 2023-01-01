@@ -2,7 +2,7 @@ import GalleryDriver from '../../drivers/reactDriver';
 import { expect } from 'chai';
 import { testImages } from '../../drivers/mocks/images-mock';
 import MagnifiedImage from '../../../src/components/item/imageWithMagnified';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 const simulateEvent = (elem, eventName, options) => {
   if (options) {
@@ -24,9 +24,14 @@ describe('imageWithMagnified', () => {
     imageItemsProps = driver.props.itemView(sampleItem);
     Object.assign(imageItemsProps, {
       options: {
-        [optionsMap.behaviourParams.item.clickAction]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].MAGNIFY,
-        [optionsMap.behaviourParams.item.content.magnificationValue]: 2,
+        itemClick: GALLERY_CONSTS.itemClick.MAGNIFY,
+        behaviourParams: {
+          item: {
+            content: {
+              magnificationValue: 2,
+            },
+          },
+        },
       },
       imageDimensions: { marginLeft: 0, marginTop: 0 },
       style: {

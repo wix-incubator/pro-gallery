@@ -13,7 +13,6 @@ const defaultV4Options = {
     },
     structure: {
       galleryLayout: -1,
-      galleryRatio: { value: 0, includeExternalInfo: false },
       scrollDirection:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
           .VERTICAL,
@@ -57,7 +56,6 @@ const defaultV4Options = {
       size: 120,
       spacing: 4,
       enable: false,
-      position: GALLERY_CONSTS.thumbnailsPosition.OUTSIDE_GALLERY,
       alignment:
         GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM,
     },
@@ -145,13 +143,9 @@ const defaultV4Options = {
           ].NO_EFFECT,
         magnificationValue: 2,
       },
-      secondaryMedia: {
-        trigger: GALLERY_CONSTS.secondaryMediaTrigger.OFF,
-        behaviour: GALLERY_CONSTS.secondaryMediaBehaviour.APPEARS,
-      },
     },
     gallery: {
-      blockContextMenu: true, //is this actually a default??
+      blockContextMenu: true,
       layoutDirection:
         GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
           .LEFT_TO_RIGHT,
@@ -207,16 +201,12 @@ const defaultV4Options = {
     itemBorderWidth: 0,
     itemBorderRadius: 0,
     itemEnableShadow: false,
-    itemBorderColor: '',
     itemShadowBlur: 20,
     itemShadowDirection: 135,
     itemShadowSize: 10,
     itemShadowOpacityAndColor: '',
     arrowsColor: '',
   },
-  //layouter API params
-  magicLayoutSeed: 1,
-  fixedColumns: 0, // determine the number of columns regardless of the screen size (use 0 to ignore)
 };
 
 export default defaultV4Options;

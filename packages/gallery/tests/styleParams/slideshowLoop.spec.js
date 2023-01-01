@@ -1,6 +1,7 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -18,11 +19,9 @@ describe('options - slideshowLoop', () => {
     };
   });
   it('should be able to to click next when reached last item', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
-      [optionsMap.behaviourParams.gallery.horizontal.loop]: true,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      slideshowLoop: true,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -32,11 +31,9 @@ describe('options - slideshowLoop', () => {
     driver.detach.proGallery();
   });
   it('should not be able to to click next', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
-      [optionsMap.behaviourParams.gallery.horizontal.loop]: false,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.SLIDESHOW,
+      slideshowLoop: false,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

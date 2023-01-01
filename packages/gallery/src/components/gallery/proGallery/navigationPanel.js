@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, optionsMap, utils } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 
 import TextItem from '../../item/textItem.js';
 
@@ -144,9 +144,10 @@ class NavigationPanel extends React.Component {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
+    const { position: navigationPanelPosition } =
+      this.props.options.layoutParams.thumbnails;
     const navigationRelevantProps = {
-      navigationPanelPosition:
-        this.props.options[optionsMap.layoutParams.thumbnails.position],
+      navigationPanelPosition,
       thumbnailAlignment: this.props.options.galleryThumbnailsAlignment,
       options: this.props.options,
       galleryStructure: this.props.galleryStructure,
@@ -163,10 +164,7 @@ const getHorizontalNavigationPanelDimensions = ({
   galleryHeight,
   navigationPanelPosition,
 }) => {
-  if (
-    navigationPanelPosition ===
-    GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].ON_GALLERY
-  ) {
+  if (navigationPanelPosition === 'ON_GALLERY') {
     return {};
   } else {
     return { width: width, height: height - galleryHeight };
@@ -178,10 +176,7 @@ const getVerticalNavigationPanelDimensions = ({
   galleryWidth,
   navigationPanelPosition,
 }) => {
-  if (
-    navigationPanelPosition ===
-    GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].ON_GALLERY
-  ) {
+  if (navigationPanelPosition === 'ON_GALLERY') {
     return {};
   } else {
     return { width: width - galleryWidth, height: height };

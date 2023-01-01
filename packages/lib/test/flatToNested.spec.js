@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { flatToNested } from '../src/core/helpers/optionsUtils';
 
-describe('flatToNested', () => {
+describe('optionsUtils', () => {
   it('should create a nested object out of a flat object', () => {
     const actual = flatToNested(input());
     expect(actual).to.deep.equal(expected());

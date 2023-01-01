@@ -2,7 +2,6 @@ import GalleryDriver from '../drivers/reactDriver';
 import { testVideos } from '../drivers/mocks/images-mock';
 import VideoItemWrapper from '../../src/components/item/videos/videoItemWrapper';
 import { expect } from 'chai';
-import { optionsMap } from 'pro-gallery-lib';
 
 const mountAndGetPreloadElements = (driver, sampleItemProps) => {
   driver.mount(VideoItemWrapper, sampleItemProps);
@@ -29,7 +28,7 @@ describe('options - enableVideoPlaceholder ', () => {
 
   it('should not remove video placeholder when "enableVideoPlaceholder=true"', async () => {
     Object.assign(sampleItemViewProps.options, {
-      [optionsMap.behaviourParams.item.video.enablePlaceholder]: true,
+      enableVideoPlaceholder: true,
     });
     const placeholders = mountAndGetPreloadElements(
       driver,
@@ -39,7 +38,7 @@ describe('options - enableVideoPlaceholder ', () => {
   });
   it('should not remove video placeholder when "enableVideoPlaceholder=false"', async () => {
     Object.assign(sampleItemViewProps.options, {
-      [optionsMap.behaviourParams.item.video.enablePlaceholder]: false,
+      enableVideoPlaceholder: false,
     });
     const placeholders = mountAndGetPreloadElements(
       driver,

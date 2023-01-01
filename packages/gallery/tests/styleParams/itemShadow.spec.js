@@ -1,6 +1,7 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -18,17 +19,14 @@ describe('options - overlayAnimation', () => {
   });
 
   it('should have box shadow when "itemEnableShadow" is "true"', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
-      [optionsMap.stylingParams.itemShadowBlur]: 20,
-      [optionsMap.stylingParams.itemShadowSize]: 10,
-      [optionsMap.stylingParams.itemShadowDirection]: 135,
-      [optionsMap.stylingParams.itemShadowOpacityAndColor]: 'rgba(0,0,0,.4)',
-      [optionsMap.stylingParams.itemEnableShadow]: true,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      itemShadowBlur: 20,
+      itemShadowSize: 10,
+      itemShadowDirection: 135,
+      itemShadowOpacityAndColor: 'rgba(0,0,0,.4)',
+      itemEnableShadow: true,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -39,17 +37,14 @@ describe('options - overlayAnimation', () => {
     driver.detach.proGallery();
   });
   it('should not have box shadow when "itemEnableShadow" is "false"', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
-      [optionsMap.stylingParams.itemShadowBlur]: 20,
-      [optionsMap.stylingParams.itemShadowSize]: 10,
-      [optionsMap.stylingParams.itemShadowDirection]: 135,
-      [optionsMap.stylingParams.itemShadowOpacityAndColor]: 'rgba(0,0,0,.4)',
-      [optionsMap.stylingParams.itemEnableShadow]: false,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      itemShadowBlur: 20,
+      itemShadowSize: 10,
+      itemShadowDirection: 135,
+      itemShadowOpacityAndColor: 'rgba(0,0,0,.4)',
+      itemEnableShadow: false,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -59,17 +54,14 @@ describe('options - overlayAnimation', () => {
     driver.detach.proGallery();
   });
   it('should not have box shadow in a horizontal gallery', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
-      [optionsMap.stylingParams.itemShadowBlur]: 20,
-      [optionsMap.stylingParams.itemShadowSize]: 10,
-      [optionsMap.stylingParams.itemShadowDirection]: 135,
-      [optionsMap.stylingParams.itemShadowOpacityAndColor]: 'rgba(0,0,0,.4)',
-      [optionsMap.stylingParams.itemEnableShadow]: true,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
+      itemShadowBlur: 20,
+      itemShadowSize: 10,
+      itemShadowDirection: 135,
+      itemShadowOpacityAndColor: 'rgba(0,0,0,.4)',
+      itemEnableShadow: true,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -80,17 +72,14 @@ describe('options - overlayAnimation', () => {
   });
 
   it('should set the right "gallerySpacing"', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
-      [optionsMap.stylingParams.itemShadowBlur]: 20,
-      [optionsMap.stylingParams.itemShadowSize]: 10,
-      [optionsMap.stylingParams.itemShadowDirection]: 135,
-      [optionsMap.stylingParams.itemShadowOpacityAndColor]: 'rgba(0,0,0,.4)',
-      [optionsMap.stylingParams.itemEnableShadow]: true,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      itemShadowBlur: 20,
+      itemShadowSize: 10,
+      itemShadowDirection: 135,
+      itemShadowOpacityAndColor: 'rgba(0,0,0,.4)',
+      itemEnableShadow: true,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -101,17 +90,14 @@ describe('options - overlayAnimation', () => {
   });
 
   it('should set the correct box-shadow style to the items', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
-      [optionsMap.stylingParams.itemEnableShadow]: true,
-      [optionsMap.stylingParams.itemShadowDirection]: 100,
-      [optionsMap.stylingParams.itemShadowSize]: 20,
-      [optionsMap.stylingParams.itemShadowBlur]: 20,
-      [optionsMap.stylingParams.itemShadowOpacityAndColor]: 'rgba(0,0,0,.4)',
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      itemEnableShadow: true,
+      itemShadowDirection: 100,
+      itemShadowSize: 20,
+      itemShadowBlur: 20,
+      itemShadowOpacityAndColor: 'rgba(0,0,0,.4)',
     });
 
     driver.mount.proGallery(initialProps);

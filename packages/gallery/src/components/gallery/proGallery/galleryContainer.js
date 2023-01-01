@@ -7,7 +7,6 @@ import {
   isSEOMode,
   isPreviewMode,
   isSiteMode,
-  optionsMap,
 } from 'pro-gallery-lib';
 import { ItemsHelper } from 'pro-layouts';
 import GalleryView from './galleryView';
@@ -257,8 +256,7 @@ export class GalleryContainer extends React.Component {
     const layoutItems = this.props.structure.items;
     const isFixedHorizontlaGalleryRatio =
       this.containerInfiniteGrowthDirection() === 'horizontal' &&
-      this.state.options[optionsMap.layoutParams.structure.galleryRatio.value] >
-        0;
+      this.state.options.layoutParams.structure.galleryRatio.value > 0;
 
     const onGalleryChangeData = {
       numOfItems,

@@ -6,23 +6,11 @@ import optionsMap from '../../core/helpers/optionsMap';
 
 export default {
   title: 'Second Media Behaivour',
-  isRelevant: (options) => {
-    if (options.newSPs) {
-      return (
-        behaviourParams_item_secondaryMedia_trigger.isRelevant(options) && //NEW STYPEPARAMS METHOD need to flatten here
-        options[optionsMap.behaviourParams.item.secondaryMedia.trigger] !==
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger]
-            .OFF
-      );
-    } else {
-      return (
-        behaviourParams_item_secondaryMedia_trigger.isRelevant(options) && //NEW STYPEPARAMS METHOD need to flatten here
-        options.behaviourParams.item.secondaryMedia.trigger !==
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger]
-            .OFF
-      );
-    }
-  },
+  isRelevant: (sp) =>
+    behaviourParams_item_secondaryMedia_trigger.isRelevant(sp) && //NEW STYPEPARAMS METHOD need to flatten here
+    sp.behaviourParams.item.secondaryMedia.trigger !==
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger]
+        .OFF,
   isRelevantDescription:
     'Secondary Media Trigger is not "OFF" and when arrowsPosition is MOUSE_CURSOR there must be some space to hover (mouseCursorContainerMaxWidth less then 100)',
   type: INPUT_TYPES.OPTIONS,

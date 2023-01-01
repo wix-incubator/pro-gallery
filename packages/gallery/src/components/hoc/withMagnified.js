@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import ImageRenderer from '../item/imageRenderer';
 
 function withMagnified(WrappedComponent) {
@@ -79,11 +79,9 @@ function withMagnified(WrappedComponent) {
     getMagnifiedDimensions() {
       const {
         style: { innerHeight, innerWidth },
+        options: { behaviourParams },
       } = this.props;
-      const magnificationValue =
-        this.props.options[
-          optionsMap.behaviourParams.item.content.magnificationValue
-        ];
+      const { magnificationValue } = behaviourParams.item.content;
       return {
         magnifiedHeight: innerHeight * magnificationValue,
         magnifiedWidth: innerWidth * magnificationValue,
@@ -94,8 +92,7 @@ function withMagnified(WrappedComponent) {
       const { innerWidth, innerHeight } = style;
       const { marginTop, marginLeft } = imageDimensions;
       const { shouldMagnify, x, y } = this.state;
-      const magnificationValue =
-        options[optionsMap.behaviourParams.item.content.magnificationValue];
+      const { magnificationValue } = options.behaviourParams.item.content;
       const src = createUrl(
         GALLERY_CONSTS.urlSizes.RESIZED,
         GALLERY_CONSTS.urlTypes.HIGH_RES
@@ -130,7 +127,7 @@ function withMagnified(WrappedComponent) {
       const { createMagnifiedUrl, id, alt, options } = this.props;
       const { magnifiedWidth, magnifiedHeight } = this.getMagnifiedDimensions();
       const src = createMagnifiedUrl(
-        options[optionsMap.behaviourParams.item.content.magnificationValue]
+        options.behaviourParams.item.content.magnificationValue
       );
       return (
         <ImageRenderer

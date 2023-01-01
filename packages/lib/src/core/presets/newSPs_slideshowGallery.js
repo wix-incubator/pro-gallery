@@ -55,10 +55,6 @@ const fixToSlideshow = (options) => {
 
   presetOptions[optionsMap.layoutParams.structure.scatter.manualScatter] = '';
   presetOptions[optionsMap.layoutParams.structure.itemSpacing] = 0;
-
-  //layouter direct API
-  presetOptions.fixedColumns = 1;
-  //layouter direct API
   return presetOptions;
 };
 export const fixedOptions = fixToSlideshow({});
@@ -66,7 +62,7 @@ export const fixedOptions = fixToSlideshow({});
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToSlideshow(res);
-  res.targetItemSize = calcTargetItemSize(res);
+  res[optionsMap.layoutParams.targetItemSize.value] = calcTargetItemSize(res);
   res = removeBordersIfNeeded(res);
   return res;
 };

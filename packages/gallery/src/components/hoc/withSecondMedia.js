@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 const withSecondaryMedia = (WrappedComponent) => {
   return (props) => {
@@ -10,9 +10,8 @@ const withSecondaryMedia = (WrappedComponent) => {
       secondaryMediaItem,
     } = props;
     if (
-      props.options[optionsMap.behaviourParams.item.secondaryMedia.trigger] ===
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger]
-          .OFF ||
+      props.options.behaviourParams.item.secondaryMedia.trigger ===
+        GALLERY_CONSTS.secondaryMediaTrigger.OFF ||
       !hasSecondaryMedia
     ) {
       return <WrappedComponent {...props} />;

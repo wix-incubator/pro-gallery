@@ -64,7 +64,6 @@ export interface Overlay {
   size?: number;
   sizeUnits?: 'PIXEL' | 'PERCENT';
   padding?: number;
-  backgroundColor?: any;
 }
 
 export interface Content {

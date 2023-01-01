@@ -1,6 +1,6 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -17,17 +17,12 @@ describe('imageInfoType - e2e', () => {
   });
   it('should apply styles to image only (imageInfoType = "NO_BACKGROUND")', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.info.layout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.layout].NO_BACKGROUND,
-      [optionsMap.stylingParams.itemBorderWidth]: 5,
-      [optionsMap.layoutParams.info.border.width]: 5,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      imageInfoType: GALLERY_CONSTS.infoType.NO_BACKGROUND,
+      itemBorderWidth: 5,
+      textBoxBorderWidth: 5,
+      titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -36,17 +31,12 @@ describe('imageInfoType - e2e', () => {
   });
   it('should attach texts and image and apply styles to both as one container (imageInfoType = "ATTACHED_BACKGROUND")', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.info.layout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.layout].ATTACHED_BACKGROUND,
-      [optionsMap.stylingParams.itemBorderWidth]: 5,
-      [optionsMap.layoutParams.info.border.width]: 5,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      imageInfoType: GALLERY_CONSTS.infoType.ATTACHED_BACKGROUND,
+      itemBorderWidth: 5,
+      textBoxBorderWidth: 5,
+      titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -55,18 +45,12 @@ describe('imageInfoType - e2e', () => {
   });
   it('should separate texts and image (imageInfoType = "SEPARATED_BACKGROUND")', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.info.layout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.layout]
-          .SEPARATED_BACKGROUND,
-      [optionsMap.stylingParams.itemBorderWidth]: 5,
-      [optionsMap.layoutParams.info.border.width]: 5,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      imageInfoType: GALLERY_CONSTS.infoType.SEPARATED_BACKGROUND,
+      itemBorderWidth: 5,
+      textBoxBorderWidth: 5,
+      titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -75,17 +59,12 @@ describe('imageInfoType - e2e', () => {
   });
   it('should not show styles to texts and image (imageInfoType = "SEPARATED_BACKGROUND")', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.info.layout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.layout].DONT_SHOW,
-      [optionsMap.stylingParams.itemBorderWidth]: 5,
-      [optionsMap.layoutParams.info.border.width]: 5,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      imageInfoType: GALLERY_CONSTS.infoType.DONT_SHOW,
+      itemBorderWidth: 5,
+      textBoxBorderWidth: 5,
+      titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { utils, GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { utils, GALLERY_CONSTS } from 'pro-gallery-lib';
 import { ARROWS_DATA } from '../svgs';
 
 const getArrowsSizeData = ({
@@ -83,21 +83,18 @@ export const getArrowsRenderData = (arrowsDataRelevantArgs) => {
 
 // Function that checks if the nav arrows parent-container is large enough for them
 const arrowsWillFitPosition = (arrowsWillFitPositionRelevantArgs) => {
-  const { arrowsVerticalPosition, textBoxHeight, arrowsSize } =
+  const { arrowsVerticalPosition, textBoxHeight, arrowsSize, layoutParams } =
     arrowsWillFitPositionRelevantArgs.options;
-  const { options } = arrowsWillFitPositionRelevantArgs;
   const { height } = arrowsWillFitPositionRelevantArgs.container;
   const { customNavArrowsRenderer } = arrowsWillFitPositionRelevantArgs;
   // Calc of Nav arrows container's height
-  const arrowData = getArrowIconData(
-    options[optionsMap.layoutParams.navigationArrows.type]
-  );
+  const arrowData = getArrowIconData(layoutParams.navigationArrows.type);
   const { navArrowsContainerHeight } = getArrowsSizeData({
     customNavArrowsRenderer,
     arrowsSize,
     svgData: arrowData,
     containerStyleType:
-      options[optionsMap.layoutParams.navigationArrows.container.type],
+      layoutParams.navigationArrows.container.containerStyleType,
   });
   const infoHeight = textBoxHeight;
   const parentHeightByVerticalPosition = {

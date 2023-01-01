@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
 
@@ -17,10 +17,9 @@ describe('minItemSize - e2e', () => {
   });
   it('minimum item size of 120', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].COLLAGE,
-      [optionsMap.layoutParams.targetItemSize.minimum]: 120,
-      [optionsMap.layoutParams.groups.groupSize]: 3,
+      galleryLayout: GALLERY_CONSTS.layout.COLLAGE,
+      minItemSize: 120,
+      groupSize: 3,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -29,10 +28,9 @@ describe('minItemSize - e2e', () => {
   });
   it('minimum item size of 400', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].COLLAGE,
-      [optionsMap.layoutParams.targetItemSize.minimum]: 400,
-      [optionsMap.layoutParams.groups.groupSize]: 3,
+      galleryLayout: GALLERY_CONSTS.layout.COLLAGE,
+      minItemSize: 400,
+      groupSize: 3,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);

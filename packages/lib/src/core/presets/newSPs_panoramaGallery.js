@@ -28,10 +28,6 @@ const fixToPanorama = (options) => {
   ] = false;
   presetOptions[optionsMap.layoutParams.crop.cropOnlyFill] = false;
   presetOptions[optionsMap.behaviourParams.gallery.horizontal.loop] = false;
-
-  //layouter direct API
-  presetOptions.fixedColumns = 1;
-  //layouter direct API
   return presetOptions;
 };
 export const fixedOptions = fixToPanorama({});
@@ -39,6 +35,6 @@ export const fixedOptions = fixToPanorama({});
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToPanorama(res);
-  res.targetItemSize = calcTargetItemSize(res);
+  res[optionsMap.layoutParams.targetItemSize.value] = calcTargetItemSize(res);
   return res;
 };

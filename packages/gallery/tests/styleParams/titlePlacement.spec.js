@@ -1,6 +1,7 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container, customComponents } from '../drivers/mocks/styles';
 
@@ -19,14 +20,11 @@ describe('options - titlePlacement', () => {
   });
 
   it('should place texts below images when "titlePlacement" is "SHOW_BELOW"', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: 2,
+      onRow: false,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      titlePlacement: GALLERY_CONSTS.placements.SHOW_BELOW,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -35,14 +33,11 @@ describe('options - titlePlacement', () => {
     driver.detach.proGallery();
   });
   it('should place texts above images when "titlePlacement" is "SHOW_ABOVE"', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].ABOVE,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: 2,
+      onRow: false,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      titlePlacement: GALLERY_CONSTS.placements.SHOW_ABOVE,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -51,14 +46,11 @@ describe('options - titlePlacement', () => {
     driver.detach.proGallery();
   });
   it('should render hover when "titlePlacement" is "SHOW_ON_HOVER"', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: 2,
+      onRow: false,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      titlePlacement: GALLERY_CONSTS.placements.SHOW_ON_HOVER,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

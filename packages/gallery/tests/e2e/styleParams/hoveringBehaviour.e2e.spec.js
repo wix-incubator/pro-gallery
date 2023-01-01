@@ -1,6 +1,6 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -17,12 +17,8 @@ describe('hoveringBehaviour - e2e', () => {
   });
   it('should show hover container on hover event when "hoveringBehaviour" is "APPEAR', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].APPEARS,
+      galleryLayout: 2,
+      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.actions.hover('item-container')[0];
@@ -32,12 +28,8 @@ describe('hoveringBehaviour - e2e', () => {
   });
   it('should make hover state disapear on hover (reverse-hover) when "hoveringBehaviour" is "DISAPPEARS', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].DISAPPEARS,
+      galleryLayout: 2,
+      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.DISAPPEARS,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.actions.hover('item-container')[0];
@@ -47,12 +39,8 @@ describe('hoveringBehaviour - e2e', () => {
   });
   it('should set all items in constant hover state when "hoveringBehaviour" is "NO_CHANGE"', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].ALWAYS_SHOW,
+      galleryLayout: 2,
+      hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NO_CHANGE,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.actions.hover('item-container')[0];
