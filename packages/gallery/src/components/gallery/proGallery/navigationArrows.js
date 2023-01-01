@@ -1,6 +1,6 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom';
-import { GALLERY_CONSTS, utils, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import { ArrowFollower } from '../../helpers/mouseCursorPosition';
 import {
   getArrowBoxStyle,
@@ -16,21 +16,23 @@ export function NavigationArrows({
   next,
   id,
 }) {
-  const itemSpacing = options[optionsMap.layoutParams.structure.itemSpacing];
-  const isRTL =
-    options[optionsMap.behaviourParams.gallery.layoutDirection] ===
-    GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-      .RIGHT_TO_LEFT;
-  const arrowsPosition =
-    options[optionsMap.layoutParams.navigationArrows.position];
-  const arrowsPadding =
-    options[optionsMap.layoutParams.navigationArrows.padding];
-  const scrollDirection =
-    options[optionsMap.layoutParams.structure.scrollDirection];
-  const mouseCursorContainerMaxWidth =
-    options[
-      optionsMap.layoutParams.navigationArrows.mouseCursorContainerMaxWidth
-    ];
+  const {
+    isRTL,
+    scrollDirection,
+    imageMargin,
+    arrowsPadding,
+    arrowsPosition,
+    arrowsVerticalPosition,
+    layoutParams,
+    titlePlacement,
+    textBoxHeight,
+    arrowsColor,
+    arrowsSize,
+  } = options;
+  const {
+    container: { type, backgroundColor, borderRadius },
+    mouseCursorContainerMaxWidth,
+  } = layoutParams.navigationArrows;
 
   const {
     arrowRenderer: renderArrowSvg,
@@ -38,58 +40,42 @@ export function NavigationArrows({
     navArrowsContainerHeight,
   } = getArrowsRenderData({
     customNavArrowsRenderer,
-    arrowsColor: options[optionsMap.stylingParams.arrowsColor], //v5 TODO - get this in the nav arrows options
-    arrowsSize: options[optionsMap.layoutParams.navigationArrows.size],
-    arrowsType: options[optionsMap.layoutParams.navigationArrows.type],
-    containerStyleType:
-      options[optionsMap.layoutParams.navigationArrows.container.type],
+    arrowsColor: arrowsColor,
+    arrowsSize: arrowsSize,
+    arrowsType: layoutParams.navigationArrows.type,
+    containerStyleType: type,
   });
   const mouseCursorEnabled =
-    arrowsPosition ===
-    GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
-      .MOUSE_CURSOR;
+    arrowsPosition === GALLERY_CONSTS.arrowsPosition.MOUSE_CURSOR;
 
   const { galleryHeight } = container;
   const { galleryWidth } = container;
-  const infoHeight = options[optionsMap.layoutParams.info.height];
+  const infoHeight = textBoxHeight;
   const imageHeight = galleryHeight - infoHeight;
 
-  // the nav arrows parent container top edge is itemSpacing/2 ABOVE the actual view, that calculates the middle point of gallery
-  const galleryVerticalCenter = `50% + ${itemSpacing / 4}px`;
+  // the nav arrows parent container top edge is imageMargin/2 ABOVE the actual view, that calculates the middle point of gallery
+  const galleryVerticalCenter = `50% + ${imageMargin / 4}px`;
 
   // Determines the direction fix, the direction in which we move the nav arrows 'vertical position fix' pixels
   let directionFix;
-  if (
-    GALLERY_CONSTS.hasExternalAbovePlacement(
-      options[optionsMap.layoutParams.info.placement]
-    )
-  ) {
+  if (GALLERY_CONSTS.hasExternalAbovePlacement(titlePlacement)) {
     directionFix = -1;
-  } else if (
-    GALLERY_CONSTS.hasExternalBelowPlacement(
-      options[optionsMap.layoutParams.info.placement]
-    )
-  ) {
+  } else if (GALLERY_CONSTS.hasExternalBelowPlacement(titlePlacement)) {
     directionFix = 1;
   } else {
     // if we got here, we should be ITEM_CENTER, taken care of in layoutHelper.ts
   }
   const verticalPositionFix = {
-    [GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
-      .ITEM_CENTER]: 0,
-    [GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
-      .IMAGE_CENTER]: infoHeight * directionFix,
-    [GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
-      .INFO_CENTER]: -imageHeight * directionFix,
-  }[options[optionsMap.layoutParams.navigationArrows.verticalAlignment]];
+    [GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER]: 0,
+    [GALLERY_CONSTS.arrowsVerticalPosition.IMAGE_CENTER]:
+      infoHeight * directionFix,
+    [GALLERY_CONSTS.arrowsVerticalPosition.INFO_CENTER]:
+      -imageHeight * directionFix,
+  }[arrowsVerticalPosition];
   const arrowBoxStyle = getArrowBoxStyle({
-    type: options[optionsMap.layoutParams.navigationArrows.container.type],
-    backgroundColor:
-      options[
-        optionsMap.layoutParams.navigationArrows.container.backgroundColor
-      ],
-    borderRadius:
-      options[optionsMap.layoutParams.navigationArrows.container.borderRadius],
+    type,
+    backgroundColor,
+    borderRadius,
   });
   const containerStyle = mouseCursorEnabled
     ? {
@@ -112,23 +98,17 @@ export function NavigationArrows({
       };
 
   const arrowsPos =
-    scrollDirection ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-        .HORIZONTAL &&
-    arrowsPosition ===
-      GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
-        .OUTSIDE_GALLERY
+    scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+    arrowsPosition === GALLERY_CONSTS.arrowsPosition.OUTSIDE_GALLERY
       ? `-${20 + navArrowsContainerWidth}px`
-      : `${itemSpacing / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
-  // itemSpacing effect the margin of the main div ('pro-gallery-parent-container') that SlideshowView is rendering, so the arrows should be places accordingly
+      : `${imageMargin / 2 + (arrowsPadding ? arrowsPadding : 0)}px`;
+  // imageMargin effect the margin of the main div ('pro-gallery-parent-container') that SlideshowView is rendering, so the arrows should be places accordingly
   // arrowsPadding relevant only for arrowsPosition.ON_GALLERY
 
   const prevContainerStyle = { left: mouseCursorEnabled ? 0 : arrowsPos };
   const nextContainerStyle = { right: mouseCursorEnabled ? 0 : arrowsPos };
 
-  const useDropShadow =
-    options[optionsMap.layoutParams.navigationArrows.container.type] ===
-    GALLERY_CONSTS.arrowsContainerStyleType.SHADOW;
+  const useDropShadow = type === GALLERY_CONSTS.arrowsContainerStyleType.SHADOW;
   const arrowsBaseClasses = [
     'nav-arrows-container',
     useDropShadow ? 'drop-shadow' : '',

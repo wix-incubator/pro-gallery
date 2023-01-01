@@ -1,6 +1,6 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -16,25 +16,20 @@ describe('imageHoverAnimation - e2e', () => {
     await driver.closePage();
   });
 
-  Object.values(
-    GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
-  ).forEach((animationType) => {
-    it(`should have "${animationType}" animation`, async () => {
-      await driver.navigate({
-        [optionsMap.layoutParams.structure.galleryLayout]:
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-            .THUMBNAIL,
-        [optionsMap.behaviourParams.item.content.hoverAnimation]: animationType,
-        [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-          ].NEVER_SHOW,
+  Object.values(GALLERY_CONSTS.imageHoverAnimations).forEach(
+    (animationType) => {
+      it(`should have "${animationType}" animation`, async () => {
+        await driver.navigate({
+          galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
+          imageHoverAnimation: animationType,
+          hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.NEVER_SHOW,
+        });
+        await driver.waitFor.hookToBeVisible('item-container');
+        await driver.actions.hover('item-container')[0];
+        await driver.waitFor.timer(3000);
+        const page = await driver.grab.elemScreenshot('.pro-gallery');
+        expect(page).toMatchImageSnapshot();
       });
-      await driver.waitFor.hookToBeVisible('item-container');
-      await driver.actions.hover('item-container')[0];
-      await driver.waitFor.timer(3000);
-      const page = await driver.grab.elemScreenshot('.pro-gallery');
-      expect(page).toMatchImageSnapshot();
-    });
-  });
+    }
+  );
 });

@@ -18,22 +18,13 @@ import {
   reverseBooleans,
 } from './migratorStore';
 
-function extendNestedOptionsToIncludeOldAndNew(
-  nestedOptions,
-  allowMigratingOldToNewInNewSPs = false
-) {
+function extendNestedOptionsToIncludeOldAndNew(nestedOptions) {
   let flatOptions = flattenObject(nestedOptions);
-  let populatedFlatOptions = addOldOptions(
-    addMigratedOptions(flatOptions, allowMigratingOldToNewInNewSPs)
-  );
-  return { ...flatToNested(populatedFlatOptions), ...populatedFlatOptions };
+  let populatedFlatOptions = addOldOptions(addMigratedOptions(flatOptions));
+  return flatToNested(populatedFlatOptions);
 }
 
-function addMigratedOptions(
-  flatOptions,
-  allowMigratingOldToNewInNewSPs = false
-) {
-  if (flatOptions.newSPs && !allowMigratingOldToNewInNewSPs) return flatOptions; // do not convert old to new. new is king
+function addMigratedOptions(flatOptions) {
   const flat_migrated = migrateOptions(flatOptions);
   let flat_combinedOptions = {
     ...trimUndefinedValues_flat(flat_migrated),
@@ -88,6 +79,7 @@ function migrateOptions(flatOptionsObject) {
   migratedOptions = changeNames(migratedOptions, nameChangedStylingParams);
   delete migratedOptions.enableLeanGallery;
   delete migratedOptions.fullscreen;
+  delete migratedOptions.magicLayoutSeed;
   return migratedOptions;
 }
 
@@ -228,8 +220,8 @@ function process_old_to_new_gallerySpacing(obj) {
   }
   let _obj = obj;
   let spacingVal;
-  if (_obj['layoutParams_gallerySpacing'] >= 0) {
-    spacingVal = _obj['layoutParams_gallerySpacing'];
+  if (_obj['layoutParams.gallerySpacing'] >= 0) {
+    spacingVal = _obj['layoutParams.gallerySpacing'];
   } else if (_obj['galleryMargin'] >= 0) {
     spacingVal = _obj['galleryMargin'];
   }
@@ -471,11 +463,11 @@ function process_old_to_new_OverlayHoveringBehaviour(obj) {
   switch (_obj[optionsMap.behaviourParams.item.overlay.hoveringBehaviour]) {
     case 'NO_CHANGE':
       _obj[optionsMap.behaviourParams.item.overlay.hoveringBehaviour] =
-        'ALWAYS_SHOW';
+        'ALWAYS_VISIBLE';
       break;
     case 'NEVER_SHOW':
       _obj[optionsMap.behaviourParams.item.overlay.hoveringBehaviour] =
-        'NEVER_SHOW';
+        'NEVER_VISIBLE';
       break;
     default:
       break;
@@ -641,10 +633,17 @@ function process_old_to_new_NumberOfColumns(obj) {
     return obj;
   }
   let _obj = obj;
+  const fixedColumns = obj['fixedColumns'];
   const numberOfImagesPerRow = obj['numberOfImagesPerRow'];
-  const finalVal = numberOfImagesPerRow >= 0 ? numberOfImagesPerRow : undefined;
+  const finalVal =
+    numberOfImagesPerRow >= 0
+      ? numberOfImagesPerRow
+      : fixedColumns >= 0
+      ? fixedColumns
+      : undefined;
 
   _obj[optionsMap.layoutParams.structure.numberOfColumns] = finalVal;
+  delete _obj['fixedColumns'];
   delete _obj['numberOfImagesPerRow'];
   return _obj;
 }

@@ -1,37 +1,28 @@
-import optionsMap from '../core/helpers/optionsMap';
 import GALLERY_CONSTS from './constants';
-import { flattenObject } from '../core/helpers/optionsUtils';
-const defaultV4Options = {
+
+const defaultOptions = {
   layoutParams: {
     crop: {
       ratios: [1], // determine the ratio of the images when using grid (use 1 for squares grid)
-      method: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
+      method: 'FILL',
       enable: false,
       enableSmartCrop: false,
       cropOnlyFill: false,
-      alignment: GALLERY_CONSTS[optionsMap.layoutParams.crop.alignment].CENTER,
+      alignment: 'CENTER',
     },
     structure: {
       galleryLayout: -1,
-      galleryRatio: { value: 0, includeExternalInfo: false },
-      scrollDirection:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+      scrollDirection: 'VERTICAL', //TODO, create and use use NEW_CONSTS
       gallerySpacing: 0,
       itemSpacing: 10,
       enableStreching: true,
-      responsiveMode:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
-          .FIT_TO_SCREEN,
+      responsiveMode: 'FIT_TO_SCREEN',
       scatter: {
         randomScatter: 0,
         manualScatter: '',
       },
-      layoutOrientation:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-          .HORIZONTAL,
-      groupsOrder:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.groupsOrder].BY_HEIGHT,
+      layoutOrientation: 'HORIZONTAL', //TODO, create and use use NEW_CONSTS
+      groupsOrder: 'BY_HEIGHT', //TODO, create and use use NEW_CON
       numberOfGridRows: 1,
       numberOfColumns: 3,
       columnRatios: [],
@@ -42,59 +33,41 @@ const defaultV4Options = {
       numberOfGroupsPerRow: 0,
       density: 0.8,
       groupSize: 3,
-      allowedGroupTypes: [
-        GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['1'],
-        GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['2h'],
-        GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['2v'],
-        GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['3t'],
-        GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['3b'],
-        GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['3l'],
-        GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['3r'],
-      ],
+      allowedGroupTypes: ['1', '2h', '2v', '3t', '3b', '3l', '3r'],
       repeatingGroupTypes: [],
     },
     thumbnails: {
       size: 120,
       spacing: 4,
       enable: false,
-      position: GALLERY_CONSTS.thumbnailsPosition.OUTSIDE_GALLERY,
-      alignment:
-        GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM,
+      alignment: 'BOTTOM', //TODO, create and use use NEW_CONSTS
     },
     navigationArrows: {
       enable: true,
-      position:
-        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
-          .ON_GALLERY,
+      position: 'ON_GALLERY', //TODO, create and use use NEW_CONSTS
       padding: 23,
       size: 23,
-      verticalAlignment:
-        GALLERY_CONSTS[
-          optionsMap.layoutParams.navigationArrows.verticalAlignment
-        ].ITEM_CENTER,
-      type: GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.type]
-        .DEFAULT_ARROW,
+      verticalAlignment: GALLERY_CONSTS.arrowsVerticalPosition.ITEM_CENTER,
+      type: GALLERY_CONSTS.arrowsType.DEFAULT_ARROW,
       container: {
-        type: GALLERY_CONSTS[
-          optionsMap.layoutParams.navigationArrows.container.type
-        ].SHADOW,
+        type: GALLERY_CONSTS.arrowsContainerStyleType.SHADOW,
         backgroundColor: 'rgba(0,0,0,0)',
         borderRadius: 0,
       },
     },
     targetItemSize: {
-      unit: GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].SMART,
+      unit: 'SMART',
       value: 30,
       minimum: 120,
     },
     info: {
-      sizeUnits: GALLERY_CONSTS[optionsMap.layoutParams.info.sizeUnits].PERCENT,
+      sizeUnits: GALLERY_CONSTS.textBoxWidthCalculationOptions.PERCENT,
       width: 50,
       height: 200,
       spacing: 10,
-      layout: GALLERY_CONSTS[optionsMap.layoutParams.info.layout].NO_BACKGROUND,
+      layout: GALLERY_CONSTS.infoType.NO_BACKGROUND,
       // widthByPercent: 50, //I want this to be in the width just like we did the overlaySize
-      placement: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
+      placement: 'OVERLAY', //TODO, create and use use consts
       border: {
         width: 0,
         radius: 0,
@@ -104,12 +77,9 @@ const defaultV4Options = {
   },
   behaviourParams: {
     item: {
-      clickAction:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING,
+      clickAction: 'NOTHING', //TODO, create and use use NEW_CONSTS
       video: {
-        playTrigger:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
-            .HOVER,
+        playTrigger: 'HOVER',
         loop: true,
         volume: 0,
         enableControls: false,
@@ -118,75 +88,40 @@ const defaultV4Options = {
         enablePlaceholder: true,
       },
       overlay: {
-        hoveringBehaviour:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-          ].APPEARS,
-        hoverAnimation:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
-            .NO_EFFECT,
-        position:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.position].LEFT,
+        hoveringBehaviour: GALLERY_CONSTS.infoBehaviourOnHover.APPEARS,
+        hoverAnimation: GALLERY_CONSTS.overlayAnimations.NO_EFFECT,
+        position: GALLERY_CONSTS.overlayPositions.LEFT,
         size: 100,
-        sizeUnits:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.sizeUnits]
-            .PERCENT,
+        sizeUnits: GALLERY_CONSTS.overlaySizeType.PERCENT,
         padding: 0,
       },
       content: {
-        hoverAnimation:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
-            .NO_EFFECT,
-        loader:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader].BLUR,
-        placementAnimation:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.item.content.placementAnimation
-          ].NO_EFFECT,
+        hoverAnimation: GALLERY_CONSTS.imageHoverAnimations.NO_EFFECT,
+        loader: GALLERY_CONSTS.loadingMode.BLUR,
+        placementAnimation: GALLERY_CONSTS.imagePlacementAnimations.NO_EFFECT,
         magnificationValue: 2,
-      },
-      secondaryMedia: {
-        trigger: GALLERY_CONSTS.secondaryMediaTrigger.OFF,
-        behaviour: GALLERY_CONSTS.secondaryMediaBehaviour.APPEARS,
       },
     },
     gallery: {
-      blockContextMenu: true, //is this actually a default??
-      layoutDirection:
-        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-          .LEFT_TO_RIGHT,
-      scrollAnimation:
-        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation]
-          .NO_EFFECT,
+      blockContextMenu: true,
+      layoutDirection: 'LEFT_TO_RIGHT', //TODO, create and use use consts
+      scrollAnimation: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
       enableIndexingShareLinks: true,
       horizontal: {
         enableScrollSnap: false,
         navigationDuration: 400,
         blockScroll: false,
         loop: false,
-        slideTransition:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.gallery.horizontal.slideTransition
-          ].EASE,
-        slideAnimation:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.gallery.horizontal.slideAnimation
-          ].SCROLL,
+        slideTransition: GALLERY_CONSTS.slideTransition.ease,
+        slideAnimation: GALLERY_CONSTS.slideAnimations.SCROLL,
         autoSlide: {
-          behaviour:
-            GALLERY_CONSTS[
-              optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-            ].OFF,
+          behaviour: 'OFF',
           interval: 4,
           pauseOnHover: true,
           speed: 200,
         },
         slideshowInfo: {
-          buttonsAlignment:
-            GALLERY_CONSTS[
-              optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
-                .buttonsAlignment
-            ].CENTER,
+          buttonsAlignment: 'CENTER',
           enablePlayButton: false,
           enableCounter: false,
         },
@@ -195,10 +130,7 @@ const defaultV4Options = {
         loadMore: {
           enable: false,
           text: '',
-          amount:
-            GALLERY_CONSTS[
-              optionsMap.behaviourParams.gallery.vertical.loadMore.amount
-            ].ALL,
+          amount: 'ALL',
         },
       },
     },
@@ -207,17 +139,12 @@ const defaultV4Options = {
     itemBorderWidth: 0,
     itemBorderRadius: 0,
     itemEnableShadow: false,
-    itemBorderColor: '',
     itemShadowBlur: 20,
     itemShadowDirection: 135,
     itemShadowSize: 10,
     itemShadowOpacityAndColor: '',
     arrowsColor: '',
   },
-  //layouter API params
-  magicLayoutSeed: 1,
-  fixedColumns: 0, // determine the number of columns regardless of the screen size (use 0 to ignore)
 };
 
-export default defaultV4Options;
-export const flatV4DefaultOptions = flattenObject(defaultV4Options);
+export default defaultOptions;

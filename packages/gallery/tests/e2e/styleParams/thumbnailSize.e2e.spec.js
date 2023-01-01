@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
 
@@ -17,10 +17,8 @@ describe('thumbnailSize - e2e', () => {
   });
   it('should set thumbnailSize to 100', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
-      [optionsMap.layoutParams.thumbnails.size]: 100,
+      galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
+      thumbnailSize: 100,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -29,10 +27,8 @@ describe('thumbnailSize - e2e', () => {
   });
   it('should set thumbnailSize to 300', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
-      [optionsMap.layoutParams.thumbnails.size]: 300,
+      galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
+      thumbnailSize: 300,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);

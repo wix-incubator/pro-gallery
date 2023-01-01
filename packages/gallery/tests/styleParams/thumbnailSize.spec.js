@@ -1,6 +1,7 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -16,11 +17,9 @@ describe('options - thumbnailSize', () => {
     };
   });
   it('should "thumbnailSize" of "300"', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
-      [optionsMap.layoutParams.thumbnails.size]: 300,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
+      thumbnailSize: 300,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -30,11 +29,9 @@ describe('options - thumbnailSize', () => {
     driver.detach.proGallery();
   });
   it('should "thumbnailSize" of "150"', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
-      [optionsMap.layoutParams.thumbnails.size]: 150,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
+      thumbnailSize: 150,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -44,14 +41,11 @@ describe('options - thumbnailSize', () => {
     driver.detach.proGallery();
   });
   it('should set the gallery height for thumbnailSize=300', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
-      [optionsMap.layoutParams.thumbnails.size]: 300,
-      [optionsMap.layoutParams.thumbnails.spacing]: 10,
-      [optionsMap.layoutParams.thumbnails.alignment]:
-        GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
+      thumbnailSize: 300,
+      thumbnailSpacings: 10,
+      galleryThumbnailsAlignment: 'bottom',
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -63,14 +57,11 @@ describe('options - thumbnailSize', () => {
   });
 
   it('should set the gallery width for thumbnailSize=300', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
-      [optionsMap.layoutParams.thumbnails.size]: 300,
-      [optionsMap.layoutParams.thumbnails.spacing]: 10,
-      [optionsMap.layoutParams.thumbnails.alignment]:
-        GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.THUMBNAIL,
+      thumbnailSize: 300,
+      thumbnailSpacings: 10,
+      galleryThumbnailsAlignment: 'left',
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

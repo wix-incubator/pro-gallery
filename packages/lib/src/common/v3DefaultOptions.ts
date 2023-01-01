@@ -2,15 +2,6 @@ import GALLERY_CONSTS from './constants';
 
 const v3DefaultOptions = {
   layoutParams: {
-    structure: {
-      galleryRatio: {
-        includeExternalInfo: false,
-        value: 0,
-      },
-    },
-    thumbnails: {
-      position: 'OUTSIDE_GALLERY',
-    },
     gallerySpacing: 0,
     cropRatio: 1, // determine the ratio of the images when using grid (use 1 for squares grid)
     repeatingGroupTypes: '',
@@ -20,14 +11,6 @@ const v3DefaultOptions = {
         type: GALLERY_CONSTS.arrowsContainerStyleType.SHADOW,
         backgroundColor: 'rgba(0,0,0,0)',
         borderRadius: 0,
-      },
-    },
-  },
-  behaviourParams: {
-    item: {
-      secondaryMedia: {
-        behaviour: 'APPEARS',
-        trigger: 'OFF',
       },
     },
   },
@@ -41,7 +24,6 @@ const v3DefaultOptions = {
   itemShadowOpacityAndColor: '',
   arrowsColor: '',
   textBoxBorderColor: '',
-  itemBorderColor: '',
   allowContextMenu: false,
   showVideoPlayButton: false,
   gallerySize: 30,
@@ -133,6 +115,5 @@ const v3DefaultOptions = {
   autoSlideshowContinuousSpeed: 200,
   //duplicated from lib
   magnificationLevel: 2,
-  magicLayoutSeed: 1,
 };
 export default v3DefaultOptions;

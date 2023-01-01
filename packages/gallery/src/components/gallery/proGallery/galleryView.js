@@ -1,5 +1,5 @@
 import React from 'react';
-import { window, utils, GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { window, utils, GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDebugMessage from './galleryDebugMessage';
 import itemView from '../../item/itemView.js';
 import { getItemsInViewportOrMarginByScrollLocation } from '../../helpers/virtualization';
@@ -41,13 +41,7 @@ class GalleryView extends React.Component {
         case 37: //left
           newIdx = findNeighborItem(
             idx,
-            this.props.options[
-              optionsMap.behaviourParams.gallery.layoutDirection
-            ] ===
-              GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-                .RIGHT_TO_LEFT
-              ? 'right'
-              : 'left'
+            this.props.options.isRTL ? 'right' : 'left'
           );
           break;
         case 40: //down
@@ -66,13 +60,7 @@ class GalleryView extends React.Component {
         case 39: //right
           newIdx = findNeighborItem(
             idx,
-            this.props.options[
-              optionsMap.behaviourParams.gallery.layoutDirection
-            ] ===
-              GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-                .RIGHT_TO_LEFT
-              ? 'left'
-              : 'right'
+            this.props.options.isRTL ? 'left' : 'right'
           );
           break;
         case 27: //esc
@@ -162,8 +150,7 @@ class GalleryView extends React.Component {
     }
     const galleryWidth = this.props.isPrerenderMode
       ? 'auto'
-      : this.props.container.galleryWidth -
-        options[optionsMap.layoutParams.structure.itemSpacing];
+      : this.props.container.galleryWidth - options.imageMargin;
 
     const items = getVisibleItems(galleryStructure.galleryItems, container);
     const itemsWithVirtualizationData =
@@ -196,17 +183,11 @@ class GalleryView extends React.Component {
         id={this.props.galleryContainerId}
         className={
           'pro-gallery inline-styles ' +
-          (options[optionsMap.layoutParams.structure.scrollDirection] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-            .HORIZONTAL
+          (options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
             ? ' one-row slider hide-scrollbars '
             : '') +
           (settings?.isAccessible ? ' accessible ' : '') +
-          (options[optionsMap.behaviourParams.gallery.layoutDirection] ===
-          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-            .RIGHT_TO_LEFT
-            ? ' rtl '
-            : ' ltr ')
+          (options.isRTL ? ' rtl ' : ' ltr ')
         }
         style={{
           height: galleryHeight,
@@ -219,11 +200,7 @@ class GalleryView extends React.Component {
           id={`pro-gallery-margin-container-${this.props.id}`}
           className={'pro-gallery-margin-container'}
           style={{
-            margin:
-              (this.props.options.galleryMargin ||
-                this.props.options[
-                  optionsMap.layoutParams.structure.gallerySpacing
-                ]) + 'px',
+            margin: options.layoutParams.gallerySpacing + 'px',
             height: galleryHeight,
             width: galleryWidth,
             overflow: 'visible',
@@ -291,9 +268,7 @@ class GalleryView extends React.Component {
       this.props.galleryStructure.height > this.props.container.height;
 
     if (shouldShowButton) {
-      const buttonText =
-        options[optionsMap.behaviourParams.gallery.vertical.loadMore.text] ||
-        'Load More';
+      const buttonText = options.loadMoreButtonText || 'Load More';
       showMoreButton = (
         <div
           className={

@@ -2,22 +2,13 @@ import { Layouter, ItemsHelper } from 'pro-layouts';
 import {
   populateWithDefaultOptions,
   addPresetOptions,
-  newSPs_processLayouts,
   dimensionsHelper,
-  newSPs_dimensionsHelper,
   processLayouts,
-  utils,
+  GALLERY_CONSTS,
   extendNestedOptionsToIncludeOldAndNew,
 } from 'pro-gallery-lib';
 
 class Blueprints {
-  getProcessLayoutsFunc(newSPs) {
-    if (newSPs) {
-      return newSPs_processLayouts;
-    } else {
-      return processLayouts;
-    }
-  }
   createBlueprint({
     params,
     lastParams,
@@ -97,9 +88,10 @@ class Blueprints {
         existingBlueprint.structure = structure;
 
         // if its an infinite gallery - let the container loose
-        const isInfinite = utils.isHeightSetByGallery(
-          existingBlueprint.options
-        );
+        const isInfinite =
+          existingBlueprint.options.scrollDirection ===
+            GALLERY_CONSTS.scrollDirection.VERTICAL &&
+          existingBlueprint.options.enableInfiniteScroll;
         if (isInfinite) {
           existingBlueprint.container.height =
             existingBlueprint.container.galleryHeight = structure.height;
@@ -273,7 +265,7 @@ class Blueprints {
         mergedOldAndNewStyles
       ); //add default for any undefined option
       formattedOptions = extendNestedOptionsToIncludeOldAndNew(
-        this.getProcessLayoutsFunc(fullOptionsOverDefualts.newSPs)(
+        processLayouts(
           addPresetOptions(fullOptionsOverDefualts),
           isUsingCustomInfoElements
         )
@@ -305,10 +297,13 @@ class Blueprints {
         return false; // no new continainer
       }
       const containerHasChanged = {
-        height: utils.isHeightSetByGallery(formattedOptions) // height doesnt matter if the new gallery is going to be vertical
-          ? false
-          : !!newContainerParams.height &&
-            newContainerParams.height !== oldContainerParams.height,
+        height:
+          formattedOptions.scrollDirection ===
+            GALLERY_CONSTS.scrollDirection.VERTICAL &&
+          formattedOptions.enableInfiniteScroll // height doesnt matter if the new gallery is going to be vertical
+            ? false
+            : !!newContainerParams.height &&
+              newContainerParams.height !== oldContainerParams.height,
         width:
           !oldContainerParams ||
           (!!newContainerParams.width &&
@@ -334,29 +329,16 @@ class Blueprints {
         oldOptions,
       })
     ) {
-      if (formattedOptions.newSPs) {
-        newSPs_dimensionsHelper.updateParams({
-          options: formattedOptions,
-          container,
-        });
-        changed = true;
-        formattedContainer = Object.assign(
-          {},
-          container,
-          newSPs_dimensionsHelper.getGalleryDimensions()
-        );
-      } else {
-        dimensionsHelper.updateParams({
-          options: formattedOptions,
-          container,
-        });
-        changed = true;
-        formattedContainer = Object.assign(
-          {},
-          container,
-          dimensionsHelper.getGalleryDimensions()
-        );
-      }
+      dimensionsHelper.updateParams({
+        options: formattedOptions,
+        container,
+      });
+      changed = true;
+      formattedContainer = Object.assign(
+        {},
+        container,
+        dimensionsHelper.getGalleryDimensions()
+      );
     }
     return { formattedContainer, changed };
   }

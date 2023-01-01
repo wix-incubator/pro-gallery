@@ -26,6 +26,7 @@ import {
 import { SECTIONS, settingsManager } from '../../constants/settings';
 import {
   INPUT_TYPES,
+  flattenObject,
 } from 'pro-gallery-lib';
 import { Divider, Alert } from 'antd';
 import comments from './comments';
@@ -37,7 +38,7 @@ import { GALLERY_CONSTS } from 'pro-gallery';
 
 import 'antd/dist/antd.css';
 import { getContainerUrlParams } from "./helper";
-import {utils, optionsMap} from 'pro-gallery-lib';
+import {utils} from 'pro-gallery-lib';
 import {StylesList} from './StyleList';
 
 const Community = React.lazy(() => import('../Community'));
@@ -50,6 +51,7 @@ function SideBar({ items, blueprintsManager, visible }) {
     options,
   } = useGalleryContext(blueprintsManager);
 
+  const flatOptions = flattenObject(options)
   const [searchResult, setSearchResult] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -78,7 +80,7 @@ function SideBar({ items, blueprintsManager, visible }) {
     setSearchResult('');
     setSearchTerm('');
   };
-  const changedOptions = Object.entries(options).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidOption(styleParam, value, options)).reduce((obj, [styleParam, value]) => ({ ...obj, [styleParam]: value }), {});
+  const changedOptions = Object.entries(flatOptions).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidOption(styleParam, value, flatOptions)).reduce((obj, [styleParam, value]) => ({ ...obj, [styleParam]: value }), {});
   const didChangeStyleParams = Object.keys(changedOptions).length > 0;
 
   const isDev = (window.location.hostname.indexOf('localhost') >= 0) || null;
@@ -102,8 +104,8 @@ function SideBar({ items, blueprintsManager, visible }) {
         }}>
           <JsonEditor
             onChange={_setOptions}
-            allOptions={options}
-            options={options}
+            allOptions={flatOptions}
+            options={flatOptions}
             section={settingsManager[searchResult].section}
             option={searchResult}
             expandIcon={() => <CloseOutlined onClick={() => resetSearch()} />}
@@ -119,18 +121,18 @@ function SideBar({ items, blueprintsManager, visible }) {
           <Collapse.Panel header={'* Changed Settings'} key="-1">
             <JsonEditor
               onChange={_setOptions}
-              allOptions={options}
+              allOptions={flatOptions}
               options={changedOptions}
               showAllOptions={true}
             />
           </Collapse.Panel> : null}
         <Collapse.Panel header={SECTIONS.PRESET} key="1">
-          <LayoutPicker selectedLayout={options[optionsMap.layoutParams.structure.galleryLayout]} onSelectLayout={galleryLayout => setOptions(optionsMap.layoutParams.structure.galleryLayout, galleryLayout)} />
+          <LayoutPicker selectedLayout={flatOptions.galleryLayout} onSelectLayout={galleryLayout => setOptions('galleryLayout', galleryLayout)} />
           <Divider />
           <JsonEditor
             onChange={_setOptions}
-            allOptions={options}
-            options={options}
+            allOptions={flatOptions}
+            options={flatOptions}
             section={SECTIONS.PRESET}
             showAllOptions={gallerySettings.showAllStyles}
           />
@@ -142,8 +144,8 @@ function SideBar({ items, blueprintsManager, visible }) {
                 <JsonEditor
                   section={section}
                   onChange={_setOptions}
-                  allOptions={options}
-                  options={options}
+                  allOptions={flatOptions}
+                  options={flatOptions}
                   showAllOptions={gallerySettings.showAllStyles}
                 />
               </Collapse.Panel>
@@ -259,7 +261,7 @@ function SideBar({ items, blueprintsManager, visible }) {
               <Button shape="circle" icon={<ArrowRightOutlined />} target="_blank" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
             </Form.Item>
             {isDev && <Form.Item label="Simulate Local SSR" labelAlign="left">
-              <Button shape="circle" icon={<BugOutlined />} target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useCustomNavigationPanel=${gallerySettings.useCustomNavigationPanel}&useBlueprints=${gallerySettings.useBlueprints}&${getContainerUrlParams(gallerySettings)}&${Object.entries(options).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
+              <Button shape="circle" icon={<BugOutlined />} target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useCustomNavigationPanel=${gallerySettings.useCustomNavigationPanel}&useBlueprints=${gallerySettings.useBlueprints}&${getContainerUrlParams(gallerySettings)}&${Object.entries(flatOptions).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
             </Form.Item>}
           </Form>
         </Collapse.Panel>
@@ -271,17 +273,17 @@ function SideBar({ items, blueprintsManager, visible }) {
         {isDev && <Collapse.Panel header="Lean Gallery" key="lean">
           <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
             <Form.Item label="Allow Lean Gallery" labelAlign="left">
-              <Switch checked={!!options.allowLeanGallery} onChange={e => setOptions('allowLeanGallery', !!e)} />
+              <Switch checked={!!flatOptions.allowLeanGallery} onChange={e => setOptions('allowLeanGallery', !!e)} />
             </Form.Item>
             {
-              // isEligibleForLeanGallery({ items, styles: options }) ?
+              // isEligibleForLeanGallery({ items, styles: flatOptions }) ?
               //   <Alert key={'leanGalleryAllowed'} message={'RENDERING LEAN GALLERY'} type="success" />  
               //   :
                 <List
                   size="small"
                   header="CAN NOT RENDER LEAN GALLERY"
                   bordered
-                  // dataSource={notEligibleReasons({ items, styles: options })}
+                  // dataSource={notEligibleReasons({ items, styles: flatOptions })}
                   renderItem={item => <List.Item>{item}</List.Item>}
                 />
             }

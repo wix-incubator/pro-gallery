@@ -1,4 +1,3 @@
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import React from 'react';
 
 export default class TextItem extends React.Component {
@@ -23,8 +22,7 @@ export default class TextItem extends React.Component {
         ? style.width / style.maxWidth
         : style.height / style.maxHeight) * style.maxWidth;
     const translate =
-      options[optionsMap.layoutParams.crop.method] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
+      options.cubeType === 'fit'
         ? '0, 0'
         : `${Math.round((style.width - textWidth) / 2)}px, ${Math.round(
             (style.height - textHeight) / 2
@@ -66,10 +64,7 @@ export default class TextItem extends React.Component {
     const changeBgColor = {
       style: Object.assign(
         dimensions,
-        options[optionsMap.layoutParams.crop.method] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
-          ? { backgroundColor: style.bgColor }
-          : {}
+        options.cubeType === 'fit' ? { backgroundColor: style.bgColor } : {}
       ),
     };
     const attributes = {
@@ -81,11 +76,7 @@ export default class TextItem extends React.Component {
         imageDimensions && !this.props.isPrerenderMode
           ? imageDimensions.height
           : 'inherit',
-      backgroundColor:
-        options[optionsMap.layoutParams.crop.method] !==
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
-          ? style.bgColor
-          : 'inherit',
+      backgroundColor: options.cubeType !== 'fit' ? style.bgColor : 'inherit',
     };
 
     if (imageDimensions && imageDimensions.borderRadius) {

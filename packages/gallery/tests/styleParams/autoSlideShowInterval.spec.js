@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS, viewModeWrapper, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, viewModeWrapper } from 'pro-gallery-lib';
 import { expect } from 'chai';
 import SlideshowView from '../../src/components/gallery/proGallery/slideshowView';
 import GalleryDriver from '../drivers/reactDriver';
@@ -14,9 +14,7 @@ describe('options - autoSlideShowInterval', () => {
     driver = new GalleryDriver();
     initialProps = driver.props.galleryView();
     Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     clock = sinon.useFakeTimers();
   });
@@ -26,13 +24,10 @@ describe('options - autoSlideShowInterval', () => {
   });
   it('startAutoSlideshow is called if needed', () => {
     Object.assign(initialProps.options, {
-      [optionsMap.behaviourParams.gallery.horizontal.autoSlide.interval]: 1,
-      [optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-        ].INTERVAL,
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDER,
+      isAutoSlideshow: true,
+      autoSlideshowInterval: 1,
+      autoSlideshowType: GALLERY_CONSTS.autoSlideshowTypes.INTERVAL,
+      galleryLayout: 4,
     });
     galleryViewProps = driver.props.galleryView(initialProps);
     const stub = sinon.stub(SlideshowView.prototype, 'next');

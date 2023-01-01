@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
 
@@ -17,15 +17,10 @@ describe('numberOfImagesPerRow - e2e', () => {
   });
   it('should set 1 images per a row', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.structure.numberOfColumns]: 1,
-      [optionsMap.layoutParams.structure.responsiveMode]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
-          .SET_ITEMS_PER_ROW,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+      galleryLayout: 2,
+      numberOfImagesPerRow: 1,
+      gridStyle: 1,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -34,10 +29,10 @@ describe('numberOfImagesPerRow - e2e', () => {
   });
   // it('should set 2 images per a row', async () => {
   //   await driver.navigate({
-  //    [optionsMap.layoutParams.structure.galleryLayout]: GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-  //     [optionsMap.layoutParams.structure.numberOfColumns]:2,
-  //     [optionsMap.layoutParams.structure.responsiveMode]: GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW,
-  //     [optionsMap.layoutParams.structure.scrollDirection]: GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
+  //     galleryLayout: 2,
+  //     numberOfImagesPerRow:2,
+  //     gridStyle: 1,
+  //     scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
   //   });
   //   await driver.waitFor.hookToBeVisible('item-container');
   //   await driver.waitFor.timer(200);
@@ -46,15 +41,10 @@ describe('numberOfImagesPerRow - e2e', () => {
   // });
   it('should set 3 images per a row', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.structure.numberOfColumns]: 3,
-      [optionsMap.layoutParams.structure.responsiveMode]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
-          .SET_ITEMS_PER_ROW,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+      galleryLayout: 2,
+      numberOfImagesPerRow: 3,
+      gridStyle: 1,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);

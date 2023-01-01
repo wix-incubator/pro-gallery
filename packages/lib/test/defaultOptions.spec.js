@@ -1,7 +1,6 @@
 import { expect } from 'chai';
-import {
+import defaultOptions, {
   populateWithDefaultOptions,
-  flatDefaultOptions,
 } from '../src/common/defaultOptions';
 import { flattenObject } from '../src/core/helpers/optionsUtils';
 import { extendNestedOptionsToIncludeOldAndNew } from '../src/core/helpers/optionsConverter';
@@ -9,20 +8,21 @@ import GALLERY_CONSTS from '../src/common/constants';
 
 describe('defaultOptions', () => {
   it('should return the expected options unchanged', () => {
+    const actual = flattenObject(defaultOptions);
     const expected = flattenObject(expectedOptions());
-    expect(flatDefaultOptions).to.eql(expected);
+    expect(actual).to.eql(expected);
   });
   it('should populate missing properties with default properties and should leave defined properties as they are', () => {
+    const actual = flattenObject(defaultOptions);
     const expected = flattenObject(expectedOptions());
-    expect(flatDefaultOptions).to.eql(expected);
+    expect(actual).to.eql(expected);
     let customOptions = { layoutParams: { structure: { galleryLayout: 5 } } };
     const migrated = extendNestedOptionsToIncludeOldAndNew(customOptions);
-    delete migrated.wasConvertedToOldOptions;
     const flat = flattenObject(migrated);
     Object.keys(flat).forEach((key) =>
       flat[key] === undefined ? delete flat[key] : {}
     );
-    expect(Object.keys(flat).length).to.eql(2); //this object should contains only 2 defined options (the old and new galleryLayout) + the wasConvertedOption
+    expect(Object.keys(flat).length).to.eql(2); //this object should contains only 2 defined options (the old and new galleryLayout)
     let populated = populateWithDefaultOptions(migrated);
     expect(populated.galleryLayout).to.eql(5); //this should be 5 and not the default (-1)
     expect(populated.slideshowInfoSize).to.eql(200);

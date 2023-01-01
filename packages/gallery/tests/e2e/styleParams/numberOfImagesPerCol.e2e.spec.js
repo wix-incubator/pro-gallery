@@ -1,4 +1,4 @@
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
 
@@ -17,12 +17,10 @@ describe('numberOfImagesPerCol - e2e', () => {
   });
   it('should set 1 images per a column', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.structure.numberOfGridRows]: 1,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+      galleryLayout: 2,
+      numberOfImagesPerCol: 1,
+      oneRow: true, // deprecated but left here to make sure we are not breaking for those who still use it
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -31,12 +29,10 @@ describe('numberOfImagesPerCol - e2e', () => {
   });
   it('should set 2 images per a column', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.structure.numberOfGridRows]: 2,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+      galleryLayout: 2,
+      numberOfImagesPerCol: 2,
+      oneRow: true, // deprecated but left here to make sure we are not breaking for those who still use it
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -45,12 +41,10 @@ describe('numberOfImagesPerCol - e2e', () => {
   });
   it('should set 3 images per a column', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.structure.numberOfGridRows]: 3,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+      galleryLayout: 2,
+      numberOfImagesPerCol: 3,
+      oneRow: true, // deprecated but left here to make sure we are not breaking for those who still use it
+      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);

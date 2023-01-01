@@ -1,12 +1,11 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
-describe.skip('options - itemBorderRadius', () => {
-  //v5 TODO. need to restore this once layoutHelper is new
-
+describe('options - itemBorderRadius', () => {
   let driver;
   let initialProps;
 
@@ -20,14 +19,11 @@ describe.skip('options - itemBorderRadius', () => {
   });
 
   it('should set border-radius of 10 to items', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
-      [optionsMap.stylingParams.itemBorderWidth]: 1,
-      [optionsMap.stylingParams.itemBorderRadius]: 10,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      itemBorderWidth: 1,
+      itemBorderRadius: 10,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -36,14 +32,11 @@ describe.skip('options - itemBorderRadius', () => {
     driver.detach.proGallery();
   });
   it('should set border-radius of 40 to items', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
-      [optionsMap.stylingParams.itemBorderWidth]: 1,
-      [optionsMap.stylingParams.itemBorderRadius]: 40,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      itemBorderWidth: 1,
+      itemBorderRadius: 40,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -52,16 +45,12 @@ describe.skip('options - itemBorderRadius', () => {
     driver.detach.proGallery();
   });
   it('should not set border-radius to when "cubeType" is "fit"', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
-      [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
-      [optionsMap.stylingParams.itemBorderWidth]: 1,
-      [optionsMap.stylingParams.itemBorderRadius]: 40,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: GALLERY_CONSTS.layout.GRID,
+      cubeType: GALLERY_CONSTS.cubeType.FIT,
+      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      itemBorderWidth: 1,
+      itemBorderRadius: 40,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

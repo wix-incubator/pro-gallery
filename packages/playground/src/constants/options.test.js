@@ -1,10 +1,9 @@
 import {getOptionsFromUrl} from './options'
 it('should return SP object from url', () => {
-  const locationSearch = '?layoutParams_structure_galleryLayout=1&behaviourParams_item_overlay_hoveringBehaviour=ALWAYS_SHOW'
+  const locationSearch = '?hoveringBehaviour=NO_CHANGE'
   const options = getOptionsFromUrl(locationSearch)
   const expected = {
-    "behaviourParams_item_overlay_hoveringBehaviour": "ALWAYS_SHOW",
-    "layoutParams_structure_galleryLayout": 1
+    "hoveringBehaviour": "NO_CHANGE"
   }
   expect(options).toEqual(expected)
 })

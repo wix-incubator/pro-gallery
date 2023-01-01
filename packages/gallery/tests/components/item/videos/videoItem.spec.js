@@ -5,7 +5,6 @@ import sinon from 'sinon';
 import VideoItem from '../../../../src/components/item/videos/videoItem';
 // import VideoItemWrapper from '../../../../src/components/item/videos/videoItemWrapper';
 import { expect } from 'chai';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 describe('Video Item ', () => {
   let driver;
@@ -30,8 +29,7 @@ describe('Video Item ', () => {
     //utils.isMobile() && itemClick !== 'expand'
     stub = sinon.stub(utils, 'isMobile').returns(true);
     Object.assign(sampleItemViewProps.options, {
-      [optionsMap.behaviourParams.item.clickAction]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
+      itemClick: 'link',
     });
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
@@ -44,8 +42,7 @@ describe('Video Item ', () => {
     );
 
     Object.assign(sampleItemViewProps.options, {
-      [optionsMap.behaviourParams.item.clickAction]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING,
+      itemClick: 'nothing',
     });
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
@@ -61,8 +58,7 @@ describe('Video Item ', () => {
     //!utils.isMobile() && itemClick !== 'expand'
     stub = sinon.stub(utils, 'isMobile').returns(false);
     Object.assign(sampleItemViewProps.options, {
-      [optionsMap.behaviourParams.item.clickAction]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
+      itemClick: 'link',
     });
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
@@ -74,8 +70,7 @@ describe('Video Item ', () => {
       0
     );
     Object.assign(sampleItemViewProps.options, {
-      [optionsMap.behaviourParams.item.clickAction]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING,
+      itemClick: 'nothing',
     });
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
@@ -91,8 +86,7 @@ describe('Video Item ', () => {
     //!utils.isMobile() && videoPlay !== 'onClick'
     stub = sinon.stub(utils, 'isMobile').returns(false);
     Object.assign(sampleItemViewProps.options, {
-      [optionsMap.behaviourParams.item.video.playTrigger]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER,
+      videoPlay: 'hover',
     });
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
@@ -104,8 +98,7 @@ describe('Video Item ', () => {
       0
     );
     Object.assign(sampleItemViewProps.options, {
-      [optionsMap.behaviourParams.item.video.playTrigger]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO,
+      videoPlay: 'auto',
     });
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
@@ -122,7 +115,7 @@ describe('Video Item ', () => {
   // it('source should have right src', async () => {
   //   Object.assign(sampleItemViewProps, {
   //     videoUrl: '',
-  //     [optionsMap.behaviourParams.item.video.loop]: true,
+  //     loadVideo: true,
   //   });
   //   driver.mount(VideoItem, sampleItemViewProps);
   //   expect(driver.find.selector('ReactPlayer').props().url).equal(

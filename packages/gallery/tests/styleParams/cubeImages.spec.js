@@ -1,6 +1,7 @@
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
@@ -18,12 +19,10 @@ describe('options - cubeImages', () => {
   });
 
   it('should allow to "cubeType" to set class to "itemWrapper"', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
-      [optionsMap.layoutParams.crop.enable]: true,
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: -1,
+      cubeImages: true,
+      cubeType: GALLERY_CONSTS.cubeType.CROP,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -33,12 +32,10 @@ describe('options - cubeImages', () => {
     driver.detach.proGallery();
   });
   it('should not allow to "cubeType" to set class to "itemWrapper"', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
-      [optionsMap.layoutParams.crop.enable]: false,
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
+    initialProps.options = mergeNestedObjects(initialProps.options, {
+      galleryLayout: -1,
+      cubeImages: false,
+      cubeType: GALLERY_CONSTS.cubeType.CROP,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

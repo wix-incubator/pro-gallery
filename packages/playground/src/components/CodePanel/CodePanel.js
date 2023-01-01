@@ -27,8 +27,8 @@ function CodePanel() {
   };
 
   const getStyleParams = () => {
-    const {layoutParams_structure_galleryLayout} = options;
-    const migratedOptions = flatToNested(addMigratedOptions({layoutParams_structure_galleryLayout, ...getOptionsFromUrl(window.location.search)}));
+    const {galleryLayout} = options;
+    const migratedOptions = flatToNested(addMigratedOptions({galleryLayout, ...getOptionsFromUrl(window.location.search)}));
     let {layoutParams, behaviourParams, stylingParams } = migratedOptions;
     const v4Options = {layoutParams, behaviourParams, stylingParams }
     return JSON.stringify(v4Options, null, 4);

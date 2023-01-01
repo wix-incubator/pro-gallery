@@ -7,6 +7,5 @@ export interface StylingParams {
   itemEnableShadow?: boolean;
   itemBorderRadius?: number;
   itemBorderWidth?: number;
-  itemBorderColor?: any;
   itemResolutionMode?: 'FULL' | 'SCLAED_DOWN';
 }

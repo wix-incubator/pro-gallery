@@ -1,6 +1,6 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -10,12 +10,10 @@ const getLayoutStylesByVerticalPosition = (
   arrowsVerticalPosition
 ) => {
   return {
-    [optionsMap.layoutParams.structure.galleryLayout]:
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDER,
-    [optionsMap.layoutParams.info.placement]: titlePlacement,
-    [optionsMap.layoutParams.navigationArrows.size]: 60,
-    [optionsMap.layoutParams.navigationArrows.verticalAlignment]:
-      arrowsVerticalPosition,
+    galleryLayout: GALLERY_CONSTS.layout.SLIDER,
+    titlePlacement: titlePlacement,
+    arrowsSize: 60,
+    arrowsVerticalPosition: arrowsVerticalPosition,
   };
 };
 
@@ -47,9 +45,8 @@ describe('arrowsPosition with info below - e2e', () => {
 
   it('should have arrows on info center', async () => {
     const currentTestLayout = getLayoutStylesByVerticalPosition(
-      GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
-      GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
-        .INFO_CENTER
+      'SHOW_BELOW',
+      'INFO_CENTER'
     );
     await driver.navigate(currentTestLayout);
     await grabSnapshotAndCompare();
@@ -57,9 +54,8 @@ describe('arrowsPosition with info below - e2e', () => {
 
   it('should have arrows on item center', async () => {
     const currentTestLayout = getLayoutStylesByVerticalPosition(
-      GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
-      GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
-        .ITEM_CENTER
+      'SHOW_BELOW',
+      'ITEM_CENTER'
     );
     await driver.navigate(currentTestLayout);
     await grabSnapshotAndCompare();
@@ -67,9 +63,8 @@ describe('arrowsPosition with info below - e2e', () => {
 
   it('should have arrows on image center', async () => {
     const currentTestLayout = getLayoutStylesByVerticalPosition(
-      GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
-      GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
-        .IMAGE_CENTER
+      'SHOW_BELOW',
+      'IMAGE_CENTER'
     );
     await driver.navigate(currentTestLayout);
     await grabSnapshotAndCompare();
@@ -88,9 +83,8 @@ describe('arrowsPosition with info above - e2e', () => {
 
   it('should have arrows on info center', async () => {
     const currentTestLayout = getLayoutStylesByVerticalPosition(
-      GALLERY_CONSTS[optionsMap.layoutParams.info.placement].ABOVE,
-      GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
-        .INFO_CENTER
+      'SHOW_ABOVE',
+      'INFO_CENTER'
     );
     await driver.navigate(currentTestLayout);
     await grabSnapshotAndCompare();
@@ -98,9 +92,8 @@ describe('arrowsPosition with info above - e2e', () => {
 
   it('should have arrows on item center', async () => {
     const currentTestLayout = getLayoutStylesByVerticalPosition(
-      GALLERY_CONSTS[optionsMap.layoutParams.info.placement].ABOVE,
-      GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
-        .ITEM_CENTER
+      'SHOW_ABOVE',
+      'ITEM_CENTER'
     );
     await driver.navigate(currentTestLayout);
     await grabSnapshotAndCompare();
@@ -108,9 +101,8 @@ describe('arrowsPosition with info above - e2e', () => {
 
   it('should have arrows on image center', async () => {
     const currentTestLayout = getLayoutStylesByVerticalPosition(
-      GALLERY_CONSTS[optionsMap.layoutParams.info.placement].ABOVE,
-      GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
-        .IMAGE_CENTER
+      'SHOW_ABOVE',
+      'IMAGE_CENTER'
     );
     await driver.navigate(currentTestLayout);
     await grabSnapshotAndCompare();

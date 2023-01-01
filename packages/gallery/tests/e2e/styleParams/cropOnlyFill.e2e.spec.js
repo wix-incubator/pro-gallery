@@ -1,6 +1,6 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
-import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -17,12 +17,10 @@ describe('cropOnlyFill - e2e', () => {
   });
   it('should crop images', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
-      [optionsMap.layoutParams.crop.enable]: true,
-      [optionsMap.layoutParams.crop.cropOnlyFill]: false,
+      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
+      cubeType: GALLERY_CONSTS.cubeType.FIT,
+      cubeImages: true,
+      cropOnlyFill: false,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -30,12 +28,10 @@ describe('cropOnlyFill - e2e', () => {
   });
   it('should not crop images', async () => {
     await driver.navigate({
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
-      [optionsMap.layoutParams.crop.enable]: true,
-      [optionsMap.layoutParams.crop.cropOnlyFill]: true,
+      galleryLayout: GALLERY_CONSTS.layout.EMPTY,
+      cubeType: GALLERY_CONSTS.cubeType.FIT,
+      cubeImages: true,
+      cropOnlyFill: true,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');

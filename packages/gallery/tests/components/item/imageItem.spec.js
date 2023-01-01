@@ -2,7 +2,6 @@ import ImageItem from '../../../src/components/item/imageItem';
 import { expect } from 'chai';
 import GalleryDriver from '../../drivers/reactDriver.js';
 import { testImages } from '../../drivers/mocks/images-mock';
-import { optionsMap, GALLERY_CONSTS } from 'pro-gallery-lib';
 
 describe('Image Item', () => {
   let galleryDriver, sampleItem, imageItemsProps;
@@ -12,11 +11,7 @@ describe('Image Item', () => {
     sampleItem = testImages[0];
     imageItemsProps = galleryDriver.props.itemView(sampleItem);
     Object.assign(imageItemsProps, {
-      options: {
-        [optionsMap.layoutParams.crop.method]:
-          GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
-        [optionsMap.layoutParams.crop.enable]: true,
-      },
+      options: { cubeType: 'fit', cubeImages: true },
       imageDimensions: { borderRadius: null },
     });
   });
