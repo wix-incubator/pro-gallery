@@ -74,7 +74,7 @@ export interface Structure {
   columnRatios?: Array<number>;
   scatter?: Scatter;
   layoutOrientation?: 'VERTICAL' | 'HORIZONTAL'; //isVertical
-  groupsOrder?: 'LEFT_TO_RIGHT' | 'BY_HEIGHT'; //use const? or is this the new const?
+  groupsOrder?: 'LEFT_TO_RIGHT' | 'RIGHT_TO_LEFT' | 'BY_HEIGHT'; //use const? or is this the new const?
 }
 
 export interface GalleryRatio {
