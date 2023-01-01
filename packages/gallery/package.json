@@ -20,10 +20,10 @@
     "dist"
   ],
   "scripts": {
-    "watch": "npm run start",
-    "build": " tsc && tsc -p tsconfig-esm.json && npm run css-compile",
+    "watch": "yarn run start",
+    "build": " tsc && tsc -p tsconfig-esm.json && yarn run css-compile",
     "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css src/components/styles/gallery.scss:dist/statics/main.css",
-    "start": "concurrently \"npm run css-watch\" \"npm run code-watch\"",
+    "start": "concurrently \"yarn run css-watch\" \"yarn run code-watch\"",
     "code-watch": "tsc && tsc -w -p tsconfig-esm-dev.json",
     "css-watch": "sass --watch src/components/styles/gallery.scss:dist/statics/main.css",
     "unit": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
@@ -33,7 +33,7 @@
     "test:e2e-styleParams": "jest --testPathPattern='.*/e2e/styleParams/.*.e2e.spec.js'",
     "test:e2e-integration": "jest --testPathPattern='.*/e2e/integration/.*.e2e.spec.js'",
     "lint": "eslint \"{src,tests}/**/*.{js,jsx,ts,tsx}\"",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "yarn run lint --fix"
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",

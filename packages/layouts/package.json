@@ -23,7 +23,7 @@
     "unit": "mocha --require ts-node/register test/*.spec.*",
     "test": "echo 'no test in wix CI'",
     "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "yarn run lint --fix"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.8.1",

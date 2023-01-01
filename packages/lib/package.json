@@ -20,12 +20,12 @@
   "scripts": {
     "watch": "tsc -w",
     "start": "tsc -w -p tsconfig-dev.json",
-    "build": "npm run generateValidationFunction && tsc && tsc -p tsconfig-esm.json",
+    "build": "yarn run generateValidationFunction && tsc && tsc -p tsconfig-esm.json",
     "generateValidationFunction": "node buildScripts/buildRuntimeValidateFunctionFromTypes.js",
     "unit": "mocha --require ts-node/register test/*.spec.*",
     "test": "echo 'no test in wix CI'",
     "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "yarn run lint --fix"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.8.1",
