@@ -60,10 +60,7 @@ import itemResolutionMode from './itemResolutionMode';
 import autoSlideBehaviour from './autoSlideBehaviour';
 import secondaryMediaTrigger from './secondaryMediaTrigger';
 import secondaryMediaBehaviour from './secondaryMediaBehaviour';
-//NEW STYPEPARAMS METHOD
-import layoutParams_crop_method from './layoutParams_crop_method';
-import layoutParams_crop_alignment from './layoutParams_crop_alignment';
-//NEW STYPEPARAMS METHOD
+
 export default {
   arrowsPosition,
   itemResolutionMode,
@@ -128,9 +125,4 @@ export default {
   autoSlideBehaviour,
   secondaryMediaTrigger,
   secondaryMediaBehaviour,
-
-  //NEW STYPEPARAMS METHOD
-  layoutParams_crop_method,
-  layoutParams_crop_alignment,
-  //NEW STYPEPARAMS METHOD
 };
