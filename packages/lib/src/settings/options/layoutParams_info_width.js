@@ -7,7 +7,7 @@ export default {
   isRelevant: (options) =>
     options.isVertical &&
     options.groupSize === 1 &&
-    options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL && //NEW STYPEPARAMS METHOD change to new sps
+    options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
     GALLERY_CONSTS.hasExternalHorizontalPlacement(options.titlePlacement),
   isRelevantDescription: `First set a Vertical gallery ("Scroll Direction" as "Vertical").\nThen set "Layout Orientation" to "Columns".\nThen set "Max Group Size" to "1".\nThen set "Texts Placement" to "Show on the Right" or "Show on the Left".`,
   type: INPUT_TYPES.NUMBER,

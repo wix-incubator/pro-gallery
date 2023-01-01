@@ -9,7 +9,7 @@ export default {
   isRelevant: (options) =>
     ((options.isVertical &&
       options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL) ||
-      options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) && //NEW STYPEPARAMS METHOD change to new sps
+      options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) &&
     options.groupSize === 1 &&
     GALLERY_CONSTS.hasExternalVerticalPlacement(options.titlePlacement),
   type: INPUT_TYPES.NUMBER,
