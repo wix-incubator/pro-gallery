@@ -90,11 +90,10 @@ const defaultOptions = mergeNestedObjects(coreOptions, {
   magnificationLevel: 2,
 });
 
-export const flatDefaultOptions = flattenObject(defaultOptions);
-
 export function populateWithDefaultOptions(options) {
+  const flatDefault = flattenObject(defaultOptions);
   const flatOptions = flattenObject(options);
-  const mergedOptions = Object.assign({}, flatDefaultOptions, flatOptions);
+  const mergedOptions = Object.assign({}, flatDefault, flatOptions);
   Object.keys(mergedOptions).forEach((key) => {
     if (typeof mergedOptions[key] === 'undefined') {
       mergedOptions[key] = defaultOptions[key];
@@ -102,5 +101,4 @@ export function populateWithDefaultOptions(options) {
   });
   return flatToNested(mergedOptions);
 }
-
 export default defaultOptions;

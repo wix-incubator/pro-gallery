@@ -1,7 +1,6 @@
 import { expect } from 'chai';
-import {
+import defaultOptions, {
   populateWithDefaultOptions,
-  flatDefaultOptions,
 } from '../src/common/defaultOptions';
 import { flattenObject } from '../src/core/helpers/optionsUtils';
 import { extendNestedOptionsToIncludeOldAndNew } from '../src/core/helpers/optionsConverter';
@@ -9,12 +8,14 @@ import GALLERY_CONSTS from '../src/common/constants';
 
 describe('defaultOptions', () => {
   it('should return the expected options unchanged', () => {
+    const actual = flattenObject(defaultOptions);
     const expected = flattenObject(expectedOptions());
-    expect(flatDefaultOptions).to.eql(expected);
+    expect(actual).to.eql(expected);
   });
   it('should populate missing properties with default properties and should leave defined properties as they are', () => {
+    const actual = flattenObject(defaultOptions);
     const expected = flattenObject(expectedOptions());
-    expect(flatDefaultOptions).to.eql(expected);
+    expect(actual).to.eql(expected);
     let customOptions = { layoutParams: { structure: { galleryLayout: 5 } } };
     const migrated = extendNestedOptionsToIncludeOldAndNew(customOptions);
     const flat = flattenObject(migrated);

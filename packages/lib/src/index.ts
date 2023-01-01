@@ -2,7 +2,6 @@ export { default as GALLERY_CONSTS } from './common/constants';
 export {
   default as defaultOptions,
   populateWithDefaultOptions,
-  flatDefaultOptions,
 } from './common/defaultOptions';
 export { default as v3DefaultOptions } from './common/v3DefaultOptions';
 export { default as v4DefaultOptions } from './common/v4DefaultOptions';
