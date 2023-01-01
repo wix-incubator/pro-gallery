@@ -213,15 +213,6 @@ import behaviourParams_gallery_horizontal_slideshowInfo_buttonsAlignment from '.
 import behaviourParams_gallery_horizontal_slideshowInfo_enableCounter from './behaviourParams_gallery_horizontal_slideshowInfo_enableCounter';
 import behaviourParams_gallery_horizontal_slideshowInfo_enablePlayButton from './behaviourParams_gallery_horizontal_slideshowInfo_enablePlayButton';
 
-import stylingParams_arrowsColor from './stylingParams_arrowsColor';
-import stylingParams_itemShadowBlur from './stylingParams_itemShadowBlur';
-import stylingParams_itemShadowDirection from './stylingParams_itemShadowDirection';
-import stylingParams_itemShadowOpacityAndColor from './stylingParams_itemShadowOpacityAndColor';
-import stylingParams_itemShadowSize from './stylingParams_itemShadowSize';
-import stylingParams_itemEnableShadow from './stylingParams_itemEnableShadow';
-import stylingParams_itemBorderRadius from './stylingParams_itemBorderRadius';
-import stylingParams_itemBorderWidth from './stylingParams_itemBorderWidth';
-// import stylingParams_itemResolutionMode from './stylingParams_itemResolutionMode';
 //NEW STYPEPARAMS METHOD
 
 export default {
@@ -565,16 +556,6 @@ export default {
   behaviourParams_gallery_horizontal_slideshowInfo_buttonsAlignment,
   behaviourParams_gallery_horizontal_slideshowInfo_enableCounter,
   behaviourParams_gallery_horizontal_slideshowInfo_enablePlayButton,
-
-  stylingParams_arrowsColor,
-  stylingParams_itemShadowBlur,
-  stylingParams_itemShadowDirection,
-  stylingParams_itemShadowOpacityAndColor,
-  stylingParams_itemShadowSize,
-  stylingParams_itemEnableShadow,
-  stylingParams_itemBorderRadius,
-  stylingParams_itemBorderWidth,
-  // stylingParams_itemResolutionMode,
   //NEW STYPEPARAMS METHOD
 };
 // TODO = add the options:
