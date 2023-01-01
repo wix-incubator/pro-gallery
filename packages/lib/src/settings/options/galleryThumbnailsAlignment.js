@@ -1,11 +1,13 @@
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
+import optionsMap from '../../core/helpers/optionsMap';
 
 export default {
   title: 'Thumbnails alignment',
   isRelevant: (options) =>
-    options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-    options.hasThumbnails,
+    options[optionsMap.layoutParams.structure.scrollDirection] ===
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+        .HORIZONTAL && options.hasThumbnails,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Gallery preset" to "Thumbnail".',
   type: INPUT_TYPES.TEXT,
