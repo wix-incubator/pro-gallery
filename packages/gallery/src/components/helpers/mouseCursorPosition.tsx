@@ -237,4 +237,3 @@ export function clickableFactory(): React.ReactHTML {
 }
 
 export const clickable = clickableFactory();
-// dummy commit
