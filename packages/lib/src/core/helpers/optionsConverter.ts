@@ -21,7 +21,7 @@ import {
 function extendNestedOptionsToIncludeOldAndNew(nestedOptions) {
   let flatOptions = flattenObject(nestedOptions);
   let populatedFlatOptions = addOldOptions(addMigratedOptions(flatOptions));
-  return { ...flatToNested(populatedFlatOptions), ...populatedFlatOptions };
+  return flatToNested(populatedFlatOptions);
 }
 
 function addMigratedOptions(flatOptions) {
