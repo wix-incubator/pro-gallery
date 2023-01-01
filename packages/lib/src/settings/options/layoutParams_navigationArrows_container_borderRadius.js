@@ -7,7 +7,7 @@ export default {
     options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
     options.showArrows &&
     options.layoutParams_navigationArrows_container_type ===
-      GALLERY_CONSTS.arrowsContainerStyleType.BOX, //NEW STYPEPARAMS METHOD use new sps
+      GALLERY_CONSTS.arrowsContainerStyleType.BOX,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal"), "Show Navigation Arrows" to "true" and Navigation arrows styling ("layoutParams.navigationArrows.container.type") to "BOX".',
   type: INPUT_TYPES.NUMBER,
