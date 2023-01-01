@@ -223,10 +223,8 @@ function withMagnified(WrappedComponent) {
 
     render() {
       const { shouldMagnify } = this.state;
-      if (
-        this.props.options[optionsMap.behaviourParams.item.clickAction] !==
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].MAGNIFY
-      ) {
+      const { itemClick } = this.props.options;
+      if (itemClick !== GALLERY_CONSTS.itemClick.MAGNIFY) {
         return <WrappedComponent {...this.props} />;
       }
       return (
