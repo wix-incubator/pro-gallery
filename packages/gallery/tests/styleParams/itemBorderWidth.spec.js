@@ -4,9 +4,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { images2 } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
-describe.skip('options - itemBorderWidth', () => {
-  //v5 TODO. need to restore this once layoutHelper is new
-
+describe('options - itemBorderWidth', () => {
   let driver;
   let initialProps;
 

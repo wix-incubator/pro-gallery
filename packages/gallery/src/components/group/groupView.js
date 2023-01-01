@@ -45,7 +45,7 @@ class GroupView extends React.Component {
   }
 
   render() {
-    const { isRTL } = this.props.galleryConfig.options; //v5 TODO - why is this not from the options in the gallery. this comes from the layouter
+    const { isRTL } = this.props.galleryConfig.options;
     return this.shouldRender() ? (
       <div
         key={`group_${this.props.idx}_${this.props.items[0].id}`}
