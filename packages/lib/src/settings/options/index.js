@@ -190,14 +190,6 @@ import behaviourParams_item_content_loader from './behaviourParams_item_content_
 // import behaviourParams_item_content_magnificationValue from './behaviourParams_item_content_magnificationValue';
 // import behaviourParams_item_secondaryMedia_trigger from './behaviourParams_item_secondaryMedia_trigger';
 // import behaviourParams_item_secondaryMedia_behaviour from './behaviourParams_item_secondaryMedia_behaviour';
-
-import behaviourParams_gallery_layoutDirection from './behaviourParams_gallery_layoutDirection';
-import behaviourParams_gallery_blockContextMenu from './behaviourParams_gallery_blockContextMenu';
-import behaviourParams_gallery_scrollAnimation from './behaviourParams_gallery_scrollAnimation';
-import behaviourParams_gallery_enableIndexingShareLinks from './behaviourParams_gallery_enableIndexingShareLinks';
-import behaviourParams_gallery_vertical_loadMore_enable from './behaviourParams_gallery_vertical_loadMore_enable';
-import behaviourParams_gallery_vertical_loadMore_amount from './behaviourParams_gallery_vertical_loadMore_amount';
-import behaviourParams_gallery_vertical_loadMore_text from './behaviourParams_gallery_vertical_loadMore_text';
 //NEW STYPEPARAMS METHOD
 
 export default {
@@ -520,13 +512,6 @@ export default {
   // behaviourParams_item_content_magnificationValue,
   // behaviourParams_item_secondaryMedia_trigger,
   // behaviourParams_item_secondaryMedia_behaviour,
-  behaviourParams_gallery_layoutDirection,
-  behaviourParams_gallery_blockContextMenu,
-  behaviourParams_gallery_scrollAnimation,
-  behaviourParams_gallery_enableIndexingShareLinks,
-  behaviourParams_gallery_vertical_loadMore_enable,
-  behaviourParams_gallery_vertical_loadMore_amount,
-  behaviourParams_gallery_vertical_loadMore_text,
 
   //NEW STYPEPARAMS METHOD
 };
