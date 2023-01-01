@@ -169,27 +169,6 @@ import layoutParams_info_border_radius from './layoutParams_info_border_radius';
 import layoutParams_targetItemSize_unit from './layoutParams_targetItemSize_unit';
 // import layoutParams_targetItemSize_value from './layoutParams_targetItemSize_value';
 import layoutParams_targetItemSize_minimum from './layoutParams_targetItemSize_minimum';
-
-import behaviourParams_item_clickAction from './behaviourParams_item_clickAction';
-import behaviourParams_item_video_speed from './behaviourParams_item_video_speed';
-import behaviourParams_item_video_volume from './behaviourParams_item_video_volume';
-import behaviourParams_item_video_loop from './behaviourParams_item_video_loop';
-import behaviourParams_item_video_playTrigger from './behaviourParams_item_video_playTrigger';
-import behaviourParams_item_video_enablePlayButton from './behaviourParams_item_video_enablePlayButton';
-import behaviourParams_item_video_enableControls from './behaviourParams_item_video_enableControls';
-import behaviourParams_item_video_enablePlaceholder from './behaviourParams_item_video_enablePlaceholder';
-import behaviourParams_item_overlay_hoveringBehaviour from './behaviourParams_item_overlay_hoveringBehaviour';
-import behaviourParams_item_overlay_hoverAnimation from './behaviourParams_item_overlay_hoverAnimation';
-import behaviourParams_item_overlay_position from './behaviourParams_item_overlay_position';
-import behaviourParams_item_overlay_size from './behaviourParams_item_overlay_size';
-import behaviourParams_item_overlay_sizeUnits from './behaviourParams_item_overlay_sizeUnits';
-import behaviourParams_item_overlay_padding from './behaviourParams_item_overlay_padding';
-import behaviourParams_item_content_hoverAnimation from './behaviourParams_item_content_hoverAnimation';
-import behaviourParams_item_content_placementAnimation from './behaviourParams_item_content_placementAnimation';
-import behaviourParams_item_content_loader from './behaviourParams_item_content_loader';
-// import behaviourParams_item_content_magnificationValue from './behaviourParams_item_content_magnificationValue';
-// import behaviourParams_item_secondaryMedia_trigger from './behaviourParams_item_secondaryMedia_trigger';
-// import behaviourParams_item_secondaryMedia_behaviour from './behaviourParams_item_secondaryMedia_behaviour';
 //NEW STYPEPARAMS METHOD
 
 export default {
@@ -491,28 +470,6 @@ export default {
   layoutParams_targetItemSize_unit,
   // layoutParams_targetItemSize_value,
   layoutParams_targetItemSize_minimum,
-
-  behaviourParams_item_clickAction,
-  behaviourParams_item_video_speed,
-  behaviourParams_item_video_volume,
-  behaviourParams_item_video_loop,
-  behaviourParams_item_video_playTrigger,
-  behaviourParams_item_video_enablePlayButton,
-  behaviourParams_item_video_enableControls,
-  behaviourParams_item_video_enablePlaceholder,
-  behaviourParams_item_overlay_hoveringBehaviour,
-  behaviourParams_item_overlay_hoverAnimation,
-  behaviourParams_item_overlay_position,
-  behaviourParams_item_overlay_size,
-  behaviourParams_item_overlay_sizeUnits,
-  behaviourParams_item_overlay_padding,
-  behaviourParams_item_content_hoverAnimation,
-  behaviourParams_item_content_placementAnimation,
-  behaviourParams_item_content_loader,
-  // behaviourParams_item_content_magnificationValue,
-  // behaviourParams_item_secondaryMedia_trigger,
-  // behaviourParams_item_secondaryMedia_behaviour,
-
   //NEW STYPEPARAMS METHOD
 };
 // TODO = add the options:

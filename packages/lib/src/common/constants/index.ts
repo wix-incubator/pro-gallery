@@ -77,20 +77,7 @@ import layoutParams_info_layout from './layoutParams_info_layout';
 import layoutParams_info_sizeUnits from './layoutParams_info_sizeUnits';
 
 import layoutParams_targetItemSize_unit from './layoutParams_targetItemSize_unit';
-
-import behaviourParams_item_clickAction from './behaviourParams_item_clickAction';
-import behaviourParams_item_video_playTrigger from './behaviourParams_item_video_playTrigger';
-import behaviourParams_item_overlay_hoveringBehaviour from './behaviourParams_item_overlay_hoveringBehaviour';
-import behaviourParams_item_overlay_hoverAnimation from './behaviourParams_item_overlay_hoverAnimation';
-import behaviourParams_item_overlay_position from './behaviourParams_item_overlay_position';
-import behaviourParams_item_overlay_sizeUnits from './behaviourParams_item_overlay_sizeUnits';
-import behaviourParams_item_content_hoverAnimation from './behaviourParams_item_content_hoverAnimation';
-import behaviourParams_item_content_placementAnimation from './behaviourParams_item_content_placementAnimation';
-import behaviourParams_item_content_loader from './behaviourParams_item_content_loader';
-import behaviourParams_item_secondaryMedia_trigger from './behaviourParams_item_clickAction';
-import behaviourParams_item_secondaryMedia_behaviour from './behaviourParams_item_clickAction';
 //NEW STYPEPARAMS METHOD
-
 export default {
   arrowsPosition,
   itemResolutionMode,
@@ -170,16 +157,5 @@ export default {
   layoutParams_info_layout,
   layoutParams_info_sizeUnits,
   layoutParams_targetItemSize_unit,
-  behaviourParams_item_clickAction,
-  behaviourParams_item_video_playTrigger,
-  behaviourParams_item_overlay_hoveringBehaviour,
-  behaviourParams_item_overlay_hoverAnimation,
-  behaviourParams_item_overlay_position,
-  behaviourParams_item_overlay_sizeUnits,
-  behaviourParams_item_content_hoverAnimation,
-  behaviourParams_item_content_placementAnimation,
-  behaviourParams_item_content_loader,
-  behaviourParams_item_secondaryMedia_trigger,
-  behaviourParams_item_secondaryMedia_behaviour,
   //NEW STYPEPARAMS METHOD
 };
