@@ -324,7 +324,7 @@ export class Group {
 
   calculateRandomSeed(numOfOptions) {
     let seed;
-    if (this.isVertical) {
+    if (this.layoutOrientation === 'VERTICAL') {
       //vertical galleries random is not relevant (previous group is in another column)
       seed = this.items[0].seed % numOfOptions;
     } else {
