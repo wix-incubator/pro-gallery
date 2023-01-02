@@ -196,6 +196,7 @@ function input() {
     layoutParams_groups_groupSize: 3,
     layoutParams_thumbnails_enable: false,
     layoutParams_thumbnails_spacing: 0,
+    layoutParams_thumbnails_margin: 0,
     layoutParams_thumbnails_size: 120,
     layoutParams_navigationArrows_enable: true,
     layoutParams_navigationArrows_padding: 23,

@@ -116,6 +116,7 @@ import layoutParams_thumbnails_enable from './layoutParams_thumbnails_enable';
 import layoutParams_thumbnails_position from './layoutParams_thumbnails_position';
 import layoutParams_thumbnails_size from './layoutParams_thumbnails_size';
 import layoutParams_thumbnails_spacing from './layoutParams_thumbnails_spacing';
+import layoutParams_thumbnails_margin from './layoutParams_thumbnails_margin';
 
 import stylingParams_arrowsColor from './stylingParams_arrowsColor';
 import stylingParams_itemBorderColor from './stylingParams_itemBorderColor';
@@ -248,6 +249,7 @@ export default {
   layoutParams_thumbnails_position,
   layoutParams_thumbnails_size,
   layoutParams_thumbnails_spacing,
+  layoutParams_thumbnails_margin,
 
   stylingParams_arrowsColor,
   stylingParams_itemBorderColor,

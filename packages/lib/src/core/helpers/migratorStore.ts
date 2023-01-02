@@ -17,6 +17,7 @@ export const nameChangedLayoutParams = [
   ['groupSize', optionsMap.layoutParams.groups.groupSize],
   ['hasThumbnails', optionsMap.layoutParams.thumbnails.enable],
   ['thumbnailSpacings', optionsMap.layoutParams.thumbnails.spacing],
+  ['thumbnailMargin', optionsMap.layoutParams.thumbnails.margin],
   ['thumbnailSize', optionsMap.layoutParams.thumbnails.size],
   ['showArrows', optionsMap.layoutParams.navigationArrows.enable],
   ['arrowsPadding', optionsMap.layoutParams.navigationArrows.padding],
