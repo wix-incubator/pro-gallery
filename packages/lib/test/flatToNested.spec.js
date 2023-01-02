@@ -307,7 +307,6 @@ function input() {
     layoutParams_groups_repeatingGroupTypes: [],
     layoutParams_thumbnails_enable: false,
     layoutParams_thumbnails_spacing: 0,
-    layoutParams_thumbnails_margin: 0,
     layoutParams_thumbnails_size: 120,
     layoutParams_thumbnails_alignment: 'BOTTOM',
     layoutParams_navigationArrows_enable: true,

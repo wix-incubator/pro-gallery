@@ -53,7 +53,6 @@ const v3DefaultOptions = {
   placeGroupsLtr: false,
   enableInfiniteScroll: true,
   thumbnailSpacings: 4,
-  thumbnailMargin: 4,
   enableScroll: true,
   scrollSnap: false,
   itemClick: 'nothing',
