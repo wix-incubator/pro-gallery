@@ -41,8 +41,8 @@ export default {
       ABOVE: isVerticalInfoCompatibleLayout,
       RIGHT: isHorizontalInfoCompatibleLayout,
       LEFT: isHorizontalInfoCompatibleLayout,
-      ALTERNATE_HORIZONTAL: isHorizontalInfoCompatibleLayout,
-      ALTERNATE_VERTICAL: isVerticalInfoCompatibleLayout,
+      ALTERNATE_HORIZONTALLY: isHorizontalInfoCompatibleLayout,
+      ALTERNATE_VERTICALLY: isVerticalInfoCompatibleLayout,
     };
     // specific option isRelevant : general titlePlacement isRelevant (Hover always true)
     return option
