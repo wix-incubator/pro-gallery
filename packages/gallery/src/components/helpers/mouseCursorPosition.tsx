@@ -183,7 +183,7 @@ export class ArrowFollower extends React.Component<ArrowFollowerProps> {
       this.props.isTheOnlyArrow ? 100 : 50
     );
     const amountOfPixelsNeeded = containerWidth * (realMaxWidth / 100);
-    const isLeft = amountOfPixelsNeeded > x;
+    const isLeft = amountOfPixelsNeeded >= x;
     const isRight = x > containerWidth - amountOfPixelsNeeded;
 
     return this.props.direction === 'left' ? isLeft : isRight;
