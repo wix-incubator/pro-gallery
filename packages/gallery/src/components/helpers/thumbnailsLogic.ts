@@ -6,9 +6,9 @@ import {
 } from 'pro-gallery-lib';
 import { CSSProperties } from 'react';
 
-// function getNumberOrZeroIfNaN(value: number) {
-//   return isNaN(value) ? 0 : value;
-// }
+function getNumberOrZeroIfNaN(value: number) {
+  return isNaN(value) ? 0 : value;
+}
 function calculateActiveIndexOffset({
   activeIndex,
   prevActiveIndex,
@@ -99,7 +99,8 @@ export function getThumbnailsData({
   const nirMargin = options[optionsMap.layoutParams.thumbnails.margin];
   const thumbnailSizeWithSpacing =
     options[optionsMap.layoutParams.thumbnails.size] +
-    options[optionsMap.layoutParams.thumbnails.spacing] * 2;
+    getNumberOrZeroIfNaN(nirMargin) * 2;
+  options[optionsMap.layoutParams.thumbnails.spacing] * 2;
   const horizontalThumbnails =
     thumbnailAlignment ===
       GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM ||
