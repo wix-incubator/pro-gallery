@@ -6,9 +6,9 @@ import {
 } from 'pro-gallery-lib';
 import { CSSProperties } from 'react';
 
-function getNumberOrZeroIfNaN(value: number) {
-  return isNaN(value) ? 0 : value;
-}
+// function getNumberOrZeroIfNaN(value: number) {
+//   return isNaN(value) ? 0 : value;
+// }
 function calculateActiveIndexOffset({
   activeIndex,
   prevActiveIndex,
