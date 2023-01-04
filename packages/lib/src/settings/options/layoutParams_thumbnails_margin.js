@@ -10,6 +10,6 @@ export default {
         .HORIZONTAL && options[optionsMap.layoutParams.thumbnails.enable],
   isRelevantDescription: 'Set "Gallery preset" to "Thumbnail".',
   type: INPUT_TYPES.NUMBER,
-  default: 4,
+  default: 0,
   description: `Sets internal margin between thumbnails which does not effect the size of the gallery`,
 };
