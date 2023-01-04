@@ -94,6 +94,7 @@ export function getThumbnailsData({
   const withInfiniteScroll = false; // this is not supported yet
   const thumbnailSizeWithSpacing =
     options[optionsMap.layoutParams.thumbnails.size] +
+    options[optionsMap.layoutParams.thumbnails.margin] * 2 +
     options[optionsMap.layoutParams.thumbnails.spacing] * 2;
   const horizontalThumbnails =
     thumbnailAlignment ===
