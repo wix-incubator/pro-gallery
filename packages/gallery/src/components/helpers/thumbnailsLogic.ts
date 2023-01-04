@@ -99,7 +99,6 @@ export function getThumbnailsData({
   const nirMargin = options[optionsMap.layoutParams.thumbnails.margin];
   const thumbnailSizeWithSpacing =
     options[optionsMap.layoutParams.thumbnails.size] +
-    getNumberOrZeroIfNaN(nirMargin) +
     options[optionsMap.layoutParams.thumbnails.spacing] * 2;
   const horizontalThumbnails =
     thumbnailAlignment ===
