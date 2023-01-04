@@ -95,11 +95,11 @@ export function getThumbnailsData({
   }
 
   const withInfiniteScroll = false; // this is not supported yet
+  // @ts-ignore
+  const nirMargin = options[optionsMap.layoutParams.thumbnails.margin];
   const thumbnailSizeWithSpacing =
     options[optionsMap.layoutParams.thumbnails.size] +
-    // @ts-ignore
-    getNumberOrZeroIfNaN(options[optionsMap.layoutParams.thumbnails.margin]) *
-      2 +
+    getNumberOrZeroIfNaN(nirMargin) +
     options[optionsMap.layoutParams.thumbnails.spacing] * 2;
   const horizontalThumbnails =
     thumbnailAlignment ===
