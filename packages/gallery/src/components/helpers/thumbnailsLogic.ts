@@ -6,6 +6,9 @@ import {
 } from 'pro-gallery-lib';
 import { CSSProperties } from 'react';
 
+function getNumberOrZeroIfNaN(value: number) {
+  return isNaN(value) ? 0 : value;
+}
 function calculateActiveIndexOffset({
   activeIndex,
   prevActiveIndex,
@@ -94,7 +97,9 @@ export function getThumbnailsData({
   const withInfiniteScroll = false; // this is not supported yet
   const thumbnailSizeWithSpacing =
     options[optionsMap.layoutParams.thumbnails.size] +
-    options[optionsMap.layoutParams.thumbnails.margin] * 2 +
+    // @ts-ignore
+    getNumberOrZeroIfNaN(options[optionsMap.layoutParams.thumbnails.margin]) *
+      2 +
     options[optionsMap.layoutParams.thumbnails.spacing] * 2;
   const horizontalThumbnails =
     thumbnailAlignment ===
