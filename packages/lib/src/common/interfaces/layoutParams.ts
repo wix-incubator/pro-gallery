@@ -27,6 +27,10 @@ export interface Thumbnails {
   position?: 'ON_GALLERY' | 'OUTSIDE_GALLERY';
   spacing?: number;
   margin?: number;
+  marginTop?: number;
+  marginBottom?: number;
+  marginRight?: number;
+  marginLeft?: number;
   size?: number;
   alignment?: 'BOTTOM' | 'RIGHT' | 'LEFT' | 'TOP';
 }

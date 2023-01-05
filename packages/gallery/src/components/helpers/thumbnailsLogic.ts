@@ -9,6 +9,30 @@ import { CSSProperties } from 'react';
 function getNumberOrZeroIfNaN(value: number) {
   return isNaN(value) ? 0 : value;
 }
+
+function getNirMargin(options: any) {
+  // @ts-ignore
+
+  const sides = [
+    'layoutParams_thumbnails_marginLeft',
+    'layoutParams_thumbnails_marginRight',
+    'layoutParams_thumbnails_marginTop',
+    'layoutParams_thumbnails_marginBottom',
+  ];
+  const fullSize = sides
+    .map((side) => {
+      const x = options[side];
+      console.log('x', x);
+      return getNumberOrZeroIfNaN(x);
+    })
+    .reduce((a, b) => a + b, 0);
+  console.log(`fullSize`, fullSize);
+  // @ts-ignore
+  const nirMargin = options[optionsMap.layoutParams.thumbnails.margin];
+  console.log('old nir margin', nirMargin);
+  return getNumberOrZeroIfNaN(nirMargin);
+  // return getNumberOrZeroIfNaN(fullSize)
+}
 function calculateActiveIndexOffset({
   activeIndex,
   prevActiveIndex,
@@ -96,11 +120,10 @@ export function getThumbnailsData({
 
   const withInfiniteScroll = false; // this is not supported yet
   // @ts-ignore
-  const nirMargin = options[optionsMap.layoutParams.thumbnails.margin];
   const thumbnailSizeWithSpacing =
     options[optionsMap.layoutParams.thumbnails.size] +
-    getNumberOrZeroIfNaN(nirMargin) * 2;
-  options[optionsMap.layoutParams.thumbnails.spacing] * 2;
+    getNirMargin(options) * 2 +
+    options[optionsMap.layoutParams.thumbnails.spacing] * 2;
   const horizontalThumbnails =
     thumbnailAlignment ===
       GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM ||
