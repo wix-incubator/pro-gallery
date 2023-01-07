@@ -52,7 +52,6 @@ class ItemView extends React.Component {
     this.onItemClick = this.onItemClick.bind(this);
     this.onItemWrapperClick = this.onItemWrapperClick.bind(this);
     this.onItemInfoClick = this.onItemInfoClick.bind(this);
-    this.onContainerKeyDown = this.onContainerKeyDown.bind(this);
     this.onAnchorKeyDown = this.onAnchorKeyDown.bind(this);
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
     this.handleItemMouseUp = this.handleItemMouseUp.bind(this);
@@ -131,22 +130,6 @@ class ItemView extends React.Component {
       GALLERY_CONSTS.events.ITEM_LOST_FOCUS,
       this.props
     );
-  }
-
-  onContainerKeyDown(e) {
-    const clickTarget = 'item-container';
-    switch (e.keyCode || e.charCode) {
-      case 32: //space
-      case 13: //enter
-        e.stopPropagation();
-        this.onItemClick(e, clickTarget, false); //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
-        if (this.shouldUseDirectLink()) {
-          this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
-        }
-        return false;
-      default:
-        return true;
-    }
   }
 
   onAnchorKeyDown(e) {
@@ -986,7 +969,6 @@ class ItemView extends React.Component {
         onMouseLeave={this.onMouseLeave}
         onFocus={this.onFocus}
         onBlur={this.onBlur} // The onblur event is the opposite of the onfocus event.
-        onKeyDown={this.onContainerKeyDown}
         tabIndex={this.getItemContainerTabIndex()}
         aria-label={this.getItemAriaLabel()}
         data-hash={hash}
