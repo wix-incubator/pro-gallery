@@ -26,8 +26,9 @@ export const hasExternalRightPlacement = (placement: string, idx: number) =>
     String(placement).includes(PLACEMENTS.ALTERNATE_HORIZONTALLY));
 
 export const hasExternalLeftPlacement = (placement: string, idx: number) =>
-  idx % 2 === 1 &&
-  String(placement).includes(PLACEMENTS.ALTERNATE_HORIZONTALLY);
+  String(placement).includes(PLACEMENTS.LEFT) ||
+  (idx % 2 === 1 &&
+    String(placement).includes(PLACEMENTS.ALTERNATE_HORIZONTALLY));
 
 export const hasExternalVerticalPlacement = (placement: string) =>
   hasExternalAbovePlacement(placement, 0) ||
