@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   GALLERY_CONSTS,
-  featureManager,
   window,
   utils,
   isEditMode,
@@ -286,7 +285,6 @@ class ItemView extends React.Component {
         this.props.options[
           optionsMap.behaviourParams.item.overlay.hoveringBehaviour
         ];
-      const isNewMobileSettings = featureManager.supports.mobileSettings;
       if (
         hoveringBehaviour ===
         GALLERY_CONSTS[
@@ -310,7 +308,6 @@ class ItemView extends React.Component {
           GALLERY_CONSTS[
             optionsMap.behaviourParams.item.overlay.hoveringBehaviour
           ].NEVER_SHOW &&
-        isNewMobileSettings &&
         (allowDescription || allowTitle || isStoreGallery)
       ) {
         return true;

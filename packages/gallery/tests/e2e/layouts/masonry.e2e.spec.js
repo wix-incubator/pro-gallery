@@ -15,7 +15,7 @@ describe('masonry - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('masonry - scrollDirection = vertical', async () => {
+  it('masonry - layoutParams_structure_scrollDirection = VERTICAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].MASONRY,
@@ -28,7 +28,7 @@ describe('masonry - e2e', () => {
     const page = await driver.grab.screenshot();
     expect(page).toMatchImageSnapshot();
   });
-  it('masonry - scrollDirection = horizontal', async () => {
+  it('masonry - layoutParams_structure_scrollDirection = HORIZONTAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].MASONRY,

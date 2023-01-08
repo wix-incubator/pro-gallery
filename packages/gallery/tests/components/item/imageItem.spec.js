@@ -26,7 +26,7 @@ describe('Image Item', () => {
     expect(galleryDriver.find.hook('image-item').length).to.equal(1);
   });
 
-  it('should set grid-fit if cubeType is fit', () => {
+  it('should set grid-fit if layoutParams_crop_method is fit', () => {
     galleryDriver.mount(ImageItem, imageItemsProps);
     expect(galleryDriver.find.hook('image-item').hasClass('grid-fit')).to.be
       .true;

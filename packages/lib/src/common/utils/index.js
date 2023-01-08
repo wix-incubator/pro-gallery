@@ -34,7 +34,7 @@ class Utils {
 
   inRange(value, range, max = range) {
     if (range === 0) {
-      throw new Error('Range cannot be 0');
+      return -1;
     }
     while (value < 0) {
       value += range;
@@ -703,10 +703,13 @@ class Utils {
 
   isSingleItemHorizontalDisplay(options) {
     return (
-      options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-      options.groupSize === 1 &&
-      options.cubeImages &&
-      options.layoutParams.cropRatio === '100%/100%'
+      options.scrollDirection ===
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .HORIZONTAL &&
+      options[optionsMap.layoutParams.groups.groupSize] === 1 &&
+      options[optionsMap.layoutParams.crop.enable] &&
+      options[optionsMap.layoutParams.crop.ratios].length === 1 &&
+      options[optionsMap.layoutParams.crop.ratios][0] === '100%/100%'
     );
   }
 
@@ -744,25 +747,12 @@ class Utils {
   }
 
   isHeightSetByGallery(options) {
-    const oldSPs_isHeightSetByGallery = (options) => {
-      //NEW STYPEPARAMS METHOD remove when done
-      return (
-        options.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL &&
-        options.enableInfiniteScroll
-      );
-    };
-    const newSPs_isHeightSetByGallery = (options) => {
-      return (
-        options[optionsMap.layoutParams.structure.galleryLayout] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-            .VERTICAL &&
-        !options[optionsMap.behaviourParams.gallery.vertical.loadMore]
-      ); //NEW STYLEPARAMS METHOD POSSIBLE BUG FOUND Could be that I need to add the horizontal gallery ratio thing here....
-    };
     return (
-      oldSPs_isHeightSetByGallery(options) || //NEW STYPEPARAMS METHOD remove when done
-      newSPs_isHeightSetByGallery(options)
-    );
+      options[optionsMap.layoutParams.structure.galleryLayout] ===
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
+          .VERTICAL &&
+      !options[optionsMap.behaviourParams.gallery.vertical.loadMore]
+    ); //v5 TODO!!! NEW STYLEPARAMS METHOD POSSIBLE BUG FOUND Could be that I need to add the horizontal gallery ratio thing here....
   }
 }
 

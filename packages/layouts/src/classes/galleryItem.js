@@ -348,11 +348,20 @@ class GalleryItem {
     }
   }
 
+  get cubeTypeResizeMethod() {
+    return {
+      [GALLERY_CONSTS.layoutParams_crop_method.FIT]:
+        GALLERY_CONSTS.resizeMethods.FIT,
+      [GALLERY_CONSTS.layoutParams_crop_method.FILL]:
+        GALLERY_CONSTS.resizeMethods.FILL,
+    }[this.cubeType];
+  }
+
   createMagnifiedUrl(scale = 1) {
     if (!this.urls.magnified_url) {
       const { innerWidth, innerHeight } = this.style;
       this.urls.magnified_url = this.processedMediaUrl(
-        this.cubeType,
+        this.cubeTypeResizeMethod,
         innerWidth * scale,
         innerHeight * scale,
         this.sharpParams,
@@ -365,7 +374,7 @@ class GalleryItem {
   get resized_url() {
     if (!this.urls.resized_url) {
       this.urls.resized_url = this.processedMediaUrl(
-        this.cubeType,
+        this.cubeTypeResizeMethod,
         this.resizeWidth,
         this.resizeHeight,
         this.sharpParams
@@ -377,7 +386,7 @@ class GalleryItem {
   get multi_url() {
     if (!this.urls.multi_url) {
       this.urls.multi_url = this.processedMediaUrl(
-        this.cubeType,
+        this.cubeTypeResizeMethod,
         this.resizeWidth,
         this.resizeHeight,
         this.sharpParams,

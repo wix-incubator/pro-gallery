@@ -27,7 +27,6 @@ describe('Video Item ', () => {
   });
 
   it('should create PlayerElement if video can play in gallery, and is set to play', async () => {
-    //utils.isMobile() && itemClick !== 'expand'
     stub = sinon.stub(utils, 'isMobile').returns(true);
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.clickAction]:
@@ -58,7 +57,6 @@ describe('Video Item ', () => {
     );
     stub.restore();
 
-    //!utils.isMobile() && itemClick !== 'expand'
     stub = sinon.stub(utils, 'isMobile').returns(false);
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.clickAction]:
@@ -88,7 +86,6 @@ describe('Video Item ', () => {
     );
     stub.restore();
 
-    //!utils.isMobile() && videoPlay !== 'onClick'
     stub = sinon.stub(utils, 'isMobile').returns(false);
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.video.playTrigger]:

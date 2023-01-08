@@ -15,7 +15,7 @@ describe('slideshow - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('slideshow - scrollDirection = vertical', async () => {
+  it('slideshow - layoutParams_structure_scrollDirection = VERTICAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
@@ -29,7 +29,7 @@ describe('slideshow - e2e', () => {
     const page = await driver.grab.screenshot();
     expect(page).toMatchImageSnapshot();
   });
-  it('slideshow - scrollDirection = horizontal', async () => {
+  it('slideshow - layoutParams_structure_scrollDirection = HORIZONTAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]

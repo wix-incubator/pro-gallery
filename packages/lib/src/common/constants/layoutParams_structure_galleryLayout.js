@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import optionsMap from '../../core/helpers/optionsMap';
 
 const LAYOUTS = {

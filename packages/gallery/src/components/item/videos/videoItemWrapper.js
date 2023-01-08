@@ -4,13 +4,19 @@ import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import VideoItemPlaceholder from './videoItemPlaceholder';
+import { clickable } from '../../helpers/mouseCursorPosition';
 
 const isIos = utils.isiOS();
 const useTransparentPlayButtonAndForceLoadVideo = (props) =>
   (props.videoUrl || props.url).includes('youtube.com') && isIos;
 
 const VideoPlayButton = ({ pointerEvents }) => (
-  <div style={{ pointerEvents: pointerEvents ? 'initial' : 'none' }}>
+  <clickable.div
+    style={{
+      pointerEvents: pointerEvents ? 'initial' : 'none',
+      cursor: 'pointer',
+    }}
+  >
     <i
       key="play-triangle"
       data-hook="play-triangle"
@@ -25,7 +31,7 @@ const VideoPlayButton = ({ pointerEvents }) => (
     >
       <PlayBackground />
     </i>
-  </div>
+  </clickable.div>
 );
 
 class VideoItemWrapper extends React.Component {

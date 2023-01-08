@@ -15,7 +15,7 @@ describe('thumbnail - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('thumbnail - scrollDirection = vertical', async () => {
+  it('thumbnail - layoutParams_structure_scrollDirection = VERTICAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
@@ -29,7 +29,7 @@ describe('thumbnail - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('thumbnail - scrollDirection = horizontal', async () => {
+  it('thumbnail - layoutParams_structure_scrollDirection = HORIZONTAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]

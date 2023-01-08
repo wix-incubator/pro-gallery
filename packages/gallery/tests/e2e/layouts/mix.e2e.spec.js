@@ -15,7 +15,7 @@ describe('mix - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('mix - scrollDirection = vertical', async () => {
+  it('mix - layoutParams_structure_scrollDirection = VERTICAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].MIX,
@@ -28,7 +28,7 @@ describe('mix - e2e', () => {
     const page = await driver.grab.partialScreenshot();
     expect(page).toMatchImageSnapshot();
   });
-  it('mix - scrollDirection = horizontal', async () => {
+  it('mix - layoutParams_structure_scrollDirection = HORIZONTAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].MIX,

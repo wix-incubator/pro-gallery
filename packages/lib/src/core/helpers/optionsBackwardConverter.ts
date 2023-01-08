@@ -1,5 +1,5 @@
 import { trimUndefinedValues_flat } from './optionsUtils';
-import { isLayout } from '../../common/constants/layout';
+import { isLayout } from '../../common/constants/layoutParams_structure_galleryLayout';
 import optionsMap from './optionsMap';
 import {
   nameChangedLayoutParams,
@@ -17,7 +17,6 @@ function addOldOptions(flatOptions) {
   let flat_combinedOptions = {
     ...trimUndefinedValues_flat(flat_migrated),
     ...trimUndefinedValues_flat(flatOptions),
-    // ...(flatOptions.newSPs ? trimUndefinedValues_flat(flat_migrated) : {}),
   };
   flat_combinedOptions.wasConvertedToOldOptions = true;
   return flat_combinedOptions;

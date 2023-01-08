@@ -15,7 +15,7 @@ describe('panorama - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('panorama - scrollDirection = vertical', async () => {
+  it('panorama - layoutParams_structure_scrollDirection = VERTICAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
@@ -29,7 +29,7 @@ describe('panorama - e2e', () => {
     const page = await driver.grab.screenshot();
     expect(page).toMatchImageSnapshot();
   });
-  it('panorama - scrollDirection = horizontal', async () => {
+  it('panorama - layoutParams_structure_scrollDirection = HORIZONTAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]

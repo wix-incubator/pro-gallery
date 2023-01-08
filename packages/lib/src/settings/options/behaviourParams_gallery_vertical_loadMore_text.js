@@ -10,6 +10,6 @@ export default {
   isRelevantDescription:
     'Set a Vertical gallery ("Scroll Direction" as "Vertical") and set "Enable load more button" to "true".',
   type: INPUT_TYPES.TEXT,
-  default: 'Load More', //NEW STYPEPARAMS METHOD one source
+  default: 'Load More', //one source
   description: 'Set the text of the load more button',
 };
