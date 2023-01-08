@@ -18,7 +18,7 @@ export default {
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal"), "Show Navigation Arrows" to "true" and Navigation arrows styling ("layoutParams.navigationArrows.container.type") to "BOX".',
   type: INPUT_TYPES.TEXT,
-  // default: 'rgba(0,0,0,0)',
+  default: 'rgba(0,0,0,0)',
   description: `Choose the color of the navigating arrows background.
   `,
 };
