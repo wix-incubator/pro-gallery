@@ -7,6 +7,19 @@ import { window } from "pro-gallery-lib";
 import { GALLERY_CONSTS } from "pro-gallery-lib";
 import { createScrollAnimations } from "./cssAnimationsHelper";
 
+const advancedScrollAnimation = [
+  {
+    type: GALLERY_CONSTS.scrollAnimations.GRAYSCALE,
+    fromValue: 0,
+    toValue: 100,
+    fromPosition: 0,
+    toPosition: 800,
+    direction: "IN", // IN, OUT, BOTH
+    iterations: 10,
+    reset: false,
+  },
+];
+
 const isHorizontalScroll = (options) => options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
 const getContainerSize = (options, container) =>
   isHorizontalScroll(options)
@@ -67,13 +80,13 @@ class CssScrollHelper {
     );
   }
 
-  createScrollSelectorsFunction({ itemId, item, container, options, direction, animationDistanceInPx }) {
+  createScrollSelectorsFunction({ itemId, item, container, options, direction }) {
     const imageStart = Math.round(isHorizontalScroll(options) ? item.offset.left : item.offset.top);
     const imageSize = Math.round(isHorizontalScroll(options) ? item.width : item.height);
 
     const containerSize = getContainerSize(options, container);
 
-    return ({ fromPosition, toPosition, selectorSuffix, animationCss }) => {
+    return ({ animationParams, selectorSuffix, animationCss }) => {
       // fromPosition:  the distance from the bottom of the screen to start the animation
       // toPosition:  the distance from the bottom of the screen to end the animation
 
@@ -84,9 +97,10 @@ class CssScrollHelper {
           .join("\n");
         return res;
       };
-      const iterations = Math.max(10, Math.round(animationDistanceInPx / 20));
+      const { iterations, fromPosition, toPosition } = animationParams;
       this.transitionDuration = 400;
 
+      debugger;
       const createAnimationStep = (idx, isExit) => {
         if (isExit) {
           idx = iterations - idx;
@@ -163,16 +177,18 @@ class CssScrollHelper {
         addScrollClass(`${transitionCss}; ${createAnimationStep(0, true)}`, [selectorSuffix]);
 
         if (direction === "IN") {
+          debugger;
           addScrollClass(
             createAnimationStep(0) + " transtion: none !important;",
             createSelectorsRange(entryAnimationStart - this.animationPadding, entryAnimationStart)
           );
-          addScrollClasses(createAnimationRange(entryAnimationStart, entryAnimationEnd));
+          addScrollClasses(createAnimationRange(entryAnimationStart, entryAnimationEnd, false));
           // addScrollClass(
           //   createAnimationStep(iterations) + " transtion: none !important;",
           //   createSelectorsRange(entryAnimationEnd, entryAnimationEnd + this.animationPadding)
           // );
         } else if (direction === "OUT") {
+          debugger;
           // addScrollClass(
           //   createAnimationStep(iterations) + " transtion: none !important;",
           //   createSelectorsRange(exitAnimationStart - this.animationPadding, exitAnimationStart)
@@ -196,65 +212,73 @@ class CssScrollHelper {
     };
   }
 
-  createScrollAnimationsIfNeeded({ idx, item, container, options }) {
+  createScrollAnimationsIfNeeded({ idx, item, container, options, animation }) {
     const { isRTL, scrollAnimation, exitScrollAnimation, oneColorAnimationColor } = options;
-
+    const animationParams = animation; //TODO: replace with new option
+    const { direction } = animationParams;
     const itemId = this.getSellectorDomId(item);
-
     const containerSize = getContainerSize(options, container);
-    const animationDistanceInPx = Math.round(containerSize * (options.scrollAnimationDistance / 100));
 
-    const createEntryScrollSelectors = this.createScrollSelectorsFunction({
+    // debugger;
+
+    const createEntryScrollSelectors =
+      direction === "OUT"
+        ? () => {}
+        : this.createScrollSelectorsFunction({
+            itemId,
+            item,
+            container,
+            options,
+            direction: "IN",
+          });
+    const createExitScrollSelectors =
+      direction === "IN"
+        ? () => {}
+        : this.createScrollSelectorsFunction({
+            itemId,
+            item,
+            container,
+            options,
+            direction: "OUT",
+          });
+
+    const createScrollAnimationParams = {
       itemId,
       item,
-      container,
       options,
-      direction: "IN",
-      animationDistanceInPx,
-    });
-    const createExitScrollSelectors = this.createScrollSelectorsFunction({
-      itemId,
-      item,
-      container,
-      options,
-      animationDistanceInPx,
-      direction: "OUT",
-    });
-
+      containerSize,
+      animationParams,
+      isHorizontalScroll: isHorizontalScroll(options),
+    };
     return (
-      createScrollAnimations({
-        createScrollSelectors: createEntryScrollSelectors,
-        itemId,
-        item,
-        options,
-        containerSize: getContainerSize(options, container),
-        scrollAnimation: options.scrollAnimation,
-        isHorizontalScroll: isHorizontalScroll(options),
-        animationDistanceInPx,
-      }) +
+      (direction === "OUT"
+        ? ""
+        : createScrollAnimations({
+            createScrollSelectors: createEntryScrollSelectors,
+            ...createScrollAnimationParams,
+          })) +
       " \n" +
-      createScrollAnimations({
-        createScrollSelectors: createExitScrollSelectors,
-        itemId,
-        item,
-        options,
-        containerSize: getContainerSize(options, container),
-        scrollAnimation: options.exitScrollAnimation,
-        isHorizontalScroll: isHorizontalScroll(options),
-        animationDistanceInPx,
-      })
+      (direction === "IN"
+        ? ""
+        : createScrollAnimations({
+            createScrollSelectors: createExitScrollSelectors,
+            ...createScrollAnimationParams,
+          }))
     );
   }
 
   calcScrollCssForItem({ item, container, options }) {
     const { idx } = item;
     let scrollCss = "";
-    scrollCss += this.createScrollAnimationsIfNeeded({
-      idx,
-      item,
-      container,
-      options,
-    });
+    for (const animation of advancedScrollAnimation) {
+      scrollCss += this.createScrollAnimationsIfNeeded({
+        idx,
+        item,
+        container,
+        options,
+        animation,
+      });
+    }
 
     this.scrollCss[idx] = scrollCss || this.scrollCss[idx];
 
@@ -267,12 +291,12 @@ class CssScrollHelper {
     if (!(items && items.length)) {
       return [];
     }
-    if (
-      (!scrollAnimation || scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT) &&
-      (!exitScrollAnimation || exitScrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT)
-    ) {
-      return [];
-    }
+    // if (
+    //   (!scrollAnimation || scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT) &&
+    //   (!exitScrollAnimation || exitScrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT)
+    // ) {
+    //   return [];
+    // }
 
     const res = items.map((item) => this.calcScrollCssForItem({ item, container, options }));
     return res;
