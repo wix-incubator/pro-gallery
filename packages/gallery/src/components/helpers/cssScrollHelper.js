@@ -32,7 +32,7 @@ const advancedScrollAnimation = [
   },
 ];
 
-const isHorizontalScroll = (options) => options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
+const isHorizontalScroll = (options) => options.layoutParams_structure_scrollDirection === GALLERY_CONSTS.layoutParams_structure_scrollDirection.HORIZONTAL;
 const getContainerSize = (options, container) =>
   isHorizontalScroll(options)
     ? Math.min(container.width, window.innerWidth)
@@ -110,7 +110,6 @@ class CssScrollHelper {
       };
       const { transitionDuration, iterations, fromPosition, toPosition } = animationParams;
 
-      debugger;
       const createAnimationStep = (idx, isExit) => {
         if (isExit) {
           idx = iterations - idx;
@@ -189,7 +188,6 @@ class CssScrollHelper {
         addScrollClass(`${transitionCss}; ${createAnimationStep(0, true)}`, [selectorSuffix]);
 
         if (direction === "IN") {
-          debugger;
           addScrollClass(
             createAnimationStep(0) + " transtion: none !important;",
             createSelectorsRange(entryAnimationStart - this.animationPadding, entryAnimationStart)
@@ -200,7 +198,6 @@ class CssScrollHelper {
           //   createSelectorsRange(entryAnimationEnd, entryAnimationEnd + this.animationPadding)
           // );
         } else if (direction === "OUT") {
-          debugger;
           // addScrollClass(
           //   createAnimationStep(iterations) + " transtion: none !important;",
           //   createSelectorsRange(exitAnimationStart - this.animationPadding, exitAnimationStart)
@@ -225,7 +222,7 @@ class CssScrollHelper {
   }
 
   createScrollAnimationsIfNeeded({ idx, item, container, options, animation }) {
-    const { isRTL, scrollAnimation, exitScrollAnimation, oneColorAnimationColor } = options;
+    const { isRTL, oneColorAnimationColor } = options;
     const animationParams = animation; //TODO: replace with new option
     const { direction } = animationParams;
     const itemId = this.getSellectorDomId(item);
@@ -282,9 +279,9 @@ class CssScrollHelper {
   calcScrollCssForItem({ item, container, options }) {
     const { idx } = item;
     let scrollCss = "";
-    console.log("advancedScrollAnimation", options.advancedScrollAnimation);
+    console.log("advancedScrollAnimation", options.behaviourParams_gallery_advancedScrollAnimation);
     try {
-      for (const animation of options.advancedScrollAnimation) {
+      for (const animation of options.behaviourParams_gallery_advancedScrollAnimation) {
         scrollCss += this.createScrollAnimationsIfNeeded({
           idx,
           item,
@@ -295,7 +292,7 @@ class CssScrollHelper {
       }
       this.scrollCss[idx] = scrollCss || this.scrollCss[idx];
     } catch (e) {
-      console.error("failed to calc scroll CSS for item # " + idx, e);
+      idx === 1 && console.error("failed to calc scroll CSS for item # " + idx, e);
     }
     return this.scrollCss[idx];
   }

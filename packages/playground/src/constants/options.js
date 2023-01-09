@@ -119,7 +119,6 @@ export const getOptionsFromUrl = (locationSearchString) => {
 export const setOptionsInUrl = (options) => {
   // console.log(`[STYLE PARAMS - VALIDATION] setting options in the url`, options);
   const formatValueForUrl = (val) => {
-    debugger;
     if (typeof val === 'object') {
       return encodeURI(JSON.stringify(val));
     }if (typeof val === 'string') {

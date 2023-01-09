@@ -53,7 +53,7 @@ export const createScrollAnimations = ({
     PAN_RIGHT,
     PAN_UP,
     PAN_DOWN,
-  } = GALLERY_CONSTS.advancedScrollAnimations;
+  } = GALLERY_CONSTS.behaviourParams_gallery_advancedScrollAnimation;
 
   const i = scrollAnimationIntensity || 25;
   const h = isHorizontalScroll;
@@ -177,19 +177,19 @@ export const createScrollAnimations = ({
       }),
     });
   }
-  if (hasAnimation(ZOOM_IN)) {
-    const fromVal = 1;
-    const toVal = Math.round(110 + i / 4) / 100; // 1.1-1.35
-    const animationParams = s[ZOOM_IN];
-    const { fromValue, toValue } = animationParams;
-    addScrollSelectors({
-      selectorSuffix: `#${itemId} .gallery-item-content`,
-      animationParams,
-      animationCss: (step, isExit) => ({
-        transform: `scale(${valueInRange(step, fromVal, toVal, 0.01)})`,
-      }),
-    });
-  }
+  // if (hasAnimation(ZOOM_IN)) {
+  //   const fromVal = 1;
+  //   const toVal = Math.round(110 + i / 4) / 100; // 1.1-1.35
+  //   const animationParams = s[ZOOM_IN];
+  //   const { fromValue, toValue } = animationParams;
+  //   addScrollSelectors({
+  //     selectorSuffix: `#${itemId} .gallery-item-content`,
+  //     animationParams,
+  //     animationCss: (step, isExit) => ({
+  //       transform: `scale(${valueInRange(step, fromVal, toVal, 0.01)})`,
+  //     }),
+  //   });
+  // }
   if (hasAnimation(BLUR)) {
     const fromVal = Math.round(10 + (i * 9) / 10); // 10-100;
     const toVal = 0;

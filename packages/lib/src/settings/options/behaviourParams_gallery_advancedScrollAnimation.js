@@ -7,9 +7,13 @@ export default {
   isRelevantDescription:
     'To enable "Scroll Animation" either set a Vertical gallery ("Scroll Direction" as "Vertical")\nor set a Horizontal gallery ("Scroll Direction" as "Horizontal") with "Slide Animation" set to "Scroll".',
   isRelevant: (sp) =>
-    sp.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL ||
-    (sp.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-      sp.slideAnimation === GALLERY_CONSTS.slideAnimations.SCROLL),
+    sp.layoutParams_structure_scrollDirection ===
+      GALLERY_CONSTS.layoutParams_structure_scrollDirection.VERTICAL ||
+    (sp.layoutParams_structure_scrollDirection ===
+      GALLERY_CONSTS.layoutParams_structure_scrollDirection.HORIZONTAL &&
+      sp.behaviourParams_gallery_horizontal_slideAnimation ===
+        GALLERY_CONSTS.behaviourParams_gallery_horizontal_slideAnimation
+          .SCROLL),
   type: INPUT_TYPES.JSON,
   default: [],
 };

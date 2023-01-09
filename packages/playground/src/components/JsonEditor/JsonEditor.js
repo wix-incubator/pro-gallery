@@ -190,11 +190,14 @@ class JsonEditor extends React.Component {
         );
       case INPUT_TYPES.JSON:
         return (
+          // theValue.plainText
           <JSONInput
-            placeholder={theValue || []}
+            placeholder={theValue.jsObject || (typeof theValue === 'object' ? theValue : [])}
+            reset={false}
             theme="light_mitsuketa_tribute"
             height="550px"
-            onChange={(e) => this.onFieldChanged(key, e)}
+            width="360px"
+            onChange={(e) => e.jsObject && this.onFieldChanged(key, JSON.stringify(e.jsObject))}
           />
         );
       case INPUT_TYPES.TEXT:
