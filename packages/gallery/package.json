@@ -1,6 +1,6 @@
 {
   "name": "pro-gallery",
-  "version": "5.0.5",
+  "version": "5.0.8",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],

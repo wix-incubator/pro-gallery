@@ -1,6 +1,6 @@
 {
   "name": "pro-playground",
-  "version": "5.0.5",
+  "version": "5.0.8",
   "private": true,
   "scripts": {
     "watch": "sleep 10 && node scripts/start.js",
