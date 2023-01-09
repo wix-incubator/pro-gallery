@@ -1,7 +1,10 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom';
 import { GALLERY_CONSTS, utils, optionsMap } from 'pro-gallery-lib';
-import { ArrowFollower } from '../../helpers/mouseCursorPosition';
+import {
+  ArrowFollower,
+  MouseFollowerProvider,
+} from '../../helpers/mouseCursorPosition';
 import {
   getArrowBoxStyle,
   getArrowsRenderData,
@@ -170,8 +173,10 @@ export function NavigationArrows({
       isRTL={isRTL}
       navigationArrowPortalId={navigationArrowPortalId}
     >
-      {hideLeftArrow ? null : renderArrow(true)}
-      {hideRightArrow ? null : renderArrow(false)}
+      <MouseFollowerProvider id={id}>
+        {hideLeftArrow ? null : renderArrow(true)}
+        {hideRightArrow ? null : renderArrow(false)}
+      </MouseFollowerProvider>
     </ArrowsContainer>
   );
 }

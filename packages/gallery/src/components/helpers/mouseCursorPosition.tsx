@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Emitter from './emitter';
 import { proxy } from './proxy';
 import { utils } from 'pro-gallery-lib';
@@ -12,6 +12,22 @@ type MouseFollowerEvents = {
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function mouseFollower(container: HTMLElement) {
   const emitter = new Emitter<MouseFollowerEvents>();
+  let state = {
+    mouseIn: false,
+    position: [0, 0] as [number, number],
+  };
+  emitter.listen.mouseEnterState((mouseIn, ...position) => {
+    state = {
+      mouseIn,
+      position,
+    };
+  });
+  emitter.listen.mouseMove((x, y) => {
+    state = {
+      ...state,
+      position: [x, y],
+    };
+  });
   const getMousePosition = (event: MouseEvent) => {
     const bounding = container.getBoundingClientRect();
     const position = [
@@ -48,6 +64,9 @@ export function mouseFollower(container: HTMLElement) {
   container.addEventListener('click', onClick);
   return {
     listen: emitter.listen,
+    get state() {
+      return state;
+    },
     destroy: () => {
       container.removeEventListener('mouseenter', onMouseEnter);
       container.removeEventListener('mousemove', onMouseMove);
@@ -74,23 +93,58 @@ interface MouseCursorState {
 const getContainerById = (id: string) =>
   document.getElementById(`pro-gallery-container-${id}`) as HTMLElement;
 
+const MouseFollowerContext = React.createContext<
+  ReturnType<typeof mouseFollower> | undefined
+>(undefined);
+
+export const MouseFollowerProvider = ({
+  children,
+  id,
+}: {
+  children: React.ReactNode;
+  id: string;
+}) => {
+  const [mouseFollowerValue, setMouseFollowerValue] =
+    React.useState<ReturnType<typeof mouseFollower>>();
+  useEffect(() => {
+    const container = getContainerById(id);
+    const mouseFollowerValue = mouseFollower(container);
+    setMouseFollowerValue(mouseFollowerValue);
+    return () => {
+      mouseFollowerValue.destroy();
+    };
+  }, [id]);
+
+  return (
+    <MouseFollowerContext.Provider value={mouseFollowerValue}>
+      {mouseFollowerValue && children}
+    </MouseFollowerContext.Provider>
+  );
+};
+
 export class MouseCursor extends React.Component<
   MouseCursorProps,
   MouseCursorState
 > {
-  private mouseFollower?: ReturnType<typeof mouseFollower>;
+  declare context: NonNullable<React.ContextType<typeof MouseFollowerContext>>;
+
+  static contextType = MouseFollowerContext;
+
+  cleanup: (() => void) | undefined;
   componentDidMount(): void {
-    const element = this.props.getElement();
-    this.mouseFollower = mouseFollower(element);
-    this.mouseFollower.listen.mouseMove(
+    if (!this.context) {
+      throw new Error('MouseFollowerContext is undefined');
+    }
+    const removeMoveListener = this.context.listen.mouseMove(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (utils as any).throttle((x, y) => {
+      (utils as any).throttle(() => {
         this.setState({
-          position: [x, y],
+          position: this.context.state.position,
         });
       }, this.props.throttle)
     );
-    this.mouseFollower.listen.mouseEnterState((mouseIn, ...position) => {
+    const removeEnterListener = this.context.listen.mouseEnterState(() => {
+      const { mouseIn, position } = this.context.state;
       if (this.state.mouseIn !== mouseIn) {
         this.setState({
           mouseIn: mouseIn,
@@ -101,7 +155,7 @@ export class MouseCursor extends React.Component<
         }
       }
     });
-    this.mouseFollower.listen.mouseClick((e) => {
+    const removeClickListener = this.context.listen.mouseClick((e) => {
       if (!this.state.mouseIn) {
         return;
       }
@@ -111,13 +165,19 @@ export class MouseCursor extends React.Component<
       }
       this.props.onClick(e);
     });
+    this.cleanup = () => {
+      removeMoveListener();
+      removeEnterListener();
+      removeClickListener();
+    };
   }
   componentWillUnmount(): void {
-    this.mouseFollower?.destroy();
+    this.cleanup?.();
   }
+
   state: MouseCursorState = {
-    position: [0, 0],
-    mouseIn: false,
+    position: this.context?.state.position || [0, 0],
+    mouseIn: this.context?.state.mouseIn || false,
   };
   render(): React.ReactNode {
     if (!this.state.mouseIn) {
