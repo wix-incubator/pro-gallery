@@ -2,6 +2,7 @@ import ImageItem from '../../../src/components/item/imageItem';
 import { expect } from 'chai';
 import GalleryDriver from '../../drivers/reactDriver.js';
 import { testImages } from '../../drivers/mocks/images-mock';
+import { optionsMap, GALLERY_CONSTS } from 'pro-gallery-lib';
 
 describe('Image Item', () => {
   let galleryDriver, sampleItem, imageItemsProps;
@@ -11,7 +12,11 @@ describe('Image Item', () => {
     sampleItem = testImages[0];
     imageItemsProps = galleryDriver.props.itemView(sampleItem);
     Object.assign(imageItemsProps, {
-      options: { cubeType: 'fit', cubeImages: true },
+      options: {
+        [optionsMap.layoutParams.crop.method]:
+          GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
+        [optionsMap.layoutParams.crop.enable]: true,
+      },
       imageDimensions: { borderRadius: null },
     });
   });
@@ -21,7 +26,7 @@ describe('Image Item', () => {
     expect(galleryDriver.find.hook('image-item').length).to.equal(1);
   });
 
-  it('should set grid-fit if cubeType is fit', () => {
+  it('should set grid-fit if layoutParams_crop_method is fit', () => {
     galleryDriver.mount(ImageItem, imageItemsProps);
     expect(galleryDriver.find.hook('image-item').hasClass('grid-fit')).to.be
       .true;

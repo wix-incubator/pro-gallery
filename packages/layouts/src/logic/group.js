@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { optionsMap } from 'pro-gallery-lib';
 import { Item } from './item.js';
 
 const GROUP_TYPES_BY_RATIOS_V = {
@@ -47,23 +48,20 @@ export class Group {
 
     if (config.styleParams) {
       const { styleParams } = config;
-      this.scrollDirection = styleParams.scrollDirection;
-      this.cubeType = styleParams.cubeType;
-      this.cubeImages = styleParams.cubeImages;
-      this.isVertical = styleParams.isVertical;
-      this.minItemSize = styleParams.minItemSize;
-      this.collageAmount = styleParams.collageAmount;
-      this.collageDensity = styleParams.collageDensity;
-      this.groupTypes = String(styleParams.groupTypes);
-      this.repeatingGroupTypes = String(
-        styleParams.layoutParams.repeatingGroupTypes
-      );
-      this.rotatingCropRatios = String(styleParams.rotatingCropRatios);
-      this.chooseBestGroup = styleParams.chooseBestGroup;
+      this.scrollDirection = styleParams[optionsMap.layoutParams.structure.scrollDirection];
+      this.cubeType = styleParams[optionsMap.layoutParams.crop.method];
+      this.cubeImages = styleParams[optionsMap.layoutParams.crop.enable];
+      this.layoutOrientation = styleParams[optionsMap.layoutParams.structure.layoutOrientation];
+      this.minItemSize = styleParams[optionsMap.layoutParams.targetItemSize.minimum];
+      this.collageDensity = styleParams[optionsMap.layoutParams.groups.density];
+      this.groupTypes = String(styleParams[optionsMap.layoutParams.groups.allowedGroupTypes]);
+      this.repeatingGroupTypes = String(styleParams[optionsMap.layoutParams.groups.repeatingGroupTypes]);
+      this.rotatingCropRatios = styleParams[optionsMap.layoutParams.crop.ratios];
+      this.chooseBestGroup = styleParams[optionsMap.layoutParams.groups.groupByOrientation];
       this.externalInfoHeight = styleParams.externalInfoHeight;
       this.externalInfoWidth = styleParams.externalInfoWidth;
-      this.imageMargin = styleParams.imageMargin;
-      this.groupSize = styleParams.groupSize;
+      this.imageMargin = styleParams[optionsMap.layoutParams.structure.itemSpacing];
+      this.groupSize = styleParams[optionsMap.layoutParams.groups.groupSize];
     }
 
     this.visible = true;
@@ -82,7 +80,7 @@ export class Group {
   }
 
   resize() {
-    if (this.isVertical) {
+    if (this.layoutOrientation === 'VERTICAL') {
       this.resizeToWidth(this.targetItemSize);
     } else {
       this.resizeToHeight(this.targetItemSize);
@@ -118,16 +116,16 @@ export class Group {
     const shouldUseFixedHeight =
       this.cubeImages &&
       this.groupSize === 1 &&
-      ['fill', 'fit'].includes(this.cubeType) &&
+      ['FILL', 'FIT'].includes(this.cubeType) &&
       this.repeatingGroupTypes.length === 0 &&
-      this.rotatingCropRatios.length === 0;
+      this.rotatingCropRatios.length < 2;
     this.cubedHeight = shouldUseFixedHeight ? height : null;
   }
 
   round() {
     //round all sizes to full pixels
-
-    if (this.isLastGroup && this.scrollDirection === 0) {
+    
+    if (this.isLastGroup && this.scrollDirection === 'VERTICAL') {
       this.width = this.stripWidth - this.left;
     } else {
       this.width = Math.round(this.width);
@@ -225,7 +223,7 @@ export class Group {
       // } else if (this.isLastItems) {
       //   return this.groupTypes.split(',')[0] || '1';
     } else {
-      //isVertical - is the gallery vertical (pinterest style) or horizontal (flickr style)
+      //layoutOrientation === 'VERTICAL' - is the gallery vertical (pinterest style) or horizontal (flickr style)
 
       //---------| Find the best groupType for each ratios case
       //optional types:
@@ -246,7 +244,7 @@ export class Group {
       //  3l  => ppp,plp,ppl,pll (vertical only)
       //  3r  => ppp,plp,lpp,llp (vertical only)
 
-      const isV = this.isVertical;
+      const isV = this.layoutOrientation === 'VERTICAL';
       let optionalTypes; //optional groupTypes (separated by ,). 1 is always optional
 
       if (this.chooseBestGroup) {
@@ -326,7 +324,7 @@ export class Group {
 
   calculateRandomSeed(numOfOptions) {
     let seed;
-    if (this.isVertical) {
+    if (this.layoutOrientation === 'VERTICAL') {
       //vertical galleries random is not relevant (previous group is in another column)
       seed = this.items[0].seed % numOfOptions;
     } else {

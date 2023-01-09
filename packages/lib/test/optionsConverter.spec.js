@@ -27,6 +27,7 @@ describe('Styles processing', () => {
   it('should have new and old styles combined coming from both old and new objects', () => {
     const migrated = addMigratedOptions(flattenObject(defaultOptions_old()));
     const reversed = addOldOptions(flattenObject(defaultOptions_new()));
+    delete reversed.wasConvertedToOldOptions;
     expect(migrated).to.eql(reversed);
   });
 
@@ -48,6 +49,7 @@ describe('Styles processing', () => {
   });
   it('should not have defined properties if they were not initialy defined', () => {
     const migrated = addOldOptions(addMigratedOptions({}));
+    delete migrated.wasConvertedToOldOptions;
     const flat = flattenObject(migrated);
     Object.keys(flat).forEach((key) =>
       flat[key] === undefined ? delete flat[key] : {}
@@ -174,12 +176,13 @@ function semiRefactored() {
 // }
 
 function defaultOptions_old() {
-  const oldDefaults = v3DefaultOptions;
+  const oldDefaults = { ...v3DefaultOptions };
+
   // these are merged in the migration and will not be defined going new to old.
   oldDefaults.gallerySizePx = undefined;
   oldDefaults.gallerySizeRatio = undefined;
   oldDefaults.rotatingCropRatios = undefined;
-  oldDefaults.fixedColumns = undefined;
+  // oldDefaults.fixedColumns = 0;
   return oldDefaults;
 }
 

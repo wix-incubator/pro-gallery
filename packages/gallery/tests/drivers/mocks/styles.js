@@ -1,107 +1,113 @@
+// import { GALLERY.CONSTS } from 'pro-gallery-lib';
+import { optionsMap, GALLERY_CONSTS } from 'pro-gallery-lib';
+
 const options = {
-  layoutParams: {
-    gallerySpacing: 0,
-    cropRatio: 1,
-    repeatingGroupTypes: '',
-  },
-  titlePlacement: 'SHOW_ON_HOVER',
-  hoveringBehaviour: 'NO_CHANGE',
-  galleryLayout: 2,
-  scrollDirection: 1,
-  numberOfImagesPerRow: 3,
-  numberOfImagesPerCol: 2,
-  isRTL: false,
-  isVertical: false,
-  gallerySize: 30,
-  minItemSize: 120,
-  chooseBestGroup: true,
-  groupSize: 3,
-  groupTypes: '1,2h,2v,3t,3b,3l,3r',
-  collageDensity: 0.8, //80, // should be 0.8 after
-  cubeImages: false,
-  cubeType: 'fill',
-  cropOnlyFill: false,
-  smartCrop: false,
-  rotatingCropRatio: '',
+  [optionsMap.layoutParams.structure.gallerySpacing]: 0,
+  [optionsMap.layoutParams.crop.ratios]: [1],
+  [optionsMap.layoutParams.groups.repeatingGroupTypes]: [],
+  [optionsMap.layoutParams.info.placement]:
+    GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
+  [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
+    GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour]
+      .ALWAYS_SHOW,
+  [optionsMap.layoutParams.structure.galleryLayout]: 2,
+  [optionsMap.layoutParams.structure.scrollDirection]:
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+      .HORIZONTAL,
+  [optionsMap.layoutParams.structure.numberOfColumns]: 3,
+  [optionsMap.layoutParams.structure.numberOfGridRows]: 2,
+  [optionsMap.behaviourParams.gallery.layoutDirection]:
+    GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+      .LEFT_TO_RIGHT,
+  [optionsMap.layoutParams.structure.layoutOrientation]:
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
+      .HORIZONTAL,
   fixedColumns: 0,
-  forceFullStrips: false,
-  groupsPerStrip: 0,
-  imageMargin: 10,
-  scatter: 0,
-  rotatingScatter: '',
-  gridStyle: 0,
-  placeGroupsLtr: false,
-  showArrows: true,
-  enableInfiniteScroll: true,
-  thumbnailSpacings: 4,
-  enableScroll: true,
-  hasThumbnails: true,
-  isAutoSlideshow: false,
-  slideshowLoop: false,
-  autoSlideshowInterval: 4,
-  galleryTextAlign: 'center',
-  scrollSnap: false,
-  fullscreen: true,
-  arrowsPosition: 0,
-  arrowsVerticalPosition: 'ITEM_CENTER',
-  arrowsSize: 23,
-  arrowsPadding: 23,
-  // bgColorExpand: color-1
-  // actionsColorExpand: color-5
-  // titleFontExpand: font_5
-  // titleColorExpand: color-5
-  // descriptionFontExpand: font_8
-  // descriptionColorExpand: color-5,
-  // addToCartBackColorExpand: color-5,
-  // addToCartFontExpand: font-8
-  // addToCartColorExpand: color-1
-  //addToCartBorderColor: color-5,
-  slideshowInfoSize: 200,
-  playButtonForAutoSlideShow: false,
-  pauseAutoSlideshowOnHover: true,
-  allowSlideshowCounter: false,
-  galleryThumbnailsAlignment: 'bottom',
-  thumbnailSize: 250,
-  magicLayoutSeed: 1,
-  //itemOpacity:'color-5', startWithOpacity: 0.60,
-  //itemIconColorSlideshow: 'color-5'
-  // itemIconColor: color-1
-  // arrowsColor: 'color-1'
-  // itemFont: 'font_5'  // startWithSize: 22,
-  // itemFontColor: 'color-1'
-  // itemFontSlideshow:'font_5' // startWithSize: 22,
-  // itemFontColorSlideshow: 'color-5'
-  // itemDescriptionFont: 'font_8' // startWithSize: 15
-  // itemDescriptionFontColor: 'color-1'
-  // itemDescriptionFontSlideshow: 'font_8' // startWithSize: 15
-  // itemDescriptionFontColorSlideshow: 'color-5'
-  // textBoxFillColor: 'color-2', //startWithOpacity: 1,
-  textBoxHeight: 200,
-  textImageSpace: 10,
-  textBoxBorderRadius: 0,
-  textBoxBorderWidth: 0,
-  // textBoxBorderColor: color-5,
-  loadMoreButtonText: '',
-  //loadMoreButtonFont: font_8
-  // loadMoreButtonFontColor: color-5
-  // loadMoreButtonColor: startWithOpacity: '1', startWithColor: 'color-1'
-  // loadMoreButtonBorderColor:  startWithColor: 'color-5'
-  itemBorderWidth: 0,
-  // itemBorderColor: 'color-5'
-  itemBorderRadius: 0,
-  itemEnableShadow: false,
-  // itemShadowOpacityAndColor: startWithColor: 'color-5', startWithOpacity: 0.2
-  itemShadowBlur: 20,
-  itemShadowDirection: 135,
-  itemShadowSize: 10,
-  // imageLoadingColor: startWithColor: 'color-3'
-  // oneColorAnimationColor: startWithColor: 'color-1',
-  videoSound: false,
-  videoSpeed: '1',
-  videoLoop: true,
-  shouldIndexDirectShareLinkInSEO: true,
-  slideTransition: 'ease',
-  enableVideoPlaceholder: true,
+  [optionsMap.layoutParams.structure.itemSpacing]: 10,
+  [optionsMap.layoutParams.groups.numberOfGroupsPerRow]: 0,
+  [optionsMap.layoutParams.crop.enable]: false,
+  [optionsMap.layoutParams.crop.enableSmartCrop]: false,
+  [optionsMap.layoutParams.crop.cropOnlyFill]: false,
+  [optionsMap.layoutParams.targetItemSize.minimum]: 120,
+  [optionsMap.layoutParams.structure.scatter.randomScatter]: 0,
+  [optionsMap.layoutParams.structure.scatter.manualScatter]: '',
+  [optionsMap.layoutParams.groups.density]: 0.8,
+  [optionsMap.layoutParams.groups.groupByOrientation]: true,
+  [optionsMap.layoutParams.groups.groupSize]: 3,
+  [optionsMap.layoutParams.thumbnails.enable]: true,
+  [optionsMap.layoutParams.thumbnails.spacing]: 4,
+  [optionsMap.layoutParams.thumbnails.size]: 250,
+  [optionsMap.layoutParams.navigationArrows.enable]: true,
+  [optionsMap.layoutParams.navigationArrows.padding]: 23,
+  [optionsMap.layoutParams.navigationArrows.verticalAlignment]:
+    GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
+      .ITEM_CENTER,
+  [optionsMap.layoutParams.navigationArrows.size]: 23,
+  [optionsMap.layoutParams.info.spacing]: 10,
+  [optionsMap.layoutParams.info.border.width]: 0,
+  [optionsMap.layoutParams.info.border.radius]: 0,
+  [optionsMap.layoutParams.thumbnails.alignment]:
+    GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM,
+  [optionsMap.layoutParams.structure.groupsOrder]:
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.groupsOrder].BY_HEIGHT,
+  [optionsMap.layoutParams.groups.allowedGroupTypes]: [
+    '1',
+    '2h',
+    '2v',
+    '3t',
+    '3b',
+    '3l',
+    '3r',
+  ],
+  [optionsMap.layoutParams.structure.columnRatios]: undefined,
+  [optionsMap.layoutParams.crop.method]:
+    GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
+  [optionsMap.layoutParams.structure.responsiveMode]:
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
+      .FIT_TO_SCREEN,
+  [optionsMap.layoutParams.info.height]: 200,
+  [optionsMap.layoutParams.navigationArrows.position]:
+    GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
+      .ON_GALLERY,
+  [optionsMap.behaviourParams.item.video.loop]: true,
+  [optionsMap.behaviourParams.item.video.enablePlaceholder]: true,
+  [optionsMap.behaviourParams.gallery.horizontal.enableScrollSnap]: false,
+  [optionsMap.behaviourParams.gallery.enableIndexingShareLinks]: true,
+  [optionsMap.behaviourParams.gallery.vertical.loadMore.text]: '',
+  [optionsMap.behaviourParams.gallery.horizontal.slideTransition]:
+    GALLERY_CONSTS[
+      optionsMap.behaviourParams.gallery.horizontal.slideTransition
+    ].EASE,
+  [optionsMap.behaviourParams.gallery.horizontal.loop]: false,
+  [optionsMap.behaviourParams.gallery.horizontal.autoSlide.interval]: 4,
+  [optionsMap.behaviourParams.gallery.horizontal.autoSlide.pauseOnHover]: true,
+  [optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
+    .enableCounter]: false,
+  [optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
+    .enablePlayButton]: false,
+  [optionsMap.behaviourParams.gallery.vertical.loadMore.enable]: false,
+  [optionsMap.behaviourParams.gallery.horizontal.blockScroll]: false,
+  [optionsMap.behaviourParams.item.clickAction]: undefined,
+  [optionsMap.behaviourParams.item.video.playTrigger]: undefined,
+  [optionsMap.behaviourParams.item.video.volume]: 0,
+  [optionsMap.behaviourParams.item.video.speed]: 1,
+  [optionsMap.behaviourParams.gallery.vertical.loadMore.amount]: undefined,
+  [optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour]:
+    GALLERY_CONSTS[
+      optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
+    ].OFF,
+  [optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
+    .buttonsAlignment]:
+    GALLERY_CONSTS[
+      optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
+        .buttonsAlignment
+    ].CENTER,
+  [optionsMap.stylingParams.itemShadowBlur]: 20,
+  [optionsMap.stylingParams.itemShadowDirection]: 135,
+  [optionsMap.stylingParams.itemShadowSize]: 10,
+  [optionsMap.stylingParams.itemEnableShadow]: false,
+  [optionsMap.stylingParams.itemBorderRadius]: 0,
+  [optionsMap.stylingParams.itemBorderWidth]: 0,
 };
 
 const container = {

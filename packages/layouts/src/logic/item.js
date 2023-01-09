@@ -1,3 +1,4 @@
+import { optionsMap } from 'pro-gallery-lib';
 import { utils } from './utils';
 
 export class Item {
@@ -18,25 +19,35 @@ export class Item {
     this.idx = config.idx;
     this.inGroupIdx = config.inGroupIdx;
     this.container = config.container;
-    this.cubeType = 'fill';
+    this.cubeType = 'FILL';
 
     if (config.styleParams) {
       const { styleParams } = config;
-      this.cubeType = styleParams.cubeType;
-      this.cubeImages = styleParams.cubeImages;
-      this._cropRatio = styleParams.layoutParams.cropRatio;
-      this.rotatingCropRatios = styleParams.rotatingCropRatios;
-      this.smartCrop = styleParams.smartCrop;
-      this.cropOnlyFill = styleParams.cropOnlyFill;
-      this.imageMargin = styleParams.imageMargin;
-      this.gallerySpacing = styleParams.layoutParams.gallerySpacing;
-      this.forceFullStrips = styleParams.forceFullStrips;
-      this.scatter = styleParams.scatter;
-      this.rotatingScatter = styleParams.rotatingScatter;
-      this.smartCrop = styleParams.smartCrop;
+      this.cubeType = styleParams[optionsMap.layoutParams.crop.method];
+      this.cubeImages = styleParams[optionsMap.layoutParams.crop.enable];
+      this._cropRatio = styleParams[optionsMap.layoutParams.crop.ratios];
+      this.rotatingCropRatios =
+        styleParams[optionsMap.layoutParams.crop.ratios].length > 1 &&
+        styleParams[optionsMap.layoutParams.crop.ratios];
+      this.smartCrop =
+        styleParams[optionsMap.layoutParams.crop.enableSmartCrop];
+      this.cropOnlyFill =
+        styleParams[optionsMap.layoutParams.crop.cropOnlyFill];
+      this.imageMargin =
+        styleParams[optionsMap.layoutParams.structure.itemSpacing];
+      this.gallerySpacing =
+        styleParams[optionsMap.layoutParams.structure.gallerySpacing];
+      this.scatter =
+        styleParams[optionsMap.layoutParams.structure.scatter.randomScatter];
+      this.rotatingScatter =
+        styleParams[optionsMap.layoutParams.structure.scatter.manualScatter];
+      this.smartCrop =
+        styleParams[optionsMap.layoutParams.crop.enableSmartCrop];
       this.useMaxDimensions =
-        styleParams.useMaxDimensions && this.itemType !== 'text';
-      this.cubeFitPosition = styleParams.cubeFitPosition;
+        !styleParams[optionsMap.layoutParams.structure.enableStreching] &&
+        this.itemType !== 'text';
+      this.cubeFitPosition =
+        styleParams[optionsMap.layoutParams.crop.alignment];
     }
 
     this._groupOffset = {
@@ -376,7 +387,7 @@ export class Item {
   }
 
   get dimensions() {
-    const isGridFit = this.cubeImages && this.cubeType === 'fit';
+    const isGridFit = this.cubeImages && this.cubeType === 'FIT';
 
     let targetWidth = this.width;
     let targetHeight = this.height;
@@ -442,20 +453,20 @@ export class Item {
     let ratio;
     if (this.rotatingCropRatio) {
       ratio = this.rotatingCropRatio;
-    } else if (this.rotatingCropRatios && this.rotatingCropRatios.length > 0) {
-      const cropRatiosArr = String(this.rotatingCropRatios).split(',');
+    } else if (this.rotatingCropRatios && this.rotatingCropRatios.length > 1) {
+      const cropRatiosArr = this.rotatingCropRatios;
       ratio = this.rotatingCropRatio =
         cropRatiosArr[this.idx % cropRatiosArr.length];
     }
     if (!ratio && typeof this._cropRatio === 'function') {
       ratio = this._cropRatio();
     }
-    if (!ratio && this.cropOnlyFill && this.cubeType === 'fit') {
+    if (!ratio && this.cropOnlyFill && this.cubeType === 'FIT') {
       ratio = this.ratio;
     }
 
     if (!ratio) {
-      ratio = this._cropRatio || this.ratio;
+      ratio = (this._cropRatio && this._cropRatio[0]) || this.ratio;
     }
 
     if (this.dynamicCropRatios !== null && typeof ratio === 'string') {
@@ -507,9 +518,9 @@ export class Item {
       }
     }
 
-    if (this.cubeType === 'min') {
+    if (this.cubeType === 'MIN') {
       ratio = Math.max(ratio, this.orgRatio);
-    } else if (this.cubeType === 'max') {
+    } else if (this.cubeType === 'MAX') {
       ratio = Math.min(ratio, this.orgRatio);
     }
 

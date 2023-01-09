@@ -1,0 +1,8 @@
+const CLICK_ACTION = {
+  ACTION: 'ACTION',
+  LINK: 'LINK',
+  NOTHING: 'NOTHING',
+  MAGNIFY: 'MAGNIFY',
+};
+
+export default CLICK_ACTION;

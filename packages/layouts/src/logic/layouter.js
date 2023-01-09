@@ -5,6 +5,7 @@ import { Group } from './group.js';
 import { Strip } from './strip.js';
 import { Column } from './column.js';
 import layoutsStore from './layoutsStore.js';
+import { optionsMap } from 'pro-gallery-lib';
 
 export default class Layouter {
   constructor(layoutParams) {
@@ -55,9 +56,10 @@ export default class Layouter {
 
   calcNumberOfColumns(galleryWidth, targetItemSize) {
     let numOfCols = 1;
-    if (this.styleParams.isVertical) {
+    if (this.styleParams[optionsMap.layoutParams.structure.layoutOrientation] === 'VERTICAL') {
       if (this.styleParams.fixedColumns > 0) {
         numOfCols = this.styleParams.fixedColumns;
+      
       } else {
         // find the number of columns that makes each column width the closet to the targetItemSize
         const numOfColsFloat = galleryWidth / targetItemSize;
@@ -77,7 +79,7 @@ export default class Layouter {
 
   findShortestColumn(columns, groupIdx) {
     let minCol = columns[0];
-    if (this.styleParams.placeGroupsLtr) {
+    if (this.styleParams[optionsMap.layoutParams.structure.groupsOrder] === 'LEFT_TO_RIGHT') {
       minCol = columns[groupIdx % columns.length];
     } else {
       let minColH = -1;
@@ -115,7 +117,7 @@ export default class Layouter {
       if (this.useLayoutStore) {
         Object.assign(this, layoutsStore.layout);
       } else {
-        if (this.styleParams.isVertical) {
+        if (this.styleParams[optionsMap.layoutParams.structure.layoutOrientation] === 'VERTICAL') {
           //---------------------| COLUMNS GALLERY |----------------------//
           //remove items from the last 3 groups;
           const lastGroups = this.groups.slice(-3);
@@ -134,7 +136,7 @@ export default class Layouter {
           });
         } else {
           //---------------------| STRIPS GALLERY |----------------------//
-          if (this.scrollDirection === 1) {
+          if (this.scrollDirection === 'HORIZONTAL') {
             //remove items from the last group:
             const lastGroups = this.groups.slice(-1);
             lastGroups.forEach((group) => {
@@ -185,8 +187,8 @@ export default class Layouter {
               this.strip = new Strip({
                 idx: this.strips.length + 1,
                 container: this.container,
-                groupsPerStrip: this.styleParams.groupsPerStrip,
-                scrollDirection: this.styleParams.scrollDirection,
+                groupsPerStrip: this.styleParams[optionsMap.layoutParams.groups.numberOfGroupsPerRow],
+                scrollDirection: this.styleParams[optionsMap.layoutParams.structure.scrollDirection],
                 targetItemSize: this.targetItemSize,
               });
             }
@@ -206,7 +208,7 @@ export default class Layouter {
       this.groups = [];
       this.strips = [];
 
-      if (this.styleParams.forceFullHeight) {
+      if (this.styleParams.forceFullHeight) { //v5 TODO check and remove this API
         this.targetItemSize = Math.sqrt(
           (this.container.galleryHeight * this.container.galleryWidth) /
             this.srcItems.length
@@ -222,8 +224,8 @@ export default class Layouter {
           Math.floor(gallerySizeVal) +
           Math.ceil(
             2 *
-              (this.styleParams.imageMargin / 2 -
-                this.styleParams.layoutParams.gallerySpacing)
+              (this.styleParams[optionsMap.layoutParams.structure.itemSpacing] / 2 -
+                this.styleParams[optionsMap.layoutParams.structure.gallerySpacing])
           );
       }
 
@@ -240,8 +242,8 @@ export default class Layouter {
       this.strip = new Strip({
         idx: 1,
         container: this.container,
-        groupsPerStrip: this.styleParams.groupsPerStrip,
-        scrollDirection: this.styleParams.scrollDirection,
+        groupsPerStrip: this.styleParams[optionsMap.layoutParams.groups.numberOfGroupsPerRow],
+        scrollDirection: this.styleParams[optionsMap.layoutParams.structure.scrollDirection],
         targetItemSize: this.targetItemSize,
       });
 
@@ -251,15 +253,18 @@ export default class Layouter {
         this.galleryWidth,
         this.targetItemSize
       );
-      this.targetItemSize = this.styleParams.isVertical
+      this.targetItemSize = this.styleParams[optionsMap.layoutParams.structure.layoutOrientation] === 'VERTICAL'
         ? Math.floor(this.galleryWidth / this.numOfCols)
         : this.targetItemSize;
 
-      const { columnWidths, externalInfoWidth, imageMargin } = this.styleParams;
-      const { cropRatio } = this.styleParams.layoutParams;
+      const { externalInfoWidth } =
+        this.styleParams;
+        const columnWidths = this.styleParams[optionsMap.layoutParams.structure.columnRatios]
+        const imageMargin = this.styleParams[optionsMap.layoutParams.structure.itemSpacing]
+      const cropRatio = this.styleParams[optionsMap.layoutParams.crop.ratios];
       let columnWidthsArr = false;
       if (columnWidths && columnWidths.length > 0) {
-        columnWidthsArr = columnWidths.split(',').map(Number);
+        columnWidthsArr = columnWidths.map(Number);
         while (columnWidthsArr.length < this.numOfCols) {
           columnWidthsArr.push(...columnWidthsArr);
         }
@@ -294,7 +299,7 @@ export default class Layouter {
           colWidth -= infoWidth;
           fixedCubeHeight =
             fixedCubeHeight ||
-            (this.targetItemSize - infoWidth - imageMargin) / cropRatio +
+            (this.targetItemSize - infoWidth - imageMargin) / cropRatio[0] + //v5 check how this works if there are multiple ratios or if this is a function......wtf
               imageMargin; //calc the cube height only once
           //add space for info on the side
           return new Column(idx, colWidth, curLeft, fixedCubeHeight, infoWidth);
@@ -386,7 +391,7 @@ export default class Layouter {
       this.groupItems = [];
 
       //resize and fit the group in the strip / column
-      if (!this.styleParams.isVertical) {
+      if (this.styleParams[optionsMap.layoutParams.structure.layoutOrientation] === 'HORIZONTAL') {
         //---------------------| STRIPS GALLERY |----------------------//
 
         if (this.strip.isFull(this.group, this.isLastImage)) {
@@ -397,7 +402,14 @@ export default class Layouter {
           this.columns[0].addGroups(this.strip.groups);
           this.strips.push(this.strip);
 
-          const newStripIdx = this.strip.idx + 1;
+          //open a new strip
+          this.strip = new Strip({
+            idx: this.strip.idx + 1,
+            container: this.container,
+            groupsPerStrip: this.styleParams[optionsMap.layoutParams.groups.numberOfGroupsPerRow],
+            scrollDirection: this.styleParams[optionsMap.layoutParams.structure.scrollDirection],
+            targetItemSize: this.targetItemSize,
+          });
 
           //reset the group (this group will be rebuilt)
           this.pointer -= this.group.realItems.length - 1;
@@ -502,11 +514,11 @@ export default class Layouter {
         this.strip.addGroup(this.group);
 
         if (this.isLastImage && this.strip.hasGroups) {
-          if (this.styleParams.scrollDirection === 1) {
+          if (this.styleParams[optionsMap.layoutParams.structure.scrollDirection] === 'HORIZONTAL') {
             this.strip.height =
               this.container.galleryHeight +
-              (this.styleParams.imageMargin / 2 -
-                this.styleParams.layoutParams.gallerySpacing);
+              (this.styleParams[optionsMap.layoutParams.structure.itemSpacing] / 2 -
+                this.styleParams[optionsMap.layoutParams.structure.gallerySpacing]);
           } else if (this.strip.canRemainIncomplete()) {
             //stretching the this.strip to the full width will make it too high - so make it as high as the targetItemSize and not stretch
             this.strip.height = this.targetItemSize;
@@ -554,7 +566,7 @@ export default class Layouter {
       this.pointer++;
     }
 
-    if (this.styleParams.forceFullHeight) {
+    if (this.styleParams.forceFullHeight) { //v5 TODO check and remove this API
       const stretchRatio = this.container.galleryHeight / this.galleryHeight;
       this.items.map((item) => {
         item.cubeImages = true;
@@ -575,9 +587,7 @@ export default class Layouter {
     this.colWidth = Math.floor(this.galleryWidth / this.numOfCols);
     this.height =
       this.galleryHeight -
-      (this.styleParams.imageMargin / 2 -
-        this.styleParams.layoutParams.gallerySpacing) *
-        2;
+      (this.styleParams[optionsMap.layoutParams.structure.itemSpacing] / 2 - this.styleParams[optionsMap.layoutParams.structure.gallerySpacing]) * 2;
 
     this.width = this.lastGroup.left + this.lastGroup.width;
 
@@ -680,10 +690,10 @@ export default class Layouter {
     let _maxGroupSize = 1;
     try {
       const groupTypes =
-        typeof this.styleParams.groupTypes === 'string' &&
-        this.styleParams.groupTypes.length > 0
-          ? this.styleParams.groupTypes.split(',')
-          : this.styleParams.groupTypes;
+        typeof this.styleParams[optionsMap.layoutParams.groups.allowedGroupTypes] === 'string' &&
+        this.styleParams[optionsMap.layoutParams.groups.allowedGroupTypes].length > 0
+          ? this.styleParams[optionsMap.layoutParams.groups.allowedGroupTypes].split(',')
+          : this.styleParams[optionsMap.layoutParams.groups.allowedGroupTypes];
       _maxGroupSize =
         groupTypes.length > 0
           ? groupTypes.reduce(
@@ -691,7 +701,7 @@ export default class Layouter {
               1
             )
           : Number(groupTypes);
-      _maxGroupSize = Math.min(_maxGroupSize, this.styleParams.groupSize);
+      _maxGroupSize = Math.min(_maxGroupSize, this.styleParams[optionsMap.layoutParams.groups.groupSize]);
     } catch (e) {
       console.error("couldn't calculate max group size - returing 3 (?)", e);
       _maxGroupSize = 3;

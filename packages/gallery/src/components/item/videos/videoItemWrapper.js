@@ -1,16 +1,22 @@
 import React from 'react';
-import { utils, isEditMode } from 'pro-gallery-lib';
+import { utils, isEditMode, optionsMap, GALLERY_CONSTS } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import VideoItemPlaceholder from './videoItemPlaceholder';
+import { clickable } from '../../helpers/mouseCursorPosition';
 
 const isIos = utils.isiOS();
 const useTransparentPlayButtonAndForceLoadVideo = (props) =>
   (props.videoUrl || props.url).includes('youtube.com') && isIos;
 
 const VideoPlayButton = ({ pointerEvents }) => (
-  <div style={{ pointerEvents: pointerEvents ? 'initial' : 'none' }}>
+  <clickable.div
+    style={{
+      pointerEvents: pointerEvents ? 'initial' : 'none',
+      cursor: 'pointer',
+    }}
+  >
     <i
       key="play-triangle"
       data-hook="play-triangle"
@@ -25,7 +31,7 @@ const VideoPlayButton = ({ pointerEvents }) => (
     >
       <PlayBackground />
     </i>
-  </div>
+  </clickable.div>
 );
 
 class VideoItemWrapper extends React.Component {
@@ -37,16 +43,30 @@ class VideoItemWrapper extends React.Component {
   }
 
   mightPlayVideo() {
-    const { videoPlay, itemClick } = this.props.options;
+    const videoPlayTrigger =
+      this.props.options[optionsMap.behaviourParams.item.video.playTrigger];
     const { hasLink } = this.props;
     if (this.props.isVideoPlaceholder) {
       return false;
     }
-    if (videoPlay === 'hover' || videoPlay === 'auto') {
+    if (
+      videoPlayTrigger ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
+          .HOVER ||
+      videoPlayTrigger ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO
+    ) {
       return true;
-    } else if (itemClick === 'nothing') {
+    } else if (
+      this.props.options[optionsMap.behaviourParams.item.clickAction] ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING
+    ) {
       return true;
-    } else if (itemClick === 'link' && !hasLink) {
+    } else if (
+      this.props.options[optionsMap.behaviourParams.item.clickAction] ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK &&
+      !hasLink
+    ) {
       return true;
     }
     // }
@@ -107,7 +127,9 @@ class VideoItemWrapper extends React.Component {
   render() {
     const hover = this.props.hover;
     const showVideoPlayButton =
-      !this.props.hidePlay && this.props.options.showVideoPlayButton;
+      this.props.options[
+        optionsMap.behaviourParams.item.video.enablePlayButton
+      ];
     const videoPlaceholder = this.createVideoPlaceholder(showVideoPlayButton);
 
     const VideoItem = this.VideoItem;

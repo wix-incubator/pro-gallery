@@ -1,5 +1,5 @@
 import { Layouter, GalleryItem, ItemsHelper } from 'pro-layouts';
-import { window, defaultOptions, mergeNestedObjects } from 'pro-gallery-lib';
+import { window, addOldOptions, defaultOptions } from 'pro-gallery-lib';
 import { testImages } from './mocks/images-mock.js';
 import { mount, shallow, configure } from 'enzyme';
 import { GalleryContainer } from '../../src/components/gallery/proGallery/galleryContainer'; //import GalleryContainer before the connect (without redux)
@@ -39,9 +39,7 @@ class galleryDriver {
       },
     };
 
-    this.options = mergeNestedObjects(defaultOptions, {
-      targetItemSize: 320,
-    });
+    this.options = { ...defaultOptions, targetItemSize: 320 };
 
     this.scroll = {
       top: 0,
@@ -58,6 +56,7 @@ class galleryDriver {
       pauseAllVideos: () => {},
       setWixHeight: () => {},
       scrollToItem: () => new Promise((res) => res()),
+      scrollToGroup: () => new Promise((res) => res()),
     };
 
     this.layoutParams = {
@@ -105,12 +104,19 @@ class galleryDriver {
 
   get mount() {
     const res = (Component, props) => {
+      props.options = { ...addOldOptions(props.options), ...props.options };
+      props.galleryConfig &&
+        (props.galleryConfig.options = {
+          ...addOldOptions(props.galleryConfig.options),
+          ...props.galleryConfig.options,
+        });
       this.wrapper = mount(<Component {...props} />);
       return this;
     };
     res.galleryContainer = (props) => {
       const defaultProps = this.props.galleryContainer();
       props = Object.assign(defaultProps, props || {});
+      props.options = { ...addOldOptions(props.options), ...props.options };
       this.wrapper = mount(<GalleryContainer actions={{}} {...props} />);
       return this;
     };
@@ -118,6 +124,7 @@ class galleryDriver {
       const div = document.createElement('div');
       div.setAttribute('id', 'testing-container');
       document.body.appendChild(div);
+      props.options = { ...addOldOptions(props.options), ...props.options };
       this.wrapper = mount(<ProGallery {...props} />, {
         attachTo: document.getElementById('testing-container'),
       });

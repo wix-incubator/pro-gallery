@@ -81,7 +81,7 @@ export class Strip {
     const { galleryWidth } = this.container;
 
     let isStripSmallEnough;
-    if (scrollDirection === 1) {
+    if (scrollDirection === 'HORIZONTAL') {
       isStripSmallEnough = false; //horizontal layout is one long strip
     } else {
       const withNewGroup =

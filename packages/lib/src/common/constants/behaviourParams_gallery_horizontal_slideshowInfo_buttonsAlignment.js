@@ -1,0 +1,7 @@
+const GALLERY_TEXT_ALIGN = {
+  LEFT: 'LEFT',
+  RIGHT: 'RIGHT',
+  CENTER: 'CENTER',
+};
+
+export default GALLERY_TEXT_ALIGN;

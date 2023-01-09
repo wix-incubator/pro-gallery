@@ -4,24 +4,34 @@ import { INPUT_TYPES } from '../utils/constants';
 import {
   isConstantVerticalPlacement,
   isHoverPlacement,
-} from '../../common/constants/placements';
+} from '../../common/constants/layoutParams_info_placement';
+import optionsMap from '../../core/helpers/optionsMap';
 export default {
   title: 'Include External Info in gallery Ratio',
   description: `Set to true with a single row horizontal gallery to include the external info (above or below) in the fixed gallery Ratio`,
   isRelevant: (options) => {
-    const isSingleVerticalItemRendered = options.layoutParams
-      .repeatingGroupTypes
-      ? options.layoutParams.repeatingGroupTypes === '1'
-      : options.groupTypes === '1';
-    const filteredPlacement = options.titlePlacement // filtering hover since it doesn't affect this
+    const isSingleVerticalItemRendered =
+      options[optionsMap.layoutParams.groups.repeatingGroupTypes].length > 1
+        ? options[optionsMap.layoutParams.groups.repeatingGroupTypes].join(
+            ''
+          ) === '1'
+        : options[optionsMap.layoutParams.groups.allowedGroupTypes].join('') ===
+          '1';
+    const filteredPlacement = options[optionsMap.layoutParams.info.placement] // filtering hover since it doesn't affect this
       .split(',')
       .filter((placement) => !isHoverPlacement(placement))
       .join(',');
+    console.log(
+      isSingleVerticalItemRendered,
+      isConstantVerticalPlacement(filteredPlacement),
+      galleryRatioValue.isRelevant(options),
+      options[optionsMap.layoutParams.structure.galleryRatio.value] > 0
+    );
     return (
       isSingleVerticalItemRendered &&
       isConstantVerticalPlacement(filteredPlacement) &&
       galleryRatioValue.isRelevant(options) &&
-      options.layoutParams.structure.galleryRatio.value > 0
+      options[optionsMap.layoutParams.structure.galleryRatio.value] > 0
     );
   },
   isRelevantDescription:

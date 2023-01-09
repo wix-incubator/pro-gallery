@@ -4,8 +4,7 @@ import {
   addPresetOptions,
   dimensionsHelper,
   processLayouts,
-  GALLERY_CONSTS,
-  extendNestedOptionsToIncludeOldAndNew,
+  utils,
 } from 'pro-gallery-lib';
 import { cssScrollHelper } from 'pro-gallery';
 
@@ -97,10 +96,9 @@ class Blueprints {
         console.log({ existingBlueprint });
 
         // if its an infinite gallery - let the container loose
-        const isInfinite =
-          existingBlueprint.options.scrollDirection ===
-            GALLERY_CONSTS.scrollDirection.VERTICAL &&
-          existingBlueprint.options.enableInfiniteScroll;
+        const isInfinite = utils.isHeightSetByGallery(
+          existingBlueprint.options
+        );
         if (isInfinite) {
           existingBlueprint.container.height =
             existingBlueprint.container.galleryHeight = structure.height;
@@ -268,17 +266,11 @@ class Blueprints {
     let changed = false;
     let formattedOptions;
     if (optionsHaveChanged(options, oldOptions)) {
-      const mergedOldAndNewStyles =
-        extendNestedOptionsToIncludeOldAndNew(options); //add both old and new options
-      const fullOptionsOverDefualts = populateWithDefaultOptions(
-        mergedOldAndNewStyles
-      ); //add default for any undefined option
-      formattedOptions = extendNestedOptionsToIncludeOldAndNew(
-        processLayouts(
-          addPresetOptions(fullOptionsOverDefualts),
-          isUsingCustomInfoElements
-        )
-      ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
+      const optionsOverDefaults = populateWithDefaultOptions(options); //add default for any undefined option
+      formattedOptions = processLayouts(
+        addPresetOptions(optionsOverDefaults),
+        isUsingCustomInfoElements
+      );
       changed = true;
     }
 
@@ -306,13 +298,10 @@ class Blueprints {
         return false; // no new continainer
       }
       const containerHasChanged = {
-        height:
-          formattedOptions.scrollDirection ===
-            GALLERY_CONSTS.scrollDirection.VERTICAL &&
-          formattedOptions.enableInfiniteScroll // height doesnt matter if the new gallery is going to be vertical
-            ? false
-            : !!newContainerParams.height &&
-              newContainerParams.height !== oldContainerParams.height,
+        height: utils.isHeightSetByGallery(formattedOptions) // height doesnt matter if the new gallery is going to be vertical
+          ? false
+          : !!newContainerParams.height &&
+            newContainerParams.height !== oldContainerParams.height,
         width:
           !oldContainerParams ||
           (!!newContainerParams.width &&

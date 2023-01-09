@@ -332,6 +332,24 @@ div.pro-gallery {
       height: 100%;
       overflow: hidden;
 
+      .item-with-secondary-media-container {
+        .secondary-media-item {
+          position: absolute;
+          z-index: 1;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          .gallery-item {
+            object-fit: cover;
+          }
+          .text-item > div {
+            width: 100% !important;
+            height: 100% !important;
+          }
+        }
+      }
+
       &.transparent,
       &.cube-type-fit {
         background: transparent;
@@ -520,6 +538,7 @@ div.pro-gallery {
       }
 
       .gallery-item-hover {
+        pointer-events: none;
         white-space: initial;
         position: absolute;
         top: 0;

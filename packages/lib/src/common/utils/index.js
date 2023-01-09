@@ -4,8 +4,10 @@ import {
   isEditMode,
   isPreviewMode,
   isDeviceTypeMobile,
+  isDeviceTypeTouch,
 } from '../window/viewModeWrapper';
 import GALLERY_CONSTS from '../constants';
+import optionsMap from '../../core/helpers/optionsMap';
 
 class Utils {
   constructor() {
@@ -32,7 +34,7 @@ class Utils {
 
   inRange(value, range, max = range) {
     if (range === 0) {
-      throw new Error('Range cannot be 0');
+      return -1;
     }
     while (value < 0) {
       value += range;
@@ -264,6 +266,19 @@ class Utils {
     return this.getOrPutFromCache('isMobile', _isMobile);
   }
 
+  isTouch() {
+    const _isTouch = () => {
+      const isTouchByProps = isDeviceTypeTouch();
+      const isTouchBrowser =
+        window.navigator?.maxTouchPoints > 0 || // checking if navigator exists because of SSR
+        'ontouchstart' in window.document.documentElement;
+
+      return this.isUndefined(isTouchByProps) ? isTouchBrowser : isTouchByProps;
+    };
+
+    return this.getOrPutFromCache('isTouch', _isTouch);
+  }
+
   isTest() {
     try {
       return window.isTest;
@@ -321,7 +336,7 @@ class Utils {
 
   // TODO : Replace with isPrerender mode
   isSSR() {
-    return typeof global.window === 'undefined';
+    return typeof global?.window === 'undefined';
   }
 
   isOOI() {
@@ -688,20 +703,28 @@ class Utils {
 
   isSingleItemHorizontalDisplay(options) {
     return (
-      options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-      options.groupSize === 1 &&
-      options.cubeImages &&
-      options.layoutParams.cropRatio === '100%/100%'
+      options.scrollDirection ===
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .HORIZONTAL &&
+      options[optionsMap.layoutParams.groups.groupSize] === 1 &&
+      options[optionsMap.layoutParams.crop.enable] &&
+      options[optionsMap.layoutParams.crop.ratios].length === 1 &&
+      options[optionsMap.layoutParams.crop.ratios][0] === '100%/100%'
     );
   }
 
   getAriaAttributes({ proGalleryRole, proGalleryRegionLabel }) {
-    return {
+    const role = proGalleryRole || 'region';
+    const roledescription =
+      proGalleryRole === 'application' ? 'gallery application' : 'region';
+    const attr = {
       role: proGalleryRole || 'region',
       ['aria-label']: proGalleryRegionLabel,
-      ['aria-roledescription']:
-        proGalleryRole === 'application' ? 'gallery application' : 'region',
     };
+    if (role !== roledescription) {
+      attr['aria-roledescription'] = roledescription;
+    }
+    return attr;
   }
 
   focusGalleryElement(element) {
@@ -711,6 +734,15 @@ class Utils {
   isMeaningfulString(str) {
     if (typeof str !== 'string') return false;
     return !!str.trim().length;
+  }
+
+  isHeightSetByGallery(options) {
+    return (
+      options[optionsMap.layoutParams.structure.galleryLayout] ===
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
+          .VERTICAL &&
+      !options[optionsMap.behaviourParams.gallery.vertical.loadMore]
+    ); //v5 TODO!!! NEW STYLEPARAMS METHOD POSSIBLE BUG FOUND Could be that I need to add the horizontal gallery ratio thing here....
   }
 }
 

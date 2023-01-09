@@ -6,6 +6,22 @@ div.pro-gallery {
     //===================================================================
     //image hover animations
 
+    &.main-color-on-hover:not(.hide-hover) {
+
+     .gallery-item-content .gallery-item {
+      transition: opacity .4s ease !important;
+     }
+
+      &.simulate-hover,
+      &:hover {
+        .gallery-item-content {
+          .gallery-item {
+            opacity: 0;
+          }
+        }
+      }
+    }
+
     &.zoom-in-on-hover:not(.hide-hover) {
 
       .gallery-item-hover:not(.hide-hover), .gallery-item-content, .hover-info-element {

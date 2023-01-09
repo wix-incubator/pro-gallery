@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.16.1]
+        node-version: [16.13.0]
     steps:
     - uses: actions/checkout@v2
     - name: Install and run lint
@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.16.1]
+        node-version: [16.13.0]
         test-script: ["ci:test-unit", "ci:test-e2e-layouts","ci:test-e2e-styleParams", "ci:test-e2e-integration"]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
@@ -51,7 +51,7 @@ jobs:
     needs: [lint, tests]
     strategy:
       matrix:
-        node-version: [14.16.1]
+        node-version: [16.13.0]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
     - uses: actions/checkout@v2
@@ -76,13 +76,14 @@ jobs:
       # run: echo "this is a push to master"
       run: |
         git checkout master
-        lerna publish patch --exact  --yes
+        lerna publish patch --exact  --yes --registry https://registry.npmjs.org
+        npm run changelog
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     - name: Push to pull request
       if: github.event_name == 'pull_request' && github.actor != 'dependabot' 
       # run: echo "PULL REQUEST PUSH"
-      run: lerna publish --canary --preid ${{ github.sha }} --yes
+      run: lerna publish --canary --preid ${{ github.sha }} --yes --registry https://registry.npmjs.org
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   update-playground:
@@ -91,7 +92,7 @@ jobs:
     needs: [lint, tests]
     strategy:
       matrix:
-        node-version: [14.16.1]
+        node-version: [16.13.0]
     steps:
     - uses: actions/checkout@v2
     - name: update-playground
