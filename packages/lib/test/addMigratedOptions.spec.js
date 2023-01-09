@@ -473,6 +473,7 @@ function expected() {
     behaviourParams_item_content_hoverAnimation: 'NO_EFFECT',
     behaviourParams_item_content_loader: 'COLOR',
     behaviourParams_gallery_scrollAnimation: 'NO_EFFECT',
+    behaviourParams_gallery_advancedScrollAnimations: [],
     behaviourParams_gallery_enableIndexingShareLinks: false,
     behaviourParams_gallery_horizontal_slideAnimation: 'SCROLL',
     behaviourParams_gallery_horizontal_slideTransition:

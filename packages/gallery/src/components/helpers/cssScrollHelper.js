@@ -9,7 +9,7 @@ import { createScrollAnimations } from "./cssAnimationsHelper";
 
 const advancedScrollAnimation = [
   {
-    type: GALLERY_CONSTS.advancedScrollAnimations.GRAYSCALE,
+    type: 'GRAYSCALE',
     fromValue: 100,
     toValue: 0,
     fromPosition: 200,
@@ -20,7 +20,7 @@ const advancedScrollAnimation = [
     reset: false,
   },
   {
-    type: GALLERY_CONSTS.advancedScrollAnimations.FADE,
+    type: 'FADE',
     fromValue: 0,
     toValue: 1,
     fromPosition: 100,

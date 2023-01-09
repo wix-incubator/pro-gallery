@@ -20,6 +20,7 @@ import behaviourParams_gallery_horizontal_slideTransition from './behaviourParam
 
 import behaviourParams_gallery_layoutDirection from './behaviourParams_gallery_layoutDirection';
 import behaviourParams_gallery_scrollAnimation from './behaviourParams_gallery_scrollAnimation';
+import behaviourParams_gallery_advancedScrollAnimation from './behaviourParams_gallery_advancedScrollAnimation';
 
 import behaviourParams_gallery_vertical_loadMore_amount from './behaviourParams_gallery_vertical_loadMore_amount';
 import behaviourParams_gallery_vertical_loadMore_enable from './behaviourParams_gallery_vertical_loadMore_enable';
@@ -152,6 +153,7 @@ export default {
 
   behaviourParams_gallery_layoutDirection,
   behaviourParams_gallery_scrollAnimation,
+  behaviourParams_gallery_advancedScrollAnimation,
 
   behaviourParams_gallery_vertical_loadMore_amount,
   behaviourParams_gallery_vertical_loadMore_enable,
