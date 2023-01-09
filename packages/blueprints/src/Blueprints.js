@@ -90,7 +90,7 @@ class Blueprints {
         existingBlueprint.scrollAnimationsCss = this.createCssAnimations({
           items: structure.items,
           container: existingBlueprint.container,
-          options: existingBlueprint.styles,
+          options: existingBlueprint.options,
           id: params.id,
         });
         console.log({ existingBlueprint });

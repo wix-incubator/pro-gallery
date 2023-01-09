@@ -17,7 +17,7 @@ const advancedScrollAnimation = [
     direction: 'IN',
     iterations: 1,
     transitionDuration: 1400,
-    reset: false,
+    reset: false
   },
   {
     type: 'FADE',
@@ -28,8 +28,8 @@ const advancedScrollAnimation = [
     direction: 'IN',
     iterations: 1,
     transitionDuration: 1400,
-    reset: false,
-  },
+    reset: false
+  }
 ];
 
 const isHorizontalScroll = (options) => options.layoutParams_structure_scrollDirection === GALLERY_CONSTS.layoutParams_structure_scrollDirection.HORIZONTAL;
@@ -299,8 +299,9 @@ class CssScrollHelper {
 
   calcScrollCss({ galleryId, items, container, options }) {
     this.galleryId = galleryId;
-    const { exitScrollAnimation, scrollAnimation } = options;
-    if (!(items && items.length)) {
+    // const { exitScrollAnimation, scrollAnimation } = options;
+    if (!(items && items.length) || !options) {
+      console.error("calcScrollCss: missing params", { items, options });
       return [];
     }
     // if (

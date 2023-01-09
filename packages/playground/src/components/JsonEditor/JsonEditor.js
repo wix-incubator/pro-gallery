@@ -189,10 +189,20 @@ class JsonEditor extends React.Component {
           </Button>
         );
       case INPUT_TYPES.JSON:
+        const formatJson = (json) => {
+          if (json.jsObject) return json.jsObject;
+          if (typeof json === 'object') return json;
+          try {
+            return JSON.parse(json);
+          } catch (e) {
+            return [];
+          }
+        }
+            
         return (
           // theValue.plainText
           <JSONInput
-            placeholder={theValue.jsObject || (typeof theValue === 'object' ? theValue : [])}
+            placeholder={formatJson(theValue)}
             reset={false}
             theme="light_mitsuketa_tribute"
             height="550px"
