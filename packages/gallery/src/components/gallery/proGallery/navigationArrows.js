@@ -165,6 +165,13 @@ export function NavigationArrows({
     );
   };
 
+  const provideMouseFollower = (children) => {
+    if (mouseCursorEnabled) {
+      return <MouseFollowerProvider id={id}>{children}</MouseFollowerProvider>;
+    }
+    return children;
+  };
+
   return (
     <ArrowsContainer
       hideLeftArrow={hideLeftArrow}
@@ -173,10 +180,12 @@ export function NavigationArrows({
       isRTL={isRTL}
       navigationArrowPortalId={navigationArrowPortalId}
     >
-      <MouseFollowerProvider id={id}>
-        {hideLeftArrow ? null : renderArrow(true)}
-        {hideRightArrow ? null : renderArrow(false)}
-      </MouseFollowerProvider>
+      {provideMouseFollower(
+        <>
+          {hideLeftArrow ? null : renderArrow(true)}
+          {hideRightArrow ? null : renderArrow(false)}
+        </>
+      )}
     </ArrowsContainer>
   );
 }
