@@ -24,8 +24,7 @@ import { INPUT_TYPES, isInPreset, flatToNested } from "pro-gallery-lib";
 import ColorPicker from "../ColorPicker/ColorPicker";
 import { settingsManager } from "../../constants/settings";
 
-import { JsonEditor as Editor } from 'jsoneditor-react';
-import 'jsoneditor-react/es/editor.min.css';
+import JSONInput from 'react-json-ide';
 
 
 class JsonEditor extends React.Component {
@@ -193,10 +192,11 @@ class JsonEditor extends React.Component {
         );
       case INPUT_TYPES.JSON:
         return (
-          <Editor
-            value={theValue || []}
-            rows={20}
-            onChange={(e) => this.onFieldChanged(key, e.target.value)}
+          <JSONInput
+            placeholder={theValue || []}
+            theme="light_mitsuketa_tribute"
+            height="550px"
+            onChange={(e) => this.onFieldChanged(key, e)}
           />
         );
       case INPUT_TYPES.TEXT:

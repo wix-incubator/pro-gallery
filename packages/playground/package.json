@@ -20,6 +20,8 @@
     "css-animation": "1.5.0",
     "firebase": "^8.2.4",
     "image-client-api": "^1.3130.0",
+    "jsoneditor": "^9.9.2",
+    "jsoneditor-react": "^3.1.2",
     "lean-gallery": "4.1.40",
     "lodash.clonedeep": "^4.5.0",
     "moment": "2.29.2",
@@ -31,6 +33,7 @@
     "react": "^16.8.6",
     "react-color": "^2.17.3",
     "react-dom": "^16.8.6",
+    "react-json-ide": "^2.6.0",
     "react-syntax-highlighter": "^15.4.5"
   },
   "devDependencies": {

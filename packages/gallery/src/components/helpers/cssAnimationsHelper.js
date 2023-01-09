@@ -22,8 +22,7 @@ export const createScrollAnimations = ({
     EXPAND,
     SHRINK,
     ROUND,
-    ZOOM_IN,
-    ZOOM_OUT,
+    ZOOM,
     SKEW_UP,
     SKEW_DOWN,
     SKEW_RIGHT,
@@ -146,32 +145,26 @@ export const createScrollAnimations = ({
     });
   }
   if (hasAnimation(EXPAND)) {
-    const fromVal = Math.round(95 - i / 4) / 100; // 0.95-0.7
-    const toVal = 1;
-    const animationParams = s[EXPAND];
     const { fromValue, toValue } = animationParams;
     addScrollSelectors({
       selectorSuffix: `#${itemId} .gallery-item-wrapper`,
       animationParams,
       animationCss: (step, isExit) => ({
-        transform: `scale(${valueInRange(step, fromVal, toVal, 0.01)})`,
+        transform: `scale(${valueInRange(step, fromValue, toValue, 0.01)})`,
       }),
     });
   }
   if (hasAnimation(SHRINK)) {
-    const fromVal = Math.round(102 + i / 12) / 100; // 1.02-1.10
-    const toVal = 1;
-    const animationParams = s[SHRINK];
     const { fromValue, toValue } = animationParams;
     addScrollSelectors({
       selectorSuffix: `#${itemId}`,
       animationParams,
       animationCss: (step, isExit) => ({
-        transform: `scale(${valueInRange(step, fromVal, toVal, 0.01)})`,
+        transform: `scale(${valueInRange(step, fromValue, toValue, 0.01)})`,
       }),
     });
   }
-  if (hasAnimation(ZOOM_OUT)) {
+  if (hasAnimation(ZOOM)) {
     const fromVal = Math.round(110 + i / 4) / 100; // 1.1-1.35
     const toVal = 1;
     const animationParams = s[ZOOM_OUT];
