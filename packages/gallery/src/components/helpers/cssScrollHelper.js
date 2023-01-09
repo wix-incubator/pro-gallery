@@ -14,7 +14,7 @@ const advancedScrollAnimation = [
     toValue: 0,
     fromPosition: 200,
     toPosition: 200,
-    direction: "IN", // IN, OUT, BOTH
+    direction: 'IN',
     iterations: 1,
     transitionDuration: 1400,
     reset: false,
@@ -25,7 +25,7 @@ const advancedScrollAnimation = [
     toValue: 1,
     fromPosition: 100,
     toPosition: 100,
-    direction: "IN", // IN, OUT, BOTH
+    direction: 'IN',
     iterations: 1,
     transitionDuration: 1400,
     reset: false,
