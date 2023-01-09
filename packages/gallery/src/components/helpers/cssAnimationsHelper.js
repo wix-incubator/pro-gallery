@@ -13,7 +13,7 @@ export const createScrollAnimations = ({
 
   const {
     NO_EFFECT,
-    FADE_IN,
+    FADE,
     GRAYSCALE,
     SHADOW,
     BLUR,
@@ -54,7 +54,7 @@ export const createScrollAnimations = ({
     PAN_RIGHT,
     PAN_UP,
     PAN_DOWN,
-  } = GALLERY_CONSTS.scrollAnimations;
+  } = GALLERY_CONSTS.advancedScrollAnimations;
 
   const i = scrollAnimationIntensity || 25;
   const h = isHorizontalScroll;
@@ -108,21 +108,17 @@ export const createScrollAnimations = ({
     return [...animations].some(animation => s.type === animation);
   }
 
-  if (hasAnimation(FADE_IN)) {
-    const fromVal = Math.round(50 - i / 2) / 100; // 0.5 - 0
-    const toVal = 1;
-    const animationParams = s[FADE_IN];
+  if (hasAnimation(FADE)) {
     const { fromValue, toValue } = animationParams;
     addScrollSelectors({
       selectorSuffix: `#${itemId} .gallery-item-wrapper`,
       animationParams,
       animationCss: (step, isExit) => ({
-        opacity: valueInRange(step, fromVal, toVal, 0.01),
+        opacity: valueInRange(step, fromValue, toValue, 0.01),
       }),
     });
   }
   if (hasAnimation(GRAYSCALE)) {
-    debugger;
     const { fromValue, toValue } = animationParams;
     addScrollSelectors({
       selectorSuffix: `#${itemId} .gallery-item-content`,

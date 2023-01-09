@@ -43,7 +43,7 @@ import smartCrop from './smartCrop';
 import forceFullStrips from './forceFullStrips';
 import minItemSize from './minItemSize';
 import scrollAnimation from './scrollAnimation';
-import exitScrollAnimation from './exitScrollAnimation';
+import advancedScrollAnimation from './advancedScrollAnimation';
 import slideAnimation from './slideAnimation';
 import scatter from './scatter';
 import rotatingScatter from './rotatingScatter';
@@ -78,9 +78,6 @@ import gallerySizeRatio from './gallerySizeRatio';
 import allowContextMenu from './allowContextMenu';
 import galleryLayout from './galleryLayout';
 import scrollDirection from './scrollDirection';
-import scrollAnimationDistance from './scrollAnimationDistance';
-import scrollAnimationIntensity from './scrollAnimationIntensity';
-import scrollAnimationReset from './scrollAnimationReset';
 import scrollDuration from './scrollDuration';
 import isAutoSlideshow from './isAutoSlideshow';
 import loadMoreAmount from './loadMoreAmount';
@@ -221,8 +218,9 @@ export default {
   [optionsMap.layoutParams.targetItemSize.minimum]: minItemSize,
   scrollAnimation,
   [optionsMap.behaviourParams.gallery.scrollAnimation]: scrollAnimation,
-  exitScrollAnimation,
-  [optionsMap.behaviourParams.gallery.exitScrollAnimation]: exitScrollAnimation,
+  advancedScrollAnimation,
+  [optionsMap.behaviourParams.gallery.advancedScrollAnimation]:
+    advancedScrollAnimation,
   slideAnimation,
   [optionsMap.behaviourParams.gallery.horizontal.slideAnimation]:
     slideAnimation,
@@ -289,9 +287,6 @@ export default {
   galleryLayout,
   [optionsMap.layoutParams.structure.galleryLayout]: galleryLayout,
   scrollDirection,
-  scrollAnimationReset,
-  scrollAnimationDistance,
-  scrollAnimationIntensity,
   [optionsMap.layoutParams.structure.scrollDirection]: scrollDirection,
   scrollDuration,
   [optionsMap.behaviourParams.gallery.horizontal.navigationDuration]:

@@ -30,7 +30,12 @@ const formatValue = (val) => {
   } else if (Number(val) === parseInt(val)) {
     return Number(val);
   } else {
-    return String(val);
+    const str = decodeURI(String(val));
+    try {
+      return JSON.parse(str);
+    } catch (e) {
+      return str;
+    }
   }
 };
 
@@ -98,11 +103,21 @@ export const getOptionsFromUrl = (locationSearchString) => {
 export const setOptionsInUrl = (options) => {
   const flatSP = flattenObject(options);
   // console.log(`[STYLE PARAMS - VALIDATION] setting options in the url`, options);
+  const formatValueForUrl = (val) => {
+    debugger;
+    if (typeof val === 'object') {
+      return encodeURI(JSON.stringify(val));
+    }if (typeof val === 'string') {
+      return encodeURI(val);
+    } else {
+      return val;
+    }
+  };
   const urlParams = Object.entries(flatSP)
     .reduce(
       (arr, [option, value]) =>
         isValidOption(option, value, flatSP)
-          ? arr.concat(`${option}=${value}`)
+          ? arr.concat(`${option}=${formatValueForUrl(value)}`)
           : arr,
       []
     )

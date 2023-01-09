@@ -60,7 +60,6 @@ function input() {
     slideshowInfoSize: 200,
     imageLoadingMode: 'COLOR',
     scrollAnimation: 'NO_EFFECT',
-    exitScrollAnimation: 'NO_EFFECT',
     overlayAnimation: 'NO_EFFECT',
     imageHoverAnimation: 'NO_EFFECT',
     itemBorderWidth: 0,

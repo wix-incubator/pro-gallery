@@ -3,7 +3,7 @@ import { default as GALLERY_CONSTS } from '../../common/constants';
 import { createOptions } from '../utils/utils';
 
 export default {
-  title: 'Entry Scroll Animation',
+  title: 'Simple Scroll Animation',
   description: `Choose the type of animation to be used when items appear while scrolling through the gallery`,
   isRelevantDescription:
     'To enable "Scroll Animation" either set a Vertical gallery ("Scroll Direction" as "Vertical")\nor set a Horizontal gallery ("Scroll Direction" as "Horizontal") with "Slide Animation" set to "Scroll".',
@@ -12,6 +12,6 @@ export default {
     (sp.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
       sp.slideAnimation === GALLERY_CONSTS.slideAnimations.SCROLL),
   options: createOptions('scrollAnimations'),
-  type: INPUT_TYPES.MULTISELECT,
+  type: INPUT_TYPES.SELECT,
   default: GALLERY_CONSTS.scrollAnimations.NO_EFFECT,
 };

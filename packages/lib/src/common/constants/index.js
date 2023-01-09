@@ -40,6 +40,7 @@ import placements, {
 } from './placements';
 import resizeMethods from './resizeMethods';
 import scrollAnimations from './scrollAnimations';
+import advancedScrollAnimations from './advancedScrollAnimations';
 import slideAnimations from './slideAnimations';
 import scrollDirection from './scrollDirection';
 import socialNetworks from './socialNetworks';
@@ -105,6 +106,7 @@ export default {
   isConstantVerticalPlacement,
   resizeMethods,
   scrollAnimations,
+  advancedScrollAnimations,
   slideAnimations,
   scrollDirection,
   socialNetworks,

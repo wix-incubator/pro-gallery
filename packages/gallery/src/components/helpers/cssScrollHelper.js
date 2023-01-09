@@ -9,13 +9,25 @@ import { createScrollAnimations } from "./cssAnimationsHelper";
 
 const advancedScrollAnimation = [
   {
-    type: GALLERY_CONSTS.scrollAnimations.GRAYSCALE,
-    fromValue: 0,
-    toValue: 100,
-    fromPosition: 0,
-    toPosition: 800,
+    type: GALLERY_CONSTS.advancedScrollAnimations.GRAYSCALE,
+    fromValue: 100,
+    toValue: 0,
+    fromPosition: 200,
+    toPosition: 200,
     direction: "IN", // IN, OUT, BOTH
-    iterations: 10,
+    iterations: 1,
+    transitionDuration: 1400,
+    reset: false,
+  },
+  {
+    type: GALLERY_CONSTS.advancedScrollAnimations.FADE,
+    fromValue: 0,
+    toValue: 1,
+    fromPosition: 100,
+    toPosition: 100,
+    direction: "IN", // IN, OUT, BOTH
+    iterations: 1,
+    transitionDuration: 1400,
     reset: false,
   },
 ];
@@ -39,7 +51,6 @@ class CssScrollHelper {
     this.scrollCss = [];
     this.scrollCssProps = [];
 
-    this.transitionDuration = 250;
     this.animationPadding = 1000;
 
     try {
@@ -97,8 +108,7 @@ class CssScrollHelper {
           .join("\n");
         return res;
       };
-      const { iterations, fromPosition, toPosition } = animationParams;
-      this.transitionDuration = 400;
+      const { transitionDuration, iterations, fromPosition, toPosition } = animationParams;
 
       debugger;
       const createAnimationStep = (idx, isExit) => {
@@ -151,8 +161,6 @@ class CssScrollHelper {
       };
 
       const createScrollClasses = () => {
-        const transitionCss = `transition: all ${this.transitionDuration}ms ease !important`;
-
         const animationRange = Math.round(toPosition - fromPosition);
 
         const entryAnimationStart = Math.round(imageStart - containerSize + fromPosition);
@@ -174,6 +182,10 @@ class CssScrollHelper {
         };
 
         //first batch: animation start value until the range start:
+        console.log("createAnimationStep", createAnimationStep(0, true));
+        const firstAnimationStep = createAnimationStep(0, true);
+        const animatedProperties = firstAnimationStep.split(":")[0];
+        const transitionCss = `transition: ${animatedProperties} ${transitionDuration}ms ease !important`;
         addScrollClass(`${transitionCss}; ${createAnimationStep(0, true)}`, [selectorSuffix]);
 
         if (direction === "IN") {
@@ -270,18 +282,21 @@ class CssScrollHelper {
   calcScrollCssForItem({ item, container, options }) {
     const { idx } = item;
     let scrollCss = "";
-    for (const animation of advancedScrollAnimation) {
-      scrollCss += this.createScrollAnimationsIfNeeded({
-        idx,
-        item,
-        container,
-        options,
-        animation,
-      });
+    console.log("advancedScrollAnimation", options.advancedScrollAnimation);
+    try {
+      for (const animation of options.advancedScrollAnimation) {
+        scrollCss += this.createScrollAnimationsIfNeeded({
+          idx,
+          item,
+          container,
+          options,
+          animation,
+        });
+      }
+      this.scrollCss[idx] = scrollCss || this.scrollCss[idx];
+    } catch (e) {
+      console.error("failed to calc scroll CSS for item # " + idx, e);
     }
-
-    this.scrollCss[idx] = scrollCss || this.scrollCss[idx];
-
     return this.scrollCss[idx];
   }
 
