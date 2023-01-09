@@ -1,4 +1,5 @@
 import { utils } from 'pro-gallery-lib';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 type Three = typeof import('three');
 type GLTFLoader = typeof import('three/examples/jsm/loaders/GLTFLoader');
@@ -18,62 +19,50 @@ const utils_singleInstance = utils.singleInstance as <
   fn: T
 ) => T;
 
-export function create3DManager() {
-  let isInitialized = false;
+const laztLoadThreejs = utils_singleInstance(() => {
+  const THREE_PROMISE = new Promise((resolve, reject) => {
+    import('three')
+      .then((three) => {
+        resolve(three);
+      })
+      .catch(reject);
+  });
+  const EXTENSIONS_PROMISE = new Promise<Extensions>((resolve, reject) =>
+    Promise.all([
+      import('three/examples/jsm/loaders/GLTFLoader'),
+      import('three/examples/jsm/loaders/DRACOLoader'),
+      import('three/examples/jsm/controls/OrbitControls'),
+      import('three/examples/jsm/loaders/RGBELoader'),
+    ])
+      .then(([GLTFLoader, DRACOLoader, OrbitControls, RGBELoader]) => {
+        resolve({
+          gltfLoader: GLTFLoader,
+          dracoLoader: DRACOLoader,
+          orbitControls: OrbitControls,
+          rgbELoader: RGBELoader,
+        });
+      })
+      .catch(reject)
+  );
+  const awaitLoad = Promise.all([THREE_PROMISE, EXTENSIONS_PROMISE]);
   return {
-    init: utils_singleInstance(() => {
-      const THREE_PROMISE = new Promise((resolve, reject) => {
-        import('three')
-          .then((three) => {
-            resolve(three);
-          })
-          .catch(reject);
-      });
-      const EXTENSIONS_PROMISE = new Promise<Extensions>((resolve, reject) =>
-        Promise.all([
-          import('three/examples/jsm/loaders/GLTFLoader'),
-          import('three/examples/jsm/loaders/DRACOLoader'),
-          import('three/examples/jsm/controls/OrbitControls'),
-          import('three/examples/jsm/loaders/RGBELoader'),
-        ])
-          .then(([GLTFLoader, DRACOLoader, OrbitControls, RGBELoader]) => {
-            resolve({
-              gltfLoader: GLTFLoader,
-              dracoLoader: DRACOLoader,
-              orbitControls: OrbitControls,
-              rgbELoader: RGBELoader,
-            });
-          })
-          .catch(reject)
-      );
-      const awaitLoad = Promise.all([THREE_PROMISE, EXTENSIONS_PROMISE]);
-      awaitLoad.then(() => {
-        isInitialized = true;
-      });
-      return {
-        THREE: THREE_PROMISE,
-        EXTENSIONS: EXTENSIONS_PROMISE,
-        awaitLoad,
-      };
-    }),
-    get isInitialized() {
-      return isInitialized;
-    },
-    async render(
-      element: HTMLElement,
-      canvas: HTMLCanvasElement = element.appendChild(
-        document.createElement('canvas')
-      )
-    ) {
-      const { THREE, EXTENSIONS } = this.init();
-      const three = (await THREE) as Three;
-      const extensions = (await EXTENSIONS) as Extensions;
-      return createSceneManager(three, element, canvas, extensions);
-    },
+    THREE: THREE_PROMISE,
+    EXTENSIONS: EXTENSIONS_PROMISE,
+    awaitLoad,
   };
-}
+});
 
-export const ThreeDManager = create3DManager();
+export async function render3DScene(
+  element: HTMLElement,
+  canvas: HTMLCanvasElement = element.appendChild(
+    document.createElement('canvas')
+  )
+) {
+  const { THREE, EXTENSIONS } = laztLoadThreejs();
+  const three = (await THREE) as Three;
+  const extensions = (await EXTENSIONS) as Extensions;
+  return createSceneManager(three, element, canvas, extensions);
+}
 
 interface ManagerInstance {
   stop(): void;
@@ -383,3 +372,25 @@ export function createSceneManager(
 }
 
 export type SceneManager = ReturnType<typeof createSceneManager>;
+
+export function useSceneManager() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [sceneManager, setSceneManager] = useState<SceneManager | null>(null);
+
+  useEffect(() => {
+    laztLoadThreejs();
+  }, []);
+  const render = useCallback(() => {
+    if (!containerRef.current || !canvasRef.current) {
+      return;
+    }
+    if (!sceneManager) {
+      render3DScene(containerRef.current, canvasRef.current).then(
+        setSceneManager
+      );
+    }
+  }, []);
+
+  return { containerRef, canvasRef, sceneManager, render };
+}

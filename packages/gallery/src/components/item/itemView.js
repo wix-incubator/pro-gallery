@@ -8,7 +8,7 @@ import {
   optionsMap,
 } from 'pro-gallery-lib';
 import MagnifiedImage from './imageWithMagnified.js';
-import ThreeDItem from './3DItem.js';
+import ThreeDItem from './3d/3dItem.tsx';
 import withSecondaryMedia from '../hoc/withSecondMedia.js';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
