@@ -2117,10 +2117,17 @@ const itemsWithSecondaryMedia = [
 ];
 const testMedia = [...testImages, ...testVideos];
 const testItems = [...testMedia, ...testTexts];
+
 const mixed3D = [
   ...test3D,
-  ...testMedia.slice(0, 4),
+  ...test3D,
+  ...test3D,
+  ...testMedia,
+  ...test3D,
+  ...test3D,
+  ...test3D,
 ]
+
 
 export {
   testMedia,

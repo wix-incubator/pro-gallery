@@ -45,7 +45,7 @@ import layoutParams_info_placement, {
 import layoutParams_targetItemSize_unit from './layoutParams_targetItemSize_unit';
 
 import behaviourParams_item_clickAction from './behaviourParams_item_clickAction';
-import behaviourParams_item_video_playTrigger from './behaviourParams_item_video_playTrigger';
+import playTrigger from './playTrigger';
 import behaviourParams_item_overlay_hoveringBehaviour from './behaviourParams_item_overlay_hoveringBehaviour';
 import behaviourParams_item_overlay_hoverAnimation from './behaviourParams_item_overlay_hoverAnimation';
 import behaviourParams_item_overlay_position from './behaviourParams_item_overlay_position';
@@ -113,7 +113,7 @@ export default {
   layoutParams_info_placement,
   layoutParams_targetItemSize_unit,
   behaviourParams_item_clickAction,
-  behaviourParams_item_video_playTrigger,
+  behaviourParams_item_video_playTrigger: playTrigger,
   behaviourParams_item_overlay_hoveringBehaviour,
   behaviourParams_item_overlay_hoverAnimation,
   behaviourParams_item_overlay_position,
@@ -130,8 +130,9 @@ export default {
   behaviourParams_gallery_horizontal_slideTransition,
   behaviourParams_gallery_horizontal_autoSlide_behaviour,
   behaviourParams_gallery_horizontal_slideshowInfo_buttonsAlignment,
+  behaviourParams_item_threeDimensionalScene_playTrigger: playTrigger,
+  parse3DDimensions,
   stylingParams_itemResolutionMode,
   layoutParams_thumbnails_position,
-  parse3DDimensions,
   //NEW STYPEPARAMS METHOD
 };

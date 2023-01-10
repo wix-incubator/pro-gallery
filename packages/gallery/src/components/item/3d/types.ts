@@ -14,7 +14,9 @@ export interface ThreeDProps {
   isPrerenderMode: boolean;
   isTransparent: boolean;
   style: any;
+  itemContainer?: HTMLDivElement;
   actions: any;
+  shouldLoad: boolean;
   customComponents: any;
   scene: ThreeDimensionalScene;
   imageDimensions: any;

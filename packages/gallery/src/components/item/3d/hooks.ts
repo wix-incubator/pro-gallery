@@ -38,22 +38,17 @@ export function use3DItem(props: ThreeDProps): ThreeDItemHooks {
   const { canvasRef, containerRef, sceneManager, render } = useSceneManager();
   const [viewMode, setViewMode] = useState<'image' | '3d'>('image');
 
-  useEffect(() => {
-    if (props.activeIndex === props.idx) {
-      render();
-    }
-  }, [props.activeIndex, props.idx]);
-
   const sceneParams = mapSceneToStyleParams(props.scene || {}, props.options);
 
   const trigger3D = useMemo(
     () =>
       utils.singleInstance(async () => {
-        if (!sceneManager) {
+        const manager = sceneManager || (await render());
+        if (!manager) {
           return;
         }
-        sceneManager.opacity = 0;
-        sceneManager.model
+        manager.opacity = 0;
+        manager.model
           .load3DModel(
             props.createUrl(
               GALLERY_CONSTS.urlSizes.RESIZED,
@@ -62,14 +57,14 @@ export function use3DItem(props: ThreeDProps): ThreeDItemHooks {
           )
           .then(() => {
             props.actions.setItemLoaded();
-            sceneManager.opacity = 1;
-            sceneManager.model.addGround();
-            sceneManager.environment.addAmbientLight();
-            sceneManager.environment.sun();
+            manager.opacity = 1;
+            manager.model.addGround();
+            manager.environment.addAmbientLight();
+            manager.environment.sun();
             setViewMode('3d');
           });
       }),
-    [sceneManager]
+    []
   );
 
   const postLoadUpdate = useCallback(
@@ -119,13 +114,30 @@ export function use3DItem(props: ThreeDProps): ThreeDItemHooks {
   );
 
   useEffect(() => {
+    if (sceneManager) {
+      sceneManager.stop = !props.shouldLoad;
+      return;
+    }
+    if (props.shouldLoad) {
+      trigger3D();
+    }
+  }, [props.shouldLoad]);
+
+  useEffect(() => {
     postLoadUpdate(sceneParams);
   }, [sceneParams, postLoadUpdate]);
+
+  const shouldShowPlayButton =
+    props.options.behaviourParams_item_threeDimensionalScene_playTrigger ===
+      GALLERY_CONSTS.behaviourParams_item_threeDimensionalScene_playTrigger
+        .CLICK && !props.shouldLoad;
+
   return {
     canvasRef,
     containerRef,
     viewMode,
     trigger3D,
+    shouldShowPlayButton,
   };
 }
 
@@ -134,4 +146,5 @@ export interface ThreeDItemHooks {
   containerRef: React.RefObject<HTMLDivElement>;
   viewMode: 'image' | '3d';
   trigger3D: () => Promise<void>;
+  shouldShowPlayButton: boolean;
 }

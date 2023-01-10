@@ -20,11 +20,12 @@ class VideoScrollHelperWrapper {
   }
   initVideoScrollHelperIfNeeded(galleryStructureData, items) {
     if (
-      items.some(
-        (item) =>
-          (item.metaData && item.metaData.type === 'video') ||
-          (item.metadata && item.metadata.type === 'video')
-      )
+      items.some((item) => {
+        const metaData = item.metaData || item.metadata;
+        return (
+          metaData && (metaData.type === 'video' || metaData.type === '3d')
+        );
+      })
     ) {
       const videoScrollHelperConfig = {
         setPlayingVideos: isEditMode() ? () => {} : this.setPlayingIdxState,

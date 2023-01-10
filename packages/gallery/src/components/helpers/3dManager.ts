@@ -65,7 +65,7 @@ export async function render3DScene(
 }
 
 interface ManagerInstance {
-  stop(): void;
+  stop: boolean;
   opacity: number;
   environment: {
     loadBackground(url: string): void;
@@ -178,8 +178,14 @@ export function createSceneManager(
 
   let modelBasePosition: THREE.Vector3 | undefined;
   return {
-    stop() {
-      stop = true;
+    get stop() {
+      return stop;
+    },
+    set stop(value) {
+      stop = value;
+      if (!stop) {
+        animate();
+      }
     },
     get opacity() {
       return opacity;
@@ -381,15 +387,20 @@ export function useSceneManager() {
   useEffect(() => {
     laztLoadThreejs();
   }, []);
-  const render = useCallback(() => {
+
+  const render = useCallback(async () => {
     if (!containerRef.current || !canvasRef.current) {
       return;
     }
     if (!sceneManager) {
-      render3DScene(containerRef.current, canvasRef.current).then(
-        setSceneManager
+      return render3DScene(containerRef.current, canvasRef.current).then(
+        (sceneManager) => {
+          setSceneManager(sceneManager);
+          return sceneManager;
+        }
       );
     }
+    return sceneManager;
   }, []);
 
   return { containerRef, canvasRef, sceneManager, render };

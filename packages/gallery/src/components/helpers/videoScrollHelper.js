@@ -15,7 +15,7 @@ const VIDEO_EVENTS = {
 class VideoScrollHelper {
   constructor(config) {
     this.scrollBase = 0;
-    this.videoItems = [];
+    this.items = [];
     this.currentPlayingIdx = -1;
     this.currentItemCount = 0;
     this.playing = false;
@@ -27,9 +27,10 @@ class VideoScrollHelper {
     this.stop = this.stop.bind(this);
     this.isVisible = this.isVisible.bind(this);
     this.videoPlayTrigger = undefined;
-    this.setPlayingVideos = config.setPlayingVideos;
+    this.threeDPlayTrigger = undefined;
+    this.setPlayingItem = config.setPlayingVideos;
     this.lastVideoPlayed = -1;
-    this.videoRatingMap = new Map();
+    this.itemRatingMap = new Map();
     this.trigger = Object.assign(
       {},
       ...Object.keys(VIDEO_EVENTS).map((key) => ({
@@ -44,27 +45,30 @@ class VideoScrollHelper {
     galleryWidth,
     scrollBase,
     videoPlayTrigger,
+    threeDPlayTrigger,
     videoLoop,
     scrollDirection,
   }) {
     this.galleryWidth = galleryWidth;
     this.scrollBase = scrollBase;
     this.videoPlayTrigger = videoPlayTrigger;
+    this.threeDPlayTrigger = threeDPlayTrigger;
     this.videoLoop = videoLoop;
     this[optionsMap.layoutParams.structure.scrollDirection] = scrollDirection;
     this.currentItemCount = galleryStructure.galleryItems.length;
-    this.videoItems = [];
+    this.items = [];
     galleryStructure.galleryItems.forEach((item) => {
       if (
         item.type === 'video' ||
         (item.type === 'image' &&
-          (item.id.includes('_placeholder') || item.isVideoPlaceholder))
+          (item.id.includes('_placeholder') || item.isVideoPlaceholder)) ||
+        item.type === '3d'
       ) {
         // either video or a placeholder for video files (both need to be included in the list)
-        if (!this.videoRatingMap.has(item.id)) {
-          this.videoRatingMap.set(item.id, item.idx);
+        if (!this.itemRatingMap.has(item.id)) {
+          this.itemRatingMap.set(item.id, item.idx);
         }
-        this.videoItems.push(item);
+        this.items.push(item);
       }
     });
   }
@@ -107,62 +111,77 @@ class VideoScrollHelper {
     }
   }
 
-  itemHovered(idx) {
-    if (
-      this.videoPlayTrigger !==
-      GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER
-    )
-      return;
-    if (this.IdxExistsInVideoItems(idx)) {
-      this.play(idx);
-    } else {
-      //do nothing
+  isTheeD(item) {
+    return item.type === '3d';
+  }
+  isIdxTheeD(idx) {
+    const item = this.items.find((item) => item.idx === idx);
+    if (!item) return false;
+    return this.isTheeD(item);
+  }
+
+  idxPlayTrigger(idx) {
+    return this.isIdxTheeD(idx)
+      ? this.threeDPlayTrigger
+      : this.videoPlayTrigger;
+  }
+
+  idxAutoPlay(idx) {
+    return (
+      this.idxPlayTrigger(idx) ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO
+    );
+  }
+
+  shouldTriggerAction(idx, action = 'HOVER') {
+    if (this.findItemIndex(idx) === -1) {
+      return false;
     }
+    if (
+      this.idxPlayTrigger(idx) !==
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger][action]
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  itemHovered(idx) {
+    return this.shouldTriggerAction(idx, 'HOVER') && this.play(idx);
   }
 
   itemClicked(idx) {
-    if (
-      this.videoPlayTrigger !==
-      GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].CLICK
-    )
+    if (!this.shouldTriggerAction(idx, 'CLICK')) {
       return;
-    if (this.IdxExistsInVideoItems(idx)) {
-      if (this.currentPlayingIdx === idx) {
-        this.stop();
-      } else {
-        this.play(idx);
-      }
-    } else {
-      //do nothing
     }
+    if (this.currentPlayingIdx === idx && !this.isIdxTheeD(idx)) {
+      this.stop(idx);
+      return;
+    }
+    this.play(idx);
+  }
+
+  findItemIndex(idx) {
+    return this.items.findIndex((item) => item.idx === idx);
   }
 
   onScroll({ top, left }) {
     this.top = top >= 0 ? top : this.top;
     this.left = left >= 0 ? left : this.left;
     if (this.currentPlayingIdx === -1) {
-      this.autoPlayNextVideoByRating({ top: this.top, left: this.left });
+      this.autoPlayNextItemByRating({ top: this.top, left: this.left });
     } else {
-      if (
-        !this.isCurrentVideoStillVisible({ top: this.top, left: this.left })
-      ) {
-        this.stop(
-          this.videoItems.findIndex(
-            (item) => item.idx === this.currentPlayingIdx
-          )
-        );
+      if (!this.isCurrentItemStillVisible({ top: this.top, left: this.left })) {
+        this.stop(this.currentPlayingIdx);
       }
-      this.autoPlayNextVideoByRating({ top: this.top, left: this.left });
+      this.autoPlayNextItemByRating({ top: this.top, left: this.left });
     }
   }
 
   videoEnded(idx) {
-    const indexInVideoItems = this.videoItems.findIndex(
-      (item) => item.idx === idx
-    );
-    this.stop(indexInVideoItems);
+    this.stop(idx);
     const scroll = { top: this.top, left: this.left };
-    this.autoPlayNextVideoByRating(scroll);
+    this.autoPlayNextItemByRating(scroll);
   }
 
   videoPlayed(idx) {
@@ -176,12 +195,12 @@ class VideoScrollHelper {
   }
 
   initializePlayState() {
-    this.autoPlayNextVideoByRating({ top: this.top, left: this.left });
+    this.autoPlayNextItemByRating({ top: this.top, left: this.left });
   }
 
   //-------------------------------controls------------------------------------//
 
-  autoPlayNextVideoByRating({ top, left }) {
+  autoPlayNextItemByRating({ top, left }) {
     if (!this.shouldAutoPlay()) {
       return;
     }
@@ -194,9 +213,12 @@ class VideoScrollHelper {
       idx: -1,
       rating: Infinity,
     };
-    this.videoItems.some((item) => {
+    this.items.some((item) => {
+      if (!this.idxAutoPlay(item.idx)) {
+        return false;
+      }
       if (this.isVisible(item, { top, left })) {
-        const itemRating = this.videoRatingMap.get(item.id);
+        const itemRating = this.itemRatingMap.get(item.id);
         if (itemRating <= bestRating.rating) {
           secondBestRating.idx = bestRating.idx;
           secondBestRating.rating = bestRating.rating;
@@ -230,9 +252,10 @@ class VideoScrollHelper {
   }
 
   calculateCurrentItemPlacement() {
-    return this.videoItems.findIndex(
-      (item) => item.idx === this.currentPlayingIdx
-    );
+    const idx = this.findItemIndex(this.currentPlayingIdx);
+    if (idx >= 0) {
+      return this.items[idx];
+    }
   }
 
   play(idx) {
@@ -240,19 +263,18 @@ class VideoScrollHelper {
     this.playing = true;
   }
 
-  stop(indexInVideoItems) {
-    if (indexInVideoItems >= 0) {
-      const newRating =
-        this.videoRatingMap.get(this.videoItems[indexInVideoItems].id) +
-        this.currentItemCount;
-      this.videoRatingMap.set(this.videoItems[indexInVideoItems].id, newRating);
+  stop(idx) {
+    const item = this.findItemIndex(idx);
+    if (idx >= 0) {
+      const newRating = this.itemRatingMap.get(item.id) + this.currentItemCount;
+      this.itemRatingMap.set(item.id, newRating);
     }
     this.setPlayingIdx(-1);
     this.playing = false;
   }
 
   onPlayingIdxChange() {
-    this.setPlayingVideos(this.currentPlayingIdx);
+    this.setPlayingItem(this.currentPlayingIdx);
   }
   //-------------------------------get/set----------------------------------------//
 
@@ -265,9 +287,9 @@ class VideoScrollHelper {
 
   //-----------------------------Utils--------------------------------------------//
 
-  isCurrentVideoStillVisible({ top, left }) {
+  isCurrentItemStillVisible({ top, left }) {
     const currentItemPlacement = this.calculateCurrentItemPlacement();
-    return this.isVisible(this.videoItems[currentItemPlacement], { top, left });
+    return this.isVisible(currentItemPlacement, { top, left });
   }
 
   isVisible(item, { top, left }) {
@@ -276,9 +298,9 @@ class VideoScrollHelper {
       scrollY: top,
       scrollLeft: left,
     };
-    const videoPlayVerticalTolerance =
+    const itemPlayVerticalTolerance =
       (item.offset.top - item.offset.bottom) / 2;
-    const videoPlayHorizontalTolerance =
+    const itemPlayHorizontalTolerance =
       (item.offset.left - item.offset.right) / 2;
     const visibleVertically = isWithinPaddingVertically({
       target,
@@ -286,7 +308,7 @@ class VideoScrollHelper {
       top: item.offset.top,
       bottom: item.offset.top + item.style.height,
       screenHeight: window && window.innerHeight,
-      padding: videoPlayVerticalTolerance,
+      padding: itemPlayVerticalTolerance,
     });
     let visibleHorizontally;
     if (
@@ -300,7 +322,7 @@ class VideoScrollHelper {
         left: item.offset.left,
         right: item.offset.left + item.style.width,
         screenWidth: this.galleryWidth || (window && window.innerWidth),
-        padding: videoPlayHorizontalTolerance,
+        padding: itemPlayHorizontalTolerance,
       });
     }
     return visibleVertically && visibleHorizontally;
@@ -309,7 +331,12 @@ class VideoScrollHelper {
   shouldAutoPlay() {
     return (
       this.videoPlayTrigger ===
-      GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
+          .AUTO ||
+      this.threeDPlayTrigger ===
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.item.threeDimensionalScene.playTrigger
+        ].AUTO
     );
   }
   allowedLoop() {
@@ -317,7 +344,7 @@ class VideoScrollHelper {
   }
 
   IdxExistsInVideoItems(idx) {
-    return this.videoItems.some((item) => item.idx === idx);
+    return this.findItemIndex(idx) >= 0;
   }
 }
 

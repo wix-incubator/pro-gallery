@@ -8,7 +8,7 @@ import {
   optionsMap,
 } from 'pro-gallery-lib';
 import MagnifiedImage from './imageWithMagnified.js';
-import ThreeDItem from './3d/3dItem.tsx';
+import ThreeDItem from './3d/3dItem.js';
 import withSecondaryMedia from '../hoc/withSecondMedia.js';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
@@ -468,6 +468,7 @@ class ItemView extends React.Component {
       'customComponents',
       'scene',
       'activeIndex',
+      'isCurrentHover',
     ]);
 
     return (
@@ -475,12 +476,16 @@ class ItemView extends React.Component {
         {...props}
         key="3dItem"
         imageDimensions={imageDimensions}
+        itemContainer={this.itemContainer}
+        shouldLoad={this.props.idx === this.props.playingVideoIdx}
         actions={{
           ...this.props.actions,
           setItemLoaded: this.setItemLoaded,
           handleItemMouseDown: this.handleItemMouseDown,
           handleItemMouseUp: this.handleItemMouseUp,
         }}
+        hasLink={this.itemHasLink()}
+        isCurrentHover={this.simulateHover()}
       />
     );
   }

@@ -157,6 +157,24 @@ const defaultOptions = flattenObject({
             optionsMap.behaviourParams.item.secondaryMedia.behaviour
           ].APPEARS,
       },
+      threeDimensionalScene: {
+        controls: {
+          enableAutoRotate: false,
+          enablePan: true,
+          enableRotate: true,
+          enableZoom: false,
+        },
+        transform: {
+          rotation: 'x0y0z0',
+          scale: 'x1y1z1',
+          position: 'x0y0z0',
+        },
+        playTrigger:
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
+            .HOVER,
+        enablePlayButton: false,
+        enablePlaceholder: true,
+      },
     },
     gallery: {
       blockContextMenu: true, //is this actually a default??
@@ -207,19 +225,6 @@ const defaultOptions = flattenObject({
             GALLERY_CONSTS[
               optionsMap.behaviourParams.gallery.vertical.loadMore.amount
             ].ALL,
-        },
-      },
-      threeDimensionalScene: {
-        controls: {
-          enableAutoRotate: false,
-          enablePan: true,
-          enableRotate: true,
-          enableZoom: false,
-        },
-        transform: {
-          rotation: 'x0y0z0',
-          scale: 'x1y1z1',
-          position: 'x0y0z0',
         },
       },
     },

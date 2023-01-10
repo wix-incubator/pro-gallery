@@ -396,6 +396,10 @@ export class GalleryContainer extends React.Component {
       scrollBase: container.scrollBase,
       videoPlayTrigger:
         options[optionsMap.behaviourParams.item.video.playTrigger],
+      threeDPlayTrigger:
+        options[
+          optionsMap.behaviourParams.item.threeDimensionalScene.playTrigger
+        ],
       videoLoop: options[optionsMap.behaviourParams.item.video.loop],
       scrollDirection:
         options[optionsMap.layoutParams.structure.scrollDirection],

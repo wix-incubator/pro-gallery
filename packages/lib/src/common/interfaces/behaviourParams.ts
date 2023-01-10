@@ -34,11 +34,13 @@ export interface SecondaryMedia {
   trigger: 'OFF' | 'HOVER';
   behaviour: 'APPEARS';
 }
+
+export type PlayTrigger = 'CLICK' | 'HOVER' | 'AUTO';
 export interface Video {
   speed?: number;
   volume?: number;
   loop?: boolean;
-  playTrigger?: 'CLICK' | 'HOVER' | 'AUTO';
+  playTrigger?: PlayTrigger;
   enablePlayButton?: boolean;
   enableControls?: boolean;
   enablePlaceholder?: boolean;
@@ -47,6 +49,7 @@ export interface Video {
 export interface ThreeDimensionalScene {
   transform?: Transform;
   controls?: Controls;
+  playTrigger?: PlayTrigger;
 }
 
 export type Dimensions = `x${number}y${number}z${number}`;
