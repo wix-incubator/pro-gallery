@@ -245,8 +245,7 @@ class CssScrollHelper {
     const { idx } = item;
     let scrollCss = "";
     try {
-      for (const animation of advancedScrollAnimation) {
-        //options.behaviourParams_gallery_advancedScrollAnimation) {
+      for (const animation of options.behaviourParams_gallery_advancedScrollAnimation) {
         scrollCss += this.createScrollAnimationsIfNeeded({
           idx,
           item,

@@ -163,22 +163,6 @@ export const createScrollAnimations = ({
       }),
     });
   }
-  // if (hasAnimation(HINGE)) {
-  //   const origin = hasAnimation(HINGE_LEFT) ? "top left" : "top right";
-  //   const direction = hasAnimation(HINGE_LEFT) ? 1 : -1;
-  //   const fromVal = direction * Math.round(2 + i / 8); // 2-14
-  //   const toVal = 0;
-  //   const animationParams = s[HINGE_LEFT] || s[HINGE_RIGHT];
-  //
-  //   addScrollSelectors({
-  //     selectorSuffix: `#${itemId}`,
-  //     animationParams,
-  //     animationCss: (step, isExit) => ({
-  //       transform: `rotate(${(isExit ? -1 : 1) * valueInRange(step, fromVal, toVal, 1)}deg)`,
-  //       "transform-origin": origin,
-  //     }),
-  //   });
-  // }
   if (hasAnimation(ROUND)) {
     const from = Math.round(i / 1.2);
     const to = 0;
@@ -344,7 +328,8 @@ export const createScrollAnimations = ({
       const { width, height } = item;
       const maxSize = Math.max(width, height);
       const minSize = Math.min(width, height);
-      return (Math.cos(rad) * (maxSize * Math.sin(rad) + minSize)) / minSize;
+      const size = (Math.cos(rad) + (maxSize * Math.sin(rad) / minSize ) - (Math.sin(rad) * Math.tan(rad)));
+      return Math.pow(size, 2);
     };
     const selectorSuffix = `#${itemId} .gallery-item-content`;
 
