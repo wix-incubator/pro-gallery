@@ -10,10 +10,9 @@ const isIos = utils.isiOS();
 const useTransparentPlayButtonAndForceLoadVideo = (props) =>
   (props.videoUrl || props.url).includes('youtube.com') && isIos;
 
-const VideoPlayButton = ({ pointerEvents }) => (
+const VideoPlayButton = () => (
   <clickable.div
     style={{
-      pointerEvents: pointerEvents ? 'initial' : 'none',
       cursor: 'pointer',
     }}
   >
