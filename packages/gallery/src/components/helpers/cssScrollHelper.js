@@ -9,30 +9,35 @@ import { createScrollAnimations } from "./cssAnimationsHelper";
 
 const advancedScrollAnimation = [
   {
-    type: 'GRAYSCALE',
-    fromValue: 100,
+    type: 'SKEW',
+    fromValue: 10,
     toValue: 0,
-    fromPosition: 200,
+    fromAnchor: 'BOTTOM',
+    toAnchor: 'BOTTOM',
+    fromPosition: 100,
     toPosition: 200,
-    direction: 'IN',
-    iterations: 1,
-    transitionDuration: 1400,
+    iterations: 5,
+    transitionDuration: 400,
+    direction: 'LEFT',
+    hinge: 'center',
     reset: false
   },
   {
     type: 'FADE',
     fromValue: 0,
     toValue: 1,
-    fromPosition: 100,
+    fromAnchor: 'BOTTOM',
+    toAnchor: 'BOTTOM',
+    fromPosition: 0,
     toPosition: 100,
-    direction: 'IN',
     iterations: 1,
-    transitionDuration: 1400,
-    reset: false
-  }
+    transitionDuration: 4000,
+    reset: true
+  },
 ];
 
-const isHorizontalScroll = (options) => options.layoutParams_structure_scrollDirection === GALLERY_CONSTS.layoutParams_structure_scrollDirection.HORIZONTAL;
+const isHorizontalScroll = (options) =>
+  options.layoutParams_structure_scrollDirection === GALLERY_CONSTS.layoutParams_structure_scrollDirection.HORIZONTAL;
 const getContainerSize = (options, container) =>
   isHorizontalScroll(options)
     ? Math.min(container.width, window.innerWidth)
@@ -51,7 +56,7 @@ class CssScrollHelper {
     this.scrollCss = [];
     this.scrollCssProps = [];
 
-    this.animationPadding = 1000;
+    this.animationPadding = 5000;
 
     try {
       this.settings = JSON.parse(localStorage.gallerySettings);
@@ -108,7 +113,7 @@ class CssScrollHelper {
           .join("\n");
         return res;
       };
-      const { transitionDuration, iterations, fromPosition, toPosition } = animationParams;
+      const { transitionDuration = 400, iterations = 10, fromPosition = -100, toPosition = 100, fromAnchor = 'BOTTOM', toAnchor = 'BOTTOM' } = animationParams;
 
       const createAnimationStep = (idx, isExit) => {
         if (isExit) {
@@ -131,7 +136,7 @@ class CssScrollHelper {
             (step) => fromPosition % step === 0 && fromPosition + step <= toPosition
           ); //eslint-disable-line
           scrollClasses.push(
-            (options.scrollAnimationReset ? `.${this.isScrollingClassName(axis, true)}` : "") +
+            (animationParams.reset ? `.${this.isScrollingClassName(axis, true)}` : "") +
               `.${this.buildScrollClassName(largestDividerIdx, fromPosition, itemId, axis)} ~ div ${selectorSuffix}`
           );
           fromPosition += this.pgScrollSteps[largestDividerIdx];
@@ -168,6 +173,9 @@ class CssScrollHelper {
         const exitAnimationStart = Math.round(imageStart + imageSize - toPosition);
         const exitAnimationEnd = Math.round(exitAnimationStart + animationRange);
 
+        const animationStart = fromAnchor === "BOTTOM" ? entryAnimationStart : exitAnimationStart;
+        const animationEnd = toAnchor === "BOTTOM" ? entryAnimationEnd : exitAnimationEnd;
+
         const scrollClasses = {};
 
         const addScrollClass = (key, val) => {
@@ -181,33 +189,20 @@ class CssScrollHelper {
         };
 
         //first batch: animation start value until the range start:
-        console.log("createAnimationStep", createAnimationStep(0, true));
         const firstAnimationStep = createAnimationStep(0, true);
         const animatedProperties = firstAnimationStep.split(":")[0];
         const transitionCss = `transition: ${animatedProperties} ${transitionDuration}ms ease !important`;
-        addScrollClass(`${transitionCss}; ${createAnimationStep(0, true)}`, [selectorSuffix]);
 
-        if (direction === "IN") {
-          addScrollClass(
-            createAnimationStep(0) + " transtion: none !important;",
-            createSelectorsRange(entryAnimationStart - this.animationPadding, entryAnimationStart)
-          );
-          addScrollClasses(createAnimationRange(entryAnimationStart, entryAnimationEnd, false));
-          // addScrollClass(
-          //   createAnimationStep(iterations) + " transtion: none !important;",
-          //   createSelectorsRange(entryAnimationEnd, entryAnimationEnd + this.animationPadding)
-          // );
-        } else if (direction === "OUT") {
-          // addScrollClass(
-          //   createAnimationStep(iterations) + " transtion: none !important;",
-          //   createSelectorsRange(exitAnimationStart - this.animationPadding, exitAnimationStart)
-          // );
-          addScrollClasses(createAnimationRange(exitAnimationStart, exitAnimationEnd, true));
-          addScrollClass(
-            createAnimationStep(0) + " transtion: none !important;",
-            createSelectorsRange(exitAnimationEnd, exitAnimationEnd + this.animationPadding)
-          );
-        }
+        addScrollClass(`${transitionCss}; ${createAnimationStep(0, true)}`, [selectorSuffix]);
+        addScrollClass(
+          createAnimationStep(0) + " transtion: none !important;",
+          createSelectorsRange(animationStart - this.animationPadding, animationStart)
+        );
+        addScrollClasses(createAnimationRange(animationStart, animationEnd, false));
+        addScrollClass(
+          createAnimationStep(iterations) + " transtion: none !important;",
+          createSelectorsRange(animationEnd, animationEnd + this.animationPadding)
+        );
 
         const fullCss = Object.entries(scrollClasses)
           .map(([css, selectors]) => (selectors.length > 0 ? `${selectors.join(",\n")} \n{${css}}\n` : false))
@@ -228,60 +223,30 @@ class CssScrollHelper {
     const itemId = this.getSellectorDomId(item);
     const containerSize = getContainerSize(options, container);
 
-    // debugger;
+    const createScrollSelectors = this.createScrollSelectorsFunction({
+      itemId,
+      item,
+      container,
+      options,
+    });
 
-    const createEntryScrollSelectors =
-      direction === "OUT"
-        ? () => {}
-        : this.createScrollSelectorsFunction({
-            itemId,
-            item,
-            container,
-            options,
-            direction: "IN",
-          });
-    const createExitScrollSelectors =
-      direction === "IN"
-        ? () => {}
-        : this.createScrollSelectorsFunction({
-            itemId,
-            item,
-            container,
-            options,
-            direction: "OUT",
-          });
-
-    const createScrollAnimationParams = {
+    return createScrollAnimations({
+      createScrollSelectors: createScrollSelectors,
       itemId,
       item,
       options,
       containerSize,
       animationParams,
       isHorizontalScroll: isHorizontalScroll(options),
-    };
-    return (
-      (direction === "OUT"
-        ? ""
-        : createScrollAnimations({
-            createScrollSelectors: createEntryScrollSelectors,
-            ...createScrollAnimationParams,
-          })) +
-      " \n" +
-      (direction === "IN"
-        ? ""
-        : createScrollAnimations({
-            createScrollSelectors: createExitScrollSelectors,
-            ...createScrollAnimationParams,
-          }))
-    );
+    });
   }
 
   calcScrollCssForItem({ item, container, options }) {
     const { idx } = item;
     let scrollCss = "";
-    console.log("advancedScrollAnimation", options.behaviourParams_gallery_advancedScrollAnimation);
     try {
-      for (const animation of options.behaviourParams_gallery_advancedScrollAnimation) {
+      for (const animation of advancedScrollAnimation) {
+        //options.behaviourParams_gallery_advancedScrollAnimation) {
         scrollCss += this.createScrollAnimationsIfNeeded({
           idx,
           item,
@@ -299,17 +264,14 @@ class CssScrollHelper {
 
   calcScrollCss({ galleryId, items, container, options }) {
     this.galleryId = galleryId;
-    // const { exitScrollAnimation, scrollAnimation } = options;
+    const { behaviourParams_gallery_advancedScrollAnimation } = options;
     if (!(items && items.length) || !options) {
       console.error("calcScrollCss: missing params", { items, options });
       return [];
     }
-    // if (
-    //   (!scrollAnimation || scrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT) &&
-    //   (!exitScrollAnimation || exitScrollAnimation === GALLERY_CONSTS.scrollAnimations.NO_EFFECT)
-    // ) {
-    //   return [];
-    // }
+    if (behaviourParams_gallery_advancedScrollAnimation?.length < 1) {
+      return [];
+    }
 
     const res = items.map((item) => this.calcScrollCssForItem({ item, container, options }));
     return res;
