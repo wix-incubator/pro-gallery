@@ -15,11 +15,14 @@ export const createScrollAnimations = ({
     NO_EFFECT,
     FADE,
     GRAYSCALE,
+    SIZE,
     SHADOW,
     BLUR,
+    ROTATE,
+
+
     ONE_COLOR,
     MAIN_COLOR,
-    EXPAND,
     SHRINK,
     ROUND,
     ZOOM,
@@ -127,24 +130,7 @@ export const createScrollAnimations = ({
       }),
     });
   }
-  if (hasAnimation(SHADOW)) {
-    //TODO check why animation doesn't start on time
-    const fromVal = Math.round(15 + i / 6); // 15-31
-    const toVal = 0;
-    const animationParams = s[SHADOW];
-    const { fromValue, toValue } = animationParams;
-    addScrollSelectors({
-      selectorSuffix: `#${itemId}`,
-      animationParams,
-      animationCss: (step, isExit) => {
-        const size = valueInRange(step, fromVal, toVal, 1);
-        return {
-          filter: `drop-shadow(0 0 ${size}px rgba(0,0,0,${0.3 + i / 250}));`,
-        };
-      },
-    });
-  }
-  if (hasAnimation(EXPAND)) {
+  if (hasAnimation(SIZE)) {
     const { fromValue, toValue } = animationParams;
     addScrollSelectors({
       selectorSuffix: `#${itemId} .gallery-item-wrapper`,
@@ -154,14 +140,18 @@ export const createScrollAnimations = ({
       }),
     });
   }
-  if (hasAnimation(SHRINK)) {
+  if (hasAnimation(SHADOW)) {
+    //TODO check why animation doesn't start on time
     const { fromValue, toValue } = animationParams;
     addScrollSelectors({
       selectorSuffix: `#${itemId}`,
       animationParams,
-      animationCss: (step, isExit) => ({
-        transform: `scale(${valueInRange(step, fromValue, toValue, 0.01)})`,
-      }),
+      animationCss: (step, isExit) => {
+        const size = valueInRange(step, fromValue, toValue, 1);
+        return {
+          filter: `drop-shadow(0 0 ${size}px rgba(0,0,0,0.5));`,
+        };
+      },
     });
   }
   if (hasAnimation(ZOOM)) {
@@ -177,72 +167,46 @@ export const createScrollAnimations = ({
       }),
     });
   }
-  // if (hasAnimation(ZOOM_IN)) {
-  //   const fromVal = 1;
-  //   const toVal = Math.round(110 + i / 4) / 100; // 1.1-1.35
-  //   const animationParams = s[ZOOM_IN];
-  //   const { fromValue, toValue } = animationParams;
-  //   addScrollSelectors({
-  //     selectorSuffix: `#${itemId} .gallery-item-content`,
-  //     animationParams,
-  //     animationCss: (step, isExit) => ({
-  //       transform: `scale(${valueInRange(step, fromVal, toVal, 0.01)})`,
-  //     }),
-  //   });
-  // }
   if (hasAnimation(BLUR)) {
-    const fromVal = Math.round(10 + (i * 9) / 10); // 10-100;
-    const toVal = 0;
-    const scaleByBlur = (blur) => {
-      const size = Math.min(item.width, item.height);
-      return (size + blur * 2) / size;
-    };
-    const animationParams = s[BLUR];
     const { fromValue, toValue } = animationParams;
     addScrollSelectors({
       selectorSuffix: `#${itemId} .gallery-item-content`,
       animationParams,
       animationCss: (step, isExit) => {
-        const blur = valueInRange(step, fromVal, toVal, 1);
+        const blur = valueInRange(step, fromValue, toValue, 1);
         return {
-          transform: `scale(${scaleByBlur(blur)})`,
           filter: `blur(${blur}px)`,
         };
       },
     });
   }
-  if (hasAnimation(ROTATE_LEFT, ROTATE_RIGHT)) {
-    //TODO - add scale so that the image will fit in the container
-    const direction = hasAnimation(ROTATE_LEFT) ? 1 : -1;
-    const fromVal = direction * Math.round(2 + i / 8); // 2-14
-    const toVal = 0;
-    const animationParams = s[ROTATE_LEFT] || s[ROTATE_RIGHT];
-    const { fromValue, toValue } = animationParams;
+  if (hasAnimation(ROTATE)) {
+    const { hinge, fromValue, toValue } = animationParams;
     addScrollSelectors({
       selectorSuffix: `#${itemId}`,
       animationParams,
       animationCss: (step, isExit) => ({
-        transform: `rotate(${valueInRange(step, fromVal, toVal, 1)}deg)`,
-        "transform-origin": "center",
+        transform: `rotate(${valueInRange(step, fromValue, toValue, 1)}deg)`,
+        "transform-origin": hinge || "center",
       }),
     });
   }
-  if (hasAnimation(HINGE_LEFT, HINGE_RIGHT)) {
-    const origin = hasAnimation(HINGE_LEFT) ? "top left" : "top right";
-    const direction = hasAnimation(HINGE_LEFT) ? 1 : -1;
-    const fromVal = direction * Math.round(2 + i / 8); // 2-14
-    const toVal = 0;
-    const animationParams = s[HINGE_LEFT] || s[HINGE_RIGHT];
-    const { fromValue, toValue } = animationParams;
-    addScrollSelectors({
-      selectorSuffix: `#${itemId}`,
-      animationParams,
-      animationCss: (step, isExit) => ({
-        transform: `rotate(${(isExit ? -1 : 1) * valueInRange(step, fromVal, toVal, 1)}deg)`,
-        "transform-origin": origin,
-      }),
-    });
-  }
+  // if (hasAnimation(HINGE)) {
+  //   const origin = hasAnimation(HINGE_LEFT) ? "top left" : "top right";
+  //   const direction = hasAnimation(HINGE_LEFT) ? 1 : -1;
+  //   const fromVal = direction * Math.round(2 + i / 8); // 2-14
+  //   const toVal = 0;
+  //   const animationParams = s[HINGE_LEFT] || s[HINGE_RIGHT];
+  //   const { fromValue, toValue } = animationParams;
+  //   addScrollSelectors({
+  //     selectorSuffix: `#${itemId}`,
+  //     animationParams,
+  //     animationCss: (step, isExit) => ({
+  //       transform: `rotate(${(isExit ? -1 : 1) * valueInRange(step, fromVal, toVal, 1)}deg)`,
+  //       "transform-origin": origin,
+  //     }),
+  //   });
+  // }
   if (hasAnimation(ROUND)) {
     const from = Math.round(i / 1.2);
     const to = 0;
@@ -257,7 +221,8 @@ export const createScrollAnimations = ({
     });
   }
 
-  if (hasAnimation(SQUEEZE_DOWN, SQUEEZE_UP, SQUEEZE_LEFT, SQUEEZE_RIGHT)) {
+  if (hasAnimation(SQUEEZE)) {
+    const 
     const rtlFix = h && isRTL ? -1 : 1;
     const directionFix = hasAnimation(SQUEEZE_UP, SQUEEZE_LEFT) ? 1 : -1;
     const prop = hasAnimation(SQUEEZE_LEFT, SQUEEZE_RIGHT) ? "X" : "Y";
