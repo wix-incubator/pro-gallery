@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThreeDImplementation } from './types';
 import { use3DItem } from './hooks';
+import { VideoPlayButton } from '../../helpers/play-button';
 
 export default function ThreeDItem(props: ThreeDImplementation): JSX.Element {
   const { canvasRef, isLoaded } = use3DItem(props);
@@ -22,9 +23,13 @@ export default function ThreeDItem(props: ThreeDImplementation): JSX.Element {
   return (
     <>
       {canvas}
-      <span style={{ opacity: isLoaded ? 0 : 1, transition: 'opacity 200ms' }}>
-        {props.thumbnail}
-      </span>
+      {props.thumbnailWithOverride({
+        extraClasses: [
+          props.placeholderExtraClasses,
+          isLoaded ? 'three-d-loaded' : 'three-d-loading',
+        ].join(' '),
+        overlay: !props.shouldPlay && <VideoPlayButton pointerEvents />,
+      })}
       {props.hover}
     </>
   );

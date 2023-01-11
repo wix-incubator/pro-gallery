@@ -77,7 +77,7 @@ export function createSceneManager(
   const width = container.clientWidth;
   const height = container.clientHeight;
   const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-  const controls = new OrbitControls(camera, container);
+  let controls = new OrbitControls(camera, container);
   controls.target.set(0, 0, 0);
   camera.position.set(0, 0, 0.8);
   controls.maxDistance = 1.6;
@@ -121,11 +121,13 @@ export function createSceneManager(
     },
     set stop(value) {
       if (!value && !renderer) {
+        controls = new OrbitControls(camera, container);
         renderer = initRenderer();
         animate();
       }
       if (value && renderer) {
         renderer.dispose();
+        controls.dispose();
         renderer = undefined;
       }
     },

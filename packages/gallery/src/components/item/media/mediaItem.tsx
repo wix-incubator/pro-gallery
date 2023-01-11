@@ -41,6 +41,7 @@ export type MediaProps<T extends Record<string, any>> = MediaBaseProps & {
 export type MediaImplementationProps<T = {}> = T &
   MediaBaseProps & {
     thumbnail: JSX.Element;
+    thumbnailWithOverride(props: ImageItem['props']): JSX.Element;
     placeholder: JSX.Element;
   };
 
@@ -83,20 +84,23 @@ export default function MediaItem<T extends Record<string, any>>(
     return false;
   }, [hasLink, playTrigger, clickAction]);
 
-  const thumbnail = enableImagePlaceholder ? (
-    <ImageItem
-      {...props}
-      imageDimensions={imageDimensions}
-      id={props.idx}
-      overlay={
-        showPlayButton &&
-        !isMediaPlayable && <VideoPlayButton pointerEvents={true} />
-      }
-      extraClasses={' ' + props.placeholderExtraClasses.join(' ')}
-    />
-  ) : (
-    <></>
-  );
+  const createThumbnail = (propsOverrides: any = {}) =>
+    enableImagePlaceholder ? (
+      <ImageItem
+        {...props}
+        imageDimensions={imageDimensions}
+        id={props.idx}
+        overlay={
+          showPlayButton &&
+          !isMediaPlayable && <VideoPlayButton pointerEvents={true} />
+        }
+        extraClasses={props.placeholderExtraClasses.join(' ')}
+        {...propsOverrides}
+      />
+    ) : (
+      <></>
+    );
+  const thumbnail = createThumbnail();
 
   const placeholder = (
     <>
@@ -114,6 +118,7 @@ export default function MediaItem<T extends Record<string, any>>(
         {...props}
         thumbnail={thumbnail}
         placeholder={placeholder}
+        thumbnailWithOverride={createThumbnail}
       />
     </React.Suspense>
   );

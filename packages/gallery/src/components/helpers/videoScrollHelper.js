@@ -342,10 +342,6 @@ class VideoScrollHelper {
   allowedLoop() {
     return this.videoLoop === true;
   }
-
-  IdxExistsInVideoItems(idx) {
-    return this.findItemIndex(idx) >= 0;
-  }
 }
 
 export default VideoScrollHelper;

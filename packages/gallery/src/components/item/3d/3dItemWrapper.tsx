@@ -25,7 +25,7 @@ export default function ThreeDItemWrapper(
       {...props}
       MediaImplementation={ThreeDItem}
       playTrigger={playTrigger}
-      placeholderExtraClasses={['pro-gallery-item-placeholder-3d']}
+      placeholderExtraClasses={['gallery-item-3d-placeholder']}
       enableImagePlaceholder={true}
       showPlayButton={true}
     />
