@@ -2,7 +2,6 @@ import {
   GALLERY_CONSTS,
   Options,
   ThreeDimensionalScene,
-  utils,
 } from 'pro-gallery-lib';
 import { ThreeDImplementation } from './types';
 import { useSceneManager } from '../../helpers/3dManager';
@@ -35,39 +34,45 @@ function mapSceneToStyleParams(scene: ThreeDimensionalScene, options: Options) {
 }
 
 export function use3DItem(props: ThreeDImplementation): ThreeDItemHooks {
-  const { canvasRef, sceneManager, render } = useSceneManager(
-    props.itemContainer
-  );
+  const { canvasRef, sceneManager, render } = useSceneManager();
   const [isLoaded, setIsLoaded] = useState(false);
 
   const sceneParams = mapSceneToStyleParams(props.scene || {}, props.options);
 
-  const start = useMemo(
-    () =>
-      utils.singleInstance(async () => {
-        const manager = sceneManager || (await render());
-        if (!manager) {
-          return;
-        }
-        manager.opacity = 0;
-        manager.model
-          .load3DModel(
-            props.createUrl(
-              GALLERY_CONSTS.urlSizes.RESIZED,
-              GALLERY_CONSTS.urlTypes.THREE_D
-            )
-          )
-          .then(() => {
-            props.actions.setItemLoaded();
-            manager.opacity = 1;
-            manager.model.addGround();
-            manager.environment.addAmbientLight();
-            manager.environment.sun();
-            setIsLoaded(true);
-          });
-      }),
-    []
-  );
+  const loadedManager = useMemo(() => {
+    if (!props.shouldPlay) {
+      return sceneManager;
+    }
+    if (sceneManager) {
+      return sceneManager;
+    }
+    if (!props.itemContainer.current) {
+      return sceneManager;
+    }
+    const manager = render(props.itemContainer.current);
+    if (!manager) {
+      throw new Error('Could not create scene manager post play');
+    }
+    manager.opacity = 0;
+    manager.model
+      .load3DModel(
+        props.createUrl(
+          GALLERY_CONSTS.urlSizes.RESIZED,
+          GALLERY_CONSTS.urlTypes.THREE_D
+        )
+      )
+      .then(() => {
+        props.actions.setItemLoaded();
+        manager.opacity = 1;
+        manager.model.addGround();
+        manager.environment.addAmbientLight();
+        manager.environment.sun();
+        requestAnimationFrame(() => {
+          setIsLoaded(true);
+        });
+      });
+    return manager;
+  }, [render, sceneManager, props.shouldPlay, props.itemContainer.current]);
 
   const postLoadUpdate = useCallback(
     ({
@@ -79,7 +84,7 @@ export function use3DItem(props: ThreeDImplementation): ThreeDItemHooks {
       behaviourParams_item_threeDimensionalScene_controls_enableZoom,
       behaviourParams_item_threeDimensionalScene_controls_enableAutoRotate,
     }: typeof sceneParams) => {
-      if (!sceneManager) {
+      if (!loadedManager) {
         return;
       }
       const rotation = GALLERY_CONSTS.parse3DDimensions(
@@ -91,42 +96,46 @@ export function use3DItem(props: ThreeDImplementation): ThreeDItemHooks {
       const position = GALLERY_CONSTS.parse3DDimensions(
         behaviourParams_item_threeDimensionalScene_transform_position
       );
-      sceneManager.model.transform.setPosition(
+      loadedManager.model.transform.setPosition(
         position.x,
         position.y,
         position.z
       );
-      sceneManager.model.transform.setRotation(
+      loadedManager.model.transform.setRotation(
         rotation.x,
         rotation.y,
         rotation.z
       );
-      sceneManager.camera.enablePan =
+      loadedManager.camera.enablePan =
         behaviourParams_item_threeDimensionalScene_controls_enablePan;
-      sceneManager.camera.enableRotate =
+      loadedManager.camera.enableRotate =
         behaviourParams_item_threeDimensionalScene_controls_enableRotate;
-      sceneManager.camera.enableZoom =
+      loadedManager.camera.enableZoom =
         behaviourParams_item_threeDimensionalScene_controls_enableZoom;
-      sceneManager.camera.enableAutoRotate =
+      loadedManager.camera.enableAutoRotate =
         behaviourParams_item_threeDimensionalScene_controls_enableAutoRotate;
 
-      sceneManager.model.transform.setScale(scale.x, scale.y, scale.z);
+      loadedManager.model.transform.setScale(scale.x, scale.y, scale.z);
     },
-    [sceneManager]
+    [loadedManager]
   );
 
   useEffect(() => {
-    if (!sceneManager && props.shouldPlay) {
-      start();
+    if (isLoaded && loadedManager && props.shouldPlay === loadedManager.stop) {
+      loadedManager.stop = !props.shouldPlay;
       return;
     }
-    if (sceneManager && props.shouldPlay === sceneManager.stop) {
-      sceneManager.stop = !props.shouldPlay;
-      return;
-    }
-  }, [props.shouldPlay]);
+  }, [props.shouldPlay, loadedManager, isLoaded]);
 
   postLoadUpdate(sceneParams);
+
+  useEffect(() => {
+    return () => {
+      if (loadedManager) {
+        loadedManager.dispose();
+      }
+    };
+  }, [loadedManager]);
 
   return {
     canvasRef,

@@ -20,7 +20,6 @@ export type MediaBaseProps = {
   isPrerenderMode: boolean;
   isTransparent: boolean;
   style: any;
-  itemContainer?: HTMLDivElement;
   actions: any;
   customComponents: any;
   shouldPlay: boolean;

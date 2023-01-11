@@ -170,8 +170,9 @@ const defaultOptions = flattenObject({
           position: 'x0y0z0',
         },
         playTrigger:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
-            .HOVER,
+          GALLERY_CONSTS[
+            optionsMap.behaviourParams.item.threeDimensionalScene.playTrigger
+          ].HOVER,
         enablePlayButton: false,
         enablePlaceholder: true,
       },

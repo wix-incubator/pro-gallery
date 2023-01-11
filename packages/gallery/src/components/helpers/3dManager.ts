@@ -95,7 +95,6 @@ export function createSceneManager(
     renderer.domElement.style.transition = 'opacity 0.3s ease-in-out';
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
     return renderer;
   };
   let renderer: THREE.WebGLRenderer | undefined = initRenderer();
@@ -330,13 +329,13 @@ export function createSceneManager(
 
 export type SceneManager = ReturnType<typeof createSceneManager>;
 
-export function useSceneManager(container?: HTMLDivElement) {
+export function useSceneManager() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [sceneManager, setSceneManager] = useState<SceneManager | null>(null);
 
-  const render = useCallback(async () => {
-    if (!container || !canvasRef.current) {
-      return;
+  const render = useCallback((container: HTMLElement) => {
+    if (!canvasRef.current) {
+      throw new Error('canvas element is not found.');
     }
     if (!sceneManager) {
       const sceneManager = createSceneManager(container, canvasRef.current);
@@ -344,7 +343,7 @@ export function useSceneManager(container?: HTMLDivElement) {
       return sceneManager;
     }
     return sceneManager;
-  }, [container]);
+  }, []);
 
   return { canvasRef, sceneManager, render };
 }

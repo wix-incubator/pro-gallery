@@ -6,24 +6,26 @@ export default function ThreeDItem(props: ThreeDImplementation): JSX.Element {
   const { canvasRef, isLoaded } = use3DItem(props);
 
   const canvas = (
-    <canvas key={'canvas'} width={'100%'} height={'100%'} ref={canvasRef} />
+    <canvas
+      key={'canvas'}
+      width={'100%'}
+      height={'100%'}
+      ref={canvasRef}
+      style={{
+        background: 'transparent',
+        opacity: isLoaded ? 1 : 0,
+        transition: 'opacity 200ms',
+      }}
+    />
   );
 
-  if (!props.shouldPlay) {
-    if (isLoaded) {
-      return (
-        <>
-          {canvas}
-          {props.hover}
-        </>
-      );
-    }
-    return props.placeholder;
-  }
   return (
     <>
       {canvas}
-      {!isLoaded && props.placeholder}
+      <span style={{ opacity: isLoaded ? 0 : 1, transition: 'opacity 200ms' }}>
+        {props.thumbnail}
+      </span>
+      {props.hover}
     </>
   );
 }

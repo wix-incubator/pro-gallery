@@ -47,6 +47,8 @@ class ItemView extends React.Component {
     this.activeElement = '';
   }
 
+  itemContainer = React.createRef();
+
   //-------------------------------------------| INIT |--------------------------------------------//
 
   init() {
@@ -1037,7 +1039,7 @@ class ItemView extends React.Component {
     changeActiveElementIfNeeded({
       prevProps,
       currentProps: this.props,
-      itemContainer: this.itemContainer,
+      itemContainer: this.itemContainer.current,
     });
   }
 
@@ -1094,7 +1096,7 @@ class ItemView extends React.Component {
         className={this.getItemContainerClass()}
         onContextMenu={(e) => this.onContextMenu(e)}
         id={cssScrollHelper.getSellectorDomId(this.props)}
-        ref={(e) => (this.itemContainer = e)}
+        ref={this.itemContainer}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         onFocus={this.onFocus}
