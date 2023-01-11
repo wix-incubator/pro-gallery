@@ -8,7 +8,7 @@ import {
   optionsMap,
 } from 'pro-gallery-lib';
 import MagnifiedImage from './imageWithMagnified.js';
-import ThreeDItem from './3d/3dItem.js';
+import ThreeDItem from './3d/3dItemWrapper.js';
 import withSecondaryMedia from '../hoc/withSecondMedia.js';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
@@ -450,34 +450,32 @@ class ItemView extends React.Component {
     );
   }
 
-  get3dItem(imageDimensions) {
-    const props = utils.pick(this.props, [
-      'gotFirstScrollEvent',
-      'calculatedAlt',
-      'title',
-      'description',
-      'id',
-      'idx',
-      'options',
-      'createUrl',
-      'createMagnifiedUrl',
-      'settings',
-      'isPrerenderMode',
-      'isTransparent',
-      'style',
-      'customComponents',
-      'scene',
-      'activeIndex',
-      'isCurrentHover',
-    ]);
+  get3dItem(imageDimensions, itemHover) {
+    const {
+      calculatedAlt,
+      title,
+      description,
+      id,
+      idx,
+      options,
+      createUrl,
+      createMagnifiedUrl,
+      settings,
+      isPrerenderMode,
+      isTransparent,
+      style,
+      customComponents,
+      scene,
+      activeIndex,
+      isCurrentHover,
+    } = this.props;
 
     return (
       <ThreeDItem
-        {...props}
         key="3dItem"
         imageDimensions={imageDimensions}
         itemContainer={this.itemContainer}
-        shouldLoad={this.props.idx === this.props.playingVideoIdx}
+        shouldPlay={this.props.idx === this.props.playingVideoIdx}
         actions={{
           ...this.props.actions,
           setItemLoaded: this.setItemLoaded,
@@ -486,6 +484,23 @@ class ItemView extends React.Component {
         }}
         hasLink={this.itemHasLink()}
         isCurrentHover={this.simulateHover()}
+        hover={itemHover}
+        activeIndex={activeIndex}
+        calculatedAlt={calculatedAlt}
+        createMagnifiedUrl={createMagnifiedUrl}
+        createUrl={createUrl}
+        customComponents={customComponents}
+        title={title}
+        description={description}
+        id={id}
+        idx={idx}
+        isPrerenderMode={isPrerenderMode}
+        isTransparent={isTransparent}
+        options={options}
+        scene={scene}
+        style={style}
+        settings={settings}
+        isCurrentHover={isCurrentHover}
       />
     );
   }
@@ -567,7 +582,7 @@ class ItemView extends React.Component {
         itemInner = [this.getTextItem(itemStyles), itemHover];
         break;
       case '3d':
-        itemInner = [this.get3dItem(itemStyles), itemHover];
+        itemInner = this.get3dItem(itemStyles, itemHover);
         break;
       case 'image':
       case 'picture':

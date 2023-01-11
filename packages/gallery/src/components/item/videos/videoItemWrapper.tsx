@@ -4,7 +4,7 @@ import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import { VideoPlayButton } from '../../helpers/play-button';
 import MediaImage, {
   MediaImplementationProps,
-  MediaProps,
+  MediaBaseProps,
 } from '../media/mediaItem';
 
 const isIos = utils.isiOS();
@@ -18,7 +18,7 @@ const VideoItem = React.lazy(() => {
 class VideoItemImplementation extends React.Component<MediaImplementationProps> {
   render() {
     if (isEditMode()) {
-      return this.props.placeholder;
+      return this.props.thumbnail;
     }
     const shouldUseTransparentPlayButtonAndForceLoadVideo =
       useTransparentPlayButtonAndForceLoadVideo(this.props);
@@ -29,7 +29,7 @@ class VideoItemImplementation extends React.Component<MediaImplementationProps> 
           this.props.shouldPlay ||
           shouldUseTransparentPlayButtonAndForceLoadVideo
         }
-        videoPlaceholder={this.props.placeholder}
+        videoPlaceholder={this.props.thumbnail}
         videoPlayButton={
           this.props.showPlayButton && (
             <VideoPlayButton
@@ -43,7 +43,7 @@ class VideoItemImplementation extends React.Component<MediaImplementationProps> 
 }
 
 export type VideoWreapperProps = Omit<
-  MediaProps,
+  MediaBaseProps,
   | 'MediaImplementation'
   | 'enableImagePlaceholder'
   | 'showPlayButton'

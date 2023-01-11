@@ -1,16 +1,18 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import React, { useMemo } from 'react';
 import { optionsMap, GALLERY_CONSTS } from 'pro-gallery-lib';
 import { VideoPlayButton } from '../../helpers/play-button';
 import { Options, Settings, PlayTrigger } from 'pro-gallery-lib';
 import ImageItem from '../imageItem';
 
-export interface MediaProps {
+export type MediaBaseProps = {
   calculatedAlt: string;
   title: string;
   description: string;
   id: string;
   idx: number;
   activeIndex: number;
+  isCurrentHover: boolean;
   options: Options;
   createUrl: any;
   createMagnifiedUrl: any;
@@ -25,18 +27,27 @@ export interface MediaProps {
   imageDimensions: any;
   playTrigger: PlayTrigger;
   hasLink: boolean;
-  MediaImplementation: React.ComponentType<MediaImplementationProps>;
   placeholderExtraClasses: string[];
   showPlayButton: boolean;
   hover: JSX.Element;
   enableImagePlaceholder: boolean;
-}
+};
 
-export interface MediaImplementationProps extends MediaProps {
-  placeholder: JSX.Element;
-}
+export type MediaProps<T extends Record<string, any>> = MediaBaseProps & {
+  MediaImplementation: React.ComponentType<
+    MediaImplementationProps<Omit<T, 'MediaImplementation'>>
+  >;
+} & T;
 
-export default function MediaItem(props: MediaProps) {
+export type MediaImplementationProps<T = {}> = T &
+  MediaBaseProps & {
+    thumbnail: JSX.Element;
+    placeholder: JSX.Element;
+  };
+
+export default function MediaItem<T extends Record<string, any>>(
+  props: MediaProps<T>
+): JSX.Element {
   const {
     hasLink,
     playTrigger,
@@ -73,7 +84,7 @@ export default function MediaItem(props: MediaProps) {
     return false;
   }, [hasLink, playTrigger, clickAction]);
 
-  const placeholder = enableImagePlaceholder ? (
+  const thumbnail = enableImagePlaceholder ? (
     <ImageItem
       {...props}
       imageDimensions={imageDimensions}
@@ -88,18 +99,23 @@ export default function MediaItem(props: MediaProps) {
     <></>
   );
 
+  const placeholder = (
+    <>
+      {thumbnail}
+      {props.hover}
+    </>
+  );
   if (!isMediaPlayable) {
-    return (
-      <>
-        {placeholder}
-        {props.hover}
-      </>
-    );
+    return placeholder;
   }
 
   return (
     <React.Suspense fallback={placeholder}>
-      <MediaImplementation {...props} placeholder={placeholder} />
+      <MediaImplementation
+        {...props}
+        thumbnail={thumbnail}
+        placeholder={placeholder}
+      />
     </React.Suspense>
   );
 }

@@ -1,23 +1,9 @@
-import { Options, Settings, ThreeDimensionalScene } from 'pro-gallery-lib';
+import { ThreeDimensionalScene } from 'pro-gallery-lib';
+import { MediaImplementationProps } from '../media/mediaItem';
 
-export interface ThreeDProps {
-  calculatedAlt: string;
-  title: string;
-  description: string;
-  id: string;
-  idx: number;
-  activeIndex: number;
-  options: Options;
-  createUrl: any;
-  createMagnifiedUrl: any;
-  settings: Settings;
-  isPrerenderMode: boolean;
-  isTransparent: boolean;
-  style: any;
+export type ThreeDProps = {
   itemContainer?: HTMLDivElement;
-  actions: any;
-  shouldLoad: boolean;
-  customComponents: any;
   scene: ThreeDimensionalScene;
-  imageDimensions: any;
-}
+};
+
+export type ThreeDImplementation = MediaImplementationProps<ThreeDProps>;

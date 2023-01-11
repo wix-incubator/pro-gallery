@@ -1,68 +1,8 @@
-import { utils } from 'pro-gallery-lib';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
-type Three = typeof import('three');
-type GLTFLoader = typeof import('three/examples/jsm/loaders/GLTFLoader');
-type DRACOLoader = typeof import('three/examples/jsm/loaders/DRACOLoader');
-type OrbitControls = typeof import('three/examples/jsm/controls/OrbitControls');
-type RGBELoader = typeof import('three/examples/jsm/loaders/RGBELoader');
-type Extensions = {
-  gltfLoader: GLTFLoader;
-  dracoLoader: DRACOLoader;
-  orbitControls: OrbitControls;
-  rgbELoader: RGBELoader;
-};
-
-const utils_singleInstance = utils.singleInstance as <
-  T extends (...args: any[]) => any
->(
-  fn: T
-) => T;
-
-const laztLoadThreejs = utils_singleInstance(() => {
-  const THREE_PROMISE = new Promise((resolve, reject) => {
-    import('three')
-      .then((three) => {
-        resolve(three);
-      })
-      .catch(reject);
-  });
-  const EXTENSIONS_PROMISE = new Promise<Extensions>((resolve, reject) =>
-    Promise.all([
-      import('three/examples/jsm/loaders/GLTFLoader'),
-      import('three/examples/jsm/loaders/DRACOLoader'),
-      import('three/examples/jsm/controls/OrbitControls'),
-      import('three/examples/jsm/loaders/RGBELoader'),
-    ])
-      .then(([GLTFLoader, DRACOLoader, OrbitControls, RGBELoader]) => {
-        resolve({
-          gltfLoader: GLTFLoader,
-          dracoLoader: DRACOLoader,
-          orbitControls: OrbitControls,
-          rgbELoader: RGBELoader,
-        });
-      })
-      .catch(reject)
-  );
-  const awaitLoad = Promise.all([THREE_PROMISE, EXTENSIONS_PROMISE]);
-  return {
-    THREE: THREE_PROMISE,
-    EXTENSIONS: EXTENSIONS_PROMISE,
-    awaitLoad,
-  };
-});
-
-export async function render3DScene(
-  element: HTMLElement,
-  canvas: HTMLCanvasElement = element.appendChild(
-    document.createElement('canvas')
-  )
-) {
-  const { THREE, EXTENSIONS } = laztLoadThreejs();
-  const three = (await THREE) as Three;
-  const extensions = (await EXTENSIONS) as Extensions;
-  return createSceneManager(three, element, canvas, extensions);
-}
+import { useCallback, useRef, useState } from 'react';
+import * as THREE from 'three';
+import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 interface ManagerInstance {
   stop: boolean;
@@ -123,46 +63,45 @@ interface ManagerInstance {
     enableRotate: boolean;
     enableAutoRotate: boolean;
   };
+  dispose(): void;
 }
 
 export function createSceneManager(
-  three: typeof import('three'),
   container: HTMLElement,
-  canvas: HTMLCanvasElement,
-  extensions: Extensions
+  canvas: HTMLCanvasElement
 ): ManagerInstance {
-  const renderer = new three.WebGLRenderer({
-    antialias: true,
-    alpha: true,
-    canvas,
-  });
-  renderer.setClearColor(0x000000, 0);
-  const scene = new three.Scene();
-  const dracoLoader = new extensions.dracoLoader.DRACOLoader();
-  const gltfLoader = new extensions.gltfLoader.GLTFLoader();
+  const scene = new THREE.Scene();
+  const dracoLoader = new DRACOLoader();
+  const gltfLoader = new GLTFLoader();
   gltfLoader.setDRACOLoader(dracoLoader);
   const width = container.clientWidth;
   const height = container.clientHeight;
-  const camera = new three.PerspectiveCamera(75, width / height, 0.1, 1000);
-  const controls = new extensions.orbitControls.OrbitControls(
-    camera,
-    container
-  );
+  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+  const controls = new OrbitControls(camera, container);
   controls.target.set(0, 0, 0);
   camera.position.set(0, 0, 0.8);
   controls.maxDistance = 1.6;
   controls.minDistance = 0.65;
-  renderer.setSize(width, height);
-  renderer.domElement.style.position = 'absolute';
-  renderer.domElement.style.userSelect = 'none';
-  renderer.domElement.style.transition = 'opacity 0.3s ease-in-out';
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = three.PCFSoftShadowMap;
+  const initRenderer = () => {
+    const renderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+      canvas,
+    });
+    renderer.setClearColor(0x000000, 0);
+    renderer.setSize(width, height);
+    renderer.domElement.style.position = 'absolute';
+    renderer.domElement.style.userSelect = 'none';
+    renderer.domElement.style.transition = 'opacity 0.3s ease-in-out';
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
+    return renderer;
+  };
+  let renderer: THREE.WebGLRenderer | undefined = initRenderer();
   let opacity = 1;
-  let stop = false;
   function animate() {
-    if (stop) {
+    if (!renderer) {
       return;
     }
     canvas.width = container.clientWidth;
@@ -179,12 +118,16 @@ export function createSceneManager(
   let modelBasePosition: THREE.Vector3 | undefined;
   return {
     get stop() {
-      return stop;
+      return !renderer;
     },
     set stop(value) {
-      stop = value;
-      if (!stop) {
+      if (!value && !renderer) {
+        renderer = initRenderer();
         animate();
+      }
+      if (value && renderer) {
+        renderer.dispose();
+        renderer = undefined;
       }
     },
     get opacity() {
@@ -192,26 +135,26 @@ export function createSceneManager(
     },
     set opacity(value) {
       opacity = value;
-      renderer.domElement.style.opacity = opacity.toString();
+      canvas.style.opacity = opacity.toString();
     },
     environment: {
       loadBackground(url) {
-        const backgroundTexture = new three.TextureLoader().load(url);
+        const backgroundTexture = new THREE.TextureLoader().load(url);
         scene.background = backgroundTexture;
         scene.environment = backgroundTexture;
       },
       loadTextureAsLightmap(url) {
-        const lightmapTexture = new three.TextureLoader().load(url);
+        const lightmapTexture = new THREE.TextureLoader().load(url);
         scene.traverse((child) => {
-          if (child instanceof three.Mesh) {
+          if (child instanceof THREE.Mesh) {
             child.material.lightmapIntensity = 1;
             child.material.lightmap = lightmapTexture;
           }
         });
       },
       addByDirectionalLights(intensity = 1, color = 0xffffff) {
-        const light = new three.DirectionalLight(color, intensity);
-        const lightBack = new three.DirectionalLight(color, intensity);
+        const light = new THREE.DirectionalLight(color, intensity);
+        const lightBack = new THREE.DirectionalLight(color, intensity);
         light.position.set(0, 0, 2);
         lightBack.position.set(0, 0, -2);
         scene.add(light);
@@ -224,7 +167,7 @@ export function createSceneManager(
         };
       },
       sun(intensity = 1, color = 0xffffff) {
-        const light = new three.DirectionalLight(color, intensity);
+        const light = new THREE.DirectionalLight(color, intensity);
         light.castShadow = true;
         light.position.set(0, 3, 2);
         light.target.position.set(0, 0, 0);
@@ -236,7 +179,7 @@ export function createSceneManager(
         };
       },
       addAmbientLight(intensity = 0.95, color = 0xffffff) {
-        const light = new three.AmbientLight(color, intensity);
+        const light = new THREE.AmbientLight(color, intensity);
         scene.add(light);
         return {
           remove() {
@@ -245,11 +188,14 @@ export function createSceneManager(
         };
       },
       async loadHDR(url) {
-        const hdrLoader = new extensions.rgbELoader.RGBELoader();
+        const { RGBELoader } = await import(
+          /* webpackChunkName: "three-rbdl-loader" */ 'three/examples/jsm/loaders/RGBELoader'
+        );
+        const hdrLoader = new RGBELoader();
         const hdr = await new Promise<THREE.Texture>((resolve) => {
           hdrLoader.load(url, resolve);
         });
-        hdr.mapping = three.EquirectangularReflectionMapping;
+        hdr.mapping = THREE.EquirectangularReflectionMapping;
         scene.background = hdr;
         scene.environment = hdr;
         return {
@@ -272,13 +218,13 @@ export function createSceneManager(
         model.scale.set(0.1, 0.1, 0.1);
         let modelMesh: THREE.Mesh | undefined;
         model.traverse((child) => {
-          if (!modelMesh && child instanceof three.Mesh) {
+          if (!modelMesh && child instanceof THREE.Mesh) {
             modelMesh = child;
           }
         });
         if (modelMesh) {
           const center = modelMesh.geometry.boundingBox?.getSize(
-            new three.Vector3()
+            new THREE.Vector3()
           );
           if (center) {
             model.position.y = (-center.y / 2) * model.scale.y;
@@ -287,7 +233,7 @@ export function createSceneManager(
 
         // shadow
         model.traverse((child) => {
-          if (child instanceof three.Mesh) {
+          if (child instanceof THREE.Mesh) {
             child.castShadow = true;
             child.receiveShadow = true;
             (child.geometry as THREE.BufferGeometry).computeVertexNormals();
@@ -307,9 +253,9 @@ export function createSceneManager(
         };
       },
       addGround(opacity = 0.6) {
-        const ground = new three.Mesh(
-          new three.PlaneBufferGeometry(100, 100),
-          new three.ShadowMaterial({ opacity: opacity })
+        const ground = new THREE.Mesh(
+          new THREE.PlaneBufferGeometry(100, 100),
+          new THREE.ShadowMaterial({ opacity: opacity })
         );
         ground.position.y = -0.4;
         ground.rotation.x = -Math.PI / 2;
@@ -374,34 +320,31 @@ export function createSceneManager(
         controls.enableRotate = value;
       },
     },
+    dispose() {
+      renderer?.dispose();
+      controls.dispose();
+      renderer = undefined;
+    },
   };
 }
 
 export type SceneManager = ReturnType<typeof createSceneManager>;
 
-export function useSceneManager() {
-  const containerRef = useRef<HTMLDivElement>(null);
+export function useSceneManager(container?: HTMLDivElement) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [sceneManager, setSceneManager] = useState<SceneManager | null>(null);
 
-  useEffect(() => {
-    laztLoadThreejs();
-  }, []);
-
   const render = useCallback(async () => {
-    if (!containerRef.current || !canvasRef.current) {
+    if (!container || !canvasRef.current) {
       return;
     }
     if (!sceneManager) {
-      return render3DScene(containerRef.current, canvasRef.current).then(
-        (sceneManager) => {
-          setSceneManager(sceneManager);
-          return sceneManager;
-        }
-      );
+      const sceneManager = createSceneManager(container, canvasRef.current);
+      setSceneManager(sceneManager);
+      return sceneManager;
     }
     return sceneManager;
-  }, []);
+  }, [container]);
 
-  return { containerRef, canvasRef, sceneManager, render };
+  return { canvasRef, sceneManager, render };
 }

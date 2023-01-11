@@ -1,0 +1,33 @@
+import React from 'react';
+import { ThreeDProps } from './types';
+import MediaItem, { MediaProps } from '../media/mediaItem';
+import { optionsMap } from 'pro-gallery-lib';
+
+const ThreeDItem = React.lazy(
+  () => import(/* webpackChunkName: "ThreeDItem" */ './3dItem')
+);
+
+export default function ThreeDItemWrapper(
+  props: Omit<
+    MediaProps<ThreeDProps>,
+    | 'MediaImplementation'
+    | 'enableImagePlaceholder'
+    | 'showPlayButton'
+    | 'placeholderExtraClasses'
+  >
+): JSX.Element {
+  const { options } = props;
+  const playTrigger =
+    options[optionsMap.behaviourParams.item.threeDimensionalScene.playTrigger];
+
+  return (
+    <MediaItem
+      {...props}
+      MediaImplementation={ThreeDItem}
+      playTrigger={playTrigger}
+      placeholderExtraClasses={['pro-gallery-item-placeholder-3d']}
+      enableImagePlaceholder={true}
+      showPlayButton={true}
+    />
+  );
+}
