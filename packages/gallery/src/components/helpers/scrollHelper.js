@@ -247,15 +247,15 @@ function horizontalCssScrollTo({
   Object.assign(
     scrollerInner.style,
     {
-      transition: `margin ${duration}ms ${slideTransition}`,
-      '-webkit-transition': `margin ${duration}ms ${slideTransition}`,
+      transition: `transform ${duration}ms ${slideTransition}`,
+      '-webkit-transition': `transform ${duration}ms ${slideTransition}`,
     },
     isRTL
       ? {
-          marginRight: `${change}px`,
+          transform: `translateX(${change}px)`,
         }
       : {
-          marginLeft: `${-1 * change}px`,
+          transform: `translateX(${-1 * change}px)`,
         }
   );
 
@@ -277,10 +277,10 @@ function horizontalCssScrollTo({
       },
       isRTL
         ? {
-            marginRight: 0,
+            transform: `translateX(0px)`,
           }
         : {
-            marginLeft: 0,
+            transform: `translateX(0px)`,
           }
     );
     scroller.style.removeProperty('scroll-snap-type');
