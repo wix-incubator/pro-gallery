@@ -298,7 +298,8 @@ class ItemView extends React.Component {
       if (
         this.props.options[optionsMap.behaviourParams.item.clickAction] ===
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING &&
-        this.props.type !== 'video'
+        this.props.type !== 'video' &&
+        this.props.type !== '3d'
       ) {
         return true;
       } else if (
@@ -328,7 +329,8 @@ class ItemView extends React.Component {
       if (
         this.props.options[optionsMap.behaviourParams.item.clickAction] ===
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING &&
-        this.props.type !== 'video'
+        this.props.type !== 'video' &&
+        this.props.type !== '3d'
       ) {
         return (
           this.props.options[

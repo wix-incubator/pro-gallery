@@ -5,7 +5,7 @@ import {
 } from 'pro-gallery-lib';
 import { ThreeDImplementation } from './types';
 import { useSceneManager } from '../../helpers/3dManager';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 function mapSceneToStyleParams(scene: ThreeDimensionalScene, options: Options) {
   return {
@@ -34,7 +34,8 @@ function mapSceneToStyleParams(scene: ThreeDimensionalScene, options: Options) {
 }
 
 export function use3DItem(props: ThreeDImplementation): ThreeDItemHooks {
-  const { canvasRef, sceneManager, render } = useSceneManager();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { sceneManager, render } = useSceneManager();
   const [isLoaded, setIsLoaded] = useState(false);
 
   const sceneParams = mapSceneToStyleParams(props.scene || {}, props.options);
@@ -46,10 +47,10 @@ export function use3DItem(props: ThreeDImplementation): ThreeDItemHooks {
     if (sceneManager) {
       return sceneManager;
     }
-    if (!props.itemContainer.current) {
+    if (!props.itemContainer.current || !canvasRef.current) {
       return sceneManager;
     }
-    const manager = render(props.itemContainer.current);
+    const manager = render(props.itemContainer.current, canvasRef.current);
     if (!manager) {
       throw new Error('Could not create scene manager post play');
     }
@@ -61,18 +62,26 @@ export function use3DItem(props: ThreeDImplementation): ThreeDItemHooks {
           GALLERY_CONSTS.urlTypes.THREE_D
         )
       )
-      .then(() => {
+      .then(({ punctualLights }) => {
         props.actions.setItemLoaded();
         manager.opacity = 1;
         manager.model.addGround();
-        manager.environment.addAmbientLight();
-        manager.environment.sun();
+        if (punctualLights) {
+          manager.environment.addAmbientLight();
+          manager.environment.sun();
+        }
         requestAnimationFrame(() => {
           setIsLoaded(true);
         });
       });
     return manager;
-  }, [render, sceneManager, props.shouldPlay, props.itemContainer.current]);
+  }, [
+    render,
+    sceneManager,
+    props.shouldPlay,
+    props.itemContainer.current,
+    canvasRef.current,
+  ]);
 
   const postLoadUpdate = useCallback(
     ({

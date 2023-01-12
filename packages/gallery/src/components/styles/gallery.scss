@@ -456,6 +456,7 @@ div.pro-gallery {
           &.three-d-loaded {
             img {
               opacity: 0;
+              pointer-events: none;
             }
           }
           &.three-d-loading {

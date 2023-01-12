@@ -3,6 +3,8 @@ import * as THREE from 'three';
 import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import { LoadingManager } from 'three';
 
 interface ManagerInstance {
   stop: boolean;
@@ -35,6 +37,7 @@ interface ManagerInstance {
   model: {
     load3DModel(url: string): Promise<{
       remove(): void;
+      punctualLights: boolean;
     }>;
     addGround(opacity?: number): {
       remove(): void;
@@ -66,18 +69,21 @@ interface ManagerInstance {
   dispose(): void;
 }
 
+const GLOBAL_LOADING_MANAGER = new LoadingManager();
+
 export function createSceneManager(
   container: HTMLElement,
   canvas: HTMLCanvasElement
 ): ManagerInstance {
   const scene = new THREE.Scene();
-  const dracoLoader = new DRACOLoader();
-  const gltfLoader = new GLTFLoader();
+  const dracoLoader = new DRACOLoader(GLOBAL_LOADING_MANAGER);
+  const gltfLoader = new GLTFLoader(GLOBAL_LOADING_MANAGER);
   gltfLoader.setDRACOLoader(dracoLoader);
   const width = container.clientWidth;
   const height = container.clientHeight;
-  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-  let controls = new OrbitControls(camera, container);
+  const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 12);
+  scene.add(camera);
+  const controls = new OrbitControls(camera, container);
   controls.target.set(0, 0, 0);
   camera.position.set(0, 0, 0.8);
   controls.maxDistance = 1.6;
@@ -90,44 +96,57 @@ export function createSceneManager(
     });
     renderer.setClearColor(0x000000, 0);
     renderer.setSize(width, height);
+    renderer.toneMapping = THREE.LinearToneMapping;
+    renderer.toneMappingExposure = 1;
     renderer.domElement.style.position = 'absolute';
     renderer.domElement.style.userSelect = 'none';
     renderer.domElement.style.transition = 'opacity 0.3s ease-in-out';
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    const envTexture = new THREE.PMREMGenerator(renderer).fromScene(
+      new RoomEnvironment()
+    ).texture;
+    scene.environment = envTexture;
     return renderer;
   };
   let renderer: THREE.WebGLRenderer | undefined = initRenderer();
   let opacity = 1;
-  function animate() {
+  const mixers: THREE.AnimationMixer[] = [];
+  let previousRAF: number | undefined;
+  function animate(stamp?: DOMHighResTimeStamp) {
     if (!renderer) {
+      previousRAF = undefined;
       return;
     }
+    const delta = (previousRAF && stamp ? stamp - previousRAF : 0) / 1000;
+    previousRAF = stamp;
     canvas.width = container.clientWidth;
     canvas.height = container.clientHeight;
     renderer.setSize(container.clientWidth, container.clientHeight);
     requestAnimationFrame(animate);
     controls.update();
+    mixers.forEach((mixer) => {
+      mixer.update(delta);
+    });
     renderer.render(scene, camera);
   }
   animate();
 
   let model: GLTF['scene'] | undefined;
 
-  let modelBasePosition: THREE.Vector3 | undefined;
-  return {
+  // let modelBasePosition: THREE.Vector3 | undefined;
+  let manualPosition = false;
+  const api: ManagerInstance = {
     get stop() {
       return !renderer;
     },
     set stop(value) {
       if (!value && !renderer) {
-        controls = new OrbitControls(camera, container);
+        // controls = new OrbitControls(camera, container);
         renderer = initRenderer();
         animate();
       }
       if (value && renderer) {
         renderer.dispose();
-        controls.dispose();
+        // controls.dispose();
         renderer = undefined;
       }
     },
@@ -167,24 +186,22 @@ export function createSceneManager(
           },
         };
       },
-      sun(intensity = 1, color = 0xffffff) {
+      sun(intensity = 0.2, color = 0xffffff) {
         const light = new THREE.DirectionalLight(color, intensity);
-        light.castShadow = true;
-        light.position.set(0, 3, 2);
-        light.target.position.set(0, 0, 0);
-        scene.add(light);
+        light.position.set(0.5, 0, 0.866); //from https://github.com/donmccurdy/three-gltf-viewer/blob/main/src/viewer.js#L430
+        camera.add(light);
         return {
           remove() {
-            scene.remove(light);
+            camera.remove(light);
           },
         };
       },
-      addAmbientLight(intensity = 0.95, color = 0xffffff) {
+      addAmbientLight(intensity = 0.2, color = 0xffffff) {
         const light = new THREE.AmbientLight(color, intensity);
-        scene.add(light);
+        camera.add(light);
         return {
           remove() {
-            scene.remove(light);
+            camera.remove(light);
           },
         };
       },
@@ -212,45 +229,57 @@ export function createSceneManager(
         const gltf = await new Promise<GLTF>((resolve) => {
           gltfLoader.load(url, resolve);
         });
-        if (model) {
-          scene.remove(model);
-        }
-        model = gltf.scene;
-        model.scale.set(0.1, 0.1, 0.1);
-        let modelMesh: THREE.Mesh | undefined;
-        model.traverse((child) => {
-          if (!modelMesh && child instanceof THREE.Mesh) {
-            modelMesh = child;
-          }
-        });
-        if (modelMesh) {
-          const center = modelMesh.geometry.boundingBox?.getSize(
-            new THREE.Vector3()
-          );
-          if (center) {
-            model.position.y = (-center.y / 2) * model.scale.y;
-          }
-        }
+        const gltfScene = gltf.scene || gltf.scenes[0];
+        const clips = gltf.animations || [];
+        const { punctualLights, mixer } = addModel(
+          scene,
+          gltfScene,
+          clips,
+          camera,
+          controls,
+          manualPosition
+        );
+        mixers.push(mixer);
 
-        // shadow
-        model.traverse((child) => {
-          if (child instanceof THREE.Mesh) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-            (child.geometry as THREE.BufferGeometry).computeVertexNormals();
-          }
-        });
-        model.castShadow = true;
-        model.receiveShadow = true;
-        scene.add(model);
-        modelBasePosition = model.position.clone();
+        // if (model) {
+        //   scene.remove(model);
+        // }
+        // model = gltf.scene;
+        // model.scale.set(0.1, 0.1, 0.1);
+        // let modelMesh: THREE.Mesh | undefined;
+        // model.traverse((child) => {
+        //   if (!modelMesh && child instanceof THREE.Mesh) {
+        //     modelMesh = child;
+        //   }
+        // });
+        // if (modelMesh) {
+        //   const center = modelMesh.geometry.boundingBox?.getSize(
+        //     new THREE.Vector3()
+        //   );
+        //   if (center) {
+        //     model.position.y = (-center.y / 2) * model.scale.y;
+        //   }
+        // }
 
+        // // shadow
+        // model.traverse((child) => {
+        //   if (child instanceof THREE.Mesh) {
+        //     child.castShadow = true;
+        //     child.receiveShadow = true;
+        //     (child.geometry as THREE.BufferGeometry).computeVertexNormals();
+        //   }
+        // });
+        // model.castShadow = true;
+        // model.receiveShadow = true;
+        // scene.add(model);
+        // modelBasePosition = model.position.clone();
         return {
           remove() {
             if (model) {
               scene.remove(model);
             }
           },
+          punctualLights,
         };
       },
       addGround(opacity = 0.6) {
@@ -280,15 +309,23 @@ export function createSceneManager(
           model.rotation.set(radX, radY, radZ);
         },
         setPosition(x, y, z) {
-          if (!model || !modelBasePosition) {
+          // if (!model || !modelBasePosition) {
+          //   return;
+          // }
+          // x = modelBasePosition.x + (x ?? 0) / 100;
+          // y = modelBasePosition.y + (y ?? 0) / 100;
+          // z = modelBasePosition.z + (z ?? 0) / 100;
+          // model.position.x = x;
+          // model.position.y = y;
+          // model.position.z = z;
+          if (!x && !y && !z) {
             return;
           }
-          x = modelBasePosition.x + (x ?? 0) / 100;
-          y = modelBasePosition.y + (y ?? 0) / 100;
-          z = modelBasePosition.z + (z ?? 0) / 100;
-          model.position.x = x;
-          model.position.y = y;
-          model.position.z = z;
+          manualPosition = true;
+          camera.position.x = x ?? 0;
+          camera.position.y = y ?? 0;
+          camera.position.z = z ?? 0;
+          camera.lookAt(new THREE.Vector3());
         },
         setScale(x, y, z) {
           scene.scale.set(x ?? 1, y ?? 1, z ?? 1);
@@ -327,25 +364,110 @@ export function createSceneManager(
       renderer = undefined;
     },
   };
+  return api;
 }
 
 export type SceneManager = ReturnType<typeof createSceneManager>;
 
 export function useSceneManager() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [sceneManager, setSceneManager] = useState<SceneManager | null>(null);
 
-  const render = useCallback((container: HTMLElement) => {
-    if (!canvasRef.current) {
-      throw new Error('canvas element is not found.');
-    }
-    if (!sceneManager) {
-      const sceneManager = createSceneManager(container, canvasRef.current);
-      setSceneManager(sceneManager);
+  const render = useCallback(
+    (container: HTMLElement, canvas: HTMLCanvasElement) => {
+      if (!sceneManager) {
+        const sceneManager = createSceneManager(container, canvas);
+        setSceneManager(sceneManager);
+        return sceneManager;
+      }
       return sceneManager;
-    }
-    return sceneManager;
-  }, []);
+    },
+    []
+  );
 
-  return { canvasRef, sceneManager, render };
+  return { sceneManager, render };
+}
+
+/**
+ * from - https://github.com/donmccurdy/three-gltf-viewer/blob/main/src/viewer.js - MIT
+ */
+function addModel(
+  scene: THREE.Scene,
+  object: THREE.Object3D,
+  animations: THREE.AnimationClip[],
+  camera: THREE.PerspectiveCamera,
+  controls: OrbitControls,
+  manualPosition: boolean
+) {
+  const box = new THREE.Box3().setFromObject(object);
+  const size = box.getSize(new THREE.Vector3()).length();
+  const center = box.getCenter(new THREE.Vector3());
+  object.position.x += object.position.x - center.x;
+  object.position.y += object.position.y - center.y;
+  object.position.z += object.position.z - center.z;
+  controls.reset();
+  controls.maxDistance = size * 10;
+  camera.near = size / 100;
+  camera.far = size * 100;
+  camera.updateProjectionMatrix();
+
+  if (!manualPosition) {
+    camera.position.copy(center);
+    camera.position.x += size / 2.0;
+    camera.position.y += size / 5.0;
+    camera.position.z += size / 2.0;
+    camera.lookAt(center);
+  }
+
+  controls.saveState();
+
+  scene.add(object);
+
+  let punctualLights = true;
+
+  object.traverse((node) => {
+    if (node instanceof THREE.Light) {
+      punctualLights = false;
+      return;
+    }
+    if (node instanceof THREE.Mesh) {
+      // TODO(https://github.com/mrdoob/three.js/pull/18235): Clean up.
+      node.material.depthWrite = !node.material.transparent;
+      if (node.material.emissiveMap) {
+        node.material.emissiveMap.encoding = THREE.sRGBEncoding;
+      }
+      if (node.material.map) {
+        node.material.map.encoding = THREE.sRGBEncoding;
+      }
+      node.material.needsUpdate = true;
+      return;
+    }
+  });
+
+  const mixer = new THREE.AnimationMixer(object);
+
+  playAllAnimations(mixer, animations);
+
+  return {
+    object,
+    animations,
+    mixer,
+    punctualLights,
+  };
+}
+
+function playAllAnimations(
+  mixer: THREE.AnimationMixer,
+  animations: THREE.AnimationClip[]
+) {
+  if (animations.length === 0) {
+    return;
+  }
+  // Play all animations after each other
+  mixer.addEventListener('finished', (e) => {
+    const action = e.action;
+    action.stop();
+    mixer.uncacheRoot(action._clip);
+    mixer.clipAction(animations[(action._clip.name || 0) + 1]).play();
+  });
+  mixer.clipAction(animations[0]).play();
 }

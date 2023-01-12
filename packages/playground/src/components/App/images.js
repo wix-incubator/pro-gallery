@@ -2055,6 +2055,60 @@ const test3D = [
         color: '#4287f5',
       }
     }
+  },
+  {
+    itemId: 'd19570fa-097f-4b3d-b8ad-4e24b3a9a1c',
+    url: window.location.origin + '/3d/jordan_4.glb',
+    metadata: {
+      width: 1920,
+      height: 1080,
+      type: '3d',
+      poster: {
+        width: 1920,
+        height: 1080,
+      },
+      scene: {
+        transform: {
+          // position: 'x0y-2z0',
+          rotation: 'x0y-45z0',
+          scale: 'x1.5y1.5z1.5'
+        },
+        controls: {
+          enableZoom: true,
+        }
+      },
+      background: {
+        type: 'color',
+        color: '#4287f5',
+      }
+    }
+  },
+  {
+    itemId: 'd19570fz-097f-4b3d-b8ad-4e24b3a9a1c',
+    url: window.location.origin + '/3d/Parrot.glb',
+    metadata: {
+      width: 1920,
+      height: 1080,
+      type: '3d',
+      poster: {
+        width: 1920,
+        height: 1080,
+      },
+      scene: {
+        transform: {
+          // position: 'x0y-2z0',
+          // rotation: 'x0y-45z0',
+          // scale: 'x1.5y1.5z1.5'
+        },
+        controls: {
+          enableZoom: true,
+        }
+      },
+      background: {
+        type: 'color',
+        color: '#4287f5',
+      }
+    }
   }
 ];
 
