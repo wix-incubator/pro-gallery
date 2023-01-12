@@ -33,11 +33,13 @@ export interface SecondaryMedia {
   trigger: 'OFF' | 'HOVER';
   behaviour: 'APPEARS';
 }
+
+export type PlayTrigger = 'CLICK' | 'HOVER' | 'AUTO';
 export interface Video {
   speed?: number;
   volume?: number;
   loop?: boolean;
-  playTrigger?: 'CLICK' | 'HOVER' | 'AUTO';
+  playTrigger?: PlayTrigger;
   enablePlayButton?: boolean;
   enableControls?: boolean;
   enablePlaceholder?: boolean;
