@@ -140,6 +140,10 @@ export class GalleryContainer extends React.Component {
       html.scrollHeight,
       html.offsetHeight
     );
+    const scrollingElement = this._scrollingElement.horizontal();
+    Object.assign(scrollingElement.style, {
+      'will-change': 'transform',
+    });
     this.initializeScrollPosition();
     this.getMoreItemsIfScrollIsDisabled(height, viewportHeight);
     this.handleNewGalleryStructure();
