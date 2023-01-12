@@ -612,6 +612,7 @@ div.pro-gallery {
 
     .gallery-horizontal-scroll-inner {
       position: relative;
+      will-change: transform;
     }
   }
 
