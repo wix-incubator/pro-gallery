@@ -55,6 +55,7 @@ class CssScrollHelper {
 
     this.scrollCss = [];
     this.scrollCssProps = [];
+    this.createScrollSelectors = {};
 
     this.animationPadding = 5000;
 
@@ -223,7 +224,7 @@ class CssScrollHelper {
     const itemId = this.getSellectorDomId(item);
     const containerSize = getContainerSize(options, container);
 
-    const createScrollSelectors = this.createScrollSelectorsFunction({
+    this.createScrollSelectors[itemId] ||= this.createScrollSelectorsFunction({
       itemId,
       item,
       container,
@@ -231,7 +232,7 @@ class CssScrollHelper {
     });
 
     return createScrollAnimations({
-      createScrollSelectors: createScrollSelectors,
+      createScrollSelectors: this.createScrollSelectors[itemId],
       itemId,
       item,
       options,
@@ -244,6 +245,9 @@ class CssScrollHelper {
   calcScrollCssForItem({ item, container, options }) {
     const { idx } = item;
     let scrollCss = "";
+    if (this.scrollCss[idx]) {
+      return this.scrollCss[idx];
+    }
     try {
       for (const animation of options.behaviourParams_gallery_advancedScrollAnimation) {
         scrollCss += this.createScrollAnimationsIfNeeded({

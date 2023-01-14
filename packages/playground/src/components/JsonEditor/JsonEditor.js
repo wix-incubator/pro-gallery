@@ -204,6 +204,7 @@ class JsonEditor extends React.Component {
           <JSONInput
             placeholder={formatJson(theValue)}
             reset={false}
+            onKeyPressUpdate={false}
             theme="light_mitsuketa_tribute"
             height="550px"
             width="360px"
