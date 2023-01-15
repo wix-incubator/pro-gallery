@@ -90,10 +90,7 @@ export default function MediaItem<T extends Record<string, any>>(
         {...props}
         imageDimensions={imageDimensions}
         id={props.idx}
-        overlay={
-          showPlayButton &&
-          !isMediaPlayable && <VideoPlayButton pointerEvents={true} />
-        }
+        overlay={showPlayButton && !isMediaPlayable && <VideoPlayButton />}
         extraClasses={props.placeholderExtraClasses.join(' ')}
         {...propsOverrides}
       />

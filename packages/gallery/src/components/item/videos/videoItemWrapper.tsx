@@ -20,23 +20,15 @@ class VideoItemImplementation extends React.Component<MediaImplementationProps> 
     if (isEditMode()) {
       return this.props.thumbnail;
     }
-    const shouldUseTransparentPlayButtonAndForceLoadVideo =
-      useTransparentPlayButtonAndForceLoadVideo(this.props);
+    const shouldForceLoadVideo = useTransparentPlayButtonAndForceLoadVideo(
+      this.props
+    );
     return (
       <VideoItem
         {...this.props}
-        loadVideo={
-          this.props.shouldPlay ||
-          shouldUseTransparentPlayButtonAndForceLoadVideo
-        }
+        loadVideo={this.props.shouldPlay || shouldForceLoadVideo}
         videoPlaceholder={this.props.thumbnail}
-        videoPlayButton={
-          this.props.showPlayButton && (
-            <VideoPlayButton
-              pointerEvents={!shouldUseTransparentPlayButtonAndForceLoadVideo}
-            />
-          )
-        }
+        videoPlayButton={this.props.showPlayButton && <VideoPlayButton />}
       />
     );
   }

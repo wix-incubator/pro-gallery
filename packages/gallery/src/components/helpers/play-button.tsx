@@ -3,14 +3,9 @@ import PlayBackground from '../svgs/components/play_background';
 import PlayTriangle from '../svgs/components/play_triangle';
 import { clickable } from './mouseCursorPosition';
 
-export const VideoPlayButton = ({
-  pointerEvents,
-}: {
-  pointerEvents: boolean;
-}): JSX.Element => (
+export const VideoPlayButton = (): JSX.Element => (
   <clickable.div
     style={{
-      pointerEvents: pointerEvents ? 'initial' : 'none',
       cursor: 'pointer',
     }}
     className="play-button"

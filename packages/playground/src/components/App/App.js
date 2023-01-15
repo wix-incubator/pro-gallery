@@ -11,7 +11,7 @@ import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
 import { BlueprintsManager } from 'pro-gallery-blueprints'
 import BlueprintsApi from './PlaygroundBlueprintsApi'
-import {utils} from 'pro-gallery-lib';
+import {optionsMap, utils} from 'pro-gallery-lib';
 import { Resizable } from 're-resizable';
 
 import 'pro-gallery/dist/statics/main.css';
@@ -175,7 +175,7 @@ export function App() {
       </div>
     </div>);
 
-    const { titlePlacement } = pgItemProps.options;
+    const { [optionsMap.layoutParams.info.placement]: titlePlacement } = pgItemProps.options;
 
     switch (type) {
       case 'HOVER':

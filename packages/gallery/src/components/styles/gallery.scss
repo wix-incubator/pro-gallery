@@ -114,6 +114,17 @@ body.pro-gallery {
   position: absolute;
 }
 
+.follow-mouse-cursor {
+  position: absolute;
+  transition: all 0.2s ease;
+  > div {
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 .nav-arrows-container {
   left: auto;
   position: absolute;
@@ -128,10 +139,6 @@ body.pro-gallery {
   outline: none;
   justify-content: center;
 
-  &.follow-mouse-cursor {
-    position: relative;
-    cursor: none;
-  }
 
   &:hover {
     opacity: 1;
@@ -613,6 +620,7 @@ div.pro-gallery {
 
     .gallery-horizontal-scroll-inner {
       position: relative;
+      will-change: transform;
     }
   }
 
