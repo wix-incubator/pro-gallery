@@ -225,6 +225,7 @@ const defaultOptions = flattenObject({
   //layouter API params
   fixedColumns: 0, // determine the number of columns regardless of the screen size (use 0 to ignore)
 });
+export const flatDefaultOptions = flattenObject(defaultOptions);
 
 export function populateWithDefaultOptions(options) {
   const mergedOptions = Object.assign({}, defaultOptions, options);
