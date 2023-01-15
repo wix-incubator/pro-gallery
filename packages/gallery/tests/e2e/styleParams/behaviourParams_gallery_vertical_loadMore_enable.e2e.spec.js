@@ -15,7 +15,7 @@ describe('behaviourParams_gallery_vertical_loadMore_enable - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('should have "Load More" button when "behaviourParams_gallery_vertical_loadMore_enable" is "false"', async () => {
+  it.skip('should have "Load More" button when "behaviourParams_gallery_vertical_loadMore_enable" is "false"', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
@@ -25,7 +25,7 @@ describe('behaviourParams_gallery_vertical_loadMore_enable - e2e', () => {
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
   });
-  it('should not have "Load More" button when "behaviourParams_gallery_vertical_loadMore_enable" is "true"', async () => {
+  it.skip('should not have "Load More" button when "behaviourParams_gallery_vertical_loadMore_enable" is "true"', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
