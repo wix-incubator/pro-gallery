@@ -9,30 +9,31 @@ import { createScrollAnimations } from "./cssAnimationsHelper";
 
 const advancedScrollAnimation = [
   {
-    type: 'SKEW',
+    type: "SKEW",
     fromValue: 10,
     toValue: 0,
-    fromAnchor: 'BOTTOM',
-    toAnchor: 'BOTTOM',
+    fromAnchor: "BOTTOM",
+    toAnchor: "BOTTOM",
     fromPosition: 100,
     toPosition: 200,
     iterations: 5,
     transitionDuration: 400,
-    direction: 'LEFT',
-    hinge: 'center',
-    reset: false
+    direction: "LEFT",
+    hinge: "center",
+    reset: false,
+    ease: true,
   },
   {
-    type: 'FADE',
+    type: "FADE",
     fromValue: 0,
     toValue: 1,
-    fromAnchor: 'BOTTOM',
-    toAnchor: 'BOTTOM',
+    fromAnchor: "BOTTOM",
+    toAnchor: "BOTTOM",
     fromPosition: 0,
     toPosition: 100,
     iterations: 1,
     transitionDuration: 4000,
-    reset: true
+    reset: true,
   },
 ];
 
@@ -107,21 +108,25 @@ class CssScrollHelper {
       // fromPosition:  the distance from the bottom of the screen to start the animation
       // toPosition:  the distance from the bottom of the screen to end the animation
 
-      const createAnimationCss = (step, isExit) => {
-        const cssObject = animationCss(step, isExit);
+      const createAnimationCss = (step) => {
+        const cssObject = animationCss(step);
         const res = Object.entries(cssObject)
           .map(([prop, val]) => `${prop}: ${val};`)
           .join("\n");
         return res;
       };
-      const { transitionDuration = 400, iterations = 10, fromPosition = -100, toPosition = 100, fromAnchor = 'BOTTOM', toAnchor = 'BOTTOM' } = animationParams;
+      const {
+        transitionDuration = 400,
+        iterations = 10,
+        fromPosition = -100,
+        toPosition = 100,
+        fromAnchor = "BOTTOM",
+        toAnchor = "BOTTOM",
+      } = animationParams;
 
-      const createAnimationStep = (idx, isExit) => {
-        if (isExit) {
-          idx = iterations - idx;
-        }
+      const createAnimationStep = (idx) => {
         let step = idx / iterations;
-        return createAnimationCss(step, isExit);
+        return createAnimationCss(step);
       };
 
       const createSelectorsRange = (fromPosition, toPosition) => {
@@ -145,14 +150,14 @@ class CssScrollHelper {
         return scrollClasses;
       };
 
-      const createAnimationRange = (fromPosition, toPosition, isExit) => {
+      const createAnimationRange = (fromPosition, toPosition) => {
         if (toPosition < 0 || toPosition <= fromPosition) {
           return {};
         }
         return Array.from({ length: iterations })
           .map((i, idx) => fromPosition + (idx * (toPosition - fromPosition)) / iterations)
           .map((i, idx) => ({
-            [createAnimationStep(idx, isExit)]: createSelectorsRange(i, i + (toPosition - fromPosition) / iterations),
+              [createAnimationStep(idx)]: createSelectorsRange(i, i + (toPosition - fromPosition) / iterations),
           }))
           .reduce((obj, item) => {
             const itemKey = Object.keys(item)[0];
@@ -168,14 +173,14 @@ class CssScrollHelper {
       const createScrollClasses = () => {
         const animationRange = Math.round(toPosition - fromPosition);
 
-        const entryAnimationStart = Math.round(imageStart - containerSize + fromPosition);
-        const entryAnimationEnd = Math.round(entryAnimationStart + animationRange);
+        const bottomAnimationStart = Math.round(imageStart - containerSize + fromPosition);
+        const bottomAnimationEnd = Math.round(imageStart - containerSize + toPosition);
 
-        const exitAnimationStart = Math.round(imageStart + imageSize - toPosition);
-        const exitAnimationEnd = Math.round(exitAnimationStart + animationRange);
+        const topAnimationStart = Math.round(imageStart + imageSize - fromPosition);
+        const topAnimationEnd = Math.round(imageStart + imageSize - toPosition);
 
-        const animationStart = fromAnchor === "BOTTOM" ? entryAnimationStart : exitAnimationStart;
-        const animationEnd = toAnchor === "BOTTOM" ? entryAnimationEnd : exitAnimationEnd;
+        const animationStart = fromAnchor === "BOTTOM" ? bottomAnimationStart : topAnimationStart;
+        const animationEnd = toAnchor === "BOTTOM" ? bottomAnimationEnd : topAnimationEnd;
 
         const scrollClasses = {};
 
