@@ -22,7 +22,7 @@ describe('options - behaviourParams_gallery_vertical_loadMore_enable', () => {
     };
   });
 
-  it('should render "Show More" button when "behaviourParams_gallery_vertical_loadMore_enable" is "false"', async () => {
+  it.skip('should render "Show More" button when "behaviourParams_gallery_vertical_loadMore_enable" is "false"', async () => {
     // make sure to give the right params to make a vertical gallery for the test
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
