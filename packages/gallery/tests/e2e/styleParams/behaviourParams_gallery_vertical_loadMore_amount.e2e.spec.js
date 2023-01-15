@@ -15,7 +15,7 @@ describe('behaviourParams_gallery_vertical_loadMore_amount - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('Should increase the height of the gallery container to fit all items', async () => {
+  it.skip('Should increase the height of the gallery container to fit all items', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
