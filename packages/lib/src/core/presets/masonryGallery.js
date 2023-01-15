@@ -33,11 +33,13 @@ export const createOptions = (options) => {
     res[optionsMap.layoutParams.structure.layoutOrientation] ===
     GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
       .VERTICAL;
+  const userDefinedTargetItemSizeValue =
+    options[optionsMap.layoutParams.targetItemSize.value];
   res.targetItemSize = calcTargetItemSize(
     res,
     isVerticalOrientation
-      ? res.targetItemSize * 8 + 200
-      : res.targetItemSize * 5 + 200
+      ? userDefinedTargetItemSizeValue * 8 + 200
+      : userDefinedTargetItemSizeValue * 5 + 200
   );
   res = processNumberOfImagesPerRow(res);
   res = processGridStyle(res);
