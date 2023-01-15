@@ -1,4 +1,5 @@
 import { GALLERY_CONSTS } from "pro-gallery-lib";
+import { easingFunctions } from "../../common/utils/easing";
 
 export const createScrollAnimations = ({
   createScrollSelectors,
@@ -7,6 +8,7 @@ export const createScrollAnimations = ({
   options,
   animationParams,
   isHorizontalScroll,
+  iterations,
 }) => {
   const { isRTL, oneColorAnimationColor } = options;
 
@@ -69,8 +71,8 @@ export const createScrollAnimations = ({
 
   const valueInRange = (step, from, to, roundTo) => {
     //TODO - use easing
-    const _step = ease ? Math.pow(step, 3) : step;
-    const val = _step * (to - from) + from;
+    const easeFunc = easingFunctions[ease] || easingFunctions["linear"];
+    const val = easeFunc(step * iterations, from, to - from, iterations);
     if (roundTo < 1) {
       const roundedRoundTo = Math.round(1 / roundTo); //stupid javascript
       return Math.round(val * roundedRoundTo) / roundedRoundTo;
