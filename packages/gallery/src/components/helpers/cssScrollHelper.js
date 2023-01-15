@@ -6,6 +6,7 @@ import utils from "../../common/utils";
 import { window } from "pro-gallery-lib";
 import { GALLERY_CONSTS } from "pro-gallery-lib";
 import { createScrollAnimations } from "./cssAnimationsHelper";
+import { cssEasing } from "../../common/utils/easing";
 
 const advancedScrollAnimation = [
   {
@@ -122,6 +123,7 @@ class CssScrollHelper {
         toPosition = 100,
         fromAnchor = "BOTTOM",
         toAnchor = "BOTTOM",
+        ease = 'linear',
       } = animationParams;
 
       const createAnimationStep = (idx) => {
@@ -197,7 +199,8 @@ class CssScrollHelper {
         //first batch: animation start value until the range start:
         const firstAnimationStep = createAnimationStep(0, true);
         const animatedProperties = firstAnimationStep.split(":")[0];
-        const transitionCss = `transition: ${animatedProperties} ${transitionDuration}ms ease !important`;
+        const cssEase = (iterations > 1 || !ease) ? 'linear' : cssEasing[ease] || 'linear';
+        const transitionCss = `transition: ${animatedProperties} ${transitionDuration}ms ${cssEase} !important`;
 
         addScrollClass(`${transitionCss}; ${createAnimationStep(0, true)}`, [selectorSuffix]);
         addScrollClass(
@@ -225,7 +228,7 @@ class CssScrollHelper {
   createScrollAnimationsIfNeeded({ idx, item, container, options, animation }) {
     const { isRTL, oneColorAnimationColor } = options;
     const animationParams = animation; //TODO: replace with new option
-    const { direction } = animationParams;
+    const { iterations } = animationParams;
     const itemId = this.getSellectorDomId(item);
     const containerSize = getContainerSize(options, container);
 
@@ -241,6 +244,7 @@ class CssScrollHelper {
       itemId,
       item,
       options,
+      iterations,
       containerSize,
       animationParams,
       isHorizontalScroll: isHorizontalScroll(options),
