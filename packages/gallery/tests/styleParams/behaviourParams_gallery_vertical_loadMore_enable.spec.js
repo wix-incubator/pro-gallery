@@ -22,7 +22,7 @@ describe('options - behaviourParams_gallery_vertical_loadMore_enable', () => {
     };
   });
 
-  it.skip('should render "Show More" button when "behaviourParams_gallery_vertical_loadMore_enable" is "false"', async () => {
+  it('should render "Show More" button when "behaviourParams_gallery_vertical_loadMore_enable" is "false"', async () => {
     // make sure to give the right params to make a vertical gallery for the test
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
@@ -73,7 +73,7 @@ describe('options - behaviourParams_gallery_vertical_loadMore_enable', () => {
     expect(showMoreBtn).to.have.lengthOf(0);
     driver.detach.proGallery();
   });
-  it.skip('should set the gallery height (container.height - show-more-container" height) when "behaviourParams_gallery_vertical_loadMore_enable" "false"', async () => {
+  it('should set the gallery height (container.height - show-more-container" height) when "behaviourParams_gallery_vertical_loadMore_enable" "false"', async () => {
     // make sure to give the right params to make a vertical gallery for the test
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
@@ -92,7 +92,7 @@ describe('options - behaviourParams_gallery_vertical_loadMore_enable', () => {
     expect(galleryHeight).to.eq(initialProps.container.height - 138); //138 is the height given to "show-more-container"
     driver.detach.proGallery();
   });
-  it.skip('should set the gallery height as given in container.height (ProGallery props)', async () => {
+  it('should set the gallery height as given in container.height (ProGallery props)', async () => {
     // make sure to give the right params to make a vertical gallery for the test
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
