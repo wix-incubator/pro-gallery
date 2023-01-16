@@ -119,7 +119,7 @@ class CssScrollHelper {
       const {
         transitionDuration = 400,
         iterations = 10,
-        fromPosition = -100,
+        fromPosition = 0,
         toPosition = 100,
         fromAnchor = "BOTTOM",
         toAnchor = "BOTTOM",
@@ -198,7 +198,7 @@ class CssScrollHelper {
 
         //first batch: animation start value until the range start:
         const firstAnimationStep = createAnimationStep(0, true);
-        const animatedProperties = firstAnimationStep.split(":")[0];
+        const animatedProperties = 'filter, transform, opacity, border-radius'; //firstAnimationStep.split(":")[0];
         const cssEase = (iterations > 1 || !ease) ? 'linear' : cssEasing[ease] || 'linear';
         const transitionCss = `transition: ${animatedProperties} ${transitionDuration}ms ${cssEase} !important`;
 
