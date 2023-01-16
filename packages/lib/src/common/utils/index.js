@@ -741,7 +741,7 @@ class Utils {
       options[optionsMap.layoutParams.structure.scrollDirection] ===
         GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
           .VERTICAL &&
-      !options[optionsMap.behaviourParams.gallery.vertical.loadMore.enable]
+      !options[optionsMap.behaviourParams.gallery.vertical.loadMore]
     ); //v5 TODO!!! NEW STYLEPARAMS METHOD POSSIBLE BUG FOUND Could be that I need to add the horizontal gallery ratio thing here....
   }
 }
