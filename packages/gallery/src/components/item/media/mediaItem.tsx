@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React, { useMemo } from 'react';
-import { optionsMap, GALLERY_CONSTS } from 'pro-gallery-lib';
-import { VideoPlayButton } from '../../helpers/play-button';
+import { optionsMap, GALLERY_CONSTS, isEditMode } from 'pro-gallery-lib';
+import { VideoPlayButton } from './playButton';
 import { Options, Settings, PlayTrigger } from 'pro-gallery-lib';
 import ImageItem from '../imageItem';
 
@@ -105,8 +105,13 @@ export default function MediaItem<T extends Record<string, any>>(
       {props.hover}
     </>
   );
+
   if (!isMediaPlayable) {
     return placeholder;
+  }
+
+  if (isEditMode()) {
+    return thumbnail;
   }
 
   return (

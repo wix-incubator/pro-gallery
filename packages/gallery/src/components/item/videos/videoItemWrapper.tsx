@@ -1,7 +1,7 @@
 import React from 'react';
-import { utils, isEditMode, optionsMap } from 'pro-gallery-lib';
+import { utils, optionsMap } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
-import { VideoPlayButton } from '../../helpers/play-button';
+import { VideoPlayButton } from '../media/playButton';
 import MediaImage, {
   MediaImplementationProps,
   MediaBaseProps,
@@ -17,9 +17,6 @@ const VideoItem = React.lazy(() => {
 
 class VideoItemImplementation extends React.Component<MediaImplementationProps> {
   render() {
-    if (isEditMode()) {
-      return this.props.thumbnail;
-    }
     const shouldForceLoadVideo = useTransparentPlayButtonAndForceLoadVideo(
       this.props
     );

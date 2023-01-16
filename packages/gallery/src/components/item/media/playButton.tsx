@@ -1,7 +1,7 @@
 import React from 'react';
-import PlayBackground from '../svgs/components/play_background';
-import PlayTriangle from '../svgs/components/play_triangle';
-import { clickable } from './mouseCursorPosition';
+import PlayBackground from '../../svgs/components/play_background';
+import PlayTriangle from '../../svgs/components/play_triangle';
+import { clickable } from '../../helpers/mouseCursorPosition';
 
 export const VideoPlayButton = (): JSX.Element => (
   <clickable.div
