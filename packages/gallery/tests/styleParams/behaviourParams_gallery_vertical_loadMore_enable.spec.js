@@ -92,7 +92,7 @@ describe('options - behaviourParams_gallery_vertical_loadMore_enable', () => {
     expect(galleryHeight).to.eq(initialProps.container.height - 138); //138 is the height given to "show-more-container"
     driver.detach.proGallery();
   });
-  it.skip('should set the gallery height as given in container.height (ProGallery props)', async () => {
+  it('should set the gallery height as given in container.height (ProGallery props)', async () => {
     // make sure to give the right params to make a vertical gallery for the test
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
