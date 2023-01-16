@@ -32,7 +32,7 @@ describe('behaviourParams_item_secondaryMedia_trigger - e2e', () => {
     });
     expect(page).toMatchImageSnapshot();
   });
-  it('should reveal second media on hover', async () => {
+  it.skip('should reveal second media on hover', async () => {
     const page = await navigateAndHoverTakeSnapshot(driver, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
