@@ -1,7 +1,7 @@
 import React from 'react';
-import { utils, isEditMode, optionsMap } from 'pro-gallery-lib';
+import { utils, optionsMap } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
-import { VideoPlayButton } from '../../helpers/play-button';
+import { VideoPlayButton } from '../media/playButton';
 import MediaImage, {
   MediaImplementationProps,
   MediaBaseProps,
@@ -17,26 +17,15 @@ const VideoItem = React.lazy(() => {
 
 class VideoItemImplementation extends React.Component<MediaImplementationProps> {
   render() {
-    if (isEditMode()) {
-      return this.props.thumbnail;
-    }
-    const shouldUseTransparentPlayButtonAndForceLoadVideo =
-      useTransparentPlayButtonAndForceLoadVideo(this.props);
+    const shouldForceLoadVideo = useTransparentPlayButtonAndForceLoadVideo(
+      this.props
+    );
     return (
       <VideoItem
         {...this.props}
-        loadVideo={
-          this.props.shouldPlay ||
-          shouldUseTransparentPlayButtonAndForceLoadVideo
-        }
+        loadVideo={this.props.shouldPlay || shouldForceLoadVideo}
         videoPlaceholder={this.props.thumbnail}
-        videoPlayButton={
-          this.props.showPlayButton && (
-            <VideoPlayButton
-              pointerEvents={!shouldUseTransparentPlayButtonAndForceLoadVideo}
-            />
-          )
-        }
+        videoPlayButton={this.props.showPlayButton && <VideoPlayButton />}
       />
     );
   }

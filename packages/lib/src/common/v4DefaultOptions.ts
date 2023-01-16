@@ -80,8 +80,8 @@ const defaultV4Options = {
         type: GALLERY_CONSTS[
           optionsMap.layoutParams.navigationArrows.container.type
         ].SHADOW,
-        backgroundColor: 'rgba(0,0,0,0)',
-        borderRadius: 0,
+        backgroundColor: '',
+        borderRadius: -1,
       },
     },
     targetItemSize: {

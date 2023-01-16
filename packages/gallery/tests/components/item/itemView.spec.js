@@ -5,7 +5,6 @@ import sinon from 'sinon';
 import GalleryDriver from '../../drivers/reactDriver';
 import { testImages } from '../../drivers/mocks/images-mock';
 import ItemView from '../../../src/components/item/itemView';
-import VideoItemPlaceholder from '../../../src/components/item/videos/videoItemPlaceholder';
 
 describe('Item View', () => {
   let driver;
@@ -114,7 +113,9 @@ describe('Item View', () => {
           GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       });
       driver.mount(ItemView, sampleItemViewProps);
-      expect(driver.find.selector(VideoItemPlaceholder).length).to.equal(1);
+      expect(driver.find.selector('.video-item .image-item').length).to.equal(
+        1
+      );
     });
   });
   //compunentDidUpdate not tested
