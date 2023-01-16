@@ -10,7 +10,7 @@ export default {
   //     .HORIZONTAL && options[optionsMap.layoutParams.thumbnails.enable],
   isRelevantDescription: 'Set "Gallery preset" to "Thumbnail".',
   type: INPUT_TYPES.NUMBER,
-  default: 10,
+  default: 70,
   description: `Set the distance between all the thumnails and the gallery.
   `,
 };
