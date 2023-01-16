@@ -12,5 +12,7 @@ module.exports = {
     'prettier/@typescript-eslint',
   ],
   ignorePatterns: ['versionLogger.js', 'standaloneValidateCode.js'],
-  rules: {},
+  rules: {
+    '@typescript-eslint/ban-ts-comment': 'off',
+  },
 };
