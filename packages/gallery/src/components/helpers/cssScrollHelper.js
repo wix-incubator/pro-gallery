@@ -124,6 +124,7 @@ class CssScrollHelper {
         fromAnchor = "BOTTOM",
         toAnchor = "BOTTOM",
         ease = 'linear',
+        randomOffset = 0,
       } = animationParams;
 
       const createAnimationStep = (idx) => {
@@ -181,8 +182,13 @@ class CssScrollHelper {
         const topAnimationStart = Math.round(imageStart + imageSize - fromPosition);
         const topAnimationEnd = Math.round(imageStart + imageSize - toPosition);
 
-        const animationStart = fromAnchor === "BOTTOM" ? bottomAnimationStart : topAnimationStart;
-        const animationEnd = toAnchor === "BOTTOM" ? bottomAnimationEnd : topAnimationEnd;
+        let animationStart = fromAnchor === "BOTTOM" ? bottomAnimationStart : topAnimationStart;
+        let animationEnd = toAnchor === "BOTTOM" ? bottomAnimationEnd : topAnimationEnd;
+
+        if (randomOffset > 0) {
+          animationStart += Math.round(Math.random() * randomOffset);
+          animationEnd += Math.round(Math.random() * randomOffset);
+        }
 
         const scrollClasses = {};
 
@@ -197,19 +203,19 @@ class CssScrollHelper {
         };
 
         //first batch: animation start value until the range start:
-        const firstAnimationStep = createAnimationStep(0, true);
+        // const firstAnimationStep = createAnimationStep(0, true);
         const animatedProperties = 'filter, transform, opacity, border-radius'; //firstAnimationStep.split(":")[0];
         const cssEase = (iterations > 1 || !ease) ? 'linear' : cssEasing[ease] || 'linear';
         const transitionCss = `transition: ${animatedProperties} ${transitionDuration}ms ${cssEase} !important`;
 
         addScrollClass(`${transitionCss}; ${createAnimationStep(0, true)}`, [selectorSuffix]);
         addScrollClass(
-          createAnimationStep(0) + " transtion: none !important;",
+          createAnimationStep(0),
           createSelectorsRange(animationStart - this.animationPadding, animationStart)
         );
         addScrollClasses(createAnimationRange(animationStart, animationEnd, false));
         addScrollClass(
-          createAnimationStep(iterations) + " transtion: none !important;",
+          createAnimationStep(iterations),
           createSelectorsRange(animationEnd, animationEnd + this.animationPadding)
         );
 
