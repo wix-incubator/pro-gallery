@@ -204,9 +204,9 @@ class CssScrollHelper {
 
         //first batch: animation start value until the range start:
         // const firstAnimationStep = createAnimationStep(0, true);
-        const animatedProperties = 'filter, transform, opacity, border-radius'; //firstAnimationStep.split(":")[0];
+        const animatedProperties = ['filter', 'transform', 'opacity', 'border-radius']; //firstAnimationStep.split(":")[0];
         const cssEase = (iterations > 1 || !ease) ? 'linear' : cssEasing[ease] || 'linear';
-        const transitionCss = `transition: ${animatedProperties} ${transitionDuration}ms ${cssEase} !important`;
+        const transitionCss = 'transition: ' + animatedProperties.map(animatedProperty => `${animatedProperty} ${transitionDuration}ms ${cssEase}`).join(', ') + ' !important;';
 
         addScrollClass(`${transitionCss}; ${createAnimationStep(0, true)}`, [selectorSuffix]);
         addScrollClass(
