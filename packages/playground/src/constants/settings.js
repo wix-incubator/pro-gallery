@@ -80,6 +80,7 @@ export const optionsBySection = {
       optionsMap.layoutParams.thumbnails.alignment,
       optionsMap.layoutParams.thumbnails.size,
       optionsMap.layoutParams.thumbnails.spacing,
+      optionsMap.layoutParams.thumbnails.distanceBetweenGallery,
       optionsMap.layoutParams.structure.enableStreching,
   ],
   [SECTIONS.INFO]: [
