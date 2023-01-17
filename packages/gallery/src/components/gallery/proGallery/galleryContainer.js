@@ -812,7 +812,6 @@ export class GalleryContainer extends React.Component {
           ];
         const scrollEnd = scrollPos + screenSize;
         const getItemsDistance = scrollPos ? 3 * screenSize : 0; //first scrollPos is 0 falsy. dont load before a scroll happened.
-
         if (galleryEnd < getItemsDistance + scrollEnd) {
           //only when the last item turns visible we should try getting more items
           this.eventsListener(
