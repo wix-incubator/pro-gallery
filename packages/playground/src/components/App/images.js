@@ -2064,6 +2064,7 @@ const test3D = [
       height: 1080,
       type: '3d',
       poster: {
+        url: window.location.origin + '/3d/jordan_4.png',
         width: 1920,
         height: 1080,
       },
@@ -2091,6 +2092,7 @@ const test3D = [
       height: 1080,
       type: '3d',
       poster: {
+        url: window.location.origin + '/3d/parrot.png',
         width: 1920,
         height: 1080,
       },
