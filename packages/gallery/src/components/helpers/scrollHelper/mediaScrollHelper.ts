@@ -72,19 +72,6 @@ class VideoScrollHelper {
         }
         this.items.push(item);
       }
-
-      // if (
-      //   item.type === 'video' ||
-      //   (item.type === 'image' &&
-      //     (item.id.includes('_placeholder') || item.isVideoPlaceholder)) ||
-      //   item.type === '3d'
-      // ) {
-      //   // either video or a placeholder for video files (both need to be included in the list)
-      //   if (!this.itemRatingMap.has(item.id)) {
-      //     this.itemRatingMap.set(item.id, item.idx);
-      //   }
-      //   this.items.push(item);
-      // }
     });
   };
 
@@ -126,27 +113,11 @@ class VideoScrollHelper {
     }
   };
 
-  shouldAutoPlay = (): boolean => {
-    return (
-      this.playTrigger ===
-      GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO
-    );
-  };
-
   shouldTriggerAction = (
     idx: number,
     action: PlayTrigger = 'HOVER'
   ): boolean => {
-    if (this.findItemIndex(idx) === -1) {
-      return false;
-    }
-    if (
-      this.playTrigger !==
-      GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger][action]
-    ) {
-      return false;
-    }
-    return true;
+    return this.findItem(idx) && this.shouldTrigger(action);
   };
 
   itemHovered: SetItemIdx = (idx) => {
@@ -162,14 +133,6 @@ class VideoScrollHelper {
     } else {
       this.play(idx);
     }
-  };
-
-  findItemIndex = (idx: number): number => {
-    return this.items.findIndex((item) => item.idx === idx);
-  };
-
-  findItem = (idx: number): any => {
-    return this.items.find((item) => item.idx === idx);
   };
 
   onScroll: SetScroll = ({ top, left }) => {
@@ -192,7 +155,7 @@ class VideoScrollHelper {
   };
 
   videoPlayed: SetItemIdx = (idx) => {
-    if (this.currentPlayingIdx !== idx && this.findItemIndex(idx) !== -1) {
+    if (this.currentPlayingIdx !== idx && !this.findItem(idx)) {
       this.play(idx);
     }
     this.lastVideoPlayed = idx;
@@ -209,7 +172,7 @@ class VideoScrollHelper {
   //-------------------------------controls------------------------------------//
 
   autoPlayNextItemByRating: SetScroll = ({ top, left }) => {
-    if (!this.shouldAutoPlay()) {
+    if (!this.shouldTrigger('AUTO')) {
       return;
     }
 
@@ -222,9 +185,6 @@ class VideoScrollHelper {
       rating: Infinity,
     };
     this.items.some((item) => {
-      if (!this.shouldAutoPlay()) {
-        return false;
-      }
       if (this.isVisible(item, { top, left })) {
         const itemRating = this.itemRatingMap.get(item.id);
         if (itemRating <= bestRating.rating) {
@@ -292,7 +252,6 @@ class VideoScrollHelper {
     const currentItemPlacement = this.findItem(this.currentPlayingIdx);
     return this.isVisible(currentItemPlacement, { top, left });
   };
-
   isVisible = (item: any, { top, left }: Scroll): boolean => {
     const target = {
       offsetTop: this.scrollBase || 0,
@@ -328,35 +287,12 @@ class VideoScrollHelper {
     }
     return visibleVertically && visibleHorizontally;
   };
+  shouldTrigger = (action: PlayTrigger): boolean => {
+    return this.playTrigger === action;
+  };
+  findItem = (idx: number): any => {
+    return this.items.find((item) => item.idx === idx);
+  };
 }
 
 export default VideoScrollHelper;
-
-// this.renderedPaddingMultiply = 2;
-// this.visiblePaddingMultiply = 0;
-// this.videoPlayVerticalTolerance =
-//   (this.props.offset.bottom - this.props.offset.top) / 2;
-// this.videoPlayHorizontalTolerance =
-//   (this.props.offset.right - this.props.offset.left) / 2;
-// this.padding = {
-//   renderedVertical:
-//     utils.parseGetParam('renderedPadding') ||
-//     this.screenSize.height * this.renderedPaddingMultiply,
-//   visibleVertical:
-//     utils.parseGetParam('displayPadding') ||
-//     this.screenSize.height * this.visiblePaddingMultiply,
-//   playVertical:
-//     utils.parseGetParam('playPadding') ||
-//     this.screenSize.height * this.visiblePaddingMultiply -
-//       this.videoPlayVerticalTolerance,
-//   renderedHorizontal:
-//     utils.parseGetParam('renderedPadding') ||
-//     this.screenSize.width * this.renderedPaddingMultiply,
-//   visibleHorizontal:
-//     utils.parseGetParam('displayPadding') ||
-//     this.screenSize.width * this.visiblePaddingMultiply,
-//   playHorizontal:
-//     utils.parseGetParam('playPadding') ||
-//     this.screenSize.width * this.visiblePaddingMultiply -
-//       this.videoPlayHorizontalTolerance,
-// };

@@ -19,7 +19,7 @@ class MediaScrollHelper {
   }
   stop: SetItemIdx = (idx) => {
     for (const scrollHelper of this.scrollHelpers) {
-      if (scrollHelper.findItemIndex(idx) !== -1) {
+      if (scrollHelper.findItem(idx)) {
         scrollHelper.stop(idx);
       }
     }
