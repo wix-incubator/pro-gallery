@@ -143,7 +143,7 @@ class CssScrollHelper {
             (step) => fromPosition % step === 0 && fromPosition + step <= toPosition
           ); //eslint-disable-line
           scrollClasses.push(
-            (options.scrollAnimationReset ? `.${this.isScrollingClassName(axis, true)}` : "") +
+            (options.behaviourParams_gallery_scrollAnimationReset ? `.${this.isScrollingClassName(axis, true)}` : "") +
               `.${this.buildScrollClassName(largestDividerIdx, fromPosition, itemId, axis)} ~ div ${selectorSuffix}`
           );
           fromPosition += this.pgScrollSteps[largestDividerIdx];
@@ -206,7 +206,7 @@ class CssScrollHelper {
         const cssEase = (iterations > 1 || !ease) ? 'linear' : cssEasing[ease] || 'linear';
         const transitionCss = 'transition: ' + animatedProperties.map(animatedProperty => `${animatedProperty} ${transitionDuration}ms ${cssEase}`).join(', ') + ' !important;';
 
-        addScrollClass(`${transitionCss}; ${createAnimationStep(0, true)}`, [selectorSuffix]);
+        addScrollClass(`${transitionCss};`, [selectorSuffix]);
         addScrollClass(
           createAnimationStep(0),
           createSelectorsRange(animationStart - this.animationPadding, animationStart)
