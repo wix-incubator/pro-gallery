@@ -52,7 +52,6 @@ class ItemView extends React.Component {
     this.onItemClick = this.onItemClick.bind(this);
     this.onItemWrapperClick = this.onItemWrapperClick.bind(this);
     this.onItemInfoClick = this.onItemInfoClick.bind(this);
-    this.onContainerKeyDown = this.onContainerKeyDown.bind(this);
     this.onAnchorKeyDown = this.onAnchorKeyDown.bind(this);
     this.onContainerKeyUp = this.onContainerKeyUp.bind(this);
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
@@ -1041,7 +1040,6 @@ class ItemView extends React.Component {
         onMouseLeave={this.onMouseLeave}
         onFocus={this.onFocus}
         onBlur={this.onBlur} // The onblur event is the opposite of the onfocus event.
-        onKeyDown={this.onContainerKeyDown}
         tabIndex={this.getItemContainerTabIndex()}
         aria-label={this.getItemAriaLabel()}
         data-hash={hash}
@@ -1052,6 +1050,7 @@ class ItemView extends React.Component {
         key={'item-container-' + id}
         style={this.getItemContainerStyles()}
         onKeyUp={this.onContainerKeyUp}
+        onClick={this.onItemWrapperClick}
       >
         {this.getTopInfoElementIfNeeded()}
         {this.getLeftInfoElementIfNeeded()}
@@ -1075,7 +1074,6 @@ class ItemView extends React.Component {
               key={'item-wrapper-' + id}
               id={'item-wrapper-' + id}
               style={this.getItemWrapperStyles()}
-              onClick={this.onItemWrapperClick}
             >
               {this.getItemInner()}
             </div>
