@@ -52,7 +52,7 @@ class ItemView extends React.Component {
     this.onItemClick = this.onItemClick.bind(this);
     this.onItemWrapperClick = this.onItemWrapperClick.bind(this);
     this.onItemInfoClick = this.onItemInfoClick.bind(this);
-    this.onContainerKeyDown = this.onContainerKeyDown.bind(this);
+    this.onContainerKeyUp = this.onContainerKeyUp.bind(this);
     this.onAnchorKeyDown = this.onAnchorKeyDown.bind(this);
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
     this.handleItemMouseUp = this.handleItemMouseUp.bind(this);
@@ -133,7 +133,7 @@ class ItemView extends React.Component {
     );
   }
 
-  onContainerKeyDown(e) {
+  onContainerKeyUp(e) {
     const clickTarget = 'item-container';
     switch (e.keyCode || e.charCode) {
       case 32: //space
@@ -150,7 +150,7 @@ class ItemView extends React.Component {
   }
 
   onAnchorKeyDown(e) {
-    // Similar to "onContainerKeyDown()" expect 'shouldUseDirectLink()' part, because we are already on the <a> tag (this.itemAnchor)
+    // Similar to "onContainerKeyUp()" expect 'shouldUseDirectLink()' part, because we are already on the <a> tag (this.itemAnchor)
     const clickTarget = 'item-container';
     switch (e.keyCode || e.charCode) {
       case 32: //space
@@ -1040,7 +1040,7 @@ class ItemView extends React.Component {
         onMouseLeave={this.onMouseLeave}
         onFocus={this.onFocus}
         onBlur={this.onBlur} // The onblur event is the opposite of the onfocus event.
-        onKeyDown={this.onContainerKeyDown}
+        onKeyUp={this.onContainerKeyUp}
         tabIndex={this.getItemContainerTabIndex()}
         aria-label={this.getItemAriaLabel()}
         data-hash={hash}
