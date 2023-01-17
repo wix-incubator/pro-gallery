@@ -56,3 +56,4 @@ export { GalleryProps, GalleryState } from './common/interfaces/galleryTypes';
 export { Options } from './common/interfaces/options';
 export { GalleryRendererProps } from './common/interfaces/galleryRendererTypes';
 export { VirtualizationSettings } from './common/interfaces/virtualization';
+export { PlayTrigger } from './common/interfaces/behaviourParams';

@@ -37,11 +37,13 @@ export interface Video {
   speed?: number;
   volume?: number;
   loop?: boolean;
-  playTrigger?: 'CLICK' | 'HOVER' | 'AUTO';
+  playTrigger?: PlayTrigger;
   enablePlayButton?: boolean;
   enableControls?: boolean;
   enablePlaceholder?: boolean;
 }
+
+export type PlayTrigger = 'CLICK' | 'HOVER' | 'AUTO';
 
 export interface Overlay {
   hoveringBehaviour?: 'APPEARS' | 'DISAPPEARS' | 'ALWAYS_SHOW' | 'NEVER_SHOW';
