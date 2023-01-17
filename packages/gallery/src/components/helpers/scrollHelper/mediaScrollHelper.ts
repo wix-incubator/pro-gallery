@@ -1,8 +1,21 @@
-import { GALLERY_CONSTS, optionsMap, window } from 'pro-gallery-lib';
+import {
+  GALLERY_CONSTS,
+  PlayTrigger,
+  optionsMap,
+  window,
+} from 'pro-gallery-lib';
 import {
   isWithinPaddingVertically,
   isWithinPaddingHorizontally,
-} from './scrollHelper';
+} from './scrollHelper.js';
+import {
+  SetItemIdx,
+  UpdateGalleryData,
+  SetScroll,
+  Scroll,
+  HandleEvents,
+  GetPlayTrigger,
+} from './types';
 
 const VIDEO_EVENTS = {
   SCROLL: 'SCROLL',
@@ -13,69 +26,58 @@ const VIDEO_EVENTS = {
 };
 
 class VideoScrollHelper {
-  constructor(config) {
-    this.scrollBase = 0;
-    this.items = [];
-    this.currentPlayingIdx = -1;
-    this.currentItemCount = 0;
-    this.playing = false;
-    this.updateGalleryStructure = this.updateGalleryStructure.bind(this);
-    this.initializePlayState = this.initializePlayState.bind(this);
-    this.onScroll = this.onScroll.bind(this);
-    this.handleEvent = this.handleEvent.bind(this);
-    this.play = this.play.bind(this);
-    this.stop = this.stop.bind(this);
-    this.isVisible = this.isVisible.bind(this);
-    this.videoPlayTrigger = undefined;
-    this.threeDPlayTrigger = undefined;
-    this.setPlayingItem = config.setPlayingVideos;
-    this.lastVideoPlayed = -1;
-    this.itemRatingMap = new Map();
-    this.trigger = Object.assign(
-      {},
-      ...Object.keys(VIDEO_EVENTS).map((key) => ({
-        [key]: (args) => this.handleEvent({ eventName: key, eventData: args }),
-      }))
-    );
-  }
+  scrollBase = 0;
+  items: any[] = [];
+  currentPlayingIdx = -1;
+  currentItemCount = 0;
+  playing = false;
+  playTrigger?: PlayTrigger;
+  scrollDirection?: string;
+  lastVideoPlayed = -1;
+  itemRatingMap = new Map();
+  trigger = Object.assign(
+    {},
+    ...Object.keys(VIDEO_EVENTS).map((key) => ({
+      [key]: (args) => this.handleEvent({ eventName: key, eventData: args }),
+    }))
+  );
+  galleryWidth?: number;
+  videoLoop?: boolean;
+  top!: number;
+  left!: number;
+  constructor(
+    public setPlayingItem: SetItemIdx,
+    public readonly isItemSupported: (item: any) => boolean,
+    public readonly getPlayTrigger: GetPlayTrigger
+  ) {}
 
   //--------------------------updates----------------------------------//
-  updateGalleryStructure({
+  updateGalleryStructure: UpdateGalleryData = ({
     galleryStructure,
     galleryWidth,
     scrollBase,
-    videoPlayTrigger,
-    threeDPlayTrigger,
-    videoLoop,
-    scrollDirection,
-  }) {
+    options,
+  }) => {
     this.galleryWidth = galleryWidth;
     this.scrollBase = scrollBase;
-    this.videoPlayTrigger = videoPlayTrigger;
-    this.threeDPlayTrigger = threeDPlayTrigger;
-    this.videoLoop = videoLoop;
-    this[optionsMap.layoutParams.structure.scrollDirection] = scrollDirection;
+    this.playTrigger = this.getPlayTrigger(options);
+    this.videoLoop = options.behaviourParams_item_video_loop;
+    this.scrollDirection = options.layoutParams_structure_scrollDirection;
     this.currentItemCount = galleryStructure.galleryItems.length;
     this.items = [];
     galleryStructure.galleryItems.forEach((item) => {
-      if (
-        item.type === 'video' ||
-        (item.type === 'image' &&
-          (item.id.includes('_placeholder') || item.isVideoPlaceholder)) ||
-        item.type === '3d'
-      ) {
-        // either video or a placeholder for video files (both need to be included in the list)
+      if (this.isItemSupported(item)) {
         if (!this.itemRatingMap.has(item.id)) {
           this.itemRatingMap.set(item.id, item.idx);
         }
         this.items.push(item);
       }
     });
-  }
+  };
 
   //--------------------------triggers--------------------------------//
 
-  handleEvent({ eventName, eventData }) {
+  handleEvent: HandleEvents = ({ eventName, eventData }) => {
     switch (eventName) {
       case VIDEO_EVENTS.SCROLL:
         this.onScroll(eventData);
@@ -109,63 +111,31 @@ class VideoScrollHelper {
         break;
       default:
     }
-  }
+  };
 
-  isTheeD(item) {
-    return item.type === '3d';
-  }
-  isIdxTheeD(idx) {
-    const item = this.items.find((item) => item.idx === idx);
-    if (!item) return false;
-    return this.isTheeD(item);
-  }
+  shouldTriggerAction = (
+    idx: number,
+    action: PlayTrigger = 'HOVER'
+  ): boolean => {
+    return this.findItem(idx) && this.shouldTrigger(action);
+  };
 
-  idxPlayTrigger(idx) {
-    return this.isIdxTheeD(idx)
-      ? this.threeDPlayTrigger
-      : this.videoPlayTrigger;
-  }
+  itemHovered: SetItemIdx = (idx) => {
+    this.shouldTriggerAction(idx, 'HOVER') && this.play(idx);
+  };
 
-  idxAutoPlay(idx) {
-    return (
-      this.idxPlayTrigger(idx) ===
-      GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO
-    );
-  }
-
-  shouldTriggerAction(idx, action = 'HOVER') {
-    if (this.findItemIndex(idx) === -1) {
-      return false;
-    }
-    if (
-      this.idxPlayTrigger(idx) !==
-      GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger][action]
-    ) {
-      return false;
-    }
-    return true;
-  }
-
-  itemHovered(idx) {
-    return this.shouldTriggerAction(idx, 'HOVER') && this.play(idx);
-  }
-
-  itemClicked(idx) {
+  itemClicked: SetItemIdx = (idx) => {
     if (!this.shouldTriggerAction(idx, 'CLICK')) {
       return;
     }
-    if (this.currentPlayingIdx === idx && !this.isIdxTheeD(idx)) {
+    if (this.currentPlayingIdx === idx) {
       this.stop(idx);
-      return;
+    } else {
+      this.play(idx);
     }
-    this.play(idx);
-  }
+  };
 
-  findItemIndex(idx) {
-    return this.items.findIndex((item) => item.idx === idx);
-  }
-
-  onScroll({ top, left }) {
+  onScroll: SetScroll = ({ top, left }) => {
     this.top = top >= 0 ? top : this.top;
     this.left = left >= 0 ? left : this.left;
     if (this.currentPlayingIdx === -1) {
@@ -176,32 +146,33 @@ class VideoScrollHelper {
       }
       this.autoPlayNextItemByRating({ top: this.top, left: this.left });
     }
-  }
+  };
 
-  videoEnded(idx) {
+  videoEnded: SetItemIdx = (idx) => {
     this.stop(idx);
     const scroll = { top: this.top, left: this.left };
     this.autoPlayNextItemByRating(scroll);
-  }
+  };
 
-  videoPlayed(idx) {
-    if (this.currentPlayingIdx !== idx) {
+  videoPlayed: SetItemIdx = (idx) => {
+    if (this.currentPlayingIdx !== idx && !this.findItem(idx)) {
       this.play(idx);
     }
     this.lastVideoPlayed = idx;
-  }
-  videoErrorReported() {
-    this.stop();
-  }
+  };
 
-  initializePlayState() {
+  videoErrorReported = (): void => {
+    this.stop();
+  };
+
+  initializePlayState = (): void => {
     this.autoPlayNextItemByRating({ top: this.top, left: this.left });
-  }
+  };
 
   //-------------------------------controls------------------------------------//
 
-  autoPlayNextItemByRating({ top, left }) {
-    if (!this.shouldAutoPlay()) {
+  autoPlayNextItemByRating: SetScroll = ({ top, left }) => {
+    if (!this.shouldTrigger('AUTO')) {
       return;
     }
 
@@ -214,9 +185,6 @@ class VideoScrollHelper {
       rating: Infinity,
     };
     this.items.some((item) => {
-      if (!this.idxAutoPlay(item.idx)) {
-        return false;
-      }
       if (this.isVisible(item, { top, left })) {
         const itemRating = this.itemRatingMap.get(item.id);
         if (itemRating <= bestRating.rating) {
@@ -237,7 +205,7 @@ class VideoScrollHelper {
       }
     });
     if (bestRating.idx >= 0) {
-      if (!this.allowedLoop() && bestRating.idx === this.lastVideoPlayed) {
+      if (!this.videoLoop && bestRating.idx === this.lastVideoPlayed) {
         if (secondBestRating.idx >= 0) {
           this.play(secondBestRating.idx); //play 2nd in line instead. keep best rating for next by the score he got...
         } else {
@@ -249,50 +217,42 @@ class VideoScrollHelper {
     } else {
       this.lastVideoPlayed = -2; //if there are no videos to play. we can reset this mechanism so that one-video galleries can keep playing the same video
     }
-  }
+  };
 
-  calculateCurrentItemPlacement() {
-    const idx = this.findItemIndex(this.currentPlayingIdx);
-    if (idx >= 0) {
-      return this.items[idx];
-    }
-  }
-
-  play(idx) {
+  play: SetItemIdx = (idx) => {
     this.setPlayingIdx(idx);
     this.playing = true;
-  }
+  };
 
-  stop(idx) {
-    const item = this.findItemIndex(idx);
-    if (idx >= 0) {
+  stop = (idx = this.currentPlayingIdx): void => {
+    const item = this.findItem(idx);
+    if (item) {
       const newRating = this.itemRatingMap.get(item.id) + this.currentItemCount;
       this.itemRatingMap.set(item.id, newRating);
     }
     this.setPlayingIdx(-1);
     this.playing = false;
-  }
+  };
 
-  onPlayingIdxChange() {
+  onPlayingIdxChange = (): void => {
     this.setPlayingItem(this.currentPlayingIdx);
-  }
+  };
   //-------------------------------get/set----------------------------------------//
 
-  setPlayingIdx(idx) {
+  setPlayingIdx: SetItemIdx = (idx) => {
     if (this.currentPlayingIdx !== idx) {
       this.currentPlayingIdx = idx;
       this.onPlayingIdxChange();
     }
-  }
+  };
 
   //-----------------------------Utils--------------------------------------------//
 
-  isCurrentItemStillVisible({ top, left }) {
-    const currentItemPlacement = this.calculateCurrentItemPlacement();
+  isCurrentItemStillVisible = ({ top, left }: Scroll): boolean => {
+    const currentItemPlacement = this.findItem(this.currentPlayingIdx);
     return this.isVisible(currentItemPlacement, { top, left });
-  }
-
-  isVisible(item, { top, left }) {
+  };
+  isVisible = (item: any, { top, left }: Scroll): boolean => {
     const target = {
       offsetTop: this.scrollBase || 0,
       scrollY: top,
@@ -312,7 +272,7 @@ class VideoScrollHelper {
     });
     let visibleHorizontally;
     if (
-      this[optionsMap.layoutParams.structure.scrollDirection] ===
+      this.scrollDirection ===
       GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL
     ) {
       visibleHorizontally = true;
@@ -326,51 +286,13 @@ class VideoScrollHelper {
       });
     }
     return visibleVertically && visibleHorizontally;
-  }
-
-  shouldAutoPlay() {
-    return (
-      this.videoPlayTrigger ===
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
-          .AUTO ||
-      this.threeDPlayTrigger ===
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.threeDimensionalScene.playTrigger
-        ].AUTO
-    );
-  }
-  allowedLoop() {
-    return this.videoLoop === true;
-  }
+  };
+  shouldTrigger = (action: PlayTrigger): boolean => {
+    return this.playTrigger === action;
+  };
+  findItem = (idx: number): any => {
+    return this.items.find((item) => item.idx === idx);
+  };
 }
 
 export default VideoScrollHelper;
-
-// this.renderedPaddingMultiply = 2;
-// this.visiblePaddingMultiply = 0;
-// this.videoPlayVerticalTolerance =
-//   (this.props.offset.bottom - this.props.offset.top) / 2;
-// this.videoPlayHorizontalTolerance =
-//   (this.props.offset.right - this.props.offset.left) / 2;
-// this.padding = {
-//   renderedVertical:
-//     utils.parseGetParam('renderedPadding') ||
-//     this.screenSize.height * this.renderedPaddingMultiply,
-//   visibleVertical:
-//     utils.parseGetParam('displayPadding') ||
-//     this.screenSize.height * this.visiblePaddingMultiply,
-//   playVertical:
-//     utils.parseGetParam('playPadding') ||
-//     this.screenSize.height * this.visiblePaddingMultiply -
-//       this.videoPlayVerticalTolerance,
-//   renderedHorizontal:
-//     utils.parseGetParam('renderedPadding') ||
-//     this.screenSize.width * this.renderedPaddingMultiply,
-//   visibleHorizontal:
-//     utils.parseGetParam('displayPadding') ||
-//     this.screenSize.width * this.visiblePaddingMultiply,
-//   playHorizontal:
-//     utils.parseGetParam('playPadding') ||
-//     this.screenSize.width * this.visiblePaddingMultiply -
-//       this.videoPlayHorizontalTolerance,
-// };

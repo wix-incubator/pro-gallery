@@ -20,7 +20,7 @@ import {
 import ScrollIndicator from './galleryScrollIndicator';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
-import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper';
+import VideoScrollHelperWrapper from '../../helpers/scrollHelper/mediaScrollHelperWrapper';
 import findNeighborItem from '../../helpers/layoutUtils';
 import { isGalleryInViewport, Deferred } from './galleryHelpers';
 
@@ -46,9 +46,17 @@ export class GalleryContainer extends React.Component {
     this.getIsScrollLessGallery = this.getIsScrollLessGallery.bind(this);
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
-    this.videoScrollHelper = new VideoScrollHelperWrapper(
-      this.setPlayingIdxState
-    );
+    this.videoScrollHelper = new VideoScrollHelperWrapper([
+      {
+        getPlayTrigger: (options) =>
+          options.behaviourParams_item_video_playTrigger,
+        onSetPlayingIdx: this.setPlayingIdxState,
+        supportedItemsFilter: (item) =>
+          item.type === 'video' ||
+          (item.type === 'image' &&
+            (item.id.includes('_placeholder') || item.isVideoPlaceholder)),
+      },
+    ]);
     const initialState = {
       scrollPosition: {
         top: 0,
@@ -390,26 +398,19 @@ export class GalleryContainer extends React.Component {
         container: container,
       });
     }
+    /**
+     * @type {import('../../helpers/scrollHelper/types').ScrollHelperGalleryData}
+     */
     const scrollHelperNewGalleryStructure = {
       galleryStructure: this.galleryStructure,
       galleryWidth: container.galleryWidth,
       scrollBase: container.scrollBase,
-      videoPlayTrigger:
-        options[optionsMap.behaviourParams.item.video.playTrigger],
-      threeDPlayTrigger:
-        options[
-          optionsMap.behaviourParams.item.threeDimensionalScene.playTrigger
-        ],
-      videoLoop: options[optionsMap.behaviourParams.item.video.loop],
-      scrollDirection:
-        options[optionsMap.layoutParams.structure.scrollDirection],
-      cb: this.setPlayingIdxState,
+      options: options,
+      setPlayingIdxState: this.setPlayingIdxState,
     };
 
     this.videoScrollHelper.updateGalleryStructure(
-      scrollHelperNewGalleryStructure,
-      !utils.isSSR(),
-      items
+      scrollHelperNewGalleryStructure
     );
 
     const layoutParams = {

@@ -748,10 +748,10 @@ class Utils {
 
   isHeightSetByGallery(options) {
     return (
-      options[optionsMap.layoutParams.structure.galleryLayout] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
+      options[optionsMap.layoutParams.structure.scrollDirection] ===
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
           .VERTICAL &&
-      !options[optionsMap.behaviourParams.gallery.vertical.loadMore]
+      !options[optionsMap.behaviourParams.gallery.vertical.loadMore.enable]
     ); //v5 TODO!!! NEW STYLEPARAMS METHOD POSSIBLE BUG FOUND Could be that I need to add the horizontal gallery ratio thing here....
   }
 }
