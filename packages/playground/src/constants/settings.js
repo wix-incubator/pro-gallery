@@ -157,6 +157,8 @@ export const optionsBySection = {
     optionsMap.behaviourParams.item.content.placementAnimation,
     optionsMap.behaviourParams.gallery.scrollAnimation,
     optionsMap.behaviourParams.gallery.advancedScrollAnimation,
+    optionsMap.behaviourParams.gallery.infiniteScrollAnimation,
+    optionsMap.behaviourParams.gallery.scrollAnimationReset,
     optionsMap.behaviourParams.gallery.horizontal.slideAnimation,
     optionsMap.behaviourParams.gallery.horizontal.slideTransition,
   ],

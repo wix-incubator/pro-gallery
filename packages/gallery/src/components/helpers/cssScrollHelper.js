@@ -21,7 +21,6 @@ const advancedScrollAnimation = [
     transitionDuration: 400,
     direction: "LEFT",
     hinge: "center",
-    reset: false,
     ease: true,
   },
   {
@@ -34,7 +33,6 @@ const advancedScrollAnimation = [
     toPosition: 100,
     iterations: 1,
     transitionDuration: 4000,
-    reset: true,
   },
 ];
 
@@ -145,7 +143,7 @@ class CssScrollHelper {
             (step) => fromPosition % step === 0 && fromPosition + step <= toPosition
           ); //eslint-disable-line
           scrollClasses.push(
-            (animationParams.reset ? `.${this.isScrollingClassName(axis, true)}` : "") +
+            (options.scrollAnimationReset ? `.${this.isScrollingClassName(axis, true)}` : "") +
               `.${this.buildScrollClassName(largestDividerIdx, fromPosition, itemId, axis)} ~ div ${selectorSuffix}`
           );
           fromPosition += this.pgScrollSteps[largestDividerIdx];

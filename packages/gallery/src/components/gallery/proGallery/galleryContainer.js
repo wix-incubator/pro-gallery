@@ -837,6 +837,7 @@ export class GalleryContainer extends React.Component {
             this.props.options[optionsMap.behaviourParams.gallery.layoutDirection] ===
             GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT
           }
+          infiniteScrollAnimation={this.props.options[optionsMap.behaviourParams.gallery.infiniteScrollAnimation]}
           totalWidth={this.galleryStructure.width}
           scrollBase={this.props.container.scrollBase}
           scrollingElement={this._scrollingElement}

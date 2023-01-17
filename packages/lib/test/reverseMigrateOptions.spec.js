@@ -234,6 +234,8 @@ function input() {
     behaviourParams_item_content_loader: 'COLOR',
     behaviourParams_gallery_scrollAnimation: 'NO_EFFECT',
     behaviourParams_gallery_advancedScrollAnimation: [],
+    behaviourParams_gallery_infiniteScrollAnimation: false,
+    behaviourParams_gallery_scrollAnimationReset: false,
     behaviourParams_gallery_enableIndexingShareLinks: false,
     behaviourParams_gallery_horizontal_slideAnimation: 'SCROLL',
     behaviourParams_gallery_horizontal_slideTransition:

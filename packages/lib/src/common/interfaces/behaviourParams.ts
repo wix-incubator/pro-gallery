@@ -29,6 +29,8 @@ export interface Gallery {
   vertical?: Vertical;
   horizontal?: Horizontal;
   advancedScrollAnimation?: string;
+  infiniteScrollAnimation?: boolean;
+  scrollAnimationReset?: boolean;
 }
 export interface SecondaryMedia {
   trigger: 'OFF' | 'HOVER';

@@ -1,6 +1,6 @@
-import React from 'react';
-import { utils, GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
-import { cssScrollHelper } from '../../helpers/cssScrollHelper';
+import React from "react";
+import { utils, GALLERY_CONSTS, optionsMap } from "pro-gallery-lib";
+import { cssScrollHelper } from "../../helpers/cssScrollHelper";
 
 export default class ScrollIndicator extends React.Component {
   constructor(props) {
@@ -19,23 +19,15 @@ export default class ScrollIndicator extends React.Component {
     if (this.scrollEventListenerSet) {
       const scrollingElement = this.props.scrollingElement;
       try {
-        scrollingElement
-          .vertical()
-          .removeEventListener('scroll', this.onVerticalScroll);
+        scrollingElement.vertical().removeEventListener("scroll", this.onVerticalScroll);
       } catch (e) {
         //
       }
 
       try {
         const { scrollDirection } = this.props;
-        if (
-          scrollDirection ===
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-            .HORIZONTAL
-        ) {
-          scrollingElement
-            .horizontal()
-            .removeEventListener('scroll', this.onHorizontalScroll);
+        if (scrollDirection === GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL) {
+          scrollingElement.horizontal().removeEventListener("scroll", this.onHorizontalScroll);
         }
       } catch (e) {
         //
@@ -50,8 +42,7 @@ export default class ScrollIndicator extends React.Component {
     }
 
     this.scrollEventListenerSet = true;
-    const { isRTL, setGotFirstScrollIfNeeded, scrollingElement, oneRow } =
-      this.props;
+    const { isRTL, setGotFirstScrollIfNeeded, scrollingElement } = this.props;
 
     this.pauseVerticalScrolling = utils.debounce(
       () =>
@@ -74,8 +65,7 @@ export default class ScrollIndicator extends React.Component {
       if (step >= 0) {
         if (
           this.props.galleryScrollDirection ===
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-            .HORIZONTAL
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
         ) {
           this.setState({
             scrollingHorizontally: true,
@@ -92,11 +82,11 @@ export default class ScrollIndicator extends React.Component {
       if (isRTL) {
         left = Math.abs(left); //this.props.totalWidth - left;
       }
-      if (left >= 0) {
+      const minScrollPosition = this.props.infiniteScrollAnimation ? 0 : this.state.scrollLeft;
+      if (left >= minScrollPosition) {
         if (
           this.props.galleryScrollDirection ===
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-            .HORIZONTAL
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
         ) {
           this.setState({
             scrollingHorizontally: true,
@@ -110,29 +100,18 @@ export default class ScrollIndicator extends React.Component {
     };
 
     try {
-      scrollingElement
-        .horizontal()
-        ?.addEventListener('scroll', this.onHorizontalScroll);
+      scrollingElement.horizontal()?.addEventListener("scroll", this.onHorizontalScroll);
     } catch (e) {
       console.error(e);
     }
 
     if (
-      this.props.galleryScrollDirection ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-        .HORIZONTAL
+      this.props.galleryScrollDirection === GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
     ) {
       try {
-        scrollingElement
-          .horizontal()
-          .addEventListener('scroll', this.onHorizontalScroll);
+        scrollingElement.horizontal().addEventListener("scroll", this.onHorizontalScroll);
 
-        scrollingElement
-          .horizontal()
-          .addEventListener(
-            'scrollTransition',
-            this.onHorizontalScrollTransition
-          );
+        scrollingElement.horizontal().addEventListener("scrollTransition", this.onHorizontalScrollTransition);
       } catch (e) {
         console.error(e);
       }
@@ -143,15 +122,15 @@ export default class ScrollIndicator extends React.Component {
       const target = e.currentTarget || e.target || e;
       const top = target && (target.scrollY || target.scrollTop || target.y);
       // console.log('[RTL SCROLL] onVerticalScroll: ', left);
-      if (top >= 0) {
+      const minScrollPosition = this.props.infiniteScrollAnimation ? 0 : this.state.scrollTop;
+      if (top >= minScrollPosition) {
         this.setState({
           scrollingVerically: true,
           scrollTop: Math.round(top),
         });
         if (
           this.props.galleryScrollDirection ===
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-            .VERTICAL
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL
         ) {
           this.setState({
             scrollTop: top,
@@ -163,9 +142,7 @@ export default class ScrollIndicator extends React.Component {
       }
     };
     try {
-      scrollingElement
-        .vertical()
-        .addEventListener('scroll', this.onVerticalScroll);
+      scrollingElement.vertical().addEventListener("scroll", this.onVerticalScroll);
     } catch (e) {
       console.error(e);
     }
@@ -181,13 +158,7 @@ export default class ScrollIndicator extends React.Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     let didChange = false;
-    for (const prop of [
-      'id',
-      'scrollDirection',
-      'isRTL',
-      'totalWidth',
-      'scrollBase',
-    ]) {
+    for (const prop of ["id", "scrollDirection", "isRTL", "totalWidth", "scrollBase"]) {
       if (nextProps[prop] !== this.props[prop]) {
         didChange = true;
         break;
@@ -202,8 +173,7 @@ export default class ScrollIndicator extends React.Component {
   render() {
     const verticalScrollBase =
       this.props.galleryScrollDirection ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL && this.props.scrollBase > 0
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL && this.props.scrollBase > 0
         ? this.props.scrollBase
         : 0;
     const scrollTopWithoutBase = this.state.scrollTop - verticalScrollBase;
@@ -225,13 +195,13 @@ export default class ScrollIndicator extends React.Component {
           isScrollingHorizontally
         )}
         style={{
-          position: 'fixed',
+          position: "fixed",
           top: 0,
           right: 0,
-          background: 'white',
+          background: "white",
           zIndex: 99999,
           padding: 10,
-          border: '1px solid blue',
+          border: "1px solid blue",
         }}
       >
         x: {this.state.scrollLeft}
