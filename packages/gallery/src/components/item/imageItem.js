@@ -122,7 +122,7 @@ class ImageItem extends React.Component {
 
   getImageElement() {
     const {
-      calculatedAlt,
+      alt,
       imageDimensions,
       createUrl,
       id,
@@ -234,9 +234,7 @@ class ImageItem extends React.Component {
           data-hook="gallery-item-image-img"
           data-idx={idx}
           src={src}
-          alt={
-            typeof calculatedAlt === 'string' ? calculatedAlt : 'untitled image'
-          }
+          alt={typeof alt === 'string' ? alt : 'untitled image'}
           onLoad={this.handleHighResImageLoad}
           loading={this.props.isPrerenderMode ? 'lazy' : 'eager'}
           style={{

@@ -416,7 +416,7 @@ class ItemView extends React.Component {
   getImageItem(imageDimensions) {
     const props = utils.pick(this.props, [
       'gotFirstScrollEvent',
-      'calculatedAlt',
+      'alt',
       'title',
       'description',
       'id',
@@ -827,12 +827,12 @@ class ItemView extends React.Component {
   }
 
   getItemAriaLabel() {
-    const { type, calculatedAlt, htmlContent, options } = this.props;
+    const { type, alt, htmlContent, options } = this.props;
     const mapTypeToLabel = {
       dummy: '',
       text: htmlContent,
-      video: calculatedAlt || 'Untitled video',
-      image: calculatedAlt || 'Untitled image',
+      video: alt || 'Untitled video',
+      image: alt || 'Untitled image',
     };
     const label = mapTypeToLabel[type];
     return label + (options.isStoreGallery ? ', Buy Now' : '');
