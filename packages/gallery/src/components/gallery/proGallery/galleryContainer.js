@@ -239,9 +239,7 @@ export class GalleryContainer extends React.Component {
   }
 
   handleNavigation(isInDisplay) {
-    if (isInDisplay) {
-      this.mediaScrollHelper.trigger.INIT_SCROLL();
-    } else {
+    if (!isInDisplay) {
       this.mediaScrollHelper.stop();
     }
   }
@@ -819,7 +817,7 @@ export class GalleryContainer extends React.Component {
     }
 
     if (eventName === GALLERY_CONSTS.events.GALLERY_SCROLLED) {
-      this.mediaScrollHelper.trigger.SCROLL(eventData);
+      this.mediaScrollHelper.onScroll(eventData);
       const newScrollPosition = {
         ...this.state.scrollPosition,
         ...eventData,

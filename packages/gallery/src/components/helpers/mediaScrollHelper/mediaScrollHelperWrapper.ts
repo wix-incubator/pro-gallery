@@ -84,13 +84,6 @@ class MediaScrollHelper {
         console.error('Failed to load videoScrollHelper. error: ' + e);
       });
   };
-  get trigger() {
-    return {
-      SCROLL: this.onScroll,
-      INIT_SCROLL: () =>
-        this.scrollHelpers.forEach((sh) => sh.trigger.INIT_SCROLL()),
-    };
-  }
 }
 
 export default MediaScrollHelper;

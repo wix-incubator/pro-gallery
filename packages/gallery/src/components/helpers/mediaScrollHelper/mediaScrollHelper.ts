@@ -17,14 +17,6 @@ import {
   GetPlayTrigger,
 } from './types.js';
 
-const VIDEO_EVENTS = {
-  SCROLL: 'SCROLL',
-  CLICKED: 'CLICKED',
-  HOVERED: 'HOVERED',
-  ENDED: 'ENDED',
-  INIT_SCROLL: 'INIT_SCROLL',
-};
-
 class VideoScrollHelper {
   scrollBase = 0;
   items: any[] = [];
@@ -35,12 +27,6 @@ class VideoScrollHelper {
   scrollDirection?: string;
   lastVideoPlayed = -1;
   itemRatingMap = new Map();
-  trigger = Object.assign(
-    {},
-    ...Object.keys(VIDEO_EVENTS).map((key) => ({
-      [key]: (args) => this.handleEvent({ eventName: key, eventData: args }),
-    }))
-  );
   galleryWidth?: number;
   videoLoop?: boolean;
   top!: number;
@@ -52,7 +38,7 @@ class VideoScrollHelper {
   ) {}
 
   //--------------------------updates----------------------------------//
-  updateGalleryStructure: UpdateGalleryData = ({
+  public readonly updateGalleryStructure: UpdateGalleryData = ({
     galleryStructure,
     galleryWidth,
     scrollBase,
@@ -77,11 +63,8 @@ class VideoScrollHelper {
 
   //--------------------------triggers--------------------------------//
 
-  handleEvent: HandleEvents = ({ eventName, eventData }) => {
+  public readonly handleEvent: HandleEvents = ({ eventName, eventData }) => {
     switch (eventName) {
-      case VIDEO_EVENTS.SCROLL:
-        this.onScroll(eventData);
-        break;
       case GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED:
         //case VIDEO_EVENTS.clicked:
         this.itemClicked(eventData.idx);
@@ -107,24 +90,22 @@ class VideoScrollHelper {
         //case VIDEO_EVENTS.ended:
         this.videoErrorReported();
         break;
-      case VIDEO_EVENTS.INIT_SCROLL:
-        break;
       default:
     }
   };
 
-  shouldTriggerAction = (
+  private readonly shouldTriggerAction = (
     idx: number,
     action: PlayTrigger = 'HOVER'
   ): boolean => {
     return this.findItem(idx) && this.shouldTrigger(action);
   };
 
-  itemHovered: SetItemIdx = (idx) => {
+  private readonly itemHovered: SetItemIdx = (idx) => {
     this.shouldTriggerAction(idx, 'HOVER') && this.play(idx);
   };
 
-  itemClicked: SetItemIdx = (idx) => {
+  private readonly itemClicked: SetItemIdx = (idx) => {
     if (!this.shouldTriggerAction(idx, 'CLICK')) {
       return;
     }
@@ -135,7 +116,7 @@ class VideoScrollHelper {
     }
   };
 
-  onScroll: SetScroll = ({ top, left }) => {
+  public readonly onScroll: SetScroll = ({ top, left }) => {
     this.top = top >= 0 ? top : this.top;
     this.left = left >= 0 ? left : this.left;
     if (this.currentPlayingIdx === -1) {
@@ -148,30 +129,30 @@ class VideoScrollHelper {
     }
   };
 
-  videoEnded: SetItemIdx = (idx) => {
+  private readonly videoEnded: SetItemIdx = (idx) => {
     this.stop(idx);
     const scroll = { top: this.top, left: this.left };
     this.autoPlayNextItemByRating(scroll);
   };
 
-  videoPlayed: SetItemIdx = (idx) => {
+  private readonly videoPlayed: SetItemIdx = (idx) => {
     if (this.currentPlayingIdx !== idx && !this.findItem(idx)) {
       this.play(idx);
     }
     this.lastVideoPlayed = idx;
   };
 
-  videoErrorReported = (): void => {
+  private readonly videoErrorReported = (): void => {
     this.stop();
   };
 
-  initializePlayState = (): void => {
+  public readonly initializePlayState = (): void => {
     this.autoPlayNextItemByRating({ top: this.top, left: this.left });
   };
 
   //-------------------------------controls------------------------------------//
 
-  autoPlayNextItemByRating: SetScroll = ({ top, left }) => {
+  private readonly autoPlayNextItemByRating: SetScroll = ({ top, left }) => {
     if (!this.shouldTrigger('AUTO')) {
       return;
     }
@@ -219,12 +200,12 @@ class VideoScrollHelper {
     }
   };
 
-  play: SetItemIdx = (idx) => {
+  private readonly play: SetItemIdx = (idx) => {
     this.setPlayingIdx(idx);
     this.playing = true;
   };
 
-  stop = (idx = this.currentPlayingIdx): void => {
+  public readonly stop = (idx = this.currentPlayingIdx): void => {
     const item = this.findItem(idx);
     if (item) {
       const newRating = this.itemRatingMap.get(item.id) + this.currentItemCount;
@@ -234,12 +215,12 @@ class VideoScrollHelper {
     this.playing = false;
   };
 
-  onPlayingIdxChange = (): void => {
+  private readonly onPlayingIdxChange = (): void => {
     this.setPlayingItem(this.currentPlayingIdx);
   };
   //-------------------------------get/set----------------------------------------//
 
-  setPlayingIdx: SetItemIdx = (idx) => {
+  private readonly setPlayingIdx: SetItemIdx = (idx) => {
     if (this.currentPlayingIdx !== idx) {
       this.currentPlayingIdx = idx;
       this.onPlayingIdxChange();
@@ -248,14 +229,17 @@ class VideoScrollHelper {
 
   //-----------------------------Utils--------------------------------------------//
 
-  isCurrentItemStillVisible = ({ top, left }: Scroll): boolean => {
+  private readonly isCurrentItemStillVisible = ({
+    top,
+    left,
+  }: Scroll): boolean => {
     const currentItemPlacement = this.findItem(this.currentPlayingIdx);
     if (!currentItemPlacement) {
       return false;
     }
     return this.isVisible(currentItemPlacement, { top, left });
   };
-  isVisible = (item: any, { top, left }: Scroll): boolean => {
+  private readonly isVisible = (item: any, { top, left }: Scroll): boolean => {
     const target = {
       offsetTop: this.scrollBase || 0,
       scrollY: top,
@@ -290,10 +274,10 @@ class VideoScrollHelper {
     }
     return visibleVertically && visibleHorizontally;
   };
-  shouldTrigger = (action: PlayTrigger): boolean => {
+  private readonly shouldTrigger = (action: PlayTrigger): boolean => {
     return this.playTrigger === action;
   };
-  findItem = (idx: number): any => {
+  public readonly findItem = (idx: number): any => {
     return this.items.find((item) => item.idx === idx);
   };
 }
