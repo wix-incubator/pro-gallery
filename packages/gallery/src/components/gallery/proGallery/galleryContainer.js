@@ -20,7 +20,7 @@ import {
 import ScrollIndicator from './galleryScrollIndicator';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
-import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper';
+import MediaScrollHelperWrapper from '../../helpers/mediaScrollHelper/mediaScrollHelperWrapper';
 import findNeighborItem from '../../helpers/layoutUtils';
 import { isGalleryInViewport, Deferred } from './galleryHelpers';
 
@@ -46,9 +46,17 @@ export class GalleryContainer extends React.Component {
     this.getIsScrollLessGallery = this.getIsScrollLessGallery.bind(this);
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
-    this.videoScrollHelper = new VideoScrollHelperWrapper(
-      this.setPlayingIdxState
-    );
+    this.mediaScrollHelper = new MediaScrollHelperWrapper([
+      {
+        getPlayTrigger: (options) =>
+          options.behaviourParams_item_video_playTrigger,
+        onSetPlayingIdx: this.setPlayingIdxState,
+        supportedItemsFilter: (item) =>
+          item.type === 'video' ||
+          (item.type === 'image' &&
+            (item.id.includes('_placeholder') || item.isVideoPlaceholder)),
+      },
+    ]);
     const initialState = {
       scrollPosition: {
         top: 0,
@@ -144,7 +152,7 @@ export class GalleryContainer extends React.Component {
     this.getMoreItemsIfScrollIsDisabled(height, viewportHeight);
     this.handleNewGalleryStructure();
     this.eventsListener(GALLERY_CONSTS.events.APP_LOADED, {});
-    this.videoScrollHelper.initializePlayState();
+    this.mediaScrollHelper.initializePlayState();
 
     try {
       if (typeof window.CustomEvent === 'function') {
@@ -231,10 +239,8 @@ export class GalleryContainer extends React.Component {
   }
 
   handleNavigation(isInDisplay) {
-    if (isInDisplay) {
-      this.videoScrollHelper.trigger.INIT_SCROLL();
-    } else {
-      this.videoScrollHelper.stop();
+    if (!isInDisplay) {
+      this.mediaScrollHelper.stop();
     }
   }
 
@@ -390,22 +396,18 @@ export class GalleryContainer extends React.Component {
         container: container,
       });
     }
+    /**
+     * @type {import('../../helpers/scrollHelper/types').ScrollHelperGalleryData}
+     */
     const scrollHelperNewGalleryStructure = {
       galleryStructure: this.galleryStructure,
       galleryWidth: container.galleryWidth,
       scrollBase: container.scrollBase,
-      videoPlayTrigger:
-        options[optionsMap.behaviourParams.item.video.playTrigger],
-      videoLoop: options[optionsMap.behaviourParams.item.video.loop],
-      scrollDirection:
-        options[optionsMap.layoutParams.structure.scrollDirection],
-      cb: this.setPlayingIdxState,
+      options: options,
     };
 
-    this.videoScrollHelper.updateGalleryStructure(
-      scrollHelperNewGalleryStructure,
-      !utils.isSSR(),
-      items
+    this.mediaScrollHelper.updateGalleryStructure(
+      scrollHelperNewGalleryStructure
     );
 
     const layoutParams = {
@@ -785,7 +787,7 @@ export class GalleryContainer extends React.Component {
   }
 
   eventsListener(eventName, eventData, event) {
-    this.videoScrollHelper.handleEvent({
+    this.mediaScrollHelper.handleEvent({
       eventName,
       eventData,
     });
@@ -815,7 +817,7 @@ export class GalleryContainer extends React.Component {
     }
 
     if (eventName === GALLERY_CONSTS.events.GALLERY_SCROLLED) {
-      this.videoScrollHelper.trigger.SCROLL(eventData);
+      this.mediaScrollHelper.onScroll(eventData);
       const newScrollPosition = {
         ...this.state.scrollPosition,
         ...eventData,
