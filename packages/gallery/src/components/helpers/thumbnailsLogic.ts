@@ -123,12 +123,17 @@ export function getThumbnailsData({
     ? utils.sliceArrayWithRange(galleryItems, itemRangeStart, itemRangeEnd)
     : utils.sliceArrayIfAvailable(galleryItems, itemRangeStart, itemRangeEnd);
 
+  const distanceBetweenGallery =
+    options[optionsMap.layoutParams.thumbnails.distanceBetweenGallery];
+  console.log('distanceBetweenGallery', distanceBetweenGallery);
   const thumbnailsStyle = getThumbnailsStyles({
     horizontalThumbnails,
     width,
     height,
     thumbnailSizeWithSpacing,
     activeIndex: activeIndexWithOffset,
+    thumbnailAlignment,
+    distanceBetweenGallery,
   });
 
   const thumbnailsStyleWithRTLCalc = isRTL
@@ -207,23 +212,48 @@ function getNumberOfThumbnails({
   }
 }
 
+function getMarginDirection({
+  thumbnailAlignment,
+}: {
+  thumbnailAlignment: string;
+}) {
+  switch (thumbnailAlignment) {
+    case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP:
+      return 'marginBottom';
+    case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM:
+      return 'marginTop';
+    case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT:
+      return 'marginRight';
+    case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].RIGHT:
+      return 'marginLeft';
+    default:
+      throw new Error('unknown thumbnail alignment');
+  }
+}
+
 function getThumbnailsStyles({
   horizontalThumbnails,
   width,
   height,
   activeIndex,
   thumbnailSizeWithSpacing,
+  thumbnailAlignment,
+  distanceBetweenGallery,
 }: {
   horizontalThumbnails: boolean;
   width: number;
   height: number;
   activeIndex: number;
   thumbnailSizeWithSpacing: number;
+  thumbnailAlignment: string;
+  distanceBetweenGallery: number;
 }): CSSProperties {
+  const marginKey = getMarginDirection({ thumbnailAlignment });
   const baseStyle = {
     overflow: 'visible',
     width,
     height,
+    [marginKey]: `${distanceBetweenGallery}px`,
   };
   const size = horizontalThumbnails ? width : height;
   const unit = horizontalThumbnails ? 'left' : 'top';
