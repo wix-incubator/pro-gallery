@@ -406,7 +406,6 @@ export class GalleryContainer extends React.Component {
       galleryWidth: container.galleryWidth,
       scrollBase: container.scrollBase,
       options: options,
-      setPlayingIdxState: this.setPlayingIdxState,
     };
 
     this.videoScrollHelper.updateGalleryStructure(

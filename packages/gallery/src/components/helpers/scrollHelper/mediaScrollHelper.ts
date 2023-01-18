@@ -250,6 +250,9 @@ class VideoScrollHelper {
 
   isCurrentItemStillVisible = ({ top, left }: Scroll): boolean => {
     const currentItemPlacement = this.findItem(this.currentPlayingIdx);
+    if (!currentItemPlacement) {
+      return false;
+    }
     return this.isVisible(currentItemPlacement, { top, left });
   };
   isVisible = (item: any, { top, left }: Scroll): boolean => {
