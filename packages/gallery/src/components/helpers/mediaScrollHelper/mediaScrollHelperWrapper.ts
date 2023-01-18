@@ -65,7 +65,7 @@ class MediaScrollHelper {
       return;
     }
     this.scrollHelperPromise = import(
-      /* webpackChunkName: "proGallery_videoScrollHelper" */ './mediaScrollHelper.js'
+      /* webpackChunkName: "proGallery_videoScrollHelper" */ './mediaScrollHelper'
     )
       .then(({ default: VideoScrollHelper }) => {
         for (const config of this.config) {
