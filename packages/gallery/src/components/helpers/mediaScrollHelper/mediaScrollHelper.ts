@@ -7,7 +7,7 @@ import {
 import {
   isWithinPaddingVertically,
   isWithinPaddingHorizontally,
-} from './scrollHelper.js';
+} from './utils.js';
 import {
   SetItemIdx,
   UpdateGalleryData,
@@ -15,7 +15,7 @@ import {
   Scroll,
   HandleEvents,
   GetPlayTrigger,
-} from './types';
+} from './types.js';
 
 const VIDEO_EVENTS = {
   SCROLL: 'SCROLL',
