@@ -18,19 +18,18 @@ import {
 } from './types.js';
 
 class VideoScrollHelper {
-  scrollBase = 0;
-  items: any[] = [];
-  currentPlayingIdx = -1;
-  currentItemCount = 0;
-  playing = false;
-  playTrigger?: PlayTrigger;
-  scrollDirection?: string;
-  lastVideoPlayed = -1;
-  itemRatingMap = new Map();
-  galleryWidth?: number;
-  videoLoop?: boolean;
-  top!: number;
-  left!: number;
+  private scrollBase = 0;
+  private items: any[] = [];
+  private currentPlayingIdx = -1;
+  private currentItemCount = 0;
+  private playTrigger?: PlayTrigger;
+  private scrollDirection?: string;
+  private lastVideoPlayed = -1;
+  private readonly itemRatingMap = new Map();
+  private galleryWidth?: number;
+  private videoLoop?: boolean;
+  private top!: number;
+  private left!: number;
   constructor(
     public setPlayingItem: SetItemIdx,
     public readonly isItemSupported: (item: any) => boolean,
@@ -202,7 +201,6 @@ class VideoScrollHelper {
 
   private readonly play: SetItemIdx = (idx) => {
     this.setPlayingIdx(idx);
-    this.playing = true;
   };
 
   public readonly stop = (idx = this.currentPlayingIdx): void => {
@@ -212,7 +210,6 @@ class VideoScrollHelper {
       this.itemRatingMap.set(item.id, newRating);
     }
     this.setPlayingIdx(-1);
-    this.playing = false;
   };
 
   private readonly onPlayingIdxChange = (): void => {
