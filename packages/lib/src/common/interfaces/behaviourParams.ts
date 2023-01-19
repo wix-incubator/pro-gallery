@@ -45,6 +45,8 @@ export interface Video {
   enablePlaceholder?: boolean;
 }
 
+export type PlayTrigger = 'CLICK' | 'HOVER' | 'AUTO';
+
 export interface Overlay {
   hoveringBehaviour?: 'APPEARS' | 'DISAPPEARS' | 'ALWAYS_SHOW' | 'NEVER_SHOW';
   hoverAnimation?:
