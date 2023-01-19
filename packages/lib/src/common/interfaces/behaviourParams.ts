@@ -33,6 +33,7 @@ export interface SecondaryMedia {
   trigger: 'OFF' | 'HOVER';
   behaviour: 'APPEARS';
 }
+
 export interface Video {
   speed?: number;
   volume?: number;

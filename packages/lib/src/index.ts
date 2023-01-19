@@ -55,6 +55,7 @@ export { Structure } from './common/interfaces/Structure';
 export { GalleryProps, GalleryState } from './common/interfaces/galleryTypes';
 export { Options as NestedOptions } from './common/interfaces/options';
 export { FlattenOptions as Options } from './common/interfaces/flatten';
+export { PlayTrigger } from './common/interfaces/behaviourParams';
+export { Settings } from './common/interfaces/Settings';
 export { GalleryRendererProps } from './common/interfaces/galleryRendererTypes';
 export { VirtualizationSettings } from './common/interfaces/virtualization';
-export { PlayTrigger } from './common/interfaces/behaviourParams';
