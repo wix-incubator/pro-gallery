@@ -55,7 +55,7 @@ class ItemView extends React.Component {
     this.onItemClick = this.onItemClick.bind(this);
     this.onItemWrapperClick = this.onItemWrapperClick.bind(this);
     this.onItemInfoClick = this.onItemInfoClick.bind(this);
-    this.onContainerKeyDown = this.onContainerKeyDown.bind(this);
+    this.onContainerKeyUp = this.onContainerKeyUp.bind(this);
     this.onAnchorKeyDown = this.onAnchorKeyDown.bind(this);
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
     this.handleItemMouseUp = this.handleItemMouseUp.bind(this);
@@ -136,7 +136,7 @@ class ItemView extends React.Component {
     );
   }
 
-  onContainerKeyDown(e) {
+  onContainerKeyUp(e) {
     const clickTarget = 'item-container';
     switch (e.keyCode || e.charCode) {
       case 32: //space
@@ -153,7 +153,7 @@ class ItemView extends React.Component {
   }
 
   onAnchorKeyDown(e) {
-    // Similar to "onContainerKeyDown()" expect 'shouldUseDirectLink()' part, because we are already on the <a> tag (this.itemAnchor)
+    // Similar to "onContainerKeyUp()" expect 'shouldUseDirectLink()' part, because we are already on the <a> tag (this.itemAnchor)
     const clickTarget = 'item-container';
     switch (e.keyCode || e.charCode) {
       case 32: //space
@@ -421,7 +421,7 @@ class ItemView extends React.Component {
   getImageItem(imageDimensions) {
     const props = utils.pick(this.props, [
       'gotFirstScrollEvent',
-      'calculatedAlt',
+      'alt',
       'title',
       'description',
       'id',
@@ -890,12 +890,12 @@ class ItemView extends React.Component {
   }
 
   getItemAriaLabel() {
-    const { type, calculatedAlt, htmlContent, options } = this.props;
+    const { type, alt, htmlContent, options } = this.props;
     const mapTypeToLabel = {
       dummy: '',
       text: htmlContent,
-      video: calculatedAlt || 'Untitled video',
-      image: calculatedAlt || 'Untitled image',
+      video: alt || 'Untitled video',
+      image: alt || 'Untitled image',
     };
     const label = mapTypeToLabel[type];
     return label + (options.isStoreGallery ? ', Buy Now' : '');
@@ -1103,7 +1103,7 @@ class ItemView extends React.Component {
         onMouseLeave={this.onMouseLeave}
         onFocus={this.onFocus}
         onBlur={this.onBlur} // The onblur event is the opposite of the onfocus event.
-        onKeyDown={this.onContainerKeyDown}
+        onKeyUp={this.onContainerKeyUp}
         tabIndex={this.getItemContainerTabIndex()}
         aria-label={this.getItemAriaLabel()}
         data-hash={hash}

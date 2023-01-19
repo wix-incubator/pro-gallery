@@ -113,9 +113,7 @@ describe('Item View', () => {
           GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       });
       driver.mount(ItemView, sampleItemViewProps);
-      expect(driver.find.selector('.video-item .image-item').length).to.equal(
-        1
-      );
+      expect(driver.find.selector('.video-item.image-item').length).to.equal(1);
     });
   });
   //compunentDidUpdate not tested

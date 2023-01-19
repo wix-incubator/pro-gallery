@@ -129,7 +129,6 @@ class GalleryItem {
       isVideoPlaceholder: this.isVideoPlaceholder,
       url: this.url,
       alt: this.alt,
-      calculatedAlt: this.calculatedAlt,
       htmlContent: this.htmlContent,
       directLink: this.directLink,
       directShareLink: this.directShareLink,
@@ -711,22 +710,12 @@ class GalleryItem {
     );
   }
 
-  get calculatedAlt() {
-    return (
-      (utils.isMeaningfulString(this.alt) && this.alt) ||
-      this.title ||
-      this.description ||
-      this.fileName ||
-      ''
-    );
-  }
-
   get htmlContent() {
     return this.html?.replace(/<[^<>]*>/g, '').trim();
   }
 
   get alt() {
-    return this.metadata.alt || '';
+    return utils.isMeaningfulString(this.metadata.alt) || '';
   }
 
   set alt(value) {

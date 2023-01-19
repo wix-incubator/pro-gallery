@@ -65,7 +65,6 @@ export interface Controls {
   enablePan?: boolean;
   enableAutoRotate?: boolean;
 }
-
 export interface Overlay {
   hoveringBehaviour?: 'APPEARS' | 'DISAPPEARS' | 'ALWAYS_SHOW' | 'NEVER_SHOW';
   hoverAnimation?:

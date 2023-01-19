@@ -62,4 +62,3 @@ export {
 export { Settings } from './common/interfaces/Settings';
 export { GalleryRendererProps } from './common/interfaces/galleryRendererTypes';
 export { VirtualizationSettings } from './common/interfaces/virtualization';
-export { PlayTrigger } from './common/interfaces/behaviourParams';
