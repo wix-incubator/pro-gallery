@@ -34,7 +34,6 @@ export interface SecondaryMedia {
   behaviour: 'APPEARS';
 }
 
-export type PlayTrigger = 'CLICK' | 'HOVER' | 'AUTO';
 export interface Video {
   speed?: number;
   volume?: number;
