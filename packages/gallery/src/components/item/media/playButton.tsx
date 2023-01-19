@@ -15,14 +15,14 @@ export const VideoPlayButton = (): JSX.Element => (
       data-hook="play-triangle"
       className={'gallery-item-video-play-triangle play-triangle '}
     >
-      <PlayTriangle size={undefined} />
+      <PlayTriangle />
     </i>
     <i
       key="play-bg"
       data-hook="play-background"
       className={'gallery-item-video-play-background play-background '}
     >
-      <PlayBackground size={undefined} />
+      <PlayBackground />
     </i>
   </clickable.div>
 );
