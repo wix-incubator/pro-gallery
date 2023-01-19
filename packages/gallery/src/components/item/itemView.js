@@ -479,7 +479,7 @@ class ItemView extends React.Component {
         key="3dItem"
         imageDimensions={imageDimensions}
         itemContainer={this.itemContainer}
-        shouldPlay={this.props.idx === this.props.playingVideoIdx}
+        shouldPlay={this.props.idx === this.props.playing3DIdx}
         actions={{
           ...this.props.actions,
           setItemLoaded: this.setItemLoaded,

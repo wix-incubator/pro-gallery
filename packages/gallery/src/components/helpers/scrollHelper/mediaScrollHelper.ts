@@ -109,6 +109,9 @@ class VideoScrollHelper {
         break;
       case VIDEO_EVENTS.INIT_SCROLL:
         break;
+      case GALLERY_CONSTS.events.THREE_D_CLICK:
+        this.itemClicked(eventData.idx);
+        break;
       default:
     }
   };
@@ -231,7 +234,7 @@ class VideoScrollHelper {
       this.itemRatingMap.set(item.id, newRating);
     }
     this.setPlayingIdx(-1);
-    this.playing = false;
+    this.playing = true;
   };
 
   onPlayingIdxChange = (): void => {

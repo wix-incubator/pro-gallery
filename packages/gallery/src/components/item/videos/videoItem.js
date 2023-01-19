@@ -115,8 +115,8 @@ class VideoItem extends React.Component {
 
   playVideoIfNeeded(props = this.props) {
     try {
-      const { playingVideoIdx } = props;
-      if (playingVideoIdx === this.props.idx && !this.isPlaying) {
+      const { shouldPlay } = props;
+      if (shouldPlay && !this.isPlaying) {
         this.videoElement =
           this.videoElement ||
           window.document.querySelector(`#video-${this.props.id} video`);

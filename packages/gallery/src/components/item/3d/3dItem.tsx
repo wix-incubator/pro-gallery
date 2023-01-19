@@ -31,13 +31,14 @@ export default function ThreeDItem(props: ThreeDImplementation): JSX.Element {
         ].join(' '),
         overlay: !props.shouldPlay && (
           <VideoPlayButton
-            onClick={(e) =>
+            onMouseDown={(e) => {
+              e.stopPropagation();
               props.actions.eventsListener(
-                GALLERY_CONSTS.events.ITEM_CLICKED,
-                { ...props, clickTarget: 'item-media' },
-                e
-              )
-            }
+                GALLERY_CONSTS.events.THREE_D_CLICK,
+                { idx: props.idx, id: props.id },
+                props.idx
+              );
+            }}
           />
         ),
       })}

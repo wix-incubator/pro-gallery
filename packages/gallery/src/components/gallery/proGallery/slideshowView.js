@@ -693,6 +693,7 @@ class SlideshowView extends React.Component {
       galleryId: this.props.id,
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,
       playingVideoIdx: this.props.playingVideoIdx,
+      playing3DIdx: this.props.playing3DIdx,
       noFollowForSEO: this.props.noFollowForSEO,
       isPrerenderMode: this.props.isPrerenderMode,
       firstUserInteractionExecuted: this.props.firstUserInteractionExecuted,
