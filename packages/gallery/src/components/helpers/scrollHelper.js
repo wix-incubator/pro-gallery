@@ -228,13 +228,9 @@ function horizontalCssScrollTo({
       transition: `transform ${duration}ms ${slideTransition}`,
       '-webkit-transition': `transform ${duration}ms ${slideTransition}`,
     },
-    isRTL
-      ? {
-          transform: `translateX(${change}px)`,
-        }
-      : {
-          transform: `translateX(${-1 * change}px)`,
-        }
+    {
+      transform: `translateX(${-1 * change}px)`,
+    }
   );
 
   const intervals = 10;
