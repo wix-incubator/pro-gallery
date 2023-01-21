@@ -24,7 +24,6 @@ export type MediaBaseProps = {
   customComponents: any;
   shouldPlay: boolean;
   imageDimensions: any;
-  playTrigger: PlayTrigger;
   hasLink: boolean;
   placeholderExtraClasses: string[];
   showPlayButton: boolean;
