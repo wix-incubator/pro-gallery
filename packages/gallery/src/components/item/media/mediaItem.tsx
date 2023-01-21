@@ -50,14 +50,16 @@ export default function MediaItem<T extends Record<string, any>>(
 ): JSX.Element {
   const {
     hasLink,
-    playTrigger,
     options,
     imageDimensions,
     showPlayButton,
     MediaImplementation,
     enableImagePlaceholder,
   } = props;
-  const { behaviourParams_item_clickAction: clickAction } = options;
+  const {
+    behaviourParams_item_clickAction: clickAction,
+    behaviourParams_item_video_playTrigger: playTrigger,
+  } = options;
 
   const isMediaPlayable = useMemo(() => {
     if (
