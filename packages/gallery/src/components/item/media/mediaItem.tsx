@@ -2,7 +2,7 @@
 import React, { useMemo } from 'react';
 import { optionsMap, GALLERY_CONSTS, isEditMode } from 'pro-gallery-lib';
 import { VideoPlayButton } from './playButton';
-import { Options, Settings, PlayTrigger } from 'pro-gallery-lib';
+import { Options, Settings } from 'pro-gallery-lib';
 import ImageItem from '../imageItem';
 
 export type MediaBaseProps = {
