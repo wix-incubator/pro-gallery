@@ -403,7 +403,7 @@ export class GalleryContainer extends React.Component {
       });
     }
     /**
-     * @type {import('../../helpers/scrollHelper/types').ScrollHelperGalleryData}
+     * @type {import('../../helpers/mediaScrollHelper/types').ScrollHelperGalleryData}
      */
     const scrollHelperNewGalleryStructure = {
       galleryStructure: this.galleryStructure,
