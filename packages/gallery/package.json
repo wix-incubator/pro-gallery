@@ -94,6 +94,9 @@
     ],
     "setupFilesAfterEnv": [
       "<rootDir>/tests/drivers/mocks/jest-setup.js"
+    ],
+    "transformIgnorePatterns": [
+      "./tests/e2e/integration/rce.e2e.spec.js"
     ]
   }
 }
