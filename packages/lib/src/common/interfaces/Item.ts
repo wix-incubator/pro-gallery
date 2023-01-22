@@ -1,5 +1,5 @@
 /* eslint-disable */
-export type Item = PhotoItem | VideoItem | TextItem;
+export type Item = PhotoItem | VideoItem | TextItem | Object3DItem;
 
 export interface PhotoItem extends GenericItem {
   [key: string]: any;
@@ -16,6 +16,11 @@ export interface VideoItem extends GenericItem {
 export interface TextItem extends GenericItem {
   [key: string]: any;
   // metadata: TextMetadata;
+}
+
+export interface Object3DItem extends GenericItem {
+  [key: string]: any;
+  // metadata: Object3DMetadata;
 }
 
 export interface GenericItem {
@@ -67,6 +72,13 @@ export interface GenericItem {
 //   };
 //   fontPickerStyleParamName?: any; // not in use in PG core
 // }
+//
+/// interface Object3DMetadata extends GenericMetadata {
+//   type: string;
+//   url: string;
+//   focalPoint?: [number, number];
+//  scene?: ThreeDimensionalScene;
+//}
 //
 // interface GenericMetadata {
 //   height: number;
