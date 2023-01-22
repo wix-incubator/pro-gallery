@@ -72,8 +72,8 @@
     "sass": "^1.29.0",
     "sinon": "^6.0.0",
     "ts-jest": "^26.4.4",
-    "tslib": "2.4.1",
-    "typescript": "4.4.2"
+    "tslib": "^2.1.0",
+    "typescript": "4.2.4"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -94,9 +94,6 @@
     ],
     "setupFilesAfterEnv": [
       "<rootDir>/tests/drivers/mocks/jest-setup.js"
-    ],
-    "transformIgnorePatterns": [
-      "./tests/e2e/integration/rce.e2e.spec.js"
     ]
   }
 }
