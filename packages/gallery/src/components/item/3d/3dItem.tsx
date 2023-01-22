@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ThreeDImplementation } from './types';
 import { use3DItem } from './hooks';
 import { VideoPlayButton } from '../media/playButton';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
 
 export default function ThreeDItem(props: ThreeDImplementation): JSX.Element {
   const { canvasRef, isLoaded } = use3DItem(props);
@@ -21,6 +20,8 @@ export default function ThreeDItem(props: ThreeDImplementation): JSX.Element {
     />
   );
 
+  useOrbitControlsClickPropagation(props);
+
   return (
     <>
       {canvas}
@@ -29,20 +30,28 @@ export default function ThreeDItem(props: ThreeDImplementation): JSX.Element {
           props.placeholderExtraClasses,
           isLoaded ? 'three-d-loaded' : 'three-d-loading',
         ].join(' '),
-        overlay: !props.shouldPlay && (
-          <VideoPlayButton
-            onMouseDown={(e) => {
-              e.stopPropagation();
-              props.actions.eventsListener(
-                GALLERY_CONSTS.events.THREE_D_CLICK,
-                { idx: props.idx, id: props.id },
-                props.idx
-              );
-            }}
-          />
-        ),
+        overlay: !props.shouldPlay && <VideoPlayButton />,
       })}
       {props.hover}
     </>
   );
+}
+function useOrbitControlsClickPropagation(props: ThreeDImplementation) {
+  useEffect(() => {
+    const container = props.itemContainer.current;
+    if (!props.shouldPlay && container) {
+      const onMouseDown = (e: MouseEvent) => {
+        e.stopImmediatePropagation();
+        const itemWrapper = container.querySelector<HTMLDivElement>(
+          '.gallery-item-wrapper'
+        );
+        if (itemWrapper) {
+          itemWrapper.click();
+        }
+      };
+      container.addEventListener('mousedown', onMouseDown);
+      return () => container.removeEventListener('mousedown', onMouseDown);
+    }
+    return;
+  }, [props.shouldPlay]);
 }
