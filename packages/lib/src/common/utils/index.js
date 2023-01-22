@@ -736,16 +736,6 @@ class Utils {
     return !!str.trim().length;
   }
 
-  singleInstance(fun) {
-    let instance;
-    return (...args) => {
-      if (!instance) {
-        instance = fun(...args);
-      }
-      return instance;
-    };
-  }
-
   isHeightSetByGallery(options) {
     return (
       options[optionsMap.layoutParams.structure.scrollDirection] ===
