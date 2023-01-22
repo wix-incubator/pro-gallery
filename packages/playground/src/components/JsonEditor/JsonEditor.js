@@ -15,7 +15,7 @@ import {
   Button,
   Divider,
 } from 'antd';
-import {INPUT_TYPES, isInPreset, optionsMap, GALLERY_CONSTS} from 'pro-gallery-lib';
+import {INPUT_TYPES, isInPreset, optionsMap} from 'pro-gallery-lib';
 import ColorPicker from '../ColorPicker/ColorPicker';
 import { settingsManager } from '../../constants/settings';
 
@@ -163,29 +163,6 @@ class JsonEditor extends React.Component {
             {settings.text}
           </Button>
         )
-        case INPUT_TYPES.TRANSFORM:
-          // format x{number}y{number}z{number}
-          const transform = GALLERY_CONSTS.parse3DDimensions(theValue);
-          return (
-            <Row>
-              {['x', 'y', 'z'].map((axis, i) => (
-                <Col span={8} key={i}>
-                  {axis} :
-                  <InputNumber
-                    min={settings.min}
-                    max={settings.max}
-                    step={settings.step || 1}
-                    value={transform[axis]}
-                    onChange={val => {
-                      transform[axis] = val;
-                      this.onFieldChanged(key, `x${transform.x}y${transform.y}z${transform.z}`);
-                    }}
-                    style={{ marginLeft: 5, width: 50 }}
-                  />
-                </Col>
-              ))}
-            </Row>
-          );
       case INPUT_TYPES.TEXT:
       default:
         return (
