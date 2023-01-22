@@ -847,12 +847,6 @@ export class GalleryContainer extends React.Component {
       } else {
         //more items can be fetched from the server
         //TODO - add support for horizontal galleries
-        const isRTL =
-          this.state.options[
-            optionsMap.behaviourParams.gallery.layoutDirection
-          ] ===
-          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-            .RIGHT_TO_LEFT;
         const scrollDirection =
           this.state.options[optionsMap.layoutParams.structure.scrollDirection];
         const galleryEnd =
@@ -876,12 +870,7 @@ export class GalleryContainer extends React.Component {
               ? 'innerWidth'
               : 'innerHeight'
           ];
-        const scrollEnd =
-          scrollDirection ===
-            GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-              .HORIZONTAL && isRTL
-            ? scrollPos - galleryEnd + screenSize
-            : scrollPos + screenSize;
+        const scrollEnd = scrollPos + screenSize;
         const getItemsDistance = scrollPos ? 3 * screenSize : 0; //first scrollPos is 0 falsy. dont load before a scroll happened.
 
         if (galleryEnd < getItemsDistance + scrollEnd) {
