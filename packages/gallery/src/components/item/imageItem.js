@@ -61,7 +61,7 @@ class ImageItem extends React.Component {
     return imageContainerClassNames;
   }
 
-  getImageContainer(imageRenderer, classNames, extraNodes, extraProps = {}) {
+  getImageContainer(imageRenderer, classNames, extraNodes) {
     const { imageDimensions, id, actions } = this.props;
 
     return (
@@ -72,9 +72,8 @@ class ImageItem extends React.Component {
         key={'image_container-' + id}
         data-hook={'image-item'}
         style={imageDimensions}
-        {...extraProps}
       >
-        {imageRenderer?.()}
+        {imageRenderer()}
         {extraNodes}
       </div>
     );
@@ -120,7 +119,7 @@ class ImageItem extends React.Component {
     );
   }
 
-  get imageElement() {
+  getImageElement() {
     const {
       alt,
       imageDimensions,
@@ -255,20 +254,13 @@ class ImageItem extends React.Component {
     return image;
   }
 
-  get animationOverlay() {
-    return this.props.overlay || this.getImageAnimationOverlay();
-  }
-
-  get containerClassNames() {
-    return `${this.getImageContainerClassNames()} ${
+  render() {
+    const imageRenderer = this.getImageElement();
+    const imageContainerClassNames = `${this.getImageContainerClassNames()} ${
       this.props.extraClasses || ''
     }`;
-  }
-
-  render() {
-    const imageRenderer = this.imageElement;
-    const imageContainerClassNames = this.containerClassNames;
-    const animationOverlay = this.animationOverlay;
+    const animationOverlay =
+      this.props.overlay || this.getImageAnimationOverlay();
 
     const renderedItem = this.getImageContainer(
       imageRenderer,

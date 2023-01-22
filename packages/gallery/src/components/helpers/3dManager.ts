@@ -71,6 +71,24 @@ interface ManagerInstance {
 
 const GLOBAL_LOADING_MANAGER = new LoadingManager();
 
+const DEFAULT_OPTIONS = {
+  SUN_LIGHT_COLOR: 0xffffff,
+  SUN_LIGHT_INTENSITY: 0.2,
+  SUN_POSITION: [0.5, 0, 0.866] as const,
+  AMBIENT_LIGHT_COLOR: 0xffffff,
+  AMBIENT_LIGHT_INTENSITY: 0.2,
+  DIRECTIONAL_LIGHT_COLOR: 0xffffff,
+  DIRECTIONAL_LIGHT_INTENSITY: 1,
+  CAMERA_FOV: 50,
+  CAMERA_NEAR: 0.1,
+  CAMERA_FAR: 12,
+  CAMERA_POSITION: [0, 0, 0.8] as const,
+  CAMERA_TARGET: [0, 0, 0] as const,
+  CAMERA_MIN_DISTANCE: 0.65,
+  CAMERA_MAX_DISTANCE: 1.6,
+  GROUND_OPACITY: 0.5,
+};
+
 export function createSceneManager(
   container: HTMLElement,
   canvas: HTMLCanvasElement
@@ -81,13 +99,18 @@ export function createSceneManager(
   gltfLoader.setDRACOLoader(dracoLoader);
   const width = container.clientWidth;
   const height = container.clientHeight;
-  const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 12);
+  const camera = new THREE.PerspectiveCamera(
+    DEFAULT_OPTIONS.CAMERA_FOV,
+    width / height,
+    DEFAULT_OPTIONS.CAMERA_NEAR,
+    DEFAULT_OPTIONS.CAMERA_FAR
+  );
   scene.add(camera);
   const controls = new OrbitControls(camera, container);
-  controls.target.set(0, 0, 0);
-  camera.position.set(0, 0, 0.8);
-  controls.maxDistance = 1.6;
-  controls.minDistance = 0.65;
+  controls.target.set(...DEFAULT_OPTIONS.CAMERA_TARGET);
+  camera.position.set(...DEFAULT_OPTIONS.CAMERA_POSITION);
+  controls.maxDistance = DEFAULT_OPTIONS.CAMERA_MAX_DISTANCE;
+  controls.minDistance = DEFAULT_OPTIONS.CAMERA_MIN_DISTANCE;
   const initRenderer = () => {
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -172,7 +195,10 @@ export function createSceneManager(
           }
         });
       },
-      addByDirectionalLights(intensity = 1, color = 0xffffff) {
+      addByDirectionalLights(
+        intensity = DEFAULT_OPTIONS.DIRECTIONAL_LIGHT_INTENSITY,
+        color = DEFAULT_OPTIONS.DIRECTIONAL_LIGHT_COLOR
+      ) {
         const light = new THREE.DirectionalLight(color, intensity);
         const lightBack = new THREE.DirectionalLight(color, intensity);
         light.position.set(0, 0, 2);
@@ -186,9 +212,12 @@ export function createSceneManager(
           },
         };
       },
-      sun(intensity = 0.2, color = 0xffffff) {
+      sun(
+        intensity = DEFAULT_OPTIONS.DIRECTIONAL_LIGHT_INTENSITY,
+        color = DEFAULT_OPTIONS.DIRECTIONAL_LIGHT_COLOR
+      ) {
         const light = new THREE.DirectionalLight(color, intensity);
-        light.position.set(0.5, 0, 0.866); //from https://github.com/donmccurdy/three-gltf-viewer/blob/main/src/viewer.js#L430
+        light.position.set(...DEFAULT_OPTIONS.SUN_POSITION); //from https://github.com/donmccurdy/three-gltf-viewer/blob/main/src/viewer.js#L430
         camera.add(light);
         return {
           remove() {
@@ -196,7 +225,10 @@ export function createSceneManager(
           },
         };
       },
-      addAmbientLight(intensity = 0.2, color = 0xffffff) {
+      addAmbientLight(
+        intensity = DEFAULT_OPTIONS.AMBIENT_LIGHT_INTENSITY,
+        color = DEFAULT_OPTIONS.AMBIENT_LIGHT_COLOR
+      ) {
         const light = new THREE.AmbientLight(color, intensity);
         camera.add(light);
         return {
@@ -240,39 +272,6 @@ export function createSceneManager(
           manualPosition
         );
         mixers.push(mixer);
-
-        // if (model) {
-        //   scene.remove(model);
-        // }
-        // model = gltf.scene;
-        // model.scale.set(0.1, 0.1, 0.1);
-        // let modelMesh: THREE.Mesh | undefined;
-        // model.traverse((child) => {
-        //   if (!modelMesh && child instanceof THREE.Mesh) {
-        //     modelMesh = child;
-        //   }
-        // });
-        // if (modelMesh) {
-        //   const center = modelMesh.geometry.boundingBox?.getSize(
-        //     new THREE.Vector3()
-        //   );
-        //   if (center) {
-        //     model.position.y = (-center.y / 2) * model.scale.y;
-        //   }
-        // }
-
-        // // shadow
-        // model.traverse((child) => {
-        //   if (child instanceof THREE.Mesh) {
-        //     child.castShadow = true;
-        //     child.receiveShadow = true;
-        //     (child.geometry as THREE.BufferGeometry).computeVertexNormals();
-        //   }
-        // });
-        // model.castShadow = true;
-        // model.receiveShadow = true;
-        // scene.add(model);
-        // modelBasePosition = model.position.clone();
         return {
           remove() {
             if (model) {
@@ -282,7 +281,7 @@ export function createSceneManager(
           punctualLights,
         };
       },
-      addGround(opacity = 0.6) {
+      addGround(opacity = DEFAULT_OPTIONS.GROUND_OPACITY) {
         const ground = new THREE.Mesh(
           new THREE.PlaneBufferGeometry(100, 100),
           new THREE.ShadowMaterial({ opacity: opacity })
@@ -309,15 +308,6 @@ export function createSceneManager(
           model.rotation.set(radX, radY, radZ);
         },
         setPosition(x, y, z) {
-          // if (!model || !modelBasePosition) {
-          //   return;
-          // }
-          // x = modelBasePosition.x + (x ?? 0) / 100;
-          // y = modelBasePosition.y + (y ?? 0) / 100;
-          // z = modelBasePosition.z + (z ?? 0) / 100;
-          // model.position.x = x;
-          // model.position.y = y;
-          // model.position.z = z;
           if (!x && !y && !z) {
             return;
           }
