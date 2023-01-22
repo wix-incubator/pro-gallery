@@ -68,7 +68,7 @@ class SlideshowView extends React.Component {
         GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
           .LEFT_TO_RIGHT,
       hideRightArrow:
-        this.props.options.behaviourParams_gallery_layoutDirection ===
+        props.options.behaviourParams_gallery_layoutDirection ===
         GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
           .RIGHT_TO_LEFT,
       shouldBlockAutoSlideshow: false,

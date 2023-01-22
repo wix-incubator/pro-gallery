@@ -228,13 +228,9 @@ function horizontalCssScrollTo({
       transition: `transform ${duration}ms ${slideTransition}`,
       '-webkit-transition': `transform ${duration}ms ${slideTransition}`,
     },
-    isRTL
-      ? {
-          transform: `translateX(${change}px)`,
-        }
-      : {
-          transform: `translateX(${-1 * change}px)`,
-        }
+    {
+      transform: `translateX(${-1 * change}px)`,
+    }
   );
 
   const intervals = 10;
@@ -253,13 +249,9 @@ function horizontalCssScrollTo({
         transition: `none`,
         '-webkit-transition': `none`,
       },
-      isRTL
-        ? {
-            transform: `translateX(0px)`,
-          }
-        : {
-            transform: `translateX(0px)`,
-          }
+      {
+        transform: `translateX(0px)`,
+      }
     );
     scroller.style.removeProperty('scroll-snap-type');
     scroller.scrollLeft = to;
@@ -291,13 +283,9 @@ function animateStopScroll({ scroller, at, isRTL }) {
       transition: `none`,
       '-webkit-transition': `none`,
     },
-    isRTL
-      ? {
-          marginRight: 0,
-        }
-      : {
-          marginLeft: 0,
-        }
+    {
+      transform: `translateX(0px)`,
+    }
   );
   scroller.scrollLeft = at;
   scrollDeffered.resolve(at);
@@ -318,10 +306,10 @@ export function haltScroll({
   clearTimeout(currentScrollEndTimeout);
   const scrollerInner = scroller.firstChild;
   const computedStyle = getComputedStyle(scrollerInner);
-  let margins = isRTL
-    ? computedStyle.getPropertyValue('margin-right')
-    : computedStyle.getPropertyValue('margin-left');
-  margins = Math.round(parseInt(margins, 10));
+  let transform = computedStyle.getPropertyValue('transform');
+  var matrix = new DOMMatrix(transform);
+
+  const margins = Math.round(parseInt(matrix.m41, 10));
   from = from - margins;
 
   animateStopScroll({
