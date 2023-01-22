@@ -52,7 +52,8 @@ export interface ThreeDimensionalScene {
   playTrigger?: PlayTrigger;
 }
 
-export type Dimensions = `x${number}y${number}z${number}`;
+export type Dimensions = string;
+// due to a bug in typescript 4.1.2 - https://github.com/microsoft/TypeScript/pull/41693
 
 export interface Transform {
   rotation?: Dimensions;
