@@ -302,7 +302,7 @@ class VideoItem extends React.Component {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
-    const { videoPlaceholder, hover } = this.props;
+    const { thumbnail, hover } = this.props;
     let baseClassName = [
       'gallery-item-content',
       'gallery-item-visible',
@@ -342,7 +342,7 @@ class VideoItem extends React.Component {
     return (
       <div key={'video-and-hover-container' + this.props.idx}>
         {video}
-        {shouldCreateVideoPlaceholder(this.props.options) && videoPlaceholder}
+        {shouldCreateVideoPlaceholder(this.props.options) && thumbnail}
         {hover}
       </div>
     );
