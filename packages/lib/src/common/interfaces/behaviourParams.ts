@@ -6,6 +6,7 @@ export interface BehaviourParams {
 export interface Item {
   clickAction?: 'NOTHING' | 'LINK' | 'ACTION' | 'MAGNIFY';
   video?: Video;
+  threeDimensionalScene?: ThreeDimensionalScene;
   overlay?: Overlay;
   content?: Content;
   secondaryMedia?: SecondaryMedia;
@@ -34,6 +35,7 @@ export interface SecondaryMedia {
   behaviour: 'APPEARS';
 }
 
+export type PlayTrigger = 'CLICK' | 'HOVER' | 'AUTO';
 export interface Video {
   speed?: number;
   volume?: number;
@@ -44,8 +46,25 @@ export interface Video {
   enablePlaceholder?: boolean;
 }
 
-export type PlayTrigger = 'CLICK' | 'HOVER' | 'AUTO';
+export interface ThreeDimensionalScene {
+  transform?: Transform;
+  controls?: Controls;
+  playTrigger?: PlayTrigger;
+}
 
+export type Dimensions = `x${number}y${number}z${number}`;
+
+export interface Transform {
+  rotation?: Dimensions;
+  scale?: Dimensions;
+  position?: Dimensions;
+}
+export interface Controls {
+  enableZoom?: boolean;
+  enableRotate?: boolean;
+  enablePan?: boolean;
+  enableAutoRotate?: boolean;
+}
 export interface Overlay {
   hoveringBehaviour?: 'APPEARS' | 'DISAPPEARS' | 'ALWAYS_SHOW' | 'NEVER_SHOW';
   hoverAnimation?:
