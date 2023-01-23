@@ -8,6 +8,7 @@ import {
   optionsMap,
 } from 'pro-gallery-lib';
 import MagnifiedImage from './imageWithMagnified.js';
+import ThreeDItem from './3d/3dItemWrapper';
 import withSecondaryMedia from '../hoc/withSecondMedia.js';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
@@ -45,6 +46,8 @@ class ItemView extends React.Component {
 
     this.activeElement = '';
   }
+
+  itemContainer = React.createRef();
 
   //-------------------------------------------| INIT |--------------------------------------------//
 
@@ -295,7 +298,8 @@ class ItemView extends React.Component {
       if (
         this.props.options[optionsMap.behaviourParams.item.clickAction] ===
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING &&
-        this.props.type !== 'video'
+        this.props.type !== 'video' &&
+        this.props.type !== '3d'
       ) {
         return true;
       } else if (
@@ -325,7 +329,8 @@ class ItemView extends React.Component {
       if (
         this.props.options[optionsMap.behaviourParams.item.clickAction] ===
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING &&
-        this.props.type !== 'video'
+        this.props.type !== 'video' &&
+        this.props.type !== '3d'
       ) {
         return (
           this.props.options[
@@ -449,6 +454,61 @@ class ItemView extends React.Component {
     );
   }
 
+  get3dItem(imageDimensions, itemHover) {
+    const {
+      calculatedAlt,
+      title,
+      description,
+      id,
+      idx,
+      options,
+      createUrl,
+      createMagnifiedUrl,
+      settings,
+      isPrerenderMode,
+      isTransparent,
+      style,
+      customComponents,
+      scene,
+      activeIndex,
+      isCurrentHover,
+    } = this.props;
+
+    return (
+      <ThreeDItem
+        key="3dItem"
+        imageDimensions={imageDimensions}
+        itemContainer={this.itemContainer}
+        shouldPlay={this.props.idx === this.props.playing3DIdx}
+        actions={{
+          ...this.props.actions,
+          setItemLoaded: this.setItemLoaded,
+          handleItemMouseDown: this.handleItemMouseDown,
+          handleItemMouseUp: this.handleItemMouseUp,
+        }}
+        hasLink={this.itemHasLink()}
+        isCurrentHover={this.simulateHover()}
+        hover={itemHover}
+        activeIndex={activeIndex}
+        calculatedAlt={calculatedAlt}
+        createMagnifiedUrl={createMagnifiedUrl}
+        createUrl={createUrl}
+        customComponents={customComponents}
+        title={title}
+        description={description}
+        id={id}
+        idx={idx}
+        isPrerenderMode={isPrerenderMode}
+        isTransparent={isTransparent}
+        options={options}
+        scene={scene}
+        style={style}
+        settings={settings}
+        isCurrentHover={isCurrentHover}
+      />
+    );
+  }
+
   getVideoItem(imageDimensions, itemHover) {
     return (
       <VideoItemWrapper
@@ -524,6 +584,9 @@ class ItemView extends React.Component {
         break;
       case 'text':
         itemInner = [this.getTextItem(itemStyles), itemHover];
+        break;
+      case '3d':
+        itemInner = this.get3dItem(itemStyles, itemHover);
         break;
       case 'image':
       case 'picture':
@@ -985,7 +1048,7 @@ class ItemView extends React.Component {
     changeActiveElementIfNeeded({
       prevProps,
       currentProps: this.props,
-      itemContainer: this.itemContainer,
+      itemContainer: this.itemContainer.current,
     });
   }
 
@@ -1042,7 +1105,7 @@ class ItemView extends React.Component {
         className={this.getItemContainerClass()}
         onContextMenu={(e) => this.onContextMenu(e)}
         id={cssScrollHelper.getSellectorDomId(this.props)}
-        ref={(e) => (this.itemContainer = e)}
+        ref={this.itemContainer}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         onFocus={this.onFocus}

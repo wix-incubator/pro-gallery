@@ -459,7 +459,22 @@ div.pro-gallery {
             background-size: contain;
           }
         }
-
+        &.gallery-item-3d-placeholder {
+          &.three-d-loaded {
+            img {
+              opacity: 0;
+              pointer-events: none;
+            }
+          }
+          &.three-d-loading {
+            img {
+              opacity: 1;
+            }
+          }
+          img {
+            transition: opacity .2s ease;
+          }
+        }
         &.gallery-item-video {
           overflow: hidden;
           text-align: center; //for grid crop
@@ -468,20 +483,21 @@ div.pro-gallery {
             left: 0;
             top: 0;
           }
+          &.playedOnce {
+            ~ .image-item {
+              pointer-events: none;
+              opacity: 0;
+              transition: opacity .2s ease;
+            }
+          }
+        }
+        &.gallery-item-video, &.gallery-item-3d-placeholder {
 
           &.playing {
 
             button,
             i {
               display: none;
-            }
-          }
-
-          &.playedOnce {
-            ~ .image-item {
-              pointer-events: none;
-              opacity: 0;
-              transition: opacity .2s ease;
             }
           }
 

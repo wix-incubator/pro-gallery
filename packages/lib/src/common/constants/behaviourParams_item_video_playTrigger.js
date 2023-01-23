@@ -1,6 +1,0 @@
-const VIDEO_PLAY_TRIGGER = {
-  HOVER: 'HOVER',
-  AUTO: 'AUTO',
-  CLICK: 'CLICK',
-};
-export default VIDEO_PLAY_TRIGGER;

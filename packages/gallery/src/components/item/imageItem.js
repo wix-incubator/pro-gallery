@@ -8,7 +8,6 @@ class ImageItem extends React.Component {
     this.getImageContainer = this.getImageContainer.bind(this);
     this.getImageContainerClassNames =
       this.getImageContainerClassNames.bind(this);
-    this.getImageElement = this.getImageElement.bind(this);
 
     this.state = {
       isHighResImageLoaded: false,
@@ -262,6 +261,7 @@ class ImageItem extends React.Component {
     }`;
     const animationOverlay =
       this.props.overlay || this.getImageAnimationOverlay();
+
     const renderedItem = this.getImageContainer(
       imageRenderer,
       imageContainerClassNames,

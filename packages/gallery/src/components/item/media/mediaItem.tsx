@@ -106,7 +106,6 @@ export default function MediaItem<T extends Record<string, any>>(
       {props.hover}
     </>
   );
-
   if (!isMediaPlayable) {
     return placeholder;
   }
