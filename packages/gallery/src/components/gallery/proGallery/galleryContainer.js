@@ -404,6 +404,7 @@ export class GalleryContainer extends React.Component {
       galleryWidth: container.galleryWidth,
       scrollBase: container.scrollBase,
       options: options,
+      isSSR: utils.isSSR(),
     };
 
     this.mediaScrollHelper.updateGalleryStructure(
