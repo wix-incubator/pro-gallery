@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "pro-gallery",
-  "version": "5.0.24",
+  "version": "5.0.26",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
@@ -36,13 +36,13 @@
     "lint:fix": "npm run lint -- --fix"
   },
   "dependencies": {
+    "three": "0.143.0",
     "@vimeo/player": "2.8.2",
     "hls.js": "^1.1.5",
-    "pro-gallery-blueprints": "5.0.24",
-    "pro-gallery-lib": "5.0.24",
-    "pro-layouts": "5.0.24",
-    "react-player": "^2.6.2",
-    "three": "0.143.0"
+    "pro-gallery-blueprints": "5.0.26",
+    "pro-gallery-lib": "5.0.26",
+    "pro-layouts": "5.0.26",
+    "react-player": "^2.6.2"
   },
   "peerDependencies": {
     "react": "^16.8.6",

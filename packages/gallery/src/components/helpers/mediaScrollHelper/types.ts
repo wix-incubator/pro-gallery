@@ -9,6 +9,7 @@ export type ScrollHelperGalleryData = {
   galleryWidth: number;
   scrollBase: number;
   setPlayingIdxState: SetItemIdx;
+  isSSR: boolean;
 };
 export type UpdateGalleryData = (data: ScrollHelperGalleryData) => void;
 export type GetPlayTrigger = (options: Options) => PlayTrigger;

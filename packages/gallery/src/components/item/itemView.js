@@ -849,9 +849,10 @@ class ItemView extends React.Component {
   }
 
   getItemWrapperStyles() {
-    const { createUrl, options, style, type } = this.props;
-    const { height, width } = style;
-    const styles = {};
+    const { createUrl, options, style, type, offset } = this.props;
+    const { height, width, innerWidth, innerHeight } = style;
+    const { innerTop, innerLeft } = offset;
+    let styles = {};
     if (type === 'text') {
       styles.backgroundColor =
         options[optionsMap.layoutParams.crop.method] !==
@@ -871,10 +872,16 @@ class ItemView extends React.Component {
       GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
         .MAIN_COLOR
     ) {
-      styles.background = `url(${createUrl(
-        GALLERY_CONSTS.urlSizes.PIXEL,
-        GALLERY_CONSTS.urlTypes.HIGH_RES
-      )})`;
+      styles = {
+        ...styles,
+        background: `url(${createUrl(
+          GALLERY_CONSTS.urlSizes.PIXEL,
+          GALLERY_CONSTS.urlTypes.HIGH_RES
+        )})`,
+        backgroundSize: `${innerWidth}px ${innerHeight}px`,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: `top ${innerTop}px left ${innerLeft}px`,
+      };
     }
 
     styles.height = height + 'px';
