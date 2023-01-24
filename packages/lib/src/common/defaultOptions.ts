@@ -57,6 +57,7 @@ const defaultOptions = flattenObject({
     thumbnails: {
       size: 120,
       spacing: 4,
+      marginToGallery: 0,
       enable: false,
       position:
         GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position]

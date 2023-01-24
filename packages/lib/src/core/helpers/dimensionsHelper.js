@@ -116,7 +116,7 @@ class DimensionsHelper {
     const fixedThumbnailSize =
       this.options[optionsMap.layoutParams.thumbnails.size] +
       this.options[optionsMap.layoutParams.structure.gallerySpacing] +
-      3 * this.options[optionsMap.layoutParams.thumbnails.spacing]; //TODO THUMBNAILS_FIX
+      this.options[optionsMap.layoutParams.thumbnails.marginToGallery];
     return fixedThumbnailSize;
   }
 

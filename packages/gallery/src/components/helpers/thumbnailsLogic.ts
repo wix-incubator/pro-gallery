@@ -92,9 +92,9 @@ export function getThumbnailsData({
   }
 
   const withInfiniteScroll = false; // this is not supported yet
+  const thumbnailSize = options[optionsMap.layoutParams.thumbnails.size];
   const thumbnailSizeWithSpacing =
-    options[optionsMap.layoutParams.thumbnails.size] +
-    options[optionsMap.layoutParams.thumbnails.spacing] * 2; //TODO THUMBNAILS_FIX
+    thumbnailSize + options[optionsMap.layoutParams.thumbnails.spacing] * 2;
   const horizontalThumbnails =
     thumbnailAlignment ===
       GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM ||
@@ -104,7 +104,7 @@ export function getThumbnailsData({
     horizontalThumbnails,
     containerWidth,
     containerHeight,
-    thumbnailSizeWithSpacing,
+    thumbnailSize,
   });
   const minNumOfThumbnails = getNumberOfThumbnails({
     width,
@@ -143,7 +143,8 @@ export function getThumbnailsData({
 
   const thumbnailsMargins = getThumbnailsContainerMargin({
     thumbnailAlignment,
-    thumbnailSpacings: options[optionsMap.layoutParams.thumbnails.spacing], //TODO THUMBNAILS_FIX
+    thumbnailsMarginToGallery:
+      options[optionsMap.layoutParams.thumbnails.marginToGallery],
   });
   return {
     items: itemToDisplay.map(({ item, thumbnailItem, idx }, index) => {
@@ -171,21 +172,21 @@ function getThumbnailsContainerSize({
   horizontalThumbnails,
   containerWidth,
   containerHeight,
-  thumbnailSizeWithSpacing,
+  thumbnailSize,
 }: {
   horizontalThumbnails: boolean;
   containerWidth: number;
   containerHeight: number;
-  thumbnailSizeWithSpacing: number;
+  thumbnailSize: number;
 }) {
   if (horizontalThumbnails) {
     return {
       width: containerWidth,
-      height: thumbnailSizeWithSpacing,
+      height: thumbnailSize,
     };
   } else {
     return {
-      width: thumbnailSizeWithSpacing,
+      width: thumbnailSize,
       height: containerHeight,
     };
   }
@@ -238,10 +239,10 @@ function getThumbnailsStyles({
 
 function getThumbnailsContainerMargin({
   thumbnailAlignment,
-  thumbnailSpacings,
+  thumbnailsMarginToGallery,
 }: {
   thumbnailAlignment: string;
-  thumbnailSpacings: number;
+  thumbnailsMarginToGallery: number;
 }) {
   const horizontalThumbnails =
     thumbnailAlignment ===
@@ -253,16 +254,16 @@ function getThumbnailsContainerMargin({
       thumbnailAlignment ===
       GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP;
     return {
-      marginTop: isTop ? 0 : thumbnailSpacings,
-      marginBottom: isTop ? thumbnailSpacings : 0,
+      marginTop: isTop ? 0 : thumbnailsMarginToGallery,
+      marginBottom: isTop ? thumbnailsMarginToGallery : 0,
     };
   }
   const isLeft =
     thumbnailAlignment ===
     GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT;
   return {
-    marginLeft: isLeft ? 0 : thumbnailSpacings,
-    marginRight: isLeft ? thumbnailSpacings : 0,
+    marginLeft: isLeft ? 0 : thumbnailsMarginToGallery,
+    marginRight: isLeft ? thumbnailsMarginToGallery : 0,
   };
 }
 
