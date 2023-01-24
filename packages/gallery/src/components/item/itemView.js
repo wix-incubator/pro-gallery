@@ -172,13 +172,13 @@ class ItemView extends React.Component {
   }
 
   onItemWrapperClick(e) {
-    // console.log('item-media clicked');
+    console.log('item-media clicked');
     const clickTarget = 'item-media';
     this.onItemClick(e, clickTarget);
   }
 
   onItemInfoClick(e) {
-    // console.log('item-info clicked');
+    console.log('item-info clicked');
     const clickTarget = 'item-info';
     this.onItemClick(e, clickTarget, false);
   }
