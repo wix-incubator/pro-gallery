@@ -89,8 +89,8 @@ class NavigationPanel extends React.Component {
             const itemStyle = {
               width: options[optionsMap.layoutParams.thumbnails.size],
               height: options[optionsMap.layoutParams.thumbnails.size],
-              marginLeft: options[optionsMap.layoutParams.thumbnails.spacing],
-              marginTop: options[optionsMap.layoutParams.thumbnails.spacing],
+              marginLeft: options[optionsMap.layoutParams.thumbnails.spacing], //TODO THUMBNAILS_FIX
+              marginTop: options[optionsMap.layoutParams.thumbnails.spacing], //TODO THUMBNAILS_FIX
               overflow: 'hidden',
               backgroundImage: `url(${thumbnailItem.createUrl(
                 GALLERY_CONSTS.urlSizes.THUMBNAIL,

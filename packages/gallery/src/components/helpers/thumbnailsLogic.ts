@@ -94,7 +94,7 @@ export function getThumbnailsData({
   const withInfiniteScroll = false; // this is not supported yet
   const thumbnailSizeWithSpacing =
     options[optionsMap.layoutParams.thumbnails.size] +
-    options[optionsMap.layoutParams.thumbnails.spacing] * 2;
+    options[optionsMap.layoutParams.thumbnails.spacing] * 2; //TODO THUMBNAILS_FIX
   const horizontalThumbnails =
     thumbnailAlignment ===
       GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM ||
@@ -143,7 +143,7 @@ export function getThumbnailsData({
 
   const thumbnailsMargins = getThumbnailsContainerMargin({
     thumbnailAlignment,
-    thumbnailSpacings: options[optionsMap.layoutParams.thumbnails.spacing],
+    thumbnailSpacings: options[optionsMap.layoutParams.thumbnails.spacing], //TODO THUMBNAILS_FIX
   });
   return {
     items: itemToDisplay.map(({ item, thumbnailItem, idx }, index) => {
