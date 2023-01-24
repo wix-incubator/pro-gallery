@@ -134,7 +134,7 @@ class ItemView extends React.Component {
   }
 
   onContainerKeyUp(e) {
-    const clickTarget = 'item-container';
+    const clickTarget = 'item-media';
     switch (e.keyCode || e.charCode) {
       case 32: //space
       case 13: //enter
@@ -172,11 +172,13 @@ class ItemView extends React.Component {
   }
 
   onItemWrapperClick(e) {
+    // console.log('item-media clicked');
     const clickTarget = 'item-media';
     this.onItemClick(e, clickTarget);
   }
 
   onItemInfoClick(e) {
+    // console.log('item-info clicked');
     const clickTarget = 'item-info';
     this.onItemClick(e, clickTarget, false);
   }
