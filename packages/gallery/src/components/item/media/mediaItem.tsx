@@ -4,6 +4,7 @@ import { optionsMap, GALLERY_CONSTS, isEditMode } from 'pro-gallery-lib';
 import { VideoPlayButton } from './playButton';
 import { Options, Settings } from 'pro-gallery-lib';
 import ImageItem from '../imageItem';
+import IframeVideoPlayer from '../videos/IframeVideoPlayer';
 
 export type MediaBaseProps = {
   calculatedAlt: string;
@@ -85,6 +86,16 @@ export default function MediaItem<T extends Record<string, any>>(
     return false;
   }, [hasLink, playTrigger, clickAction]);
 
+  const createIframePlayer = (propsOverrides: any = {}) => (
+    <IframeVideoPlayer
+      {...props}
+      dimensions={imageDimensions}
+      overlay={showPlayButton && !isMediaPlayable && <VideoPlayButton />}
+      extraClasses={props.placeholderExtraClasses.join(' ')}
+      url="https://www.youtube.com/embed/KvZT3etZIsw?autoplay=0&mute=0&controls=1&origin=https%3A%2F%2Fmoshemay6.wixsite.com&playsinline=1&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1&widgetid=1"
+      {...propsOverrides}
+    />
+  );
   const createThumbnail = (propsOverrides: any = {}) =>
     enableImagePlaceholder ? (
       <ImageItem
@@ -99,10 +110,11 @@ export default function MediaItem<T extends Record<string, any>>(
       <></>
     );
   const thumbnail = createThumbnail();
-
+  const iframeVideoPlayer = createIframePlayer();
   const placeholder = (
     <>
       {thumbnail}
+      {iframeVideoPlayer}
       {props.hover}
     </>
   );
@@ -126,3 +138,4 @@ export default function MediaItem<T extends Record<string, any>>(
     </React.Suspense>
   );
 }
+console.log('LOCAL');
