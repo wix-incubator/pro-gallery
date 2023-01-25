@@ -13,8 +13,8 @@ const advancedScrollAnimation = [
     type: "SKEW",
     fromValue: 10,
     toValue: 0,
-    fromAnchor: "BOTTOM",
-    toAnchor: "BOTTOM",
+    fromAnchor: "ENTRY",
+    toAnchor: "ENTRY",
     fromPosition: 100,
     toPosition: 200,
     iterations: 5,
@@ -27,8 +27,8 @@ const advancedScrollAnimation = [
     type: "FADE",
     fromValue: 0,
     toValue: 1,
-    fromAnchor: "BOTTOM",
-    toAnchor: "BOTTOM",
+    fromAnchor: "ENTRY",
+    toAnchor: "ENTRY",
     fromPosition: 0,
     toPosition: 100,
     iterations: 1,
@@ -119,8 +119,8 @@ class CssScrollHelper {
         iterations = 10,
         fromPosition = 0,
         toPosition = 100,
-        fromAnchor = "BOTTOM",
-        toAnchor = "BOTTOM",
+        fromAnchor = "ENTRY",
+        toAnchor = "ENTRY",
         ease = 'linear',
         randomOffset = 0,
       } = animationParams;
@@ -180,8 +180,8 @@ class CssScrollHelper {
         const topAnimationStart = Math.round(imageStart + imageSize - fromPosition);
         const topAnimationEnd = Math.round(imageStart + imageSize - toPosition);
 
-        let animationStart = fromAnchor === "BOTTOM" ? bottomAnimationStart : topAnimationStart;
-        let animationEnd = toAnchor === "BOTTOM" ? bottomAnimationEnd : topAnimationEnd;
+        let animationStart = ['EXIT', 'TOP'].includes(fromAnchor) ? topAnimationStart : bottomAnimationStart;
+        let animationEnd = ['EXIT', 'TOP'].includes(toAnchor) ? topAnimationEnd : bottomAnimationEnd;
 
         if (randomOffset > 0) {
           animationStart += Math.round(Math.random() * randomOffset);

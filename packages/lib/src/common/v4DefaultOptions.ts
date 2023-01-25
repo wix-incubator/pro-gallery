@@ -165,7 +165,7 @@ const defaultV4Options = {
       scrollAnimation:
         GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation]
           .NO_EFFECT,
-      advancedScrollAnimations: [],
+      advancedScrollAnimation: [],
       infiniteScrollAnimation: false,
       scrollAnimationReset: false,
       enableIndexingShareLinks: true,
