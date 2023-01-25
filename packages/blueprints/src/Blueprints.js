@@ -87,13 +87,13 @@ class Blueprints {
         }
         existingBlueprint.structure = structure;
 
-        existingBlueprint.scrollAnimationsCss = this.createCssAnimations({
-          items: structure.items,
-          container: existingBlueprint.container,
-          options: existingBlueprint.options,
-          id: params.id,
-        });
-        console.log({ existingBlueprint });
+        // existingBlueprint.scrollAnimationsCss = this.createCssAnimations({
+        //   items: structure.items,
+        //   container: existingBlueprint.container,
+        //   options: existingBlueprint.options,
+        //   id: params.id,
+        // });
+        // console.log({ existingBlueprint });
 
         // if its an infinite gallery - let the container loose
         const isInfinite = utils.isHeightSetByGallery(
@@ -345,7 +345,7 @@ class Blueprints {
     const layoutParams = {
       items: formattedItems,
       container: formattedContainer,
-      options: formattedOptions,
+      styleParams: formattedOptions,
       options: {
         showAllItems: true,
         skipVisibilitiesCalc: true,
@@ -363,14 +363,14 @@ class Blueprints {
     return this.layouter.createLayout(layoutParams);
   }
 
-  createCssAnimations({ items, container, options, id }) {
-    return cssScrollHelper.calcScrollCss({
-      items,
-      options,
-      container,
-      galleryId: id,
-    });
-  }
+  // createCssAnimations({ items, container, options, id }) {
+  //   return cssScrollHelper.calcScrollCss({
+  //     items,
+  //     options,
+  //     container,
+  //     galleryId: id,
+  //   });
+  // }
 }
 const blueprints = new Blueprints();
 export default blueprints;
