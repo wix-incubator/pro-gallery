@@ -196,52 +196,6 @@ export function scrollToGroupImp(scrollParams) {
 }
 
 // ----- rendererd / visible ----- //
-function getDistanceFromScreen({
-  offset,
-  scroll,
-  itemStart,
-  itemEnd,
-  screenSize,
-}) {
-  const before = scroll - offset - itemEnd;
-  const after = offset + itemStart - screenSize - scroll;
-  return { before, after };
-}
-function isWithinPaddingVertically({
-  target,
-  scrollBase,
-  top,
-  bottom,
-  screenHeight,
-  padding,
-}) {
-  const res = getDistanceFromScreen({
-    offset: scrollBase || 0,
-    scroll: target.scrollY,
-    itemStart: top,
-    itemEnd: bottom,
-    screenSize: screenHeight,
-  });
-  return res.before < padding && res.after < padding;
-}
-
-function isWithinPaddingHorizontally({
-  target,
-  left,
-  right,
-  screenWidth,
-  padding,
-}) {
-  const res = getDistanceFromScreen({
-    offset: 0,
-    scroll: target.scrollLeft,
-    itemStart: left,
-    itemEnd: right,
-    screenSize: screenWidth,
-  });
-  return res.before < padding && res.after < padding;
-}
-
 function horizontalCssScrollTo({
   scroller,
   from,
@@ -269,10 +223,16 @@ function horizontalCssScrollTo({
   Object.assign(scroller.style, {
     'scroll-snap-type': 'none',
   });
-  Object.assign(scrollerInner.style, {
-    transition: `margin ${duration}ms linear`,
-    [marginProp]: `-${Math.abs(change)}px`,
-  });
+  Object.assign(
+    scrollerInner.style,
+    {
+      transition: `transform ${duration}ms ${slideTransition}`,
+      '-webkit-transition': `transform ${duration}ms ${slideTransition}`,
+    },
+    {
+      transform: `translateX(${-1 * change}px)`,
+    }
+  );
 
   const intervals = 10;
   const scrollTransitionEvent = new CustomEvent('scrollTransition', {
@@ -291,13 +251,9 @@ function horizontalCssScrollTo({
         transition: `none`,
         '-webkit-transition': `none`,
       },
-      isRTL
-        ? {
-            marginRight: 0,
-          }
-        : {
-            marginLeft: 0,
-          }
+      {
+        transform: `translateX(0px)`,
+      }
     );
     scroller.style.removeProperty('scroll-snap-type');
     scroller.scrollLeft = to;
@@ -344,13 +300,9 @@ function animateStopScroll({ scroller, at, isRTL }) {
       transition: `none`,
       '-webkit-transition': `none`,
     },
-    isRTL
-      ? {
-          marginRight: 0,
-        }
-      : {
-          marginLeft: 0,
-        }
+    {
+      transform: `translateX(0px)`,
+    }
   );
   scroller.scrollLeft = at;
   scrollDeffered.resolve(at);
@@ -371,10 +323,10 @@ export function haltScroll({
   clearTimeout(currentScrollEndTimeout);
   const scrollerInner = scroller.firstChild;
   const computedStyle = getComputedStyle(scrollerInner);
-  let margins = isRTL
-    ? computedStyle.getPropertyValue('margin-right')
-    : computedStyle.getPropertyValue('margin-left');
-  margins = Math.round(parseInt(margins, 10));
+  let transform = computedStyle.getPropertyValue('transform');
+  var matrix = new DOMMatrix(transform);
+
+  const margins = Math.round(parseInt(matrix.m41, 10));
   from = from - margins;
 
   animateStopScroll({
@@ -384,5 +336,3 @@ export function haltScroll({
   });
   scrollDeffered.resolve(from);
 }
-
-export { isWithinPaddingHorizontally, isWithinPaddingVertically };

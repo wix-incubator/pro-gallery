@@ -23,7 +23,8 @@ export const SECTIONS = {
   DESIGN: "Design",
   ANIMATION: "Animations",
   // IMAGE: 'Image',
-  VIDEO: "Videos",
+  VIDEO: 'Videos',
+  ThreeD: '3D',
 };
 
 export const SECTIONS_ORDER = {
@@ -178,6 +179,12 @@ export const optionsBySection = {
     optionsMap.behaviourParams.item.video.enablePlayButton,
     optionsMap.behaviourParams.item.video.enableControls,
     optionsMap.behaviourParams.item.video.enablePlaceholder,
+  ],
+  [SECTIONS.ThreeD]: [
+    optionsMap.behaviourParams.item.threeDimensionalScene.playTrigger,
+    optionsMap.behaviourParams.item.threeDimensionalScene.keepPosterAfterObjectLoad,
+    ...Object.values(optionsMap.behaviourParams.item.threeDimensionalScene.controls),
+    ...Object.values(optionsMap.behaviourParams.item.threeDimensionalScene.transform),
   ],
 };
 

@@ -6,6 +6,7 @@ export interface BehaviourParams {
 export interface Item {
   clickAction?: 'NOTHING' | 'LINK' | 'ACTION' | 'MAGNIFY';
   video?: Video;
+  threeDimensionalScene?: ThreeDimensionalScene;
   overlay?: Overlay;
   content?: Content;
   secondaryMedia?: SecondaryMedia;
@@ -36,16 +37,38 @@ export interface SecondaryMedia {
   trigger: 'OFF' | 'HOVER';
   behaviour: 'APPEARS';
 }
+
+export type PlayTrigger = 'CLICK' | 'HOVER' | 'AUTO';
 export interface Video {
   speed?: number;
   volume?: number;
   loop?: boolean;
-  playTrigger?: 'CLICK' | 'HOVER' | 'AUTO';
+  playTrigger?: PlayTrigger;
   enablePlayButton?: boolean;
   enableControls?: boolean;
   enablePlaceholder?: boolean;
 }
 
+export interface ThreeDimensionalScene {
+  transform?: Transform;
+  controls?: Controls;
+  playTrigger?: PlayTrigger;
+}
+
+export type Dimensions = string;
+// due to a bug in typescript 4.1.2 - https://github.com/microsoft/TypeScript/pull/41693
+
+export interface Transform {
+  rotation?: Dimensions;
+  scale?: Dimensions;
+  position?: Dimensions;
+}
+export interface Controls {
+  enableZoom?: boolean;
+  enableRotate?: boolean;
+  enablePan?: boolean;
+  enableAutoRotate?: boolean;
+}
 export interface Overlay {
   hoveringBehaviour?: 'APPEARS' | 'DISAPPEARS' | 'ALWAYS_SHOW' | 'NEVER_SHOW';
   hoverAnimation?:

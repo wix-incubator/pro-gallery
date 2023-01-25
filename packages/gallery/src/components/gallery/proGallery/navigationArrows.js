@@ -1,7 +1,10 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom';
 import { GALLERY_CONSTS, utils, optionsMap } from 'pro-gallery-lib';
-import { ArrowFollower } from '../../helpers/mouseCursorPosition';
+import {
+  ArrowFollower,
+  MouseFollowerProvider,
+} from '../../helpers/mouseCursorPosition';
 import {
   getArrowBoxStyle,
   getArrowsRenderData,
@@ -50,7 +53,6 @@ export function NavigationArrows({
       .MOUSE_CURSOR;
 
   const { galleryHeight } = container;
-  const { galleryWidth } = container;
   const infoHeight = options[optionsMap.layoutParams.info.height];
   const imageHeight = galleryHeight - infoHeight;
 
@@ -93,12 +95,9 @@ export function NavigationArrows({
   });
   const containerStyle = mouseCursorEnabled
     ? {
-        width: `${galleryWidth}px`,
-        maxWidth: `${mouseCursorContainerMaxWidth}%`,
-        height: `${galleryHeight}px`,
-        padding: 0,
-        top: 0,
-        flex: 1,
+        width: `${navArrowsContainerWidth}px`,
+        height: `${navArrowsContainerHeight}px`,
+        ...arrowBoxStyle,
       }
     : {
         width: `${navArrowsContainerWidth}px`,
@@ -134,7 +133,6 @@ export function NavigationArrows({
     'nav-arrows-container',
     useDropShadow ? 'drop-shadow' : '',
     utils.isMobile() ? ' pro-gallery-mobile-indicator' : '',
-    mouseCursorEnabled ? 'follow-mouse-cursor' : '',
   ];
   const navigationArrowPortalId = `arrow-portal-container-${id}`;
 
@@ -167,6 +165,13 @@ export function NavigationArrows({
     );
   };
 
+  const provideMouseFollower = (children) => {
+    if (mouseCursorEnabled) {
+      return <MouseFollowerProvider id={id}>{children}</MouseFollowerProvider>;
+    }
+    return children;
+  };
+
   return (
     <ArrowsContainer
       hideLeftArrow={hideLeftArrow}
@@ -175,8 +180,12 @@ export function NavigationArrows({
       isRTL={isRTL}
       navigationArrowPortalId={navigationArrowPortalId}
     >
-      {hideLeftArrow ? null : renderArrow(true)}
-      {hideRightArrow ? null : renderArrow(false)}
+      {provideMouseFollower(
+        <>
+          {hideLeftArrow ? null : renderArrow(true)}
+          {hideRightArrow ? null : renderArrow(false)}
+        </>
+      )}
     </ArrowsContainer>
   );
 }
@@ -248,12 +257,18 @@ export function ArrowButtonWithCursorController(props) {
     hideLeftArrow,
     hideRightArrow,
     renderArrowSvg,
+    containerStyle,
+    arrowsBaseClasses,
+    navArrowsContainerWidth,
+    navArrowsContainerHeight,
   } = props;
   const isTheOnlyArrow = hideLeftArrow || hideRightArrow;
   return (
     <ArrowFollower
       id={props.id}
       mouseCursorContainerMaxWidth={mouseCursorContainerMaxWidth}
+      navArrowsContainerWidth={navArrowsContainerWidth}
+      navArrowsContainerHeight={navArrowsContainerHeight}
       onNavigate={() => next({ direction: directionIsLeft ? -1 : 1 })}
       direction={directionIsLeft ? 'left' : 'right'}
       isTheOnlyArrow={isTheOnlyArrow}
@@ -261,14 +276,21 @@ export function ArrowButtonWithCursorController(props) {
       {(x, y) => (
         <div
           style={{
-            position: 'absolute',
             top: y,
             left: x,
-            transition: 'all 0.2s ease',
-            pointerEvents: 'none',
           }}
+          className="follow-mouse-cursor"
         >
-          {renderArrowSvg(directionIsLeft ? 'left' : 'right')}
+          <div
+            className={arrowsBaseClasses.join(' ')}
+            style={{
+              ...containerStyle,
+              top: -navArrowsContainerHeight / 2,
+              left: -navArrowsContainerWidth / 2,
+            }}
+          >
+            {renderArrowSvg(directionIsLeft ? 'left' : 'right')}
+          </div>
         </div>
       )}
     </ArrowFollower>

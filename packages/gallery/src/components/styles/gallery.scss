@@ -114,6 +114,17 @@ body.pro-gallery {
   position: absolute;
 }
 
+.follow-mouse-cursor {
+  position: absolute;
+  transition: all 0.2s ease;
+  > div {
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 .nav-arrows-container {
   left: auto;
   position: absolute;
@@ -128,10 +139,6 @@ body.pro-gallery {
   outline: none;
   justify-content: center;
 
-  &.follow-mouse-cursor {
-    position: relative;
-    cursor: none;
-  }
 
   &:hover {
     opacity: 1;
@@ -452,7 +459,22 @@ div.pro-gallery {
             background-size: contain;
           }
         }
-
+        &.gallery-item-3d-placeholder {
+          &.three-d-loaded {
+            img {
+              opacity: 0;
+              pointer-events: none;
+            }
+          }
+          &.three-d-loading {
+            img {
+              opacity: 1;
+            }
+          }
+          img {
+            transition: opacity .2s ease;
+          }
+        }
         &.gallery-item-video {
           overflow: hidden;
           text-align: center; //for grid crop
@@ -461,20 +483,21 @@ div.pro-gallery {
             left: 0;
             top: 0;
           }
+          &.playedOnce {
+            ~ .image-item {
+              pointer-events: none;
+              opacity: 0;
+              transition: opacity .2s ease;
+            }
+          }
+        }
+        &.gallery-item-video, &.gallery-item-3d-placeholder {
 
           &.playing {
 
             button,
             i {
               display: none;
-            }
-          }
-
-          &.playedOnce {
-            ~ .image-item {
-              pointer-events: none;
-              opacity: 0;
-              transition: opacity .2s ease;
             }
           }
 
@@ -613,6 +636,7 @@ div.pro-gallery {
 
     .gallery-horizontal-scroll-inner {
       position: relative;
+      will-change: transform;
     }
   }
 

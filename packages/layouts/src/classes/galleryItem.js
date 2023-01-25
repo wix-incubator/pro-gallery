@@ -129,7 +129,6 @@ class GalleryItem {
       isVideoPlaceholder: this.isVideoPlaceholder,
       url: this.url,
       alt: this.alt,
-      calculatedAlt: this.calculatedAlt,
       htmlContent: this.htmlContent,
       directLink: this.directLink,
       directShareLink: this.directShareLink,
@@ -152,6 +151,7 @@ class GalleryItem {
       videoUrl: this.videoUrl,
       isExternalVideo: this.isExternalVideo,
       hasSecondaryMedia: this.hasSecondaryMedia,
+      scene: this.scene,
       ...config,
     };
     if (this.hasSecondaryMedia) {
@@ -274,6 +274,10 @@ class GalleryItem {
     const urls = {};
     let imgUrl = this.url;
 
+    urls[GALLERY_CONSTS.urlTypes.THREE_D] = () => this.url;
+    if (this.is3D) {
+      imgUrl = this.poster.url;
+    }
     if (this.isText) {
       return Object.assign(
         {},
@@ -653,6 +657,10 @@ class GalleryItem {
     );
   }
 
+  get scene() {
+    return this.metadata.scene;
+  }
+
   get qualities() {
     return this.metadata.qualities;
   }
@@ -685,6 +693,8 @@ class GalleryItem {
       case 'html':
       case 'text':
         return 'text';
+      case '3d':
+        return '3d';
       case 'i':
       case 'image':
       default:
@@ -700,22 +710,14 @@ class GalleryItem {
     );
   }
 
-  get calculatedAlt() {
-    return (
-      (utils.isMeaningfulString(this.alt) && this.alt) ||
-      this.title ||
-      this.description ||
-      this.fileName ||
-      ''
-    );
-  }
-
   get htmlContent() {
     return this.html?.replace(/<[^<>]*>/g, '').trim();
   }
 
   get alt() {
-    return this.metadata.alt || '';
+    return (
+      (utils.isMeaningfulString(this.metadata.alt) && this.metadata.alt) || ''
+    );
   }
 
   set alt(value) {
@@ -985,6 +987,10 @@ class GalleryItem {
 
   get isVideo() {
     return this.type === 'video';
+  }
+
+  get is3D() {
+    return this.type === '3d';
   }
 
   get isVisible() {

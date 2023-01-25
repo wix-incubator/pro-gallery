@@ -19,11 +19,16 @@ import {
   Col,
   Button,
   Divider,
-} from 'antd';
-import {INPUT_TYPES, isInPreset, optionsMap} from 'pro-gallery-lib';
-import ColorPicker from '../ColorPicker/ColorPicker';
-import { settingsManager } from '../../constants/settings';
-import JSONInput from 'react-json-ide';
+} from "antd";
+import {
+  INPUT_TYPES,
+  isInPreset,
+  optionsMap,
+  GALLERY_CONSTS,
+} from "pro-gallery-lib";
+import ColorPicker from "../ColorPicker/ColorPicker";
+import { settingsManager } from "../../constants/settings";
+import JSONInput from "react-json-ide";
 
 class JsonEditor extends React.Component {
   constructor() {
@@ -191,14 +196,14 @@ class JsonEditor extends React.Component {
       case INPUT_TYPES.JSON:
         const formatJson = (json) => {
           if (json.jsObject) return json.jsObject;
-          if (typeof json === 'object') return json;
+          if (typeof json === "object") return json;
           try {
             return JSON.parse(json);
           } catch (e) {
             return [];
           }
-        }
-            
+        };
+
         return (
           // theValue.plainText
           <JSONInput
@@ -208,8 +213,36 @@ class JsonEditor extends React.Component {
             theme="light_mitsuketa_tribute"
             height="550px"
             width="360px"
-            onChange={(e) => e.jsObject && this.onFieldChanged(key, JSON.stringify(e.jsObject))}
+            onChange={(e) =>
+              e.jsObject && this.onFieldChanged(key, JSON.stringify(e.jsObject))
+            }
           />
+        );
+      case INPUT_TYPES.TRANSFORM:
+        // format x{number}y{number}z{number}
+        const transform = GALLERY_CONSTS.parse3DDimensions(theValue);
+        return (
+          <Row>
+            {["x", "y", "z"].map((axis, i) => (
+              <Col span={8} key={i}>
+                {axis} :
+                <InputNumber
+                  min={settings.min}
+                  max={settings.max}
+                  step={settings.step || 1}
+                  value={transform[axis]}
+                  onChange={(val) => {
+                    transform[axis] = val;
+                    this.onFieldChanged(
+                      key,
+                      `x${transform.x}y${transform.y}z${transform.z}`
+                    );
+                  }}
+                  style={{ marginLeft: 5, width: 50 }}
+                />
+              </Col>
+            ))}
+          </Row>
         );
       case INPUT_TYPES.TEXT:
       default:
@@ -234,13 +267,17 @@ class JsonEditor extends React.Component {
     //   }, {}) :
     //   styleParams;
     // json = removeFieldsNotNeeded(json, selectedLayout);
-    const filterFunction = option ?
-    ([key]) => key === option :
-    ([key, settings]) => 
-      (!section || settings.section === section) &&
-      (!subSection || settings.subSection === subSection) &&
-      (this.props.showAllOptions || (settings.isRelevant(allOptions) && !isInPreset(allOptions[optionsMap.layoutParams.structure.galleryLayout], key)))
-    
+    const filterFunction = option
+      ? ([key]) => key === option
+      : ([key, settings]) =>
+          (!section || settings.section === section) &&
+          (!subSection || settings.subSection === subSection) &&
+          (this.props.showAllOptions ||
+            (settings.isRelevant(allOptions) &&
+              !isInPreset(
+                allOptions[optionsMap.layoutParams.structure.galleryLayout],
+                key
+              )));
 
     const activeKey = option
       ? { activeKey: "collapse" + option }
@@ -260,7 +297,7 @@ class JsonEditor extends React.Component {
 
     const isSingleItem = !!option;
 
-    const Extra = settings => {
+    const Extra = (settings) => {
       if (settings.isRelevant(allOptions)) {
         return null; //<Icon type="check" style={{fontSize: 10, color: '#52c41a'}} />
       } else {
@@ -308,24 +345,69 @@ class JsonEditor extends React.Component {
           >
             {this.renderEntryEditor(option, settings)}
             <div>
-              {!!settings.description && (<><Divider/><p>{settings.description}</p></>)}
-              {isDev && <>
-                <Divider/>
-                <p><b>Key: </b><code>{option}</code></p>
-                <p><b>Value: </b><code>{String(settings.value)}</code></p>
-                <p><b>Default: </b><code>{String(settings.default)}</code></p>
-              </>}
-              {!!settings.alert && (<><Divider/><Alert message={settings.alert} type="warning"/></>)}
-              {!!isSingleItem && (<>
-                <Divider/>
-                <p><b>Section: </b>{settings.section + (settings.subSection ? ` > ${settings.subSection}` : '')}</p>
-                <p><b>Overriden by current Preset: </b>{isInPreset(allOptions[optionsMap.layoutParams.structure.galleryLayout], option) ? 'Yes' : 'No'}</p>
-                <p><b>Relevant in current configuration: </b>{settings.isRelevant(allOptions, false) ? 'Yes' : 'No'}</p>
-              </>)}
-              {isDev && <>
-                <Divider/>
-                <p><b>isRelevant: </b><pre>{settings.isRelevant.toString()}</pre></p>
-              </>}
+              {!!settings.description && (
+                <>
+                  <Divider />
+                  <p>{settings.description}</p>
+                </>
+              )}
+              {isDev && (
+                <>
+                  <Divider />
+                  <p>
+                    <b>Key: </b>
+                    <code>{option}</code>
+                  </p>
+                  <p>
+                    <b>Value: </b>
+                    <code>{String(settings.value)}</code>
+                  </p>
+                  <p>
+                    <b>Default: </b>
+                    <code>{String(settings.default)}</code>
+                  </p>
+                </>
+              )}
+              {!!settings.alert && (
+                <>
+                  <Divider />
+                  <Alert message={settings.alert} type="warning" />
+                </>
+              )}
+              {!!isSingleItem && (
+                <>
+                  <Divider />
+                  <p>
+                    <b>Section: </b>
+                    {settings.section +
+                      (settings.subSection ? ` > ${settings.subSection}` : "")}
+                  </p>
+                  <p>
+                    <b>Overriden by current Preset: </b>
+                    {isInPreset(
+                      allOptions[
+                        optionsMap.layoutParams.structure.galleryLayout
+                      ],
+                      option
+                    )
+                      ? "Yes"
+                      : "No"}
+                  </p>
+                  <p>
+                    <b>Relevant in current configuration: </b>
+                    {settings.isRelevant(allOptions, false) ? "Yes" : "No"}
+                  </p>
+                </>
+              )}
+              {isDev && (
+                <>
+                  <Divider />
+                  <p>
+                    <b>isRelevant: </b>
+                    <pre>{settings.isRelevant.toString()}</pre>
+                  </p>
+                </>
+              )}
             </div>
           </Collapse.Panel>
         ))}
