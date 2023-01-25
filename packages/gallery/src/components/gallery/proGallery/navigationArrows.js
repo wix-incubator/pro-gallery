@@ -125,13 +125,20 @@ export function NavigationArrows({
   const prevContainerStyle = { left: mouseCursorEnabled ? 0 : arrowsPos };
   const nextContainerStyle = { right: mouseCursorEnabled ? 0 : arrowsPos };
 
+  const containerStylingClass = {
+    BOX: 'box',
+    SHADOW: 'shadow',
+    NONE: 'only-arrows',
+  
+  }[options[optionsMap.layoutParams.navigationArrows.container.type]] || '';
+
   const useDropShadow =
     options[optionsMap.layoutParams.navigationArrows.container.type] ===
     GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type]
       .SHADOW;
   const arrowsBaseClasses = [
     'nav-arrows-container',
-    useDropShadow ? 'drop-shadow' : '',
+    containerStylingClass,
     utils.isMobile() ? ' pro-gallery-mobile-indicator' : '',
   ];
   const navigationArrowPortalId = `arrow-portal-container-${id}`;
