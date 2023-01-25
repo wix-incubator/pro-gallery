@@ -38,7 +38,39 @@ export const createScrollAnimations = ({
   let scrollSelectorsCss = "";
   let animationBySuffix = {};
 
-  const { direction = "UP", hinge = "center", fromValue, toValue, ease = false } = animationParams;
+  const { hinge = "center", fromValue, toValue, ease = "linear" } = animationParams;
+  let { direction = "IN" } = animationParams;
+
+  const convertRelativeDirection = (direction) => {
+    if (["IN", "OUT", "RIGHTWAY", "LEFTWAY"].includes(direction)) {
+      if (h) {
+        if (isRTL) {
+          return {
+            IN: "LEFT",
+            OUT: "RIGHT",
+            RIGHTWAY: "UP",
+            LEFTWAY: "DOWN",
+          }[direction];
+        } else {
+          return {
+            IN: "RIGHT",
+            OUT: "LEFT",
+            RIGHTWAY: "DOWN",
+            LEFTWAY: "UP",
+          }[direction];
+        }
+      } else {
+        return {
+          IN: "UP",
+          OUT: "DOWN",
+          RIGHTWAY: "RIGHT",
+          LEFTWAY: "LEFT",
+        }[direction];
+      }
+    } else {
+      return direction;
+    }
+  };
 
   const addScrollSelectors = ({ selectorSuffix, animationCss }, generalStyles = "") => {
     scrollSelectorsCss += generalStyles + ` \n`;
@@ -88,6 +120,8 @@ export const createScrollAnimations = ({
   const hasDirection = (...directions) => {
     return [...directions].some((dir) => direction === dir);
   };
+
+  direction = convertRelativeDirection(direction);
 
   if (hasAnimation(FADE)) {
     addScrollSelectors({

@@ -404,6 +404,8 @@ export default class Layouter {
             targetItemSize: this.targetItemSize,
           });
 
+          const newStripIdx = this.strip.idx + 1;
+          
           //reset the group (this group will be rebuilt)
           this.pointer -= this.group.realItems.length - 1;
           this.groupIdx--;
