@@ -125,17 +125,17 @@ export function NavigationArrows({
   const prevContainerStyle = { left: mouseCursorEnabled ? 0 : arrowsPos };
   const nextContainerStyle = { right: mouseCursorEnabled ? 0 : arrowsPos };
 
-  const containerStylingClass = {
+  const containerStylesByType = {
     BOX: 'box',
     SHADOW: 'shadow',
     NONE: 'only-arrows',
-  
-  }[options[optionsMap.layoutParams.navigationArrows.container.type]] || '';
+  };
 
-  const useDropShadow =
-    options[optionsMap.layoutParams.navigationArrows.container.type] ===
-    GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type]
-      .SHADOW;
+  const containerStylingClass =
+    containerStylesByType[
+      options[optionsMap.layoutParams.navigationArrows.container.type]
+    ] || '';
+
   const arrowsBaseClasses = [
     'nav-arrows-container',
     containerStylingClass,
