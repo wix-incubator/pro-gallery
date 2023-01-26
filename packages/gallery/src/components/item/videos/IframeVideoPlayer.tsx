@@ -19,5 +19,4 @@ const IframePlayer: React.FC<Props> = ({ url, dimensions }) => {
     />
   );
 };
-console.log('iframe!!!!!!4');
 export default IframePlayer;
