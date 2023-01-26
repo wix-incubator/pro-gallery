@@ -142,4 +142,3 @@ export default function MediaItem<T extends Record<string, any>>(
     </React.Suspense>
   );
 }
-console.log('LOCAL');
