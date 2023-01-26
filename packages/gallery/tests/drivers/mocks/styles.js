@@ -35,7 +35,8 @@ const options = {
   [optionsMap.layoutParams.groups.groupByOrientation]: true,
   [optionsMap.layoutParams.groups.groupSize]: 3,
   [optionsMap.layoutParams.thumbnails.enable]: true,
-  [optionsMap.layoutParams.thumbnails.spacing]: 4,
+  [optionsMap.layoutParams.thumbnails.spacing]: 4, //TODO THUMBNAILS_FIX
+  [optionsMap.layoutParams.thumbnails.marginToGallery]: 4, //TODO THUMBNAILS_FIX
   [optionsMap.layoutParams.thumbnails.size]: 250,
   [optionsMap.layoutParams.navigationArrows.enable]: true,
   [optionsMap.layoutParams.navigationArrows.padding]: 23,
