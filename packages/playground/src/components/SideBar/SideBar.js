@@ -170,6 +170,8 @@ function SideBar({ items, blueprintsManager, visible }) {
                 <Select.Option value="images">Images Only</Select.Option>
                 <Select.Option value="videos">Videos Only</Select.Option>
                 <Select.Option value="texts">Texts Only</Select.Option>
+                <Select.Option value="threeD">3D</Select.Option>
+                <Select.Option value="mixed3D">Mixed 3D</Select.Option>
                 <Select.Option value="itemsWithSecondaryMedia">Items with Secondary Media</Select.Option>
               </Select>
             </Form.Item>

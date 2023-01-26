@@ -2,7 +2,7 @@
 import React, { useMemo } from 'react';
 import { optionsMap, GALLERY_CONSTS, isEditMode } from 'pro-gallery-lib';
 import { VideoPlayButton } from './playButton';
-import { Options, Settings } from 'pro-gallery-lib';
+import { Options, Settings, utils } from 'pro-gallery-lib';
 import ImageItem from '../imageItem';
 import IframeVideoPlayer from '../videos/IframeVideoPlayer';
 
@@ -62,6 +62,10 @@ export default function MediaItem<T extends Record<string, any>>(
   } = options;
 
   const isMediaPlayable = useMemo(() => {
+    if (utils.isSSR()) {
+      return false;
+    }
+
     if (
       playTrigger ===
         GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
@@ -82,7 +86,6 @@ export default function MediaItem<T extends Record<string, any>>(
     ) {
       return true;
     }
-    // }
     return false;
   }, [hasLink, playTrigger, clickAction]);
 
@@ -118,7 +121,6 @@ export default function MediaItem<T extends Record<string, any>>(
       {props.hover}
     </>
   );
-
   if (!isMediaPlayable) {
     return placeholder;
   }

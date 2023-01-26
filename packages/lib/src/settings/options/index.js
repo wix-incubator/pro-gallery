@@ -116,6 +116,7 @@ import layoutParams_thumbnails_enable from './layoutParams_thumbnails_enable';
 import layoutParams_thumbnails_position from './layoutParams_thumbnails_position';
 import layoutParams_thumbnails_size from './layoutParams_thumbnails_size';
 import layoutParams_thumbnails_spacing from './layoutParams_thumbnails_spacing';
+import layoutParams_thumbnails_marginToGallery from './layoutParams_thumbnails_marginToGallery';
 
 import stylingParams_arrowsColor from './stylingParams_arrowsColor';
 import stylingParams_itemBorderColor from './stylingParams_itemBorderColor';
@@ -127,6 +128,11 @@ import stylingParams_itemShadowBlur from './stylingParams_itemShadowBlur';
 import stylingParams_itemShadowDirection from './stylingParams_itemShadowDirection';
 import stylingParams_itemShadowOpacityAndColor from './stylingParams_itemShadowOpacityAndColor';
 import stylingParams_itemShadowSize from './stylingParams_itemShadowSize';
+import behaviourParams_item_threeDimensionalScene_transform from './behaviourParams_item_threeDimensionalScene_transform';
+import behaviourParams_item_threeDimensionalScene_keepPosterAfterObjectLoad from './behaviourParams_item_threeDimensionalScene_keepPosterAfterObjectLoad';
+import behaviourParams_item_threeDimensionalScene_playTrigger from './behaviourParams_item_threeDimensionalScene_playTrigger';
+import behaviourParams_item_threeDimensionalScene_controls from './behaviourParams_item_threeDimensionalScene_controls';
+// import stylingParams_itemResolutionMode from './stylingParams_itemResolutionMode';
 //NEW STYPEPARAMS METHOD
 
 export default {
@@ -248,6 +254,7 @@ export default {
   layoutParams_thumbnails_position,
   layoutParams_thumbnails_size,
   layoutParams_thumbnails_spacing,
+  layoutParams_thumbnails_marginToGallery,
 
   stylingParams_arrowsColor,
   stylingParams_itemBorderColor,
@@ -259,6 +266,10 @@ export default {
   stylingParams_itemShadowDirection,
   stylingParams_itemShadowOpacityAndColor,
   stylingParams_itemShadowSize,
+  behaviourParams_item_threeDimensionalScene_keepPosterAfterObjectLoad,
+  behaviourParams_item_threeDimensionalScene_playTrigger,
+  ...behaviourParams_item_threeDimensionalScene_transform,
+  ...behaviourParams_item_threeDimensionalScene_controls,
   //NEW STYPEPARAMS METHOD
 };
 // v5 TODO = add the options:

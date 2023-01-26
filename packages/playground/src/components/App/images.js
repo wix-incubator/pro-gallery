@@ -2014,6 +2014,9 @@ const monochromeImages = [
   }
 ]
 
+const test3D = [];
+
+
 const itemsWithSecondaryMedia = [
   {
     metadata: {
@@ -2033,8 +2036,6 @@ const itemsWithSecondaryMedia = [
       url: 'https://static.wixstatic.com/media/8bb438_ff062a651e174cf5926fe5c088be1099.jpg'
     }
   },
-  
-  
   {
     metadata: {
       height: 1280,
@@ -2067,7 +2068,6 @@ const itemsWithSecondaryMedia = [
         width: 3737,
         focalPoint: [0.9, 0.1],
       },
-      
       itemId: '2d3b675ea857dc41158bad3b28300824',
       url: 'https://static.wixstatic.com/media/8bb438_78ff5e32500d48cdaa22a3f446d68216.jpg',
     }
@@ -2077,12 +2077,25 @@ const itemsWithSecondaryMedia = [
 const testMedia = [...testImages, ...testVideos];
 const testItems = [...testMedia, ...testTexts];
 
+const mixed3D = [
+  ...test3D,
+  ...test3D,
+  ...test3D,
+  ...testMedia,
+  ...test3D,
+  ...test3D,
+  ...test3D,
+]
+
+
 export {
   testMedia,
   testImages,
   testVideos,
   testTexts,
   testItems,
+  test3D,
+  mixed3D,
   monochromeImages,
   itemsWithSecondaryMedia,
 };

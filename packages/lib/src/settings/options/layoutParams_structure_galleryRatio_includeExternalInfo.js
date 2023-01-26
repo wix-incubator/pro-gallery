@@ -21,12 +21,6 @@ export default {
       .split(',')
       .filter((placement) => !isHoverPlacement(placement))
       .join(',');
-    console.log(
-      isSingleVerticalItemRendered,
-      isConstantVerticalPlacement(filteredPlacement),
-      galleryRatioValue.isRelevant(options),
-      options[optionsMap.layoutParams.structure.galleryRatio.value] > 0
-    );
     return (
       isSingleVerticalItemRendered &&
       isConstantVerticalPlacement(filteredPlacement) &&

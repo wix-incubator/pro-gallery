@@ -38,7 +38,6 @@ export class GalleryContainer extends React.Component {
     this._scrollingElement = this.getScrollingElement();
     this.eventsListener = this.eventsListener.bind(this);
     this.onGalleryScroll = this.onGalleryScroll.bind(this);
-    this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
     this.getVisibleItems = this.getVisibleItems.bind(this);
     this.findNeighborItem = this.findNeighborItem.bind(this);
     this.setCurrentSlideshowViewIdx =
@@ -50,11 +49,17 @@ export class GalleryContainer extends React.Component {
       {
         getPlayTrigger: (options) =>
           options.behaviourParams_item_video_playTrigger,
-        onSetPlayingIdx: this.setPlayingIdxState,
+        onSetPlayingIdx: (idx) => this.setState({ playingVideoIdx: idx }),
         supportedItemsFilter: (item) =>
           item.type === 'video' ||
           (item.type === 'image' &&
             (item.id.includes('_placeholder') || item.isVideoPlaceholder)),
+      },
+      {
+        getPlayTrigger: (options) =>
+          options.behaviourParams_item_threeDimensionalScene_playTrigger,
+        onSetPlayingIdx: (idx) => this.setState({ playing3DIdx: idx }),
+        supportedItemsFilter: (item) => item.type === '3d',
       },
     ]);
     const initialState = {
@@ -67,6 +72,7 @@ export class GalleryContainer extends React.Component {
       needToHandleShowMoreClick: false,
       gotFirstScrollEvent: props.activeIndex >= 0,
       playingVideoIdx: -1,
+      playing3DIdx: -1,
       viewComponent: null,
       firstUserInteractionExecuted: false,
       isInHover: false,
@@ -397,13 +403,14 @@ export class GalleryContainer extends React.Component {
       });
     }
     /**
-     * @type {import('../../helpers/scrollHelper/types').ScrollHelperGalleryData}
+     * @type {import('../../helpers/mediaScrollHelper/types').ScrollHelperGalleryData}
      */
     const scrollHelperNewGalleryStructure = {
       galleryStructure: this.galleryStructure,
       galleryWidth: container.galleryWidth,
       scrollBase: container.scrollBase,
       options: options,
+      isSSR: utils.isSSR(),
     };
 
     this.mediaScrollHelper.updateGalleryStructure(
@@ -631,12 +638,6 @@ export class GalleryContainer extends React.Component {
     } else {
       return 'vertical';
     }
-  }
-
-  setPlayingIdxState(playingVideoIdx) {
-    this.setState({
-      playingVideoIdx,
-    });
   }
 
   onGalleryScroll(scrollPosition) {
@@ -999,6 +1000,7 @@ export class GalleryContainer extends React.Component {
           activeIndex={this.props.activeIndex || 0}
           customComponents={this.props.customComponents}
           playingVideoIdx={this.state.playingVideoIdx}
+          playing3DIdx={this.state.playing3DIdx}
           noFollowForSEO={this.props.noFollowForSEO}
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}
           proGalleryRole={this.props.proGalleryRole}

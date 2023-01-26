@@ -17,4 +17,5 @@ export const URL_TYPES = {
   HIGH_RES: 'img',
   LOW_RES: 'thumb',
   VIDEO: 'video',
+  THREE_D: '3d',
 } as const;

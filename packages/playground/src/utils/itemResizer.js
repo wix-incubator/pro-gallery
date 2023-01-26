@@ -70,6 +70,12 @@ const createProcessedVideoUrl = ({ item, originalUrl, requiredHeight }) => {
   }
 };
 
+const createProcessed3dUrl = ({
+  item,
+}) => {
+  return item.metadata.url;
+}
+
 const createProcessedImageUrl = ({
   item,
   originalUrl,
@@ -230,6 +236,8 @@ const createMediaUrl = ({
   };
   if (resizeMethod === 'video') {
     return createProcessedVideoUrl(params);
+  } if (resizeMethod === '3d') {
+    return createProcessed3dUrl(params);
   } else if (isExternalUrl(originalUrl)) {
     return originalUrl;
   } else if (resizeMethod === 'full' && !hasImageToken) {

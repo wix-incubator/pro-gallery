@@ -49,7 +49,8 @@ describe('options - layoutParams_thumbnails_size', () => {
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
           .THUMBNAIL,
       [optionsMap.layoutParams.thumbnails.size]: 300,
-      [optionsMap.layoutParams.thumbnails.spacing]: 10,
+      [optionsMap.layoutParams.thumbnails.spacing]: 46,
+      [optionsMap.layoutParams.thumbnails.marginToGallery]: 37,
       [optionsMap.layoutParams.thumbnails.alignment]:
         GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM,
     });
@@ -58,7 +59,7 @@ describe('options - layoutParams_thumbnails_size', () => {
     const galleryContainer = driver.getContainer();
     const { height } = galleryContainer.props().style;
     // expect to galleryContainer height without the thumbnails to be container.height - thumbnails and margins
-    expect(initialProps.container.height - 300 - 3 * 10).to.eq(height);
+    expect(initialProps.container.height - 300 - 37).to.eq(height);
     driver.detach.proGallery();
   });
 
@@ -68,7 +69,8 @@ describe('options - layoutParams_thumbnails_size', () => {
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
           .THUMBNAIL,
       [optionsMap.layoutParams.thumbnails.size]: 300,
-      [optionsMap.layoutParams.thumbnails.spacing]: 10,
+      [optionsMap.layoutParams.thumbnails.spacing]: 46,
+      [optionsMap.layoutParams.thumbnails.marginToGallery]: 37,
       [optionsMap.layoutParams.thumbnails.alignment]:
         GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT,
     });
@@ -77,7 +79,7 @@ describe('options - layoutParams_thumbnails_size', () => {
     const galleryContainer = driver.getContainer();
     const { width } = galleryContainer.props().style;
     // expect to galleryContainer width without the thumbnails to be container.width - thumbnails and margins
-    expect(initialProps.container.width - 300 - 3 * 10).to.eq(width);
+    expect(initialProps.container.width - 300 - 37).to.eq(width);
     driver.detach.proGallery();
   });
 });

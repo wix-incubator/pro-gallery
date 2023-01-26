@@ -46,6 +46,9 @@ class MediaScrollHelper {
     }
   };
   updateGalleryStructure: UpdateGalleryData = (data) => {
+    if (data.isSSR) {
+      return;
+    }
     for (const scrollHelper of this.scrollHelpers) {
       scrollHelper.updateGalleryStructure(data);
     }

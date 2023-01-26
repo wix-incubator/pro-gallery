@@ -8,6 +8,7 @@ import {
   optionsMap,
 } from 'pro-gallery-lib';
 import MagnifiedImage from './imageWithMagnified.js';
+import ThreeDItem from './3d/3dItemWrapper';
 import withSecondaryMedia from '../hoc/withSecondMedia.js';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
@@ -46,13 +47,14 @@ class ItemView extends React.Component {
     this.activeElement = '';
   }
 
+  itemContainer = React.createRef();
+
   //-------------------------------------------| INIT |--------------------------------------------//
 
   init() {
     this.onItemClick = this.onItemClick.bind(this);
     this.onItemWrapperClick = this.onItemWrapperClick.bind(this);
     this.onItemInfoClick = this.onItemInfoClick.bind(this);
-    this.onContainerKeyUp = this.onContainerKeyUp.bind(this);
     this.onAnchorKeyDown = this.onAnchorKeyDown.bind(this);
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
     this.handleItemMouseUp = this.handleItemMouseUp.bind(this);
@@ -133,22 +135,6 @@ class ItemView extends React.Component {
     );
   }
 
-  onContainerKeyUp(e) {
-    const clickTarget = 'item-container';
-    switch (e.keyCode || e.charCode) {
-      case 32: //space
-      case 13: //enter
-        e.stopPropagation();
-        this.onItemClick(e, clickTarget, false); //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
-        if (this.shouldUseDirectLink()) {
-          this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
-        }
-        return false;
-      default:
-        return true;
-    }
-  }
-
   onAnchorKeyDown(e) {
     // Similar to "onContainerKeyUp()" expect 'shouldUseDirectLink()' part, because we are already on the <a> tag (this.itemAnchor)
     const clickTarget = 'item-container';
@@ -179,6 +165,7 @@ class ItemView extends React.Component {
   onItemInfoClick(e) {
     const clickTarget = 'item-info';
     this.onItemClick(e, clickTarget, false);
+    e.stopPropagation();
   }
 
   onItemClick(e, clickTarget, shouldPreventDefault = true) {
@@ -295,7 +282,8 @@ class ItemView extends React.Component {
       if (
         this.props.options[optionsMap.behaviourParams.item.clickAction] ===
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING &&
-        this.props.type !== 'video'
+        this.props.type !== 'video' &&
+        this.props.type !== '3d'
       ) {
         return true;
       } else if (
@@ -325,7 +313,8 @@ class ItemView extends React.Component {
       if (
         this.props.options[optionsMap.behaviourParams.item.clickAction] ===
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING &&
-        this.props.type !== 'video'
+        this.props.type !== 'video' &&
+        this.props.type !== '3d'
       ) {
         return (
           this.props.options[
@@ -449,6 +438,61 @@ class ItemView extends React.Component {
     );
   }
 
+  get3dItem(imageDimensions, itemHover) {
+    const {
+      calculatedAlt,
+      title,
+      description,
+      id,
+      idx,
+      options,
+      createUrl,
+      createMagnifiedUrl,
+      settings,
+      isPrerenderMode,
+      isTransparent,
+      style,
+      customComponents,
+      scene,
+      activeIndex,
+      isCurrentHover,
+    } = this.props;
+
+    return (
+      <ThreeDItem
+        key="3dItem"
+        imageDimensions={imageDimensions}
+        itemContainer={this.itemContainer}
+        shouldPlay={this.props.idx === this.props.playing3DIdx}
+        actions={{
+          ...this.props.actions,
+          setItemLoaded: this.setItemLoaded,
+          handleItemMouseDown: this.handleItemMouseDown,
+          handleItemMouseUp: this.handleItemMouseUp,
+        }}
+        hasLink={this.itemHasLink()}
+        isCurrentHover={this.simulateHover()}
+        hover={itemHover}
+        activeIndex={activeIndex}
+        calculatedAlt={calculatedAlt}
+        createMagnifiedUrl={createMagnifiedUrl}
+        createUrl={createUrl}
+        customComponents={customComponents}
+        title={title}
+        description={description}
+        id={id}
+        idx={idx}
+        isPrerenderMode={isPrerenderMode}
+        isTransparent={isTransparent}
+        options={options}
+        scene={scene}
+        style={style}
+        settings={settings}
+        isCurrentHover={isCurrentHover}
+      />
+    );
+  }
+
   getVideoItem(imageDimensions, itemHover) {
     return (
       <VideoItemWrapper
@@ -524,6 +568,9 @@ class ItemView extends React.Component {
         break;
       case 'text':
         itemInner = [this.getTextItem(itemStyles), itemHover];
+        break;
+      case '3d':
+        itemInner = this.get3dItem(itemStyles, itemHover);
         break;
       case 'image':
       case 'picture':
@@ -786,9 +833,10 @@ class ItemView extends React.Component {
   }
 
   getItemWrapperStyles() {
-    const { createUrl, options, style, type } = this.props;
-    const { height, width } = style;
-    const styles = {};
+    const { createUrl, options, style, type, offset } = this.props;
+    const { height, width, innerWidth, innerHeight } = style;
+    const { innerTop, innerLeft } = offset;
+    let styles = {};
     if (type === 'text') {
       styles.backgroundColor =
         options[optionsMap.layoutParams.crop.method] !==
@@ -808,10 +856,16 @@ class ItemView extends React.Component {
       GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
         .MAIN_COLOR
     ) {
-      styles.background = `url(${createUrl(
-        GALLERY_CONSTS.urlSizes.PIXEL,
-        GALLERY_CONSTS.urlTypes.HIGH_RES
-      )})`;
+      styles = {
+        ...styles,
+        background: `url(${createUrl(
+          GALLERY_CONSTS.urlSizes.PIXEL,
+          GALLERY_CONSTS.urlTypes.HIGH_RES
+        )})`,
+        backgroundSize: `${innerWidth}px ${innerHeight}px`,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: `top ${innerTop}px left ${innerLeft}px`,
+      };
     }
 
     styles.height = height + 'px';
@@ -978,7 +1032,7 @@ class ItemView extends React.Component {
     changeActiveElementIfNeeded({
       prevProps,
       currentProps: this.props,
-      itemContainer: this.itemContainer,
+      itemContainer: this.itemContainer.current,
     });
   }
 
@@ -1035,12 +1089,11 @@ class ItemView extends React.Component {
         className={this.getItemContainerClass()}
         onContextMenu={(e) => this.onContextMenu(e)}
         id={cssScrollHelper.getSellectorDomId(this.props)}
-        ref={(e) => (this.itemContainer = e)}
+        ref={this.itemContainer}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         onFocus={this.onFocus}
         onBlur={this.onBlur} // The onblur event is the opposite of the onfocus event.
-        onKeyUp={this.onContainerKeyUp}
         tabIndex={this.getItemContainerTabIndex()}
         aria-label={this.getItemAriaLabel()}
         data-hash={hash}
@@ -1050,6 +1103,7 @@ class ItemView extends React.Component {
         data-hook="item-container"
         key={'item-container-' + id}
         style={this.getItemContainerStyles()}
+        onClick={this.onItemWrapperClick}
       >
         {this.getTopInfoElementIfNeeded()}
         {this.getLeftInfoElementIfNeeded()}
@@ -1073,7 +1127,6 @@ class ItemView extends React.Component {
               key={'item-wrapper-' + id}
               id={'item-wrapper-' + id}
               style={this.getItemWrapperStyles()}
-              onClick={this.onItemWrapperClick}
             >
               {this.getItemInner()}
             </div>
