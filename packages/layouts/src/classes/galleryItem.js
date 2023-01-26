@@ -127,6 +127,7 @@ class GalleryItem {
       html: this.html,
       type: this.type,
       isVideoPlaceholder: this.isVideoPlaceholder,
+      videoPlaceholderUrl: this.videoPlaceholderUrl,
       url: this.url,
       alt: this.alt,
       htmlContent: this.htmlContent,
@@ -707,6 +708,14 @@ class GalleryItem {
       this.dto.isVideoPlaceholder ||
       this.metadata.isVideoPlaceholder ||
       this.dto.media_isVideoPlaceholder
+    );
+  }
+
+  get videoPlaceholderUrl() {
+    return (
+      this.dto.videoPlaceholderUrl ||
+      this.metadata.videoPlaceholderUrl ||
+      this.dto.media_videoPlaceholderUrl
     );
   }
 
