@@ -91,14 +91,10 @@ export default function MediaItem<T extends Record<string, any>>(
     return false;
   }, [hasLink, playTrigger, clickAction]);
 
-  const createIframePlayer = (propsOverrides: any = {}) => (
+  const createIframePlayer = () => (
     <IframeVideoPlayer
-      {...props}
       dimensions={imageDimensions}
-      overlay={showPlayButton && !isMediaPlayable && <VideoPlayButton />}
-      extraClasses={props.placeholderExtraClasses.join(' ')}
       url={isVideoPlaceholder ? videoPlaceholderUrl : props.videoUrl}
-      {...propsOverrides}
     />
   );
   const createThumbnail = (propsOverrides: any = {}) =>

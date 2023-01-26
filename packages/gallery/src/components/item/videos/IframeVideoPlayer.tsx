@@ -1,7 +1,6 @@
 import React from 'react';
 
 interface Props {
-  isCustomVideo: boolean;
   url: string;
   dimensions: any;
 }
