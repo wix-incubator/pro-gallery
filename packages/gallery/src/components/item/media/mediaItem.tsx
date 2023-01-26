@@ -55,6 +55,8 @@ export default function MediaItem<T extends Record<string, any>>(
     showPlayButton,
     MediaImplementation,
     enableImagePlaceholder,
+    isVideoPlaceholder,
+    videoPlaceholderUrl,
   } = props;
   const {
     behaviourParams_item_clickAction: clickAction,
@@ -95,7 +97,7 @@ export default function MediaItem<T extends Record<string, any>>(
       dimensions={imageDimensions}
       overlay={showPlayButton && !isMediaPlayable && <VideoPlayButton />}
       extraClasses={props.placeholderExtraClasses.join(' ')}
-      url="https://www.youtube.com/embed/KvZT3etZIsw?autoplay=0&mute=0&controls=1&origin=https%3A%2F%2Fmoshemay6.wixsite.com&playsinline=1&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1&widgetid=1"
+      url={isVideoPlaceholder ? videoPlaceholderUrl : props.videoUrl}
       {...propsOverrides}
     />
   );
