@@ -19,7 +19,10 @@ export default function ThreeDItemWrapper(
   const { options } = props;
   const playTrigger =
     options[optionsMap.behaviourParams.item.threeDimensionalScene.playTrigger];
-
+  const showVideoPlayButton =
+    options[
+      optionsMap.behaviourParams.item.threeDimensionalScene.enablePlayButton
+    ];
   return (
     <MediaItem
       {...props}
@@ -27,7 +30,7 @@ export default function ThreeDItemWrapper(
       playTrigger={playTrigger}
       placeholderExtraClasses={['gallery-item-3d-placeholder']}
       enableImagePlaceholder={true}
-      showPlayButton={true}
+      showPlayButton={showVideoPlayButton}
     />
   );
 }
