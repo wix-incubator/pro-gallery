@@ -3,12 +3,10 @@ export {
   default as defaultOptions,
   populateWithDefaultOptions,
 } from './common/defaultOptions';
-export { default as v3DefaultOptions } from './common/v3DefaultOptions';
 export { default as v4DefaultOptions } from './common/v4DefaultOptions';
-export { default as coreOptions } from './common/coreOptions';
+export { flatV4DefaultOptions } from './common/v4DefaultOptions';
 export { default as dimensionsHelper } from './core/helpers/dimensionsHelper';
 export { default as processLayouts } from './core/helpers/layoutHelper';
-export { featureManager } from './core/helpers/versionsHelper';
 export { addPresetOptions } from './core/presets/presets';
 export {
   migrateOptions,
@@ -31,7 +29,7 @@ export { getLayoutName } from './core/presets/presets';
 export { isInPreset } from './core/presets/presets';
 
 export { default as window } from './common/window/windowWrapper';
-export { default as utils } from './common/utils/index';
+export { default as utils } from './common/utils';
 
 export { viewModeWrapper } from './common/window/viewModeWrapper';
 export { isSiteMode } from './common/window/viewModeWrapper';
@@ -55,6 +53,12 @@ export { CustomComponents } from './common/interfaces/CustomComponents';
 export { ScrollingElement } from './common/interfaces/ScrollingElement';
 export { Structure } from './common/interfaces/Structure';
 export { GalleryProps, GalleryState } from './common/interfaces/galleryTypes';
-export { Options } from './common/interfaces/options';
+export { Options as NestedOptions } from './common/interfaces/options';
+export { FlattenOptions as Options } from './common/interfaces/flatten';
+export {
+  ThreeDimensionalScene,
+  PlayTrigger,
+} from './common/interfaces/behaviourParams';
+export { Settings } from './common/interfaces/Settings';
 export { GalleryRendererProps } from './common/interfaces/galleryRendererTypes';
 export { VirtualizationSettings } from './common/interfaces/virtualization';

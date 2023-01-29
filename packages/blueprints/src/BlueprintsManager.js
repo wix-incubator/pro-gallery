@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import blueprints from './Blueprints';
-import { GALLERY_CONSTS, viewModeWrapper } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap, viewModeWrapper } from 'pro-gallery-lib';
 
 export default class BlueprintsManager {
   constructor({ id }) {
@@ -85,7 +85,7 @@ export default class BlueprintsManager {
         this.createBlueprint({ items });
         // work with the new items...
       }
-    } else if (this.existingBlueprint.options.slideshowLoop) {
+    } else if (this.existingBlueprint.options[optionsMap.behaviourParams.gallery.horizontal.loop] ) { 
       this.duplicateItemsAndCreateBlueprint();
     }
   }
@@ -171,16 +171,14 @@ export default class BlueprintsManager {
 // The following function duplicate the items if necessary for slideshowLoop
   duplicateItemsForSlideshowLoopIfNeeded(params){
     const { items, options } = params;
-    const { slideshowLoop, scrollDirection } = options;
     const { totalItemsCount } = this.currentState;
     const loopThreshold = 30;
-
     // If we've reached last items (no more items in server), and there are less items than the threshold
     const numOfItemsCondition = items.length < loopThreshold && items.length === totalItemsCount;
     // If the gallery is a horizontal scrolling gallery
-    const isHorizontalScrolling = scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
+    const isHorizontalScrolling = options[optionsMap.layoutParams.structure.scrollDirection] === GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].HORIZONTAL;
     // If slideshowLoop is True and both conditions are True as well then we duplicate number of items to reach threshold
-    if (slideshowLoop && numOfItemsCondition && isHorizontalScrolling){
+    if (options[optionsMap.behaviourParams.gallery.horizontal.loop] && numOfItemsCondition && isHorizontalScrolling){
       const duplicateFactor = Math.ceil(loopThreshold / items.length) - 1;
       return {...params, items: this.duplicateGalleryItems({items, duplicateFactor})};
     }

@@ -15,7 +15,7 @@ import {
   Button,
   Divider,
 } from 'antd';
-import {INPUT_TYPES, isInPreset, flatToNested} from 'pro-gallery-lib';
+import {INPUT_TYPES, isInPreset, optionsMap, GALLERY_CONSTS} from 'pro-gallery-lib';
 import ColorPicker from '../ColorPicker/ColorPicker';
 import { settingsManager } from '../../constants/settings';
 
@@ -163,6 +163,29 @@ class JsonEditor extends React.Component {
             {settings.text}
           </Button>
         )
+        case INPUT_TYPES.TRANSFORM:
+          // format x{number}y{number}z{number}
+          const transform = GALLERY_CONSTS.parse3DDimensions(theValue);
+          return (
+            <Row>
+              {['x', 'y', 'z'].map((axis, i) => (
+                <Col span={8} key={i}>
+                  {axis} :
+                  <InputNumber
+                    min={settings.min}
+                    max={settings.max}
+                    step={settings.step || 1}
+                    value={transform[axis]}
+                    onChange={val => {
+                      transform[axis] = val;
+                      this.onFieldChanged(key, `x${transform.x}y${transform.y}z${transform.z}`);
+                    }}
+                    style={{ marginLeft: 5, width: 50 }}
+                  />
+                </Col>
+              ))}
+            </Row>
+          );
       case INPUT_TYPES.TEXT:
       default:
         return (
@@ -187,14 +210,14 @@ class JsonEditor extends React.Component {
     //     return acc;
     //   }, {}) :
     //   styleParams;
-    const flatAndNestedOptions = {...flatToNested(allOptions), ...allOptions}
     // json = removeFieldsNotNeeded(json, selectedLayout);
     const filterFunction = option ?
     ([key]) => key === option :
-    ([key, settings]) =>
+    ([key, settings]) => 
       (!section || settings.section === section) &&
       (!subSection || settings.subSection === subSection) &&
-      (this.props.showAllOptions || settings.isRelevant(flatAndNestedOptions))
+      (this.props.showAllOptions || (settings.isRelevant(allOptions) && !isInPreset(allOptions[optionsMap.layoutParams.structure.galleryLayout], key)))
+    
 
     const activeKey = option ? {activeKey: 'collapse' + option} : {defaultActiveKey: []};
 
@@ -213,7 +236,7 @@ class JsonEditor extends React.Component {
     const isSingleItem = !!option;
 
     const Extra = settings => {
-      if (settings.isRelevant(flatAndNestedOptions)) {
+      if (settings.isRelevant(allOptions)) {
         return null; //<Icon type="check" style={{fontSize: 10, color: '#52c41a'}} />
       } else {
         if (settings.missing) {
@@ -241,8 +264,8 @@ class JsonEditor extends React.Component {
               {!!isSingleItem && (<>
                 <Divider/>
                 <p><b>Section: </b>{settings.section + (settings.subSection ? ` > ${settings.subSection}` : '')}</p>
-                <p><b>Overriden by current Preset: </b>{isInPreset(allOptions.galleryLayout, option) ? 'Yes' : 'No'}</p>
-                <p><b>Relevant in current configuration: </b>{settings.isRelevant(flatAndNestedOptions, false) ? 'Yes' : 'No'}</p>
+                <p><b>Overriden by current Preset: </b>{isInPreset(allOptions[optionsMap.layoutParams.structure.galleryLayout], option) ? 'Yes' : 'No'}</p>
+                <p><b>Relevant in current configuration: </b>{settings.isRelevant(allOptions, false) ? 'Yes' : 'No'}</p>
               </>)}
               {isDev && <>
                 <Divider/>

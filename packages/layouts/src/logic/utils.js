@@ -1,8 +1,4 @@
-import {
-  flattenObject,
-  flatToNested,
-  extendNestedOptionsToIncludeOldAndNew,
-} from 'pro-gallery-lib';
+import { optionsMap } from 'pro-gallery-lib';
 
 class Utils {
   constructor() {
@@ -90,45 +86,48 @@ class Utils {
   addDefaultStyleParams(styleParams) {
     function populateWithDefaultOptions(options) {
       //This will override only undefined values with default values
-      const flatDefault = flattenObject(defaultLayouterSP);
-      const flatOptions = flattenObject(options);
-      const mergedOptions = Object.assign({}, flatDefault, flatOptions);
+      const mergedOptions = Object.assign({}, defaultLayouterSP, options);
       Object.keys(mergedOptions).forEach((key) => {
         if (typeof mergedOptions[key] === 'undefined') {
           mergedOptions[key] = defaultLayouterSP[key];
         }
       });
-      return flatToNested(mergedOptions);
+      return mergedOptions;
     }
     //default styleParams
     const defaultLayouterSP = {
-      layoutParams: {
-        gallerySpacing: 0,
-        cropRatio: 1,
-        repeatingGroupTypes: '',
-      },
-      cubeImages: false,
-      cubeType: 'fill',
-      rotatingCropRatios: '',
-      smartCrop: false,
-      imageMargin: 10,
-      scatter: 0,
-      rotatingScatter: '',
-      chooseBestGroup: true,
-      groupSize: 3,
-      groupTypes: '1,2h,2v,3h,3v,3t,3b,3l,3r',
-      isVertical: true,
-      minItemSize: 120,
-      scrollDirection: 0,
+      [optionsMap.layoutParams.structure.gallerySpacing]: 0,
+      [optionsMap.layoutParams.groups.repeatingGroupTypes]: [],
+      [optionsMap.layoutParams.crop.enable]: false,
+      [optionsMap.layoutParams.crop.method]: 'FILL',
+      [optionsMap.layoutParams.crop.ratios]: [1],
+      [optionsMap.layoutParams.crop.enableSmartCrop]: false,
+      [optionsMap.layoutParams.structure.itemSpacing]: 10,
+      [optionsMap.layoutParams.structure.scatter.randomScatter]: 0,
+      [optionsMap.layoutParams.structure.scatter.manualScatter]: '',
+      [optionsMap.layoutParams.groups.groupByOrientation]: true,
+      [optionsMap.layoutParams.groups.groupSize]: 3,
+      [optionsMap.layoutParams.groups.allowedGroupTypes]: [
+        '1',
+        '2h',
+        '2v',
+        '3h',
+        '3v',
+        '3t',
+        '3b',
+        '3l',
+        '3r',
+      ],
+      [optionsMap.layoutParams.structure.layoutOrientation]: 'VERTICAL',
+      [optionsMap.layoutParams.targetItemSize.minimum]: 120,
+      [optionsMap.layoutParams.structure.scrollDirection]: 'VERTICAL',
       targetItemSize: 500,
-      collageDensity: 50,
+      [optionsMap.layoutParams.groups.density]: 50,
       fixedColumns: 0,
-      columnWidths: '',
+      [optionsMap.layoutParams.structure.columnRatios]: [],
     };
-    const fullMigratedAndOld =
-      extendNestedOptionsToIncludeOldAndNew(styleParams);
-    const populatedWithDefault = populateWithDefaultOptions(fullMigratedAndOld);
-    return extendNestedOptionsToIncludeOldAndNew(populatedWithDefault);
+
+    return populateWithDefaultOptions(styleParams);
   }
 
   convertContainer(container, styleParams) {
@@ -141,21 +140,23 @@ class Utils {
     if (container.width >= 0 && !(container.galleryWidth >= 0)) {
       convertedContainer.galleryWidth =
         container.width +
-        ((styleParams.imageMargin / 2 || 0) -
-          (styleParams.layoutParams.gallerySpacing || 0)) *
+        ((styleParams[optionsMap.layoutParams.structure.itemSpacing] / 2 || 0) -
+          (styleParams[optionsMap.layoutParams.structure.gallerySpacing] ||
+            0)) *
           2;
       delete convertedContainer.width;
     }
     if (container.height >= 0 && !(container.galleryHeight >= 0)) {
       convertedContainer.galleryHeight =
         container.height +
-        ((styleParams.imageMargin / 2 || 0) -
-          (styleParams.layoutParams.gallerySpacing || 0));
+        ((styleParams[optionsMap.layoutParams.structure.itemSpacing] / 2 || 0) -
+          (styleParams[optionsMap.layoutParams.structure.gallerySpacing] || 0));
       delete convertedContainer.height;
     }
     if (
       styleParams.externalInfoHeight >= 0 &&
-      styleParams.scrollDirection === 1
+      styleParams[optionsMap.layoutParams.structure.scrollDirection] ===
+        'HORIZONTAL'
     ) {
       convertedContainer.galleryHeight -= styleParams.externalInfoHeight;
     }

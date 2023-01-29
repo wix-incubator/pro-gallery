@@ -1,5 +1,5 @@
 import React from 'react';
-import { window, utils, GALLERY_CONSTS } from 'pro-gallery-lib';
+import { window, utils, GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import GalleryDebugMessage from './galleryDebugMessage';
 import itemView from '../../item/itemView.js';
 import { getItemsInViewportOrMarginByScrollLocation } from '../../helpers/virtualization';
@@ -41,7 +41,13 @@ class GalleryView extends React.Component {
         case 37: //left
           newIdx = findNeighborItem(
             idx,
-            this.props.options.isRTL ? 'right' : 'left'
+            this.props.options[
+              optionsMap.behaviourParams.gallery.layoutDirection
+            ] ===
+              GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+                .RIGHT_TO_LEFT
+              ? 'right'
+              : 'left'
           );
           break;
         case 40: //down
@@ -60,7 +66,13 @@ class GalleryView extends React.Component {
         case 39: //right
           newIdx = findNeighborItem(
             idx,
-            this.props.options.isRTL ? 'left' : 'right'
+            this.props.options[
+              optionsMap.behaviourParams.gallery.layoutDirection
+            ] ===
+              GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+                .RIGHT_TO_LEFT
+              ? 'left'
+              : 'right'
           );
           break;
         case 27: //esc
@@ -150,7 +162,8 @@ class GalleryView extends React.Component {
     }
     const galleryWidth = this.props.isPrerenderMode
       ? 'auto'
-      : this.props.container.galleryWidth - options.imageMargin;
+      : this.props.container.galleryWidth -
+        options[optionsMap.layoutParams.structure.itemSpacing];
 
     const items = getVisibleItems(galleryStructure.galleryItems, container);
     const itemsWithVirtualizationData =
@@ -183,11 +196,17 @@ class GalleryView extends React.Component {
         id={this.props.galleryContainerId}
         className={
           'pro-gallery inline-styles ' +
-          (options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+          (options[optionsMap.layoutParams.structure.scrollDirection] ===
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+            .HORIZONTAL
             ? ' one-row slider hide-scrollbars '
             : '') +
           (settings?.isAccessible ? ' accessible ' : '') +
-          (options.isRTL ? ' rtl ' : ' ltr ')
+          (options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+            .RIGHT_TO_LEFT
+            ? ' rtl '
+            : ' ltr ')
         }
         style={{
           height: galleryHeight,
@@ -200,7 +219,11 @@ class GalleryView extends React.Component {
           id={`pro-gallery-margin-container-${this.props.id}`}
           className={'pro-gallery-margin-container'}
           style={{
-            margin: options.layoutParams.gallerySpacing + 'px',
+            margin:
+              (this.props.options.galleryMargin ||
+                this.props.options[
+                  optionsMap.layoutParams.structure.gallerySpacing
+                ]) + 'px',
             height: galleryHeight,
             width: galleryWidth,
             overflow: 'visible',
@@ -226,6 +249,7 @@ class GalleryView extends React.Component {
       galleryId: this.props.id,
       gotFirstScrollEvent: this.props.gotFirstScrollEvent,
       playingVideoIdx: this.props.playingVideoIdx,
+      playing3DIdx: this.props.playing3DIdx,
       noFollowForSEO: this.props.noFollowForSEO,
       isPrerenderMode: this.props.isPrerenderMode,
       firstUserInteractionExecuted: this.props.firstUserInteractionExecuted,
@@ -268,7 +292,9 @@ class GalleryView extends React.Component {
       this.props.galleryStructure.height > this.props.container.height;
 
     if (shouldShowButton) {
-      const buttonText = options.loadMoreButtonText || 'Load More';
+      const buttonText =
+        options[optionsMap.behaviourParams.gallery.vertical.loadMore.text] ||
+        'Load More';
       showMoreButton = (
         <div
           className={

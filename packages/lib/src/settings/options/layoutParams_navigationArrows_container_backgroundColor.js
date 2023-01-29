@@ -1,14 +1,18 @@
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
+import optionsMap from '../../core/helpers/optionsMap';
 
 export default {
   title: 'Navigation arrows container background color',
   isRelevant: (options) => {
     return (
-      options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
-      options.showArrows &&
-      options.layoutParams_navigationArrows_container_type ===
-        GALLERY_CONSTS.arrowsContainerStyleType.BOX
+      options[optionsMap.layoutParams.structure.scrollDirection] ===
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .HORIZONTAL &&
+      options[optionsMap.layoutParams.navigationArrows.enable] &&
+      options[optionsMap.layoutParams.navigationArrows.container.type] ===
+        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type]
+          .BOX
     );
   },
   isRelevantDescription:

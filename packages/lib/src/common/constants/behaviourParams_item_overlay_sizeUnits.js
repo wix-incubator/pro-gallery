@@ -1,0 +1,6 @@
+const OVERLAY_SIZE_UNITS = {
+  PIXEL: 'PIXEL',
+  PERCENT: 'PERCENT',
+};
+
+export default OVERLAY_SIZE_UNITS;

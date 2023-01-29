@@ -5,7 +5,7 @@ export class Column {
     this.height = 0;
     this.width = width;
     this.left = left;
-    this.cubedHeight = cubedHeight;
+    this.cubedHeight = cubedHeight; //v5 I think this is not used, not even a possible value to use if its rotating ratios or a function for crop ratio
     this.infoWidth = infoWidth || 0;
   }
 

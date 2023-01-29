@@ -1,5 +1,6 @@
 import React from 'react';
 import itemView from '../item/itemView.js';
+import { optionsMap, GALLERY_CONSTS } from 'pro-gallery-lib';
 
 class GroupView extends React.Component {
   constructor(props) {
@@ -45,7 +46,12 @@ class GroupView extends React.Component {
   }
 
   render() {
-    const { isRTL } = this.props.galleryConfig.options;
+    const { options } = this.props.galleryConfig; //v5 TODO - why is this not from the options in the gallery. this comes from the layouter
+    const isRTL =
+      options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
+        .RIGHT_TO_LEFT;
+
     return this.shouldRender() ? (
       <div
         key={`group_${this.props.idx}_${this.props.items[0].id}`}

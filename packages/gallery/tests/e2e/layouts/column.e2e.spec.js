@@ -1,6 +1,6 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -15,20 +15,26 @@ describe('column - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('column - scrollDirection = vertical', async () => {
+  it('column - layoutParams_structure_scrollDirection = VERTICAL', async () => {
     await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.COLUMN,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.VERTICAL,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].COLUMN,
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
     const page = await driver.grab.screenshot();
     expect(page).toMatchImageSnapshot();
   });
-  it('column - scrollDirection = horizontal', async () => {
+  it('column - layoutParams_structure_scrollDirection = HORIZONTAL', async () => {
     await driver.navigate({
-      galleryLayout: GALLERY_CONSTS.layout.COLUMN,
-      scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].COLUMN,
+      [optionsMap.layoutParams.structure.scrollDirection]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+          .HORIZONTAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);

@@ -1,0 +1,6 @@
+const GROUPS_ORDER = {
+  BY_HEIGHT: 'BY_HEIGHT',
+  LEFT_TO_RIGHT: 'LEFT_TO_RIGHT',
+};
+
+export default GROUPS_ORDER;

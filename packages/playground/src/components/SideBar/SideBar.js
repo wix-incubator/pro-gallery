@@ -13,7 +13,7 @@ import {
 import { Form } from 'antd';
 
 import {
-  List,
+  // List,
   Switch,
   Select,
   InputNumber,
@@ -26,7 +26,6 @@ import {
 import { SECTIONS, settingsManager } from '../../constants/settings';
 import {
   INPUT_TYPES,
-  flattenObject,
 } from 'pro-gallery-lib';
 import { Divider, Alert } from 'antd';
 import comments from './comments';
@@ -34,11 +33,10 @@ import { throttle } from '../../utils/utils';
 import { isValidOption } from '../../constants/options';
 import s from './SideBar.module.scss';
 import { GALLERY_CONSTS } from 'pro-gallery';
-// import { notEligibleReasons, isEligibleForLeanGallery } from 'lean-gallery';
 
 import 'antd/dist/antd.css';
 import { getContainerUrlParams } from "./helper";
-import {utils} from 'pro-gallery-lib';
+import {utils, optionsMap} from 'pro-gallery-lib';
 import {StylesList} from './StyleList';
 
 const Community = React.lazy(() => import('../Community'));
@@ -51,7 +49,6 @@ function SideBar({ items, blueprintsManager, visible }) {
     options,
   } = useGalleryContext(blueprintsManager);
 
-  const flatOptions = flattenObject(options)
   const [searchResult, setSearchResult] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -80,7 +77,7 @@ function SideBar({ items, blueprintsManager, visible }) {
     setSearchResult('');
     setSearchTerm('');
   };
-  const changedOptions = Object.entries(flatOptions).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidOption(styleParam, value, flatOptions)).reduce((obj, [styleParam, value]) => ({ ...obj, [styleParam]: value }), {});
+  const changedOptions = Object.entries(options).filter(([styleParam, value]) => styleParam !== 'galleryLayout' && isValidOption(styleParam, value, options)).reduce((obj, [styleParam, value]) => ({ ...obj, [styleParam]: value }), {});
   const didChangeStyleParams = Object.keys(changedOptions).length > 0;
 
   const isDev = (window.location.hostname.indexOf('localhost') >= 0) || null;
@@ -104,8 +101,8 @@ function SideBar({ items, blueprintsManager, visible }) {
         }}>
           <JsonEditor
             onChange={_setOptions}
-            allOptions={flatOptions}
-            options={flatOptions}
+            allOptions={options}
+            options={options}
             section={settingsManager[searchResult].section}
             option={searchResult}
             expandIcon={() => <CloseOutlined onClick={() => resetSearch()} />}
@@ -121,18 +118,18 @@ function SideBar({ items, blueprintsManager, visible }) {
           <Collapse.Panel header={'* Changed Settings'} key="-1">
             <JsonEditor
               onChange={_setOptions}
-              allOptions={flatOptions}
+              allOptions={options}
               options={changedOptions}
               showAllOptions={true}
             />
           </Collapse.Panel> : null}
         <Collapse.Panel header={SECTIONS.PRESET} key="1">
-          <LayoutPicker selectedLayout={flatOptions.galleryLayout} onSelectLayout={galleryLayout => setOptions('galleryLayout', galleryLayout)} />
+          <LayoutPicker selectedLayout={options[optionsMap.layoutParams.structure.galleryLayout]} onSelectLayout={galleryLayout => setOptions(optionsMap.layoutParams.structure.galleryLayout, galleryLayout)} />
           <Divider />
           <JsonEditor
             onChange={_setOptions}
-            allOptions={flatOptions}
-            options={flatOptions}
+            allOptions={options}
+            options={options}
             section={SECTIONS.PRESET}
             showAllOptions={gallerySettings.showAllStyles}
           />
@@ -144,8 +141,8 @@ function SideBar({ items, blueprintsManager, visible }) {
                 <JsonEditor
                   section={section}
                   onChange={_setOptions}
-                  allOptions={flatOptions}
-                  options={flatOptions}
+                  allOptions={options}
+                  options={options}
                   showAllOptions={gallerySettings.showAllStyles}
                 />
               </Collapse.Panel>
@@ -173,6 +170,8 @@ function SideBar({ items, blueprintsManager, visible }) {
                 <Select.Option value="images">Images Only</Select.Option>
                 <Select.Option value="videos">Videos Only</Select.Option>
                 <Select.Option value="texts">Texts Only</Select.Option>
+                <Select.Option value="threeD">3D</Select.Option>
+                <Select.Option value="mixed3D">Mixed 3D</Select.Option>
                 <Select.Option value="itemsWithSecondaryMedia">Items with Secondary Media</Select.Option>
               </Select>
             </Form.Item>
@@ -261,7 +260,7 @@ function SideBar({ items, blueprintsManager, visible }) {
               <Button shape="circle" icon={<ArrowRightOutlined />} target="_blank" href={`https://pro-gallery.surge.sh/${window.location.search}`} />
             </Form.Item>
             {isDev && <Form.Item label="Simulate Local SSR" labelAlign="left">
-              <Button shape="circle" icon={<BugOutlined />} target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowLeanGallery=true&allowSSR=true&useCustomNavigationPanel=${gallerySettings.useCustomNavigationPanel}&useBlueprints=${gallerySettings.useBlueprints}&${getContainerUrlParams(gallerySettings)}&${Object.entries(flatOptions).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
+              <Button shape="circle" icon={<BugOutlined />} target="_blank" href={`http://localhost:3001/?seed=${Math.floor(Math.random() * 10000)}&allowSSR=true&useCustomNavigationPanel=${gallerySettings.useCustomNavigationPanel}&useBlueprints=${gallerySettings.useBlueprints}&${getContainerUrlParams(gallerySettings)}&${Object.entries(options).reduce((arr, [styleParam, value]) => arr.concat(`${styleParam}=${value}`), []).join('&')}`} />
             </Form.Item>}
           </Form>
         </Collapse.Panel>
@@ -270,25 +269,6 @@ function SideBar({ items, blueprintsManager, visible }) {
           <Community/>
         </Suspense>
         </Collapse.Panel>
-        {isDev && <Collapse.Panel header="Lean Gallery" key="lean">
-          <Form labelCol={{ span: 17 }} wrapperCol={{ span: 3 }}>
-            <Form.Item label="Allow Lean Gallery" labelAlign="left">
-              <Switch checked={!!flatOptions.allowLeanGallery} onChange={e => setOptions('allowLeanGallery', !!e)} />
-            </Form.Item>
-            {
-              // isEligibleForLeanGallery({ items, styles: flatOptions }) ?
-              //   <Alert key={'leanGalleryAllowed'} message={'RENDERING LEAN GALLERY'} type="success" />  
-              //   :
-                <List
-                  size="small"
-                  header="CAN NOT RENDER LEAN GALLERY"
-                  bordered
-                  // dataSource={notEligibleReasons({ items, styles: flatOptions })}
-                  renderItem={item => <List.Item>{item}</List.Item>}
-                />
-            }
-          </Form>
-        </Collapse.Panel>}
         {isDev && <Collapse.Panel header="ToDos" key="todos">
           {comments.map((comment, idx) => <Alert key={idx} message={comment} type="info" />)}
           </Collapse.Panel>}

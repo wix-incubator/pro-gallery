@@ -1,0 +1,6 @@
+const TEXT_BOX_SIZE_UNITS = {
+  PERCENT: 'PERCENT',
+  PIXEL: 'PIXEL',
+};
+
+export default TEXT_BOX_SIZE_UNITS;

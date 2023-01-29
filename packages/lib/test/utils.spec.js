@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import utils from '../src/common/utils/index';
+import utils from '../src/common/utils';
 
 describe('utils isMeaningfulString', () => {
   it('should return false if is not a meaningful string', () => {

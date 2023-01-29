@@ -1,6 +1,6 @@
 import GalleryDriver from '../../drivers/pptrDriver';
 import { toMatchImageSnapshot } from '../../drivers/matchers';
-import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 expect.extend({ toMatchImageSnapshot });
 const testsSensitivityConfig = {
@@ -19,16 +19,19 @@ describe('layoutParams_navigationArrows_type - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  Object.keys(GALLERY_CONSTS.arrowsType).forEach((arrowValue) => {
+  Object.keys(
+    GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.type]
+  ).forEach((arrowValue) => {
     it(`should display ${arrowValue}`, async () => {
       await driver.navigate({
-        galleryLayout: GALLERY_CONSTS.layout.SLIDER,
-        arrowsSize: 150,
-        layoutParams: {
-          navigationArrows: {
-            type: GALLERY_CONSTS.arrowsType[arrowValue],
-          },
-        },
+        [optionsMap.layoutParams.structure.galleryLayout]:
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
+            .SLIDER,
+        [optionsMap.layoutParams.navigationArrows.size]: 150,
+        [optionsMap.layoutParams.navigationArrows.type]:
+          GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.type][
+            arrowValue
+          ],
       });
       await driver.waitFor.hookToBeVisible('item-container');
       const page = await driver.grab.elemScreenshot('.pro-gallery');

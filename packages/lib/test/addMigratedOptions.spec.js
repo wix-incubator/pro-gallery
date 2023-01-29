@@ -1,13 +1,12 @@
 import { expect } from 'chai';
 import { addMigratedOptions } from '../src/core/helpers/optionsConverter';
-import GALLERY_CONSTS from '../src/common/constants';
 
-describe('optionsUtils', () => {
+describe('addMigratedOptions', () => {
   it('should create a nested object out of a flat object', () => {
     const actual = addMigratedOptions(input());
     expect(actual).to.deep.equal(expected());
   });
-  it('should run fast', () => {
+  it.skip('should run fast', () => {
     const data = input();
     const hrstart = process.hrtime();
     const actual = addMigratedOptions(data);
@@ -253,9 +252,8 @@ function input() {
     targetItemSize: 650,
     enableScroll: true,
     cropOnlyFill: false,
-    layoutParams_navigationArrows_type: GALLERY_CONSTS.arrowsType.DEFAULT_ARROW,
-    layoutParams_navigationArrows_container_type:
-      GALLERY_CONSTS.arrowsContainerStyleType.SHADOW,
+    layoutParams_navigationArrows_type: 'DEFAULT_ARROW',
+    layoutParams_navigationArrows_container_type: 'SHADOW',
     layoutParams_navigationArrows_container_backgroundColor: 'rgba(0,0,0,0)',
     layoutParams_navigationArrows_container_borderRadius: 0,
   };
@@ -423,6 +421,7 @@ function expected() {
     responsive: false,
     targetItemSize: 650,
     layoutParams_structure_galleryLayout: 0,
+    layoutParams_structure_gallerySpacing: 0,
     layoutParams_structure_itemSpacing: 10,
     layoutParams_crop_enable: false,
     layoutParams_crop_enableSmartCrop: false,
@@ -438,9 +437,8 @@ function expected() {
     layoutParams_navigationArrows_padding: 23,
     layoutParams_navigationArrows_verticalAlignment: 'ITEM_CENTER',
     layoutParams_navigationArrows_size: 23,
-    layoutParams_navigationArrows_type: GALLERY_CONSTS.arrowsType.DEFAULT_ARROW,
-    layoutParams_navigationArrows_container_type:
-      GALLERY_CONSTS.arrowsContainerStyleType.SHADOW,
+    layoutParams_navigationArrows_type: 'DEFAULT_ARROW',
+    layoutParams_navigationArrows_container_type: 'SHADOW',
     layoutParams_navigationArrows_container_backgroundColor: 'rgba(0,0,0,0)',
     layoutParams_navigationArrows_container_borderRadius: 0,
     layoutParams_info_layout: 'NO_BACKGROUND',

@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "pro-gallery",
-  "version": "4.1.49",
+  "version": "5.0.32",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
@@ -38,10 +38,11 @@
   "dependencies": {
     "@vimeo/player": "2.8.2",
     "hls.js": "^1.1.5",
-    "pro-gallery-blueprints": "4.1.49",
-    "pro-gallery-lib": "4.1.49",
-    "pro-layouts": "4.1.49",
-    "react-player": "^2.6.2"
+    "pro-gallery-blueprints": "5.0.32",
+    "pro-gallery-lib": "5.0.32",
+    "pro-layouts": "5.0.32",
+    "react-player": "^2.6.2",
+    "three": "0.143.0"
   },
   "peerDependencies": {
     "react": "^16.8.6",
@@ -51,6 +52,7 @@
     "@babel/core": "7.16.7",
     "@babel/preset-env": "^7.5.5",
     "@types/react": "^16.14.6",
+    "@types/three": "0.143.1",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
     "babelify": "^10.0.0",

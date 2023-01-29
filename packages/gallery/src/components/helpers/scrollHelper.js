@@ -1,4 +1,4 @@
-import { utils } from 'pro-gallery-lib';
+import { optionsMap, utils } from 'pro-gallery-lib';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import { Deferred } from '../gallery/proGallery/galleryHelpers';
 
@@ -21,12 +21,15 @@ export function scrollToItemImp(scrollParams) {
     slideTransition,
     isContinuousScrolling,
     autoSlideshowContinuousSpeed,
-    imageMargin,
+    itemSpacing,
   } = scrollParams;
 
   const rtlFix = isRTL ? -1 : 1;
   //default = scroll by half the container size
-  if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+  if (
+    scrollDirection ===
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
+  ) {
     from = horizontalElement.scrollLeft * rtlFix;
     to = from + (itemIdx * galleryWidth) / 2;
   } else {
@@ -42,7 +45,9 @@ export function scrollToItemImp(scrollParams) {
 
     const item = items.find((itm) => itm.idx === itemIdx);
     to =
-      scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+      scrollDirection ===
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+        .HORIZONTAL
         ? utils.get(item, 'offset.left')
         : utils.get(item, 'offset.top');
 
@@ -55,9 +60,13 @@ export function scrollToItemImp(scrollParams) {
       return new Promise((res) => res());
     }
 
-    if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+    if (
+      scrollDirection ===
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+        .HORIZONTAL
+    ) {
       //set scroll to place the item in the middle of the component
-      const diff = (galleryWidth - item.width - imageMargin) / 2;
+      const diff = (galleryWidth - item.width - itemSpacing) / 2;
       to -= diff;
       to = Math.max(0, to);
       to = Math.min(to, totalWidth - galleryWidth + scrollMarginCorrection);
@@ -68,7 +77,10 @@ export function scrollToItemImp(scrollParams) {
       }
     }
   }
-  if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+  if (
+    scrollDirection ===
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
+  ) {
     return horizontalCssScrollTo({
       scroller: horizontalElement,
       from: Math.round(from),
@@ -105,12 +117,15 @@ export function scrollToGroupImp(scrollParams) {
     slideTransition,
     isContinuousScrolling,
     autoSlideshowContinuousSpeed,
-    imageMargin,
+    itemSpacing,
   } = scrollParams;
 
   const rtlFix = isRTL ? -1 : 1;
   //default = scroll by half the container size
-  if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+  if (
+    scrollDirection ===
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
+  ) {
     from = horizontalElement.scrollLeft;
     to = from + (groupIdx * galleryWidth) / 2;
     // console.log('[RTL SCROLL] scrollTogroupImp: ', from, to);
@@ -127,7 +142,9 @@ export function scrollToGroupImp(scrollParams) {
 
     const group = groups.find((grp) => grp.idx === groupIdx);
     to =
-      scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+      scrollDirection ===
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+        .HORIZONTAL
         ? utils.get(group, 'left')
         : utils.get(group, 'top');
 
@@ -140,9 +157,13 @@ export function scrollToGroupImp(scrollParams) {
       return new Promise((res) => res());
     }
 
-    if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+    if (
+      scrollDirection ===
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
+        .HORIZONTAL
+    ) {
       //set scroll to place the group in the middle of the component
-      const diff = (galleryWidth - group.width - imageMargin) / 2;
+      const diff = (galleryWidth - group.width - itemSpacing) / 2;
       to -= diff;
       to = Math.max(0, to);
       to = Math.min(to, totalWidth - galleryWidth + scrollMarginCorrection);
@@ -152,7 +173,10 @@ export function scrollToGroupImp(scrollParams) {
       }
     }
   }
-  if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+  if (
+    scrollDirection ===
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
+  ) {
     return horizontalCssScrollTo({
       scroller: horizontalElement,
       from: Math.round(from),
@@ -172,52 +196,6 @@ export function scrollToGroupImp(scrollParams) {
 }
 
 // ----- rendererd / visible ----- //
-function getDistanceFromScreen({
-  offset,
-  scroll,
-  itemStart,
-  itemEnd,
-  screenSize,
-}) {
-  const before = scroll - offset - itemEnd;
-  const after = offset + itemStart - screenSize - scroll;
-  return { before, after };
-}
-function isWithinPaddingVertically({
-  target,
-  scrollBase,
-  top,
-  bottom,
-  screenHeight,
-  padding,
-}) {
-  const res = getDistanceFromScreen({
-    offset: scrollBase || 0,
-    scroll: target.scrollY,
-    itemStart: top,
-    itemEnd: bottom,
-    screenSize: screenHeight,
-  });
-  return res.before < padding && res.after < padding;
-}
-
-function isWithinPaddingHorizontally({
-  target,
-  left,
-  right,
-  screenWidth,
-  padding,
-}) {
-  const res = getDistanceFromScreen({
-    offset: 0,
-    scroll: target.scrollLeft,
-    itemStart: left,
-    itemEnd: right,
-    screenSize: screenWidth,
-  });
-  return res.before < padding && res.after < padding;
-}
-
 function horizontalCssScrollTo({
   scroller,
   from,
@@ -247,16 +225,12 @@ function horizontalCssScrollTo({
   Object.assign(
     scrollerInner.style,
     {
-      transition: `margin ${duration}ms ${slideTransition}`,
-      '-webkit-transition': `margin ${duration}ms ${slideTransition}`,
+      transition: `transform ${duration}ms ${slideTransition}`,
+      '-webkit-transition': `transform ${duration}ms ${slideTransition}`,
     },
-    isRTL
-      ? {
-          marginRight: `${change}px`,
-        }
-      : {
-          marginLeft: `${-1 * change}px`,
-        }
+    {
+      transform: `translateX(${-1 * change}px)`,
+    }
   );
 
   const intervals = 10;
@@ -275,13 +249,9 @@ function horizontalCssScrollTo({
         transition: `none`,
         '-webkit-transition': `none`,
       },
-      isRTL
-        ? {
-            marginRight: 0,
-          }
-        : {
-            marginLeft: 0,
-          }
+      {
+        transform: `translateX(0px)`,
+      }
     );
     scroller.style.removeProperty('scroll-snap-type');
     scroller.scrollLeft = to;
@@ -313,13 +283,9 @@ function animateStopScroll({ scroller, at, isRTL }) {
       transition: `none`,
       '-webkit-transition': `none`,
     },
-    isRTL
-      ? {
-          marginRight: 0,
-        }
-      : {
-          marginLeft: 0,
-        }
+    {
+      transform: `translateX(0px)`,
+    }
   );
   scroller.scrollLeft = at;
   scrollDeffered.resolve(at);
@@ -340,10 +306,10 @@ export function haltScroll({
   clearTimeout(currentScrollEndTimeout);
   const scrollerInner = scroller.firstChild;
   const computedStyle = getComputedStyle(scrollerInner);
-  let margins = isRTL
-    ? computedStyle.getPropertyValue('margin-right')
-    : computedStyle.getPropertyValue('margin-left');
-  margins = Math.round(parseInt(margins, 10));
+  let transform = computedStyle.getPropertyValue('transform');
+  var matrix = new DOMMatrix(transform);
+
+  const margins = Math.round(parseInt(matrix.m41, 10));
   from = from - margins;
 
   animateStopScroll({
@@ -353,5 +319,3 @@ export function haltScroll({
   });
   scrollDeffered.resolve(from);
 }
-
-export { isWithinPaddingHorizontally, isWithinPaddingVertically };

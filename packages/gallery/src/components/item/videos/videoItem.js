@@ -1,5 +1,5 @@
 import React from 'react';
-import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, window, utils, optionsMap } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import getStyle from './getStyle';
 
@@ -115,8 +115,8 @@ class VideoItem extends React.Component {
 
   playVideoIfNeeded(props = this.props) {
     try {
-      const { playingVideoIdx } = props;
-      if (playingVideoIdx === this.props.idx && !this.isPlaying) {
+      const { shouldPlay } = props;
+      if (shouldPlay && !this.isPlaying) {
         this.videoElement =
           this.videoElement ||
           window.document.querySelector(`#video-${this.props.id} video`);
@@ -155,7 +155,9 @@ class VideoItem extends React.Component {
 
     // adding 1 pixel to compensate for the difference we have sometimes from layouter in grid fill
     const isCrop =
-      this.props.options.cubeImages && this.props.options.cubeType === 'fill';
+      this.props.options[optionsMap.layoutParams.crop.enable] &&
+      this.props.options[optionsMap.layoutParams.crop.method] ===
+        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL;
 
     const url = this.props.videoUrl
       ? this.props.videoUrl
@@ -167,7 +169,7 @@ class VideoItem extends React.Component {
     const attributes = {
       controlsList: 'nodownload',
       disablePictureInPicture: 'true',
-      muted: !this.props.options.videoSound,
+      muted: !this.props.options[optionsMap.behaviourParams.item.video.volume],
       preload: 'metadata',
       style: getStyle(isCrop, isWiderThenContainer),
       type: 'video/mp4',
@@ -191,9 +193,13 @@ class VideoItem extends React.Component {
         alt={
           typeof this.props.alt === 'string' ? this.props.alt : 'untitled video'
         }
-        loop={!!this.props.options.videoLoop}
+        loop={!!this.props.options[optionsMap.behaviourParams.item.video.loop]}
         ref={(player) => (this.video = player)}
-        volume={this.props.options.videoSound ? 0.8 : 0}
+        volume={
+          this.props.options[optionsMap.behaviourParams.item.video.volume]
+            ? 0.8
+            : 0
+        }
         playing={this.state.shouldPlay}
         onEnded={() => {
           this.setState({ isPlaying: false });
@@ -211,7 +217,11 @@ class VideoItem extends React.Component {
             videoError: e,
           });
         }}
-        playbackRate={Number(this.props.options.videoSpeed) || 1}
+        playbackRate={
+          Number(
+            this.props.options[optionsMap.behaviourParams.item.video.speed]
+          ) || 1
+        }
         onStart={() => {
           if (!this.state.playedOnce) {
             this.setState({ playedOnce: true });
@@ -235,7 +245,11 @@ class VideoItem extends React.Component {
             this.setState({ shouldPlay: false });
           }
         }}
-        controls={this.props.options.showVideoControls}
+        controls={
+          this.props.options[
+            optionsMap.behaviourParams.item.video.enableControls
+          ]
+        }
         config={{
           file: {
             attributes,
@@ -288,7 +302,7 @@ class VideoItem extends React.Component {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
-    const { videoPlaceholder, hover } = this.props;
+    const { thumbnail, hover } = this.props;
     let baseClassName = [
       'gallery-item-content',
       'gallery-item-visible',
@@ -328,7 +342,7 @@ class VideoItem extends React.Component {
     return (
       <div key={'video-and-hover-container' + this.props.idx}>
         {video}
-        {shouldCreateVideoPlaceholder(this.props.options) && videoPlaceholder}
+        {shouldCreateVideoPlaceholder(this.props.options) && thumbnail}
         {hover}
       </div>
     );
