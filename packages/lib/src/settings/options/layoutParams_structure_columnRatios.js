@@ -3,7 +3,7 @@ import { default as GALLERY_CONSTS } from '../../common/constants';
 import optionsMap from '../../core/helpers/optionsMap';
 
 export default {
-  title: 'Repeating Column ratios (to the gallery width)',
+  title: 'Repeating Column ratios',
   description: `Set the width of each column, proportional to the width of the gallery`,
   isRelevant: (options) =>
     options[optionsMap.layoutParams.structure.layoutOrientation] ===

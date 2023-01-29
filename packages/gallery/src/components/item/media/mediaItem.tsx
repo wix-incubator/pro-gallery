@@ -63,7 +63,7 @@ export default function MediaItem<T extends Record<string, any>>(
     behaviourParams_item_video_playTrigger: playTrigger,
   } = options;
 
-  const isMediaPlayable = useMemo(() => {
+  const isMediaPlayable = /* useMemo( */ () => {
     if (utils.isSSR()) {
       return false;
     }
@@ -89,7 +89,7 @@ export default function MediaItem<T extends Record<string, any>>(
       return true;
     }
     return false;
-  }, [hasLink, playTrigger, clickAction]);
+  }; /* , [hasLink, playTrigger, clickAction]) */
 
   const createIframePlayer = () => (
     <IframeVideoPlayer
