@@ -4,6 +4,7 @@ import { optionsMap, GALLERY_CONSTS, isEditMode } from 'pro-gallery-lib';
 import { VideoPlayButton } from './playButton';
 import { Options, Settings, utils } from 'pro-gallery-lib';
 import ImageItem from '../imageItem';
+import IframeVideoPlayer from '../videos/IframeVideoPlayer';
 
 export type MediaBaseProps = {
   calculatedAlt: string;
@@ -54,6 +55,8 @@ export default function MediaItem<T extends Record<string, any>>(
     showPlayButton,
     MediaImplementation,
     enableImagePlaceholder,
+    isVideoPlaceholder,
+    videoPlaceholderUrl,
   } = props;
   const {
     behaviourParams_item_clickAction: clickAction,
@@ -88,6 +91,12 @@ export default function MediaItem<T extends Record<string, any>>(
     return false;
   }, [hasLink, playTrigger, clickAction]);
 
+  const createIframePlayer = () => (
+    <IframeVideoPlayer
+      dimensions={imageDimensions}
+      url={isVideoPlaceholder ? videoPlaceholderUrl : props.videoUrl}
+    />
+  );
   const createThumbnail = (propsOverrides: any = {}) =>
     enableImagePlaceholder ? (
       <ImageItem
@@ -102,10 +111,11 @@ export default function MediaItem<T extends Record<string, any>>(
       <></>
     );
   const thumbnail = createThumbnail();
-
+  const iframeVideoPlayer = createIframePlayer();
   const placeholder = (
     <>
       {thumbnail}
+      {iframeVideoPlayer}
       {props.hover}
     </>
   );
