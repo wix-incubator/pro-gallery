@@ -175,6 +175,7 @@ export const optionsBySection = {
   ],
   [SECTIONS.ThreeD]: [
     optionsMap.behaviourParams.item.threeDimensionalScene.playTrigger,
+    optionsMap.behaviourParams.item.threeDimensionalScene.enablePlayButton,
     optionsMap.behaviourParams.item.threeDimensionalScene.keepPosterAfterObjectLoad,
     ...Object.values(optionsMap.behaviourParams.item.threeDimensionalScene.controls),
     ...Object.values(optionsMap.behaviourParams.item.threeDimensionalScene.transform),

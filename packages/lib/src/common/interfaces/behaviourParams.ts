@@ -49,6 +49,7 @@ export interface Video {
 export interface ThreeDimensionalScene {
   transform?: Transform;
   controls?: Controls;
+  enablePlayButton?: boolean;
   playTrigger?: PlayTrigger;
 }
 
