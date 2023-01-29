@@ -261,11 +261,8 @@ class ItemView extends React.Component {
   shouldShowHoverOnMobile() {
     if (utils.isMobile()) {
       const {
-        controllers_layoutParams_info_allowDescription: allowDescription,
-        controllers_layoutParams_info_allowTitle: allowTitle,
         [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
           hoveringBehaviour,
-        isStoreGallery,
         alwaysShowHover,
         previewHover,
       } = this.props.options;
@@ -293,8 +290,7 @@ class ItemView extends React.Component {
         hoveringBehaviour !==
           GALLERY_CONSTS[
             optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-          ].NEVER_SHOW &&
-        (allowDescription || allowTitle || isStoreGallery)
+          ].NEVER_SHOW
       ) {
         return true;
       }
