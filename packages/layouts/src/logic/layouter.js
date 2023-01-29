@@ -402,7 +402,7 @@ export default class Layouter {
           this.groupIdx--;
 
           if (
-            this.styleParams.layoutParams.structure.forceFullStrips &&
+            this.styleParams[optionsMap.layoutParams.structure.forceFullStrips] &&
             !this.recommendedGroupsPerStrip?.[newStripIdx]
           ) {
             const placedItems = this.pointer;
