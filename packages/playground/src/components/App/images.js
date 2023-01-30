@@ -2014,7 +2014,36 @@ const monochromeImages = [
   }
 ]
 
-const test3D = [];
+const test3D = [
+  {
+    itemId: "1759xdd2-4160-4912-8a47-7258212c2079",
+    url: window.location.origin + '/3d/pool.glb',
+    metadata: {
+      width: 1920,
+      height: 1080,
+      type: '3d',
+      poster: {
+        url: window.location.origin + '/3d/pool.png',
+        width: 1920,
+        height: 1080,
+      },
+    }
+  },
+  {
+    itemId: "1759xdd2-4160-4912-8a47-7258212c2079",
+    url: window.location.origin + '/3d/screwdriver.glb',
+    metadata: {
+      width: 1920,
+      height: 1080,
+      type: '3d',
+      poster: {
+        url: window.location.origin + '/3d/screwdriver.png',
+        width: 1920,
+        height: 1080,
+      },
+    }
+  }
+];
 
 
 const itemsWithSecondaryMedia = [
