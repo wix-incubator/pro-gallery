@@ -76,6 +76,38 @@ class ImageItem extends React.Component {
     );
   }
 
+  getImageAnimationOverlay() {
+    const { imageDimensions, options, createUrl, id } = this.props;
+
+    let imageAnimationUrl = null;
+    switch (options[optionsMap.behaviourParams.gallery.scrollAnimation]) {
+      case GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation].BLUR:
+        imageAnimationUrl = createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.LOW_RES);
+        break;
+      case GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation].MAIN_COLOR:
+        imageAnimationUrl = createUrl(GALLERY_CONSTS.urlSizes.PIXEL, GALLERY_CONSTS.urlTypes.HIGH_RES);
+        break;
+    }
+
+    return (
+      imageAnimationUrl && (
+        <div
+          key={'image_container-overlay-' + id}
+          data-hook={'image-item-overlay'}
+          style={{
+            ...imageDimensions,
+            backgroundImage: `url(${imageAnimationUrl})`,
+            backgroundSize: 'cover',
+            pointerEvents: 'none',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+          }}
+        ></div>
+      )
+    );
+  }
+
   getImageElement() {
     const { alt, imageDimensions, createUrl, id, idx, settings = {}, options } = this.props;
     const { isHighResImageLoaded } = this.state;
@@ -187,6 +219,8 @@ class ImageItem extends React.Component {
   render() {
     const imageRenderer = this.getImageElement();
     const imageContainerClassNames = `${this.getImageContainerClassNames()} ${this.props.extraClasses || ''}`;
+    const animationOverlay = this.props.overlay || this.getImageAnimationOverlay();
+
     const renderedItem = this.getImageContainer(imageRenderer, imageContainerClassNames, animationOverlay);
     return renderedItem;
   }

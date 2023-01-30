@@ -11,6 +11,7 @@ import processTextDimensions from './textBoxDimensionsHelper'
 import { default as slideAnimation } from '../../settings/options/behaviourParams_gallery_horizontal_slideAnimation';
 import { default as arrowsPosition } from '../../settings/options/layoutParams_navigationArrows_position';
 import optionsMap from './optionsMap';
+import {advancedScrollAnimationConverter} from './scrollAnimationConverter';
 
 export const calcTargetItemSize = (options, smartValue) => { 
   if (
@@ -324,6 +325,13 @@ const cropItemsWithCropOnlyFillParam = (options) => {
   return _options;
 };
 
+const convertSimpleScrollAnimationsToAdvanced = (options) => {
+  const scrollAnimation = options[optionsMap.behaviourParams.gallery.scrollAnimation];
+  if (scrollAnimation === GALLERY_CONSTS.behaviourParams_gallery_scrollAnimation.NO_EFFECT) return options;
+  options[optionsMap.behaviourParams.gallery.advancedScrollAnimation] = advancedScrollAnimationConverter(scrollAnimation);
+  return options;
+}
+
 function processLayouts(options, customExternalInfoRendererExists) {
   let processedOptions = {...options};
   if (utils.isMobile()) {
@@ -345,6 +353,7 @@ function processLayouts(options, customExternalInfoRendererExists) {
     processedOptions = blockVideoControlsOnMouseCursorNavigation(processedOptions);
     processedOptions = blockMouseCursorNavigationOnTouchDevice(processedOptions);
     processedOptions = cropItemsWithCropOnlyFillParam(processedOptions);
+    processedOptions = convertSimpleScrollAnimationsToAdvanced(processedOptions);
 
   return processedOptions;
 }

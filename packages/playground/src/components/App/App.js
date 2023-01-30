@@ -175,13 +175,13 @@ export function App() {
   };
 
   const getOrInitBlueprint = () => {
-    const params = {
-      domId: 'pro-gallery-playground',
-      totalItemsCount: getTotalItemsCount(),
-      dimensions: getContainer(),
-      options: getOptions(),
-      items: getItems(),
-    };
+    // const params = {
+    //   domId: 'pro-gallery-playground',
+    //   totalItemsCount: getTotalItemsCount(),
+    //   dimensions: getContainer(),
+    //   options: getOptions(),
+    //   items: getItems(),
+    // };
     if (blueprint) {
       return blueprint;
     } else if (gallerySettings.shouldUseBlueprintsFromServer) {

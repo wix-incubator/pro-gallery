@@ -17,7 +17,7 @@
     "ci:test-e2e-layouts": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-layouts'",
     "ci:test-e2e-styleParams": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-styleParams'",
     "ci:test-e2e-integration": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-integration'",
-    "build-all-and-start-playground": "npm run start-playground"
+    "build-all-and-start-playground": "cd packages/lib && npm run build && cd ../layouts && npm run build && cd ../blueprints && npm run build && cd ../gallery && npm run build && cd ../playground && npm start"
   },
   "husky": {
     "hooks": {
