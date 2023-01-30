@@ -1,5 +1,7 @@
-import { GalleryProps, GALLERY_CONSTS, optionsMap, utils } from 'pro-gallery-lib';
-import { CSSProperties } from 'react';
+import { default as GALLERY_CONSTS } from '../../common/constants/index';
+import optionsMap from './optionsMap';
+import utils from '../../common/utils';
+import { GalleryProps } from '../../common/interfaces/galleryTypes';
 
 function calculateActiveIndexOffset({ activeIndex, prevActiveIndex, activeIndexOffsetMemory, items }) {
   const itemsLength = items.length;
@@ -19,7 +21,7 @@ function calculateActiveIndexOffset({ activeIndex, prevActiveIndex, activeIndexO
   return activeIndexOffsetMemory;
 }
 
-export function clearGalleryItems(items: any[], galleryItems: any[]): any[] {
+function clearGalleryItems(items: any[], galleryItems: any[]): any[] {
   const clear = (list) =>
     utils
       .uniqueBy(list, 'idx')
@@ -36,7 +38,7 @@ export function clearGalleryItems(items: any[], galleryItems: any[]): any[] {
   });
 }
 
-export function getThumbnailsData({
+function getThumbnailsData({
   options,
   activeIndex,
   items,
@@ -197,7 +199,7 @@ function getThumbnailsStyles({
   height: number;
   activeIndex: number;
   thumbnailSizeWithSpacing: number;
-}): CSSProperties {
+}): any {
   const baseStyle = {
     overflow: 'visible',
     width,
@@ -262,3 +264,14 @@ function getThumbnailLocation({
     [isRTL ? 'bottom' : 'top']: offsetSize,
   };
 }
+
+export default {
+  getThumbnailsData,
+  getThumbnailsContainerSize,
+  getNumberOfThumbnails,
+  getThumbnailsStyles,
+  getThumbnailsContainerMargin,
+  getThumbnailLocation,
+  calculateActiveIndexOffset,
+  clearGalleryItems,
+};

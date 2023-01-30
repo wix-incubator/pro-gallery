@@ -1,10 +1,8 @@
 import React from 'react';
-import { GALLERY_CONSTS, optionsMap, utils } from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap, utils, thumbnailsLogic } from 'pro-gallery-lib';
 import { GalleryUI } from '../../item/media/GalleryUI';
 
 import TextItem from '../../item/textItem.js';
-
-import { getThumbnailsData, clearGalleryItems } from '../../helpers/thumbnailsLogic';
 
 class NavigationPanel extends React.Component {
   constructor(props) {
@@ -17,11 +15,14 @@ class NavigationPanel extends React.Component {
   }
 
   createThumbnails({ navigationPanelPosition, thumbnailAlignment, options, galleryStructure, settings }) {
-    const clearedGalleryItems = clearGalleryItems(this.props.items, this.props.galleryStructure.galleryItems);
+    const clearedGalleryItems = thumbnailsLogic.clearGalleryItems(
+      this.props.items,
+      this.props.galleryStructure.galleryItems
+    );
     const activeIndex = utils.inRange(this.props.activeIndex, clearedGalleryItems.length);
 
     const { horizontalThumbnails, items, thumbnailsMargins, thumbnailsStyle, activeIndexOffsetMemory } =
-      getThumbnailsData({
+      thumbnailsLogic.getThumbnailsData({
         items: this.props.items,
         activeIndex,
         options,
@@ -40,6 +41,7 @@ class NavigationPanel extends React.Component {
       <div
         className={
           'pro-gallery inline-styles thumbnails-gallery ' +
+          (this.props.domOrder ? 'thumbnails-gallery-' + this.props.domOrder : '') +
           (horizontalThumbnails ? ' one-row hide-scrollbars ' : '') +
           (options[optionsMap.behaviourParams.gallery.layoutDirection] ===
           GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT
@@ -48,6 +50,7 @@ class NavigationPanel extends React.Component {
           (settings?.isAccessible ? ' accessible ' : '')
         }
         style={{
+          ...(this.props.isPrerenderMode ? { display: 'block' } : {}),
           width: thumbnailsStyle.width,
           height: thumbnailsStyle.height,
           ...thumbnailsMargins,
@@ -75,12 +78,15 @@ class NavigationPanel extends React.Component {
                 GALLERY_CONSTS.urlTypes.HIGH_RES
               )})`,
               ...location,
+              ...(this.props.isPrerenderMode ? { opacity: 0 } : {}),
             };
             return (
               <div
                 key={'thumbnail-' + thumbnailItem.id + (Number.isInteger(idx) ? '-' + idx : '')}
                 className={
-                  'thumbnailItem' +
+                  'thumbnailItem ' +
+                  'thumbnail-' +
+                  thumbnailItem.idx +
                   (highlighted
                     ? ' pro-gallery-thumbnails-highlighted pro-gallery-highlight' +
                       (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')

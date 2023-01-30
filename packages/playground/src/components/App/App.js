@@ -202,7 +202,10 @@ export function App() {
         getTotalItemsCount,
       });
       blueprintsManager.init({ api: playgroundBlueprintsApi });
-      blueprintsManager.createBlueprint(params, true);
+      blueprintsManager.createBlueprint(
+        { items: getItems(), options: getOptions(), container: getContainer(), totalItemsCount: getTotalItemsCount() },
+        true
+      );
     }
   };
 
@@ -270,11 +273,7 @@ export function App() {
   };
 
   const getContainer = () => {
-    return {
-      scrollBase: 0,
-      ...container,
-      ...(gallerySettings.responsivePreview && resizedDims),
-    };
+    return { scrollBase: 0, ...container, ...(gallerySettings.responsivePreview && resizedDims) };
   };
 
   const getOptions = () => {

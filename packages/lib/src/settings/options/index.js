@@ -33,6 +33,7 @@ import behaviourParams_item_clickAction from './behaviourParams_item_clickAction
 import behaviourParams_item_content_hoverAnimation from './behaviourParams_item_content_hoverAnimation';
 import behaviourParams_item_content_loader from './behaviourParams_item_content_loader';
 import behaviourParams_item_content_magnificationValue from './behaviourParams_item_content_magnificationValue';
+import behaviourParams_item_content_tiltAngleValue from './behaviourParams_item_content_tiltAngleValue';
 import behaviourParams_item_content_placementAnimation from './behaviourParams_item_content_placementAnimation';
 
 import behaviourParams_item_overlay_backgroundColor from './behaviourParams_item_overlay_backgroundColor';
@@ -177,6 +178,7 @@ export default {
   behaviourParams_item_content_hoverAnimation,
   behaviourParams_item_content_loader,
   behaviourParams_item_content_magnificationValue,
+  behaviourParams_item_content_tiltAngleValue,
   behaviourParams_item_content_placementAnimation,
 
   behaviourParams_item_overlay_backgroundColor,

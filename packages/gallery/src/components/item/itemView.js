@@ -740,7 +740,10 @@ class ItemView extends React.Component {
         backgroundPosition: `top ${innerTop}px left ${innerLeft}px`,
       };
     }
-
+    const { TILT } = GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation];
+    if (options[optionsMap.behaviourParams.item.content.hoverAnimation] === TILT) {
+      styles['--tiltAngleValue'] = options[optionsMap.behaviourParams.item.content.tiltAngleValue];
+    }
     styles.height = height + 'px';
     styles.width = width + 'px';
     styles.margin = -options[optionsMap.stylingParams.itemBorderWidth] + 'px';
@@ -779,7 +782,7 @@ class ItemView extends React.Component {
     const contentHoverAnimation = options[optionsMap.behaviourParams.item.content.hoverAnimation];
     const { FADE_IN, EXPAND, SLIDE_UP, SLIDE_RIGHT, SLIDE_DOWN, SLIDE_LEFT } =
       GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation];
-    const { MAIN_COLOR, ZOOM_IN, BLUR, GRAYSCALE, SHRINK, INVERT, COLOR_IN, DARKENED } =
+    const { MAIN_COLOR, ZOOM_IN, TILT, BLUR, GRAYSCALE, SHRINK, INVERT, COLOR_IN, DARKENED } =
       GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation];
 
     const isHovered = this.simulateHover();
@@ -813,6 +816,7 @@ class ItemView extends React.Component {
       //image hover animations
       'main-color-on-hover': contentHoverAnimation === MAIN_COLOR,
       'zoom-in-on-hover': contentHoverAnimation === ZOOM_IN,
+      'tilt-on-hover': contentHoverAnimation === TILT,
       'blur-on-hover': contentHoverAnimation === BLUR,
       'grayscale-on-hover': contentHoverAnimation === GRAYSCALE,
       'shrink-on-hover': contentHoverAnimation === SHRINK,

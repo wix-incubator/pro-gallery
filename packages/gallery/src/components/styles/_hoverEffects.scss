@@ -42,6 +42,19 @@ div.pro-gallery {
       }
     }
 
+    &.tilt-on-hover:not(.hide-hover) {
+
+      .gallery-item-hover:not(.hide-hover), .gallery-item-content, .hover-info-element {
+        transition: transform 1.2s cubic-bezier(.14, .4, .09, .99) !important;
+    }
+      &.simulate-hover,
+      &:hover {
+        .gallery-item-content {
+          transform: scale(0.845) rotate(calc(var(--tiltAngleValue) * 1deg));
+        }
+      }
+    }
+
     &.blur-on-hover:not(.hide-hover) {
       .gallery-item-content {
         transition: filter .4s linear !important;

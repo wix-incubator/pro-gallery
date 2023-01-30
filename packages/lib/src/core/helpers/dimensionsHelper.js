@@ -50,6 +50,10 @@ class DimensionsHelper {
         res.galleryHeight -= this.getThumbnailHeightDelta();
         res.galleryWidth -= this.getThumbnailWidthDelta();
       }
+      if (this.options[optionsMap.layoutParams.thumbnails.enable]) {
+        res.navigationBarHeight = this.getThumbnailHeightDelta() || res.galleryHeight;
+        res.navigationBarWidth = this.getThumbnailWidthDelta() || res.galleryWidth;
+      }
       return res;
     });
   }

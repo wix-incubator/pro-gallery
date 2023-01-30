@@ -185,9 +185,9 @@ class ImageItem extends React.Component {
   }
 
   render() {
+    const imageRenderer = this.getImageElement();
     const imageContainerClassNames = `${this.getImageContainerClassNames()} ${this.props.extraClasses || ''}`;
-
-    const renderedItem = this.getImageContainer(this.getImageElement(), imageContainerClassNames);
+    const renderedItem = this.getImageContainer(imageRenderer, imageContainerClassNames, animationOverlay);
     return renderedItem;
   }
 }
