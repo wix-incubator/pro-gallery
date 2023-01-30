@@ -272,6 +272,7 @@ export function createSceneManager(
           manualPosition
         );
         mixers.push(mixer);
+        model = gltfScene;
         return {
           remove() {
             if (model) {
@@ -318,7 +319,10 @@ export function createSceneManager(
           camera.lookAt(new THREE.Vector3());
         },
         setScale(x, y, z) {
-          scene.scale.set(x ?? 1, y ?? 1, z ?? 1);
+          if (!model) {
+            return;
+          }
+          model.scale.set(x ?? 1, y ?? 1, z ?? 1);
         },
       },
     },
