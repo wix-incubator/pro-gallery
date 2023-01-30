@@ -126,6 +126,7 @@ class NavigationPanel extends React.Component {
                     optionsMap.behaviourParams.item.threeDimensionalScene
                       .enableThumbnailsPlayButton
                   ] && <ThreeDimensionsRotateArrow size={'28'} />}
+
                 {thumbnailItem.type === 'text' ? (
                   <TextItem
                     {...this.props}
