@@ -282,6 +282,7 @@ function input() {
     layoutParams_structure_enableStreching: true,
     layoutParams_structure_groupsOrder: 'BY_HEIGHT',
     layoutParams_structure_columnRatios: [],
+    layoutParams_structure_forceFullStrip: false,
     layoutParams_crop_enable: false,
     layoutParams_crop_enableSmartCrop: false,
     layoutParams_crop_cropOnlyFill: false,
@@ -397,6 +398,7 @@ function expected() {
         enableStreching: true,
         groupsOrder: 'BY_HEIGHT',
         columnRatios: [],
+        forceFullStrip: false,
       },
       crop: {
         enable: false,

@@ -3,7 +3,7 @@ import { default as GALLERY_CONSTS } from '../../common/constants';
 import optionsMap from '../../core/helpers/optionsMap';
 
 export default {
-  title: 'Number of Images Per Row/ Number of Columns',
+  title: 'Number of Columns',
   isRelevantDescription:
     'Set a Vertical gallery ("Scroll Direction" as "Vertical"), set "Layout Orientation" to "Column" and set "Max Group Size" to be "1".',
   isRelevant: (options) =>

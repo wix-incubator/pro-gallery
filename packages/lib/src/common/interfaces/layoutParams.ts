@@ -76,6 +76,7 @@ export interface Structure {
   scatter?: Scatter;
   layoutOrientation?: 'VERTICAL' | 'HORIZONTAL'; //isVertical
   groupsOrder?: 'LEFT_TO_RIGHT' | 'BY_HEIGHT'; //use const? or is this the new const?
+  forceFullStrips?: boolean;
 }
 
 export interface GalleryRatio {

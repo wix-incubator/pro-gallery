@@ -91,6 +91,7 @@ import layoutParams_navigationArrows_verticalAlignment from './layoutParams_navi
 import layoutParams_structure_columnRatios from './layoutParams_structure_columnRatios';
 import layoutParams_structure_enableStreching from './layoutParams_structure_enableStreching';
 import layoutParams_structure_galleryLayout from './layoutParams_structure_galleryLayout';
+import layoutParams_structure_forceFullStrips from './layoutParams_structure_forceFullStrips';
 
 import layoutParams_structure_galleryRatio_includeExternalInfo from './layoutParams_structure_galleryRatio_includeExternalInfo';
 import layoutParams_structure_galleryRatio_value from './layoutParams_structure_galleryRatio_value';
@@ -232,6 +233,7 @@ export default {
   layoutParams_structure_columnRatios,
   layoutParams_structure_enableStreching,
   layoutParams_structure_galleryLayout,
+  layoutParams_structure_forceFullStrips,
 
   layoutParams_structure_galleryRatio_includeExternalInfo,
   layoutParams_structure_galleryRatio_value,

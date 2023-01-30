@@ -1,6 +1,7 @@
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import optionsMap from '../../core/helpers/optionsMap';
+import { createOptions } from '../utils/utils';
 
 export default {
   title: 'Arrange Items by Columns Order',
@@ -15,5 +16,6 @@ export default {
         .VERTICAL,
   isRelevantDescription:
     'Set "Gallery Orientation" to "Columns" & "Scroll Direction" to "Vertical".',
+  options: createOptions(optionsMap.layoutParams.structure.groupsOrder),
   default: 'BY_HEIGHT',
 };

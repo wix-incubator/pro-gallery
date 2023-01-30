@@ -1,26 +1,26 @@
-import { galleryOptions } from 'pro-gallery-lib';
-import {optionsMap} from 'pro-gallery-lib';
+import { galleryOptions } from "pro-gallery-lib";
+import { optionsMap } from "pro-gallery-lib";
 
 export const INPUT_TYPES = {
-  NUMBER: 'NUMBER',
-  BOOLEAN: 'BOOLEAN',
-  OPTIONS: 'OPTIONS',
-  TEXT: 'TEXT',
-  COLOR_PICKER: 'COLOR_PICKER',
-  FONT_PICKER: 'FONT_PICKER',
-  BUTTON: 'BUTTON',
-  MULTISELECT: 'MULTISELECT',
-  MULTIREPEAT: 'MULTIREPEAT',
+  NUMBER: "NUMBER",
+  BOOLEAN: "BOOLEAN",
+  OPTIONS: "OPTIONS",
+  TEXT: "TEXT",
+  COLOR_PICKER: "COLOR_PICKER",
+  FONT_PICKER: "FONT_PICKER",
+  BUTTON: "BUTTON",
+  MULTISELECT: "MULTISELECT",
+  MULTIREPEAT: "MULTIREPEAT",
 };
 
 export const SECTIONS = {
-  PRESET: 'Presets',
-  LAYOUT: 'Layout Customization',
-  ADVANCED: 'Advanced Layout Options',
-  BEHAVIOR: 'Behavior',
-  INFO: 'Item info',
-  DESIGN: 'Design',
-  ANIMATION: 'Animations',
+  PRESET: "Presets",
+  LAYOUT: "Layout Customization",
+  ADVANCED: "Advanced Layout Options",
+  BEHAVIOR: "Behavior",
+  INFO: "Item info",
+  DESIGN: "Design",
+  ANIMATION: "Animations",
   // IMAGE: 'Image',
   VIDEO: 'Videos',
   ThreeD: '3D',
@@ -68,6 +68,7 @@ export const optionsBySection = {
     optionsMap.layoutParams.structure.numberOfColumns,
     optionsMap.layoutParams.groups.numberOfGroupsPerRow,
     optionsMap.layoutParams.structure.groupsOrder,
+    optionsMap.layoutParams.structure.forceFullStrips,
 
     optionsMap.layoutParams.groups.allowedGroupTypes,
     optionsMap.layoutParams.groups.repeatingGroupTypes,
