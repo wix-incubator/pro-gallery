@@ -119,6 +119,7 @@ const defaultOptions = flattenObject({
         enableControls: false,
         speed: 1,
         enablePlayButton: false,
+        enableThumbnailsPlayButton: false,
         enablePlaceholder: true,
       },
       overlay: {
@@ -175,6 +176,7 @@ const defaultOptions = flattenObject({
             optionsMap.behaviourParams.item.threeDimensionalScene.playTrigger
           ].HOVER,
         enablePlayButton: false,
+        enableThumbnailsPlayButton: false,
         enablePlaceholder: true,
       },
     },
