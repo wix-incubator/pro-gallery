@@ -17,6 +17,5 @@ export default {
   isRelevantDescription:
     'Set "Gallery Orientation" to "Columns" & "Scroll Direction" to "Vertical".',
   options: createOptions(optionsMap.layoutParams.structure.groupsOrder),
-
   default: 'BY_HEIGHT',
 };
