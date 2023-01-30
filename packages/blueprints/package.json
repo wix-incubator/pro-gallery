@@ -1,6 +1,6 @@
 {
   "name": "pro-gallery-blueprints",
-  "version": "5.0.33",
+  "version": "5.0.34",
   "private": false,
   "author": {
     "name": "Nir Naor",
@@ -41,8 +41,8 @@
     "typescript": "4.1.2"
   },
   "dependencies": {
-    "pro-gallery-lib": "5.0.33",
-    "pro-layouts": "5.0.33"
+    "pro-gallery-lib": "5.0.34",
+    "pro-layouts": "5.0.34"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
