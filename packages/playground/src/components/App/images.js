@@ -2042,6 +2042,20 @@ const test3D = [
         height: 1080,
       },
     }
+  },
+  {
+    itemId: "1759xdd2-4160-4912-8a47-7258212c2079",
+    url: window.location.origin + '/3d/red_car.glb',
+    metadata: {
+      width: 1920,
+      height: 1080,
+      type: '3d',
+      poster: {
+        url: window.location.origin + '/3d/red_car.png',
+        width: 1920,
+        height: 1080,
+      },
+    }
   }
 ];
 
