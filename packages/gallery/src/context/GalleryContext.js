@@ -1,23 +1,19 @@
 import React from 'react';
 
-export let GalleryContext;
-try {
-  GalleryContext = React.createContext({});
-} catch (e) {
-  GalleryContext = null;
-}
+const GalleryContext = React.createContext({});
+console.log(
+  'Adding context................................................................'
+);
+export const GalleryProvider = ({ children, ...rest }) => {
+  const galleryUI = rest.customComponents.EXPERIMENTAL_customGalleryUI;
+  return (
+    <GalleryContext.Provider value={{ galleryUI }}>
+      {children}
+    </GalleryContext.Provider>
+  );
+};
 
-export class GalleryProvider extends React.Component {
-  render() {
-    if (GalleryContext) {
-      // const value = { ...this.value, ...this.state };
-      return (
-        <GalleryContext.Provider value={this.state}>
-          {this.props.children}
-        </GalleryContext.Provider>
-      );
-    } else {
-      return this.props.children;
-    }
-  }
-}
+export const useGalleryUI = () => {
+  const { galleryUI } = React.useContext(GalleryContext);
+  return galleryUI;
+};

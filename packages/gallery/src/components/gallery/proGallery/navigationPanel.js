@@ -1,6 +1,6 @@
 import React from 'react';
 import { GALLERY_CONSTS, optionsMap, utils } from 'pro-gallery-lib';
-import { VideoPlayButton } from '../../item/media/playButton';
+import { GalleryUI } from '../../item/media/GalleryUI';
 
 import TextItem from '../../item/textItem.js';
 
@@ -124,7 +124,7 @@ class NavigationPanel extends React.Component {
                     options[
                       optionsMap.behaviourParams.item.threeDimensionalScene
                         .enableThumbnailsPlayButton
-                    ])) && <VideoPlayButton size={'28'} />}
+                    ])) && <GalleryUI type={'videoPlayButton'} size={'28'} />}
                 {thumbnailItem.type === 'text' ? (
                   <TextItem
                     {...this.props}

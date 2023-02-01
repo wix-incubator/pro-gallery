@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React, { useMemo } from 'react';
 import { optionsMap, GALLERY_CONSTS, isEditMode } from 'pro-gallery-lib';
-import { VideoPlayButton } from './playButton';
+import { GalleryUI } from './GalleryUI';
 import { Options, Settings, utils } from 'pro-gallery-lib';
 import ImageItem from '../imageItem';
 import IframeVideoPlayer from '../videos/IframeVideoPlayer';
@@ -103,7 +103,10 @@ export default function MediaItem<T extends Record<string, any>>(
         {...props}
         imageDimensions={imageDimensions}
         id={props.idx}
-        overlay={showPlayButton && !isMediaPlayable && <VideoPlayButton />}
+        overlay={
+          showPlayButton &&
+          !isMediaPlayable && <GalleryUI type={'videoPlayButton'} />
+        }
         extraClasses={props.placeholderExtraClasses.join(' ')}
         {...propsOverrides}
       />

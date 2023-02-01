@@ -3,7 +3,7 @@ import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import { clickable } from '../../helpers/mouseCursorPosition';
 import PropTypes from 'prop-types';
-
+console.log('LOADING THE COMP OF VIDEO PLAY  >>>>');
 export const VideoPlayButton = ({ size = '60' }): JSX.Element => (
   <clickable.div
     style={{
@@ -31,3 +31,5 @@ export const VideoPlayButton = ({ size = '60' }): JSX.Element => (
 VideoPlayButton.propTypes = {
   size: PropTypes.string,
 };
+
+export default VideoPlayButton;

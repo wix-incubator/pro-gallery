@@ -211,6 +211,11 @@ export function App() {
   const navigationPanel = (pgGalleryProps) => {
     return <NavigationPanel {...{...pgGalleryProps, panelType: gallerySettings.navPanelType}}/>;
   };
+  const galleryUI = () => {
+    return {
+    'videoPlayButton': (size)=> <span> YO YO YO{size}</span>,
+    }
+  };
 
 
   const getCustomComponents = () => {
@@ -218,6 +223,7 @@ export function App() {
       customHoverRenderer: hoverInfoElement,
       customInfoRenderer: externalInfoElement,
       EXPERIMENTAL_customNavigationPanelRenderer: gallerySettings.useCustomNavigationPanel ? navigationPanel : undefined,
+      EXPERIMENTAL_customGalleryUI: gallerySettings.useCustomGalleryUI ? galleryUI() : undefined,
     };
   }
 
@@ -257,8 +263,8 @@ export function App() {
 
   // console.log('Rendering App: ', {options, items, dimensions, showSide, blueprint, blueprintProps})
   const getKeySettings = () => {
-    const { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, navPanelType, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand} = gallerySettings;
-    return { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, navPanelType, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
+    const { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, useCustomGalleryUI, navPanelType, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand} = gallerySettings;
+    return { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, useCustomGalleryUI, navPanelType, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
   }
 
   let GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProGalleryRenderer : ProGallery);

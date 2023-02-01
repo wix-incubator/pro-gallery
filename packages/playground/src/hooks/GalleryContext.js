@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const GalleryContext = React.createContext([{}, () => {}]);
 
-const GalleryProvider = (props) => {
+const PlaygroundGalleryProvider = (props) => {
   const [viewport, setViewport] = useState({});
 
   const setContext = (x) => {
@@ -15,4 +15,4 @@ const GalleryProvider = (props) => {
   );
 };
 
-export { GalleryContext, GalleryProvider };
+export { GalleryContext, PlaygroundGalleryProvider };
