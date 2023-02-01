@@ -45,6 +45,16 @@ export type MediaImplementationProps<T = {}> = T &
     placeholder: JSX.Element;
   };
 
+const getPlayButtonComponentByItemType = (type: string) => {
+  if (type === 'video') {
+    return <GalleryUI type={'videoPlayButton'} />;
+  } else if (type === '3d') {
+    return <GalleryUI type={'rotateArrow'} />;
+  } else {
+    return <></>;
+  }
+};
+
 export default function MediaItem<T extends Record<string, any>>(
   props: MediaProps<T>
 ): JSX.Element {
@@ -97,6 +107,7 @@ export default function MediaItem<T extends Record<string, any>>(
       url={isVideoPlaceholder ? videoPlaceholderUrl : props.videoUrl}
     />
   );
+
   const createThumbnail = (propsOverrides: any = {}) =>
     enableImagePlaceholder ? (
       <ImageItem
@@ -105,7 +116,8 @@ export default function MediaItem<T extends Record<string, any>>(
         id={props.idx}
         overlay={
           showPlayButton &&
-          !isMediaPlayable && <GalleryUI type={'videoPlayButton'} />
+          !isMediaPlayable &&
+          getPlayButtonComponentByItemType(props.type)
         }
         extraClasses={props.placeholderExtraClasses.join(' ')}
         {...propsOverrides}

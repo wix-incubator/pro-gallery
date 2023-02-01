@@ -115,16 +115,17 @@ class NavigationPanel extends React.Component {
                 style={itemStyle}
                 onClick={() => this.scrollToThumbnail(idx)}
               >
-                {((thumbnailItem.type === 'video' &&
+                {thumbnailItem.type === 'video' &&
                   options[
                     optionsMap.behaviourParams.item.video
                       .enableThumbnailsPlayButton
-                  ]) ||
-                  (thumbnailItem.type === '3d' &&
-                    options[
-                      optionsMap.behaviourParams.item.threeDimensionalScene
-                        .enableThumbnailsPlayButton
-                    ])) && <GalleryUI type={'videoPlayButton'} size={'28'} />}
+                  ] && <GalleryUI type={'videoPlayButton'} size={'28'} />}
+                {thumbnailItem.type === '3d' &&
+                  options[
+                    optionsMap.behaviourParams.item.threeDimensionalScene
+                      .enableThumbnailsPlayButton
+                  ] && <GalleryUI type={'rotateArrow'} size={'28'} />}
+
                 {thumbnailItem.type === 'text' ? (
                   <TextItem
                     {...this.props}
