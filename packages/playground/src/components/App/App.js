@@ -13,7 +13,8 @@ import { BlueprintsManager } from 'pro-gallery-blueprints'
 import BlueprintsApi from './PlaygroundBlueprintsApi'
 import {optionsMap, utils} from 'pro-gallery-lib';
 import { Resizable } from 're-resizable';
-
+import  PlaygroundCustomPlayButton  from '../UI/playgroundCustomPlayButton.tsx';
+import  PlaygroundCustomRotateArrow  from '../UI/playgroundCustomRotateArrow.tsx';
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
@@ -213,8 +214,9 @@ export function App() {
   };
   const galleryUI = () => {
     return {
-    'videoPlayButton': (size)=> <span> YO YO YO{size}</span>,
-    }
+          videoPlayButton: (size)=><PlaygroundCustomPlayButton size={size}/>,
+          rotateArrow: (size)=> <PlaygroundCustomRotateArrow size={size}/>,
+          }
   };
 
 

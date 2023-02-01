@@ -29,7 +29,7 @@ export default function ThreeDItem(props: ThreeDImplementation): JSX.Element {
           props.placeholderExtraClasses,
           isLoaded ? 'three-d-loaded' : 'three-d-loading',
         ].join(' '),
-        overlay: !props.shouldPlay && <GalleryUI type={'rotateArrow'} />,
+        overlay: <GalleryUI type={'rotateArrow'} size={60} />,
       })}
       {props.hover}
     </>

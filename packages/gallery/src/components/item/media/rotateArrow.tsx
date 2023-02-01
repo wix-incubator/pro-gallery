@@ -2,9 +2,13 @@ import React from 'react';
 import PlayBackground from '../../svgs/components/play_background';
 import RotateArrow from '../../svgs/components/rotate_arrow';
 import { clickable } from '../../helpers/mouseCursorPosition';
-import PropTypes from 'prop-types';
 
-export const ThreeDimensionsRotateArrow = ({ size = '60' }): JSX.Element => (
+interface ThreeDimensionsRotateArrowProps {
+  size: number;
+}
+export const ThreeDimensionsRotateArrow = ({
+  size,
+}: ThreeDimensionsRotateArrowProps): JSX.Element => (
   <clickable.div
     style={{
       cursor: 'pointer',
@@ -28,6 +32,4 @@ export const ThreeDimensionsRotateArrow = ({ size = '60' }): JSX.Element => (
   </clickable.div>
 );
 
-ThreeDimensionsRotateArrow.propTypes = {
-  size: PropTypes.string,
-};
+export default ThreeDimensionsRotateArrow;

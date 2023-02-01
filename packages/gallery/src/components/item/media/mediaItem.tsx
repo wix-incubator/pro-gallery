@@ -47,9 +47,9 @@ export type MediaImplementationProps<T = {}> = T &
 
 const getPlayButtonComponentByItemType = (type: string) => {
   if (type === 'video') {
-    return <GalleryUI type={'videoPlayButton'} />;
+    return <GalleryUI type={'videoPlayButton'} size={12} />;
   } else if (type === '3d') {
-    return <GalleryUI type={'rotateArrow'} />;
+    return <GalleryUI type={'rotateArrow'} size={60} />;
   } else {
     return <></>;
   }
@@ -68,6 +68,7 @@ export default function MediaItem<T extends Record<string, any>>(
     isVideoPlaceholder,
     videoPlaceholderUrl,
   } = props;
+  console.log(showPlayButton, 'showPlayButton');
   const {
     behaviourParams_item_clickAction: clickAction,
     behaviourParams_item_video_playTrigger: playTrigger,

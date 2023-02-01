@@ -1,12 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useGalleryUI } from '../../../context/GalleryContext';
 const galleryUiComponents = {
   videoPlayButton: React.lazy(
     () => import(/* webpackChunkName: "defaultPlayButton" */ './playButton')
   ),
+  rotateArrow: React.lazy(
+    () => import(/* webpackChunkName: "defaultRotateArrow" */ './rotateArrow')
+  ),
 };
-export const GalleryUI = ({ type, size }): JSX.Element => {
+interface GalleryUIProps {
+  size: number;
+  type: 'videoPlayButton' | 'rotateArrow';
+}
+
+export const GalleryUI = ({ type, size }: GalleryUIProps): JSX.Element => {
   let Component;
 
   const galleryUI = useGalleryUI();
@@ -22,9 +29,4 @@ export const GalleryUI = ({ type, size }): JSX.Element => {
       <Component size={size} />
     </React.Suspense>
   );
-};
-
-GalleryUI.propTypes = {
-  size: PropTypes.string,
-  type: PropTypes.string,
 };

@@ -326,7 +326,6 @@ class VideoItem extends React.Component {
       baseClassName.push('item-content-regular');
     }
     // eslint-disable-next-line no-unused-vars
-
     const video = (
       <div
         className={baseClassName.join(' ')}
@@ -335,7 +334,7 @@ class VideoItem extends React.Component {
         style={this.getVideoContainerStyles()}
       >
         {this.createPlayerElement()}
-        {this.props.videoPlayButton}
+        {this.state.isPlaying ? null : this.props.videoPlayButton}
       </div>
     );
 
