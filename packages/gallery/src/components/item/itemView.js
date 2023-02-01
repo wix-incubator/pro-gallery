@@ -56,6 +56,7 @@ class ItemView extends React.Component {
     this.onItemWrapperClick = this.onItemWrapperClick.bind(this);
     this.onItemInfoClick = this.onItemInfoClick.bind(this);
     this.onAnchorKeyDown = this.onAnchorKeyDown.bind(this);
+    this.onContainerKeyUp = this.onContainerKeyUp.bind(this);
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
     this.handleItemMouseUp = this.handleItemMouseUp.bind(this);
     this.setItemLoaded = this.setItemLoaded.bind(this);
@@ -1069,6 +1070,22 @@ class ItemView extends React.Component {
     }
   }
 
+  onContainerKeyUp(e) {
+    const clickTarget = 'item-container';
+    switch (e.keyCode || e.charCode) {
+      case 32: //space
+      case 13: //enter
+        e.stopPropagation();
+        this.onItemClick(e, clickTarget, false); //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
+        if (this.shouldUseDirectLink()) {
+          this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
+        }
+        return false;
+      default:
+        return true;
+    }
+  }
+
   composeItem() {
     const { photoId, id, hash, idx, options, type, url } = this.props;
 
@@ -1098,6 +1115,7 @@ class ItemView extends React.Component {
         data-hook="item-container"
         key={'item-container-' + id}
         style={this.getItemContainerStyles()}
+        onKeyUp={this.onContainerKeyUp}
         onClick={this.onItemWrapperClick}
       >
         {this.getTopInfoElementIfNeeded()}
