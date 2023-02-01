@@ -1,6 +1,7 @@
 import React from 'react';
 import { GALLERY_CONSTS, optionsMap, utils } from 'pro-gallery-lib';
 import { VideoPlayButton } from '../../item/media/playButton';
+import { ThreeDimensionsRotateArrow } from '../../item/media/rotateArrow';
 
 import TextItem from '../../item/textItem.js';
 
@@ -115,16 +116,17 @@ class NavigationPanel extends React.Component {
                 style={itemStyle}
                 onClick={() => this.scrollToThumbnail(idx)}
               >
-                {((thumbnailItem.type === 'video' &&
+                {thumbnailItem.type === 'video' &&
                   options[
                     optionsMap.behaviourParams.item.video
                       .enableThumbnailsPlayButton
-                  ]) ||
-                  (thumbnailItem.type === '3d' &&
-                    options[
-                      optionsMap.behaviourParams.item.threeDimensionalScene
-                        .enableThumbnailsPlayButton
-                    ])) && <VideoPlayButton size={'28'} />}
+                  ] && <VideoPlayButton size={'28'} />}
+                {thumbnailItem.type === '3d' &&
+                  options[
+                    optionsMap.behaviourParams.item.threeDimensionalScene
+                      .enableThumbnailsPlayButton
+                  ] && <ThreeDimensionsRotateArrow size={'28'} />}
+
                 {thumbnailItem.type === 'text' ? (
                   <TextItem
                     {...this.props}

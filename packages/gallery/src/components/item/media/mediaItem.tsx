@@ -2,6 +2,7 @@
 import React, { useMemo } from 'react';
 import { optionsMap, GALLERY_CONSTS, isEditMode } from 'pro-gallery-lib';
 import { VideoPlayButton } from './playButton';
+import { ThreeDimensionsRotateArrow } from './rotateArrow';
 import { Options, Settings, utils } from 'pro-gallery-lib';
 import ImageItem from '../imageItem';
 import IframeVideoPlayer from '../videos/IframeVideoPlayer';
@@ -44,6 +45,16 @@ export type MediaImplementationProps<T = {}> = T &
     thumbnailWithOverride(props: ImageItem['props']): JSX.Element;
     placeholder: JSX.Element;
   };
+
+const getPlayButtonComponentByItemType = (type: string) => {
+  if (type === 'video') {
+    return <ThreeDimensionsRotateArrow />;
+  } else if (type === '3d') {
+    return <VideoPlayButton />;
+  } else {
+    return <></>;
+  }
+};
 
 export default function MediaItem<T extends Record<string, any>>(
   props: MediaProps<T>
@@ -97,13 +108,18 @@ export default function MediaItem<T extends Record<string, any>>(
       url={isVideoPlaceholder ? videoPlaceholderUrl : props.videoUrl}
     />
   );
+
   const createThumbnail = (propsOverrides: any = {}) =>
     enableImagePlaceholder ? (
       <ImageItem
         {...props}
         imageDimensions={imageDimensions}
         id={props.idx}
-        overlay={showPlayButton && !isMediaPlayable && <VideoPlayButton />}
+        overlay={
+          showPlayButton &&
+          !isMediaPlayable &&
+          getPlayButtonComponentByItemType(props.type)
+        }
         extraClasses={props.placeholderExtraClasses.join(' ')}
         {...propsOverrides}
       />
