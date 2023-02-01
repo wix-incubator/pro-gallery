@@ -46,6 +46,16 @@ export type MediaImplementationProps<T = {}> = T &
     placeholder: JSX.Element;
   };
 
+const getPlayButtonComponentByItemType = (type: string) => {
+  if (type === 'video') {
+    return <ThreeDimensionsRotateArrow />;
+  } else if (type === '3d') {
+    return <VideoPlayButton />;
+  } else {
+    return <></>;
+  }
+};
+
 export default function MediaItem<T extends Record<string, any>>(
   props: MediaProps<T>
 ): JSX.Element {
@@ -98,16 +108,7 @@ export default function MediaItem<T extends Record<string, any>>(
       url={isVideoPlaceholder ? videoPlaceholderUrl : props.videoUrl}
     />
   );
-  const getPlayButtonComponentByItemType = (type: string) => {
-    console.log(type);
-    if (type === 'video') {
-      return <ThreeDimensionsRotateArrow />;
-    } else if (type === '3d') {
-      return <VideoPlayButton />;
-    } else {
-      return <></>;
-    }
-  };
+
   const createThumbnail = (propsOverrides: any = {}) =>
     enableImagePlaceholder ? (
       <ImageItem
