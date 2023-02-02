@@ -4,6 +4,7 @@ import { utils } from 'pro-gallery-lib';
 import Gallery from './galleryContainer.js';
 
 import '../../../versionLogger';
+import { GalleryProvider } from '../../../context/GalleryContext';
 
 export default class ProGallery extends React.Component {
   constructor() {
@@ -34,9 +35,11 @@ export default class ProGallery extends React.Component {
 
   render() {
     return (
-      <div {...this.containerProps()}>
-        <Gallery {...this.renderProps()} />
-      </div>
+      <GalleryProvider {...this.props}>
+        <div {...this.containerProps()}>
+          <Gallery {...this.renderProps()} />
+        </div>
+      </GalleryProvider>
     );
   }
 }

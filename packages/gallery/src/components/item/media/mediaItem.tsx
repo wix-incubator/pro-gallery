@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React, { useMemo } from 'react';
 import { optionsMap, GALLERY_CONSTS, isEditMode } from 'pro-gallery-lib';
-import { VideoPlayButton } from './playButton';
-import { ThreeDimensionsRotateArrow } from './rotateArrow';
+import { GalleryUI } from './GalleryUI';
 import { Options, Settings, utils } from 'pro-gallery-lib';
 import ImageItem from '../imageItem';
 import IframeVideoPlayer from '../videos/IframeVideoPlayer';
@@ -48,9 +47,9 @@ export type MediaImplementationProps<T = {}> = T &
 
 const getPlayButtonComponentByItemType = (type: string) => {
   if (type === 'video') {
-    return <ThreeDimensionsRotateArrow />;
+    return <GalleryUI type={'videoPlayButton'} size={12} />;
   } else if (type === '3d') {
-    return <VideoPlayButton />;
+    return <GalleryUI type={'rotateArrow'} size={60} />;
   } else {
     return <></>;
   }
@@ -69,6 +68,7 @@ export default function MediaItem<T extends Record<string, any>>(
     isVideoPlaceholder,
     videoPlaceholderUrl,
   } = props;
+  console.log(showPlayButton, 'showPlayButton');
   const {
     behaviourParams_item_clickAction: clickAction,
     behaviourParams_item_video_playTrigger: playTrigger,
