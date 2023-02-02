@@ -20,7 +20,6 @@ class VideoItemImplementation extends React.Component<MediaImplementationProps> 
     const shouldForceLoadVideo = useTransparentPlayButtonAndForceLoadVideo(
       this.props
     );
-    console.log(this.props.showPlayButton, 'showPlayButton');
     return (
       <VideoItem
         {...this.props}
