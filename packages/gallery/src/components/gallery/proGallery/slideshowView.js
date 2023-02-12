@@ -17,7 +17,7 @@ import NavigationPanel, {
 import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
 import { NavigationArrows } from './navigationArrows.js';
 import { shouldRenderNavArrows } from '../../helpers/navigationArrowUtils.js';
-import { toggleDeckAnimation } from './scrollLessAnimationHelper';
+import { toggleScrollLessAnimation } from './scrollLessAnimationHelper';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
@@ -188,13 +188,9 @@ class SlideshowView extends React.Component {
     const nextItem = await this.next(props);
     if (
       this.props.isScrollLessGallery &&
-      this.props.options.behaviourParams_gallery_horizontal_slideAnimation ===
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.gallery.horizontal.slideAnimation
-        ].DECK &&
       nextItem === this.props.totalItemsCount
     ) {
-      toggleDeckAnimation(() => this.onScrollToItemOrGroup(0, false));
+      toggleScrollLessAnimation(() => this.onScrollToItemOrGroup(0, false));
     }
   }
 

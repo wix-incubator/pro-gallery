@@ -34,18 +34,18 @@ export const getSlideAnimationClassNames = (
   }
 };
 
-export const toggleDeckAnimation = (callback) => {
+export const toggleScrollLessAnimation = (callback) => {
   const toggleDeckTransitions = (isPaused) => {
     ['.gallery-item-wrapper', '.gallery-item-common-info-outer'].forEach(
       (className) => {
         if (isPaused) {
           [...document.querySelectorAll(className)].forEach((item) => {
-            item.classList?.add('deck-disabled-transition');
+            item.classList?.add('disabled-transition');
           });
         } else {
           [...document.querySelectorAll(className)].forEach((item) => {
-            item?.info?.offsetHeight;
-            item?.info?.classList?.remove('deck-disabled-transition');
+            item.offsetHeight;
+            item.classList?.remove('disabled-transition');
           });
         }
       }
