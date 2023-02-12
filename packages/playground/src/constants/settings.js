@@ -105,7 +105,6 @@ export const optionsBySection = {
     optionsMap.behaviourParams.item.video.enableThumbnailsPlayButton,
     optionsMap.behaviourParams.item.video.enableControls,
     optionsMap.behaviourParams.item.video.enablePlaceholder,
-
     optionsMap.behaviourParams.item.content.placementAnimation,
     optionsMap.behaviourParams.item.content.loader,
     optionsMap.behaviourParams.item.content.magnificationValue,
@@ -113,6 +112,7 @@ export const optionsBySection = {
     optionsMap.behaviourParams.item.secondaryMedia.behaviour,
     optionsMap.behaviourParams.item.secondaryMedia.trigger,
     optionsMap.behaviourParams.item.secondaryMedia.behaviour,
+    optionsMap.behaviourParams.gallery.horizontal.loop,
   ],
   [SECTIONS.DESIGN]: [
 
