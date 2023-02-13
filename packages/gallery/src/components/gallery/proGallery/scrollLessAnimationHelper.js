@@ -22,3 +22,29 @@ export const getSlideAnimationClassNames = (
       return {};
   }
 };
+
+export const toggleScrollLessAnimation = (callback) => {
+  const toggleDeckTransitions = (isPaused) => {
+    console.log('toggleScrollLessAnimation: ', isPaused);
+    ['.gallery-item-wrapper', '.gallery-item-common-info-outer'].forEach(
+      (className) => {
+        if (isPaused) {
+          [...document.querySelectorAll(className)].forEach((item) => {
+            item.classList?.add('disabled-transition');
+          });
+        } else {
+          [...document.querySelectorAll(className)].forEach((item) => {
+            item.offsetHeight;
+            item.classList?.remove('disabled-transition');
+          });
+        }
+      }
+    );
+  };
+
+  setTimeout(() => {
+    callback && callback();
+    toggleDeckTransitions(true);
+    toggleDeckTransitions(false);
+  }, 600);
+};
