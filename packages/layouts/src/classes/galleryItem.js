@@ -563,7 +563,8 @@ class GalleryItem {
 
   get isCropped() {
     return (
-      this.cubeImages && this.cubeType === GALLERY_CONSTS.resizeMethods.FILL
+      this.cubeImages &&
+      this.cubeTypeResizeMethod === GALLERY_CONSTS.resizeMethods.FILL
     );
   }
 
