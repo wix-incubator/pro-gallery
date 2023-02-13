@@ -819,6 +819,7 @@ div.pro-gallery {
 }
 
 .fade {
+  display: block;
   transition: opacity 600ms ease;
 }
 
@@ -831,21 +832,21 @@ div.pro-gallery {
 }
 
 .deck-before {
-  display: 'block';
+  display: block;
   z-index: 1;
   transition: transform 600ms ease;
   transform: translateX(-(100%));
 }
 
 .deck-before-rtl {
-  display: 'block';
+  display: block;
   z-index: 1;
   transition: transform 600ms ease;
   transform: translateX(100%);
 }
 
 .deck-current {
-  display: 'block';
+  display: block;
   z-index: 0;
   transition: transform 600ms ease;
   transform: translateX(0);
@@ -855,8 +856,8 @@ div.pro-gallery {
   }
 }
 
-.deck-behind {
-  display: 'block';
+.deck-after {
+  display: block;
   transition: opacity .2s ease 600ms;
   z-index: -1;
   opacity: 0;

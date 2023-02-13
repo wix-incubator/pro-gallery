@@ -21,7 +21,7 @@ export const getSlideAnimationClassNames = (
       optionsMap.behaviourParams.gallery.horizontal.slideAnimation
     ].DECK: {
       if (activeIndex < idx) {
-        return `deck-behind ${overrideDeckTransition ? 'override' : ''}`;
+        return `deck-after ${overrideDeckTransition ? 'override' : ''}`;
       } else if (activeIndex === idx) {
         return `deck-current ${overrideDeckTransition ? 'override' : ''}`;
       } else if (activeIndex > idx) {
