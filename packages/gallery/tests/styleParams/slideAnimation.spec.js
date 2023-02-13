@@ -6,13 +6,9 @@ import { mergeNestedObjects } from 'pro-gallery-lib';
 
 describe('options - slideAnimation', () => {
   let initialProps;
-  const notCurrentFadeAnimationStylesMock = {
-    opacity: 0,
-    display: 'block',
-  };
-  const currentFadeAnimationStylesMock = {
-    opacity: 1,
-    display: 'block',
+  const FADE_CLASSED = {
+    VISIBLE: 'fade-visible',
+    HIDDEN: 'fade-hidden',
   };
 
   const getRelevantStylesForCompare = (styles) => {
@@ -45,19 +41,13 @@ describe('options - slideAnimation', () => {
         .selector('[data-hook="item-wrapper"]')
         .at(0);
       const nextItem = driver.find.selector('[data-hook="item-wrapper"]').at(1);
-      expect(getRelevantStylesForCompare(currentItem.props().style)).toEqual(
-        currentFadeAnimationStylesMock
-      );
-      expect(getRelevantStylesForCompare(nextItem.props().style)).toEqual(
-        notCurrentFadeAnimationStylesMock
-      );
+      expect(currentItem.hasClass(FADE_CLASSED.VISIBLE)).toBeTruthy();
+      expect(nextItem.hasClass(FADE_CLASSED.HIDDEN)).toBeTruthy();
       const button = driver.find.hook('nav-arrow-next');
       button.simulate('click');
       await driver.update(400);
       const prevItem = driver.find.selector('[data-hook="item-wrapper"]').at(0);
-      expect(getRelevantStylesForCompare(prevItem.props().style)).toEqual(
-        notCurrentFadeAnimationStylesMock
-      );
+      expect(prevItem.hasClass(FADE_CLASSED.HIDDEN)).toBeTruthy();
       expect(1).toEqual(1);
     });
     it('should not have Fade animation styles when "slideAnimations" is "Scroll"', async () => {
@@ -95,19 +85,13 @@ describe('options - slideAnimation', () => {
       await driver.update();
       const currentItem = driver.find.hook('item-wrapper').at(0);
       const nextItem = driver.find.hook('item-wrapper').at(1);
-      expect(
-        getRelevantStylesForCompare(currentItem.props().style)
-      ).toMatchObject(currentFadeAnimationStylesMock);
-      expect(getRelevantStylesForCompare(nextItem.props().style)).toMatchObject(
-        notCurrentFadeAnimationStylesMock
-      );
+      expect(currentItem.hasClass(FADE_CLASSED.VISIBLE)).toBeTruthy();
+      expect(nextItem.hasClass(FADE_CLASSED.HIDDEN)).toBeTruthy();
       const button = driver.find.hook('nav-arrow-next');
       button.simulate('click');
       await driver.update(400);
       const prevItem = driver.find.hook('item-wrapper').at(0);
-      expect(getRelevantStylesForCompare(prevItem.props().style)).toMatchObject(
-        notCurrentFadeAnimationStylesMock
-      );
+      expect(prevItem.hasClass(FADE_CLASSED.HIDDEN)).toBeTruthy();
     });
     it('should not have Fade animation styles when "slideAnimations" is "Scroll"', async () => {
       initialProps.options = mergeNestedObjects(initialProps.options, {
@@ -117,9 +101,7 @@ describe('options - slideAnimation', () => {
       driver.mount.proGallery(initialProps);
       await driver.update();
       const item = driver.find.hook('item-wrapper').at(0);
-      expect(item.props().style).not.toMatchObject(
-        currentFadeAnimationStylesMock
-      );
+      expect(item.hasClass(FADE_CLASSED.VISIBLE)).toBeFalsy();
     });
   });
 });

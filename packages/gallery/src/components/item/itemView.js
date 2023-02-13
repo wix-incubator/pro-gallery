@@ -20,11 +20,8 @@ import {
   getImageStyle,
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
-import {
-  getSlideAnimationStyles,
-  getCustomInfoRendererProps,
-  getLinkParams,
-} from './pure';
+import { getCustomInfoRendererProps, getLinkParams } from './pure';
+import { getSlideAnimationClassNames } from '../gallery/proGallery/scrollLessAnimationHelper';
 
 const ImageWithSecondMedia = withSecondaryMedia(MagnifiedImage);
 const TextWithSecondMedia = withSecondaryMedia(TextItem);
@@ -608,14 +605,13 @@ class ItemView extends React.Component {
     const overrideDeckTransition = GALLERY_CONSTS.isLayout('SLIDESHOW')(
       this.props.options
     );
-    const slideAnimationStyles = getSlideAnimationStyles(
-      this.props,
-      overrideDeckTransition
-    );
 
     info = (
       <div
-        className={'gallery-item-common-info-outer '}
+        className={
+          'gallery-item-common-info-outer ' +
+          getSlideAnimationClassNames(this.props, overrideDeckTransition)
+        }
         style={{
           ...getOuterInfoStyle(
             placement,
@@ -623,7 +619,6 @@ class ItemView extends React.Component {
             style.height,
             options.textBoxHeight
           ),
-          ...slideAnimationStyles,
         }}
       >
         <div
@@ -779,12 +774,7 @@ class ItemView extends React.Component {
     styles.width = width + 'px';
     styles.margin = -options.itemBorderWidth + 'px';
 
-    const itemWrapperStyles = {
-      ...styles,
-      ...getSlideAnimationStyles(this.props),
-    };
-
-    return itemWrapperStyles;
+    return styles;
   }
 
   getItemAriaLabel() {
@@ -887,6 +877,8 @@ class ItemView extends React.Component {
     if (type === 'text') {
       classes.push('gallery-item-wrapper-text');
     }
+
+    classes.push(getSlideAnimationClassNames(this.props));
     return classes.join(' ');
   }
 
