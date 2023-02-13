@@ -867,6 +867,10 @@ div.pro-gallery {
   }
 }
 
+.disabled-transition {
+  transition: none !important;
+}
+
 @keyframes changing_background {
   0% {
     background-color: rgba(241, 241, 241, 0.2);
