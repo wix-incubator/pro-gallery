@@ -34,6 +34,7 @@ export const toggleScrollLessAnimation = (callback) => {
           });
         } else {
           [...document.querySelectorAll(className)].forEach((item) => {
+            // item.offsetHeight; is to trigger a reflow and flush all the CSS changes.
             item.offsetHeight;
             item.classList?.remove('disabled-transition');
           });
