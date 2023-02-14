@@ -21,7 +21,7 @@
     "firebase": "^8.2.4",
     "image-client-api": "^1.3130.0",
     "lodash.clonedeep": "^4.5.0",
-    "moment": "2.29.2",
+    "moment": "2.29.4",
     "pro-gallery": "5.0.42",
     "pro-gallery-blueprints": "5.0.42",
     "pro-gallery-lib": "5.0.42",
