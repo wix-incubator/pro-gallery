@@ -3094,10 +3094,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/three@npm:0.143.1":
+  version: 0.143.1
+  resolution: "@types/three@npm:0.143.1"
+  dependencies:
+    "@types/webxr": "*"
+  checksum: b7a1a0b54f99d3af178666d8a605a6430dc50b198e478050c959c1841a0ed5acb1730b63a578d9b611ec5e0131058cf137bdc0c131eb335c0de6319b96fbb965
+  languageName: node
+  linkType: hard
+
 "@types/unist@npm:*":
   version: 2.0.6
   resolution: "@types/unist@npm:2.0.6"
   checksum: 8690789328e8e10c487334341fcf879fd49f8987c98ce49849f9871052f95d87477735171bb661e6f551bdb95235e015dfdad1867ca1d9b5b88a053f72ac40eb
+  languageName: node
+  linkType: hard
+
+"@types/webxr@npm:*":
+  version: 0.5.1
+  resolution: "@types/webxr@npm:0.5.1"
+  checksum: 84544dcf2689df22066a536e061b8b1ed3c89e6acf67b3b9a899b49b991b6eec7b41428cba3a8c4cb7e0794f705ea8e50af1a7f9e2eff50f9ff742f4ba92f213
   languageName: node
   linkType: hard
 
@@ -12513,6 +12529,7 @@ __metadata:
     "@babel/core": 7.16.7
     "@babel/preset-env": ^7.5.5
     "@types/react": ^16.14.6
+    "@types/three": 0.143.1
     "@typescript-eslint/eslint-plugin": ^4.8.1
     "@typescript-eslint/parser": ^4.8.1
     "@vimeo/player": 2.8.2
@@ -12539,6 +12556,7 @@ __metadata:
     react-player: ^2.6.2
     sass: ^1.29.0
     sinon: ^6.0.0
+    three: 0.143.0
     ts-jest: ^26.4.4
     tslib: ^2.1.0
     typescript: 4.1.2
@@ -15385,6 +15403,13 @@ __metadata:
   version: 0.2.0
   resolution: "text-table@npm:0.2.0"
   checksum: 02805740c12851ea5982686810702e2f14369a5f4c5c40a836821e3eefc65ffeec3131ba324692a37608294b0fd8c1e55a2dd571ffed4909822787668ddbee5c
+  languageName: node
+  linkType: hard
+
+"three@npm:0.143.0":
+  version: 0.143.0
+  resolution: "three@npm:0.143.0"
+  checksum: bd9b7560b17e225b863c6713543010cf658e23ecb7151f20403d0e7eb718e001d5525e540fa9e80cc8dce43f40857e6e52ae9faa338074155ed07be3302c3642
   languageName: node
   linkType: hard
 
