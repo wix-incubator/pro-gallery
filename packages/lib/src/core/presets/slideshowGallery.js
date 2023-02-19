@@ -42,7 +42,6 @@ const fixToSlideshow = (options) => {
   presetOptions[optionsMap.layoutParams.targetItemSize.value] = 550;
 
   presetOptions[optionsMap.layoutParams.structure.numberOfColumns] = 1;
-  presetOptions[optionsMap.layoutParams.thumbnails.enable] = false;
   presetOptions[
     optionsMap.behaviourParams.gallery.horizontal.blockScroll
   ] = false;
