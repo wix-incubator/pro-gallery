@@ -115,8 +115,8 @@ class VideoItem extends React.Component {
 
   playVideoIfNeeded(props = this.props) {
     try {
-      const { playingVideoIdx } = props;
-      if (playingVideoIdx === this.props.idx && !this.isPlaying) {
+      const { shouldPlay } = props;
+      if (shouldPlay && !this.isPlaying) {
         this.videoElement =
           this.videoElement ||
           window.document.querySelector(`#video-${this.props.id} video`);
@@ -302,7 +302,7 @@ class VideoItem extends React.Component {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
-    const { videoPlaceholder, hover } = this.props;
+    const { thumbnail, hover } = this.props;
     let baseClassName = [
       'gallery-item-content',
       'gallery-item-visible',
@@ -326,7 +326,6 @@ class VideoItem extends React.Component {
       baseClassName.push('item-content-regular');
     }
     // eslint-disable-next-line no-unused-vars
-
     const video = (
       <div
         className={baseClassName.join(' ')}
@@ -335,14 +334,14 @@ class VideoItem extends React.Component {
         style={this.getVideoContainerStyles()}
       >
         {this.createPlayerElement()}
-        {this.props.videoPlayButton}
+        {this.state.isPlaying ? null : this.props.videoPlayButton}
       </div>
     );
 
     return (
       <div key={'video-and-hover-container' + this.props.idx}>
         {video}
-        {shouldCreateVideoPlaceholder(this.props.options) && videoPlaceholder}
+        {shouldCreateVideoPlaceholder(this.props.options) && thumbnail}
         {hover}
       </div>
     );

@@ -127,9 +127,9 @@ class GalleryItem {
       html: this.html,
       type: this.type,
       isVideoPlaceholder: this.isVideoPlaceholder,
+      videoPlaceholderUrl: this.videoPlaceholderUrl,
       url: this.url,
       alt: this.alt,
-      calculatedAlt: this.calculatedAlt,
       htmlContent: this.htmlContent,
       directLink: this.directLink,
       directShareLink: this.directShareLink,
@@ -152,6 +152,7 @@ class GalleryItem {
       videoUrl: this.videoUrl,
       isExternalVideo: this.isExternalVideo,
       hasSecondaryMedia: this.hasSecondaryMedia,
+      scene: this.scene,
       ...config,
     };
     if (this.hasSecondaryMedia) {
@@ -274,6 +275,10 @@ class GalleryItem {
     const urls = {};
     let imgUrl = this.url;
 
+    urls[GALLERY_CONSTS.urlTypes.THREE_D] = () => this.url;
+    if (this.is3D) {
+      imgUrl = this.poster.url;
+    }
     if (this.isText) {
       return Object.assign(
         {},
@@ -558,7 +563,8 @@ class GalleryItem {
 
   get isCropped() {
     return (
-      this.cubeImages && this.cubeType === GALLERY_CONSTS.resizeMethods.FILL
+      this.cubeImages &&
+      this.cubeTypeResizeMethod === GALLERY_CONSTS.resizeMethods.FILL
     );
   }
 
@@ -653,6 +659,10 @@ class GalleryItem {
     );
   }
 
+  get scene() {
+    return this.metadata.scene;
+  }
+
   get qualities() {
     return this.metadata.qualities;
   }
@@ -685,6 +695,8 @@ class GalleryItem {
       case 'html':
       case 'text':
         return 'text';
+      case '3d':
+        return '3d';
       case 'i':
       case 'image':
       default:
@@ -700,13 +712,11 @@ class GalleryItem {
     );
   }
 
-  get calculatedAlt() {
+  get videoPlaceholderUrl() {
     return (
-      (utils.isMeaningfulString(this.alt) && this.alt) ||
-      this.title ||
-      this.description ||
-      this.fileName ||
-      ''
+      this.dto.videoPlaceholderUrl ||
+      this.metadata.videoPlaceholderUrl ||
+      this.dto.media_videoPlaceholderUrl
     );
   }
 
@@ -715,7 +725,9 @@ class GalleryItem {
   }
 
   get alt() {
-    return this.metadata.alt || '';
+    return (
+      (utils.isMeaningfulString(this.metadata.alt) && this.metadata.alt) || ''
+    );
   }
 
   set alt(value) {
@@ -985,6 +997,10 @@ class GalleryItem {
 
   get isVideo() {
     return this.type === 'video';
+  }
+
+  get is3D() {
+    return this.type === '3d';
   }
 
   get isVisible() {

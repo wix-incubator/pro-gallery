@@ -3,12 +3,12 @@ import './utils/polyfills';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {App} from './components/App/App';
-import {GalleryProvider} from './hooks/GalleryContext';
+import {PlaygroundGalleryProvider} from './hooks/GalleryContext';
 
 const Root = () => (
-  <GalleryProvider>
+  <PlaygroundGalleryProvider>
     <App />
-  </GalleryProvider>
+  </PlaygroundGalleryProvider>
 );
 
 ReactDOM.render(<Root />, document.getElementById('root'));

@@ -1,6 +1,6 @@
 {
   "name": "pro-gallery",
-  "version": "5.0.8",
+  "version": "5.0.42",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
@@ -40,7 +40,8 @@
     "pro-gallery-blueprints": "workspace:*",
     "pro-gallery-lib": "workspace:*",
     "pro-layouts": "workspace:*",
-    "react-player": "^2.6.2"
+    "react-player": "^2.6.2",
+    "three": "0.143.0"
   },
   "peerDependencies": {
     "react": "^16.8.6",
@@ -50,6 +51,7 @@
     "@babel/core": "7.16.7",
     "@babel/preset-env": "^7.5.5",
     "@types/react": "^16.14.6",
+    "@types/three": "0.143.1",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
     "babelify": "^10.0.0",

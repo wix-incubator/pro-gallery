@@ -2014,6 +2014,52 @@ const monochromeImages = [
   }
 ]
 
+const test3D = [
+  {
+    itemId: "1759xdd2-4160-4912-8a47-7258212c2079",
+    url: window.location.origin + '/3d/pool.glb',
+    metadata: {
+      width: 1920,
+      height: 1080,
+      type: '3d',
+      poster: {
+        url: window.location.origin + '/3d/pool.png',
+        width: 1920,
+        height: 1080,
+      },
+    }
+  },
+  {
+    itemId: "1759xdd2-4160-4912-8a47-7258212c2079",
+    url: window.location.origin + '/3d/screwdriver.glb',
+    metadata: {
+      width: 1920,
+      height: 1080,
+      type: '3d',
+      poster: {
+        url: window.location.origin + '/3d/screwdriver.png',
+        width: 1920,
+        height: 1080,
+      },
+    }
+  },
+  {
+    itemId: "1759xdd2-4160-4912-8a47-7258212c2079",
+    url: window.location.origin + '/3d/red_car.glb',
+    metadata: {
+      width: 1920,
+      height: 1080,
+      type: '3d',
+      poster: {
+        url: window.location.origin + '/3d/red_car.png',
+        width: 1920,
+        height: 1080,
+      },
+    }
+  }
+];
+
+
 const itemsWithSecondaryMedia = [
   {
     metadata: {
@@ -2033,8 +2079,6 @@ const itemsWithSecondaryMedia = [
       url: 'https://static.wixstatic.com/media/8bb438_ff062a651e174cf5926fe5c088be1099.jpg'
     }
   },
-  
-  
   {
     metadata: {
       height: 1280,
@@ -2067,7 +2111,6 @@ const itemsWithSecondaryMedia = [
         width: 3737,
         focalPoint: [0.9, 0.1],
       },
-      
       itemId: '2d3b675ea857dc41158bad3b28300824',
       url: 'https://static.wixstatic.com/media/8bb438_78ff5e32500d48cdaa22a3f446d68216.jpg',
     }
@@ -2077,12 +2120,25 @@ const itemsWithSecondaryMedia = [
 const testMedia = [...testImages, ...testVideos];
 const testItems = [...testMedia, ...testTexts];
 
+const mixed3D = [
+  ...test3D,
+  ...test3D,
+  ...test3D,
+  ...testMedia,
+  ...test3D,
+  ...test3D,
+  ...test3D,
+]
+
+
 export {
   testMedia,
   testImages,
   testVideos,
   testTexts,
   testItems,
+  test3D,
+  mixed3D,
   monochromeImages,
   itemsWithSecondaryMedia,
 };

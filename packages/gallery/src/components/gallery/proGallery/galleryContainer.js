@@ -20,7 +20,7 @@ import {
 import ScrollIndicator from './galleryScrollIndicator';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
-import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper';
+import MediaScrollHelperWrapper from '../../helpers/mediaScrollHelper/mediaScrollHelperWrapper';
 import findNeighborItem from '../../helpers/layoutUtils';
 import { isGalleryInViewport, Deferred } from './galleryHelpers';
 
@@ -38,7 +38,6 @@ export class GalleryContainer extends React.Component {
     this._scrollingElement = this.getScrollingElement();
     this.eventsListener = this.eventsListener.bind(this);
     this.onGalleryScroll = this.onGalleryScroll.bind(this);
-    this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
     this.getVisibleItems = this.getVisibleItems.bind(this);
     this.findNeighborItem = this.findNeighborItem.bind(this);
     this.setCurrentSlideshowViewIdx =
@@ -46,9 +45,23 @@ export class GalleryContainer extends React.Component {
     this.getIsScrollLessGallery = this.getIsScrollLessGallery.bind(this);
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
-    this.videoScrollHelper = new VideoScrollHelperWrapper(
-      this.setPlayingIdxState
-    );
+    this.mediaScrollHelper = new MediaScrollHelperWrapper([
+      {
+        getPlayTrigger: (options) =>
+          options.behaviourParams_item_video_playTrigger,
+        onSetPlayingIdx: (idx) => this.setState({ playingVideoIdx: idx }),
+        supportedItemsFilter: (item) =>
+          item.type === 'video' ||
+          (item.type === 'image' &&
+            (item.id.includes('_placeholder') || item.isVideoPlaceholder)),
+      },
+      {
+        getPlayTrigger: (options) =>
+          options.behaviourParams_item_threeDimensionalScene_playTrigger,
+        onSetPlayingIdx: (idx) => this.setState({ playing3DIdx: idx }),
+        supportedItemsFilter: (item) => item.type === '3d',
+      },
+    ]);
     const initialState = {
       scrollPosition: {
         top: 0,
@@ -59,6 +72,7 @@ export class GalleryContainer extends React.Component {
       needToHandleShowMoreClick: false,
       gotFirstScrollEvent: props.activeIndex >= 0,
       playingVideoIdx: -1,
+      playing3DIdx: -1,
       viewComponent: null,
       firstUserInteractionExecuted: false,
       isInHover: false,
@@ -144,7 +158,7 @@ export class GalleryContainer extends React.Component {
     this.getMoreItemsIfScrollIsDisabled(height, viewportHeight);
     this.handleNewGalleryStructure();
     this.eventsListener(GALLERY_CONSTS.events.APP_LOADED, {});
-    this.videoScrollHelper.initializePlayState();
+    this.mediaScrollHelper.initializePlayState();
 
     try {
       if (typeof window.CustomEvent === 'function') {
@@ -231,10 +245,8 @@ export class GalleryContainer extends React.Component {
   }
 
   handleNavigation(isInDisplay) {
-    if (isInDisplay) {
-      this.videoScrollHelper.trigger.INIT_SCROLL();
-    } else {
-      this.videoScrollHelper.stop();
+    if (!isInDisplay) {
+      this.mediaScrollHelper.stop();
     }
   }
 
@@ -390,22 +402,19 @@ export class GalleryContainer extends React.Component {
         container: container,
       });
     }
+    /**
+     * @type {import('../../helpers/mediaScrollHelper/types').ScrollHelperGalleryData}
+     */
     const scrollHelperNewGalleryStructure = {
       galleryStructure: this.galleryStructure,
       galleryWidth: container.galleryWidth,
       scrollBase: container.scrollBase,
-      videoPlayTrigger:
-        options[optionsMap.behaviourParams.item.video.playTrigger],
-      videoLoop: options[optionsMap.behaviourParams.item.video.loop],
-      scrollDirection:
-        options[optionsMap.layoutParams.structure.scrollDirection],
-      cb: this.setPlayingIdxState,
+      options: options,
+      isSSR: utils.isSSR(),
     };
 
-    this.videoScrollHelper.updateGalleryStructure(
-      scrollHelperNewGalleryStructure,
-      !utils.isSSR(),
-      items
+    this.mediaScrollHelper.updateGalleryStructure(
+      scrollHelperNewGalleryStructure
     );
 
     const layoutParams = {
@@ -631,12 +640,6 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  setPlayingIdxState(playingVideoIdx) {
-    this.setState({
-      playingVideoIdx,
-    });
-  }
-
   onGalleryScroll(scrollPosition) {
     if (this.props.isInDisplay) {
       this.eventsListener(
@@ -785,7 +788,7 @@ export class GalleryContainer extends React.Component {
   }
 
   eventsListener(eventName, eventData, event) {
-    this.videoScrollHelper.handleEvent({
+    this.mediaScrollHelper.handleEvent({
       eventName,
       eventData,
     });
@@ -815,7 +818,7 @@ export class GalleryContainer extends React.Component {
     }
 
     if (eventName === GALLERY_CONSTS.events.GALLERY_SCROLLED) {
-      this.videoScrollHelper.trigger.SCROLL(eventData);
+      this.mediaScrollHelper.onScroll(eventData);
       const newScrollPosition = {
         ...this.state.scrollPosition,
         ...eventData,
@@ -845,12 +848,6 @@ export class GalleryContainer extends React.Component {
       } else {
         //more items can be fetched from the server
         //TODO - add support for horizontal galleries
-        const isRTL =
-          this.state.options[
-            optionsMap.behaviourParams.gallery.layoutDirection
-          ] ===
-          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-            .RIGHT_TO_LEFT;
         const scrollDirection =
           this.state.options[optionsMap.layoutParams.structure.scrollDirection];
         const galleryEnd =
@@ -874,12 +871,7 @@ export class GalleryContainer extends React.Component {
               ? 'innerWidth'
               : 'innerHeight'
           ];
-        const scrollEnd =
-          scrollDirection ===
-            GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-              .HORIZONTAL && isRTL
-            ? scrollPos - galleryEnd + screenSize
-            : scrollPos + screenSize;
+        const scrollEnd = scrollPos + screenSize;
         const getItemsDistance = scrollPos ? 3 * screenSize : 0; //first scrollPos is 0 falsy. dont load before a scroll happened.
 
         if (galleryEnd < getItemsDistance + scrollEnd) {
@@ -1008,6 +1000,7 @@ export class GalleryContainer extends React.Component {
           activeIndex={this.props.activeIndex || 0}
           customComponents={this.props.customComponents}
           playingVideoIdx={this.state.playingVideoIdx}
+          playing3DIdx={this.state.playing3DIdx}
           noFollowForSEO={this.props.noFollowForSEO}
           proGalleryRegionLabel={this.props.proGalleryRegionLabel}
           proGalleryRole={this.props.proGalleryRole}
@@ -1019,6 +1012,7 @@ export class GalleryContainer extends React.Component {
           virtualizationSettings={this.props.virtualizationSettings}
           galleryContainerId={`pro-gallery-container-${this.props.id}`}
           scrollTop={this.state?.scrollPosition?.top}
+          isScrollLessGallery={this.getIsScrollLessGallery(this.state.options)}
           actions={{
             ...this.props.actions,
             findNeighborItem: this.findNeighborItem,

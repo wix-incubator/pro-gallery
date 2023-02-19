@@ -1,68 +1,6 @@
-export { getSlideAnimationStyles, getCustomInfoRendererProps, getLinkParams };
+export { getCustomInfoRendererProps, getLinkParams };
 
 import { GALLERY_CONSTS, utils, isSEOMode, optionsMap } from 'pro-gallery-lib';
-
-function getSlideAnimationStyles(
-  { idx, activeIndex, options, container },
-  overrideDeckTransition = false
-) {
-  const {
-    [optionsMap.behaviourParams.gallery.horizontal.slideAnimation]:
-      slideAnimation,
-  } = options;
-  const isRTL =
-    options[optionsMap.behaviourParams.gallery.layoutDirection] ===
-    GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-      .RIGHT_TO_LEFT;
-  const baseStyles = {
-    display: 'block',
-  };
-  switch (slideAnimation) {
-    case GALLERY_CONSTS[
-      optionsMap.behaviourParams.gallery.horizontal.slideAnimation
-    ].FADE:
-      return {
-        ...baseStyles,
-        transition: `opacity 600ms ease`,
-        opacity: activeIndex === idx ? 1 : 0,
-      };
-    case GALLERY_CONSTS[
-      optionsMap.behaviourParams.gallery.horizontal.slideAnimation
-    ].DECK: {
-      const rtlFix = isRTL ? 1 : -1;
-      if (activeIndex < idx) {
-        //the slides behind the deck
-        return {
-          ...baseStyles,
-          transition: overrideDeckTransition
-            ? `opacity 0.1s ease 0s`
-            : `opacity .2s ease 600ms`,
-          zIndex: -1,
-          opacity: 0,
-        };
-      } else if (activeIndex === idx) {
-        return {
-          ...baseStyles,
-          zIndex: 0,
-          transition: overrideDeckTransition
-            ? `transform 600ms ease, opacity 0.1s ease 200ms`
-            : `transform 600ms ease`,
-          transform: `translateX(0)`,
-        };
-      } else if (activeIndex > idx) {
-        return {
-          ...baseStyles,
-          zIndex: 1,
-          transition: `transform 600ms ease`,
-          transform: `translateX(${rtlFix * Math.round(container.width)}px)`,
-        };
-      }
-      break;
-    }
-    default:
-      return {};
-  }
-}
 
 function getCustomInfoRendererProps(props) {
   return { ...props, ...{ isMobile: utils.isMobile() } };

@@ -1,5 +1,6 @@
 import React from 'react';
 import { GALLERY_CONSTS, optionsMap, utils } from 'pro-gallery-lib';
+import { GalleryUI } from '../../item/media/GalleryUI';
 
 import TextItem from '../../item/textItem.js';
 
@@ -89,8 +90,6 @@ class NavigationPanel extends React.Component {
             const itemStyle = {
               width: options[optionsMap.layoutParams.thumbnails.size],
               height: options[optionsMap.layoutParams.thumbnails.size],
-              marginLeft: options[optionsMap.layoutParams.thumbnails.spacing],
-              marginTop: options[optionsMap.layoutParams.thumbnails.spacing],
               overflow: 'hidden',
               backgroundImage: `url(${thumbnailItem.createUrl(
                 GALLERY_CONSTS.urlSizes.THUMBNAIL,
@@ -116,6 +115,17 @@ class NavigationPanel extends React.Component {
                 style={itemStyle}
                 onClick={() => this.scrollToThumbnail(idx)}
               >
+                {thumbnailItem.type === 'video' &&
+                  options[
+                    optionsMap.behaviourParams.item.video
+                      .enableThumbnailsPlayButton
+                  ] && <GalleryUI type={'videoPlayButton'} size={'28'} />}
+                {thumbnailItem.type === '3d' &&
+                  options[
+                    optionsMap.behaviourParams.item.threeDimensionalScene
+                      .enableThumbnailsPlayButton
+                  ] && <GalleryUI type={'rotateArrow'} size={'28'} />}
+
                 {thumbnailItem.type === 'text' ? (
                   <TextItem
                     {...this.props}

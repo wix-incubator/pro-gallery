@@ -1,31 +1,20 @@
-import React, { useEffect, Suspense, useState } from 'react';
-import { NavigationPanel } from './PlaygroundNavigationPanel';
-import { useGalleryContext } from '../../hooks/useGalleryContext';
-import {
-  testMedia,
-  testItems,
-  testImages,
-  testVideos,
-  testTexts,
-  monochromeImages,
-  itemsWithSecondaryMedia,
-} from './images';
-import {
-  mixAndSlice,
-  isTestingEnvironment,
-  getTotalItemsCountFromUrl,
-} from '../../utils/utils';
-import { SIDEBAR_WIDTH, ITEMS_BATCH_SIZE } from '../../constants/consts';
+import React, {useEffect, Suspense, useState} from 'react';
+import {NavigationPanel} from './PlaygroundNavigationPanel';
+import {useGalleryContext} from '../../hooks/useGalleryContext';
+import {testMedia, testItems, testImages, testVideos, testTexts, monochromeImages, itemsWithSecondaryMedia, test3D, mixed3D} from './images';
+import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../../utils/utils";
+import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
 import { createMediaUrl } from '../../utils/itemResizer';
 import { setOptionsInUrl } from '../../constants/options';
 import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
 import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
-import { BlueprintsManager } from 'pro-gallery-blueprints';
-import BlueprintsApi from './PlaygroundBlueprintsApi';
-import { utils } from 'pro-gallery-lib';
+import { BlueprintsManager } from 'pro-gallery-blueprints'
+import BlueprintsApi from './PlaygroundBlueprintsApi'
+import {optionsMap, utils} from 'pro-gallery-lib';
 import { Resizable } from 're-resizable';
-
+import  PlaygroundCustomPlayButton  from '../UI/playgroundCustomPlayButton.tsx';
+import  PlaygroundCustomRotateArrow  from '../UI/playgroundCustomRotateArrow.tsx';
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 import pJson from '../../../package.json';
@@ -81,10 +70,9 @@ export function App() {
     texts: _mixAndSlice(testTexts, ITEMS_BATCH_SIZE),
     videos: _mixAndSlice(testVideos, ITEMS_BATCH_SIZE),
     images: _mixAndSlice(testImages, ITEMS_BATCH_SIZE),
-    itemsWithSecondaryMedia: _mixAndSlice(
-      itemsWithSecondaryMedia,
-      ITEMS_BATCH_SIZE
-    ),
+    threeD: _mixAndSlice(test3D, ITEMS_BATCH_SIZE),
+    mixed3D: _mixAndSlice(mixed3D, ITEMS_BATCH_SIZE),
+    itemsWithSecondaryMedia: _mixAndSlice(itemsWithSecondaryMedia, ITEMS_BATCH_SIZE),
   };
 
   const switchState = () => {
@@ -145,6 +133,10 @@ export function App() {
         return _mixAndSlice(testVideos, batchSize, true);
       case 'texts':
         return _mixAndSlice(testTexts, batchSize, true);
+      case 'threeD':
+        return _mixAndSlice(test3D, batchSize, true);
+      case 'mixed3D':
+        return _mixAndSlice(mixed3D, batchSize, true);
       case 'mixed':
         return _mixAndSlice(testItems, batchSize, true);
       case 'itemsWithSecondaryMedia':
@@ -224,7 +216,7 @@ export function App() {
       </div>
     );
 
-    const { titlePlacement } = pgItemProps.options;
+    const { [optionsMap.layoutParams.info.placement]: titlePlacement } = pgItemProps.options;
 
     switch (type) {
       case 'HOVER':
@@ -261,13 +253,19 @@ export function App() {
       />
     );
   };
+  const galleryUI = () => {
+    return {
+          videoPlayButton: (size)=><PlaygroundCustomPlayButton size={size}/>,
+          rotateArrow: (size)=> <PlaygroundCustomRotateArrow size={size}/>,
+          }
+  };
 
   const getCustomComponents = () => {
     return {
       customHoverRenderer: hoverInfoElement,
       customInfoRenderer: externalInfoElement,
-      EXPERIMENTAL_customNavigationPanelRenderer:
-        gallerySettings.useCustomNavigationPanel ? navigationPanel : undefined,
+      EXPERIMENTAL_customNavigationPanelRenderer: gallerySettings.useCustomNavigationPanel ? navigationPanel : undefined,
+      EXPERIMENTAL_customGalleryUI: gallerySettings.useCustomGalleryUI ? galleryUI() : undefined,
     };
   };
 
@@ -313,35 +311,11 @@ export function App() {
 
   // console.log('Rendering App: ', {options, items, dimensions, showSide, blueprint, blueprintProps})
   const getKeySettings = () => {
-    const {
-      mediaType,
-      numberOfItems,
-      isUnknownDimensions,
-      useCustomNavigationPanel,
-      navPanelType,
-      useBlueprints,
-      viewMode,
-      useLayoutFixer,
-      initialIdx,
-      mediaTypes,
-      useInlineStyles,
-      clickToExpand,
-    } = gallerySettings;
-    return {
-      mediaType,
-      numberOfItems,
-      isUnknownDimensions,
-      useCustomNavigationPanel,
-      navPanelType,
-      useBlueprints,
-      viewMode,
-      useLayoutFixer,
-      initialIdx,
-      mediaTypes,
-      useInlineStyles,
-      clickToExpand,
-    };
-  };
+    const { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, useCustomGalleryUI, navPanelType, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand} = gallerySettings;
+    return { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, useCustomGalleryUI, navPanelType, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
+  }
+
+  let GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProGalleryRenderer : ProGallery);
 
   let GalleryComponent = gallerySettings.clickToExpand
     ? ExpandableProGallery

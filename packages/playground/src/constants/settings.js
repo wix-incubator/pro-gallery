@@ -23,6 +23,7 @@ export const SECTIONS = {
   ANIMATION: 'Animations',
   // IMAGE: 'Image',
   VIDEO: 'Videos',
+  ThreeD: '3D',
 };
 
 export const SECTIONS_ORDER = {
@@ -80,6 +81,7 @@ export const optionsBySection = {
       optionsMap.layoutParams.thumbnails.alignment,
       optionsMap.layoutParams.thumbnails.size,
       optionsMap.layoutParams.thumbnails.spacing,
+      optionsMap.layoutParams.thumbnails.marginToGallery,
       optionsMap.layoutParams.structure.enableStreching,
   ],
   [SECTIONS.INFO]: [
@@ -100,9 +102,9 @@ export const optionsBySection = {
     optionsMap.behaviourParams.item.video.loop,
     optionsMap.behaviourParams.item.video.playTrigger,
     optionsMap.behaviourParams.item.video.enablePlayButton,
+    optionsMap.behaviourParams.item.video.enableThumbnailsPlayButton,
     optionsMap.behaviourParams.item.video.enableControls,
     optionsMap.behaviourParams.item.video.enablePlaceholder,
-
     optionsMap.behaviourParams.item.content.placementAnimation,
     optionsMap.behaviourParams.item.content.loader,
     optionsMap.behaviourParams.item.content.magnificationValue,
@@ -110,6 +112,7 @@ export const optionsBySection = {
     optionsMap.behaviourParams.item.secondaryMedia.behaviour,
     optionsMap.behaviourParams.item.secondaryMedia.trigger,
     optionsMap.behaviourParams.item.secondaryMedia.behaviour,
+    optionsMap.behaviourParams.gallery.horizontal.loop,
   ],
   [SECTIONS.DESIGN]: [
 
@@ -168,8 +171,18 @@ export const optionsBySection = {
     optionsMap.behaviourParams.item.video.loop,
     optionsMap.behaviourParams.item.video.playTrigger,
     optionsMap.behaviourParams.item.video.enablePlayButton,
+    optionsMap.behaviourParams.item.video.enableThumbnailsPlayButton,
+    
     optionsMap.behaviourParams.item.video.enableControls,
     optionsMap.behaviourParams.item.video.enablePlaceholder,
+  ],
+  [SECTIONS.ThreeD]: [
+    optionsMap.behaviourParams.item.threeDimensionalScene.playTrigger,
+    optionsMap.behaviourParams.item.threeDimensionalScene.enablePlayButton,
+    optionsMap.behaviourParams.item.threeDimensionalScene.enableThumbnailsPlayButton,
+    optionsMap.behaviourParams.item.threeDimensionalScene.keepPosterAfterObjectLoad,
+    ...Object.values(optionsMap.behaviourParams.item.threeDimensionalScene.controls),
+    ...Object.values(optionsMap.behaviourParams.item.threeDimensionalScene.transform),
   ],
 };
 

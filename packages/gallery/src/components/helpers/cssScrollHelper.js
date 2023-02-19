@@ -119,7 +119,7 @@ class CssScrollHelper {
   }
 
   shouldCalcScrollCss({ type }) {
-    if (type === 'video' || type === 'text') {
+    if (type === 'video' || type === 'text' || type === '3d') {
       return false;
     }
     return true;
