@@ -10,7 +10,7 @@ export default {
   isRelevant: (options) =>
     options[optionsMap.behaviourParams.item.overlay.hoveringBehaviour] !==
       GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour]
-        .NO_CHANGE &&
+        .ALWAYS_SHOW &&
     options[optionsMap.behaviourParams.item.overlay.hoveringBehaviour] !==
       GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour]
         .NEVER_SHOW,
