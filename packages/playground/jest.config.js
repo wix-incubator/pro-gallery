@@ -14,6 +14,8 @@ module.exports = {
         diagnostics: false,
       },
     },
-    testURL: "http://localhost/"
+    testEnvironmentOptions: {
+      url: 'https://localhost/',
+    }
   };
   
