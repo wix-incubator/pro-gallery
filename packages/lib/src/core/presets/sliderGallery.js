@@ -25,7 +25,6 @@ const fixToSlider = (options) => {
   presetOptions[optionsMap.layoutParams.structure.numberOfGridRows] = 1;
   presetOptions[optionsMap.layoutParams.crop.enableSmartCrop] = false;
 
-  presetOptions[optionsMap.layoutParams.thumbnails.enable] = false;
   presetOptions[
     optionsMap.behaviourParams.gallery.horizontal.blockScroll
   ] = false;

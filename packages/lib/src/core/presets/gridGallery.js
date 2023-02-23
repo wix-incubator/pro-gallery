@@ -17,7 +17,6 @@ const fixToGrid = (options) => {
       optionsMap.layoutParams.structure.layoutOrientation
     ].VERTICAL;
   presetOptions[optionsMap.layoutParams.groups.groupSize] = 1;
-  presetOptions[optionsMap.layoutParams.thumbnails.enable] = false;
   presetOptions[optionsMap.layoutParams.groups.allowedGroupTypes] = [
     GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['1'],
   ];

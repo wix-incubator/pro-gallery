@@ -34,7 +34,7 @@ const options = {
   [optionsMap.layoutParams.groups.density]: 0.8,
   [optionsMap.layoutParams.groups.groupByOrientation]: true,
   [optionsMap.layoutParams.groups.groupSize]: 3,
-  [optionsMap.layoutParams.thumbnails.enable]: true,
+  [optionsMap.layoutParams.thumbnails.enable]: false,
   [optionsMap.layoutParams.thumbnails.spacing]: 4, //TODO THUMBNAILS_FIX
   [optionsMap.layoutParams.thumbnails.marginToGallery]: 4, //TODO THUMBNAILS_FIX
   [optionsMap.layoutParams.thumbnails.size]: 250,

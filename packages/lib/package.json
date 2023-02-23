@@ -1,6 +1,7 @@
 {
   "name": "pro-gallery-lib",
-  "version": "5.0.42",
+  "version": "5.0.43",
+  "private": false,
   "author": {
     "name": "Rita Bazak",
     "email": "ritab@wix.com"

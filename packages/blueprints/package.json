@@ -1,6 +1,7 @@
 {
   "name": "pro-gallery-blueprints",
-  "version": "5.0.42",
+  "version": "5.0.43",
+  "private": false,
   "author": {
     "name": "Nir Naor",
     "email": "nirna@wix.com"
