@@ -18,10 +18,8 @@ export default defineConfig({
     svgLoader(),
   ],
   esbuild: {
-    loader: 'jsx',
-    include: /src\/.*\.jsx?$/,
-    // loader: "tsx",
-    // include: /src\/.*\.[tj]sx?$/,
+    loader: 'tsx',
+    include: /src\/.*\.[jt]sx?$/,
     exclude: [],
   },
   optimizeDeps: {

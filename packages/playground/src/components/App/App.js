@@ -315,7 +315,6 @@ export function App() {
     return { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, useCustomGalleryUI, navPanelType, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
   }
 
-  let GalleryComponent = gallerySettings.clickToExpand ? ExpandableProGallery : (gallerySettings.useBlueprints ? ProGalleryRenderer : ProGallery);
 
   let GalleryComponent = gallerySettings.clickToExpand
     ? ExpandableProGallery
