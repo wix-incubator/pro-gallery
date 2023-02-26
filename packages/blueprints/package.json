@@ -37,8 +37,8 @@
     "mocha": "^8.2.1",
     "prettier": "^2.1.2",
     "ts-node": "^9.0.0",
-    "tslib": "^2.1.0",
-    "typescript": "4.1.2"
+    "tslib": "2.5.0",
+    "typescript": "4.9.5"
   },
   "dependencies": {
     "pro-gallery-lib": "workspace:*",
