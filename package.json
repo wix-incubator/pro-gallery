@@ -16,7 +16,7 @@
     "start-playground": "cd packages/playground && yarn run start",
     "test:e2e": "start-server-and-test build-all-and-start-playground http-get://localhost:3006 'yarn workspaces foreach -ptv run test:e2e-all'",
     "test": "echo 'not running tests from root - runnign it using GitHub actions",
-    "ci:run-playground": "cd packages/playground && npx serve -s build -l 3006 && cd ../..",
+    "ci:run-playground": "cd packages/playground && serve -s build -l 3006 && cd ../..",
     "ci:test-unit": "yarn workspaces foreach -ptv run unit",
     "ci:test-e2e-layouts": "start-server-and-test ci:run-playground http-get://localhost:3006 'yarn workspaces foreach -ptv run test:e2e-layouts'",
     "ci:test-e2e-styleParams": "start-server-and-test ci:run-playground http-get://localhost:3006 'yarn workspaces foreach -ptv run test:e2e-styleParams'",
@@ -51,6 +51,7 @@
     "prettier": "^2.1.2",
     "prompt": "^1.0.0",
     "semver": "^6.3.0",
+    "serve": "14.2.0",
     "set-value": "^4.1.0"
   },
   "dependencies": {
