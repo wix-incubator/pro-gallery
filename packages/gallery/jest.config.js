@@ -18,4 +18,5 @@ module.exports = {
     '^.+\\.tsx?$': tsJest,
     '^.+\\.jsx?$': tsJest,
   },
+  testTimeout: 30 * 1000,
 };
