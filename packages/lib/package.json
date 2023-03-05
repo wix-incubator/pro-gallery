@@ -20,7 +20,7 @@
   "scripts": {
     "watch": "tsc -w",
     "start": "tsc -w -p tsconfig-dev.json",
-    "build": "npm run generateValidationFunction && tsc && tsc -p tsconfig-esm.json",
+    "build": "tsc && tsc -p tsconfig-esm.json",
     "generateValidationFunction": "node buildScripts/buildRuntimeValidateFunctionFromTypes.js",
     "unit": "mocha --require ts-node/register test/*.spec.*",
     "test": "echo 'no test in wix CI'",

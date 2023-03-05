@@ -102,17 +102,17 @@ class Gallery extends React.Component<GalleryProps, GalleryState> {
   }
 
   async componentDidMount() {
-    if (shouldValidate(this.props, utils.isSSR()) === false) {
-      return;
-    }
-    const validateTypesModule = await import(
-      /* webpackChunkName: "proGallery_validateTypes" */ './typeValidator/validateTypes'
-    );
-    const { validate, typeErrorsUI } = validateTypesModule;
-    const typeErrors = validate(this.state.blueprint.options);
-    if (typeErrors.length > 0) {
-      this.setState({ typeErrors: typeErrorsUI(typeErrors) });
-    }
+    // if (shouldValidate(this.props, utils.isSSR()) === false) {
+    //   return;
+    // }
+    // const validateTypesModule = await import(
+    //   /* webpackChunkName: "proGallery_validateTypes" */ './typeValidator/validateTypes'
+    // );
+    // const { validate, typeErrorsUI } = validateTypesModule;
+    // const typeErrors = validate(this.state.blueprint.options);
+    // if (typeErrors.length > 0) {
+    //   this.setState({ typeErrors: typeErrorsUI(typeErrors) });
+    // }
   }
 }
 
