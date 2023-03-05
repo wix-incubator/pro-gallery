@@ -6,6 +6,7 @@
     "watch": "sleep 10 && node scripts/start.js",
     "build": "vite build",
     "start": "vite serve",
+    "serve": "npx --yes serve dist -l 3006 --no-request-logging",
     "unit": "jest --coverage --config jest.config.js",
     "test": "echo 'no test in wix CI'",
     "deploy": "vite build",
