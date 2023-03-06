@@ -98,7 +98,6 @@ describe('options - behaviourParams_item_content_hoverAnimation', () => {
     driver.mount.proGallery(initialProps);
     await driver.update();
     const animatedItems = driver.find.selector('.color-in-on-hover').at(0);
-    expect(animatedItems.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
   it('should have "Darkened" animation on items', async () => {

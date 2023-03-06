@@ -53,27 +53,7 @@ export default class galleryDriver {
     await this.page.waitForNetworkIdle();
     await timeout(500);
     await this.scrollInteraction();
-    this.disableAnimations();
     return this.page;
-  }
-
-  async disableAnimations() {
-    await this.page.evaluate(() => {
-      // Disable CSS Animations and Transitions
-      const style = document.createElement('style');
-      style.innerHTML = `
-        *,
-        *::before,
-        *::after {
-          transition-delay: 0s !important;
-          transition-duration: 0s !important;
-          animation-delay: -0.0001s !important;
-          animation-duration: 0s !important;
-          animation-play-state: paused !important;
-        }
-      `;
-      document.head.appendChild(style);
-    });
   }
 
   async scrollInteraction() {
