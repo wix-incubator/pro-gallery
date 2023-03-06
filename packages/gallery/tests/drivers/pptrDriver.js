@@ -1,11 +1,12 @@
-import puppeteer from 'puppeteer';
-const devices = require('puppeteer/DeviceDescriptors');
+import puppeteer, { devices } from 'puppeteer';
 import { flattenObject } from 'pro-gallery-lib';
 
+const timeout = (ms) => new Promise((res) => setTimeout(res, ms));
 export default class galleryDriver {
   constructor() {
     this.timeout = 60000;
     jest.setTimeout(40000);
+    /** @type{import('puppeteer').Browser} */
     this.browser = {};
     this.windowSize = {
       width: 1920,
@@ -27,6 +28,8 @@ export default class galleryDriver {
     return this.browser;
   }
 
+  /** @type{import('puppeteer'.Page)} */
+  page = {};
   async openPage(device) {
     await this.launchBrowser();
     const page = await this.browser.newPage();
@@ -46,10 +49,31 @@ export default class galleryDriver {
 
   async navigate(options) {
     const pageUrl = this.getPageUrl(options);
-    await this.page.goto(pageUrl, { waitUntil: 'networkidle2' });
+    await this.page.goto(pageUrl);
+    await this.page.waitForNetworkIdle();
+    await timeout(500);
     await this.scrollInteraction();
-    await this.page.waitFor(500);
+    this.disableAnimations();
     return this.page;
+  }
+
+  async disableAnimations() {
+    await this.page.evaluate(() => {
+      // Disable CSS Animations and Transitions
+      const style = document.createElement('style');
+      style.innerHTML = `
+        *,
+        *::before,
+        *::after {
+          transition-delay: 0s !important;
+          transition-duration: 0s !important;
+          animation-delay: -0.0001s !important;
+          animation-duration: 0s !important;
+          animation-play-state: paused !important;
+        }
+      `;
+      document.head.appendChild(style);
+    });
   }
 
   async scrollInteraction() {
@@ -129,11 +153,11 @@ export default class galleryDriver {
         await this.page.waitForSelector(`[data-hook="${str}"]`, {
           hidden: true,
         }),
-      timer: async (time) => await this.page.waitFor(time),
+      timer: async (time) => await timeout(time),
       newPage: async (timeoutSec = 5000) => {
         return new Promise((resolve, reject) => {
           this.browser.on('targetcreated', resolve);
-          this.page.waitFor(timeoutSec).then(reject);
+          timeout(timeoutSec).then(reject);
         });
       },
     };
