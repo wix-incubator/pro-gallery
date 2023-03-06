@@ -36,7 +36,7 @@ class ImageItem extends React.Component {
   }
 
   getImageContainerClassNames() {
-    const { isCurrentHover, options, isTransparent } = this.props;
+    const { isCurrentHover, options } = this.props;
     const { isHighResImageLoaded } = this.state;
 
     const imageContainerClassNames = [
@@ -52,8 +52,7 @@ class ImageItem extends React.Component {
         ? 'grid-fit'
         : '',
       options[optionsMap.behaviourParams.item.content.loader] ===
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader].COLOR &&
-      !isTransparent
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader].COLOR
         ? `load-with-color ${isHighResImageLoaded ? 'image-loaded' : ''}`
         : '',
     ].join(' ');
@@ -128,7 +127,6 @@ class ImageItem extends React.Component {
       idx,
       settings = {},
       options,
-      isTransparent,
     } = this.props;
     const { isHighResImageLoaded } = this.state;
     const imageProps =
@@ -158,8 +156,7 @@ class ImageItem extends React.Component {
             height: '100%',
           }
         : {};
-
-      if (!isHighResImageLoaded && !isTransparent) {
+      if (!isHighResImageLoaded) {
         let preload = null;
         const preloadProps = {
           className: 'gallery-item-visible gallery-item gallery-item-preloaded',
