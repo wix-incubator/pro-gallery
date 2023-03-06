@@ -1057,6 +1057,9 @@ class SlideshowView extends React.Component {
         getActiveItemIndex: () => {
           return this.state.activeIndex;
         },
+        getActiveGroupIndex: () => {
+          return this.getCenteredItemOrGroupIdxByScroll('groups');
+        },
         triggerItemAction: (e, { itemIndex = this.state.activeIndex } = {}) => {
           const galleryConfig = this.createGalleryConfig();
           const item =
@@ -1072,6 +1075,20 @@ class SlideshowView extends React.Component {
             GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED,
             props,
             e
+          );
+        },
+        scrollToGroupIndex: (idx) => {
+          const activeGroup = this.getCenteredItemOrGroupIdxByScroll('groups');
+          const direction = idx - activeGroup;
+          const scrollingUpTheGallery = isRTL
+            ? direction <= -1
+            : direction >= 1;
+          this.scrollToItemOrGroup(
+            this.props.actions.scrollToGroup,
+            idx,
+            false,
+            400,
+            scrollingUpTheGallery
           );
         },
         // nextGroup,
