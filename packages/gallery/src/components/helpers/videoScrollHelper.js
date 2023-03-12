@@ -26,6 +26,8 @@ class VideoScrollHelper {
     this.play = this.play.bind(this);
     this.stop = this.stop.bind(this);
     this.isVisible = this.isVisible.bind(this);
+    this.isCurrentVideoStillVisible =
+      this.isCurrentVideoStillVisible.bind(this);
     this.videoPlay = undefined;
     this.itemClick = undefined;
     this.setPlayingVideos = config.setPlayingVideos;
