@@ -19,6 +19,41 @@ export default class galleryDriver {
       '--no-sandbox',
       '--font-render-hinting=none',
       '--force-color-profile=srgb|generic-rgb|color-spin-gamma24',
+      '--autoplay-policy=user-gesture-required',
+      '--disable-background-networking',
+      '--disable-background-timer-throttling',
+      '--disable-backgrounding-occluded-windows',
+      '--disable-breakpad',
+      '--disable-client-side-phishing-detection',
+      '--disable-component-update',
+      '--disable-default-apps',
+      '--disable-dev-shm-usage',
+      '--disable-domain-reliability',
+      '--disable-extensions',
+      '--disable-features=AudioServiceOutOfProcess',
+      '--disable-hang-monitor',
+      '--disable-ipc-flooding-protection',
+      '--disable-notifications',
+      '--disable-offer-store-unmasked-wallet-cards',
+      '--disable-popup-blocking',
+      '--disable-print-preview',
+      '--disable-prompt-on-repost',
+      '--disable-renderer-backgrounding',
+      '--disable-setuid-sandbox',
+      '--disable-speech-api',
+      '--disable-sync',
+      '--hide-scrollbars',
+      '--ignore-gpu-blacklist',
+      '--metrics-recording-only',
+      '--mute-audio',
+      '--no-default-browser-check',
+      '--no-first-run',
+      '--no-pings',
+      '--no-sandbox',
+      '--no-zygote',
+      '--password-store=basic',
+      '--use-gl=swiftshader',
+      '--use-mock-keychain',
       `--window-size=${this.windowSize.width},${this.windowSize.height}`,
     ];
     this.browser = await puppeteer.launch({
@@ -47,13 +82,39 @@ export default class galleryDriver {
     return page;
   }
 
-  async navigate(options) {
+  async navigate(options, thenWait = 500) {
     const pageUrl = this.getPageUrl(options);
-    await this.page.goto(pageUrl);
-    await this.page.waitForNetworkIdle();
-    await timeout(500);
+    await this.page.goto(pageUrl, { waitUntil: 'networkidle2' });
+    await timeout(thenWait);
+    await this.speedUpAnimations();
     await this.scrollInteraction();
     return this.page;
+  }
+
+  async speedUpAnimations() {
+    await this.page.evaluate(() => {
+      const style = document.createElement('style');
+      style.type = 'text/css';
+      style.innerHTML = `
+        *, *::before, *::after {
+          transition-duration: 0s !important;
+          animation-duration: 0s !important;
+          animation-iteration-count: 1 !important;
+          transition-delay: 0s !important;
+          animation-delay: 0s !important;
+        }
+      `;
+      const allElements = document.getElementsByTagName('*');
+      for (let i = 0; i < allElements.length; i++) {
+        const element = allElements[i];
+        element.style.transitionDuration = '0s';
+        element.style.animationDuration = '0s';
+        element.style.animationIterationCount = '1';
+        element.style.transitionDelay = '0s';
+        element.style.animationDelay = '0s';
+      }
+      document.getElementsByTagName('head')[0].appendChild(style);
+    });
   }
 
   async scrollInteraction() {
@@ -81,7 +142,10 @@ export default class galleryDriver {
 
   get actions() {
     return {
-      hover: async (str) => await this.page.hover(`[data-hook="${str}"]`),
+      hover: async (str, thenWait = 1000) =>
+        await this.page
+          .hover(`[data-hook="${str}"]`)
+          .then(() => timeout(thenWait)),
       click: async (str) => await this.page.click(`[data-hook="${str}"]`),
       scroll: async (x, y) =>
         await this.page.evaluate(() => {
