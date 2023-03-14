@@ -31,7 +31,7 @@ describe('behaviourParams_item_content_hoverAnimation - e2e', () => {
           ].NEVER_SHOW,
       });
       await driver.waitFor.hookToBeVisible('item-container');
-      await driver.actions.hover('item-container')[0];
+      await driver.actions.hover('item-container');
       await driver.waitFor.timer(3000);
       const page = await driver.grab.elemScreenshot('.pro-gallery');
       expect(page).toMatchImageSnapshot();

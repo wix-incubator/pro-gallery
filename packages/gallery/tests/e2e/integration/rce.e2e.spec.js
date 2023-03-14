@@ -5,6 +5,7 @@ import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 expect.extend({ toMatchImageSnapshot });
 
 describe('RCE Integration test', () => {
+  /** @type {GalleryDriver} */
   let driver;
 
   beforeAll(async () => {

@@ -9,7 +9,6 @@ function start() {
   const libSrcFolder = path.join(__dirname, '../src');
   const galleryFolder = path.join(libSrcFolder, 'common/interfaces');
   const sourceTypesFile = path.join(galleryFolder, 'galleryTypes.ts');
-  const tempFile = path.join(__dirname, 'temp.js');
   const targetDir = path.join(__dirname, '../src/common/validateTypes/');
   const targetFile = path.join(targetDir, 'standaloneValidateCode.js');
 
@@ -24,10 +23,7 @@ function start() {
   writeES5StandaloneValidateMethod({
     schema,
     targetFile,
-    tempFile,
     writeFileSync: fs.writeFileSync,
-    createWriteStream: fs.createWriteStream,
-    rmSync: fs.rmSync,
   });
 
   const optionsMap = getOptionsMap(schema);

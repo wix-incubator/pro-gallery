@@ -448,7 +448,6 @@ class ItemView extends React.Component {
       customComponents,
       scene,
       activeIndex,
-      isCurrentHover,
     } = this.props;
 
     return (
@@ -481,7 +480,6 @@ class ItemView extends React.Component {
         scene={scene}
         style={style}
         settings={settings}
-        isCurrentHover={isCurrentHover}
       />
     );
   }

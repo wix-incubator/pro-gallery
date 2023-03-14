@@ -25,7 +25,7 @@ describe('behaviourParams_item_overlay_hoveringBehaviour - e2e', () => {
         ].APPEARS,
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    await driver.actions.hover('item-container')[0];
+    await driver.actions.hover('item-container');
     await driver.waitFor.timer(200);
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
@@ -40,7 +40,7 @@ describe('behaviourParams_item_overlay_hoveringBehaviour - e2e', () => {
         ].DISAPPEARS,
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    await driver.actions.hover('item-container')[0];
+    await driver.actions.hover('item-container');
     await driver.waitFor.timer(200);
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();
@@ -55,7 +55,7 @@ describe('behaviourParams_item_overlay_hoveringBehaviour - e2e', () => {
         ].ALWAYS_SHOW,
     });
     await driver.waitFor.hookToBeVisible('item-container');
-    await driver.actions.hover('item-container')[0];
+    await driver.actions.hover('item-container');
     await driver.waitFor.timer(200);
     const page = await driver.grab.elemScreenshot('.pro-gallery');
     expect(page).toMatchImageSnapshot();

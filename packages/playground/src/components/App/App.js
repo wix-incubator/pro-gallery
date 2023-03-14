@@ -17,11 +17,11 @@ import  PlaygroundCustomPlayButton  from '../UI/playgroundCustomPlayButton.tsx';
 import  PlaygroundCustomRotateArrow  from '../UI/playgroundCustomRotateArrow.tsx';
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
+import pJson from '../../../package.json';
 
 // //dummy commit
 const SideBar = React.lazy(() => import('../SideBar'));
 
-const pJson = require('../../../package.json');
 
 const blueprintsManager = new BlueprintsManager({id: 'playground'});
 const GALLERY_EVENTS = GALLERY_CONSTS.events;
