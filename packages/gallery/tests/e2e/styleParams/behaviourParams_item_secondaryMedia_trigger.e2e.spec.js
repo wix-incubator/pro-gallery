@@ -29,6 +29,10 @@ describe('behaviourParams_item_secondaryMedia_trigger - e2e', () => {
       [optionsMap.behaviourParams.item.secondaryMedia.trigger]:
         GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger]
           .OFF,
+      [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
+        GALLERY_CONSTS[
+          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
+        ].NEVER_SHOW,
     });
     expect(page).toMatchImageSnapshot();
   });
