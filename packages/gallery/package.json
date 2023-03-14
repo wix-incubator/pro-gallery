@@ -45,8 +45,7 @@
   },
   "peerDependencies": {
     "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "@types/node":  "^10.12.29"
+    "react-dom": "^16.8.6"  
   },
   "devDependencies": {
     "@babel/core": "7.16.7",
