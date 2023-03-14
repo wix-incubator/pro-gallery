@@ -7,6 +7,7 @@ import {
   isEditMode,
   isPreviewMode,
 } from 'pro-gallery-lib';
+console.log('YONATAN - Local - itemView.js');
 import MagnifiedImage from './imageWithMagnified.js';
 import withSecondaryMedia from '../hoc/withSecondMedia.js';
 import TextItem from './textItem.js';
@@ -412,6 +413,7 @@ class ItemView extends React.Component {
       'style',
       'hasSecondaryMedia',
       'secondaryMediaItem',
+      'customComponents',
     ]);
 
     return (
