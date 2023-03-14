@@ -265,6 +265,8 @@ class VideoScrollHelper {
 
   isCurrentVideoStillVisible({ top, left }) {
     const currentItemPlacement = this.calculateCurrentItemPlacement();
+    // add hrere
+    const a = 15;
     return this.isVisible(this.videoItems[currentItemPlacement], { top, left });
   }
 
