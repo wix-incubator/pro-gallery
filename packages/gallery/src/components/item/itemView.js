@@ -412,6 +412,7 @@ class ItemView extends React.Component {
       'style',
       'hasSecondaryMedia',
       'secondaryMediaItem',
+      'customComponents',
     ]);
 
     return (
