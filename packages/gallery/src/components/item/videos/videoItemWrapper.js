@@ -65,6 +65,7 @@ class VideoItemWrapper extends React.Component {
       'settings',
       'actions',
       'isCurrentHover',
+      'customComponents',
     ]);
 
     return (
