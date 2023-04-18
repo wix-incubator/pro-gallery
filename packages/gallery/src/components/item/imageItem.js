@@ -204,6 +204,9 @@ class ImageItem extends React.Component {
               />
             );
             break;
+          case GALLERY_CONSTS.loadingMode.NONE:
+            preload = null;
+            break;
         }
 
         imagesComponents.push(preload);
