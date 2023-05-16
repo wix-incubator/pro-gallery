@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   GALLERY_CONSTS,
   window,
@@ -12,11 +12,7 @@ import {
 import { ItemsHelper } from 'pro-layouts';
 import GalleryView from './galleryView';
 import SlideshowView from './slideshowView';
-import {
-  scrollToItemImp,
-  scrollToGroupImp,
-  haltScroll,
-} from '../../helpers/scrollHelper';
+import { scrollToItemImp, scrollToGroupImp, haltScroll } from '../../helpers/scrollHelper';
 import ScrollIndicator from './galleryScrollIndicator';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
@@ -28,7 +24,7 @@ export class GalleryContainer extends React.Component {
   constructor(props) {
     super(props);
     if (utils.isVerbose()) {
-      console.count("[OOISSR] galleryContainer constructor", window.isMock);
+      console.count('[OOISSR] galleryContainer constructor', window.isMock);
     }
     this.getMoreItemsIfNeeded = this.getMoreItemsIfNeeded.bind(this);
     this.setGotFirstScrollIfNeeded = this.setGotFirstScrollIfNeeded.bind(this);
@@ -46,17 +42,14 @@ export class GalleryContainer extends React.Component {
     this.onMouseLeave = this.onMouseLeave.bind(this);
     this.mediaScrollHelper = new MediaScrollHelperWrapper([
       {
-        getPlayTrigger: (options) =>
-          options.behaviourParams_item_video_playTrigger,
+        getPlayTrigger: (options) => options.behaviourParams_item_video_playTrigger,
         onSetPlayingIdx: (idx) => this.setState({ playingVideoIdx: idx }),
         supportedItemsFilter: (item) =>
           item.type === 'video' ||
-          (item.type === 'image' &&
-            (item.id.includes('_placeholder') || item.isVideoPlaceholder)),
+          (item.type === 'image' && (item.id.includes('_placeholder') || item.isVideoPlaceholder)),
       },
       {
-        getPlayTrigger: (options) =>
-          options.behaviourParams_item_threeDimensionalScene_playTrigger,
+        getPlayTrigger: (options) => options.behaviourParams_item_threeDimensionalScene_playTrigger,
         onSetPlayingIdx: (idx) => this.setState({ playing3DIdx: idx }),
         supportedItemsFilter: (item) => item.type === '3d',
       },
@@ -88,7 +81,7 @@ export class GalleryContainer extends React.Component {
         this.initialGalleryState = galleryState;
       }
     } catch (_e) {
-      console.warn("Cannot create initial state from props", _e);
+      console.warn('Cannot create initial state from props', _e);
     }
 
     this.state = {
@@ -158,12 +151,12 @@ export class GalleryContainer extends React.Component {
     this.mediaScrollHelper.initializePlayState();
 
     try {
-      if (typeof window.CustomEvent === "function") {
-        this.currentHoverChangeEvent = new CustomEvent("current_hover_change");
+      if (typeof window.CustomEvent === 'function') {
+        this.currentHoverChangeEvent = new CustomEvent('current_hover_change');
       } else {
         //IE (new CustomEvent is not supported in IE)
-        this.currentHoverChangeEvent = window.document.createEvent("CustomEvent"); // MUST be 'CustomEvent'
-        this.currentHoverChangeEvent.initCustomEvent("current_hover_change", false, false, null);
+        this.currentHoverChangeEvent = window.document.createEvent('CustomEvent'); // MUST be 'CustomEvent'
+        this.currentHoverChangeEvent.initCustomEvent('current_hover_change', false, false, null);
       }
     } catch (e) {
       console.error("could not create 'current_hover_change' customEvent. Error =", e);
@@ -204,10 +197,10 @@ export class GalleryContainer extends React.Component {
       const nextSignificantProps = getSignificantProps(nextProps);
       hasPropsChanged = JSON.stringify(currentSignificantProps) !== JSON.stringify(nextSignificantProps);
       if (utils.isVerbose() && hasPropsChanged) {
-        console.log("New props arrived", utils.printableObjectsDiff(currentSignificantProps, nextSignificantProps));
+        console.log('New props arrived', utils.printableObjectsDiff(currentSignificantProps, nextSignificantProps));
       }
     } catch (e) {
-      console.error("Cannot compare props", e);
+      console.error('Cannot compare props', e);
     }
 
     if (hasPropsChanged) {
@@ -230,7 +223,7 @@ export class GalleryContainer extends React.Component {
   handleNewGalleryStructure() {
     //should be called AFTER new state is set
     const { container, needToHandleShowMoreClick, initialGalleryHeight } = this.state;
-    const isInfinite = this.containerInfiniteGrowthDirection() === "vertical";
+    const isInfinite = this.containerInfiniteGrowthDirection() === 'vertical';
     let updatedHeight = false;
     const needToUpdateHeightNotInfinite = !isInfinite && needToHandleShowMoreClick;
     if (needToUpdateHeightNotInfinite) {
@@ -242,7 +235,7 @@ export class GalleryContainer extends React.Component {
     const layoutHeight = updatedHeight || this.props.container.height;
     const layoutItems = this.props.structure.items;
     const isFixedHorizontlaGalleryRatio =
-      this.containerInfiniteGrowthDirection() === "horizontal" &&
+      this.containerInfiniteGrowthDirection() === 'horizontal' &&
       this.state.options[optionsMap.layoutParams.structure.galleryRatio.value] > 0;
 
     const onGalleryChangeData = {
@@ -256,7 +249,7 @@ export class GalleryContainer extends React.Component {
       updatedHeight,
     };
     if (utils.isVerbose()) {
-      console.log("handleNewGalleryStructure", onGalleryChangeData);
+      console.log('handleNewGalleryStructure', onGalleryChangeData);
     }
     this.eventsListener(GALLERY_CONSTS.events.GALLERY_CHANGE, onGalleryChangeData);
 
@@ -299,7 +292,7 @@ export class GalleryContainer extends React.Component {
     let visibleItems = items;
     try {
       const windowHeight = window.innerHeight;
-      const isInfinite = this.isVerticalGallery() && this.containerInfiniteGrowthDirection() === "vertical";
+      const isInfinite = this.isVerticalGallery() && this.containerInfiniteGrowthDirection() === 'vertical';
       const galleryBottom = isInfinite ? Infinity : scrollBase + galleryHeight;
       const windowBottom = scrollY + windowHeight;
       const maxItemTop = Math.min(galleryBottom, windowBottom) - scrollBase;
@@ -316,7 +309,7 @@ export class GalleryContainer extends React.Component {
         visibleItems = items.slice(0, 2);
       }
     } catch (e) {
-      console.error("Could not calculate visible items, returning original items", e);
+      console.error('Could not calculate visible items, returning original items', e);
       visibleItems = items;
     }
     return visibleItems;
@@ -339,10 +332,7 @@ export class GalleryContainer extends React.Component {
 
     // // ------------ TODO. This is using GalleryItem and I am leaving it here for now ---------- //
 
-    const shouldUseScrollCss = !isSEOMode(); /*  &&
-      (isEditMode() ||
-        this.state.gotFirstScrollEvent ||
-        this.state.showMoreClickedAtLeastOnce) */
+    const shouldUseScrollCss = !isSEOMode();
     if (shouldUseScrollCss) {
       this.getScrollCss({
         id,
@@ -362,9 +352,7 @@ export class GalleryContainer extends React.Component {
       isSSR: utils.isSSR(),
     };
 
-    this.mediaScrollHelper.updateGalleryStructure(
-      scrollHelperNewGalleryStructure
-    );
+    this.mediaScrollHelper.updateGalleryStructure(scrollHelperNewGalleryStructure);
 
     const layoutParams = {
       items: items,
@@ -441,20 +429,20 @@ export class GalleryContainer extends React.Component {
         });
       } catch (e) {
         console.error(
-          "error:",
+          'error:',
           e,
-          " pro-gallery, scrollToItem, cannot get scrollParams, ",
-          "isEditMode =",
+          ' pro-gallery, scrollToItem, cannot get scrollParams, ',
+          'isEditMode =',
           isEditMode(),
-          " isPreviewMode =",
+          ' isPreviewMode =',
           isPreviewMode(),
-          " isSiteMode =",
+          ' isSiteMode =',
           isSiteMode(),
-          " this.state.options =",
+          ' this.state.options =',
           this.state.options,
-          " this.state.container =",
+          ' this.state.container =',
           this.state.container,
-          " this.galleryStructure =",
+          ' this.galleryStructure =',
           this.galleryStructure
         );
       }
@@ -501,20 +489,20 @@ export class GalleryContainer extends React.Component {
         });
       } catch (e) {
         console.error(
-          "error:",
+          'error:',
           e,
-          " pro-gallery, scrollToGroup, cannot get scrollParams, ",
-          "isEditMode =",
+          ' pro-gallery, scrollToGroup, cannot get scrollParams, ',
+          'isEditMode =',
           isEditMode(),
-          " isPreviewMode =",
+          ' isPreviewMode =',
           isPreviewMode(),
-          " isSiteMode =",
+          ' isSiteMode =',
           isSiteMode(),
-          " this.state.options =",
+          ' this.state.options =',
           this.state.options,
-          " this.state.container =",
+          ' this.state.container =',
           this.state.container,
-          " this.galleryStructure =",
+          ' this.galleryStructure =',
           this.galleryStructure
         );
       }
@@ -528,7 +516,7 @@ export class GalleryContainer extends React.Component {
 
     const scrollDirection = _options[optionsMap.layoutParams.structure.scrollDirection];
     if (scrollDirection === GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL) {
-      return "horizontal";
+      return 'horizontal';
     } else if (this.props.options[optionsMap.behaviourParams.gallery.vertical.loadMore.enable]) {
       //vertical gallery with showMore button enabled
       if (
@@ -536,12 +524,12 @@ export class GalleryContainer extends React.Component {
         _options[optionsMap.behaviourParams.gallery.vertical.loadMore.amount] ===
           GALLERY_CONSTS[optionsMap.behaviourParams.gallery.vertical.loadMore.amount].ALL
       ) {
-        return "vertical";
+        return 'vertical';
       } else {
-        return "none";
+        return 'none';
       }
     } else {
-      return "vertical";
+      return 'vertical';
     }
   }
 
@@ -592,10 +580,10 @@ export class GalleryContainer extends React.Component {
   createDynamicStyles(overlayBackground, isPrerenderMode) {
     const useSSROpacity = isPrerenderMode && !this.props.settings.disableSSROpacity;
     this.dynamicStyles = `
-      ${!useSSROpacity ? "" : `#pro-gallery-${this.props.id} .gallery-item-container { opacity: 0 }`}
+      ${!useSSROpacity ? '' : `#pro-gallery-${this.props.id} .gallery-item-container { opacity: 0 }`}
       ${
         !overlayBackground
-          ? ""
+          ? ''
           : `#pro-gallery-${this.props.id} .gallery-item-hover::before { background: ${overlayBackground} !important}`
       }
     `.trim();
@@ -614,16 +602,13 @@ export class GalleryContainer extends React.Component {
     }
   }
 
-  getScrollCss({ id, items, container, options }) {
-    // if (this.shouldCreateScrollCss) {
-    console.log("Creating Scroll CSS", this.scrollCss);
+  getScrollCss({ id, items, options, container }) {
     this.scrollCss = cssScrollHelper.calcScrollCss({
       items,
-      container,
       options,
-      galleryId: id,
+      id,
+      container,
     });
-    // }
   }
 
   toggleLoadMoreItems() {
@@ -632,12 +617,6 @@ export class GalleryContainer extends React.Component {
     const needToHandleShowMoreClick = true;
     //before clicking "load more" at the first time
     if (!this.state.showMoreClickedAtLeastOnce) {
-      // this.getScrollCss({
-      //   id: this.props.id,
-      //   items: this.galleryStructure.galleryItems,
-      //   options: this.state.options,
-      //   container: this.state.container,
-      // });
       const initialGalleryHeight = this.state.container.height; //container.height before clicking "load more" at the first time
       this.setState(
         {
@@ -664,12 +643,6 @@ export class GalleryContainer extends React.Component {
 
   setGotFirstScrollIfNeeded() {
     if (!this.state.gotFirstScrollEvent) {
-      // this.getScrollCss({
-      //   id: this.props.id,
-      //   items: this.galleryStructure.galleryItems,
-      //   options: this.state.options,
-      //   container: this.state.container,
-      // });
       this.setState({
         gotFirstScrollEvent: true,
       });
@@ -708,7 +681,7 @@ export class GalleryContainer extends React.Component {
           break;
       }
     }
-    if (typeof this.props.eventsListener === "function") {
+    if (typeof this.props.eventsListener === 'function') {
       this.props.eventsListener(eventName, eventData, event);
     }
 
@@ -743,13 +716,12 @@ export class GalleryContainer extends React.Component {
       } else {
         //more items can be fetched from the server
         //TODO - add support for horizontal galleries
-        const scrollDirection =
-          this.state.options[optionsMap.layoutParams.structure.scrollDirection];
+        const scrollDirection = this.state.options[optionsMap.layoutParams.structure.scrollDirection];
         const galleryEnd =
           this.galleryStructure[
             scrollDirection === GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
-              ? "width"
-              : "height"
+              ? 'width'
+              : 'height'
           ] +
           (scrollDirection === GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
             ? 0
@@ -757,8 +729,8 @@ export class GalleryContainer extends React.Component {
         const screenSize =
           window[
             scrollDirection === GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
-              ? "innerWidth"
-              : "innerHeight"
+              ? 'innerWidth'
+              : 'innerHeight'
           ];
         const scrollEnd = scrollPos + screenSize;
         const getItemsDistance = scrollPos ? 3 * screenSize : 0; //first scrollPos is 0 falsy. dont load before a scroll happened.
@@ -783,7 +755,7 @@ export class GalleryContainer extends React.Component {
     const can = this.props.container && this.props.options && this.state.items;
     if (!can && utils.isVerbose()) {
       console.log(
-        "PROGALLERY [CAN_RENDER] GalleryContainer",
+        'PROGALLERY [CAN_RENDER] GalleryContainer',
         can,
         this.props.container,
         this.props.options,
@@ -821,20 +793,19 @@ export class GalleryContainer extends React.Component {
         : GalleryView;
 
     if (utils.isVerbose()) {
-      console.count("PROGALLERY [COUNTS] - GalleryContainer (render)");
-      console.log("PROGALLERY [RENDER] - GalleryContainer", this.props.container.scrollBase, {
+      console.count('PROGALLERY [COUNTS] - GalleryContainer (render)');
+      console.log('PROGALLERY [RENDER] - GalleryContainer', this.props.container.scrollBase, {
         props: this.props,
         items: this.state.items,
       });
     }
 
-    const displayShowMore = this.containerInfiniteGrowthDirection() === "none";
-
+    const displayShowMore = this.containerInfiniteGrowthDirection() === 'none';
     return (
       <div
         data-key="pro-gallery-inner-container"
         key="pro-gallery-inner-container"
-        className={this.props.isPrerenderMode ? "pro-gallery-prerender" : ""}
+        className={this.props.isPrerenderMode ? 'pro-gallery-prerender' : ''}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         ref={(e) => (this.galleryContainerRef = e)}
@@ -901,16 +872,16 @@ export class GalleryContainer extends React.Component {
           }}
           {...this.props.gallery}
         />
-        <div data-key="items-styles" key="items-styles" style={{ display: "none" }}>
+        <div data-key="items-styles" key="items-styles" style={{ display: 'none' }}>
           {(this.layoutCss || []).filter(Boolean).map((css, idx) => (
             <style id={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{ __html: css }} />
           ))}
-          {(this.props.scrollCss || []).filter(Boolean).map((css, idx) => (
+          {(this.scrollCss || []).filter(Boolean).map((css, idx) => (
             <style id={`scrollCss_${idx}`} key={`scrollCss_${idx}`} dangerouslySetInnerHTML={{ __html: css }} />
           ))}
           {!!this.dynamicStyles && <style dangerouslySetInnerHTML={{ __html: this.dynamicStyles }} />}
         </div>
-        {this.props.proGalleryRole === "application" && (
+        {this.props.proGalleryRole === 'application' && (
           <span ref={(e) => (this.outOfViewComponent = e)} tabIndex={-1} className="sr-only out-of-view-component">
             {this.props.translations?.Accessibility_Left_Gallery}
           </span>
