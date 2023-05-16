@@ -34,7 +34,7 @@ describe('options - layoutParams_navigationArrows_container_type', () => {
       GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type]
         .SHADOW
     );
-    expect(arrow.hasClass('drop-shadow')).to.be.true;
+    expect(arrow.hasClass('shadow')).to.be.true;
     driver.detach.proGallery();
   });
 
@@ -62,7 +62,7 @@ describe('options - layoutParams_navigationArrows_container_type', () => {
       GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type]
         .NONE
     );
-    expect(arrow.hasClass('drop-shadow')).to.be.false;
+    expect(arrow.hasClass('shadow')).to.be.false;
     driver.detach.proGallery();
   });
 
@@ -71,7 +71,7 @@ describe('options - layoutParams_navigationArrows_container_type', () => {
       GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type]
         .BOX
     );
-    expect(arrow.hasClass('drop-shadow')).to.be.false;
+    expect(arrow.hasClass('shadow')).to.be.false;
     driver.detach.proGallery();
   });
 });

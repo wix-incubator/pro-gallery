@@ -2,8 +2,12 @@ import React from 'react';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
 import { clickable } from '../../helpers/mouseCursorPosition';
-
-export const VideoPlayButton = (): JSX.Element => (
+interface VideoPlayButtonProps {
+  size?: number;
+}
+export const VideoPlayButton = ({
+  size = 60,
+}: VideoPlayButtonProps): JSX.Element => (
   <clickable.div
     style={{
       cursor: 'pointer',
@@ -15,14 +19,16 @@ export const VideoPlayButton = (): JSX.Element => (
       data-hook="play-triangle"
       className={'gallery-item-video-play-triangle play-triangle '}
     >
-      <PlayTriangle />
+      <PlayTriangle size={size} />
     </i>
     <i
       key="play-bg"
       data-hook="play-background"
       className={'gallery-item-video-play-background play-background '}
     >
-      <PlayBackground />
+      <PlayBackground size={size} />
     </i>
   </clickable.div>
 );
+
+export default VideoPlayButton;

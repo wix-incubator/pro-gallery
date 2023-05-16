@@ -9,7 +9,6 @@ const fixToCollage = (options) => {
   presetOptions[optionsMap.layoutParams.crop.enable] = false;
   GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY;
   presetOptions[optionsMap.layoutParams.groups.groupSize] = 3;
-  presetOptions[optionsMap.layoutParams.thumbnails.enable] = false;
   presetOptions[optionsMap.layoutParams.groups.allowedGroupTypes] = [
     GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['1'],
     GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['2h'],

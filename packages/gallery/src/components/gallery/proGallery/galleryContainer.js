@@ -889,6 +889,7 @@ export class GalleryContainer extends React.Component {
           virtualizationSettings={this.props.virtualizationSettings}
           galleryContainerId={`pro-gallery-container-${this.props.id}`}
           scrollTop={this.state?.scrollPosition?.top}
+          isScrollLessGallery={this.getIsScrollLessGallery(this.state.options)}
           actions={{
             ...this.props.actions,
             findNeighborItem: this.findNeighborItem,

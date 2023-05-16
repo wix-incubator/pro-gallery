@@ -45,6 +45,7 @@ export interface Video {
   loop?: boolean;
   playTrigger?: PlayTrigger;
   enablePlayButton?: boolean;
+  enableThumbnailsPlayButton?: boolean;
   enableControls?: boolean;
   enablePlaceholder?: boolean;
 }
@@ -52,6 +53,8 @@ export interface Video {
 export interface ThreeDimensionalScene {
   transform?: Transform;
   controls?: Controls;
+  enablePlayButton?: boolean;
+  enableThumbnailsPlayButton?: boolean;
   playTrigger?: PlayTrigger;
 }
 

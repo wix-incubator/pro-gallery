@@ -57,6 +57,7 @@ const defaultOptions = flattenObject({
     thumbnails: {
       size: 120,
       spacing: 4,
+      marginToGallery: 0,
       enable: false,
       position:
         GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position]
@@ -118,6 +119,7 @@ const defaultOptions = flattenObject({
         enableControls: false,
         speed: 1,
         enablePlayButton: false,
+        enableThumbnailsPlayButton: false,
         enablePlaceholder: true,
       },
       overlay: {
@@ -174,6 +176,7 @@ const defaultOptions = flattenObject({
             optionsMap.behaviourParams.item.threeDimensionalScene.playTrigger
           ].HOVER,
         enablePlayButton: false,
+        enableThumbnailsPlayButton: false,
         enablePlaceholder: true,
       },
     },

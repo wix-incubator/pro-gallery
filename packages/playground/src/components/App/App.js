@@ -13,9 +13,10 @@ import { BlueprintsManager } from 'pro-gallery-blueprints'
 import BlueprintsApi from './PlaygroundBlueprintsApi'
 import {optionsMap, utils} from 'pro-gallery-lib';
 import { Resizable } from 're-resizable';
-
-import "pro-gallery/dist/statics/main.css";
-import s from "./App.module.scss";
+import  PlaygroundCustomPlayButton  from '../UI/playgroundCustomPlayButton.tsx';
+import  PlaygroundCustomRotateArrow  from '../UI/playgroundCustomRotateArrow.tsx';
+import 'pro-gallery/dist/statics/main.css';
+import s from './App.module.scss';
 
 // //dummy commit
 const SideBar = React.lazy(() => import("../SideBar"));
@@ -254,13 +255,19 @@ export function App() {
       />
     );
   };
+  const galleryUI = () => {
+    return {
+          videoPlayButton: (size)=><PlaygroundCustomPlayButton size={size}/>,
+          rotateArrow: (size)=> <PlaygroundCustomRotateArrow size={size}/>,
+          }
+  };
 
   const getCustomComponents = () => {
     return {
       customHoverRenderer: hoverInfoElement,
       customInfoRenderer: externalInfoElement,
-      EXPERIMENTAL_customNavigationPanelRenderer:
-        gallerySettings.useCustomNavigationPanel ? navigationPanel : undefined,
+      EXPERIMENTAL_customNavigationPanelRenderer: gallerySettings.useCustomNavigationPanel ? navigationPanel : undefined,
+      EXPERIMENTAL_customGalleryUI: gallerySettings.useCustomGalleryUI ? galleryUI() : undefined,
     };
   };
 
@@ -306,35 +313,9 @@ export function App() {
 
   // console.log('Rendering App: ', {options, items, dimensions, showSide, blueprint, blueprintProps})
   const getKeySettings = () => {
-    const {
-      mediaType,
-      numberOfItems,
-      isUnknownDimensions,
-      useCustomNavigationPanel,
-      navPanelType,
-      useBlueprints,
-      viewMode,
-      useLayoutFixer,
-      initialIdx,
-      mediaTypes,
-      useInlineStyles,
-      clickToExpand,
-    } = gallerySettings;
-    return {
-      mediaType,
-      numberOfItems,
-      isUnknownDimensions,
-      useCustomNavigationPanel,
-      navPanelType,
-      useBlueprints,
-      viewMode,
-      useLayoutFixer,
-      initialIdx,
-      mediaTypes,
-      useInlineStyles,
-      clickToExpand,
-    };
-  };
+    const { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, useCustomGalleryUI, navPanelType, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand} = gallerySettings;
+    return { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, useCustomGalleryUI, navPanelType, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
+  }
 
   let GalleryComponent = gallerySettings.clickToExpand
     ? ExpandableProGallery

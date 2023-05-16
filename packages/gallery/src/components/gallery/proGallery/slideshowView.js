@@ -17,6 +17,7 @@ import NavigationPanel, {
 import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
 import { NavigationArrows } from './navigationArrows.js';
 import { shouldRenderNavArrows } from '../../helpers/navigationArrowUtils.js';
+import { toggleScrollLessAnimation } from './scrollLessAnimationHelper';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 
@@ -58,7 +59,12 @@ class SlideshowView extends React.Component {
     this._setCurrentItemByScroll = utils
       .throttle(this.setCurrentItemByScroll, 600)
       .bind(this);
-    this._next = utils.throttle(this.next.bind(this), 400).bind(this);
+    this._next = utils
+      .throttle(
+        this.nextWithEffects.bind(this),
+        props.isScrollLessGallery ? 600 : 400
+      )
+      .bind(this);
     this.state = {
       activeIndex: props.activeIndex || 0,
       isInView: true,
@@ -176,6 +182,21 @@ class SlideshowView extends React.Component {
       (scrollingUpTheGallery && this.isLastItemFullyVisible()) ||
       (!scrollingUpTheGallery && this.isFirstItemFullyVisible())
     );
+  }
+
+  async nextWithEffects(props) {
+    const nextItem = await this.next(props);
+    if (
+      this.props.options.layoutParams_groups_groupSize === 1 &&
+      this.props.isScrollLessGallery &&
+      nextItem >= this.skipFromSlide
+    ) {
+      const skipToSlide = this.skipFromSlide - this.props.totalItemsCount;
+
+      toggleScrollLessAnimation(() =>
+        this.onScrollToItemOrGroup(skipToSlide, false)
+      );
+    }
   }
 
   async next({
@@ -320,7 +341,10 @@ class SlideshowView extends React.Component {
         scrollingUpTheGallery
       );
 
-      if (this.props.options.layoutParams_groups_groupSize === 1) {
+      if (
+        this.props.options.layoutParams_groups_groupSize === 1 &&
+        !this.props.isScrollLessGallery
+      ) {
         const skipToSlide = this.skipFromSlide - this.props.totalItemsCount;
 
         if (nextItem >= this.skipFromSlide) {
@@ -337,6 +361,7 @@ class SlideshowView extends React.Component {
         );
         this.props.setGotFirstScrollIfNeeded();
       }
+      return nextItem;
     } catch (e) {
       this.onThrowScrollError('Cannot proceed to the next Item', e);
     }

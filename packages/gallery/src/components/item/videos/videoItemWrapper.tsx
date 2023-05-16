@@ -1,7 +1,7 @@
 import React from 'react';
 import { utils, optionsMap } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
-import { VideoPlayButton } from '../media/playButton';
+import { GalleryUI } from '../media/GalleryUI';
 import MediaImage, {
   MediaImplementationProps,
   MediaBaseProps,
@@ -25,7 +25,11 @@ class VideoItemImplementation extends React.Component<MediaImplementationProps> 
         {...this.props}
         loadVideo={this.props.shouldPlay || shouldForceLoadVideo}
         videoPlaceholder={this.props.thumbnail}
-        videoPlayButton={this.props.showPlayButton && <VideoPlayButton />}
+        videoPlayButton={
+          this.props.showPlayButton && (
+            <GalleryUI type={'videoPlayButton'} size={60} />
+          )
+        }
       />
     );
   }

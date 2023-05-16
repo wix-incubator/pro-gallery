@@ -13,10 +13,6 @@ const fixToSlideshow = (options) => {
   presetOptions[optionsMap.layoutParams.crop.ratios] = ['100%/100%'];
   presetOptions[optionsMap.layoutParams.crop.enable] = true;
 
-  presetOptions[optionsMap.behaviourParams.item.overlay.hoveringBehaviour] =
-    GALLERY_CONSTS[
-      optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-    ].NEVER_SHOW;
   presetOptions[optionsMap.layoutParams.structure.scrollDirection] =
     GALLERY_CONSTS[
       optionsMap.layoutParams.structure.scrollDirection
@@ -42,7 +38,6 @@ const fixToSlideshow = (options) => {
   presetOptions[optionsMap.layoutParams.targetItemSize.value] = 550;
 
   presetOptions[optionsMap.layoutParams.structure.numberOfColumns] = 1;
-  presetOptions[optionsMap.layoutParams.thumbnails.enable] = false;
   presetOptions[
     optionsMap.behaviourParams.gallery.horizontal.blockScroll
   ] = false;

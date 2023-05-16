@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React, { useMemo } from "react";
+import React from "react";
 import { optionsMap, GALLERY_CONSTS, isEditMode } from "pro-gallery-lib";
-import { VideoPlayButton } from "./playButton";
+import { GalleryUI } from "./GalleryUI";
 import { Options, Settings, utils } from "pro-gallery-lib";
 import ImageItem from "../imageItem";
+import IframeVideoPlayer from "../videos/IframeVideoPlayer";
 
 export type MediaBaseProps = {
   calculatedAlt: string;
@@ -42,8 +43,28 @@ export type MediaImplementationProps<T = {}> = T &
     placeholder: JSX.Element;
   };
 
+const getPlayButtonComponentByItemType = (type: string) => {
+  if (type === "video") {
+    return <GalleryUI type={"videoPlayButton"} size={12} />;
+  } else if (type === "3d") {
+    return <GalleryUI type={"rotateArrow"} size={60} />;
+  } else {
+    return <></>;
+  }
+};
+
 export default function MediaItem<T extends Record<string, any>>(props: MediaProps<T>): JSX.Element {
-  const { hasLink, options, imageDimensions, showPlayButton, MediaImplementation, enableImagePlaceholder } = props;
+  const {
+    hasLink,
+    options,
+    imageDimensions,
+    showPlayButton,
+    MediaImplementation,
+    enableImagePlaceholder,
+    isVideoPlaceholder,
+    videoPlaceholderUrl,
+  } = props;
+  console.log(showPlayButton, "showPlayButton");
   const { behaviourParams_item_clickAction: clickAction, behaviourParams_item_video_playTrigger: playTrigger } =
     options;
 
@@ -65,13 +86,17 @@ export default function MediaItem<T extends Record<string, any>>(props: MediaPro
     return false;
   }; /* , [hasLink, playTrigger, clickAction]) */
 
+  const createIframePlayer = () => (
+    <IframeVideoPlayer dimensions={imageDimensions} url={isVideoPlaceholder ? videoPlaceholderUrl : props.videoUrl} />
+  );
+
   const createThumbnail = (propsOverrides: any = {}) =>
     enableImagePlaceholder ? (
       <ImageItem
         {...props}
         imageDimensions={imageDimensions}
         id={props.idx}
-        overlay={showPlayButton && !isMediaPlayable && <VideoPlayButton />}
+        overlay={showPlayButton && !isMediaPlayable && getPlayButtonComponentByItemType(props.type)}
         extraClasses={props.placeholderExtraClasses.join(" ")}
         {...propsOverrides}
       />
@@ -79,10 +104,11 @@ export default function MediaItem<T extends Record<string, any>>(props: MediaPro
       <></>
     );
   const thumbnail = createThumbnail();
-
+  const iframeVideoPlayer = createIframePlayer();
   const placeholder = (
     <>
       {thumbnail}
+      {iframeVideoPlayer}
       {props.hover}
     </>
   );

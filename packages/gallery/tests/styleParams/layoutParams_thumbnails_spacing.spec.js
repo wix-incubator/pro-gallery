@@ -17,37 +17,20 @@ describe('options - layoutParams_thumbnails_spacings', () => {
     };
   });
 
-  it('should set "layoutParams_thumbnails_spacing" of "10"', async () => {
+  it('should set "layoutParams_thumbnails_spacing" of "25"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
           .THUMBNAIL,
-      [optionsMap.layoutParams.thumbnails.spacing]: 10,
+      [optionsMap.layoutParams.thumbnails.spacing]: 25,
+      [optionsMap.layoutParams.thumbnails.size]: 100,
     });
     const mock = {
-      marginLeft: 10,
-      marginTop: 10,
+      left: 125,
     };
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const item = driver.find.selector('.thumbnailItem').at(0);
-    expect(item.props().style).to.include(mock);
-    driver.detach.proGallery();
-  });
-  it('should set "layoutParams_thumbnails_spacing" of "30"', async () => {
-    initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
-      [optionsMap.layoutParams.thumbnails.spacing]: 30,
-    });
-    const mock = {
-      marginLeft: 30,
-      marginTop: 30,
-    };
-    driver.mount.proGallery(initialProps);
-    await driver.update();
-    const item = driver.find.selector('.thumbnailItem').at(0);
+    const item = driver.find.selector('.thumbnailItem').at(1);
     expect(item.props().style).to.include(mock);
     driver.detach.proGallery();
   });

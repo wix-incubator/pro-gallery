@@ -22,11 +22,8 @@ import {
   getImageStyle,
 } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
-import {
-  getSlideAnimationStyles,
-  getCustomInfoRendererProps,
-  getLinkParams,
-} from './pure';
+import { getCustomInfoRendererProps, getLinkParams } from './pure';
+import { getSlideAnimationClassNames } from '../gallery/proGallery/scrollLessAnimationHelper';
 
 const ImageWithSecondMedia = withSecondaryMedia(MagnifiedImage);
 const TextWithSecondMedia = withSecondaryMedia(TextItem);
@@ -57,6 +54,7 @@ class ItemView extends React.Component {
     this.onItemWrapperClick = this.onItemWrapperClick.bind(this);
     this.onItemInfoClick = this.onItemInfoClick.bind(this);
     this.onAnchorKeyDown = this.onAnchorKeyDown.bind(this);
+    this.onContainerKeyUp = this.onContainerKeyUp.bind(this);
     this.handleItemMouseDown = this.handleItemMouseDown.bind(this);
     this.handleItemMouseUp = this.handleItemMouseUp.bind(this);
     this.setItemLoaded = this.setItemLoaded.bind(this);
@@ -262,16 +260,12 @@ class ItemView extends React.Component {
   shouldShowHoverOnMobile() {
     if (utils.isMobile()) {
       const {
+        [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
+          hoveringBehaviour,
         alwaysShowHover,
         previewHover,
-        allowDescription,
-        allowTitle,
-        isStoreGallery,
       } = this.props.options;
-      const hoveringBehaviour =
-        this.props.options[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ];
+
       if (
         hoveringBehaviour ===
         GALLERY_CONSTS[
@@ -295,8 +289,7 @@ class ItemView extends React.Component {
         hoveringBehaviour !==
           GALLERY_CONSTS[
             optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-          ].NEVER_SHOW &&
-        (allowDescription || allowTitle || isStoreGallery)
+          ].NEVER_SHOW
       ) {
         return true;
       }
@@ -420,6 +413,7 @@ class ItemView extends React.Component {
       'style',
       'hasSecondaryMedia',
       'secondaryMediaItem',
+      'customComponents',
     ]);
 
     return (
@@ -672,14 +666,13 @@ class ItemView extends React.Component {
     const overrideDeckTransition = GALLERY_CONSTS.isLayout('SLIDESHOW')(
       this.props.options
     );
-    const slideAnimationStyles = getSlideAnimationStyles(
-      this.props,
-      overrideDeckTransition
-    );
 
     info = (
       <div
-        className={'gallery-item-common-info-outer '}
+        className={
+          'gallery-item-common-info-outer ' +
+          getSlideAnimationClassNames(this.props, overrideDeckTransition)
+        }
         style={{
           ...getOuterInfoStyle(
             placement,
@@ -687,7 +680,6 @@ class ItemView extends React.Component {
             style.height,
             options[optionsMap.layoutParams.info.height]
           ),
-          ...slideAnimationStyles,
         }}
       >
         <div
@@ -873,12 +865,7 @@ class ItemView extends React.Component {
     styles.width = width + 'px';
     styles.margin = -options[optionsMap.stylingParams.itemBorderWidth] + 'px';
 
-    const itemWrapperStyles = {
-      ...styles,
-      ...getSlideAnimationStyles(this.props),
-    };
-
-    return itemWrapperStyles;
+    return styles;
   }
 
   getItemAriaLabel() {
@@ -992,6 +979,8 @@ class ItemView extends React.Component {
     if (type === 'text') {
       classes.push('gallery-item-wrapper-text');
     }
+
+    classes.push(getSlideAnimationClassNames(this.props));
     return classes.join(' ');
   }
 
@@ -1075,6 +1064,22 @@ class ItemView extends React.Component {
     }
   }
 
+  onContainerKeyUp(e) {
+    const clickTarget = 'item-container';
+    switch (e.keyCode || e.charCode) {
+      case 32: //space
+      case 13: //enter
+        e.stopPropagation();
+        this.onItemClick(e, clickTarget, false); //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
+        if (this.shouldUseDirectLink()) {
+          this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
+        }
+        return false;
+      default:
+        return true;
+    }
+  }
+
   composeItem() {
     const { photoId, id, hash, idx, options, type, url } = this.props;
 
@@ -1104,6 +1109,7 @@ class ItemView extends React.Component {
         data-hook="item-container"
         key={'item-container-' + id}
         style={this.getItemContainerStyles()}
+        onKeyUp={this.onContainerKeyUp}
         onClick={this.onItemWrapperClick}
       >
         {this.getTopInfoElementIfNeeded()}
