@@ -12,7 +12,7 @@ export default class ScrollIndicator extends React.Component {
       scrollLeft: 0,
     };
     this.setState = this.setState.bind(this);
-    this.debouncedOnScroll = props.onScroll;
+    this.debouncedOnScroll = utils.debounce(props.onScroll, 50);
   }
 
   removeScrollListener() {
@@ -195,6 +195,7 @@ export default class ScrollIndicator extends React.Component {
           isScrollingHorizontally
         )}
         style={{
+          display: utils.isVerbose() ? "block" : "none",
           position: "fixed",
           top: 0,
           right: 0,

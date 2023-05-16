@@ -6,7 +6,6 @@ import {
   processLayouts,
   utils,
 } from 'pro-gallery-lib';
-import { cssScrollHelper } from 'pro-gallery';
 
 class Blueprints {
   createBlueprint({
@@ -86,14 +85,6 @@ class Blueprints {
           existingBlueprint.container = formattedContainer;
         }
         existingBlueprint.structure = structure;
-
-        // existingBlueprint.scrollAnimationsCss = this.createCssAnimations({
-        //   items: structure.items,
-        //   container: existingBlueprint.container,
-        //   options: existingBlueprint.options,
-        //   id: params.id,
-        // });
-        // console.log({ existingBlueprint });
 
         // if its an infinite gallery - let the container loose
         const isInfinite = utils.isHeightSetByGallery(
@@ -362,15 +353,6 @@ class Blueprints {
 
     return this.layouter.createLayout(layoutParams);
   }
-
-  // createCssAnimations({ items, container, options, id }) {
-  //   return cssScrollHelper.calcScrollCss({
-  //     items,
-  //     options,
-  //     container,
-  //     galleryId: id,
-  //   });
-  // }
 }
 const blueprints = new Blueprints();
 export default blueprints;
