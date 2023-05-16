@@ -1,6 +1,6 @@
-import React from "react";
-import { utils, GALLERY_CONSTS, optionsMap } from "pro-gallery-lib";
-import { cssScrollHelper } from "../../helpers/cssScrollHelper";
+import React from 'react';
+import { utils, GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
+import { cssScrollHelper } from '../../helpers/cssScrollHelper';
 
 export default class ScrollIndicator extends React.Component {
   constructor(props) {
@@ -19,7 +19,7 @@ export default class ScrollIndicator extends React.Component {
     if (this.scrollEventListenerSet) {
       const scrollingElement = this.props.scrollingElement;
       try {
-        scrollingElement.vertical().removeEventListener("scroll", this.onVerticalScroll);
+        scrollingElement.vertical().removeEventListener('scroll', this.onVerticalScroll);
       } catch (e) {
         //
       }
@@ -27,7 +27,7 @@ export default class ScrollIndicator extends React.Component {
       try {
         const { scrollDirection } = this.props;
         if (scrollDirection === GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL) {
-          scrollingElement.horizontal().removeEventListener("scroll", this.onHorizontalScroll);
+          scrollingElement.horizontal().removeEventListener('scroll', this.onHorizontalScroll);
         }
       } catch (e) {
         //
@@ -100,7 +100,7 @@ export default class ScrollIndicator extends React.Component {
     };
 
     try {
-      scrollingElement.horizontal()?.addEventListener("scroll", this.onHorizontalScroll);
+      scrollingElement.horizontal()?.addEventListener('scroll', this.onHorizontalScroll);
     } catch (e) {
       console.error(e);
     }
@@ -109,9 +109,9 @@ export default class ScrollIndicator extends React.Component {
       this.props.galleryScrollDirection === GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
     ) {
       try {
-        scrollingElement.horizontal().addEventListener("scroll", this.onHorizontalScroll);
+        scrollingElement.horizontal().addEventListener('scroll', this.onHorizontalScroll);
 
-        scrollingElement.horizontal().addEventListener("scrollTransition", this.onHorizontalScrollTransition);
+        scrollingElement.horizontal().addEventListener('scrollTransition', this.onHorizontalScrollTransition);
       } catch (e) {
         console.error(e);
       }
@@ -142,7 +142,7 @@ export default class ScrollIndicator extends React.Component {
       }
     };
     try {
-      scrollingElement.vertical().addEventListener("scroll", this.onVerticalScroll);
+      scrollingElement.vertical().addEventListener('scroll', this.onVerticalScroll);
     } catch (e) {
       console.error(e);
     }
@@ -158,7 +158,7 @@ export default class ScrollIndicator extends React.Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     let didChange = false;
-    for (const prop of ["id", "scrollDirection", "isRTL", "totalWidth", "scrollBase"]) {
+    for (const prop of ['id', 'scrollDirection', 'isRTL', 'totalWidth', 'scrollBase']) {
       if (nextProps[prop] !== this.props[prop]) {
         didChange = true;
         break;
@@ -195,14 +195,14 @@ export default class ScrollIndicator extends React.Component {
           isScrollingHorizontally
         )}
         style={{
-          display: utils.isVerbose() ? "block" : "none",
-          position: "fixed",
+          display: utils.isVerbose() ? 'block' : 'none',
+          position: 'fixed',
           top: 0,
           right: 0,
-          background: "white",
+          background: 'white',
           zIndex: 99999,
           padding: 10,
-          border: "1px solid blue",
+          border: '1px solid blue',
         }}
       >
         x: {this.state.scrollLeft}

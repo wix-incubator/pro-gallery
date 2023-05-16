@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React from "react";
-import { optionsMap, GALLERY_CONSTS, isEditMode } from "pro-gallery-lib";
-import { GalleryUI } from "./GalleryUI";
-import { Options, Settings, utils } from "pro-gallery-lib";
-import ImageItem from "../imageItem";
-import IframeVideoPlayer from "../videos/IframeVideoPlayer";
+import React from 'react';
+import { optionsMap, GALLERY_CONSTS, isEditMode } from 'pro-gallery-lib';
+import { GalleryUI } from './GalleryUI';
+import { Options, Settings, utils } from 'pro-gallery-lib';
+import ImageItem from '../imageItem';
+import IframeVideoPlayer from '../videos/IframeVideoPlayer';
 
 export type MediaBaseProps = {
   calculatedAlt: string;
@@ -33,21 +33,21 @@ export type MediaBaseProps = {
 };
 
 export type MediaProps<T extends Record<string, any>> = MediaBaseProps & {
-  MediaImplementation: React.ComponentType<MediaImplementationProps<Omit<T, "MediaImplementation">>>;
+  MediaImplementation: React.ComponentType<MediaImplementationProps<Omit<T, 'MediaImplementation'>>>;
 } & T;
 
 export type MediaImplementationProps<T = {}> = T &
   MediaBaseProps & {
     thumbnail: JSX.Element;
-    thumbnailWithOverride(props: ImageItem["props"]): JSX.Element;
+    thumbnailWithOverride(props: ImageItem['props']): JSX.Element;
     placeholder: JSX.Element;
   };
 
 const getPlayButtonComponentByItemType = (type: string) => {
-  if (type === "video") {
-    return <GalleryUI type={"videoPlayButton"} size={12} />;
-  } else if (type === "3d") {
-    return <GalleryUI type={"rotateArrow"} size={60} />;
+  if (type === 'video') {
+    return <GalleryUI type={'videoPlayButton'} size={12} />;
+  } else if (type === '3d') {
+    return <GalleryUI type={'rotateArrow'} size={60} />;
   } else {
     return <></>;
   }
@@ -64,7 +64,6 @@ export default function MediaItem<T extends Record<string, any>>(props: MediaPro
     isVideoPlaceholder,
     videoPlaceholderUrl,
   } = props;
-  console.log(showPlayButton, "showPlayButton");
   const { behaviourParams_item_clickAction: clickAction, behaviourParams_item_video_playTrigger: playTrigger } =
     options;
 
@@ -97,7 +96,7 @@ export default function MediaItem<T extends Record<string, any>>(props: MediaPro
         imageDimensions={imageDimensions}
         id={props.idx}
         overlay={showPlayButton && !isMediaPlayable && getPlayButtonComponentByItemType(props.type)}
-        extraClasses={props.placeholderExtraClasses.join(" ")}
+        extraClasses={props.placeholderExtraClasses.join(' ')}
         {...propsOverrides}
       />
     ) : (

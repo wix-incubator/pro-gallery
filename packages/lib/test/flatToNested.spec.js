@@ -82,8 +82,7 @@ function input() {
     itemFont_preset: 'Custom',
     itemFont_editorKey: 'font_5',
     itemFont_fontStyleParam: true,
-    itemFont_value:
-      'font:normal normal normal 22px/27px proxima-n-w01-reg,sans-serif;',
+    itemFont_value: 'font:normal normal normal 22px/27px proxima-n-w01-reg,sans-serif;',
     itemFontSlideshow_family: 'proxima-n-w01-reg',
     itemFontSlideshow_displayName: 'Heading 5',
     itemFontSlideshow_style_bold: false,
@@ -93,8 +92,7 @@ function input() {
     itemFontSlideshow_preset: 'Custom',
     itemFontSlideshow_editorKey: 'font_5',
     itemFontSlideshow_fontStyleParam: true,
-    itemFontSlideshow_value:
-      'font:normal normal normal 22px/27px proxima-n-w01-reg,sans-serif;',
+    itemFontSlideshow_value: 'font:normal normal normal 22px/27px proxima-n-w01-reg,sans-serif;',
     itemDescriptionFontSlideshow_family: 'proxima-n-w01-reg',
     itemDescriptionFontSlideshow_displayName: 'Paragraph 2',
     itemDescriptionFontSlideshow_style_bold: false,
@@ -104,8 +102,7 @@ function input() {
     itemDescriptionFontSlideshow_preset: 'Custom',
     itemDescriptionFontSlideshow_editorKey: 'font_8',
     itemDescriptionFontSlideshow_fontStyleParam: true,
-    itemDescriptionFontSlideshow_value:
-      'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
+    itemDescriptionFontSlideshow_value: 'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
     itemDescriptionFont_family: 'proxima-n-w01-reg',
     itemDescriptionFont_displayName: 'Paragraph 2',
     itemDescriptionFont_style_bold: false,
@@ -115,8 +112,7 @@ function input() {
     itemDescriptionFont_preset: 'Custom',
     itemDescriptionFont_editorKey: 'font_8',
     itemDescriptionFont_fontStyleParam: true,
-    itemDescriptionFont_value:
-      'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
+    itemDescriptionFont_value: 'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
     itemFontColor_themeName: 'color_11',
     itemFontColor_value: 'rgba(255,255,255,1)',
     itemFontColorSlideshow_themeName: 'color_15',
@@ -134,8 +130,7 @@ function input() {
     loadMoreButtonFont_preset: 'Body-M',
     loadMoreButtonFont_editorKey: 'font_8',
     loadMoreButtonFont_fontStyleParam: true,
-    loadMoreButtonFont_value:
-      'font:normal normal normal 15px/1.4em proxima-n-w01-reg,sans-serif;',
+    loadMoreButtonFont_value: 'font:normal normal normal 15px/1.4em proxima-n-w01-reg,sans-serif;',
     loadMoreButtonFontColor_themeName: 'color_15',
     loadMoreButtonFontColor_value: 'rgba(0,0,0,1)',
     loadMoreButtonColor_themeName: 'color_11',
@@ -151,8 +146,7 @@ function input() {
     customButtonFontForHover_preset: 'Custom',
     customButtonFontForHover_editorKey: 'font_8',
     customButtonFontForHover_fontStyleParam: true,
-    customButtonFontForHover_value:
-      'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
+    customButtonFontForHover_value: 'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
     customButtonFontColorForHover_themeName: 'color_15',
     customButtonFontColorForHover_value: 'rgba(0,0,0,1)',
     externalCustomButtonColor_themeName: 'color_18',
@@ -168,8 +162,7 @@ function input() {
     customButtonFont_preset: 'Custom',
     customButtonFont_editorKey: 'font_8',
     customButtonFont_fontStyleParam: true,
-    customButtonFont_value:
-      'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
+    customButtonFont_value: 'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
     customButtonFontColor_themeName: 'color_11',
     customButtonFontColor_value: 'rgba(255,255,255,1)',
     customButtonColor_themeName: 'color_11',
@@ -217,7 +210,6 @@ function input() {
     slideshowInfoSize: 200,
     imageLoadingMode: 'COLOR',
     scrollAnimation: 'NO_EFFECT',
-    exitScrollAnimation: 'NO_EFFECT',
     overlayAnimation: 'NO_EFFECT',
     imageHoverAnimation: 'NO_EFFECT',
     itemBorderWidth: 0,
@@ -295,15 +287,7 @@ function input() {
     layoutParams_groups_density: 0.8,
     layoutParams_groups_groupByOrientation: true,
     layoutParams_groups_groupSize: 3,
-    layoutParams_groups_allowedGroupTypes: [
-      '1',
-      '2h',
-      '2v',
-      '3t',
-      '3b',
-      '3l',
-      '3r',
-    ],
+    layoutParams_groups_allowedGroupTypes: ['1', '2h', '2v', '3t', '3b', '3l', '3r'],
     layoutParams_groups_numberOfGroupsPerRow: 0,
     layoutParams_groups_repeatingGroupTypes: [],
     layoutParams_thumbnails_enable: false,
@@ -348,8 +332,7 @@ function input() {
     behaviourParams_gallery_scrollAnimationReset: false,
     behaviourParams_gallery_enableIndexingShareLinks: false,
     behaviourParams_gallery_horizontal_slideAnimation: 'SCROLL',
-    behaviourParams_gallery_horizontal_slideTransition:
-      'cubic-bezier(0.46,0.1,0.25,1)',
+    behaviourParams_gallery_horizontal_slideTransition: 'cubic-bezier(0.46,0.1,0.25,1)',
     behaviourParams_gallery_horizontal_loop: false,
     behaviourParams_gallery_horizontal_autoSlide_interval: 4,
     behaviourParams_gallery_horizontal_autoSlide_pauseOnHover: true,
@@ -527,8 +510,7 @@ function expected() {
       preset: 'Custom',
       editorKey: 'font_5',
       fontStyleParam: true,
-      value:
-        'font:normal normal normal 22px/27px proxima-n-w01-reg,sans-serif;',
+      value: 'font:normal normal normal 22px/27px proxima-n-w01-reg,sans-serif;',
     },
     itemFontSlideshow: {
       family: 'proxima-n-w01-reg',
@@ -542,8 +524,7 @@ function expected() {
       preset: 'Custom',
       editorKey: 'font_5',
       fontStyleParam: true,
-      value:
-        'font:normal normal normal 22px/27px proxima-n-w01-reg,sans-serif;',
+      value: 'font:normal normal normal 22px/27px proxima-n-w01-reg,sans-serif;',
     },
     itemDescriptionFontSlideshow: {
       family: 'proxima-n-w01-reg',
@@ -557,8 +538,7 @@ function expected() {
       preset: 'Custom',
       editorKey: 'font_8',
       fontStyleParam: true,
-      value:
-        'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
+      value: 'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
     },
     itemDescriptionFont: {
       family: 'proxima-n-w01-reg',
@@ -572,8 +552,7 @@ function expected() {
       preset: 'Custom',
       editorKey: 'font_8',
       fontStyleParam: true,
-      value:
-        'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
+      value: 'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
     },
     itemFontColor: {
       themeName: 'color_11',
@@ -603,8 +582,7 @@ function expected() {
       preset: 'Body-M',
       editorKey: 'font_8',
       fontStyleParam: true,
-      value:
-        'font:normal normal normal 15px/1.4em proxima-n-w01-reg,sans-serif;',
+      value: 'font:normal normal normal 15px/1.4em proxima-n-w01-reg,sans-serif;',
     },
     loadMoreButtonFontColor: {
       themeName: 'color_15',
@@ -630,8 +608,7 @@ function expected() {
       preset: 'Custom',
       editorKey: 'font_8',
       fontStyleParam: true,
-      value:
-        'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
+      value: 'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
     },
     customButtonFontColorForHover: {
       themeName: 'color_15',
@@ -657,8 +634,7 @@ function expected() {
       preset: 'Custom',
       editorKey: 'font_8',
       fontStyleParam: true,
-      value:
-        'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
+      value: 'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
     },
     customButtonFontColor: {
       themeName: 'color_11',
@@ -717,7 +693,6 @@ function expected() {
     slideshowInfoSize: 200,
     imageLoadingMode: 'COLOR',
     scrollAnimation: 'NO_EFFECT',
-    exitScrollAnimation: 'NO_EFFECT',
     overlayAnimation: 'NO_EFFECT',
     imageHoverAnimation: 'NO_EFFECT',
     itemBorderWidth: 0,
@@ -802,7 +777,6 @@ function expected() {
       },
       gallery: {
         scrollAnimation: 'NO_EFFECT',
-        exitScrollAnimation: 'NO_EFFECT',
         enableIndexingShareLinks: false,
         horizontal: {
           slideAnimation: 'SCROLL',
