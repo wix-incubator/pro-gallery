@@ -30,10 +30,7 @@ class Utils {
       /^[\],:{}\s]*$/.test(
         stripedObj
           .replace(/\\["\\/bfnrtu]/g, '@')
-          .replace(
-            /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?/g,
-            ']'
-          )
+          .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?/g, ']')
           .replace(/(?:^|:|,)(?:\s*\[)+/g, '')
       )
     ) {
@@ -107,17 +104,7 @@ class Utils {
       [optionsMap.layoutParams.structure.scatter.manualScatter]: '',
       [optionsMap.layoutParams.groups.groupByOrientation]: true,
       [optionsMap.layoutParams.groups.groupSize]: 3,
-      [optionsMap.layoutParams.groups.allowedGroupTypes]: [
-        '1',
-        '2h',
-        '2v',
-        '3h',
-        '3v',
-        '3t',
-        '3b',
-        '3l',
-        '3r',
-      ],
+      [optionsMap.layoutParams.groups.allowedGroupTypes]: ['1', '2h', '2v', '3h', '3v', '3t', '3b', '3l', '3r'],
       [optionsMap.layoutParams.structure.layoutOrientation]: 'VERTICAL',
       [optionsMap.layoutParams.targetItemSize.minimum]: 120,
       [optionsMap.layoutParams.structure.scrollDirection]: 'VERTICAL',
@@ -141,8 +128,7 @@ class Utils {
       convertedContainer.galleryWidth =
         container.width +
         ((styleParams[optionsMap.layoutParams.structure.itemSpacing] / 2 || 0) -
-          (styleParams[optionsMap.layoutParams.structure.gallerySpacing] ||
-            0)) *
+          (styleParams[optionsMap.layoutParams.structure.gallerySpacing] || 0)) *
           2;
       delete convertedContainer.width;
     }
@@ -155,8 +141,7 @@ class Utils {
     }
     if (
       styleParams.externalInfoHeight >= 0 &&
-      styleParams[optionsMap.layoutParams.structure.scrollDirection] ===
-        'HORIZONTAL'
+      styleParams[optionsMap.layoutParams.structure.scrollDirection] === 'HORIZONTAL'
     ) {
       convertedContainer.galleryHeight -= styleParams.externalInfoHeight;
     }

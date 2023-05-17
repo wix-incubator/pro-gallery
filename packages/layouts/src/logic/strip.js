@@ -84,8 +84,7 @@ export class Strip {
     if (scrollDirection === 'HORIZONTAL') {
       isStripSmallEnough = false; //horizontal layout is one long strip
     } else {
-      const withNewGroup =
-        galleryWidth / (this.ratio + newGroup.ratio) - targetItemSize; //start a new strip BEFORE adding the current group
+      const withNewGroup = galleryWidth / (this.ratio + newGroup.ratio) - targetItemSize; //start a new strip BEFORE adding the current group
       const withoutNewGroup = galleryWidth / this.ratio - targetItemSize; //start a new strip AFTER adding the current group
       if (isNaN(withNewGroup) || isNaN(withoutNewGroup)) {
         isStripSmallEnough = false;
@@ -96,8 +95,7 @@ export class Strip {
         //adding the new group makes is small enough
         // check if adding the new group makes the strip TOO small
         //so - without the new group, the strip is larger than the required size - but adding the new group might make it too small
-        isStripSmallEnough =
-          Math.abs(withoutNewGroup) < Math.abs(withNewGroup) * 1.5; //prefer spliting strips than over pack groups in one strip
+        isStripSmallEnough = Math.abs(withoutNewGroup) < Math.abs(withNewGroup) * 1.5; //prefer spliting strips than over pack groups in one strip
       } else {
         isStripSmallEnough = false;
       }
