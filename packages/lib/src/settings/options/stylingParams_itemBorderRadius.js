@@ -7,8 +7,7 @@ export default {
   description: `Set the border radius for each item in the gallery.`,
   isRelevantDescription: 'Set "Crop Method" to anything but "Fit".',
   isRelevant: (options) =>
-    options[optionsMap.layoutParams.crop.method] !==
-    GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
+    options[optionsMap.layoutParams.crop.method] !== GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
   type: INPUT_TYPES.NUMBER,
   default: 0, //one source
 };

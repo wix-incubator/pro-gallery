@@ -7,8 +7,7 @@ export default {
   description: `Set the width of each column, proportional to the width of the gallery`,
   isRelevant: (options) =>
     options[optionsMap.layoutParams.structure.layoutOrientation] ===
-    GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-      .VERTICAL,
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].VERTICAL,
   isRelevantDescription: 'Set "Layout Orientation" to "Columns".',
   type: INPUT_TYPES.TEXT, //v5 TODO not the right input method?
   default: '',

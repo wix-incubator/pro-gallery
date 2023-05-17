@@ -7,11 +7,7 @@ class GalleryDebugMessage extends React.Component {
       return false;
     }
 
-    const version = (
-      <div className="version-header ">
-        Pro Gallery Version #{window.staticsVersion}
-      </div>
-    );
+    const version = <div className="version-header ">Pro Gallery Version #{window.staticsVersion}</div>;
 
     let parentSize = '';
     try {

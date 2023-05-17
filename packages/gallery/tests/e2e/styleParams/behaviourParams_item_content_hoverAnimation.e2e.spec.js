@@ -16,19 +16,14 @@ describe('behaviourParams_item_content_hoverAnimation - e2e', () => {
     await driver.closePage();
   });
 
-  Object.values(
-    GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
-  ).forEach((animationType) => {
+  Object.values(GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]).forEach((animationType) => {
     it(`should have "${animationType}" animation`, async () => {
       await driver.navigate({
         [optionsMap.layoutParams.structure.galleryLayout]:
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-            .THUMBNAIL,
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
         [optionsMap.behaviourParams.item.content.hoverAnimation]: animationType,
         [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-          ].NEVER_SHOW,
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].NEVER_SHOW,
       });
       await driver.waitFor.hookToBeVisible('item-container');
       await driver.actions.hover('item-container')[0];

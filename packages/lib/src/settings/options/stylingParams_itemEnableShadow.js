@@ -10,17 +10,14 @@ export default {
     'Only for vertical galleries. First set "Crop Images" to "false" or set "Crop Type" to anything but "Fit".\nThen set "Choose info layout" to "Attached Background" or set "Texts Placement" to "Show On Hover".',
   isRelevant: (options) =>
     options[optionsMap.layoutParams.structure.scrollDirection] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-        .VERTICAL &&
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL &&
     !(
       layoutParams_crop_method.isRelevant(options) &&
-      options[optionsMap.layoutParams.crop.method] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
+      options[optionsMap.layoutParams.crop.method] === GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
     ) &&
     ((layoutParams_info_layout.isRelevant(options) &&
       options[optionsMap.layoutParams.info.layout] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.info.layout]
-          .ATTACHED_BACKGROUND) ||
+        GALLERY_CONSTS[optionsMap.layoutParams.info.layout].ATTACHED_BACKGROUND) ||
       (layoutParams_info_placement.isRelevant(options) &&
         options[optionsMap.layoutParams.info.placement] ===
           GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY)),

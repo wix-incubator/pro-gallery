@@ -44,8 +44,7 @@ describe('options - behaviourParams_item_content_loader', () => {
     const props = getSampleItemViewProps(
       {
         [optionsMap.behaviourParams.item.content.loader]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader]
-            .MAIN_COLOR,
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader].MAIN_COLOR,
       },
       createUrlStub
     );

@@ -15,8 +15,7 @@ describe('options - behaviourParams_gallery_horizontal_autoSlide_behaviour', () 
     initialProps = driver.props.galleryView();
     Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL,
     });
     clock = sinon.useFakeTimers();
   });
@@ -28,9 +27,7 @@ describe('options - behaviourParams_gallery_horizontal_autoSlide_behaviour', () 
     Object.assign(initialProps.options, {
       [optionsMap.behaviourParams.gallery.horizontal.autoSlide.interval]: 1,
       [optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-        ].INTERVAL,
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour].INTERVAL,
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDER,
     });
@@ -48,9 +45,7 @@ describe('options - behaviourParams_gallery_horizontal_autoSlide_behaviour', () 
     Object.assign(initialProps.options, {
       [optionsMap.behaviourParams.gallery.horizontal.autoSlide.speed]: 200,
       [optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-        ].CONTINUOUS,
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour].CONTINUOUS,
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDER,
     });

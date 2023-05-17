@@ -20,9 +20,7 @@ describe('behaviourParams_item_overlay_hoveringBehaviour - e2e', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].APPEARS,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].APPEARS,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.actions.hover('item-container')[0];
@@ -35,9 +33,7 @@ describe('behaviourParams_item_overlay_hoveringBehaviour - e2e', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].DISAPPEARS,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].DISAPPEARS,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.actions.hover('item-container')[0];
@@ -50,9 +46,7 @@ describe('behaviourParams_item_overlay_hoveringBehaviour - e2e', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].ALWAYS_SHOW,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].ALWAYS_SHOW,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.actions.hover('item-container')[0];

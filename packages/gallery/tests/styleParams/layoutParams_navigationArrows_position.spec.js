@@ -20,11 +20,9 @@ describe('options - layoutParams_navigationArrows_position', () => {
   it('should calculate gallery width accroding to "layoutParams_navigationArrows_position" ("OUTSIDE_GALLERY")', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW,
       [optionsMap.layoutParams.navigationArrows.position]:
-        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
-          .OUTSIDE_GALLERY,
+        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position].OUTSIDE_GALLERY,
       [optionsMap.layoutParams.navigationArrows.size]: 40,
       [optionsMap.layoutParams.structure.itemSpacing]: 0, // fixed in slideshow
     });
@@ -45,11 +43,9 @@ describe('options - layoutParams_navigationArrows_position', () => {
   it('should have original container width (layoutParams_navigationArrows_position = "OUTSIDE_GALLERY")', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW,
       [optionsMap.layoutParams.navigationArrows.position]:
-        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
-          .ON_GALLERY,
+        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position].ON_GALLERY,
       [optionsMap.layoutParams.navigationArrows.size]: 40,
       [optionsMap.layoutParams.structure.itemSpacing]: 0, // fixed in slideshow
     });

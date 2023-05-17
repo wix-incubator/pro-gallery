@@ -20,8 +20,7 @@ describe('layoutParams_structure_responsiveMode - e2e', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.responsiveMode]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
-          .FIT_TO_SCREEN,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].FIT_TO_SCREEN,
       [optionsMap.layoutParams.structure.numberOfColumns]: 2,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -33,8 +32,7 @@ describe('layoutParams_structure_responsiveMode - e2e', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.responsiveMode]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
-          .SET_ITEMS_PER_ROW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW,
       [optionsMap.layoutParams.structure.numberOfColumns]: 2,
     });
     await driver.waitFor.hookToBeVisible('item-container');

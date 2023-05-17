@@ -8,19 +8,15 @@ export default {
   isRelevant: (options) => {
     return (
       options[optionsMap.layoutParams.structure.scrollDirection] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL &&
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL &&
       options[optionsMap.layoutParams.structure.layoutOrientation] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-          .VERTICAL
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].VERTICAL
     );
   },
   isRelevantDescription:
     'Set a Vertical gallery ("Scroll Direction" as "Vertical") and set "Layout Orientation" to "Columns".',
   type: INPUT_TYPES.OPTIONS,
-  default:
-    GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
-      .FIT_TO_SCREEN,
+  default: GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].FIT_TO_SCREEN,
   options: createOptions(optionsMap.layoutParams.structure.responsiveMode),
   description: `Choose between adjusting the number of columns addording to the container
   size or setting it manually and keep it fixed.`,

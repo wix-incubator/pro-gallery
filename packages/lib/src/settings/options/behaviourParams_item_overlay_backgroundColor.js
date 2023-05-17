@@ -9,8 +9,7 @@ export default {
   isRelevant: (options) =>
     behaviourParams_item_overlay_hoveringBehaviour.isRelevant(options) &&
     options[optionsMap.behaviourParams.item.overlay.hoveringBehaviour] !==
-      GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour]
-        .NEVER_SHOW,
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].NEVER_SHOW,
   type: INPUT_TYPES.COLOR_PICKER,
   default: 'rgba(8, 8 ,8, 0.75)', //one source
 };

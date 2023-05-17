@@ -66,9 +66,7 @@ class galleryDriver {
       gotScrollEvent: true,
     };
 
-    this.galleryStructure = ItemsHelper.convertToGalleryItems(
-      new Layouter(this.layoutParams)
-    );
+    this.galleryStructure = ItemsHelper.convertToGalleryItems(new Layouter(this.layoutParams));
 
     this.customComponents = {
       customHoverRenderer: () => {},
@@ -188,10 +186,7 @@ class galleryDriver {
   }
 
   get images() {
-    return _.uniqBy(
-      Array.from(this.find.hook('gallery-item-image-img')),
-      ({ props }) => props.src
-    );
+    return _.uniqBy(Array.from(this.find.hook('gallery-item-image-img')), ({ props }) => props.src);
   }
 
   getContainer() {
@@ -247,9 +242,7 @@ class galleryDriver {
           styleParams: galleryViewProps.options,
         };
 
-        const galleryStructure = ItemsHelper.convertToGalleryItems(
-          new Layouter(layoutParams)
-        );
+        const galleryStructure = ItemsHelper.convertToGalleryItems(new Layouter(layoutParams));
 
         return {
           totalItemsCount: galleryViewProps.totalItemsCount || 100,
@@ -273,9 +266,7 @@ class galleryDriver {
         return Object.assign(galleryViewProps, {
           rendered: true,
           visible: true,
-          items: galleryViewProps.items.map(
-            (item) => new GalleryItem({ dto: item })
-          ),
+          items: galleryViewProps.items.map((item) => new GalleryItem({ dto: item })),
         });
       },
 
@@ -301,17 +292,14 @@ class galleryDriver {
       textView: (itemDto, galleryConfig) => {
         const newGalleryConfig = galleryConfig || this.get.galleryConfig;
         const galleryItem = new GalleryItem({ dto: itemDto });
-        const itemViewPropsObj = Object.assign(
-          galleryItem.renderProps(newGalleryConfig),
-          {
-            config: newGalleryConfig,
-            visible: true,
-            imageDimensions: {
-              marginLeft: 0,
-              marginTop: 0,
-            },
-          }
-        );
+        const itemViewPropsObj = Object.assign(galleryItem.renderProps(newGalleryConfig), {
+          config: newGalleryConfig,
+          visible: true,
+          imageDimensions: {
+            marginLeft: 0,
+            marginTop: 0,
+          },
+        });
         return Object.assign(itemViewPropsObj, {
           actions: {
             handleItemMouseDown: () => {},

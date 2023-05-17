@@ -8,8 +8,7 @@ export default {
   isRelevant: (options) =>
     layoutParams_navigationArrows_position.isRelevant(options) &&
     options[optionsMap.layoutParams.navigationArrows.position] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
-        .ON_GALLERY,
+      GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position].ON_GALLERY,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal"), set "Show Navigation Arrows" to "true" ans set "Navigation Arrows Position" to "On Gallery"',
   type: INPUT_TYPES.NUMBER,

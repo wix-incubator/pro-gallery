@@ -74,21 +74,8 @@ export interface Controls {
 }
 export interface Overlay {
   hoveringBehaviour?: 'APPEARS' | 'DISAPPEARS' | 'ALWAYS_SHOW' | 'NEVER_SHOW';
-  hoverAnimation?:
-    | 'NO_EFFECT'
-    | 'FADE_IN'
-    | 'EXPAND'
-    | 'SLIDE_UP'
-    | 'SLIDE_RIGHT'
-    | 'SLIDE_DOWN'
-    | 'SLIDE_LEFT';
-  position?:
-    | 'LEFT'
-    | 'TOP'
-    | 'RIGHT'
-    | 'BUTTOM'
-    | 'CENTERED_VERTICALLY'
-    | 'CENTERED_HORIZONTALLY';
+  hoverAnimation?: 'NO_EFFECT' | 'FADE_IN' | 'EXPAND' | 'SLIDE_UP' | 'SLIDE_RIGHT' | 'SLIDE_DOWN' | 'SLIDE_LEFT';
+  position?: 'LEFT' | 'TOP' | 'RIGHT' | 'BUTTOM' | 'CENTERED_VERTICALLY' | 'CENTERED_HORIZONTALLY';
   size?: number;
   sizeUnits?: 'PIXEL' | 'PERCENT';
   padding?: number;
@@ -96,15 +83,7 @@ export interface Overlay {
 }
 
 export interface Content {
-  hoverAnimation?:
-    | 'NO_EFFECT'
-    | 'ZOOM_IN'
-    | 'BLUR'
-    | 'GRAYSCALE'
-    | 'SHRINK'
-    | 'INVERT'
-    | 'COLOR_IN'
-    | 'DARKENED';
+  hoverAnimation?: 'NO_EFFECT' | 'ZOOM_IN' | 'BLUR' | 'GRAYSCALE' | 'SHRINK' | 'INVERT' | 'COLOR_IN' | 'DARKENED';
   placementAnimation?: 'NO_EFFECT' | 'SLIDE';
   loader?: 'BLUR' | 'COLOR' | 'MAIN_COLOR';
   magnificationValue?: number;

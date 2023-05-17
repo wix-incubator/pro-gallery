@@ -26,9 +26,7 @@ describe('options - behaviourParams_item_video_playTrigger', () => {
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const galleryVideoItems = driver.find.hook(
-      'video_container-video-player-element'
-    );
+    const galleryVideoItems = driver.find.hook('video_container-video-player-element');
     expect(galleryVideoItems.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
@@ -41,8 +39,7 @@ describe('options - behaviourParams_item_video_playTrigger', () => {
     it('should not have video elements intially (with no hover event)', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.video.playTrigger]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
-            .HOVER,
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER,
         [optionsMap.layoutParams.structure.galleryLayout]:
           GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       });
@@ -55,8 +52,7 @@ describe('options - behaviourParams_item_video_playTrigger', () => {
     it('should have video element on hover', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.video.playTrigger]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
-            .HOVER,
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER,
         [optionsMap.layoutParams.structure.galleryLayout]:
           GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       });
@@ -78,8 +74,7 @@ describe('options - behaviourParams_item_video_playTrigger', () => {
     it('should not have video elements intially (with no click event)', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.video.playTrigger]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
-            .CLICK,
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].CLICK,
         [optionsMap.layoutParams.structure.galleryLayout]:
           GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       });
@@ -92,8 +87,7 @@ describe('options - behaviourParams_item_video_playTrigger', () => {
     it('should have video element on click', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.video.playTrigger]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
-            .CLICK,
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].CLICK,
         [optionsMap.layoutParams.structure.galleryLayout]:
           GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
         [optionsMap.behaviourParams.item.clickAction]:

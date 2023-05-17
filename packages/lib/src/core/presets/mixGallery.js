@@ -5,8 +5,7 @@ const fixToMix = (options) => {
   let presetOptions = { ...options };
   presetOptions[optionsMap.layoutParams.structure.galleryLayout] =
     GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].MIX;
-  presetOptions[optionsMap.layoutParams.crop.method] =
-    GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL;
+  presetOptions[optionsMap.layoutParams.crop.method] = GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL;
   presetOptions[optionsMap.layoutParams.crop.enable] = true;
   presetOptions[optionsMap.layoutParams.crop.ratios] = [1];
   presetOptions[optionsMap.layoutParams.info.placement] =
@@ -15,9 +14,7 @@ const fixToMix = (options) => {
     GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL;
   presetOptions[optionsMap.layoutParams.structure.gallerySpacing] = 0;
   presetOptions[optionsMap.layoutParams.structure.layoutOrientation] =
-    GALLERY_CONSTS[
-      optionsMap.layoutParams.structure.layoutOrientation
-    ].VERTICAL;
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].VERTICAL;
   presetOptions[optionsMap.layoutParams.groups.groupSize] = 3;
   presetOptions[optionsMap.layoutParams.groups.allowedGroupTypes] = [
     GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['1'],
@@ -32,9 +29,7 @@ const fixToMix = (options) => {
   ];
   presetOptions[optionsMap.layoutParams.groups.density] = 0.48;
   presetOptions[optionsMap.layoutParams.structure.responsiveMode] =
-    GALLERY_CONSTS[
-      optionsMap.layoutParams.structure.responsiveMode
-    ].SET_ITEMS_PER_ROW;
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW;
   presetOptions[optionsMap.layoutParams.targetItemSize.value] = 86;
   presetOptions[optionsMap.layoutParams.targetItemSize.minimum] = 50;
   presetOptions[optionsMap.layoutParams.groups.groupByOrientation] = true;

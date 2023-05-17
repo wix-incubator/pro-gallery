@@ -21,12 +21,10 @@ describe('fixedColumns - e2e', () => {
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.layoutParams.groups.groupSize]: 1,
       [optionsMap.layoutParams.structure.layoutOrientation]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].VERTICAL,
       [optionsMap.layoutParams.structure.numberOfColumns]: 1,
       [optionsMap.layoutParams.structure.responsiveMode]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
-          .SET_ITEMS_PER_ROW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.partialScreenshot();
@@ -38,12 +36,10 @@ describe('fixedColumns - e2e', () => {
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.layoutParams.groups.groupSize]: 1,
       [optionsMap.layoutParams.structure.layoutOrientation]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].VERTICAL,
       [optionsMap.layoutParams.structure.numberOfColumns]: 2,
       [optionsMap.layoutParams.structure.responsiveMode]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
-          .SET_ITEMS_PER_ROW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -55,12 +51,10 @@ describe('fixedColumns - e2e', () => {
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.layoutParams.groups.groupSize]: 1,
       [optionsMap.layoutParams.structure.layoutOrientation]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].VERTICAL,
       [optionsMap.layoutParams.structure.numberOfColumns]: 3,
       [optionsMap.layoutParams.structure.responsiveMode]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
-          .SET_ITEMS_PER_ROW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');

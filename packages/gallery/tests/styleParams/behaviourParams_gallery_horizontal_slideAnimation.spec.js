@@ -32,18 +32,13 @@ describe('options - behaviourParams_gallery_horizontal_slideAnimation', () => {
     it('should set the correct "Fade" animation styles to the items', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.layoutParams.structure.galleryLayout]:
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-            .SLIDESHOW,
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW,
         [optionsMap.behaviourParams.gallery.horizontal.slideAnimation]:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.gallery.horizontal.slideAnimation
-          ].FADE,
+          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation].FADE,
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
-      const currentItem = driver.find
-        .selector('[data-hook="item-wrapper"]')
-        .at(0);
+      const currentItem = driver.find.selector('[data-hook="item-wrapper"]').at(0);
       const nextItem = driver.find.selector('[data-hook="item-wrapper"]').at(1);
       expect(currentItem.hasClass(FADE_CLASSED.VISIBLE)).toBeTruthy();
       expect(nextItem.hasClass(FADE_CLASSED.HIDDEN)).toBeTruthy();
@@ -57,12 +52,9 @@ describe('options - behaviourParams_gallery_horizontal_slideAnimation', () => {
     it('should not have Fade animation styles when "behaviourParams_gallery_horizontal_slideAnimation" is "Scroll"', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.layoutParams.structure.galleryLayout]:
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-            .SLIDESHOW,
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW,
         [optionsMap.behaviourParams.gallery.horizontal.slideAnimation]:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.gallery.horizontal.slideAnimation
-          ].SCROLL,
+          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation].SCROLL,
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -88,12 +80,9 @@ describe('options - behaviourParams_gallery_horizontal_slideAnimation', () => {
     it('should set the correct "Fade" animation styles to the items', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.layoutParams.structure.galleryLayout]:
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-            .THUMBNAIL,
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
         [optionsMap.behaviourParams.gallery.horizontal.slideAnimation]:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.gallery.horizontal.slideAnimation
-          ].FADE,
+          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation].FADE,
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -110,12 +99,9 @@ describe('options - behaviourParams_gallery_horizontal_slideAnimation', () => {
     it('should not have Fade animation styles when "behaviourParams_gallery_horizontal_slideAnimation" is "Scroll"', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.layoutParams.structure.galleryLayout]:
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-            .THUMBNAIL,
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
         [optionsMap.behaviourParams.gallery.horizontal.slideAnimation]:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.gallery.horizontal.slideAnimation
-          ].SCROLL,
+          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation].SCROLL,
       });
       driver.mount.proGallery(initialProps);
       await driver.update();

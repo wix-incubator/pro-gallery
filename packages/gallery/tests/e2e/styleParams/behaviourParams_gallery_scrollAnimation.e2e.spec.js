@@ -13,28 +13,19 @@ describe('behaviourParams_gallery_scrollAnimation - e2e', () => {
     await driver.closePage();
   });
 
-  Object.keys(
-    GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation]
-  ).forEach((animationKey) => {
+  Object.keys(GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation]).forEach((animationKey) => {
     if (animationKey !== 'NO_EFFECT') {
       it(`should create ${animationKey} animation style tag for each item`, async () => {
         await driver.navigate({
           [optionsMap.layoutParams.structure.galleryLayout]:
-            GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-              .GRID,
+            GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
           [optionsMap.behaviourParams.gallery.scrollAnimation]:
-            GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation][
-              animationKey
-            ],
+            GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation][animationKey],
         });
         await driver.waitFor.hookToBeVisible('item-container');
         const numberOfAnimationStyleTags = await driver.page.evaluate(() => {
-          const styleTags = Array.from(
-            document.querySelectorAll('div[data-key="items-styles"] style')
-          );
-          const AnimationStyleTags = styleTags.filter((styleTag) =>
-            styleTag.id.includes('scrollCss')
-          );
+          const styleTags = Array.from(document.querySelectorAll('div[data-key="items-styles"] style'));
+          const AnimationStyleTags = styleTags.filter((styleTag) => styleTag.id.includes('scrollCss'));
           return AnimationStyleTags.length;
         });
         // the default e2e images is always 20 so we should get 20 animation style tags
@@ -48,17 +39,12 @@ describe('behaviourParams_gallery_scrollAnimation - e2e', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.gallery.scrollAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation]
-          .NO_EFFECT,
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation].NO_EFFECT,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const numberOfAnimationStyleTags = await driver.page.evaluate(() => {
-      const styleTags = Array.from(
-        document.querySelectorAll('div[data-key="items-styles"] style')
-      );
-      const AnimationStyleTags = styleTags.filter((styleTag) =>
-        styleTag.id.includes('scrollCss')
-      );
+      const styleTags = Array.from(document.querySelectorAll('div[data-key="items-styles"] style'));
+      const AnimationStyleTags = styleTags.filter((styleTag) => styleTag.id.includes('scrollCss'));
       return AnimationStyleTags.length;
     });
     expect(numberOfAnimationStyleTags).toEqual(0);

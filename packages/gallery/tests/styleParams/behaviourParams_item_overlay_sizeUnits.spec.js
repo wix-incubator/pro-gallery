@@ -41,8 +41,7 @@ describe('options - behaviourParams_item_overlay_sizeUnits', () => {
   it('should set the correct overlay size according to behaviourParams_item_overlay_sizeUnits- PERCENT', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.behaviourParams.item.overlay.sizeUnits]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.sizeUnits]
-          .PERCENT,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.sizeUnits].PERCENT,
       [optionsMap.behaviourParams.item.overlay.size]: 50,
     });
     driver.mount.proGallery(initialProps);

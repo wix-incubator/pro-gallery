@@ -8,8 +8,7 @@ const gridFitWithPosition = (position) => {
   return {
     [optionsMap.layoutParams.structure.galleryLayout]:
       GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-    [optionsMap.layoutParams.crop.method]:
-      GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
+    [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
     [optionsMap.layoutParams.crop.alignment]: position,
   };
 };
@@ -22,8 +21,7 @@ const expectGalleryToMatchSnapshot = async (driver) => {
 
 describe('layoutParams_crop_alignment - e2e', () => {
   let driver;
-  const { MIDDLE, TOP, BOTTOM, LEFT, RIGHT } =
-    GALLERY_CONSTS[optionsMap.layoutParams.crop.alignment];
+  const { MIDDLE, TOP, BOTTOM, LEFT, RIGHT } = GALLERY_CONSTS[optionsMap.layoutParams.crop.alignment];
   beforeAll(async () => {
     driver = new GalleryDriver();
     await driver.openPage();

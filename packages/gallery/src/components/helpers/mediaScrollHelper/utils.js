@@ -1,23 +1,10 @@
-function getDistanceFromScreen({
-  offset,
-  scroll,
-  itemStart,
-  itemEnd,
-  screenSize,
-}) {
+function getDistanceFromScreen({ offset, scroll, itemStart, itemEnd, screenSize }) {
   const before = scroll - offset - itemEnd;
   const after = offset + itemStart - screenSize - scroll;
   return { before, after };
 }
 
-function isWithinPaddingVertically({
-  target,
-  scrollBase,
-  top,
-  bottom,
-  screenHeight,
-  padding,
-}) {
+function isWithinPaddingVertically({ target, scrollBase, top, bottom, screenHeight, padding }) {
   const res = getDistanceFromScreen({
     offset: scrollBase || 0,
     scroll: target.scrollY,
@@ -28,13 +15,7 @@ function isWithinPaddingVertically({
   return res.before < padding && res.after < padding;
 }
 
-function isWithinPaddingHorizontally({
-  target,
-  left,
-  right,
-  screenWidth,
-  padding,
-}) {
+function isWithinPaddingHorizontally({ target, left, right, screenWidth, padding }) {
   const res = getDistanceFromScreen({
     offset: 0,
     scroll: target.scrollLeft,

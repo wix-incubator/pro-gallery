@@ -18,8 +18,7 @@ describe('layoutParams_thumbnails_size - e2e', () => {
   it('should set layoutParams_thumbnails_size to 100', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
       [optionsMap.layoutParams.thumbnails.size]: 100,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -30,8 +29,7 @@ describe('layoutParams_thumbnails_size - e2e', () => {
   it('should set layoutParams_thumbnails_size to 300', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
       [optionsMap.layoutParams.thumbnails.size]: 300,
     });
     await driver.waitFor.hookToBeVisible('item-container');

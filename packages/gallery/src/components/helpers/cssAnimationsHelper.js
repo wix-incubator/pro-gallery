@@ -1,5 +1,5 @@
-import { GALLERY_CONSTS } from "pro-gallery-lib";
-import { easingFunctions } from "../../common/utils/easing";
+import { GALLERY_CONSTS } from 'pro-gallery-lib';
+import { easingFunctions } from '../../common/utils/easing';
 
 export const createScrollAnimations = ({
   createScrollSelectors,
@@ -35,36 +35,36 @@ export const createScrollAnimations = ({
   const h = isHorizontalScroll;
   const s = animationParams;
 
-  let scrollSelectorsCss = "";
+  let scrollSelectorsCss = '';
   let animationBySuffix = {};
 
-  const { hinge = "center", fromValue, toValue, ease = "linear" } = animationParams;
-  let { direction = "IN" } = animationParams;
+  const { hinge = 'center', fromValue, toValue, ease = 'linear' } = animationParams;
+  let { direction = 'IN' } = animationParams;
 
   const convertRelativeDirection = (direction) => {
-    if (["IN", "OUT", "RIGHTWAY", "LEFTWAY"].includes(direction)) {
+    if (['IN', 'OUT', 'RIGHTWAY', 'LEFTWAY'].includes(direction)) {
       if (h) {
         if (isRTL) {
           return {
-            IN: "LEFT",
-            OUT: "RIGHT",
-            RIGHTWAY: "UP",
-            LEFTWAY: "DOWN",
+            IN: 'LEFT',
+            OUT: 'RIGHT',
+            RIGHTWAY: 'UP',
+            LEFTWAY: 'DOWN',
           }[direction];
         } else {
           return {
-            IN: "RIGHT",
-            OUT: "LEFT",
-            RIGHTWAY: "DOWN",
-            LEFTWAY: "UP",
+            IN: 'RIGHT',
+            OUT: 'LEFT',
+            RIGHTWAY: 'DOWN',
+            LEFTWAY: 'UP',
           }[direction];
         }
       } else {
         return {
-          IN: "UP",
-          OUT: "DOWN",
-          RIGHTWAY: "RIGHT",
-          LEFTWAY: "LEFT",
+          IN: 'UP',
+          OUT: 'DOWN',
+          RIGHTWAY: 'RIGHT',
+          LEFTWAY: 'LEFT',
         }[direction];
       }
     } else {
@@ -72,7 +72,7 @@ export const createScrollAnimations = ({
     }
   };
 
-  const addScrollSelectors = ({ selectorSuffix, animationCss }, generalStyles = "") => {
+  const addScrollSelectors = ({ selectorSuffix, animationCss }, generalStyles = '') => {
     scrollSelectorsCss += generalStyles + ` \n`;
     animationBySuffix[selectorSuffix] = [...(animationBySuffix[selectorSuffix] || []), animationCss];
   };
@@ -88,7 +88,7 @@ export const createScrollAnimations = ({
             const animationCssObject = cssCreationFunction(step);
             for (let cssProp of Object.keys(animationCssObject)) {
               if (cssObject[cssProp]) {
-                cssObject[cssProp] = cssObject[cssProp] + " " + animationCssObject[cssProp];
+                cssObject[cssProp] = cssObject[cssProp] + ' ' + animationCssObject[cssProp];
               } else {
                 cssObject[cssProp] = animationCssObject[cssProp];
               }
@@ -103,7 +103,7 @@ export const createScrollAnimations = ({
 
   const valueInRange = (step, from, to, roundTo) => {
     //TODO - use easing
-    const easeFunc = easingFunctions[ease] || easingFunctions["linear"];
+    const easeFunc = easingFunctions[ease] || easingFunctions['linear'];
     const val = easeFunc(step * iterations, from, to - from, iterations);
     if (roundTo < 1) {
       const roundedRoundTo = Math.round(1 / roundTo); //stupid javascript
@@ -190,7 +190,7 @@ export const createScrollAnimations = ({
       animationParams,
       animationCss: (step) => ({
         transform: `rotate(${valueInRange(step, fromValue, toValue, 1)}deg)`,
-        "transform-origin": hinge || "center",
+        'transform-origin': hinge || 'center',
       }),
     });
   }
@@ -200,13 +200,13 @@ export const createScrollAnimations = ({
       selectorSuffix: `#${itemId} .gallery-item-wrapper`,
       animationParams,
       animationCss: (step) => ({
-        "border-radius": `${valueInRange(step, fromValue, toValue, 1)}%`,
+        'border-radius': `${valueInRange(step, fromValue, toValue, 1)}%`,
       }),
     });
   }
 
   if (hasAnimation(ONE_COLOR)) {
-    const bgColor = oneColorAnimationColor?.value || oneColorAnimationColor || "transparent";
+    const bgColor = oneColorAnimationColor?.value || oneColorAnimationColor || 'transparent';
     addScrollSelectors(
       {
         selectorSuffix: `#${itemId} .gallery-item-content`,
@@ -220,7 +220,7 @@ export const createScrollAnimations = ({
   }
 
   if (hasAnimation(MAIN_COLOR)) {
-    const pixel = item.createUrl("pixel", "img");
+    const pixel = item.createUrl('pixel', 'img');
     addScrollSelectors(
       {
         selectorSuffix: `#${itemId} .gallery-item-content`,
@@ -235,15 +235,15 @@ export const createScrollAnimations = ({
 
   if (hasAnimation(SQUEEZE)) {
     const rtlFix = h && isRTL ? -1 : 1;
-    const directionFix = hasDirection("UP", "LEFT") ? 1 : -1;
-    const prop = hasDirection("LEFT", "RIGHT") ? "X" : "Y";
-    const origin = hasDirection("DOWN")
-      ? "bottom"
-      : hasDirection("UP")
-      ? "top"
-      : hasDirection("RIGHT")
-      ? "right"
-      : "left";
+    const directionFix = hasDirection('UP', 'LEFT') ? 1 : -1;
+    const prop = hasDirection('LEFT', 'RIGHT') ? 'X' : 'Y';
+    const origin = hasDirection('DOWN')
+      ? 'bottom'
+      : hasDirection('UP')
+      ? 'top'
+      : hasDirection('RIGHT')
+      ? 'right'
+      : 'left';
 
     const fromVal = fromValue * directionFix * rtlFix;
     const toVal = toValue * directionFix * rtlFix;
@@ -254,8 +254,8 @@ export const createScrollAnimations = ({
         animationParams,
         animationCss: (step) => ({
           transform: `scale${prop}(${valueInRange(step, fromVal, toVal, 0.01)})`,
-          "transform-origin": origin,
-          "object-fit": "fill",
+          'transform-origin': origin,
+          'object-fit': 'fill',
         }),
       },
       ` #${itemId} {overflow: visible !important;}`
@@ -263,22 +263,22 @@ export const createScrollAnimations = ({
   }
 
   if (hasAnimation(FLIP)) {
-    const xAxis = hasDirection("RIGHT", "LEFT") ? 0 : hasDirection("UP") ? -1 : 1;
-    const yAxis = hasDirection("UP", "DOWN") ? 0 : hasDirection("RIGHT") ? -1 : 1;
-    const origin = hasDirection("DOWN")
-      ? "bottom"
-      : hasDirection("UP")
-      ? "top"
-      : hasDirection("RIGHT")
-      ? "right"
-      : "left";
+    const xAxis = hasDirection('RIGHT', 'LEFT') ? 0 : hasDirection('UP') ? -1 : 1;
+    const yAxis = hasDirection('UP', 'DOWN') ? 0 : hasDirection('RIGHT') ? -1 : 1;
+    const origin = hasDirection('DOWN')
+      ? 'bottom'
+      : hasDirection('UP')
+      ? 'top'
+      : hasDirection('RIGHT')
+      ? 'right'
+      : 'left';
     addScrollSelectors(
       {
         selectorSuffix: `#${itemId} .gallery-item-wrapper`,
         animationParams,
         animationCss: (step) => ({
           transform: `rotate3d(${xAxis}, ${yAxis}, 0, ${valueInRange(step, fromValue, toValue, 1)}deg)`,
-          "transform-origin": origin,
+          'transform-origin': origin,
         }),
       },
       `#${itemId}>div {perspective: 1000px;}`
@@ -287,8 +287,8 @@ export const createScrollAnimations = ({
 
   if (hasAnimation(SLIDE)) {
     const rtlFix = h && isRTL ? -1 : 1;
-    const directionFix = hasDirection("UP", "LEFT") ? 1 : -1;
-    const prop = hasDirection("LEFT", "RIGHT") ? "X" : "Y";
+    const directionFix = hasDirection('UP', 'LEFT') ? 1 : -1;
+    const prop = hasDirection('LEFT', 'RIGHT') ? 'X' : 'Y';
     const fromVal = fromValue * rtlFix * directionFix;
     const toVal = toValue * rtlFix * directionFix;
 
@@ -306,8 +306,8 @@ export const createScrollAnimations = ({
 
   if (hasAnimation(APPEAR)) {
     const rtlFix = h && isRTL ? -1 : 1;
-    const directionFix = hasDirection("UP", "LEFT") ? 1 : -1;
-    const prop = hasDirection("LEFT", "RIGHT") ? "X" : "Y";
+    const directionFix = hasDirection('UP', 'LEFT') ? 1 : -1;
+    const prop = hasDirection('LEFT', 'RIGHT') ? 'X' : 'Y';
     const fromVal = fromValue * rtlFix * directionFix;
     const toVal = toValue * rtlFix * directionFix;
 
@@ -327,10 +327,10 @@ export const createScrollAnimations = ({
     //TODO = the image should not exit the frame
     const scale = Math.max(fromValue || 1, toValue || 1);
     const { width, height } = item;
-    const dimension = hasDirection("LEFT", "RIGHT") ? width : height;
+    const dimension = hasDirection('LEFT', 'RIGHT') ? width : height;
     const pan = Math.round((dimension * (scale - 1)) / 2 / scale);
-    const prop = hasDirection("LEFT", "RIGHT") ? "X" : "Y";
-    const fromVal = (hasDirection("LEFT", "UP") ? 1 : -1) * pan;
+    const prop = hasDirection('LEFT', 'RIGHT') ? 'X' : 'Y';
+    const fromVal = (hasDirection('LEFT', 'UP') ? 1 : -1) * pan;
     const toVal = -1 * fromVal;
 
     const selectorSuffix = `#${itemId} .gallery-item-content`;
@@ -368,26 +368,26 @@ export const createScrollAnimations = ({
         const deg = valueInRange(step, fromValue, toValue, 1);
         return {
           transform: `scale(${scaleByDeg(deg)}) rotate(${deg}deg)`,
-          "transform-origin": hinge,
+          'transform-origin': hinge,
         };
       },
     });
   }
 
   if (hasAnimation(SKEW)) {
-    const direction = hasDirection("LEFT", "UP") ? 1 : -1;
+    const direction = hasDirection('LEFT', 'UP') ? 1 : -1;
     const fromVal = direction * fromValue;
     const scaleByDeg = (deg) => {
       const rad = (Math.abs(deg) * 2 * Math.PI) / 360;
       const { width, height } = item;
-      const maxSize = hasDirection("LEFT", "RIGHT") ? width : height;
-      const minSize = hasDirection("LEFT", "RIGHT") ? height : width;
+      const maxSize = hasDirection('LEFT', 'RIGHT') ? width : height;
+      const minSize = hasDirection('LEFT', 'RIGHT') ? height : width;
       return (Math.tan(rad) * maxSize + minSize) / minSize;
     };
     const toVal = direction * toValue;
     const selectorSuffix = `#${itemId} .gallery-item-content`;
-    const skewX = (deg) => (hasDirection("LEFT", "RIGHT") ? deg : 0);
-    const skewY = (deg) => (hasDirection("LEFT", "RIGHT") ? 0 : deg);
+    const skewX = (deg) => (hasDirection('LEFT', 'RIGHT') ? deg : 0);
+    const skewY = (deg) => (hasDirection('LEFT', 'RIGHT') ? 0 : deg);
 
     addScrollSelectors({
       selectorSuffix,
@@ -396,7 +396,7 @@ export const createScrollAnimations = ({
         const deg = valueInRange(step, fromVal, toVal, 1);
         return {
           transform: `scale(${scaleByDeg(Math.abs(deg))}) skew(${skewY(deg)}deg, ${skewX(deg)}deg)`,
-          "transform-origin": hinge,
+          'transform-origin': hinge,
         };
       },
     });

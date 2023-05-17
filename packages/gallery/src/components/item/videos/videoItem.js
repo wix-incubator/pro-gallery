@@ -28,9 +28,7 @@ class VideoItem extends React.Component {
 
   dynamiclyImportVideoPlayers() {
     if (!(window && window.ReactPlayer)) {
-      import(
-        /* webpackChunkName: "proGallery_reactPlayer" */ 'react-player'
-      ).then((ReactPlayer) => {
+      import(/* webpackChunkName: "proGallery_reactPlayer" */ 'react-player').then((ReactPlayer) => {
         window.ReactPlayer = ReactPlayer.default;
         this.setState({ reactPlayerLoaded: true });
         this.playVideoIfNeeded();
@@ -42,9 +40,7 @@ class VideoItem extends React.Component {
       this.props.videoUrl &&
       this.props.videoUrl.includes('vimeo.com')
     ) {
-      import(
-        /* webpackChunkName: "proGallery_vimeoPlayer" */ '@vimeo/player'
-      ).then((Player) => {
+      import(/* webpackChunkName: "proGallery_vimeoPlayer" */ '@vimeo/player').then((Player) => {
         window.Vimeo = { Player: Player.default };
         this.setState({ vimeoPlayerLoaded: true });
         this.playVideoIfNeeded();
@@ -55,22 +51,16 @@ class VideoItem extends React.Component {
       !(window && window.Hls) &&
       this.isHLSVideo()
     ) {
-      import(/* webpackChunkName: "proGallery_HlsPlayer" */ 'hls.js').then(
-        (Player) => {
-          window.Hls = Player.default;
-          this.setState({ hlsPlayerLoaded: true });
-          this.playVideoIfNeeded();
-        }
-      );
+      import(/* webpackChunkName: "proGallery_HlsPlayer" */ 'hls.js').then((Player) => {
+        window.Hls = Player.default;
+        this.setState({ hlsPlayerLoaded: true });
+        this.playVideoIfNeeded();
+      });
     }
   }
 
   isHLSVideo() {
-    return (
-      this.props.videoUrl &&
-      (this.props.videoUrl.includes('/hls') ||
-        this.props.videoUrl.includes('.m3u8'))
-    );
+    return this.props.videoUrl && (this.props.videoUrl.includes('/hls') || this.props.videoUrl.includes('.m3u8'));
   }
 
   shouldUseHlsPlayer() {
@@ -117,37 +107,21 @@ class VideoItem extends React.Component {
     try {
       const { shouldPlay } = props;
       if (shouldPlay && !this.isPlaying) {
-        this.videoElement =
-          this.videoElement ||
-          window.document.querySelector(`#video-${this.props.id} video`);
+        this.videoElement = this.videoElement || window.document.querySelector(`#video-${this.props.id} video`);
         if (this.videoElement) {
           this.isPlaying = true;
           this.videoElement.play();
-          utils.isVerbose() &&
-            console.log(
-              '[VIDEO] Playing video #' + this.props.idx,
-              this.videoElement
-            );
+          utils.isVerbose() && console.log('[VIDEO] Playing video #' + this.props.idx, this.videoElement);
         }
       }
     } catch (e) {
-      console.error(
-        '[VIDEO] Could not play video #' + this.props.idx,
-        this.videoElement,
-        e
-      );
+      console.error('[VIDEO] Could not play video #' + this.props.idx, this.videoElement, e);
     }
   }
   //-----------------------------------------| UTILS |--------------------------------------------//
   createPlayerElement() {
     //video dimensions are for videos in grid fill - placing the video with negative margins to crop into a square
-    if (
-      !(
-        window &&
-        window.ReactPlayer &&
-        (this.state.loadVideo || this.props.playing)
-      )
-    ) {
+    if (!(window && window.ReactPlayer && (this.state.loadVideo || this.props.playing))) {
       return null;
     }
     const PlayerElement = window.ReactPlayer;
@@ -161,10 +135,7 @@ class VideoItem extends React.Component {
 
     const url = this.props.videoUrl
       ? this.props.videoUrl
-      : this.props.createUrl(
-          GALLERY_CONSTS.urlSizes.RESIZED,
-          GALLERY_CONSTS.urlTypes.VIDEO
-        );
+      : this.props.createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.VIDEO);
 
     const attributes = {
       controlsList: 'nodownload',
@@ -176,10 +147,7 @@ class VideoItem extends React.Component {
     };
 
     if (shouldCreateVideoPlaceholder(this.props.options)) {
-      attributes.poster = this.props.createUrl(
-        GALLERY_CONSTS.urlSizes.SCALED,
-        GALLERY_CONSTS.urlTypes.HIGH_RES
-      );
+      attributes.poster = this.props.createUrl(GALLERY_CONSTS.urlSizes.SCALED, GALLERY_CONSTS.urlTypes.HIGH_RES);
     }
 
     return (
@@ -190,23 +158,14 @@ class VideoItem extends React.Component {
         width="100%"
         height="100%"
         url={url}
-        alt={
-          typeof this.props.alt === 'string' ? this.props.alt : 'untitled video'
-        }
+        alt={typeof this.props.alt === 'string' ? this.props.alt : 'untitled video'}
         loop={!!this.props.options[optionsMap.behaviourParams.item.video.loop]}
         ref={(player) => (this.video = player)}
-        volume={
-          this.props.options[optionsMap.behaviourParams.item.video.volume]
-            ? 0.8
-            : 0
-        }
+        volume={this.props.options[optionsMap.behaviourParams.item.video.volume] ? 0.8 : 0}
         playing={this.state.shouldPlay}
         onEnded={() => {
           this.setState({ isPlaying: false });
-          this.props.actions.eventsListener(
-            GALLERY_CONSTS.events.VIDEO_ENDED,
-            this.props
-          );
+          this.props.actions.eventsListener(GALLERY_CONSTS.events.VIDEO_ENDED, this.props);
         }}
         onPause={() => {
           this.setState({ isPlaying: false });
@@ -217,21 +176,14 @@ class VideoItem extends React.Component {
             videoError: e,
           });
         }}
-        playbackRate={
-          Number(
-            this.props.options[optionsMap.behaviourParams.item.video.speed]
-          ) || 1
-        }
+        playbackRate={Number(this.props.options[optionsMap.behaviourParams.item.video.speed]) || 1}
         onStart={() => {
           if (!this.state.playedOnce) {
             this.setState({ playedOnce: true });
           }
         }}
         onPlay={() => {
-          this.props.actions.eventsListener(
-            GALLERY_CONSTS.events.VIDEO_PLAYED,
-            this.props
-          );
+          this.props.actions.eventsListener(GALLERY_CONSTS.events.VIDEO_PLAYED, this.props);
           this.setState({ isPlaying: true });
         }}
         onReady={() => {
@@ -245,11 +197,7 @@ class VideoItem extends React.Component {
             this.setState({ shouldPlay: false });
           }
         }}
-        controls={
-          this.props.options[
-            optionsMap.behaviourParams.item.video.enableControls
-          ]
-        }
+        controls={this.props.options[optionsMap.behaviourParams.item.video.enableControls]}
         config={{
           file: {
             attributes,
@@ -264,11 +212,8 @@ class VideoItem extends React.Component {
 
   fixIFrameTabIndexIfNeeded() {
     if (this.props.isExternalVideo) {
-      const videoGalleryItem =
-        window.document &&
-        window.document.getElementById(`video-${this.props.id}`);
-      const videoIFrames =
-        videoGalleryItem && videoGalleryItem.getElementsByTagName('iframe');
+      const videoGalleryItem = window.document && window.document.getElementById(`video-${this.props.id}`);
+      const videoIFrames = videoGalleryItem && videoGalleryItem.getElementsByTagName('iframe');
       const videoIFrame = videoIFrames && videoIFrames[0];
       if (videoIFrame) {
         if (this.props.activeIndex === this.props.idx) {
@@ -284,11 +229,7 @@ class VideoItem extends React.Component {
     const videoContainerStyle = {
       ...this.props.imageDimensions,
     };
-    if (
-      utils.deviceHasMemoryIssues() ||
-      this.state.ready ||
-      !shouldCreateVideoPlaceholder(this.props.options)
-    ) {
+    if (utils.deviceHasMemoryIssues() || this.state.ready || !shouldCreateVideoPlaceholder(this.props.options)) {
       // videoContainerStyle.backgroundColor = 'black';
     } else {
       videoContainerStyle.backgroundImage = `url(${this.props.createUrl(

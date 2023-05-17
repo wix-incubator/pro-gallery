@@ -8,8 +8,7 @@ export default {
   isRelevant: (options) =>
     options[optionsMap.behaviourParams.item.clickAction] ===
     GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
-  isRelevantDescription:
-    'Item Click Action must be an external Action (ACTION)',
+  isRelevantDescription: 'Item Click Action must be an external Action (ACTION)',
   type: INPUT_TYPES.BOOLEAN,
   default: true, //one source
 };

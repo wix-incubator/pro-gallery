@@ -22,8 +22,7 @@ describe('options - stylingParams_itemBorderColor', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
       [optionsMap.stylingParams.itemBorderWidth]: 1,
       [optionsMap.stylingParams.itemBorderColor]: 'rgba(0,0,0,1)',
     });
@@ -39,8 +38,7 @@ describe('options - stylingParams_itemBorderColor', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
       [optionsMap.stylingParams.itemBorderWidth]: 1,
       [optionsMap.stylingParams.itemBorderColor]: 'rgba(23,110,23,1)',
     });

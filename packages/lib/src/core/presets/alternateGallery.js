@@ -6,8 +6,7 @@ const fixToAlternate = (options) => {
   let presetOptions = { ...options };
   presetOptions[optionsMap.layoutParams.structure.galleryLayout] =
     GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].ALTERNATE;
-  presetOptions[optionsMap.layoutParams.crop.method] =
-    GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL;
+  presetOptions[optionsMap.layoutParams.crop.method] = GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL;
   presetOptions[optionsMap.layoutParams.crop.enable] = true;
   presetOptions[optionsMap.layoutParams.crop.ratios] = [1];
   presetOptions[optionsMap.layoutParams.info.placement] =
@@ -15,14 +14,10 @@ const fixToAlternate = (options) => {
   presetOptions[optionsMap.layoutParams.structure.scrollDirection] =
     GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL;
   presetOptions[optionsMap.layoutParams.structure.responsiveMode] =
-    GALLERY_CONSTS[
-      optionsMap.layoutParams.structure.responsiveMode
-    ].SET_ITEMS_PER_ROW;
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW;
   presetOptions[optionsMap.layoutParams.structure.gallerySpacing] = 0;
   presetOptions[optionsMap.layoutParams.structure.layoutOrientation] =
-    GALLERY_CONSTS[
-      optionsMap.layoutParams.structure.layoutOrientation
-    ].VERTICAL;
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].VERTICAL;
   presetOptions[optionsMap.layoutParams.groups.groupSize] = 3;
   presetOptions[optionsMap.layoutParams.groups.density] = 0.48;
   presetOptions[optionsMap.layoutParams.groups.allowedGroupTypes] = [

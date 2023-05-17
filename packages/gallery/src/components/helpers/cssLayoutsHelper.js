@@ -14,24 +14,19 @@ const getImageStyle = (item) => ({
 });
 
 const createItemId = ({ galleryId, item }) => {
-  return `#pro-gallery-${galleryId} #${cssScrollHelper.getSellectorDomId(
-    item
-  )}`;
+  return `#pro-gallery-${galleryId} #${cssScrollHelper.getSellectorDomId(item)}`;
 };
 const createExactCssForItems = (id = '', galleryItems, options) => {
   const isRTL =
     options[optionsMap.behaviourParams.gallery.layoutDirection] ===
-    GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-      .RIGHT_TO_LEFT;
+    GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT;
 
   let cssStr = '';
   galleryItems.forEach((item) => {
     const itemId = createItemId({ galleryId: id, item });
     const style = getImageStyle(item, options);
     const T = `top:${style.top}px;`;
-    const L = isRTL
-      ? `right:${style.left}px;left:auto;`
-      : `left:${style.left}px;`;
+    const L = isRTL ? `right:${style.left}px;left:auto;` : `left:${style.left}px;`;
     const W = `width:${style.width}px;`;
     const H = `height:${style.height}px;`;
     cssStr += `${itemId} {${T}${L}${W}${H}}`;

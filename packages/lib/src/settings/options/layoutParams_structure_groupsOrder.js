@@ -9,13 +9,10 @@ export default {
   type: INPUT_TYPES.MULTISELECT,
   isRelevant: (options) =>
     options[optionsMap.layoutParams.structure.scrollDirection] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-        .VERTICAL &&
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL &&
     options[optionsMap.layoutParams.structure.layoutOrientation] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-        .VERTICAL,
-  isRelevantDescription:
-    'Set "Gallery Orientation" to "Columns" & "Scroll Direction" to "Vertical".',
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].VERTICAL,
+  isRelevantDescription: 'Set "Gallery Orientation" to "Columns" & "Scroll Direction" to "Vertical".',
   options: createOptions(optionsMap.layoutParams.structure.groupsOrder),
   default: 'BY_HEIGHT',
 };

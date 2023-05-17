@@ -14,8 +14,7 @@ describe('Gallery View', () => {
     initialGalleryViewProps = driver.props.galleryView();
     Object.assign(initialGalleryViewProps.options, {
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
       options: {
         [optionsMap.layoutParams.structure.itemSpacing]: 10,
         [optionsMap.layoutParams.structure.gallerySpacing]: 5,
@@ -63,10 +62,7 @@ describe('Gallery View', () => {
         container: { ...galleryViewProps.container, height: 1000 },
       });
       driver.mount(GalleryView, galleryViewProps);
-      const stub = sinon.stub(
-        driver.get.props().actions,
-        'toggleLoadMoreItems'
-      );
+      const stub = sinon.stub(driver.get.props().actions, 'toggleLoadMoreItems');
       expect(driver.find.hook('show-more').length).to.equal(1);
       driver.find.hook('show-more').simulate('click');
       expect(spy.called).to.be.true;
@@ -80,13 +76,9 @@ describe('Gallery View', () => {
     it('handle up arrow', () => {
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(GalleryView, galleryViewProps);
-      const stub_document = sinon
-        .stub(document.activeElement, 'getAttribute')
-        .returns(7);
+      const stub_document = sinon.stub(document.activeElement, 'getAttribute').returns(7);
       const stub_utils = sinon.stub(utils, 'setStateAndLog');
-      const stub_findNeighborItem = sinon
-        .stub(driver.get.props().galleryStructure, 'findNeighborItem')
-        .returns(3);
+      const stub_findNeighborItem = sinon.stub(driver.get.props().galleryStructure, 'findNeighborItem').returns(3);
       const result = driver.get.instance().handleKeys({
         keyCode: 38,
         charCode: null,
@@ -104,13 +96,9 @@ describe('Gallery View', () => {
     it('handle left arrow', () => {
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(GalleryView, galleryViewProps);
-      const stub_document = sinon
-        .stub(document.activeElement, 'getAttribute')
-        .returns(7);
+      const stub_document = sinon.stub(document.activeElement, 'getAttribute').returns(7);
       const stub_utils = sinon.stub(utils, 'setStateAndLog');
-      const stub_findNeighborItem = sinon
-        .stub(driver.get.props().galleryStructure, 'findNeighborItem')
-        .returns(16);
+      const stub_findNeighborItem = sinon.stub(driver.get.props().galleryStructure, 'findNeighborItem').returns(16);
       const result = driver.get.instance().handleKeys({
         keyCode: 37,
         charCode: null,
@@ -128,13 +116,9 @@ describe('Gallery View', () => {
     it('handle down arrow', () => {
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(GalleryView, galleryViewProps);
-      const stub_document = sinon
-        .stub(document.activeElement, 'getAttribute')
-        .returns(7);
+      const stub_document = sinon.stub(document.activeElement, 'getAttribute').returns(7);
       const stub_utils = sinon.stub(utils, 'setStateAndLog');
-      const stub_findNeighborItem = sinon
-        .stub(driver.get.props().galleryStructure, 'findNeighborItem')
-        .returns(10);
+      const stub_findNeighborItem = sinon.stub(driver.get.props().galleryStructure, 'findNeighborItem').returns(10);
       const result = driver.get.instance().handleKeys({
         keyCode: 40,
         charCode: null,
@@ -152,13 +136,9 @@ describe('Gallery View', () => {
     it('handle right arrow', () => {
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(GalleryView, galleryViewProps);
-      const stub_document = sinon
-        .stub(document.activeElement, 'getAttribute')
-        .returns(7);
+      const stub_document = sinon.stub(document.activeElement, 'getAttribute').returns(7);
       const stub_utils = sinon.stub(utils, 'setStateAndLog');
-      const stub_findNeighborItem = sinon
-        .stub(driver.get.props().galleryStructure, 'findNeighborItem')
-        .returns(3);
+      const stub_findNeighborItem = sinon.stub(driver.get.props().galleryStructure, 'findNeighborItem').returns(3);
       const result = driver.get.instance().handleKeys({
         keyCode: null,
         charCode: 39,
@@ -176,12 +156,8 @@ describe('Gallery View', () => {
     it('handle not valid arrow', () => {
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(GalleryView, galleryViewProps);
-      const stub_document = sinon
-        .stub(document.activeElement, 'getAttribute')
-        .returns(7);
-      const stub_findNeighborItem = sinon
-        .stub(driver.get.props().galleryStructure, 'findNeighborItem')
-        .returns(3);
+      const stub_document = sinon.stub(document.activeElement, 'getAttribute').returns(7);
+      const stub_findNeighborItem = sinon.stub(driver.get.props().galleryStructure, 'findNeighborItem').returns(3);
       const result = driver.get.instance().handleKeys({
         keyCode: null,
         charCode: 2,
