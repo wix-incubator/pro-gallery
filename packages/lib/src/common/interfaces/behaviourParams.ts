@@ -96,6 +96,7 @@ export interface Content {
   hoverAnimation?:
     | 'NO_EFFECT'
     | 'ZOOM_IN'
+    | 'TILT'
     | 'BLUR'
     | 'GRAYSCALE'
     | 'SHRINK'

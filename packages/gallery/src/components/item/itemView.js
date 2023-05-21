@@ -904,6 +904,7 @@ class ItemView extends React.Component {
     const {
       MAIN_COLOR,
       ZOOM_IN,
+      TILT,
       BLUR,
       GRAYSCALE,
       SHRINK,
@@ -948,6 +949,7 @@ class ItemView extends React.Component {
       //image hover animations
       'main-color-on-hover': contentHoverAnimation === MAIN_COLOR,
       'zoom-in-on-hover': contentHoverAnimation === ZOOM_IN,
+      'tilt-on-hover': contentHoverAnimation === TILT,
       'blur-on-hover': contentHoverAnimation === BLUR,
       'grayscale-on-hover': contentHoverAnimation === GRAYSCALE,
       'shrink-on-hover': contentHoverAnimation === SHRINK,
