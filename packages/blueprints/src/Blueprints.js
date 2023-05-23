@@ -309,7 +309,7 @@ class Blueprints {
           (!!newContainerParams.width &&
             newContainerParams.width !== oldContainerParams.width),
         scrollBase:
-          newContainerParams.scrollBAse !== oldContainerParams.scrollBAse,
+          newContainerParams.scrollBase !== oldContainerParams.scrollBase,
       };
       return Object.keys(containerHasChanged).reduce((is, key) => {
         if (containerHasChanged[key]) {
