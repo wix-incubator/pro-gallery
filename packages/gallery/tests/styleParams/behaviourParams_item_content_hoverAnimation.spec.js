@@ -31,6 +31,20 @@ describe('options - behaviourParams_item_content_hoverAnimation', () => {
     expect(animatedItems.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
+  it('should have "Tilt" animation on items', async () => {
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.item.content.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
+          .TILT,
+    });
+    driver.mount.proGallery(initialProps);
+    await driver.update();
+    const animatedItems = driver.find.selector('.tilt-on-hover').at(0);
+    expect(animatedItems.length).to.be.greaterThan(0);
+    driver.detach.proGallery();
+  });
   it('should have "Blur" animation on items', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:

@@ -149,6 +149,7 @@ const defaultOptions = flattenObject({
             optionsMap.behaviourParams.item.content.placementAnimation
           ].NO_EFFECT,
         magnificationValue: 2,
+        tiltAngleValue: -4,
       },
       secondaryMedia: {
         trigger:

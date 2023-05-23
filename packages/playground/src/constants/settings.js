@@ -108,6 +108,7 @@ export const optionsBySection = {
     optionsMap.behaviourParams.item.content.placementAnimation,
     optionsMap.behaviourParams.item.content.loader,
     optionsMap.behaviourParams.item.content.magnificationValue,
+    optionsMap.behaviourParams.item.content.tiltAngleValue,
     optionsMap.behaviourParams.item.secondaryMedia.trigger,
     optionsMap.behaviourParams.item.secondaryMedia.behaviour,
     optionsMap.behaviourParams.item.secondaryMedia.trigger,

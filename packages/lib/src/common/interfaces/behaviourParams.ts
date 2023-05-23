@@ -96,6 +96,7 @@ export interface Content {
   hoverAnimation?:
     | 'NO_EFFECT'
     | 'ZOOM_IN'
+    | 'TILT'
     | 'BLUR'
     | 'GRAYSCALE'
     | 'SHRINK'
@@ -105,6 +106,7 @@ export interface Content {
   placementAnimation?: 'NO_EFFECT' | 'SLIDE';
   loader?: 'BLUR' | 'COLOR' | 'MAIN_COLOR';
   magnificationValue?: number;
+  tiltAngleValue?: number;
 }
 
 export interface Vertical {
