@@ -43,6 +43,7 @@ export const nameChangedBehaviourParams = [
     'magnificationLevel',
     optionsMap.behaviourParams.item.content.magnificationValue,
   ],
+  ['tiltAngleValue', optionsMap.behaviourParams.item.content.tiltAngleValue],
   ['videoLoop', optionsMap.behaviourParams.item.video.loop],
   [
     'showVideoPlayButton',

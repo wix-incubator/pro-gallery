@@ -50,7 +50,7 @@ div.pro-gallery {
       &.simulate-hover,
       &:hover {
         .gallery-item-content {
-          transform: scale(0.845) rotate(-4deg);
+          transform: scale(0.845) rotate(calc(var(--tiltAngleValue) * 1deg));
         }
       }
     }

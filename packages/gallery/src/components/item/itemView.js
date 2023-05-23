@@ -859,7 +859,14 @@ class ItemView extends React.Component {
         backgroundPosition: `top ${innerTop}px left ${innerLeft}px`,
       };
     }
-
+    const { TILT } =
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation];
+    if (
+      options[optionsMap.behaviourParams.item.content.hoverAnimation] === TILT
+    ) {
+      styles['--tiltAngleValue'] =
+        options[optionsMap.behaviourParams.item.content.tiltAngleValue];
+    }
     styles.height = height + 'px';
     styles.width = width + 'px';
     styles.margin = -options[optionsMap.stylingParams.itemBorderWidth] + 'px';

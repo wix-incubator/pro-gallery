@@ -106,6 +106,7 @@ export interface Content {
   placementAnimation?: 'NO_EFFECT' | 'SLIDE';
   loader?: 'BLUR' | 'COLOR' | 'MAIN_COLOR';
   magnificationValue?: number;
+  tiltAngleValue?: number;
 }
 
 export interface Vertical {
