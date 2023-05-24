@@ -60,6 +60,9 @@ class NavigationPanel extends React.Component {
       <div
         className={
           'pro-gallery inline-styles thumbnails-gallery ' +
+          (this.props.domOrder
+            ? 'thumbnails-gallery-' + this.props.domOrder
+            : '') +
           (horizontalThumbnails ? ' one-row hide-scrollbars ' : '') +
           (options[optionsMap.behaviourParams.gallery.layoutDirection] ===
           GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
@@ -69,6 +72,7 @@ class NavigationPanel extends React.Component {
           (settings?.isAccessible ? ' accessible ' : '')
         }
         style={{
+          ...(this.props.isPrerenderMode ? { display: 'block' } : {}),
           width: thumbnailsStyle.width,
           height: thumbnailsStyle.height,
           ...thumbnailsMargins,
