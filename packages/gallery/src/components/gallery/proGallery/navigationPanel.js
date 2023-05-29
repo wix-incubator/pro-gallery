@@ -1,13 +1,13 @@
 import React from 'react';
-import { GALLERY_CONSTS, optionsMap, utils } from 'pro-gallery-lib';
+import {
+  GALLERY_CONSTS,
+  optionsMap,
+  utils,
+  thumbnailsLogic,
+} from 'pro-gallery-lib';
 import { GalleryUI } from '../../item/media/GalleryUI';
 
 import TextItem from '../../item/textItem.js';
-
-import {
-  getThumbnailsData,
-  clearGalleryItems,
-} from '../../helpers/thumbnailsLogic';
 
 class NavigationPanel extends React.Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class NavigationPanel extends React.Component {
     galleryStructure,
     settings,
   }) {
-    const clearedGalleryItems = clearGalleryItems(
+    const clearedGalleryItems = thumbnailsLogic.clearGalleryItems(
       this.props.items,
       this.props.galleryStructure.galleryItems
     );
@@ -41,7 +41,7 @@ class NavigationPanel extends React.Component {
       thumbnailsMargins,
       thumbnailsStyle,
       activeIndexOffsetMemory,
-    } = getThumbnailsData({
+    } = thumbnailsLogic.getThumbnailsData({
       items: this.props.items,
       activeIndex,
       options,
