@@ -62,3 +62,4 @@ export {
 export { Settings } from './common/interfaces/Settings';
 export { GalleryRendererProps } from './common/interfaces/galleryRendererTypes';
 export { VirtualizationSettings } from './common/interfaces/virtualization';
+export { default as thumbnailsLogic } from './core/helpers/thumbnailsLogic';
