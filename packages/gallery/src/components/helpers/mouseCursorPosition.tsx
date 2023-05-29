@@ -169,7 +169,7 @@ export class MouseCursor extends React.Component<
         if (!this.props.shouldRenderAtPosition(x, y)) {
           return;
         }
-        if (e.type !== 'click') {
+        if (e.type === 'mousedown' || e.type === 'mouseup') {
           this.props.onMouseDownOrUp(e);
           return;
         }
