@@ -100,6 +100,7 @@ class NavigationPanel extends React.Component {
                 GALLERY_CONSTS.urlTypes.HIGH_RES
               )})`,
               ...location,
+              ...(this.isPrerenderMode ? { opacity: 0 } : {}),
             };
             return (
               <div
@@ -109,7 +110,9 @@ class NavigationPanel extends React.Component {
                   (Number.isInteger(idx) ? '-' + idx : '')
                 }
                 className={
-                  'thumbnailItem' +
+                  'thumbnailItem ' +
+                  'thumbnail-' +
+                  thumbnailItem.idx +
                   (highlighted
                     ? ' pro-gallery-thumbnails-highlighted pro-gallery-highlight' +
                       (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')
