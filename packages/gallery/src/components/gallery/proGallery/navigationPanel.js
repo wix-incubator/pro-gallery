@@ -100,7 +100,7 @@ class NavigationPanel extends React.Component {
                 GALLERY_CONSTS.urlTypes.HIGH_RES
               )})`,
               ...location,
-              ...(this.isPrerenderMode ? { opacity: 0 } : {}),
+              ...(this.props.isPrerenderMode ? { opacity: 0 } : {}),
             };
             return (
               <div
