@@ -6,8 +6,8 @@ export default {
   title: 'Thumbnails Spacings',
   isRelevant: (options) =>
     options[optionsMap.layoutParams.structure.scrollDirection] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-        .HORIZONTAL && options[optionsMap.layoutParams.thumbnails.enable],
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL &&
+    options[optionsMap.layoutParams.thumbnails.enable],
   isRelevantDescription: 'Set "Gallery preset" to "Thumbnail".',
   type: INPUT_TYPES.NUMBER,
   default: 4,

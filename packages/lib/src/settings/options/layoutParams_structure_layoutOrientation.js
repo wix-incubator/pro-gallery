@@ -10,11 +10,8 @@ export default {
   isRelevant: (options) =>
     options[optionsMap.layoutParams.structure.scrollDirection] ===
     GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
-  isRelevantDescription:
-    'Set a Vertical gallery ("Scroll Direction" as "Vertical").',
+  isRelevantDescription: 'Set a Vertical gallery ("Scroll Direction" as "Vertical").',
   options: createOptions(optionsMap.layoutParams.structure.layoutOrientation),
   type: INPUT_TYPES.OPTIONS,
-  default:
-    GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-      .HORIZONTAL,
+  default: GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].HORIZONTAL,
 };

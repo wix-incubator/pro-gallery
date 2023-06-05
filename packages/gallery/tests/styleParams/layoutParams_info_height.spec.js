@@ -22,11 +22,9 @@ describe('options - layoutParams_info_height', () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
+      [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
       [optionsMap.layoutParams.info.height]: 250,
     });
     driver.mount.proGallery(initialProps);

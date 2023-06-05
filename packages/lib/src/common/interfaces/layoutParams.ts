@@ -13,12 +13,8 @@ export interface Groups {
   density?: number;
   groupByOrientation?: boolean;
   numberOfGroupsPerRow?: number;
-  allowedGroupTypes?: Array<
-    '1' | '2h' | '2v' | '3h' | '3v' | '3t' | '3b' | '3l' | '3r'
-  >;
-  repeatingGroupTypes?: Array<
-    '1' | '2h' | '2v' | '3h' | '3v' | '3t' | '3b' | '3l' | '3r'
-  >;
+  allowedGroupTypes?: Array<'1' | '2h' | '2v' | '3h' | '3v' | '3t' | '3b' | '3l' | '3r'>;
+  repeatingGroupTypes?: Array<'1' | '2h' | '2v' | '3h' | '3v' | '3t' | '3b' | '3l' | '3r'>;
   groupSize?: number;
 }
 
@@ -93,20 +89,9 @@ export interface Info {
   width?: number;
   height?: number;
   spacing?: number;
-  layout?:
-    | 'NO_BACKGROUND'
-    | 'ATTACHED_BACKGROUND'
-    | 'SEPARATED_BACKGROUND'
-    | 'DONT_SHOW';
+  layout?: 'NO_BACKGROUND' | 'ATTACHED_BACKGROUND' | 'SEPARATED_BACKGROUND' | 'DONT_SHOW';
   border?: InfoBorder;
-  placement?:
-    | 'OVERLAY'
-    | 'ABOVE'
-    | 'BELOW'
-    | 'LEFT'
-    | 'RIGHT'
-    | 'ALTERNATE_HORIZONTALLY'
-    | 'ALTERNATE_VERTICALLY';
+  placement?: 'OVERLAY' | 'ABOVE' | 'BELOW' | 'LEFT' | 'RIGHT' | 'ALTERNATE_HORIZONTALLY' | 'ALTERNATE_VERTICALLY';
 }
 
 export interface InfoBorder {

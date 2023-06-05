@@ -22,8 +22,7 @@ describe('options - behaviourParams_gallery_layoutDirection', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.behaviourParams.gallery.layoutDirection]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-          .LEFT_TO_RIGHT,
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].LEFT_TO_RIGHT,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -36,8 +35,7 @@ describe('options - behaviourParams_gallery_layoutDirection', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.behaviourParams.gallery.layoutDirection]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-          .RIGHT_TO_LEFT,
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -68,11 +66,9 @@ describe('options - behaviourParams_gallery_layoutDirection', () => {
   it('should set "rtl" class in slideShowView', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW,
       [optionsMap.behaviourParams.gallery.layoutDirection]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-          .RIGHT_TO_LEFT,
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -84,11 +80,9 @@ describe('options - behaviourParams_gallery_layoutDirection', () => {
   it('should not set "rtl" class in slideShowView', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW,
       [optionsMap.behaviourParams.gallery.layoutDirection]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-          .RIGHT_TO_LEFT,
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

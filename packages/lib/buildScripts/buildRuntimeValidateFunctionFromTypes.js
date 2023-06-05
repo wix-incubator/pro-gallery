@@ -32,16 +32,11 @@ function start() {
 
   const optionsMap = getOptionsMap(schema);
   const mapCode = `export default ${JSON.stringify(optionsMap, null, 4)}`;
-  fs.writeFileSync(
-    path.join(libSrcFolder, 'core/helpers/optionsMap.js'),
-    mapCode
-  );
+  fs.writeFileSync(path.join(libSrcFolder, 'core/helpers/optionsMap.js'), mapCode);
 }
 start();
 
 function raiseIfNotExist(fileOrDirPath) {
   if (fs.existsSync(fileOrDirPath) === false)
-    throw new Error(
-      `Cannot generate validate function. this path does not exist: ${fileOrDirPath}`
-    );
+    throw new Error(`Cannot generate validate function. this path does not exist: ${fileOrDirPath}`);
 }

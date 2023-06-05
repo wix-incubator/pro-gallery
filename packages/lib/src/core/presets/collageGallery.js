@@ -21,18 +21,12 @@ const fixToCollage = (options) => {
   presetOptions[optionsMap.behaviourParams.gallery.horizontal.loop] = false;
   presetOptions[optionsMap.layoutParams.structure.numberOfGridRows] = 1;
   presetOptions[optionsMap.layoutParams.structure.responsiveMode] =
-    GALLERY_CONSTS[
-      optionsMap.layoutParams.structure.responsiveMode
-    ].FIT_TO_SCREEN;
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].FIT_TO_SCREEN;
   presetOptions[optionsMap.layoutParams.structure.numberOfColumns] = 0;
-  presetOptions[
-    optionsMap.behaviourParams.gallery.horizontal.blockScroll
-  ] = false;
+  presetOptions[optionsMap.behaviourParams.gallery.horizontal.blockScroll] = false;
   presetOptions[optionsMap.layoutParams.crop.cropOnlyFill] = false;
   presetOptions[optionsMap.behaviourParams.gallery.horizontal.slideAnimation] =
-    GALLERY_CONSTS[
-      optionsMap.behaviourParams.gallery.horizontal.slideAnimation
-    ].SCROLL;
+    GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation].SCROLL;
 
   //layouter direct API
   presetOptions.fixedColumns = 0;
@@ -44,11 +38,7 @@ export const fixedOptions = fixToCollage({});
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToCollage(res);
-  const userDefinedTargetItemSizeValue =
-    options[optionsMap.layoutParams.targetItemSize.value];
-  res.targetItemSize = calcTargetItemSize(
-    res,
-    Math.round(userDefinedTargetItemSizeValue * 5 + 500)
-  );
+  const userDefinedTargetItemSizeValue = options[optionsMap.layoutParams.targetItemSize.value];
+  res.targetItemSize = calcTargetItemSize(res, Math.round(userDefinedTargetItemSizeValue * 5 + 500));
   return res;
 };

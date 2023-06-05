@@ -10,12 +10,8 @@ export default {
   isRelevant: (options) => {
     return (
       autoSlideBehaviour.isRelevant(options) &&
-      options[
-        optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-      ] ===
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-        ].INTERVAL
+      options[optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour] ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour].INTERVAL
     );
   },
   type: INPUT_TYPES.NUMBER,

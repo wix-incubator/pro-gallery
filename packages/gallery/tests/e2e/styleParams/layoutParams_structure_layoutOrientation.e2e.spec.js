@@ -20,8 +20,7 @@ describe('layoutParams_structure_layoutOrientation - e2e', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].MASONRY,
       [optionsMap.layoutParams.structure.layoutOrientation]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -32,8 +31,7 @@ describe('layoutParams_structure_layoutOrientation - e2e', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].MASONRY,
       [optionsMap.layoutParams.structure.layoutOrientation]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-          .HORIZONTAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].HORIZONTAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');

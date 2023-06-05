@@ -8,8 +8,7 @@ const images = [
       width: 1920,
       sourceName: 'private',
       title: 'Image 0',
-      description:
-        'Description of image 0 -> now we are testing long description, lets see how it works',
+      description: 'Description of image 0 -> now we are testing long description, lets see how it works',
     },
     orderIndex: 0,
     itemId: '8b72558253b2502b401bb46e5599f22a',
@@ -22,8 +21,7 @@ const images = [
       name: '2d3b675ea857dc41158bad3b28300824',
       size: 8128464,
       width: 3737,
-      title:
-        'Image 1 Image 1 Image 1 Image 1 Image 1 Image 1 Image 1 Image 1 Image 1',
+      title: 'Image 1 Image 1 Image 1 Image 1 Image 1 Image 1 Image 1 Image 1 Image 1',
     },
     orderIndex: 1,
     itemId: '2d3b675ea857dc41158bad3b28300824',
@@ -64,8 +62,7 @@ const images = [
       size: 6528300,
       width: 5600,
       title: '4',
-      description:
-        'DescriptionOfImage4DescriptionOfImage4 DescriptionOfImage4DescriptionOfImage4',
+      description: 'DescriptionOfImage4DescriptionOfImage4 DescriptionOfImage4DescriptionOfImage4',
     },
     orderIndex: 4,
     itemId: '5dd5a6e757c702b2856a3a2f4bb00154',
@@ -106,8 +103,7 @@ const images = [
       size: 9294683,
       width: 5600,
       title: 'Image 7',
-      description:
-        'DescriptionOfImage7DescriptionOfImage7DescriptionOfImage7DescriptionOfImage7',
+      description: 'DescriptionOfImage7DescriptionOfImage7DescriptionOfImage7DescriptionOfImage7',
     },
     orderIndex: 7,
     itemId: '0db65a80624a2e0b8c71e553b6f4b3f6',
@@ -147,8 +143,7 @@ const images = [
       size: 9556027,
       width: 5600,
       title: 'Image 10',
-      description:
-        'Description of image 10 -> now we are testing long description, lets see how it works',
+      description: 'Description of image 10 -> now we are testing long description, lets see how it works',
     },
     orderIndex: 10,
     itemId: '8e0bf32b6fade59dcfd7757ead8a0478',
@@ -421,8 +416,7 @@ const images2 = [
     },
     height: 2000,
     itemId: '8b72558253b2502b401bb46e5599f22a',
-    mediaUrl:
-      'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
+    mediaUrl: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
     metaData: {
       description: 'Describe your image here.',
       fileName: '002cd4_769319a2d138444cb19990885128f2c7_',
@@ -453,8 +447,7 @@ const images2 = [
     },
     height: 2000,
     itemId: '87dc373b35ff17641e86a23b58635f89',
-    mediaUrl:
-      'https://static.wixstatic.com/media/8bb438_e8735e0102554d6ead385a48e2b9e69a.jpg',
+    mediaUrl: 'https://static.wixstatic.com/media/8bb438_e8735e0102554d6ead385a48e2b9e69a.jpg',
     metaData: {
       description: 'Describe your image here.',
       fileName: '87dc373b35ff17641e86a23b58635f89',
@@ -485,8 +478,7 @@ const images2 = [
     },
     height: 2000,
     itemId: '5c64c68f0efda76c3cfbf83f569a8e2e',
-    mediaUrl:
-      'https://static.wixstatic.com/media/8bb438_a2049532d1b7487ba542f55efbc55c7c.jpg',
+    mediaUrl: 'https://static.wixstatic.com/media/8bb438_a2049532d1b7487ba542f55efbc55c7c.jpg',
     metaData: {
       fileName: '002cd4_769319a2d138444cb19990885128f2c7_',
       height: 2000,
@@ -515,8 +507,7 @@ const images2 = [
     },
     height: 2000,
     itemId: '9c0c752ebc1b7b27dc3b02b98f2a4181',
-    mediaUrl:
-      'https://static.wixstatic.com/media/8bb438_e78b371c75ce42de8719dccfc97298a4.jpg',
+    mediaUrl: 'https://static.wixstatic.com/media/8bb438_e78b371c75ce42de8719dccfc97298a4.jpg',
     metaData: {
       fileName: '002cd4_769319a2d138444cb19990885128f2c7_',
       height: 2000,
@@ -837,12 +828,5 @@ const itemsWithSecondaryMedia = [
   },
 ];
 
-export {
-  images,
-  images2,
-  videoItems,
-  textItems,
-  itemsWithDirectShareLink,
-  itemsWithSecondaryMedia,
-};
+export { images, images2, videoItems, textItems, itemsWithDirectShareLink, itemsWithSecondaryMedia };
 /* eslint-enable prettier/prettier */

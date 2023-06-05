@@ -19,8 +19,7 @@ describe('layoutParams_info_height - e2e', () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
+      [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
       [optionsMap.layoutParams.info.height]: 300,
     });
     await driver.waitFor.hookToBeVisible('item-container');

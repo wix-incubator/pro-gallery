@@ -28,8 +28,7 @@ describe('options - behaviourParams_item_secondaryMedia_trigger', () => {
   it('should wrapp item with secondary media container', async () => {
     await mountGalleryWithSecondaryMediaOptions({
       [optionsMap.behaviourParams.item.secondaryMedia.trigger]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger]
-          .HOVER,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger].HOVER,
     });
     const items = driver.find.selector('.item-with-secondary-media-container');
     expect(items.length).to.eq(itemsWithSecondaryMedia.length);
@@ -38,8 +37,7 @@ describe('options - behaviourParams_item_secondaryMedia_trigger', () => {
   it('should not wrapp item with secondary media container', async () => {
     await mountGalleryWithSecondaryMediaOptions({
       [optionsMap.behaviourParams.item.secondaryMedia.trigger]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger]
-          .OFF,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger].OFF,
     });
     const items = driver.find.selector('.item-with-secondary-media-container');
     expect(items.length).to.eq(0);
@@ -48,8 +46,7 @@ describe('options - behaviourParams_item_secondaryMedia_trigger', () => {
   it('should not show item when there is no hover', async () => {
     await mountGalleryWithSecondaryMediaOptions({
       [optionsMap.behaviourParams.item.secondaryMedia.trigger]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger]
-          .HOVER,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger].HOVER,
     });
     const shownItems = driver.find.selector('.secondary-media-item.show');
     expect(shownItems.length).to.eq(0);
@@ -58,8 +55,7 @@ describe('options - behaviourParams_item_secondaryMedia_trigger', () => {
   it.skip('should show item on hover', async () => {
     await mountGalleryWithSecondaryMediaOptions({
       [optionsMap.behaviourParams.item.secondaryMedia.trigger]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger]
-          .HOVER,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger].HOVER,
     });
     const item = driver.find.selector('.secondary-media-item').at(0);
     // TODO:  I fixed a bug (https://github.com/wix/pro-gallery/pull/991) by replacing the mouseover to mouseEnter and mouseout to mouseleave. Enzyme cannot simulate the mouseEnter event correctly so I need to skip this test. Luckily we have a e2e test that makes sure that second media is working (https://github.com/wix/pro-gallery/blob/56310c380ee2aeb686dc1f11c7af7c98a5b4acdf/packages/gallery/tests/e2e/styleParams/behaviourParams_item_secondaryMedia_trigger.e2e.spec.js#L35)

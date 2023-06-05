@@ -10,18 +10,13 @@ export default {
   isRelevant: (options) => {
     return (
       ((options[optionsMap.layoutParams.structure.layoutOrientation] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-          .VERTICAL &&
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].VERTICAL &&
         options[optionsMap.layoutParams.structure.scrollDirection] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-            .VERTICAL) ||
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL) ||
         options[optionsMap.layoutParams.structure.scrollDirection] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-            .HORIZONTAL) &&
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL) &&
       options[optionsMap.layoutParams.groups.groupSize] === 1 &&
-      GALLERY_CONSTS.hasExternalVerticalPlacement(
-        options[optionsMap.layoutParams.info.placement]
-      )
+      GALLERY_CONSTS.hasExternalVerticalPlacement(options[optionsMap.layoutParams.info.placement])
     );
   },
   type: INPUT_TYPES.NUMBER,

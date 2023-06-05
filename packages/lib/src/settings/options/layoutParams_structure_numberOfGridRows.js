@@ -8,9 +8,7 @@ export default {
   type: INPUT_TYPES.NUMBER,
   isRelevant: (options) =>
     options[optionsMap.layoutParams.structure.scrollDirection] ===
-    GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-      .HORIZONTAL,
-  isRelevantDescription:
-    'Set a Horizontal gallery ("Scroll Direction" as "Horizontal").',
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL,
+  isRelevantDescription: 'Set a Horizontal gallery ("Scroll Direction" as "Horizontal").',
   default: 1, //one source
 };

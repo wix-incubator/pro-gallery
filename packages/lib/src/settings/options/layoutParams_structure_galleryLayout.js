@@ -10,6 +10,5 @@ export default {
   isRelevant: () => true,
   type: INPUT_TYPES.OPTIONS,
   options: createOptions(optionsMap.layoutParams.structure.galleryLayout),
-  default:
-    GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
+  default: GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
 };

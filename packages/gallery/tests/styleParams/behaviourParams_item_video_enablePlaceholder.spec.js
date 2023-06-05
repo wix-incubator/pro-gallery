@@ -31,20 +31,14 @@ describe('options - behaviourParams_item_video_enablePlaceholder ', () => {
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.video.enablePlaceholder]: true,
     });
-    const placeholders = mountAndGetPreloadElements(
-      driver,
-      sampleItemViewProps
-    );
+    const placeholders = mountAndGetPreloadElements(driver, sampleItemViewProps);
     expect(placeholders.length).to.equal(1);
   });
   it('should not remove video placeholder when "behaviourParams_item_video_enablePlaceholder=false"', async () => {
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.video.enablePlaceholder]: false,
     });
-    const placeholders = mountAndGetPreloadElements(
-      driver,
-      sampleItemViewProps
-    );
+    const placeholders = mountAndGetPreloadElements(driver, sampleItemViewProps);
     expect(placeholders.length).to.equal(0);
   });
 });

@@ -9,28 +9,22 @@ export default {
   isRelevant: (options, option) => {
     // Distribution of the specific isRelevant functions
     const videoPlayOptions = {
-      [GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO]:
-        () => {
-          return true;
-        },
-      [GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER]:
-        () => {
-          return true;
-        },
-      [GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].CLICK]:
-        () => {
-          return true;
-        },
+      [GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO]: () => {
+        return true;
+      },
+      [GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER]: () => {
+        return true;
+      },
+      [GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].CLICK]: () => {
+        return true;
+      },
     };
 
     // specific option isRelevant : general video play isRelevant (AUTO always true)
-    return option
-      ? videoPlayOptions[option](options)
-      : Object.values(videoPlayOptions).some((val) => val(options));
+    return option ? videoPlayOptions[option](options) : Object.values(videoPlayOptions).some((val) => val(options));
   },
   isRelevantDescription: 'Always Relevant',
   options: createOptions(optionsMap.behaviourParams.item.video.playTrigger),
   type: INPUT_TYPES.OPTIONS,
-  default:
-    GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER, //one source
+  default: GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER, //one source
 };

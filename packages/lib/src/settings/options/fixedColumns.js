@@ -9,9 +9,7 @@ export default {
   isRelevantDescription:
     'Set a Vertical gallery ("Scroll Direction" as "Vertical"), set "Layout Orientation" to "columns" and set "Responsive Type" to "Set Items Per Row".',
   isRelevant: (options) =>
-    options.scrollDirection ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-        .VERTICAL &&
+    options.scrollDirection === GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL &&
     options.isVertical &&
     options.gridStyle === 1,
   type: INPUT_TYPES.NUMBER,

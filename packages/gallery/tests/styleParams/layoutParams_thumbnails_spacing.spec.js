@@ -20,8 +20,7 @@ describe('options - layoutParams_thumbnails_spacings', () => {
   it('should set "layoutParams_thumbnails_spacing" of "25"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
       [optionsMap.layoutParams.thumbnails.spacing]: 25,
       [optionsMap.layoutParams.thumbnails.size]: 100,
     });

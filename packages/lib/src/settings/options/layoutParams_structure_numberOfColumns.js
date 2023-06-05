@@ -8,14 +8,11 @@ export default {
     'Set a Vertical gallery ("Scroll Direction" as "Vertical"), set "Layout Orientation" to "Column" and set "Max Group Size" to be "1".',
   isRelevant: (options) =>
     options[optionsMap.layoutParams.structure.scrollDirection] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-        .VERTICAL &&
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL &&
     options[optionsMap.layoutParams.structure.layoutOrientation] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-        .VERTICAL &&
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].VERTICAL &&
     options[optionsMap.layoutParams.structure.responsiveMode] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
-        .SET_ITEMS_PER_ROW,
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW,
   type: INPUT_TYPES.NUMBER,
   default: 3,
   description: `This sets the number of items per row in the gallery. Note that this option relies on a number of options, the gallery must be

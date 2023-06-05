@@ -6,10 +6,7 @@ import {
   addMigratedOptions,
   extendNestedOptionsToIncludeOldAndNew,
 } from '../src/core/helpers/optionsConverter';
-import {
-  reverseMigrateOptions,
-  addOldOptions,
-} from '../src/core/helpers/optionsBackwardConverter';
+import { reverseMigrateOptions, addOldOptions } from '../src/core/helpers/optionsBackwardConverter';
 import v3DefaultOptions from '../src/common/v3DefaultOptions';
 import v4DefaultOptions from '../src/common/v4DefaultOptions';
 
@@ -39,21 +36,15 @@ describe('Styles processing', () => {
     expect(migrated.layoutParams.structure.galleryLayout).to.eql(4);
     expect(migrated.galleryLayout).to.eql(4);
     expect(migrated.isAutoSlideshow).to.eql(false);
-    expect(
-      migrated.behaviourParams.gallery.horizontal.autoSlide.behaviour
-    ).to.eql('OFF');
+    expect(migrated.behaviourParams.gallery.horizontal.autoSlide.behaviour).to.eql('OFF');
     expect(migrated.scrollSnap).to.eql(false);
-    expect(migrated.behaviourParams.gallery.horizontal.enableScrollSnap).to.eql(
-      false
-    );
+    expect(migrated.behaviourParams.gallery.horizontal.enableScrollSnap).to.eql(false);
   });
   it('should not have defined properties if they were not initialy defined', () => {
     const migrated = addOldOptions(addMigratedOptions({}));
     delete migrated.wasConvertedToOldOptions;
     const flat = flattenObject(migrated);
-    Object.keys(flat).forEach((key) =>
-      flat[key] === undefined ? delete flat[key] : {}
-    );
+    Object.keys(flat).forEach((key) => (flat[key] === undefined ? delete flat[key] : {}));
     expect(Object.keys(flat).length).to.eql(0);
   });
   it('should work with string percent cropRatios', () => {
@@ -91,10 +82,7 @@ describe('Styles processing', () => {
 
     const migrated = addOldOptions(addMigratedOptions(styles));
     expect(migrated['layoutParams_cropRatio']).to.eql(4 / 3); //the migration would assign'25%/100%' here if it wasnt namely defined in the initial object
-    expect(migrated['layoutParams_crop_ratios']).to.eql([
-      '25%/100%',
-      '50%/100%',
-    ]);
+    expect(migrated['layoutParams_crop_ratios']).to.eql(['25%/100%', '50%/100%']);
     expect(migrated['cubeRatio']).to.eql('25%/100%');
   });
 });

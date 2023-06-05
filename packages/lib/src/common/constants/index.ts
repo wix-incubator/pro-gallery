@@ -7,9 +7,7 @@ import events from './events';
 
 import layoutParams_crop_method from './layoutParams_crop_method';
 import layoutParams_crop_alignment from './layoutParams_crop_alignment';
-import layoutParams_structure_galleryLayout, {
-  isLayout,
-} from './layoutParams_structure_galleryLayout';
+import layoutParams_structure_galleryLayout, { isLayout } from './layoutParams_structure_galleryLayout';
 import layoutParams_structure_groupsOrder from './layoutParams_structure_groupsOrder';
 import layoutParams_structure_layoutOrientation from './layoutParams_structure_layoutOrientation';
 import layoutParams_structure_responsiveMode from './layoutParams_structure_responsiveMode';

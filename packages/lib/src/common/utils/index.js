@@ -1,11 +1,6 @@
 import * as lodash from './lodash';
 import window from '../window/windowWrapper';
-import {
-  isEditMode,
-  isPreviewMode,
-  isDeviceTypeMobile,
-  isDeviceTypeTouch,
-} from '../window/viewModeWrapper';
+import { isEditMode, isPreviewMode, isDeviceTypeMobile, isDeviceTypeTouch } from '../window/viewModeWrapper';
 import GALLERY_CONSTS from '../constants';
 import optionsMap from '../../core/helpers/optionsMap';
 
@@ -179,10 +174,7 @@ class Utils {
       /^[\],:{}\s]*$/.test(
         stripedObj
           .replace(/\\["\\/bfnrtu]/g, '@')
-          .replace(
-            /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?/g,
-            ']'
-          )
+          .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?/g, ']')
           .replace(/(?:^|:|,)(?:\s*\[)+/g, '')
       )
     ) {
@@ -258,9 +250,7 @@ class Utils {
       const isMobileByProps = this.isMobileByProps();
       const isUserAgentMobile = this.isUserAgentMobile();
 
-      return this.isUndefined(isMobileByProps)
-        ? isUserAgentMobile
-        : isMobileByProps;
+      return this.isUndefined(isMobileByProps) ? isUserAgentMobile : isMobileByProps;
     };
 
     return this.getOrPutFromCache('isMobile', _isMobile);
@@ -316,9 +306,7 @@ class Utils {
   }
 
   isVerbose() {
-    return (
-      !this.isTest() && (this.safeLocalStorage() || {}).forceDevMode === 'true'
-    );
+    return !this.isTest() && (this.safeLocalStorage() || {}).forceDevMode === 'true';
   }
 
   isStoreGallery() {
@@ -508,31 +496,13 @@ class Utils {
         if (!this.isEqual(v, _obj2[k])) {
           if (Array.isArray(_obj2[k])) {
             if (v.length !== _obj2[k].length) {
-              res[k + '.length'] =
-                '[' + v.length + '] => [' + _obj2[k].length + ']';
+              res[k + '.length'] = '[' + v.length + '] => [' + _obj2[k].length + ']';
             }
-            res = Object.assign(
-              res,
-              getInnerDiff(
-                v,
-                _obj2[k],
-                (_prefix ? _prefix + '.' : '') + k,
-                depth + 1
-              )
-            );
+            res = Object.assign(res, getInnerDiff(v, _obj2[k], (_prefix ? _prefix + '.' : '') + k, depth + 1));
           } else if (typeof _obj2[k] === 'object') {
-            res = Object.assign(
-              res,
-              getInnerDiff(
-                v,
-                _obj2[k],
-                (_prefix ? _prefix + '.' : '') + k,
-                depth + 1
-              )
-            );
+            res = Object.assign(res, getInnerDiff(v, _obj2[k], (_prefix ? _prefix + '.' : '') + k, depth + 1));
           } else {
-            res[(_prefix ? _prefix + '.' : '') + k] =
-              _toString(v) + ' => ' + _toString(_obj2[k]);
+            res[(_prefix ? _prefix + '.' : '') + k] = _toString(v) + ' => ' + _toString(_obj2[k]);
           }
         }
         return res;
@@ -671,8 +641,7 @@ class Utils {
       return defaultColor;
     }
     const colorStr = color.value ? color.value : color;
-    const colorRegex =
-      /(?:#|0x)(?:[A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})\b|(?:rgb|hsl)a?\([^)]*\)/;
+    const colorRegex = /(?:#|0x)(?:[A-Fa-f0-9]{3}|[A-Fa-f0-9]{6})\b|(?:rgb|hsl)a?\([^)]*\)/;
     const regexRes = colorRegex.exec(colorStr);
     const isValidColor = regexRes && regexRes[0];
     return isValidColor ? colorStr : defaultColor;
@@ -684,17 +653,12 @@ class Utils {
         const optionsStr = Object.entries(options)
           .filter(
             ([key, val]) =>
-              typeof val !== 'object' &&
-              String(key).indexOf('Expand') === -1 &&
-              String(key).indexOf('Color') === -1
+              typeof val !== 'object' && String(key).indexOf('Expand') === -1 && String(key).indexOf('Color') === -1
           )
           .map(([key, val]) => `${key}=${encodeURI(val)}`)
           .join('&');
 
-        console.log(
-          'Gallery Playground link:',
-          `https://pro-gallery.surge.sh?${optionsStr}`
-        );
+        console.log('Gallery Playground link:', `https://pro-gallery.surge.sh?${optionsStr}`);
       }
     } catch (e) {
       console.error(e);
@@ -703,9 +667,7 @@ class Utils {
 
   isSingleItemHorizontalDisplay(options) {
     return (
-      options.scrollDirection ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL &&
+      options.scrollDirection === GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL &&
       options[optionsMap.layoutParams.groups.groupSize] === 1 &&
       options[optionsMap.layoutParams.crop.enable] &&
       options[optionsMap.layoutParams.crop.ratios].length === 1 &&
@@ -715,8 +677,7 @@ class Utils {
 
   getAriaAttributes({ proGalleryRole, proGalleryRegionLabel }) {
     const role = proGalleryRole || 'region';
-    const roledescription =
-      proGalleryRole === 'application' ? 'gallery application' : 'region';
+    const roledescription = proGalleryRole === 'application' ? 'gallery application' : 'region';
     const attr = {
       role: proGalleryRole || 'region',
       ['aria-label']: proGalleryRegionLabel,
@@ -739,8 +700,7 @@ class Utils {
   isHeightSetByGallery(options) {
     return (
       options[optionsMap.layoutParams.structure.scrollDirection] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL &&
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL &&
       !options[optionsMap.behaviourParams.gallery.vertical.loadMore.enable]
     ); //v5 TODO!!! NEW STYLEPARAMS METHOD POSSIBLE BUG FOUND Could be that I need to add the horizontal gallery ratio thing here....
   }

@@ -24,8 +24,7 @@ describe('options - layoutParams_structure_itemSpacing', () => {
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].COLUMN,
       [optionsMap.layoutParams.structure.itemSpacing]: 10,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -41,14 +40,11 @@ describe('options - layoutParams_structure_itemSpacing', () => {
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.itemSpacing]: 25,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
-      [optionsMap.layoutParams.targetItemSize.unit]:
-        GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].PIXEL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
+      [optionsMap.layoutParams.targetItemSize.unit]: GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].PIXEL,
       [optionsMap.layoutParams.targetItemSize.value]: 390,
       [optionsMap.layoutParams.structure.layoutOrientation]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].VERTICAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -59,9 +55,7 @@ describe('options - layoutParams_structure_itemSpacing', () => {
       const dims = getElementDimensions(item);
       if (dims.top === prevDims.top) {
         const spacing = dims.left - (prevDims.left + prevDims.width);
-        expect(spacing).to.eq(
-          initialProps.options[optionsMap.layoutParams.structure.itemSpacing]
-        );
+        expect(spacing).to.eq(initialProps.options[optionsMap.layoutParams.structure.itemSpacing]);
       }
       prevDims = dims;
     }

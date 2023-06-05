@@ -24,14 +24,11 @@ describe('options - layoutParams_structure_gallerySpacing', () => {
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
 
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const marginContainer = driver.find
-      .selector('.pro-gallery-margin-container')
-      .getDOMNode();
+    const marginContainer = driver.find.selector('.pro-gallery-margin-container').getDOMNode();
     const margin = getComputedStyle(marginContainer).margin;
     expect(margin).to.eq('20px');
     driver.detach.proGallery();
@@ -44,14 +41,11 @@ describe('options - layoutParams_structure_gallerySpacing', () => {
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.itemSpacing]: 10,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const galleryContainer = driver.find
-      .selector('.pro-gallery-parent-container')
-      .getDOMNode();
+    const galleryContainer = driver.find.selector('.pro-gallery-parent-container').getDOMNode();
     const margin = getComputedStyle(galleryContainer).margin;
     // expect the margin to be (gallerySpacing - (itemSpacing / 2)
     expect(margin).to.eq('15px');

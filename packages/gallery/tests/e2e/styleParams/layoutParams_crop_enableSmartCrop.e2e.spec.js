@@ -23,8 +23,7 @@ describe('layoutParams_crop_enableSmartCrop - e2e', () => {
       [optionsMap.layoutParams.crop.enableSmartCrop]: true,
       [optionsMap.layoutParams.crop.enable]: true,
       [optionsMap.layoutParams.crop.ratios]: [2],
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
+      [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -38,8 +37,7 @@ describe('layoutParams_crop_enableSmartCrop - e2e', () => {
       [optionsMap.layoutParams.crop.enableSmartCrop]: false,
       [optionsMap.layoutParams.crop.enable]: true,
       [optionsMap.layoutParams.crop.ratios]: [2],
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
+      [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);

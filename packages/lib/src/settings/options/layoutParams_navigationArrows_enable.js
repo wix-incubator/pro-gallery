@@ -9,10 +9,8 @@ export default {
   isRelevant: (options) =>
     layoutParams_structure_scrollDirection.isRelevant(options) &&
     options[optionsMap.layoutParams.structure.scrollDirection] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-        .HORIZONTAL,
-  isRelevantDescription:
-    'Set a Horizontal gallery ("Scroll Direction" as "Horizontal").',
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL,
+  isRelevantDescription: 'Set a Horizontal gallery ("Scroll Direction" as "Horizontal").',
   type: INPUT_TYPES.BOOLEAN,
   default: true,
 };
