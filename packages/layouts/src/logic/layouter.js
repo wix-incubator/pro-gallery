@@ -349,31 +349,17 @@ export default class Layouter {
         continue;
       }
 
-      const calcRecommendedGroupSize = () => {
-        if (this.srcItems.length > this.pointer + 1) return null;
-
-        const totalGroupsInStrip = this.strip.groups.length;
-        const recommendedGroupsInStrip =
-          this.recommendedGroupsPerStrip?.[this.strip.idx];
-        const remainingGroups = recommendedGroupsInStrip - totalGroupsInStrip;
-        if (remainingGroups === 1) {
-          return this.groupItems.length;
-        } else {
-          return null;
-        }
-      };
-
       this.group = new Group({
         idx: this.groupIdx,
         stripIdx: this.strip.idx,
         inStripIdx: this.strip.groups.length + 1,
         top: this.galleryHeight,
         items: this.groupItems,
+        isLastItems: this.isLastImages,
         targetItemSize: this.targetItemSize,
         showAllItems: this.showAllItems,
         container: this.container,
         styleParams: this.styleParams,
-        recommendedGroupSize: calcRecommendedGroupSize(),
       });
       this.groups[this.groupIdx] = this.group;
 
@@ -404,44 +390,9 @@ export default class Layouter {
             targetItemSize: this.targetItemSize,
           });
 
-          const newStripIdx = this.strip.idx + 1;
-          
           //reset the group (this group will be rebuilt)
           this.pointer -= this.group.realItems.length - 1;
           this.groupIdx--;
-
-          if (
-            this.styleParams.forceFullStrips &&
-            !this.recommendedGroupsPerStrip?.[newStripIdx]
-          ) {
-            const placedItems = this.pointer;
-            const placedGroups = this.groupIdx - 1;
-            const placedStrips = this.strip.idx;
-            const avgItemsPerGroup = placedItems / placedGroups;
-            const avgGroupsPerStrip = placedGroups / placedStrips;
-            const avgItemsPerStrip = avgItemsPerGroup * avgGroupsPerStrip;
-            const remainingItems = this.srcItems.length - placedItems;
-            const remainingGroups = remainingItems / avgItemsPerGroup;
-            const remainingStrips = remainingGroups / avgGroupsPerStrip;
-            const maxStripsToFix = 3;
-            if (avgItemsPerStrip * maxStripsToFix >= remainingItems) {
-              this.recommendedGroupsPerStrip = {
-                [newStripIdx]: Math.floor(remainingGroups / remainingStrips),
-              };
-            }
-          }
-
-          //open a new strip
-          this.strip = new Strip({
-            idx: newStripIdx,
-            container: this.container,
-            groupsPerStrip:
-              this.styleParams.groupsPerStrip ||
-              this.recommendedGroupsPerStrip?.[newStripIdx],
-            scrollDirection: this.styleParams.scrollDirection,
-            targetItemSize: this.targetItemSize,
-          });
-
           continue;
         }
 
@@ -654,7 +605,7 @@ export default class Layouter {
   }
 
   get isLastImages() {
-    return !this.srcItems[this.pointer + 2];
+    return !this.srcItems[this.pointer + 1];
   }
 
   get imagesLeft() {

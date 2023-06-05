@@ -39,7 +39,6 @@ describe('Layouter', () => {
       [optionsMap.layoutParams.structure.scatter.randomScatter]: 0,
       [optionsMap.layoutParams.structure.scatter.manualScatter]: '',
       fixedColumns: 0,
-      forceFullStrips: false,
     };
 
     container = {
