@@ -1,40 +1,40 @@
-import React from "react";
-import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from "pro-gallery";
-import { utils } from "pro-gallery-lib";
+import React from 'react';
+import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
+import { utils } from 'pro-gallery-lib';
 // import CLICK_ACTIONS from '../../../common/constants/itemClick';
-import CloseButton from "./x";
+import CloseButton from './x';
 
 const styles = {
   gallery: {},
   fullscreen: {
-    position: "fixed",
+    position: 'fixed',
     top: 0,
     left: 0,
-    width: "100vw",
-    height: "100vh",
+    width: '100vw',
+    height: '100vh',
     zIndex: 9999,
-    background: "white",
+    background: 'white',
     opacity: 0,
-    transition: "opacity 2s ease",
-    visibility: "hidden",
+    transition: 'opacity 2s ease',
+    visibility: 'hidden',
   },
   shown: {
-    visibility: "visible",
+    visibility: 'visible',
     opacity: 1,
   },
   close: {
-    boxSizing: "content-box",
+    boxSizing: 'content-box',
     zIndex: 10,
     padding: 10,
-    position: "fixed",
+    position: 'fixed',
     right: 20,
     top: 20,
-    background: "rgba(255,255,255,0.8)",
+    background: 'rgba(255,255,255,0.8)',
     borderRadius: 4,
     width: 25,
     height: 25,
-    fill: "black",
-    cursor: "pointer",
+    fill: 'black',
+    cursor: 'pointer',
   },
 };
 
@@ -58,7 +58,7 @@ export default class ExpandableProGallery extends React.Component {
         // console.log({eventName, eventData});
         break;
     }
-    if (typeof this.props.eventsListener === "function") {
+    if (typeof this.props.eventsListener === 'function') {
       this.props.eventsListener(eventName, eventData);
     }
   }
@@ -70,7 +70,7 @@ export default class ExpandableProGallery extends React.Component {
         <section
           style={{
             ...styles.gallery,
-            display: this.state.fullscreenIdx < 0 ? "block" : "none",
+            display: this.state.fullscreenIdx < 0 ? 'block' : 'none',
           }}
         >
           <Gallery
@@ -87,10 +87,7 @@ export default class ExpandableProGallery extends React.Component {
               ...(this.state.fullscreenIdx >= 0 && styles.shown),
             }}
           >
-            <CloseButton
-              style={styles.close}
-              onClick={() => this.setState({ fullscreenIdx: -1 })}
-            />
+            <CloseButton style={styles.close} onClick={() => this.setState({ fullscreenIdx: -1 })} />
             <Gallery
               {...this.props}
               key={`pro-fullscreen-${this.props.id}`}
@@ -104,8 +101,8 @@ export default class ExpandableProGallery extends React.Component {
                 ...this.props.options,
                 galleryLayout: 5,
                 textBoxHeight: 80,
-                slideAnimation: utils.isMobile() ? "SCROLL" : "FADE",
-                cubeType: "fit",
+                slideAnimation: utils.isMobile() ? 'SCROLL' : 'FADE',
+                cubeType: 'fit',
                 scrollSnap: true,
                 showArrows: !utils.isMobile(),
               }}

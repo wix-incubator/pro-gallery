@@ -1,17 +1,16 @@
 import React from 'react';
 import { CodeOutlined } from '@ant-design/icons';
-import {Modal, Button} from 'antd';
+import { Modal, Button } from 'antd';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 // choose highlighter style here: https://conorhastings.github.io/react-syntax-highlighter/demo/
-import {tomorrowNightEighties} from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { tomorrowNightEighties } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import s from './CodePanel.module.scss';
-import {useGalleryContext} from '../../hooks/useGalleryContext';
-import { getOptionsFromUrl } from '../../constants/options'
-import { flatToNested } from 'pro-gallery-lib'
+import { useGalleryContext } from '../../hooks/useGalleryContext';
+import { getOptionsFromUrl } from '../../constants/options';
+import { flatToNested } from 'pro-gallery-lib';
 
 function CodePanel() {
-
-  const {options} = useGalleryContext();
+  const { options } = useGalleryContext();
 
   const [hasCopied, setHasCopied] = React.useState(false);
   const [modalVisible, set_modalVisible] = React.useState(false);
@@ -27,12 +26,15 @@ function CodePanel() {
   };
 
   const getStyleParams = () => {
-    const {layoutParams_structure_galleryLayout} = options;
-    const migratedOptions = flatToNested({layoutParams_structure_galleryLayout, ...getOptionsFromUrl(window.location.search)});
-    let {layoutParams, behaviourParams, stylingParams } = migratedOptions;
-    const v4Options = {layoutParams, behaviourParams, stylingParams }
+    const { layoutParams_structure_galleryLayout } = options;
+    const migratedOptions = flatToNested({
+      layoutParams_structure_galleryLayout,
+      ...getOptionsFromUrl(window.location.search),
+    });
+    let { layoutParams, behaviourParams, stylingParams } = migratedOptions;
+    const v4Options = { layoutParams, behaviourParams, stylingParams };
     return JSON.stringify(v4Options, null, 4);
-  }
+  };
 
   const code = getCode(getStyleParams());
   return (
@@ -44,7 +46,7 @@ function CodePanel() {
         visible={modalVisible}
         onOk={onCopy}
         okText={hasCopied ? 'Copy Successful' : 'Copy to clipboard'}
-        okButtonProps={{disabled: hasCopied}}
+        okButtonProps={{ disabled: hasCopied }}
         cancelText={'Close'}
         onCancel={() => set_modalVisible(false)}
       >
@@ -59,7 +61,15 @@ function CodePanel() {
           {code}
         </SyntaxHighlighter>
       </Modal>
-      <Button type="primary" icon={<CodeOutlined />} shape="round" size="large" disabled={modalVisible} onClick={() => set_modalVisible(true)} block>
+      <Button
+        type="primary"
+        icon={<CodeOutlined />}
+        shape="round"
+        size="large"
+        disabled={modalVisible}
+        onClick={() => set_modalVisible(true)}
+        block
+      >
         Generate Gallery Code
       </Button>
     </div>
@@ -157,17 +167,14 @@ ${options}
 }
 
 // proudly copy and pasted from https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
-const copyToClipboard = str => {
+const copyToClipboard = (str) => {
   const el = document.createElement('textarea');
   el.value = str;
   el.setAttribute('readonly', '');
   el.style.position = 'absolute';
   el.style.left = '-9999px';
   document.body.appendChild(el);
-  const selected =
-    document.getSelection().rangeCount > 0 ?
-      document.getSelection().getRangeAt(0) :
-      false;
+  const selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
   el.select();
   document.execCommand('copy');
   document.body.removeChild(el);
@@ -177,4 +184,4 @@ const copyToClipboard = str => {
   }
 };
 
-export {CodePanel};
+export { CodePanel };

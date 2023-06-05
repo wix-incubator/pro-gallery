@@ -8,11 +8,7 @@ const PlaygroundGalleryProvider = (props) => {
   const setContext = (x) => {
     return setViewport({ ...viewport, ...x });
   };
-  return (
-    <GalleryContext.Provider value={[viewport, setContext]}>
-      {props.children}
-    </GalleryContext.Provider>
-  );
+  return <GalleryContext.Provider value={[viewport, setContext]}>{props.children}</GalleryContext.Provider>;
 };
 
 export { GalleryContext, PlaygroundGalleryProvider };

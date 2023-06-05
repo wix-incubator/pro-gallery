@@ -1,27 +1,27 @@
-import { galleryOptions } from "pro-gallery-lib";
-import { optionsMap } from "pro-gallery-lib";
+import { galleryOptions } from 'pro-gallery-lib';
+import { optionsMap } from 'pro-gallery-lib';
 
 export const INPUT_TYPES = {
-  NUMBER: "NUMBER",
-  BOOLEAN: "BOOLEAN",
-  OPTIONS: "OPTIONS",
-  TEXT: "TEXT",
-  JSON: "JSON",
-  COLOR_PICKER: "COLOR_PICKER",
-  FONT_PICKER: "FONT_PICKER",
-  BUTTON: "BUTTON",
-  MULTISELECT: "MULTISELECT",
-  MULTIREPEAT: "MULTIREPEAT",
+  NUMBER: 'NUMBER',
+  BOOLEAN: 'BOOLEAN',
+  OPTIONS: 'OPTIONS',
+  TEXT: 'TEXT',
+  JSON: 'JSON',
+  COLOR_PICKER: 'COLOR_PICKER',
+  FONT_PICKER: 'FONT_PICKER',
+  BUTTON: 'BUTTON',
+  MULTISELECT: 'MULTISELECT',
+  MULTIREPEAT: 'MULTIREPEAT',
 };
 
 export const SECTIONS = {
-  PRESET: "Presets",
-  LAYOUT: "Layout Customization",
-  ADVANCED: "Advanced Layout Options",
-  BEHAVIOR: "Behavior",
-  INFO: "Item info",
-  DESIGN: "Design",
-  ANIMATION: "Animations",
+  PRESET: 'Presets',
+  LAYOUT: 'Layout Customization',
+  ADVANCED: 'Advanced Layout Options',
+  BEHAVIOR: 'Behavior',
+  INFO: 'Item info',
+  DESIGN: 'Design',
+  ANIMATION: 'Animations',
   // IMAGE: 'Image',
   VIDEO: 'Videos',
   ThreeD: '3D',
@@ -63,10 +63,10 @@ export const optionsBySection = {
     optionsMap.layoutParams.targetItemSize.value,
     optionsMap.layoutParams.targetItemSize.unit,
 
-    "gallerySizeType",
-    "gallerySize",
-    "gallerySizePx",
-    "gallerySizeRatio",
+    'gallerySizeType',
+    'gallerySize',
+    'gallerySizePx',
+    'gallerySizeRatio',
   ],
   [SECTIONS.ADVANCED]: [
     optionsMap.layoutParams.structure.responsiveMode,
@@ -83,11 +83,11 @@ export const optionsBySection = {
     // [optionsMap.layoutParams.crop.enableSmartCrop],
 
     optionsMap.layoutParams.thumbnails.position,
-      optionsMap.layoutParams.thumbnails.alignment,
-      optionsMap.layoutParams.thumbnails.size,
-      optionsMap.layoutParams.thumbnails.spacing,
-      optionsMap.layoutParams.thumbnails.marginToGallery,
-      optionsMap.layoutParams.structure.enableStreching,
+    optionsMap.layoutParams.thumbnails.alignment,
+    optionsMap.layoutParams.thumbnails.size,
+    optionsMap.layoutParams.thumbnails.spacing,
+    optionsMap.layoutParams.thumbnails.marginToGallery,
+    optionsMap.layoutParams.structure.enableStreching,
   ],
   [SECTIONS.INFO]: [
     optionsMap.layoutParams.info.placement,
@@ -120,7 +120,6 @@ export const optionsBySection = {
     optionsMap.behaviourParams.gallery.horizontal.loop,
   ],
   [SECTIONS.DESIGN]: [
-
     optionsMap.layoutParams.navigationArrows.enable,
     optionsMap.layoutParams.navigationArrows.size,
     optionsMap.layoutParams.navigationArrows.padding,
@@ -180,7 +179,7 @@ export const optionsBySection = {
     optionsMap.behaviourParams.item.video.playTrigger,
     optionsMap.behaviourParams.item.video.enablePlayButton,
     optionsMap.behaviourParams.item.video.enableThumbnailsPlayButton,
-    
+
     optionsMap.behaviourParams.item.video.enableControls,
     optionsMap.behaviourParams.item.video.enablePlaceholder,
   ],

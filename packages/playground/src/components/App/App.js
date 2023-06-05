@@ -1,32 +1,42 @@
-import React, {useEffect, Suspense, useState} from 'react';
-import {NavigationPanel} from './PlaygroundNavigationPanel';
-import {useGalleryContext} from '../../hooks/useGalleryContext';
-import {testMedia, testItems, testImages, testVideos, testTexts, monochromeImages, itemsWithSecondaryMedia, test3D, mixed3D} from './images';
-import {mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl} from "../../utils/utils";
-import {SIDEBAR_WIDTH, ITEMS_BATCH_SIZE} from '../../constants/consts';
+import React, { useEffect, Suspense, useState } from 'react';
+import { NavigationPanel } from './PlaygroundNavigationPanel';
+import { useGalleryContext } from '../../hooks/useGalleryContext';
+import {
+  testMedia,
+  testItems,
+  testImages,
+  testVideos,
+  testTexts,
+  monochromeImages,
+  itemsWithSecondaryMedia,
+  test3D,
+  mixed3D,
+} from './images';
+import { mixAndSlice, isTestingEnvironment, getTotalItemsCountFromUrl } from '../../utils/utils';
+import { SIDEBAR_WIDTH, ITEMS_BATCH_SIZE } from '../../constants/consts';
 import { createMediaUrl } from '../../utils/itemResizer';
-import {setOptionsInUrl} from '../../constants/options'
+import { setOptionsInUrl } from '../../constants/options';
 import { GALLERY_CONSTS, ProGallery, ProGalleryRenderer } from 'pro-gallery';
 import ExpandableProGallery from './expandableGallery';
 import SideBarButton from '../SideBar/SideBarButton';
-import { BlueprintsManager } from 'pro-gallery-blueprints'
-import BlueprintsApi from './PlaygroundBlueprintsApi'
-import {optionsMap, utils} from 'pro-gallery-lib';
+import { BlueprintsManager } from 'pro-gallery-blueprints';
+import BlueprintsApi from './PlaygroundBlueprintsApi';
+import { optionsMap, utils } from 'pro-gallery-lib';
 import { Resizable } from 're-resizable';
-import  PlaygroundCustomPlayButton  from '../UI/playgroundCustomPlayButton.tsx';
-import  PlaygroundCustomRotateArrow  from '../UI/playgroundCustomRotateArrow.tsx';
+import PlaygroundCustomPlayButton from '../UI/playgroundCustomPlayButton.tsx';
+import PlaygroundCustomRotateArrow from '../UI/playgroundCustomRotateArrow.tsx';
 import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
 // //dummy commit
-const SideBar = React.lazy(() => import("../SideBar"));
+const SideBar = React.lazy(() => import('../SideBar'));
 
-const pJson = require("../../../package.json");
+const pJson = require('../../../package.json');
 
-const blueprintsManager = new BlueprintsManager({ id: "playground" });
+const blueprintsManager = new BlueprintsManager({ id: 'playground' });
 const GALLERY_EVENTS = GALLERY_CONSTS.events;
 
-const galleryReadyEvent = new Event("galleryReady");
+const galleryReadyEvent = new Event('galleryReady');
 let sideShownOnce = false;
 let totalItems = 0;
 
@@ -48,18 +58,13 @@ export function App() {
   sideShownOnce = sideShownOnce || showSide;
 
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
-  const { numberOfItems = 0, mediaTypes = "media" } = gallerySettings || {};
+  const { numberOfItems = 0, mediaTypes = 'media' } = gallerySettings || {};
   const isTestingEnv = isTestingEnvironment(window.location.search);
 
   const [resizedDims, setResizedDims] = useState({ width: 320, height: 500 });
 
   const _mixAndSlice = (items, batchSize, shouldAdd) => {
-    const mixedItems = mixAndSlice(
-      items,
-      batchSize,
-      totalItems,
-      gallerySettings
-    );
+    const mixedItems = mixAndSlice(items, batchSize, totalItems, gallerySettings);
     if (shouldAdd) {
       totalItems += mixedItems.length;
     }
@@ -84,7 +89,7 @@ export function App() {
   const setGalleryReady = () => {
     window.dispatchEvent(galleryReadyEvent);
   };
-  const eventListener = (eventName, eventData, event) => {
+  const eventListener = (eventName, eventData) => {
     switch (eventName) {
       case GALLERY_EVENTS.APP_LOADED:
         setGalleryReady();
@@ -115,10 +120,7 @@ export function App() {
 
   const addItems = () => {
     const currentItems = getItems();
-    if (
-      !window.benchmarking &&
-      (!numberOfItems || currentItems.length < numberOfItems)
-    ) {
+    if (!window.benchmarking && (!numberOfItems || currentItems.length < numberOfItems)) {
       //zero items means infinite
       const newItems = currentItems.concat(createItems());
       setItems(newItems);
@@ -129,11 +131,11 @@ export function App() {
   const createItems = () => {
     const batchSize = numberOfItems || ITEMS_BATCH_SIZE;
     switch (mediaTypes) {
-      case "images":
+      case 'images':
         return _mixAndSlice(testImages, batchSize, true);
-      case "videos":
+      case 'videos':
         return _mixAndSlice(testVideos, batchSize, true);
-      case "texts":
+      case 'texts':
         return _mixAndSlice(testTexts, batchSize, true);
       case 'threeD':
         return _mixAndSlice(test3D, batchSize, true);
@@ -164,9 +166,7 @@ export function App() {
   };
 
   const getTotalItemsCount = () => {
-    const totalItemsCountFromUrl = getTotalItemsCountFromUrl(
-      window.location.search
-    );
+    const totalItemsCountFromUrl = getTotalItemsCountFromUrl(window.location.search);
     if (totalItemsCountFromUrl) {
       return totalItemsCountFromUrl;
     }
@@ -176,7 +176,7 @@ export function App() {
 
   const getOrInitBlueprint = () => {
     const params = {
-      domId: "pro-gallery-playground",
+      domId: 'pro-gallery-playground',
       totalItemsCount: getTotalItemsCount(),
       dimensions: getContainer(),
       options: getOptions(),
@@ -208,11 +208,11 @@ export function App() {
 
   const renderInfoElement = (type, pgItemProps) => {
     const infoElement = (
-      <div className={"playground-info"}>
-        <div className={"playground-info-title"}>
+      <div className={'playground-info'}>
+        <div className={'playground-info-title'}>
           <p>{pgItemProps.title}</p>
         </div>
-        <div className={"playground-info-description"}>
+        <div className={'playground-info-description'}>
           <p>{pgItemProps.description}</p>
         </div>
       </div>
@@ -221,12 +221,12 @@ export function App() {
     const { [optionsMap.layoutParams.info.placement]: titlePlacement } = pgItemProps.options;
 
     switch (type) {
-      case "HOVER":
+      case 'HOVER':
         if (GALLERY_CONSTS.hasHoverPlacement(titlePlacement)) {
           return infoElement;
         }
         break;
-      case "EXTERNAL":
+      case 'EXTERNAL':
         if (
           GALLERY_CONSTS.hasExternalVerticalPlacement(titlePlacement) ||
           GALLERY_CONSTS.hasExternalHorizontalPlacement(titlePlacement)
@@ -234,7 +234,7 @@ export function App() {
           return infoElement;
         }
         break;
-      case "SLIDESHOW":
+      case 'SLIDESHOW':
         return infoElement;
       default:
         return null;
@@ -242,31 +242,29 @@ export function App() {
   };
 
   const hoverInfoElement = (pgItemProps) => {
-    return renderInfoElement("HOVER", pgItemProps);
+    return renderInfoElement('HOVER', pgItemProps);
   };
 
   const externalInfoElement = (pgItemProps) => {
-    return renderInfoElement("EXTERNAL", pgItemProps);
+    return renderInfoElement('EXTERNAL', pgItemProps);
   };
   const navigationPanel = (pgGalleryProps) => {
-    return (
-      <NavigationPanel
-        {...{ ...pgGalleryProps, panelType: gallerySettings.navPanelType }}
-      />
-    );
+    return <NavigationPanel {...{ ...pgGalleryProps, panelType: gallerySettings.navPanelType }} />;
   };
   const galleryUI = () => {
     return {
-          videoPlayButton: (size)=><PlaygroundCustomPlayButton size={size}/>,
-          rotateArrow: (size)=> <PlaygroundCustomRotateArrow size={size}/>,
-          }
+      videoPlayButton: (size) => <PlaygroundCustomPlayButton size={size} />,
+      rotateArrow: (size) => <PlaygroundCustomRotateArrow size={size} />,
+    };
   };
 
   const getCustomComponents = () => {
     return {
       customHoverRenderer: hoverInfoElement,
       customInfoRenderer: externalInfoElement,
-      EXPERIMENTAL_customNavigationPanelRenderer: gallerySettings.useCustomNavigationPanel ? navigationPanel : undefined,
+      EXPERIMENTAL_customNavigationPanelRenderer: gallerySettings.useCustomNavigationPanel
+        ? navigationPanel
+        : undefined,
       EXPERIMENTAL_customGalleryUI: gallerySettings.useCustomGalleryUI ? galleryUI() : undefined,
     };
   };
@@ -292,9 +290,9 @@ export function App() {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", setContainer);
+    window.addEventListener('resize', setContainer);
     return () => {
-      window.removeEventListener("resize", setContainer);
+      window.removeEventListener('resize', setContainer);
     };
   }, [setContainer]);
 
@@ -313,9 +311,37 @@ export function App() {
 
   // console.log('Rendering App: ', {options, items, dimensions, showSide, blueprint, blueprintProps})
   const getKeySettings = () => {
-    const { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, useCustomGalleryUI, navPanelType, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand} = gallerySettings;
-    return { mediaType, numberOfItems, isUnknownDimensions, useCustomNavigationPanel, useCustomGalleryUI, navPanelType, useBlueprints, viewMode, useLayoutFixer, initialIdx, mediaTypes, useInlineStyles, clickToExpand };
-  }
+    const {
+      mediaType,
+      numberOfItems,
+      isUnknownDimensions,
+      useCustomNavigationPanel,
+      useCustomGalleryUI,
+      navPanelType,
+      useBlueprints,
+      viewMode,
+      useLayoutFixer,
+      initialIdx,
+      mediaTypes,
+      useInlineStyles,
+      clickToExpand,
+    } = gallerySettings;
+    return {
+      mediaType,
+      numberOfItems,
+      isUnknownDimensions,
+      useCustomNavigationPanel,
+      useCustomGalleryUI,
+      navPanelType,
+      useBlueprints,
+      viewMode,
+      useLayoutFixer,
+      initialIdx,
+      mediaTypes,
+      useInlineStyles,
+      clickToExpand,
+    };
+  };
 
   let GalleryComponent = gallerySettings.clickToExpand
     ? ExpandableProGallery
@@ -323,17 +349,12 @@ export function App() {
     ? ProGalleryRenderer
     : ProGallery;
 
-
   window.playgroundItems = getItems();
 
   return (
     <main id="sidebar_main" className={s.main}>
       {/* <Loader/> */}
-      <SideBarButton
-        className={s.toggleButton}
-        onClick={switchState}
-        isOpen={showSide}
-      />
+      <SideBarButton className={s.toggleButton} onClick={switchState} isOpen={showSide} />
       <aside
         className={s.sideBar}
         style={{
@@ -342,7 +363,7 @@ export function App() {
         }}
       >
         <div className={s.heading}>
-          Pro Gallery Playground{" "}
+          Pro Gallery Playground{' '}
           <a
             className={s.version}
             href="https://github.com/wix/pro-gallery/blob/master/CHANGELOG.md"
@@ -354,11 +375,7 @@ export function App() {
         </div>
         {sideShownOnce && (
           <Suspense fallback={<div>Loading...</div>}>
-            <SideBar
-              visible={showSide}
-              blueprintsManager={blueprintsManager}
-              items={getItems()}
-            />
+            <SideBar visible={showSide} blueprintsManager={blueprintsManager} items={getItems()} />
           </Suspense>
         )}
       </aside>
@@ -374,20 +391,16 @@ export function App() {
           addResizable(
             GalleryComponent,
             {
-              key: `pro-gallery-${JSON.stringify(getKeySettings())}-${
-                getItems()[0].itemId
-              }`,
-              id: "pro-gallery-playground",
-              scrollingElement: gallerySettings.responsivePreview
-                ? document.getElementById("resizable")
-                : window,
+              key: `pro-gallery-${JSON.stringify(getKeySettings())}-${getItems()[0].itemId}`,
+              id: 'pro-gallery-playground',
+              scrollingElement: gallerySettings.responsivePreview ? document.getElementById('resizable') : window,
               viewMode: gallerySettings.viewMode,
               eventsListener: eventListener,
               totalItemsCount: getTotalItemsCount(),
               createMediaUrl: createMediaUrl,
               settings: {
                 avoidInlineStyles: !gallerySettings.useInlineStyles,
-                disableSSROpacity: gallerySettings.viewMode === "PRERENDER",
+                disableSSROpacity: gallerySettings.viewMode === 'PRERENDER',
               },
               activeIndex: gallerySettings.initialIdx,
               customComponents: getCustomComponents(),
@@ -406,43 +419,37 @@ export function App() {
   );
 }
 
-const addResizable = (
-  Component,
-  props,
-  resizedDims,
-  setResizedDims,
-  gallerySettings
-) => {
+const addResizable = (Component, props, resizedDims, setResizedDims, gallerySettings) => {
   props.shouldValidateTypes = false;
   return gallerySettings.responsivePreview ? (
     <div
       style={{
-        background: "#666",
-        width: "100%",
-        height: window.innerHeight + "px",
-        display: "block",
-        textAlign: "center",
-        overflow: "visible",
+        background: '#666',
+        width: '100%',
+        height: window.innerHeight + 'px',
+        display: 'block',
+        textAlign: 'center',
+        overflow: 'visible',
       }}
     >
       <div
         style={{
-          display: "inline-block",
+          display: 'inline-block',
           // margin: `${(window.innerHeight - resizedDims.height) / 2}px auto`,
           margin: `${window.innerHeight / 2}px auto`,
-          transform: "translate(0, -50%)",
-          overflow: "visible",
+          transform: 'translate(0, -50%)',
+          overflow: 'visible',
         }}
       >
         <Resizable
           id="resizable"
           style={{
-            display: "block",
-            textAlign: "center",
-            background: "white",
-            border: "6px solid black",
-            borderRadius: "6px",
-            overflowY: "scroll",
+            display: 'block',
+            textAlign: 'center',
+            background: 'white',
+            border: '6px solid black',
+            borderRadius: '6px',
+            overflowY: 'scroll',
           }}
           defaultSize={{
             width: resizedDims.width,
@@ -459,8 +466,8 @@ const addResizable = (
         >
           <div
             style={{
-              height: "auto",
-              overflow: "visible",
+              height: 'auto',
+              overflow: 'visible',
             }}
           >
             <Component

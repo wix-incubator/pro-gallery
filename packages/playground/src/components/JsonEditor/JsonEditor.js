@@ -1,10 +1,5 @@
-import React from "react";
-import {
-  CheckOutlined,
-  CloseOutlined,
-  InfoCircleTwoTone,
-  WarningOutlined,
-} from "@ant-design/icons";
+import React from 'react';
+import { CheckOutlined, CloseOutlined, InfoCircleTwoTone, WarningOutlined } from '@ant-design/icons';
 import {
   Alert,
   Popover,
@@ -19,16 +14,11 @@ import {
   Col,
   Button,
   Divider,
-} from "antd";
-import {
-  INPUT_TYPES,
-  isInPreset,
-  optionsMap,
-  GALLERY_CONSTS,
-} from "pro-gallery-lib";
-import ColorPicker from "../ColorPicker/ColorPicker";
-import { settingsManager } from "../../constants/settings";
-import JSONInput from "react-json-ide";
+} from 'antd';
+import { INPUT_TYPES, isInPreset, optionsMap, GALLERY_CONSTS } from 'pro-gallery-lib';
+import ColorPicker from '../ColorPicker/ColorPicker';
+import { settingsManager } from '../../constants/settings';
+import JSONInput from 'react-json-ide';
 
 class JsonEditor extends React.Component {
   constructor() {
@@ -40,7 +30,7 @@ class JsonEditor extends React.Component {
   }
 
   onFieldChanged(key, value) {
-    if (key === "enableInfiniteScroll") {
+    if (key === 'enableInfiniteScroll') {
       console.log(`[PLAYGROUND] Options changed: ${key} Changed to ${!value}`);
       this.props.onChange(key, !value);
     } else {
@@ -52,9 +42,9 @@ class JsonEditor extends React.Component {
   formatValue(val) {
     if (Number(val) === parseInt(val)) {
       return Number(val);
-    } else if (val === "true") {
+    } else if (val === 'true') {
       return true;
-    } else if (val === "false") {
+    } else if (val === 'false') {
       return false;
     } else {
       return String(val);
@@ -75,7 +65,7 @@ class JsonEditor extends React.Component {
           <Switch
             checkedChildren={<CheckOutlined />}
             unCheckedChildren={<CloseOutlined />}
-            checked={key === "enableInfiniteScroll" ? !theValue : theValue}
+            checked={key === 'enableInfiniteScroll' ? !theValue : theValue}
             onChange={(e) => this.onFieldChanged(key, e)}
           />
         );
@@ -85,7 +75,7 @@ class JsonEditor extends React.Component {
             onClick={(val) => {
               this.onFieldChanged(key, this.formatValue(val.key));
             }}
-            style={{ width: 367, borderRight: "none" }}
+            style={{ width: 367, borderRight: 'none' }}
             defaultSelectedKeys={[String(theValue)]}
             mode="vertical"
           >
@@ -98,49 +88,44 @@ class JsonEditor extends React.Component {
         return (
           <Select
             mode="multiple"
-            style={{ width: "100%" }}
+            style={{ width: '100%' }}
             placeholder="Please select"
             defaultValue={
-              unescape(theValue || "")
-                .split(",")
+              unescape(theValue || '')
+                .split(',')
                 .filter(Boolean) || []
             }
-            onChange={(val) => this.onFieldChanged(key, val.join(","))}
+            onChange={(val) => this.onFieldChanged(key, val.join(','))}
           >
             {settings.options.map(({ value, title }) => (
               <Select.Option key={String(value)}>{title}</Select.Option>
             ))}
           </Select>
         );
-      case INPUT_TYPES.MULTIREPEAT:
+      case INPUT_TYPES.MULTIREPEAT: {
         const modKey = (key) => String(key) + `|${Math.random()}`;
-        const createOptions = ({ value, title }) => (
-          <Select.Option key={modKey(value)}>{title}</Select.Option>
-        );
+        const createOptions = ({ value, title }) => <Select.Option key={modKey(value)}>{title}</Select.Option>;
         return (
           <Select
             mode="multiple"
-            style={{ width: "100%" }}
+            style={{ width: '100%' }}
             placeholder="Please select"
             defaultValue={
-              unescape(theValue || "")
-                .split(",")
+              unescape(theValue || '')
+                .split(',')
                 .filter(Boolean) || []
             }
             onChange={(val) =>
               this.onFieldChanged(
                 key,
-                val
-                  .map((v) =>
-                    v.substr(0, v.indexOf("|") >= 0 ? v.indexOf("|") : v.length)
-                  )
-                  .join(",")
+                val.map((v) => v.substr(0, v.indexOf('|') >= 0 ? v.indexOf('|') : v.length)).join(',')
               )
             }
           >
             {settings.options.map(createOptions)}
           </Select>
         );
+      }
       case INPUT_TYPES.NUMBER:
         if (settings.min >= 0 && settings.max > 0) {
           return (
@@ -167,17 +152,12 @@ class JsonEditor extends React.Component {
             </Row>
           );
         } else {
-          return (
-            <InputNumber
-              value={theValue}
-              onChange={(val) => this.onFieldChanged(key, val)}
-            />
-          );
+          return <InputNumber value={theValue} onChange={(val) => this.onFieldChanged(key, val)} />;
         }
       case INPUT_TYPES.COLOR_PICKER:
         return (
           <ColorPicker
-            style={{ float: "right" }}
+            style={{ float: 'right' }}
             color={theValue}
             colorChanged={({ value }) => this.onFieldChanged(key, value)}
           />
@@ -193,10 +173,10 @@ class JsonEditor extends React.Component {
             {settings.text}
           </Button>
         );
-      case INPUT_TYPES.JSON:
+      case INPUT_TYPES.JSON: {
         const formatJson = (json) => {
           if (json.jsObject) return json.jsObject;
-          if (typeof json === "object") return json;
+          if (typeof json === 'object') return json;
           try {
             return JSON.parse(json);
           } catch (e) {
@@ -213,17 +193,16 @@ class JsonEditor extends React.Component {
             theme="light_mitsuketa_tribute"
             height="550px"
             width="360px"
-            onChange={(e) =>
-              e.jsObject && this.onFieldChanged(key, JSON.stringify(e.jsObject))
-            }
+            onChange={(e) => e.jsObject && this.onFieldChanged(key, JSON.stringify(e.jsObject))}
           />
         );
-      case INPUT_TYPES.TRANSFORM:
+      }
+      case INPUT_TYPES.TRANSFORM: {
         // format x{number}y{number}z{number}
         const transform = GALLERY_CONSTS.parse3DDimensions(theValue);
         return (
           <Row>
-            {["x", "y", "z"].map((axis, i) => (
+            {['x', 'y', 'z'].map((axis, i) => (
               <Col span={8} key={i}>
                 {axis} :
                 <InputNumber
@@ -233,10 +212,7 @@ class JsonEditor extends React.Component {
                   value={transform[axis]}
                   onChange={(val) => {
                     transform[axis] = val;
-                    this.onFieldChanged(
-                      key,
-                      `x${transform.x}y${transform.y}z${transform.z}`
-                    );
+                    this.onFieldChanged(key, `x${transform.x}y${transform.y}z${transform.z}`);
                   }}
                   style={{ marginLeft: 5, width: 50 }}
                 />
@@ -244,20 +220,15 @@ class JsonEditor extends React.Component {
             ))}
           </Row>
         );
+      }
       case INPUT_TYPES.TEXT:
       default:
-        return (
-          <Input
-            value={theValue || ""}
-            onChange={(e) => this.onFieldChanged(key, e.target.value)}
-          />
-        );
+        return <Input value={theValue || ''} onChange={(e) => this.onFieldChanged(key, e.target.value)} />;
     }
   }
 
   render() {
-    const { section, subSection, options, allOptions, option, expandIcon } =
-      this.props;
+    const { section, subSection, options, allOptions, option, expandIcon } = this.props;
     // const selectedProps = LayoutProps[selectedLayout];
     // let json = selectedProps ?
     //   Object.keys(selectedProps).reduce((acc, key) => {
@@ -274,19 +245,14 @@ class JsonEditor extends React.Component {
           (!subSection || settings.subSection === subSection) &&
           (this.props.showAllOptions ||
             (settings.isRelevant(allOptions) &&
-              !isInPreset(
-                allOptions[optionsMap.layoutParams.structure.galleryLayout],
-                key
-              )));
+              !isInPreset(allOptions[optionsMap.layoutParams.structure.galleryLayout], key)));
 
-    const activeKey = option
-      ? { activeKey: "collapse" + option }
-      : { defaultActiveKey: [] };
+    const activeKey = option ? { activeKey: 'collapse' + option } : { defaultActiveKey: [] };
 
     const json = Object.entries(settingsManager)
       .filter(filterFunction)
       .reduce((acc, [key]) => {
-        if (typeof options[key] === "undefined") {
+        if (typeof options[key] === 'undefined') {
           return acc;
         } else {
           acc[key] = settingsManager[key];
@@ -302,7 +268,7 @@ class JsonEditor extends React.Component {
         return null; //<Icon type="check" style={{fontSize: 10, color: '#52c41a'}} />
       } else {
         if (settings.missing) {
-          return <WarningOutlined style={{ fontSize: 14, color: "red" }} />;
+          return <WarningOutlined style={{ fontSize: 14, color: 'red' }} />;
         } else {
           return (
             <Popover
@@ -322,27 +288,23 @@ class JsonEditor extends React.Component {
         }
       }
     };
-    const isDev = window.location.hostname.indexOf("localhost") >= 0 || null;
+    const isDev = window.location.hostname.indexOf('localhost') >= 0 || null;
     return (
       <Collapse
         accordion={true}
         bordered={false}
         onChange={() => {}}
         style={{
-          whiteSpace: "pre-wrap",
-          margin: "-17px -15px",
-          background: "#fff",
+          whiteSpace: 'pre-wrap',
+          margin: '-17px -15px',
+          background: '#fff',
         }}
-        expandIconPosition={expandIcon ? "right" : "left"}
+        expandIconPosition={expandIcon ? 'right' : 'left'}
         {...activeKey}
         expandIcon={expandIcon}
       >
         {Object.entries(json).map(([option, settings]) => (
-          <Collapse.Panel
-            header={settings.title || option}
-            key={"collapse" + option}
-            extra={Extra(settings)}
-          >
+          <Collapse.Panel header={settings.title || option} key={'collapse' + option} extra={Extra(settings)}>
             {this.renderEntryEditor(option, settings)}
             <div>
               {!!settings.description && (
@@ -379,23 +341,15 @@ class JsonEditor extends React.Component {
                   <Divider />
                   <p>
                     <b>Section: </b>
-                    {settings.section +
-                      (settings.subSection ? ` > ${settings.subSection}` : "")}
+                    {settings.section + (settings.subSection ? ` > ${settings.subSection}` : '')}
                   </p>
                   <p>
                     <b>Overriden by current Preset: </b>
-                    {isInPreset(
-                      allOptions[
-                        optionsMap.layoutParams.structure.galleryLayout
-                      ],
-                      option
-                    )
-                      ? "Yes"
-                      : "No"}
+                    {isInPreset(allOptions[optionsMap.layoutParams.structure.galleryLayout], option) ? 'Yes' : 'No'}
                   </p>
                   <p>
                     <b>Relevant in current configuration: </b>
-                    {settings.isRelevant(allOptions, false) ? "Yes" : "No"}
+                    {settings.isRelevant(allOptions, false) ? 'Yes' : 'No'}
                   </p>
                 </>
               )}

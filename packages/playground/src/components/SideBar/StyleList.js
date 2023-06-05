@@ -1,21 +1,19 @@
 import React from 'react';
 import { BarsOutlined } from '@ant-design/icons';
-import {Table, Modal, Button} from 'antd';
-import {settingsManager } from '../../constants/settings';
+import { Table, Modal, Button } from 'antd';
+import { settingsManager } from '../../constants/settings';
 
 function StylesList() {
-
   const [modalVisible, set_modalVisible] = React.useState(false);
 
   const dataSource = Object.entries(settingsManager).map(([option, settings], idx) => ({
-      key: option,
-      idx: idx + 1,
-      name: settings.title,
-      type: settings.type,
-      desc: settings.description,
-    })
-  );
-  
+    key: option,
+    idx: idx + 1,
+    name: settings.title,
+    type: settings.type,
+    desc: settings.description,
+  }));
+
   const columns = [
     {
       title: '#',
@@ -43,26 +41,29 @@ function StylesList() {
       key: 'key',
     },
   ];
-  
-    return (
-      <div>
-        <Modal
-          title="Pro Gallery Styles List"
-          centered
-          width={window.innerWidth > 600 ? window.innerWidth - 200 : window.innerWidth}
-          height={window.innerHeight - 200}
-          visible={modalVisible}
-          onOk={() => set_modalVisible(false)}
-          onCancel={() => set_modalVisible(false)}
-        >
-            <Table dataSource={dataSource} columns={columns} pagination={{
-              current: 1,
-              pageSize: 100,
-            }}
-  />
-        </Modal>
-        <Button shape="circle" icon={<BarsOutlined />} disabled={modalVisible} onClick={() => set_modalVisible(true)}/>
-      </div>
-    );
+
+  return (
+    <div>
+      <Modal
+        title="Pro Gallery Styles List"
+        centered
+        width={window.innerWidth > 600 ? window.innerWidth - 200 : window.innerWidth}
+        height={window.innerHeight - 200}
+        visible={modalVisible}
+        onOk={() => set_modalVisible(false)}
+        onCancel={() => set_modalVisible(false)}
+      >
+        <Table
+          dataSource={dataSource}
+          columns={columns}
+          pagination={{
+            current: 1,
+            pageSize: 100,
+          }}
+        />
+      </Modal>
+      <Button shape="circle" icon={<BarsOutlined />} disabled={modalVisible} onClick={() => set_modalVisible(true)} />
+    </div>
+  );
 }
-export {StylesList};
+export { StylesList };

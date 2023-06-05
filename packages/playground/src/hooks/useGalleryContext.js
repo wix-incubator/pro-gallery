@@ -1,14 +1,9 @@
 import { useContext } from 'react';
 import { GalleryContext } from './GalleryContext';
-import {
-  getInitialOptions,
-  getOptionsFromUrl,
-} from '../constants/options';
+import { getInitialOptions, getOptionsFromUrl } from '../constants/options';
 import { addPresetOptions } from 'pro-gallery';
 import { SIDEBAR_WIDTH } from '../constants/consts';
-import {
-  utils,
-} from 'pro-gallery-lib';
+import { utils } from 'pro-gallery-lib';
 
 export function useGalleryContext(blueprintsManager) {
   const [context, setContext] = useContext(GalleryContext);
@@ -33,10 +28,10 @@ export function useGalleryContext(blueprintsManager) {
     }
 
     const response = await fetch(url, {
-      method: "POST",
-      credentials: "omit", // include, *same-origin, omit
+      method: 'POST',
+      credentials: 'omit', // include, *same-origin, omit
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         items,
@@ -69,10 +64,7 @@ export function useGalleryContext(blueprintsManager) {
       },
     };
 
-    if (
-      JSON.stringify(newContext.container) !==
-      JSON.stringify({ ...context.container })
-    ) {
+    if (JSON.stringify(newContext.container) !== JSON.stringify({ ...context.container })) {
       if (getGallerySettings().useBlueprints) {
         requestNewBlueprint(newContext);
       }
@@ -101,7 +93,7 @@ export function useGalleryContext(blueprintsManager) {
       ...getOptionsFromUrl(window.location.search),
       [newProp]: value,
     };
-    console.log('setting new context and requesting BP', options.layoutParams)
+    console.log('setting new context and requesting BP', options.layoutParams);
     const newContext = {
       options,
     };
@@ -142,12 +134,12 @@ export function useGalleryContext(blueprintsManager) {
     try {
       localStorage.gallerySettings = JSON.stringify(gallerySettings);
     } catch (e) {
-      console.error("Could not save gallerySettings", e);
+      console.error('Could not save gallerySettings', e);
     }
   };
 
   const getGallerySettings = () => {
-    if (typeof context.gallerySettings === "object") {
+    if (typeof context.gallerySettings === 'object') {
       return context.gallerySettings;
     } else {
       try {
@@ -174,9 +166,7 @@ export function useGalleryContext(blueprintsManager) {
             height: 500,
           };
     } else {
-      container.width = !showSide
-        ? window.innerWidth
-        : window.innerWidth - SIDEBAR_WIDTH;
+      container.width = !showSide ? window.innerWidth : window.innerWidth - SIDEBAR_WIDTH;
       container.height = window.innerHeight;
     }
 
@@ -188,9 +178,7 @@ export function useGalleryContext(blueprintsManager) {
     setShowSide,
     preset: context.preset,
     setPreset,
-    options: addPresetOptions(
-      context.options || getInitialOptions()
-    ), //TODO - this is a double even for the normal flow - maybe used for the sidebar somehow?
+    options: addPresetOptions(context.options || getInitialOptions()), //TODO - this is a double even for the normal flow - maybe used for the sidebar somehow?
     setOptions,
     items: context.items || window.galleryItems,
     setItems,
