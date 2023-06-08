@@ -47,7 +47,6 @@ describe('options - behaviourParams_gallery_horizontal_slideAnimation', () => {
       await driver.update(400);
       const prevItem = driver.find.selector('[data-hook="item-wrapper"]').at(0);
       expect(prevItem.hasClass(FADE_CLASSED.HIDDEN)).toBeTruthy();
-      expect(1).toEqual(1);
     });
     it('should not have Fade animation styles when "behaviourParams_gallery_horizontal_slideAnimation" is "Scroll"', async () => {
       initialProps.options = Object.assign(initialProps.options, {

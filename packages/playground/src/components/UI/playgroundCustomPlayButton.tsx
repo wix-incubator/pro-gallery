@@ -1,9 +1,9 @@
+/* eslint-disable */
 import React from 'react';
 import { clickable } from 'pro-gallery';
 interface VideoPlayButtonProps {
   size: number;
 }
-// eslint-disable-next-line no-undef
 export const VideoPlayButton = ({ size }: VideoPlayButtonProps): JSX.Element => (
   <clickable.div
     style={{
