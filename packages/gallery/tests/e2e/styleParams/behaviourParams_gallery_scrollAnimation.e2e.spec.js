@@ -29,7 +29,7 @@ describe('behaviourParams_gallery_scrollAnimation - e2e', () => {
           return AnimationStyleTags.length;
         });
         // the default e2e images is always 20 so we should get 20 animation style tags
-        expect(numberOfAnimationStyleTags).equal(20);
+        expect(numberOfAnimationStyleTags).toEqual(20);
       });
     }
   });
@@ -47,6 +47,6 @@ describe('behaviourParams_gallery_scrollAnimation - e2e', () => {
       const AnimationStyleTags = styleTags.filter((styleTag) => styleTag.id.includes('scrollCss'));
       return AnimationStyleTags.length;
     });
-    expect(numberOfAnimationStyleTags).equal(0);
+    expect(numberOfAnimationStyleTags).toEqual(0);
   });
 });
