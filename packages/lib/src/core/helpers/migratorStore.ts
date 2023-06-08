@@ -35,6 +35,7 @@ export const reversedLayoutParams = [['useMaxDimensions', optionsMap.layoutParam
 
 export const nameChangedBehaviourParams = [
   ['magnificationLevel', optionsMap.behaviourParams.item.content.magnificationValue],
+  ['tiltAngleValue', optionsMap.behaviourParams.item.content.tiltAngleValue],
   ['videoLoop', optionsMap.behaviourParams.item.video.loop],
   ['showVideoPlayButton', optionsMap.behaviourParams.item.video.enablePlayButton],
   ['showVideoControls', optionsMap.behaviourParams.item.video.enableControls],

@@ -923,10 +923,11 @@ class SlideshowView extends React.Component {
         galleryThumbnailsAlignment: this.props.options.layoutParams_thumbnails_alignment,
         navigationPanelPosition: this.props.options.layoutParams_thumbnails_position,
       });
-      navigationPanel = (
+      navigationPanel = (domOrder) => (
         <div className="custom-navigation-panel" style={customNavigationPanelInlineStyles}>
           {customNavigationPanelRenderer({
             ...this.props,
+            domOrder,
             activeIndex: this.state.activeIndex,
             navigationToIdxCB: this.scrollToThumbnail,
             navigationPanelAPI: this.createOrGetCustomNavigationPanelAPI(),
@@ -934,9 +935,10 @@ class SlideshowView extends React.Component {
         </div>
       );
     } else {
-      navigationPanel = (
+      navigationPanel = (domOrder) => (
         <NavigationPanel
           {...this.props}
+          domOrder={domOrder}
           activeIndex={this.state.activeIndex}
           navigationToIdxCB={this.scrollToThumbnail}
         />
@@ -949,20 +951,25 @@ class SlideshowView extends React.Component {
       GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].ON_GALLERY
     ) {
       navigationPanels[0] = false;
-      navigationPanels[1] = navigationPanel;
+      navigationPanels[1] = navigationPanel('after');
       return navigationPanels;
     } else {
       //OUTSIDE_GALLERY
+      if (this.props.isPrerenderMode) {
+        navigationPanels[0] = navigationPanel('before');
+        navigationPanels[1] = navigationPanel('after');
+        return navigationPanels;
+      }
       switch (this.props.options.layoutParams_thumbnails_alignment) {
         case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP:
         case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT:
-          navigationPanels[0] = navigationPanel;
+          navigationPanels[0] = navigationPanel('before');
           navigationPanels[1] = false;
           break;
         case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].RIGHT:
         case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM:
           navigationPanels[0] = false;
-          navigationPanels[1] = navigationPanel;
+          navigationPanels[1] = navigationPanel('after');
           break;
       }
       return navigationPanels;

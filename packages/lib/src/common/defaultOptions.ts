@@ -114,6 +114,7 @@ const defaultOptions = flattenObject({
         loader: GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader].BLUR,
         placementAnimation: GALLERY_CONSTS[optionsMap.behaviourParams.item.content.placementAnimation].NO_EFFECT,
         magnificationValue: 2,
+        tiltAngleValue: -4,
       },
       secondaryMedia: {
         trigger: GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger].OFF,

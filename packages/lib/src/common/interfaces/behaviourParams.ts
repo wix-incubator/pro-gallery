@@ -80,10 +80,20 @@ export interface Overlay {
 }
 
 export interface Content {
-  hoverAnimation?: 'NO_EFFECT' | 'ZOOM_IN' | 'BLUR' | 'GRAYSCALE' | 'SHRINK' | 'INVERT' | 'COLOR_IN' | 'DARKENED';
+  hoverAnimation?:
+    | 'NO_EFFECT'
+    | 'ZOOM_IN'
+    | 'TILT'
+    | 'BLUR'
+    | 'GRAYSCALE'
+    | 'SHRINK'
+    | 'INVERT'
+    | 'COLOR_IN'
+    | 'DARKENED';
   placementAnimation?: 'NO_EFFECT' | 'SLIDE';
   loader?: 'BLUR' | 'COLOR' | 'MAIN_COLOR';
   magnificationValue?: number;
+  tiltAngleValue?: number;
 }
 
 export interface Vertical {
