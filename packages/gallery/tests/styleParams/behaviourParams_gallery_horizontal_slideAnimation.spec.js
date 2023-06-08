@@ -58,7 +58,7 @@ describe('options - behaviourParams_gallery_horizontal_slideAnimation', () => {
       driver.mount.proGallery(initialProps);
       await driver.update();
       const item = driver.find.selector('[data-hook="item-wrapper"]').at(0);
-      expect(getRelevantStylesForCompare(item.props().style)).equal({});
+      expect(getRelevantStylesForCompare(item.props().style)).toEqual({});
     });
   });
 
