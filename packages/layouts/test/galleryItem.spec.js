@@ -80,16 +80,16 @@ describe('GalleryItem ', () => {
   //not testing missuse of item-core
 
   it('should use processScheme on scheme created from dto, does not have scheme parameters (undefined) without dto', () => {
-    expect(galleryItem.id).equal('8b72558253b2502b401bb46e5599f22a');
-    expect(antiGalleryItem.id).equal(undefined);
+    expect(galleryItem.id).to.equal('8b72558253b2502b401bb46e5599f22a');
+    expect(antiGalleryItem.id).to.equal(undefined);
   });
   it('cubeType is fill if scheme.cropType is undefined', () => {
     Object.assign(config, {
       scheme: { cropType: 'aaa', dto: { directLink: {} } },
     });
     galleryItem = new GalleryItem(config);
-    expect(galleryItem.cubeType).equal('aaa');
-    expect(antiGalleryItem.cubeType).equal('FILL');
+    expect(galleryItem.cubeType).to.equal('aaa');
+    expect(antiGalleryItem.cubeType).to.equal('FILL');
   });
   // it('createFromWixImage', () => {
   //   Object.assign(config, { orderIndex: 1 });

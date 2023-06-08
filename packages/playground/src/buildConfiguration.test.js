@@ -15,7 +15,7 @@ it('version numbers in all pacakages remain the same', () => {
     .map(getVersion)
     .reduce((s, v) => s.add(v), new Set());
 
-  expect(uniqVersionNumbers.size).equal(1);
+  expect(uniqVersionNumbers.size).to.equal(1);
   expect(uniqVersionNumbers).toContain(lernaVersion);
 });
 
