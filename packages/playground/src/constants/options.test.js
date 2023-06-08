@@ -9,5 +9,5 @@ it('should return SP object from url', () => {
     behaviourParams_item_overlay_hoveringBehaviour: 'ALWAYS_SHOW',
     layoutParams_structure_galleryLayout: 1,
   };
-  expect(options).to.equal(expected);
+  expect(options).equal(expected);
 });

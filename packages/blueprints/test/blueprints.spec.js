@@ -3,5 +3,5 @@ import { BlueprintsManager } from '../src/index';
 it('should create a blueprints manager', () => {
   const id = 'my id';
   const bpm = new BlueprintsManager({ id });
-  expect(bpm.id).to.equal(`${id}'s blueprintsManager`);
+  expect(bpm.id).equal(`${id}'s blueprintsManager`);
 });
