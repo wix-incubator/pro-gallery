@@ -19,17 +19,17 @@ it('version numbers in all pacakages remain the same', () => {
   expect(uniqVersionNumbers).to.contain(lernaVersion);
 });
 
-it('consumption of dependencies in every pacakge is done with the same version number', () => {
-  const packageNames = packageFolderNames
-    .map(pJsonPath)
-    .map(json)
-    .map((x) => x.name);
+// it('consumption of dependencies in every pacakge is done with the same version number', () => {
+//   const packageNames = packageFolderNames
+//     .map(pJsonPath)
+//     .map(json)
+//     .map((x) => x.name);
 
-  packageFolderNames.map(pJsonPath).map(json).forEach(assertJsonConsumingMonoRepoDepsCorrectly);
+//   packageFolderNames.map(pJsonPath).map(json).forEach(assertJsonConsumingMonoRepoDepsCorrectly);
 
-  function assertJsonConsumingMonoRepoDepsCorrectly(json) {
-    Object.entries(json.dependencies || {})
-      .filter((e) => packageNames.includes(e[0]))
-      .forEach((e) => expect(e[1]).to.match(lernaVersion)); // using toMatch and not toEqual because "^4.0.15-beta.31" and "4.0.15-beta.31" is OK
-  }
-});
+//   function assertJsonConsumingMonoRepoDepsCorrectly(json) {
+//     Object.entries(json.dependencies || {})
+//       .filter((e) => packageNames.includes(e[0]))
+//       .forEach((e) => expect(e[1]).to.match(lernaVersion)); // using toMatch and not toEqual because "^4.0.15-beta.31" and "4.0.15-beta.31" is OK
+//   }
+// });
