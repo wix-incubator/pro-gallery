@@ -55,6 +55,7 @@ class GroupView extends React.Component {
       <div
         key={`group_${this.props.idx}_${this.props.items[0].id}`}
         data-hook={'group-view'}
+        className={`group-view group-view-${this.props.idx}`}
         style={{
           '--group-top': this.props.top + 'px',
           '--group-left': isRTL ? 'auto' : this.props.left + 'px',
