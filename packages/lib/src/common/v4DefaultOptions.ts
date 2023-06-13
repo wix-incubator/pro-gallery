@@ -121,7 +121,7 @@ const defaultV4Options = {
       blockContextMenu: true, //is this actually a default??
       layoutDirection: GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].LEFT_TO_RIGHT,
       scrollAnimation: GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation].NO_EFFECT,
-      advancedScrollAnimation: [],
+      jsonScrollAnimation: [],
       infiniteScrollAnimation: false,
       scrollAnimationReset: false,
       enableIndexingShareLinks: true,

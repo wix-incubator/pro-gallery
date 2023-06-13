@@ -30,7 +30,7 @@ export const createScrollAnimations = ({
     APPEAR,
     PAN,
     SKEW,
-  } = GALLERY_CONSTS.behaviourParams_gallery_advancedScrollAnimation;
+  } = GALLERY_CONSTS.behaviourParams_gallery_jsonScrollAnimation;
 
   const h = isHorizontalScroll;
   const s = animationParams;

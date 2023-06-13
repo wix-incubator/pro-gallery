@@ -11,7 +11,7 @@ import processTextDimensions from './textBoxDimensionsHelper'
 import { default as slideAnimation } from '../../settings/options/behaviourParams_gallery_horizontal_slideAnimation';
 import { default as arrowsPosition } from '../../settings/options/layoutParams_navigationArrows_position';
 import optionsMap from './optionsMap';
-import {advancedScrollAnimationConverter} from './scrollAnimationConverter';
+import {jsonScrollAnimationConverter} from './scrollAnimationConverter';
 
 export const calcTargetItemSize = (options, smartValue) => { 
   if (
@@ -328,7 +328,7 @@ const cropItemsWithCropOnlyFillParam = (options) => {
 const convertSimpleScrollAnimationsToAdvanced = (options) => {
   const scrollAnimation = options[optionsMap.behaviourParams.gallery.scrollAnimation];
   if (scrollAnimation === GALLERY_CONSTS.behaviourParams_gallery_scrollAnimation.NO_EFFECT) return options;
-  options[optionsMap.behaviourParams.gallery.advancedScrollAnimation] = advancedScrollAnimationConverter(scrollAnimation);
+  options[optionsMap.behaviourParams.gallery.jsonScrollAnimation] = jsonScrollAnimationConverter(scrollAnimation);
   return options;
 }
 

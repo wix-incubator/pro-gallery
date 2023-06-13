@@ -271,6 +271,6 @@ const advancedAnimations: AdvancedAnimations = {
   ],
 };
 
-export const advancedScrollAnimationConverter = (animation) => {
+export const jsonScrollAnimationConverter = (animation) => {
   return advancedAnimations[animation] || [];
 };

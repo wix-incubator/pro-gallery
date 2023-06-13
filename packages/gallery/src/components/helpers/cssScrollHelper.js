@@ -8,34 +8,6 @@ import { GALLERY_CONSTS } from "pro-gallery-lib";
 import { createScrollAnimations } from "./cssAnimationsHelper";
 import { cssEasing } from "../../common/utils/easing";
 
-const advancedScrollAnimation = [
-  {
-    type: "SKEW",
-    fromValue: 10,
-    toValue: 0,
-    fromAnchor: "ENTRY",
-    toAnchor: "ENTRY",
-    fromPosition: 100,
-    toPosition: 200,
-    iterations: 5,
-    transitionDuration: 400,
-    direction: "LEFT",
-    hinge: "center",
-    ease: true,
-  },
-  {
-    type: "FADE",
-    fromValue: 0,
-    toValue: 1,
-    fromAnchor: "ENTRY",
-    toAnchor: "ENTRY",
-    fromPosition: 0,
-    toPosition: 100,
-    iterations: 1,
-    transitionDuration: 4000,
-  },
-];
-
 const isHorizontalScroll = (options) =>
   options.layoutParams_structure_scrollDirection === GALLERY_CONSTS.layoutParams_structure_scrollDirection.HORIZONTAL;
 const getContainerSize = (options, container) =>
@@ -265,7 +237,7 @@ class CssScrollHelper {
       return this.scrollCss[idx];
     }
     try {
-      for (const animation of options.behaviourParams_gallery_advancedScrollAnimation) {
+      for (const animation of options.behaviourParams_gallery_jsonScrollAnimation) {
         scrollCss += this.createScrollAnimationsIfNeeded({
           idx,
           item,
@@ -283,12 +255,12 @@ class CssScrollHelper {
 
   calcScrollCss({ galleryId, items, container, options }) {
     this.galleryId = galleryId;
-    const { behaviourParams_gallery_advancedScrollAnimation } = options;
+    const { behaviourParams_gallery_jsonScrollAnimation } = options;
     if (!(items && items.length) || !options) {
       console.error("calcScrollCss: missing params", { items, options });
       return [];
     }
-    if (behaviourParams_gallery_advancedScrollAnimation?.length < 1) {
+    if (behaviourParams_gallery_jsonScrollAnimation?.length < 1) {
       return [];
     }
 

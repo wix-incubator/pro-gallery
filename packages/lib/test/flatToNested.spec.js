@@ -327,7 +327,7 @@ function input() {
     behaviourParams_item_overlay_hoveringBehaviour: 'APPEARS',
     behaviourParams_item_clickAction: 'ACTION',
     behaviourParams_gallery_scrollAnimation: 'NO_EFFECT',
-    behaviourParams_gallery_advancedScrollAnimation: [],
+    behaviourParams_gallery_jsonScrollAnimation: [],
     behaviourParams_gallery_infiniteScrollAnimation: false,
     behaviourParams_gallery_scrollAnimationReset: false,
     behaviourParams_gallery_enableIndexingShareLinks: false,

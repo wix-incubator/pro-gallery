@@ -154,7 +154,7 @@ export const optionsBySection = {
     'oneColorAnimationColor',
     optionsMap.behaviourParams.item.content.placementAnimation,
     optionsMap.behaviourParams.gallery.scrollAnimation,
-    optionsMap.behaviourParams.gallery.advancedScrollAnimation,
+    optionsMap.behaviourParams.gallery.jsonScrollAnimation,
     optionsMap.behaviourParams.gallery.infiniteScrollAnimation,
     optionsMap.behaviourParams.gallery.scrollAnimationReset,
     optionsMap.behaviourParams.gallery.horizontal.slideAnimation,

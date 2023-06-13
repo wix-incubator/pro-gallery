@@ -29,7 +29,7 @@ export interface Gallery {
   enableIndexingShareLinks?: boolean;
   vertical?: Vertical;
   horizontal?: Horizontal;
-  advancedScrollAnimation?: string;
+  jsonScrollAnimation?: string;
   infiniteScrollAnimation?: boolean;
   scrollAnimationReset?: boolean;
 }

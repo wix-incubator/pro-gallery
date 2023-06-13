@@ -142,7 +142,7 @@ const defaultOptions = flattenObject({
       blockContextMenu: true, //is this actually a default??
       layoutDirection: GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].LEFT_TO_RIGHT,
       scrollAnimation: GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation].NO_EFFECT,
-      advancedScrollAnimation: [],
+      jsonScrollAnimation: [],
       enableIndexingShareLinks: true,
       horizontal: {
         enableScrollSnap: false,
