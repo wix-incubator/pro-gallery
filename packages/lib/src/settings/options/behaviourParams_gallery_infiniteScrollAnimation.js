@@ -2,7 +2,7 @@ import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 
 export default {
-  title: 'Infinite Scroll Animation',
+  title: 'Always Animate Scroll',
   description: `Trigger the animation every time the user scrolls, not only once`,
   isRelevantDescription:
     'To enable "Scroll Animation" either set a Vertical gallery ("Scroll Direction" as "Vertical")\nor set a Horizontal gallery ("Scroll Direction" as "Horizontal") with "Slide Animation" set to "Scroll".',
