@@ -9,10 +9,7 @@ export class ItemsHelper {
       return dto;
     } else {
       const dtoMetadata = dto.metadata || dto.metaData;
-      const metadata =
-        typeof dtoMetadata === 'object'
-          ? dtoMetadata
-          : utils.parseStringObject(dtoMetadata) || {};
+      const metadata = typeof dtoMetadata === 'object' ? dtoMetadata : utils.parseStringObject(dtoMetadata) || {};
       return {
         id: dto.itemId || dto.photoId,
         width: metadata.width,
@@ -22,11 +19,7 @@ export class ItemsHelper {
     }
   }
 
-  static convertToGalleryItems(
-    galleryStructure,
-    itemConfig = {},
-    existingItems = []
-  ) {
+  static convertToGalleryItems(galleryStructure, itemConfig = {}, existingItems = []) {
     galleryStructure.galleryItems = [];
     for (let c = 0; c < galleryStructure.columns.length; c++) {
       const column = galleryStructure.columns[c];
@@ -64,11 +57,7 @@ export class ItemsHelper {
     return galleryStructure;
   }
 
-  static convertExistingStructureToGalleryItems(
-    existingStructure,
-    galleryStructure,
-    itemConfig = {}
-  ) {
+  static convertExistingStructureToGalleryItems(existingStructure, galleryStructure, itemConfig = {}) {
     // console.log('convertToGalleryItems', existingStructure.galleryItems);
     // console.count('convertToGalleryItems');
     if (utils.isVerbose()) {

@@ -10,18 +10,13 @@ export default {
     return (
       behaviourParams_item_secondaryMedia_trigger.isRelevant(options) &&
       options[optionsMap.behaviourParams.item.secondaryMedia.trigger] !==
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger]
-          .OFF
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger].OFF
     );
   },
   isRelevantDescription:
     'Secondary Media Trigger is not "OFF" and when arrowsPosition is MOUSE_CURSOR there must be some space to hover (mouseCursorContainerMaxWidth less then 100)',
   type: INPUT_TYPES.OPTIONS,
-  default:
-    GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.behaviour]
-      .APPEARS,
-  options: createOptions(
-    optionsMap.behaviourParams.item.secondaryMedia.behaviour
-  ),
+  default: GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.behaviour].APPEARS,
+  options: createOptions(optionsMap.behaviourParams.item.secondaryMedia.behaviour),
   description: `Select the behaviour for the second media on action.`,
 };

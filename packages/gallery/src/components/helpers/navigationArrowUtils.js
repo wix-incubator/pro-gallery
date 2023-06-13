@@ -2,22 +2,13 @@ import React from 'react';
 import { utils, GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 import { ARROWS_DATA } from '../svgs';
 
-const getArrowsSizeData = ({
-  customNavArrowsRenderer,
-  arrowsSize,
-  svgData,
-  containerStyleType,
-}) => {
+const getArrowsSizeData = ({ customNavArrowsRenderer, arrowsSize, svgData, containerStyleType }) => {
   const isLandscape = svgData.width / svgData.height > 1;
-  if (
-    containerStyleType ===
-    GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type].BOX
-  ) {
+  if (containerStyleType === GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type].BOX) {
     const sizeData = {
       navArrowsContainerWidth: arrowsSize,
       navArrowsContainerHeight: arrowsSize,
-      scalePercentage:
-        arrowsSize / 2.4 / (isLandscape ? svgData.width : svgData.height),
+      scalePercentage: arrowsSize / 2.4 / (isLandscape ? svgData.width : svgData.height),
     };
     return sizeData;
   }
@@ -44,18 +35,15 @@ export const getArrowsRenderData = ({
   containerStyleType,
 }) => {
   const arrowData = getArrowIconData(arrowsType);
-  const { navArrowsContainerWidth, navArrowsContainerHeight, scalePercentage } =
-    getArrowsSizeData({
-      customNavArrowsRenderer,
-      arrowsSize,
-      svgData: arrowData,
-      containerStyleType,
-    });
+  const { navArrowsContainerWidth, navArrowsContainerHeight, scalePercentage } = getArrowsSizeData({
+    customNavArrowsRenderer,
+    arrowsSize,
+    svgData: arrowData,
+    containerStyleType,
+  });
   if (customNavArrowsRenderer) {
     const size =
-      containerStyleType ===
-      GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type]
-        .BOX
+      containerStyleType === GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type].BOX
         ? arrowsSize / 2.4
         : arrowsSize;
     const customRenderer = (position) => (
@@ -86,36 +74,24 @@ export const getArrowsRenderData = ({
 };
 
 // Function that checks if the nav arrows parent-container is large enough for them
-const arrowsWillFitPosition = ({
-  options,
-  container,
-  customNavArrowsRenderer,
-}) => {
+const arrowsWillFitPosition = ({ options, container, customNavArrowsRenderer }) => {
   const { height } = container;
   // Calc of Nav arrows container's height
-  const arrowData = getArrowIconData(
-    options[optionsMap.layoutParams.navigationArrows.type]
-  );
+  const arrowData = getArrowIconData(options[optionsMap.layoutParams.navigationArrows.type]);
   const { navArrowsContainerHeight } = getArrowsSizeData({
     customNavArrowsRenderer,
     arrowsSize: options[optionsMap.layoutParams.navigationArrows.size],
     svgData: arrowData,
-    containerStyleType:
-      options[optionsMap.layoutParams.navigationArrows.container.type],
+    containerStyleType: options[optionsMap.layoutParams.navigationArrows.container.type],
   });
   const infoHeight = options[optionsMap.layoutParams.info.height];
   const parentHeightByVerticalPosition = {
-    [GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
-      .INFO_CENTER]: infoHeight,
-    [GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
-      .IMAGE_CENTER]: height - infoHeight,
-    [GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment]
-      .ITEM_CENTER]: height,
+    [GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment].INFO_CENTER]: infoHeight,
+    [GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment].IMAGE_CENTER]: height - infoHeight,
+    [GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment].ITEM_CENTER]: height,
   };
   const parentHeight =
-    parentHeightByVerticalPosition[
-      options[optionsMap.layoutParams.navigationArrows.verticalAlignment]
-    ];
+    parentHeightByVerticalPosition[options[optionsMap.layoutParams.navigationArrows.verticalAlignment]];
   return parentHeight >= navArrowsContainerHeight;
 };
 
@@ -123,20 +99,16 @@ const arrowsWillFitPosition = ({
 export const shouldRenderNavArrows = (props) => {
   const shouldRenderArrowsRelevantArgs = getShouldRenderArrowsArgs(props);
   const navigationArrowsEnabled =
-    shouldRenderArrowsRelevantArgs.options[
-      optionsMap.layoutParams.navigationArrows.enable
-    ];
+    shouldRenderArrowsRelevantArgs.options[optionsMap.layoutParams.navigationArrows.enable];
 
   const { galleryWidth } = shouldRenderArrowsRelevantArgs.container;
-  const { isPrerenderMode, galleryStructure, customNavArrowsRenderer } =
-    shouldRenderArrowsRelevantArgs;
+  const { isPrerenderMode, galleryStructure, customNavArrowsRenderer } = shouldRenderArrowsRelevantArgs;
   const arrowsWillFitPositionRelevantArgs = {
     options: shouldRenderArrowsRelevantArgs.options,
     container: shouldRenderArrowsRelevantArgs.container,
     customNavArrowsRenderer,
   };
-  const isGalleryWiderThanRenderedItems =
-    galleryStructure.width <= galleryWidth;
+  const isGalleryWiderThanRenderedItems = galleryStructure.width <= galleryWidth;
   return (
     !!navigationArrowsEnabled &&
     !isPrerenderMode &&
@@ -156,19 +128,9 @@ const getShouldRenderArrowsArgs = (props) => {
   };
 };
 
-const getArrowIconData = (
-  arrowType = GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.type]
-    .DEFAULT_ARROW
-) => {
-  const {
-    DEFAULT_ARROW,
-    ARROW_2,
-    ARROW_3,
-    ARROW_4,
-    ARROW_5,
-    ARROW_6,
-    ARROW_7,
-  } = GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.type];
+const getArrowIconData = (arrowType = GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.type].DEFAULT_ARROW) => {
+  const { DEFAULT_ARROW, ARROW_2, ARROW_3, ARROW_4, ARROW_5, ARROW_6, ARROW_7 } =
+    GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.type];
   let arrowData;
   switch (arrowType) {
     case ARROW_2:
@@ -198,8 +160,7 @@ const getArrowIconData = (
 };
 
 export const getArrowBoxStyle = ({ type, backgroundColor, borderRadius }) => {
-  return type ===
-    GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type].BOX
+  return type === GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type].BOX
     ? {
         backgroundColor: backgroundColor,
         borderRadius: `${borderRadius}%`,

@@ -20,8 +20,7 @@ describe('layoutParams_targetItemSize_unit - e2e', () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.targetItemSize.unit]:
-        GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].PIXEL,
+      [optionsMap.layoutParams.targetItemSize.unit]: GALLERY_CONSTS[optionsMap.layoutParams.targetItemSize.unit].PIXEL,
       [optionsMap.layoutParams.targetItemSize.value]: 600,
     });
     await driver.waitFor.hookToBeVisible('item-container');

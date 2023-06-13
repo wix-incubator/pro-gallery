@@ -46,8 +46,7 @@ describe('stylingParams_itemBorder - e2e', () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
+      [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
       [optionsMap.stylingParams.itemBorderWidth]: 40,
       [optionsMap.stylingParams.itemBorderRadius]: 40,
     });

@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  GALLERY_CONSTS,
-  optionsMap,
-  utils,
-  thumbnailsLogic,
-} from 'pro-gallery-lib';
+import { GALLERY_CONSTS, optionsMap, utils, thumbnailsLogic } from 'pro-gallery-lib';
 import { GalleryUI } from '../../item/media/GalleryUI';
 
 import TextItem from '../../item/textItem.js';
@@ -19,39 +14,25 @@ class NavigationPanel extends React.Component {
     this.props.navigationToIdxCB(itemIdx);
   }
 
-  createThumbnails({
-    navigationPanelPosition,
-    thumbnailAlignment,
-    options,
-    galleryStructure,
-    settings,
-  }) {
+  createThumbnails({ navigationPanelPosition, thumbnailAlignment, options, galleryStructure, settings }) {
     const clearedGalleryItems = thumbnailsLogic.clearGalleryItems(
       this.props.items,
       this.props.galleryStructure.galleryItems
     );
-    const activeIndex = utils.inRange(
-      this.props.activeIndex,
-      clearedGalleryItems.length
-    );
+    const activeIndex = utils.inRange(this.props.activeIndex, clearedGalleryItems.length);
 
-    const {
-      horizontalThumbnails,
-      items,
-      thumbnailsMargins,
-      thumbnailsStyle,
-      activeIndexOffsetMemory,
-    } = thumbnailsLogic.getThumbnailsData({
-      items: this.props.items,
-      activeIndex,
-      options,
-      galleryStructure,
-      thumbnailAlignment,
-      containerHeight: this.props.container.height,
-      containerWidth: this.props.container.width,
-      activeIndexOffsetMemory: this.activeIndexOffsetMemory,
-      prevActiveIndex: this.prevActiveIndex,
-    });
+    const { horizontalThumbnails, items, thumbnailsMargins, thumbnailsStyle, activeIndexOffsetMemory } =
+      thumbnailsLogic.getThumbnailsData({
+        items: this.props.items,
+        activeIndex,
+        options,
+        galleryStructure,
+        thumbnailAlignment,
+        containerHeight: this.props.container.height,
+        containerWidth: this.props.container.width,
+        activeIndexOffsetMemory: this.activeIndexOffsetMemory,
+        prevActiveIndex: this.prevActiveIndex,
+      });
 
     this.prevActiveIndex = activeIndex;
     this.activeIndexOffsetMemory = activeIndexOffsetMemory;
@@ -60,13 +41,10 @@ class NavigationPanel extends React.Component {
       <div
         className={
           'pro-gallery inline-styles thumbnails-gallery ' +
-          (this.props.domOrder
-            ? 'thumbnails-gallery-' + this.props.domOrder
-            : '') +
+          (this.props.domOrder ? 'thumbnails-gallery-' + this.props.domOrder : '') +
           (horizontalThumbnails ? ' one-row hide-scrollbars ' : '') +
           (options[optionsMap.behaviourParams.gallery.layoutDirection] ===
-          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-            .RIGHT_TO_LEFT
+          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT
             ? ' rtl '
             : ' ltr ') +
           (settings?.isAccessible ? ' accessible ' : '')
@@ -104,11 +82,7 @@ class NavigationPanel extends React.Component {
             };
             return (
               <div
-                key={
-                  'thumbnail-' +
-                  thumbnailItem.id +
-                  (Number.isInteger(idx) ? '-' + idx : '')
-                }
+                key={'thumbnail-' + thumbnailItem.id + (Number.isInteger(idx) ? '-' + idx : '')}
                 className={
                   'thumbnailItem ' +
                   'thumbnail-' +
@@ -123,15 +97,13 @@ class NavigationPanel extends React.Component {
                 onClick={() => this.scrollToThumbnail(idx)}
               >
                 {thumbnailItem.type === 'video' &&
-                  options[
-                    optionsMap.behaviourParams.item.video
-                      .enableThumbnailsPlayButton
-                  ] && <GalleryUI type={'videoPlayButton'} size={'28'} />}
+                  options[optionsMap.behaviourParams.item.video.enableThumbnailsPlayButton] && (
+                    <GalleryUI type={'videoPlayButton'} size={'28'} />
+                  )}
                 {thumbnailItem.type === '3d' &&
-                  options[
-                    optionsMap.behaviourParams.item.threeDimensionalScene
-                      .enableThumbnailsPlayButton
-                  ] && <GalleryUI type={'rotateArrow'} size={'28'} />}
+                  options[optionsMap.behaviourParams.item.threeDimensionalScene.enableThumbnailsPlayButton] && (
+                    <GalleryUI type={'rotateArrow'} size={'28'} />
+                  )}
 
                 {thumbnailItem.type === 'text' ? (
                   <TextItem
@@ -139,9 +111,7 @@ class NavigationPanel extends React.Component {
                     {...thumbnailItem.renderProps()}
                     options={{
                       ...options,
-                      [optionsMap.layoutParams.crop.method]:
-                        GALLERY_CONSTS[optionsMap.layoutParams.crop.method]
-                          .FILL,
+                      [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
                       [optionsMap.layoutParams.crop.enable]: true,
                     }}
                     actions={{}}
@@ -168,10 +138,8 @@ class NavigationPanel extends React.Component {
 
   render() {
     const navigationRelevantProps = {
-      navigationPanelPosition:
-        this.props.options[optionsMap.layoutParams.thumbnails.position],
-      thumbnailAlignment:
-        this.props.options[optionsMap.layoutParams.thumbnails.alignment],
+      navigationPanelPosition: this.props.options[optionsMap.layoutParams.thumbnails.position],
+      thumbnailAlignment: this.props.options[optionsMap.layoutParams.thumbnails.alignment],
       options: this.props.options,
       galleryStructure: this.props.galleryStructure,
       settings: this.props.settings,
@@ -181,31 +149,15 @@ class NavigationPanel extends React.Component {
   }
 }
 
-const getHorizontalNavigationPanelDimensions = ({
-  width,
-  height,
-  galleryHeight,
-  navigationPanelPosition,
-}) => {
-  if (
-    navigationPanelPosition ===
-    GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].ON_GALLERY
-  ) {
+const getHorizontalNavigationPanelDimensions = ({ width, height, galleryHeight, navigationPanelPosition }) => {
+  if (navigationPanelPosition === GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].ON_GALLERY) {
     return {};
   } else {
     return { width: width, height: height - galleryHeight };
   }
 };
-const getVerticalNavigationPanelDimensions = ({
-  width,
-  height,
-  galleryWidth,
-  navigationPanelPosition,
-}) => {
-  if (
-    navigationPanelPosition ===
-    GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].ON_GALLERY
-  ) {
+const getVerticalNavigationPanelDimensions = ({ width, height, galleryWidth, navigationPanelPosition }) => {
+  if (navigationPanelPosition === GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].ON_GALLERY) {
     return {};
   } else {
     return { width: width - galleryWidth, height: height };
@@ -270,14 +222,8 @@ export const getCustomNavigationPanelInlineStyles = ({
   };
 };
 
-const getNavigationPanelOnGalleryPositionStyles = ({
-  galleryThumbnailsAlignment,
-  navigationPanelPosition,
-}) => {
-  if (
-    navigationPanelPosition ===
-    GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].ON_GALLERY
-  ) {
+const getNavigationPanelOnGalleryPositionStyles = ({ galleryThumbnailsAlignment, navigationPanelPosition }) => {
+  if (navigationPanelPosition === GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].ON_GALLERY) {
     let onGalleryStyles = { position: 'absolute' };
     onGalleryStyles[galleryThumbnailsAlignment.toLowerCase()] = 0;
     return onGalleryStyles;

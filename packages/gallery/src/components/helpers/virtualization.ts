@@ -1,9 +1,4 @@
-import {
-  GALLERY_CONSTS,
-  VirtualizationSettings,
-  Options,
-  optionsMap,
-} from 'pro-gallery-lib';
+import { GALLERY_CONSTS, VirtualizationSettings, Options, optionsMap } from 'pro-gallery-lib';
 
 export function getItemsInViewportOrMarginByActiveGroup({
   groups,
@@ -30,14 +25,11 @@ export function getItemsInViewportOrMarginByActiveGroup({
 
   const isHorizontal =
     options[optionsMap.layoutParams.structure.scrollDirection] ===
-    GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-      .HORIZONTAL;
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL;
   const isScrollable =
     !isHorizontal ||
     options[optionsMap.behaviourParams.gallery.horizontal.slideAnimation] ===
-      GALLERY_CONSTS[
-        optionsMap.behaviourParams.gallery.horizontal.slideAnimation
-      ].SCROLL;
+      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation].SCROLL;
   if (!enabled) {
     return groups.map((group) => ({
       group,
@@ -46,12 +38,8 @@ export function getItemsInViewportOrMarginByActiveGroup({
   }
   const size = isHorizontal ? galleryWidth : galleryHeight;
   const unit = isHorizontal ? 'width' : 'height';
-  const rightRenderBuffer = isScrollable
-    ? forwardItemScrollMargin
-    : forwardItemMargin;
-  const leftRenderBuffer = isScrollable
-    ? backwardItemScrollMargin
-    : backwardItemMargin;
+  const rightRenderBuffer = isScrollable ? forwardItemScrollMargin : forwardItemMargin;
+  const leftRenderBuffer = isScrollable ? backwardItemScrollMargin : backwardItemMargin;
 
   const activeGroupIndex = groups.findIndex((group) => {
     const { items } = group;
@@ -69,8 +57,7 @@ export function getItemsInViewportOrMarginByActiveGroup({
   const groupsToRender: any[] = [activeGroup];
   for (
     let index = 1;
-    accoumilatedRightMargin < rightRenderBuffer ||
-    accoumilatedLeftMargin < leftRenderBuffer;
+    accoumilatedRightMargin < rightRenderBuffer || accoumilatedLeftMargin < leftRenderBuffer;
     index++
   ) {
     const groupToRight = groups[activeGroupIndex + index];
@@ -109,11 +96,7 @@ export function getItemsInViewportOrMarginByScrollLocation({
   galleryHeight: number;
   scrollPosition: number;
 }): { item: any; shouldRender: boolean }[] {
-  const {
-    enabled = false,
-    forwardItemScrollMargin = 10,
-    backwardItemScrollMargin = 10,
-  } = virtualizationSettings || {};
+  const { enabled = false, forwardItemScrollMargin = 10, backwardItemScrollMargin = 10 } = virtualizationSettings || {};
 
   if (!enabled) {
     return items.map((item) => ({
@@ -123,8 +106,7 @@ export function getItemsInViewportOrMarginByScrollLocation({
   }
   const isHorizontal =
     options[optionsMap.layoutParams.structure.scrollDirection] ===
-    GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-      .HORIZONTAL;
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL;
   const size = isHorizontal ? galleryWidth : galleryHeight;
   const unit = isHorizontal ? 'width' : 'height';
 

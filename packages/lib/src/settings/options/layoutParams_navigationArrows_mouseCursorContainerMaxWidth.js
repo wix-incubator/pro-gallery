@@ -8,8 +8,7 @@ export default {
     return (
       arrowsPosition.isRelevant(options) &&
       options[optionsMap.layoutParams.navigationArrows.position] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
-          .MOUSE_CURSOR
+        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position].MOUSE_CURSOR
     );
   },
   isRelevantDescription:

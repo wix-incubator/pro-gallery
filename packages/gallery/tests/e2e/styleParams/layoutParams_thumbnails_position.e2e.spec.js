@@ -18,8 +18,7 @@ describe('thumbnails position - e2e', () => {
   it('should place thumbnails in the bottom', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
       [optionsMap.layoutParams.thumbnails.alignment]:
         GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM,
       [optionsMap.layoutParams.thumbnails.position]:
@@ -32,10 +31,8 @@ describe('thumbnails position - e2e', () => {
   it('should place thumbnails on gallery', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
-      [optionsMap.layoutParams.thumbnails.alignment]:
-        GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
+      [optionsMap.layoutParams.thumbnails.alignment]: GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP,
       [optionsMap.layoutParams.thumbnails.position]:
         GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].ON_GALLERY,
     });
@@ -46,10 +43,8 @@ describe('thumbnails position - e2e', () => {
   it('should place thumbnails on the left', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
-      [optionsMap.layoutParams.thumbnails.alignment]:
-        GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
+      [optionsMap.layoutParams.thumbnails.alignment]: GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT,
       [optionsMap.layoutParams.thumbnails.position]:
         GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].ON_GALLERY,
     });
@@ -60,8 +55,7 @@ describe('thumbnails position - e2e', () => {
   it('should place thumbnails on the right', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
       [optionsMap.layoutParams.thumbnails.alignment]:
         GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].RIGHT,
       [optionsMap.layoutParams.thumbnails.position]:

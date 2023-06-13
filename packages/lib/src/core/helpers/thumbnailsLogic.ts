@@ -3,28 +3,16 @@ import optionsMap from './optionsMap';
 import utils from '../../common/utils';
 import { GalleryProps } from '../../common/interfaces/galleryTypes';
 
-function calculateActiveIndexOffset({
-  activeIndex,
-  prevActiveIndex,
-  activeIndexOffsetMemory,
-  items,
-}) {
+function calculateActiveIndexOffset({ activeIndex, prevActiveIndex, activeIndexOffsetMemory, items }) {
   const itemsLength = items.length;
   if (activeIndex === prevActiveIndex) {
     return activeIndexOffsetMemory;
   }
   activeIndex = utils.inRange(activeIndex, itemsLength);
   const initialRoute = Math.abs(prevActiveIndex - activeIndex);
-  const jumpForwardRoute = Math.abs(
-    prevActiveIndex - itemsLength - activeIndex
-  );
-  const jumpBackwardRoute = Math.abs(
-    prevActiveIndex + itemsLength - activeIndex
-  );
-  if (
-    jumpBackwardRoute < jumpForwardRoute &&
-    jumpBackwardRoute < initialRoute
-  ) {
+  const jumpForwardRoute = Math.abs(prevActiveIndex - itemsLength - activeIndex);
+  const jumpBackwardRoute = Math.abs(prevActiveIndex + itemsLength - activeIndex);
+  if (jumpBackwardRoute < jumpForwardRoute && jumpBackwardRoute < initialRoute) {
     return activeIndexOffsetMemory - itemsLength;
   }
   if (jumpForwardRoute < jumpBackwardRoute && jumpForwardRoute < initialRoute) {
@@ -81,8 +69,7 @@ function getThumbnailsData({
   const activeIndexWithOffset = activeIndexOffsetMemory! + activeIndex;
   const isRTL =
     options[optionsMap.behaviourParams.gallery.layoutDirection] ===
-    GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-      .RIGHT_TO_LEFT;
+    GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT;
 
   if (utils.isVerbose()) {
     console.log('creating thumbnails for idx', activeIndex);
@@ -90,13 +77,10 @@ function getThumbnailsData({
 
   const withInfiniteScroll = false; // this is not supported yet
   const thumbnailSize = options[optionsMap.layoutParams.thumbnails.size];
-  const thumbnailSizeWithSpacing =
-    thumbnailSize + options[optionsMap.layoutParams.thumbnails.spacing];
+  const thumbnailSizeWithSpacing = thumbnailSize + options[optionsMap.layoutParams.thumbnails.spacing];
   const horizontalThumbnails =
-    thumbnailAlignment ===
-      GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM ||
-    thumbnailAlignment ===
-      GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP;
+    thumbnailAlignment === GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM ||
+    thumbnailAlignment === GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP;
   const { width, height } = getThumbnailsContainerSize({
     horizontalThumbnails,
     containerWidth,
@@ -109,8 +93,7 @@ function getThumbnailsData({
     horizontalThumbnails,
   });
 
-  const numberOfThumbnails =
-    minNumOfThumbnails % 2 === 1 ? minNumOfThumbnails : minNumOfThumbnails + 1;
+  const numberOfThumbnails = minNumOfThumbnails % 2 === 1 ? minNumOfThumbnails : minNumOfThumbnails + 1;
   const thumbnailsInEachSide = (numberOfThumbnails - 1) / 2;
 
   const itemRangeStart = activeIndexWithOffset - thumbnailsInEachSide;
@@ -140,8 +123,7 @@ function getThumbnailsData({
 
   const thumbnailsMargins = getThumbnailsContainerMargin({
     thumbnailAlignment,
-    thumbnailsMarginToGallery:
-      options[optionsMap.layoutParams.thumbnails.marginToGallery],
+    thumbnailsMarginToGallery: options[optionsMap.layoutParams.thumbnails.marginToGallery],
   });
   return {
     items: itemToDisplay.map(({ item, thumbnailItem, idx }, index) => {
@@ -242,22 +224,16 @@ function getThumbnailsContainerMargin({
   thumbnailsMarginToGallery: number;
 }) {
   const horizontalThumbnails =
-    thumbnailAlignment ===
-      GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM ||
-    thumbnailAlignment ===
-      GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP;
+    thumbnailAlignment === GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM ||
+    thumbnailAlignment === GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP;
   if (horizontalThumbnails) {
-    const isTop =
-      thumbnailAlignment ===
-      GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP;
+    const isTop = thumbnailAlignment === GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP;
     return {
       marginTop: isTop ? 0 : thumbnailsMarginToGallery,
       marginBottom: isTop ? thumbnailsMarginToGallery : 0,
     };
   }
-  const isLeft =
-    thumbnailAlignment ===
-    GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT;
+  const isLeft = thumbnailAlignment === GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT;
   return {
     marginLeft: isLeft ? 0 : thumbnailsMarginToGallery,
     marginRight: isLeft ? thumbnailsMarginToGallery : 0,
@@ -276,10 +252,8 @@ function getThumbnailLocation({
   isRTL: boolean;
 }) {
   const horizontalThumbnails =
-    thumbnailAlignment ===
-      GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM ||
-    thumbnailAlignment ===
-      GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP;
+    thumbnailAlignment === GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM ||
+    thumbnailAlignment === GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP;
   const offsetSize = offset * thumbnailSizeWithSpacing;
   if (horizontalThumbnails) {
     return {

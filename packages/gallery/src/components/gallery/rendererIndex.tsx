@@ -6,12 +6,10 @@ import { ViewModeWrapperHOC } from './proGallery/viewModeWrapper';
 
 class GalleryRenderer extends React.Component<GalleryRendererProps> {
   render() {
-    const { id, options, eventsListener, customComponents, ...otherProps } =
-      this.props;
+    const { id, options, eventsListener, customComponents, ...otherProps } = this.props;
 
     const _eventsListener = (eventName, eventData) =>
-      typeof eventsListener === 'function' &&
-      eventsListener(eventName, eventData);
+      typeof eventsListener === 'function' && eventsListener(eventName, eventData);
 
     const _options = { ...defaultOptions, ...options }; //TODOVER3 can we remove the default options?? blueprints should take care of it
 

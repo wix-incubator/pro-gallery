@@ -10,12 +10,10 @@ export default {
   isRelevant: (options) => {
     return (
       options[optionsMap.behaviourParams.item.overlay.hoveringBehaviour] !==
-      GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour]
-        .NEVER_SHOW
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].NEVER_SHOW
     );
   },
   type: INPUT_TYPES.OPTIONS,
-  default:
-    GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.position].LEFT,
+  default: GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.position].LEFT,
   options: createOptions(optionsMap.behaviourParams.item.overlay.position),
 };

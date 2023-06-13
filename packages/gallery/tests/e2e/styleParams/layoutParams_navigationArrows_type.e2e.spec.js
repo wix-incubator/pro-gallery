@@ -19,19 +19,14 @@ describe('layoutParams_navigationArrows_type - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  Object.keys(
-    GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.type]
-  ).forEach((arrowValue) => {
+  Object.keys(GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.type]).forEach((arrowValue) => {
     it(`should display ${arrowValue}`, async () => {
       await driver.navigate({
         [optionsMap.layoutParams.structure.galleryLayout]:
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-            .SLIDER,
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDER,
         [optionsMap.layoutParams.navigationArrows.size]: 150,
         [optionsMap.layoutParams.navigationArrows.type]:
-          GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.type][
-            arrowValue
-          ],
+          GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.type][arrowValue],
       });
       await driver.waitFor.hookToBeVisible('item-container');
       const page = await driver.grab.elemScreenshot('.pro-gallery');

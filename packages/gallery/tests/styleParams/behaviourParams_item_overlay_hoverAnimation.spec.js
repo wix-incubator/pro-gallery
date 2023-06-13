@@ -22,8 +22,7 @@ describe('options - behaviourParams_item_overlay_hoverAnimation', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
-          .EXPAND,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation].EXPAND,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -36,8 +35,7 @@ describe('options - behaviourParams_item_overlay_hoverAnimation', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
-          .FADE_IN,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation].FADE_IN,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -50,8 +48,7 @@ describe('options - behaviourParams_item_overlay_hoverAnimation', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
-          .SLIDE_UP,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation].SLIDE_UP,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -64,8 +61,7 @@ describe('options - behaviourParams_item_overlay_hoverAnimation', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
-          .SLIDE_RIGHT,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation].SLIDE_RIGHT,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -78,8 +74,7 @@ describe('options - behaviourParams_item_overlay_hoverAnimation', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
-          .SLIDE_DOWN,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation].SLIDE_DOWN,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -92,8 +87,7 @@ describe('options - behaviourParams_item_overlay_hoverAnimation', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
-          .SLIDE_LEFT,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation].SLIDE_LEFT,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

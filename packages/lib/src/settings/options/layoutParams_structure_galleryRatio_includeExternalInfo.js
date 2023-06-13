@@ -1,10 +1,7 @@
 import { default as galleryRatioValue } from './layoutParams_structure_galleryRatio_value';
 import { INPUT_TYPES } from '../utils/constants';
 
-import {
-  isConstantVerticalPlacement,
-  isHoverPlacement,
-} from '../../common/constants/layoutParams_info_placement';
+import { isConstantVerticalPlacement, isHoverPlacement } from '../../common/constants/layoutParams_info_placement';
 import optionsMap from '../../core/helpers/optionsMap';
 export default {
   title: 'Include External Info in gallery Ratio',
@@ -12,11 +9,8 @@ export default {
   isRelevant: (options) => {
     const isSingleVerticalItemRendered =
       options[optionsMap.layoutParams.groups.repeatingGroupTypes].length > 1
-        ? options[optionsMap.layoutParams.groups.repeatingGroupTypes].join(
-            ''
-          ) === '1'
-        : options[optionsMap.layoutParams.groups.allowedGroupTypes].join('') ===
-          '1';
+        ? options[optionsMap.layoutParams.groups.repeatingGroupTypes].join('') === '1'
+        : options[optionsMap.layoutParams.groups.allowedGroupTypes].join('') === '1';
     const filteredPlacement = options[optionsMap.layoutParams.info.placement] // filtering hover since it doesn't affect this
       .split(',')
       .filter((placement) => !isHoverPlacement(placement))

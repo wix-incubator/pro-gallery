@@ -1,10 +1,10 @@
-import {Layouter} from 'pro-layouts';
+import { Layouter } from 'pro-layouts';
 
 //create random colored boxes
 function generateUUID() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
     const r = Math.floor(Math.random() * 16) || 0;
-    return (c === 'x' ? r.toString(16) : c);
+    return c === 'x' ? r.toString(16) : c;
   });
 }
 function rnd(from, to) {
@@ -16,14 +16,14 @@ for (let i = 0; i < 1000; i++) {
     id: generateUUID(),
     width: rnd(500, 1500),
     height: rnd(500, 1500),
-    bgColor: 'rgba(' + rnd(100, 255) + ',' + rnd(100, 255) + ',' + rnd(100, 255) + ',1)'
+    bgColor: 'rgba(' + rnd(100, 255) + ',' + rnd(100, 255) + ',' + rnd(100, 255) + ',1)',
   });
 }
 
 const styleParams = {
   columnSize: 500,
   isColumnsLayout: true,
-  itemSpacing: 20
+  itemSpacing: 20,
   //add more style params here
 };
 const parent = document.createElement('div');
@@ -44,9 +44,10 @@ document.body.prepend(pause);
 
 const warning = document.createElement('div');
 warning.id = 'warning';
-warning.innerHTML = '' +
-'Notice: this demo is using a method of replacing the dom completely after every scroll / resize event. This is inefficient and not recommended for production usage. <br/>' +
-'Please use React virtual dom or any other efficient process to replace dom elements.';
+warning.innerHTML =
+  '' +
+  'Notice: this demo is using a method of replacing the dom completely after every scroll / resize event. This is inefficient and not recommended for production usage. <br/>' +
+  'Please use React virtual dom or any other efficient process to replace dom elements.';
 warning.style.position = 'fixed';
 warning.style.zIndex = 998;
 warning.style.bottom = '0';
@@ -82,7 +83,7 @@ function calcContainer() {
       visibleBottom: windowScroll + windowHeight + visiblePadding,
       renderedTop: windowScroll - renderedPadding,
       renderedBottom: windowScroll + windowHeight + renderedPadding,
-    }
+    },
   };
 
   return container;
@@ -93,9 +94,7 @@ function setItemsVisibility() {
     return;
   }
 
-  if (
-    Math.abs(windowScroll - window.scrollY) < 250
-  ) {
+  if (Math.abs(windowScroll - window.scrollY) < 250) {
     console.log('Not re-rendering, change is too small');
     return;
   }
@@ -106,19 +105,14 @@ function setItemsVisibility() {
   } else {
     placeItems();
   }
-
 }
 
 function placeItems() {
-
   if (window.paused === true) {
     return;
   }
 
-  if (
-    Math.abs(windowHeight - window.innerHeight) < 100 &&
-    Math.abs(windowWidth - window.innerWidth) < 100
-  ) {
+  if (Math.abs(windowHeight - window.innerHeight) < 100 && Math.abs(windowWidth - window.innerWidth) < 100) {
     console.log('Not re-rendering, change is too small');
     return;
   }
@@ -126,7 +120,7 @@ function placeItems() {
   const layoutParams = {
     items,
     styleParams,
-    container: calcContainer()
+    container: calcContainer(),
   };
 
   layout = new Layouter(layoutParams);

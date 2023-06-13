@@ -21,8 +21,7 @@ describe('options - layoutParams_navigationArrows_enable', () => {
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.behaviourParams.gallery.horizontal.enableScrollSnap]: true,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL,
       [optionsMap.layoutParams.navigationArrows.enable]: true,
     });
     driver.mount.proGallery(initialProps);
@@ -37,8 +36,7 @@ describe('options - layoutParams_navigationArrows_enable', () => {
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.behaviourParams.gallery.horizontal.enableScrollSnap]: true,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL,
       [optionsMap.layoutParams.navigationArrows.enable]: false,
     });
     driver.mount.proGallery(initialProps);

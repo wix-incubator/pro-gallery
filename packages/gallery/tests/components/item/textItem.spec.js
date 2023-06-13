@@ -28,17 +28,14 @@ describe('Text Item', () => {
   it('should set background color', () => {
     Object.assign(textItemProps, {
       options: {
-        [optionsMap.layoutParams.crop.method]:
-          GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
+        [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
       },
     });
     Object.assign(textItemProps, {
       style: { ...textItemProps.style, bgColor: 'red' },
     });
     galleryDriver.mount(TextItem, textItemProps);
-    const style = galleryDriver.find
-      .class('gallery-item-loaded.text-item')
-      .get(0).props.style;
+    const style = galleryDriver.find.class('gallery-item-loaded.text-item').get(0).props.style;
     expect(style).to.have.property('backgroundColor', 'red');
   });
 
@@ -47,9 +44,7 @@ describe('Text Item', () => {
       style: { ...textItemProps.style, maxWidth: 100, maxHeight: 100 },
     });
     galleryDriver.mount(TextItem, textItemProps);
-    const style = galleryDriver.find
-      .class('gallery-item-loaded.text-item')
-      .get(0).props.style;
+    const style = galleryDriver.find.class('gallery-item-loaded.text-item').get(0).props.style;
     expect(style).to.have.property('width', '100px');
     expect(style).to.have.property('height', '100px');
   });

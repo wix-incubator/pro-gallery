@@ -19,11 +19,8 @@ describe('layoutParams_info_spacing - e2e', () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
-      [optionsMap.layoutParams.info.layout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.layout]
-          .SEPARATED_BACKGROUND,
+      [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
+      [optionsMap.layoutParams.info.layout]: GALLERY_CONSTS[optionsMap.layoutParams.info.layout].SEPARATED_BACKGROUND,
       [optionsMap.layoutParams.info.spacing]: 60,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -35,11 +32,8 @@ describe('layoutParams_info_spacing - e2e', () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].ABOVE,
-      [optionsMap.layoutParams.info.layout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.layout]
-          .SEPARATED_BACKGROUND,
+      [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].ABOVE,
+      [optionsMap.layoutParams.info.layout]: GALLERY_CONSTS[optionsMap.layoutParams.info.layout].SEPARATED_BACKGROUND,
       [optionsMap.layoutParams.info.spacing]: 60,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -51,10 +45,8 @@ describe('layoutParams_info_spacing - e2e', () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
-      [optionsMap.layoutParams.info.layout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.layout].NO_BACKGROUND,
+      [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
+      [optionsMap.layoutParams.info.layout]: GALLERY_CONSTS[optionsMap.layoutParams.info.layout].NO_BACKGROUND,
       [optionsMap.layoutParams.info.spacing]: 60,
     });
     await driver.waitFor.hookToBeVisible('item-container');

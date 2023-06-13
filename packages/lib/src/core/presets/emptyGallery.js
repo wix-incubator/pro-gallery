@@ -1,7 +1,4 @@
-import {
-  calcTargetItemSize,
-  fixColumnsIfNeeded,
-} from '../helpers/layoutHelper';
+import { calcTargetItemSize, fixColumnsIfNeeded } from '../helpers/layoutHelper';
 import optionsMap from '../helpers/optionsMap';
 import { GALLERY_CONSTS } from '../..';
 
@@ -17,9 +14,6 @@ export const createOptions = (options) => {
   let res = { ...options };
   res = fixToEmpty(res);
   res = fixColumnsIfNeeded(res);
-  res.targetItemSize = calcTargetItemSize(
-    res,
-    Math.round(res[optionsMap.layoutParams.targetItemSize.value] * 9 + 100)
-  );
+  res.targetItemSize = calcTargetItemSize(res, Math.round(res[optionsMap.layoutParams.targetItemSize.value] * 9 + 100));
   return res;
 };

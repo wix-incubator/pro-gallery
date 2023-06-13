@@ -20,8 +20,7 @@ describe('options - layoutParams_thumbnails_marginToGallery', () => {
   it('should set "layoutParams_thumbnails_marginToGallery" of "49"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
       [optionsMap.layoutParams.thumbnails.marginToGallery]: 49,
     });
     const mock = {
@@ -36,8 +35,7 @@ describe('options - layoutParams_thumbnails_marginToGallery', () => {
   it('should set "layoutParams_thumbnails_marginToGallery" of "63" also when horizontal', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
       [optionsMap.layoutParams.thumbnails.marginToGallery]: 63,
       [optionsMap.layoutParams.thumbnails.alignment]:
         GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].RIGHT,

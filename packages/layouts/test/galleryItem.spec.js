@@ -15,8 +15,7 @@ describe('GalleryItem ', () => {
       width: 1920,
       sourceName: 'private',
       title: 'Image 0',
-      description:
-        'Description of image 0 -> now we are testing long description, lets see how it works',
+      description: 'Description of image 0 -> now we are testing long description, lets see how it works',
     },
     orderIndex: 0,
     photoId: '8b72558253b2502b401bb46e5599f22a',

@@ -1,8 +1,4 @@
-import {
-  calcTargetItemSize,
-  processNumberOfImagesPerRow,
-  processGridStyle,
-} from '../helpers/layoutHelper';
+import { calcTargetItemSize, processNumberOfImagesPerRow, processGridStyle } from '../helpers/layoutHelper';
 import optionsMap from '../helpers/optionsMap';
 
 import { GALLERY_CONSTS } from '../..';
@@ -18,9 +14,7 @@ const fixToMasonry = (options) => {
     GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['1'],
   ];
   presetOptions[optionsMap.behaviourParams.gallery.horizontal.loop] = false;
-  presetOptions[
-    optionsMap.behaviourParams.gallery.horizontal.blockScroll
-  ] = false;
+  presetOptions[optionsMap.behaviourParams.gallery.horizontal.blockScroll] = false;
   presetOptions[optionsMap.layoutParams.crop.cropOnlyFill] = false;
   return presetOptions;
 };
@@ -31,15 +25,11 @@ export const createOptions = (options) => {
   res = fixToMasonry(res);
   const isVerticalOrientation =
     res[optionsMap.layoutParams.structure.layoutOrientation] ===
-    GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-      .VERTICAL;
-  const userDefinedTargetItemSizeValue =
-    options[optionsMap.layoutParams.targetItemSize.value];
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].VERTICAL;
+  const userDefinedTargetItemSizeValue = options[optionsMap.layoutParams.targetItemSize.value];
   res.targetItemSize = calcTargetItemSize(
     res,
-    isVerticalOrientation
-      ? userDefinedTargetItemSizeValue * 8 + 200
-      : userDefinedTargetItemSizeValue * 5 + 200
+    isVerticalOrientation ? userDefinedTargetItemSizeValue * 8 + 200 : userDefinedTargetItemSizeValue * 5 + 200
   );
   res = processNumberOfImagesPerRow(res);
   res = processGridStyle(res);

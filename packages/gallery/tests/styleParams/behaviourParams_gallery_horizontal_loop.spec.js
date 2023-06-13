@@ -20,8 +20,7 @@ describe('options - behaviourParams_gallery_horizontal_loop', () => {
   it('should be able to to click next when reached last item', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW,
       [optionsMap.behaviourParams.gallery.horizontal.loop]: true,
     });
     driver.mount.proGallery(initialProps);
@@ -34,8 +33,7 @@ describe('options - behaviourParams_gallery_horizontal_loop', () => {
   it('should not be able to to click next', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW,
       [optionsMap.behaviourParams.gallery.horizontal.loop]: false,
     });
     driver.mount.proGallery(initialProps);

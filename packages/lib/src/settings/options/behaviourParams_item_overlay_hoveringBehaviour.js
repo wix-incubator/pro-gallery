@@ -8,12 +8,8 @@ export default {
   isRelevant: () => true,
   isRelevantDescription: 'Always relevant.',
   type: INPUT_TYPES.OPTIONS,
-  default:
-    GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour]
-      .APPEARS,
-  options: createOptions(
-    optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-  ),
+  default: GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].APPEARS,
+  options: createOptions(optionsMap.behaviourParams.item.overlay.hoveringBehaviour),
   description: `Determines whether the info appears or disappears or always shown or never shown on when hovering over items.
   `,
 };

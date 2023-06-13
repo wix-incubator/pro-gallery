@@ -18,8 +18,7 @@ describe('options - layoutParams_thumbnails_size', () => {
   it('should "layoutParams_thumbnails_size" of "300"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
       [optionsMap.layoutParams.thumbnails.size]: 300,
     });
     driver.mount.proGallery(initialProps);
@@ -32,8 +31,7 @@ describe('options - layoutParams_thumbnails_size', () => {
   it('should "layoutParams_thumbnails_size" of "150"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
       [optionsMap.layoutParams.thumbnails.size]: 150,
     });
     driver.mount.proGallery(initialProps);
@@ -46,8 +44,7 @@ describe('options - layoutParams_thumbnails_size', () => {
   it('should set the gallery height for layoutParams_thumbnails_size=300', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
       [optionsMap.layoutParams.thumbnails.size]: 300,
       [optionsMap.layoutParams.thumbnails.spacing]: 46,
       [optionsMap.layoutParams.thumbnails.marginToGallery]: 37,
@@ -66,13 +63,11 @@ describe('options - layoutParams_thumbnails_size', () => {
   it('should set the gallery width for layoutParams_thumbnails_size=300', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
       [optionsMap.layoutParams.thumbnails.size]: 300,
       [optionsMap.layoutParams.thumbnails.spacing]: 46,
       [optionsMap.layoutParams.thumbnails.marginToGallery]: 37,
-      [optionsMap.layoutParams.thumbnails.alignment]:
-        GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT,
+      [optionsMap.layoutParams.thumbnails.alignment]: GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

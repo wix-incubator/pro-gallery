@@ -1,21 +1,6 @@
-import {
-  GALLERY_CONSTS,
-  PlayTrigger,
-  optionsMap,
-  window,
-} from 'pro-gallery-lib';
-import {
-  isWithinPaddingVertically,
-  isWithinPaddingHorizontally,
-} from './utils';
-import {
-  SetItemIdx,
-  UpdateGalleryData,
-  SetScroll,
-  Scroll,
-  HandleEvents,
-  GetPlayTrigger,
-} from './types';
+import { GALLERY_CONSTS, PlayTrigger, optionsMap, window } from 'pro-gallery-lib';
+import { isWithinPaddingVertically, isWithinPaddingHorizontally } from './utils';
+import { SetItemIdx, UpdateGalleryData, SetScroll, Scroll, HandleEvents, GetPlayTrigger } from './types';
 
 class VideoScrollHelper {
   private scrollBase = 0;
@@ -93,10 +78,7 @@ class VideoScrollHelper {
     }
   };
 
-  private readonly shouldTriggerAction = (
-    idx: number,
-    action: PlayTrigger = 'HOVER'
-  ): boolean => {
+  private readonly shouldTriggerAction = (idx: number, action: PlayTrigger = 'HOVER'): boolean => {
     return this.findItem(idx) && this.shouldTrigger(action);
   };
 
@@ -226,10 +208,7 @@ class VideoScrollHelper {
 
   //-----------------------------Utils--------------------------------------------//
 
-  private readonly isCurrentItemStillVisible = ({
-    top,
-    left,
-  }: Scroll): boolean => {
+  private readonly isCurrentItemStillVisible = ({ top, left }: Scroll): boolean => {
     const currentItemPlacement = this.findItem(this.currentPlayingIdx);
     if (!currentItemPlacement) {
       return false;
@@ -242,10 +221,8 @@ class VideoScrollHelper {
       scrollY: top,
       scrollLeft: left,
     };
-    const itemPlayVerticalTolerance =
-      (item.offset.top - item.offset.bottom) / 2;
-    const itemPlayHorizontalTolerance =
-      (item.offset.left - item.offset.right) / 2;
+    const itemPlayVerticalTolerance = (item.offset.top - item.offset.bottom) / 2;
+    const itemPlayHorizontalTolerance = (item.offset.left - item.offset.right) / 2;
     const visibleVertically = isWithinPaddingVertically({
       target,
       scrollBase: this.scrollBase,
@@ -255,10 +232,7 @@ class VideoScrollHelper {
       padding: itemPlayVerticalTolerance,
     });
     let visibleHorizontally;
-    if (
-      this.scrollDirection ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL
-    ) {
+    if (this.scrollDirection === GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL) {
       visibleHorizontally = true;
     } else {
       visibleHorizontally = isWithinPaddingHorizontally({

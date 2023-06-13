@@ -33,9 +33,7 @@ export type MediaBaseProps = {
 };
 
 export type MediaProps<T extends Record<string, any>> = MediaBaseProps & {
-  MediaImplementation: React.ComponentType<
-    MediaImplementationProps<Omit<T, 'MediaImplementation'>>
-  >;
+  MediaImplementation: React.ComponentType<MediaImplementationProps<Omit<T, 'MediaImplementation'>>>;
 } & T;
 
 export type MediaImplementationProps<T = {}> = T &
@@ -55,9 +53,7 @@ const getPlayButtonComponentByItemType = (type: string) => {
   }
 };
 
-export default function MediaItem<T extends Record<string, any>>(
-  props: MediaProps<T>
-): JSX.Element {
+export default function MediaItem<T extends Record<string, any>>(props: MediaProps<T>): JSX.Element {
   const {
     hasLink,
     options,
@@ -69,10 +65,8 @@ export default function MediaItem<T extends Record<string, any>>(
     videoPlaceholderUrl,
   } = props;
   console.log(showPlayButton, 'showPlayButton');
-  const {
-    behaviourParams_item_clickAction: clickAction,
-    behaviourParams_item_video_playTrigger: playTrigger,
-  } = options;
+  const { behaviourParams_item_clickAction: clickAction, behaviourParams_item_video_playTrigger: playTrigger } =
+    options;
 
   const isMediaPlayable = useMemo(() => {
     if (utils.isSSR()) {
@@ -80,33 +74,20 @@ export default function MediaItem<T extends Record<string, any>>(
     }
 
     if (
-      playTrigger ===
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
-          .HOVER ||
-      playTrigger ===
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO
+      playTrigger === GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER ||
+      playTrigger === GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO
     ) {
       return true;
-    } else if (
-      clickAction ===
-      GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING
-    ) {
+    } else if (clickAction === GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING) {
       return true;
-    } else if (
-      clickAction ===
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK &&
-      !hasLink
-    ) {
+    } else if (clickAction === GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK && !hasLink) {
       return true;
     }
     return false;
   }, [hasLink, playTrigger, clickAction]);
 
   const createIframePlayer = () => (
-    <IframeVideoPlayer
-      dimensions={imageDimensions}
-      url={isVideoPlaceholder ? videoPlaceholderUrl : props.videoUrl}
-    />
+    <IframeVideoPlayer dimensions={imageDimensions} url={isVideoPlaceholder ? videoPlaceholderUrl : props.videoUrl} />
   );
 
   const createThumbnail = (propsOverrides: any = {}) =>
@@ -115,11 +96,7 @@ export default function MediaItem<T extends Record<string, any>>(
         {...props}
         imageDimensions={imageDimensions}
         id={props.idx}
-        overlay={
-          showPlayButton &&
-          !isMediaPlayable &&
-          getPlayButtonComponentByItemType(props.type)
-        }
+        overlay={showPlayButton && !isMediaPlayable && getPlayButtonComponentByItemType(props.type)}
         extraClasses={props.placeholderExtraClasses.join(' ')}
         {...propsOverrides}
       />

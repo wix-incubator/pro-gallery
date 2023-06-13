@@ -5,8 +5,7 @@ import optionsMap from '../../core/helpers/optionsMap';
 export default {
   title: 'Load More button text',
   isRelevant: (options) =>
-    enableLoadMore.isRelevant(options) &&
-    options[optionsMap.behaviourParams.gallery.vertical.loadMore.enable],
+    enableLoadMore.isRelevant(options) && options[optionsMap.behaviourParams.gallery.vertical.loadMore.enable],
   isRelevantDescription:
     'Set a Vertical gallery ("Scroll Direction" as "Vertical") and set "Enable load more button" to "true".',
   type: INPUT_TYPES.TEXT,

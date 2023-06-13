@@ -9,10 +9,8 @@ export default {
   isRelevantDescription: 'Set "Hover Effect" to anything but "Never Show".',
   isRelevant: (options) =>
     options[optionsMap.behaviourParams.item.overlay.hoveringBehaviour] !==
-    GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour]
-      .NEVER_SHOW,
+    GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].NEVER_SHOW,
   type: INPUT_TYPES.OPTIONS,
-  default:
-    GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.sizeUnits].PERCENT,
+  default: GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.sizeUnits].PERCENT,
   options: createOptions(optionsMap.behaviourParams.item.overlay.sizeUnits),
 };

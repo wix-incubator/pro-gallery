@@ -8,9 +8,7 @@ describe('defaultOptions', () => {
       [optionsMap.layoutParams.structure.galleryLayout]: 5,
     };
     let populated = populateWithDefaultOptions(customOptions);
-    expect(populated[optionsMap.layoutParams.structure.galleryLayout]).to.eql(
-      5
-    ); //this should be 5 and not the default (-1)
+    expect(populated[optionsMap.layoutParams.structure.galleryLayout]).to.eql(5); //this should be 5 and not the default (-1)
     expect(populated[optionsMap.layoutParams.info.height]).to.eql(200);
   });
 });

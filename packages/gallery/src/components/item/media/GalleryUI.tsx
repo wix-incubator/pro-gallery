@@ -1,12 +1,8 @@
 import React from 'react';
 import { useGalleryUI } from '../../../context/GalleryContext';
 const galleryUiComponents = {
-  videoPlayButton: React.lazy(
-    () => import(/* webpackChunkName: "defaultPlayButton" */ './playButton')
-  ),
-  rotateArrow: React.lazy(
-    () => import(/* webpackChunkName: "defaultRotateArrow" */ './rotateArrow')
-  ),
+  videoPlayButton: React.lazy(() => import(/* webpackChunkName: "defaultPlayButton" */ './playButton')),
+  rotateArrow: React.lazy(() => import(/* webpackChunkName: "defaultRotateArrow" */ './rotateArrow')),
 };
 interface GalleryUIProps {
   size: number;

@@ -16,14 +16,7 @@ for (let i = 0; i < 100; i++) {
     id: generateUUID(),
     width: rnd(500, 1500),
     height: rnd(500, 1500),
-    bgColor:
-      'rgba(' +
-      rnd(100, 255) +
-      ',' +
-      rnd(100, 255) +
-      ',' +
-      rnd(100, 255) +
-      ',1)',
+    bgColor: 'rgba(' + rnd(100, 255) + ',' + rnd(100, 255) + ',' + rnd(100, 255) + ',1)',
   });
 }
 

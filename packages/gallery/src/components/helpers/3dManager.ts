@@ -43,21 +43,9 @@ interface ManagerInstance {
       remove(): void;
     };
     transform: {
-      setRotation(
-        x: number | undefined,
-        y: number | undefined,
-        z: number | undefined
-      ): void;
-      setPosition(
-        x: number | undefined,
-        y: number | undefined,
-        z: number | undefined
-      ): void;
-      setScale(
-        x: number | undefined,
-        y: number | undefined,
-        z: number | undefined
-      ): void;
+      setRotation(x: number | undefined, y: number | undefined, z: number | undefined): void;
+      setPosition(x: number | undefined, y: number | undefined, z: number | undefined): void;
+      setScale(x: number | undefined, y: number | undefined, z: number | undefined): void;
     };
   };
   camera: {
@@ -89,10 +77,7 @@ const DEFAULT_OPTIONS = {
   GROUND_OPACITY: 0.5,
 };
 
-export function createSceneManager(
-  container: HTMLElement,
-  canvas: HTMLCanvasElement
-): ManagerInstance {
+export function createSceneManager(container: HTMLElement, canvas: HTMLCanvasElement): ManagerInstance {
   const scene = new THREE.Scene();
   const dracoLoader = new DRACOLoader(GLOBAL_LOADING_MANAGER);
   const gltfLoader = new GLTFLoader(GLOBAL_LOADING_MANAGER);
@@ -124,9 +109,7 @@ export function createSceneManager(
     renderer.domElement.style.position = 'absolute';
     renderer.domElement.style.userSelect = 'none';
     renderer.domElement.style.transition = 'opacity 0.3s ease-in-out';
-    const envTexture = new THREE.PMREMGenerator(renderer).fromScene(
-      new RoomEnvironment()
-    ).texture;
+    const envTexture = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment()).texture;
     scene.environment = envTexture;
     return renderer;
   };
@@ -212,10 +195,7 @@ export function createSceneManager(
           },
         };
       },
-      sun(
-        intensity = DEFAULT_OPTIONS.DIRECTIONAL_LIGHT_INTENSITY,
-        color = DEFAULT_OPTIONS.DIRECTIONAL_LIGHT_COLOR
-      ) {
+      sun(intensity = DEFAULT_OPTIONS.DIRECTIONAL_LIGHT_INTENSITY, color = DEFAULT_OPTIONS.DIRECTIONAL_LIGHT_COLOR) {
         const light = new THREE.DirectionalLight(color, intensity);
         light.position.set(...DEFAULT_OPTIONS.SUN_POSITION); //from https://github.com/donmccurdy/three-gltf-viewer/blob/main/src/viewer.js#L430
         camera.add(light);
@@ -263,14 +243,7 @@ export function createSceneManager(
         });
         const gltfScene = gltf.scene || gltf.scenes[0];
         const clips = gltf.animations || [];
-        const { punctualLights, mixer } = addModel(
-          scene,
-          gltfScene,
-          clips,
-          camera,
-          controls,
-          manualPosition
-        );
+        const { punctualLights, mixer } = addModel(scene, gltfScene, clips, camera, controls, manualPosition);
         mixers.push(mixer);
         model = gltfScene;
         return {
@@ -366,17 +339,14 @@ export type SceneManager = ReturnType<typeof createSceneManager>;
 export function useSceneManager() {
   const [sceneManager, setSceneManager] = useState<SceneManager | null>(null);
 
-  const render = useCallback(
-    (container: HTMLElement, canvas: HTMLCanvasElement) => {
-      if (!sceneManager) {
-        const sceneManager = createSceneManager(container, canvas);
-        setSceneManager(sceneManager);
-        return sceneManager;
-      }
+  const render = useCallback((container: HTMLElement, canvas: HTMLCanvasElement) => {
+    if (!sceneManager) {
+      const sceneManager = createSceneManager(container, canvas);
+      setSceneManager(sceneManager);
       return sceneManager;
-    },
-    []
-  );
+    }
+    return sceneManager;
+  }, []);
 
   return { sceneManager, render };
 }
@@ -449,10 +419,7 @@ function addModel(
   };
 }
 
-function playAllAnimations(
-  mixer: THREE.AnimationMixer,
-  animations: THREE.AnimationClip[]
-) {
+function playAllAnimations(mixer: THREE.AnimationMixer, animations: THREE.AnimationClip[]) {
   if (animations.length === 0) {
     return;
   }

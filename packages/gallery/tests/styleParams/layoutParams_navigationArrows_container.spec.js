@@ -20,11 +20,9 @@ describe('options - layoutParams_navigationArrows_container', () => {
   const mountSlideshowGalleryAnGetArrow = async (containerOptions) => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW,
       [optionsMap.layoutParams.navigationArrows.container.type]:
-        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type]
-          .BOX,
+        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type].BOX,
       ...containerOptions,
     });
     driver.mount.proGallery(initialProps);
@@ -34,8 +32,7 @@ describe('options - layoutParams_navigationArrows_container', () => {
 
   it('should set arrows background-color', async () => {
     const arrow = await mountSlideshowGalleryAnGetArrow({
-      [optionsMap.layoutParams.navigationArrows.container.backgroundColor]:
-        'red',
+      [optionsMap.layoutParams.navigationArrows.container.backgroundColor]: 'red',
     });
     expect(arrow.props().style.backgroundColor).to.eq('red');
     driver.detach.proGallery();

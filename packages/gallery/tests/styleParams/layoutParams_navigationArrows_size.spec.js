@@ -20,40 +20,30 @@ describe('options - layoutParams_navigationArrows_size', () => {
   it('should set the correct layoutParams_navigationArrows_size', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW,
       [optionsMap.layoutParams.navigationArrows.size]: 50,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const arrowImage = driver.find.selector(
-      '.nav-arrows-container .slideshow-arrow'
-    );
+    const arrowImage = driver.find.selector('.nav-arrows-container .slideshow-arrow');
     const { transform } = arrowImage.props().style;
-    const arrowFinalSize =
-      initialProps.options[optionsMap.layoutParams.navigationArrows.size] / 23;
+    const arrowFinalSize = initialProps.options[optionsMap.layoutParams.navigationArrows.size] / 23;
     expect(transform).to.eq(`scaleX(1) scale(${arrowFinalSize})`);
     driver.detach.proGallery();
   });
   it('should set the position of arrows according to layoutParams_navigationArrows_size', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW,
       [optionsMap.layoutParams.navigationArrows.size]: 50,
       [optionsMap.layoutParams.navigationArrows.position]:
-        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
-          .OUTSIDE_GALLERY,
+        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position].OUTSIDE_GALLERY,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
     const arrowContainer = driver.find.selector('.nav-arrows-container');
     const { right } = arrowContainer.props().style;
-    expect(right).to.eq(
-      `-${
-        20 + initialProps.options[optionsMap.layoutParams.navigationArrows.size]
-      }px`
-    );
+    expect(right).to.eq(`-${20 + initialProps.options[optionsMap.layoutParams.navigationArrows.size]}px`);
     driver.detach.proGallery();
   });
 });

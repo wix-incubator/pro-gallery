@@ -1,8 +1,4 @@
-import {
-  GALLERY_CONSTS,
-  Options,
-  ThreeDimensionalScene,
-} from 'pro-gallery-lib';
+import { GALLERY_CONSTS, Options, ThreeDimensionalScene } from 'pro-gallery-lib';
 import { ThreeDImplementation } from './types';
 import { useSceneManager } from '../../helpers/3dManager';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -10,26 +6,19 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 function mapSceneToStyleParams(scene: ThreeDimensionalScene, options: Options) {
   return {
     behaviourParams_item_threeDimensionalScene_transform_rotation:
-      scene.transform?.rotation ||
-      options.behaviourParams_item_threeDimensionalScene_transform_rotation,
+      scene.transform?.rotation || options.behaviourParams_item_threeDimensionalScene_transform_rotation,
     behaviourParams_item_threeDimensionalScene_transform_scale:
-      scene.transform?.scale ||
-      options.behaviourParams_item_threeDimensionalScene_transform_scale,
+      scene.transform?.scale || options.behaviourParams_item_threeDimensionalScene_transform_scale,
     behaviourParams_item_threeDimensionalScene_transform_position:
-      scene.transform?.position ||
-      options.behaviourParams_item_threeDimensionalScene_transform_position,
+      scene.transform?.position || options.behaviourParams_item_threeDimensionalScene_transform_position,
     behaviourParams_item_threeDimensionalScene_controls_enablePan:
-      scene.controls?.enablePan ||
-      options.behaviourParams_item_threeDimensionalScene_controls_enablePan,
+      scene.controls?.enablePan || options.behaviourParams_item_threeDimensionalScene_controls_enablePan,
     behaviourParams_item_threeDimensionalScene_controls_enableRotate:
-      scene.controls?.enableRotate ||
-      options.behaviourParams_item_threeDimensionalScene_controls_enableRotate,
+      scene.controls?.enableRotate || options.behaviourParams_item_threeDimensionalScene_controls_enableRotate,
     behaviourParams_item_threeDimensionalScene_controls_enableZoom:
-      scene.controls?.enableZoom ||
-      options.behaviourParams_item_threeDimensionalScene_controls_enableZoom,
+      scene.controls?.enableZoom || options.behaviourParams_item_threeDimensionalScene_controls_enableZoom,
     behaviourParams_item_threeDimensionalScene_controls_enableAutoRotate:
-      scene.controls?.enableAutoRotate ||
-      options.behaviourParams_item_threeDimensionalScene_controls_enableAutoRotate,
+      scene.controls?.enableAutoRotate || options.behaviourParams_item_threeDimensionalScene_controls_enableAutoRotate,
   };
 }
 
@@ -56,12 +45,7 @@ export function use3DItem(props: ThreeDImplementation): ThreeDItemHooks {
     }
     manager.opacity = 0;
     manager.model
-      .load3DModel(
-        props.createUrl(
-          GALLERY_CONSTS.urlSizes.RESIZED,
-          GALLERY_CONSTS.urlTypes.THREE_D
-        )
-      )
+      .load3DModel(props.createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.THREE_D))
       .then(({ punctualLights }) => {
         props.actions.setItemLoaded();
         manager.opacity = 1;
@@ -75,13 +59,7 @@ export function use3DItem(props: ThreeDImplementation): ThreeDItemHooks {
         });
       });
     return manager;
-  }, [
-    render,
-    sceneManager,
-    props.shouldPlay,
-    props.itemContainer.current,
-    canvasRef.current,
-  ]);
+  }, [render, sceneManager, props.shouldPlay, props.itemContainer.current, canvasRef.current]);
 
   const postLoadUpdate = useCallback(
     ({
@@ -96,33 +74,15 @@ export function use3DItem(props: ThreeDImplementation): ThreeDItemHooks {
       if (!loadedManager) {
         return;
       }
-      const rotation = GALLERY_CONSTS.parse3DDimensions(
-        behaviourParams_item_threeDimensionalScene_transform_rotation
-      );
-      const scale = GALLERY_CONSTS.parse3DDimensions(
-        behaviourParams_item_threeDimensionalScene_transform_scale
-      );
-      const position = GALLERY_CONSTS.parse3DDimensions(
-        behaviourParams_item_threeDimensionalScene_transform_position
-      );
-      loadedManager.model.transform.setPosition(
-        position.x,
-        position.y,
-        position.z
-      );
-      loadedManager.model.transform.setRotation(
-        rotation.x,
-        rotation.y,
-        rotation.z
-      );
-      loadedManager.camera.enablePan =
-        behaviourParams_item_threeDimensionalScene_controls_enablePan;
-      loadedManager.camera.enableRotate =
-        behaviourParams_item_threeDimensionalScene_controls_enableRotate;
-      loadedManager.camera.enableZoom =
-        behaviourParams_item_threeDimensionalScene_controls_enableZoom;
-      loadedManager.camera.enableAutoRotate =
-        behaviourParams_item_threeDimensionalScene_controls_enableAutoRotate;
+      const rotation = GALLERY_CONSTS.parse3DDimensions(behaviourParams_item_threeDimensionalScene_transform_rotation);
+      const scale = GALLERY_CONSTS.parse3DDimensions(behaviourParams_item_threeDimensionalScene_transform_scale);
+      const position = GALLERY_CONSTS.parse3DDimensions(behaviourParams_item_threeDimensionalScene_transform_position);
+      loadedManager.model.transform.setPosition(position.x, position.y, position.z);
+      loadedManager.model.transform.setRotation(rotation.x, rotation.y, rotation.z);
+      loadedManager.camera.enablePan = behaviourParams_item_threeDimensionalScene_controls_enablePan;
+      loadedManager.camera.enableRotate = behaviourParams_item_threeDimensionalScene_controls_enableRotate;
+      loadedManager.camera.enableZoom = behaviourParams_item_threeDimensionalScene_controls_enableZoom;
+      loadedManager.camera.enableAutoRotate = behaviourParams_item_threeDimensionalScene_controls_enableAutoRotate;
 
       loadedManager.model.transform.setScale(scale.x, scale.y, scale.z);
     },

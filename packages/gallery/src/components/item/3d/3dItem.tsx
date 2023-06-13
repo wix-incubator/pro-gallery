@@ -25,10 +25,7 @@ export default function ThreeDItem(props: ThreeDImplementation): JSX.Element {
     <>
       {canvas}
       {props.thumbnailWithOverride({
-        extraClasses: [
-          props.placeholderExtraClasses,
-          isLoaded ? 'three-d-loaded' : 'three-d-loading',
-        ].join(' '),
+        extraClasses: [props.placeholderExtraClasses, isLoaded ? 'three-d-loaded' : 'three-d-loading'].join(' '),
         overlay: <GalleryUI type={'rotateArrow'} size={60} />,
       })}
       {props.hover}
@@ -41,9 +38,7 @@ function useOrbitControlsClickPropagation(props: ThreeDImplementation) {
     if (!props.shouldPlay && container) {
       const onMouseDown = (e: MouseEvent) => {
         e.stopImmediatePropagation();
-        const itemWrapper = container.querySelector<HTMLDivElement>(
-          '.gallery-item-wrapper'
-        );
+        const itemWrapper = container.querySelector<HTMLDivElement>('.gallery-item-wrapper');
         if (itemWrapper) {
           itemWrapper.click();
         }

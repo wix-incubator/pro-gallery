@@ -21,8 +21,7 @@ describe('options - behaviourParams_gallery_horizontal_enableScrollSnap', () => 
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.behaviourParams.gallery.horizontal.enableScrollSnap]: true,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -37,8 +36,7 @@ describe('options - behaviourParams_gallery_horizontal_enableScrollSnap', () => 
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.behaviourParams.gallery.horizontal.enableScrollSnap]: false,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

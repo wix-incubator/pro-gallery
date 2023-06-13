@@ -8,11 +8,7 @@ export default {
   isRelevant: () => true,
   isRelevantDescription: 'Always relevant.',
   type: INPUT_TYPES.OPTIONS,
-  default:
-    GALLERY_CONSTS[optionsMap.behaviourParams.item.content.placementAnimation]
-      .NO_EFFECT,
-  options: createOptions(
-    optionsMap.behaviourParams.item.content.placementAnimation
-  ),
+  default: GALLERY_CONSTS[optionsMap.behaviourParams.item.content.placementAnimation].NO_EFFECT,
+  options: createOptions(optionsMap.behaviourParams.item.content.placementAnimation),
   description: `Choose an effect that happens to the image when placed/replaced on the gallery.`,
 };
