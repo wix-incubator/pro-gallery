@@ -20,8 +20,7 @@ describe('options - behaviourParams_item_clickAction', () => {
   describe('should set the correct role for each "behaviourParams_item_clickAction" value', () => {
     it('expect "role" to be "link" when "behaviourParams_item_clickAction" is "link"', async () => {
       initialProps.options = Object.assign(initialProps.options, {
-        [optionsMap.behaviourParams.item.clickAction]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
+        [optionsMap.behaviourParams.item.clickAction]: GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -65,8 +64,7 @@ describe('options - behaviourParams_item_clickAction', () => {
     });
     it('expect item to have className "clickable" when "behaviourParams_item_clickAction" is "link"', async () => {
       initialProps.options = Object.assign(initialProps.options, {
-        [optionsMap.behaviourParams.item.clickAction]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
+        [optionsMap.behaviourParams.item.clickAction]: GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -116,14 +114,11 @@ describe('options - behaviourParams_item_clickAction', () => {
     });
     it('check href when behaviourParams_item_clickAction = link', async () => {
       initialProps.options = Object.assign(initialProps.options, {
-        [optionsMap.behaviourParams.item.clickAction]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
+        [optionsMap.behaviourParams.item.clickAction]: GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
-      const item = driver.find
-        .selector('#pro-gallery-container-default-dom-id a')
-        .at(0);
+      const item = driver.find.selector('#pro-gallery-container-default-dom-id a').at(0);
       console.log(item);
       expect(item.props().href).to.not.be.undefined;
       driver.detach.proGallery();
@@ -135,9 +130,7 @@ describe('options - behaviourParams_item_clickAction', () => {
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
-      const item = driver.find
-        .selector('#pro-gallery-container-default-dom-id div')
-        .at(0);
+      const item = driver.find.selector('#pro-gallery-container-default-dom-id div').at(0);
       expect(item.props().href).to.be.undefined;
       driver.detach.proGallery();
     });
@@ -157,8 +150,7 @@ describe('options - behaviourParams_item_clickAction', () => {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING,
         [optionsMap.behaviourParams.item.video.playTrigger]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
-            .CLICK,
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].CLICK,
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -175,8 +167,7 @@ describe('options - behaviourParams_item_clickAction', () => {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].ACTION,
         [optionsMap.behaviourParams.item.video.playTrigger]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
-            .CLICK,
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].CLICK,
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -189,11 +180,9 @@ describe('options - behaviourParams_item_clickAction', () => {
     });
     it('expect not to find video element when "behaviourParams_item_clickAction" is "link"', async () => {
       initialProps.options = Object.assign(initialProps.options, {
-        [optionsMap.behaviourParams.item.clickAction]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
+        [optionsMap.behaviourParams.item.clickAction]: GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
         [optionsMap.behaviourParams.item.video.playTrigger]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
-            .CLICK,
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].CLICK,
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
@@ -207,10 +196,7 @@ describe('options - behaviourParams_item_clickAction', () => {
   });
 
   describe('behaviourParams_item_clickAction = "MAGNIFY"', () => {
-    const mountAndGetMagnifiedItems = async (
-      galleryDriver,
-      selector = '.magnified-item-container'
-    ) => {
+    const mountAndGetMagnifiedItems = async (galleryDriver, selector = '.magnified-item-container') => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].MAGNIFY,
@@ -229,9 +215,7 @@ describe('options - behaviourParams_item_clickAction', () => {
       const items = await mountAndGetMagnifiedItems(driver);
       const item = items.at(0);
       item.simulate('mouseup');
-      expect(
-        driver.find.selector('.magnified-images').length
-      ).to.be.greaterThan(0);
+      expect(driver.find.selector('.magnified-images').length).to.be.greaterThan(0);
       driver.detach.proGallery();
     });
     it('should have default styles', async () => {

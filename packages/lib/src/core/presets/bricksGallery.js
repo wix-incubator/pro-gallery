@@ -6,8 +6,7 @@ const fixToBricks = (options) => {
   let presetOptions = { ...options };
   presetOptions[optionsMap.layoutParams.structure.galleryLayout] =
     GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].BRICKS;
-  presetOptions[optionsMap.layoutParams.crop.method] =
-    GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL;
+  presetOptions[optionsMap.layoutParams.crop.method] = GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL;
   presetOptions[optionsMap.layoutParams.crop.enable] = true;
 
   // presetOptions[optionsMap.layoutParams.crop.ratios] = [1]; replaced by the assignment of the rotating crop ratios that is now merged with this
@@ -19,9 +18,7 @@ const fixToBricks = (options) => {
   presetOptions[optionsMap.layoutParams.structure.gallerySpacing] = 0;
 
   presetOptions[optionsMap.layoutParams.structure.layoutOrientation] =
-    GALLERY_CONSTS[
-      optionsMap.layoutParams.structure.layoutOrientation
-    ].VERTICAL;
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].VERTICAL;
   presetOptions[optionsMap.layoutParams.groups.groupSize] = 3;
   presetOptions[optionsMap.layoutParams.groups.density] = 0.8;
   presetOptions[optionsMap.layoutParams.groups.allowedGroupTypes] = [
@@ -37,9 +34,7 @@ const fixToBricks = (options) => {
   ];
   presetOptions[optionsMap.behaviourParams.gallery.horizontal.loop] = false;
   presetOptions[optionsMap.layoutParams.structure.responsiveMode] =
-    GALLERY_CONSTS[
-      optionsMap.layoutParams.structure.responsiveMode
-    ].SET_ITEMS_PER_ROW;
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW;
   presetOptions[optionsMap.layoutParams.targetItemSize.value] = 400;
   presetOptions[optionsMap.layoutParams.targetItemSize.minimum] = 50;
   presetOptions[optionsMap.layoutParams.groups.groupByOrientation] = true;
@@ -54,9 +49,7 @@ const fixToBricks = (options) => {
   presetOptions[optionsMap.layoutParams.groups.numberOfGroupsPerRow] = 0;
   presetOptions[optionsMap.layoutParams.structure.groupsOrder] =
     GALLERY_CONSTS[optionsMap.layoutParams.structure.groupsOrder].BY_HEIGHT;
-  presetOptions[optionsMap.layoutParams.crop.ratios] = [
-    0.707, 1.414, 1.414, 0.707,
-  ];
+  presetOptions[optionsMap.layoutParams.crop.ratios] = [0.707, 1.414, 1.414, 0.707];
   //layouter direct API
   presetOptions.fixedColumns = 1;
   //layouter direct API

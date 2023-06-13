@@ -58,8 +58,7 @@ function FullError({ errObject }) {
 function Item({ entry }) {
   const key = entry[0];
   const value = entry[1];
-  const valueText =
-    typeof value === 'string' ? value : JSON.stringify(value, null, 4);
+  const valueText = typeof value === 'string' ? value : JSON.stringify(value, null, 4);
   return <li>{`${key}: ${valueText}`}</li>;
 }
 

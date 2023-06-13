@@ -8,10 +8,8 @@ export default {
   margins between the image and the image container.`,
   isRelevant: (options) =>
     options[optionsMap.layoutParams.crop.enable] &&
-    options[optionsMap.layoutParams.crop.method] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
-  isRelevantDescription:
-    'Set "Crop Images" to "true" and set "Crop Type" to "Fit".',
+    options[optionsMap.layoutParams.crop.method] === GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
+  isRelevantDescription: 'Set "Crop Images" to "true" and set "Crop Type" to "Fit".',
   type: INPUT_TYPES.BOOLEAN,
   default: false,
 };

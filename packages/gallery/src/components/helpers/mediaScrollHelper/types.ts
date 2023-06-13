@@ -13,10 +13,7 @@ export type ScrollHelperGalleryData = {
 };
 export type UpdateGalleryData = (data: ScrollHelperGalleryData) => void;
 export type GetPlayTrigger = (options: Options) => PlayTrigger;
-export type HandleEvents = (event: {
-  eventName: string;
-  eventData: any;
-}) => void;
+export type HandleEvents = (event: { eventName: string; eventData: any }) => void;
 
 export type MediaScrollHelperHandlerConfiguration = {
   supportedItemsFilter: (item: any) => boolean;

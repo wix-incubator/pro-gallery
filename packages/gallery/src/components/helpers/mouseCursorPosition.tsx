@@ -30,26 +30,17 @@ export function mouseFollower(container: HTMLElement) {
   });
   const getMousePosition = (event: MouseEvent) => {
     const bounding = container.getBoundingClientRect();
-    const position = [
-      event.clientX - bounding.left,
-      event.clientY - bounding.top,
-    ] as [number, number];
+    const position = [event.clientX - bounding.left, event.clientY - bounding.top] as [number, number];
     return position;
   };
 
   function onMouseEnter(event: MouseEvent) {
     const position = getMousePosition(event);
-    emitter.call.mouseEnterState(
-      !isHoveringClickableElement(container, event, ...position),
-      ...position
-    );
+    emitter.call.mouseEnterState(!isHoveringClickableElement(container, event, ...position), ...position);
   }
   function onMouseMove(event: MouseEvent) {
     const position = getMousePosition(event);
-    emitter.call.mouseEnterState(
-      !isHoveringClickableElement(container, event, ...position),
-      ...position
-    );
+    emitter.call.mouseEnterState(!isHoveringClickableElement(container, event, ...position), ...position);
     emitter.call.mouseMove(...position);
   }
   function onMouseLeave() {
@@ -95,22 +86,12 @@ interface MouseCursorState {
   mouseIn: boolean;
 }
 
-const getContainerById = (id: string) =>
-  document.getElementById(`pro-gallery-container-${id}`) as HTMLElement;
+const getContainerById = (id: string) => document.getElementById(`pro-gallery-container-${id}`) as HTMLElement;
 
-const MouseFollowerContext = React.createContext<
-  ReturnType<typeof mouseFollower> | undefined
->(undefined);
+const MouseFollowerContext = React.createContext<ReturnType<typeof mouseFollower> | undefined>(undefined);
 
-export const MouseFollowerProvider = ({
-  children,
-  id,
-}: {
-  children: React.ReactNode;
-  id: string;
-}) => {
-  const [mouseFollowerValue, setMouseFollowerValue] =
-    React.useState<ReturnType<typeof mouseFollower>>();
+export const MouseFollowerProvider = ({ children, id }: { children: React.ReactNode; id: string }) => {
+  const [mouseFollowerValue, setMouseFollowerValue] = React.useState<ReturnType<typeof mouseFollower>>();
   useEffect(() => {
     const container = getContainerById(id);
     const mouseFollowerValue = mouseFollower(container);
@@ -127,10 +108,7 @@ export const MouseFollowerProvider = ({
   );
 };
 
-export class MouseCursor extends React.Component<
-  MouseCursorProps,
-  MouseCursorState
-> {
+export class MouseCursor extends React.Component<MouseCursorProps, MouseCursorState> {
   declare context: NonNullable<React.ContextType<typeof MouseFollowerContext>>;
 
   static contextType = MouseFollowerContext;
@@ -160,22 +138,20 @@ export class MouseCursor extends React.Component<
         }
       }
     });
-    const removeClickListener = this.context.listen.mouseClickInteractionEvent(
-      (e) => {
-        if (!this.state.mouseIn) {
-          return;
-        }
-        const [x, y] = this.state.position;
-        if (!this.props.shouldRenderAtPosition(x, y)) {
-          return;
-        }
-        if (e.type === 'mousedown' || e.type === 'mouseup') {
-          this.props.onMouseDownOrUp(e);
-          return;
-        }
-        this.props.onClick(e);
+    const removeClickListener = this.context.listen.mouseClickInteractionEvent((e) => {
+      if (!this.state.mouseIn) {
+        return;
       }
-    );
+      const [x, y] = this.state.position;
+      if (!this.props.shouldRenderAtPosition(x, y)) {
+        return;
+      }
+      if (e.type === 'mousedown' || e.type === 'mouseup') {
+        this.props.onMouseDownOrUp(e);
+        return;
+      }
+      this.props.onClick(e);
+    });
     this.cleanup = () => {
       removeMoveListener();
       removeEnterListener();
@@ -212,26 +188,15 @@ interface ArrowFollowerProps {
   isTheOnlyArrow: boolean;
 }
 
-const isHoveringClickableElement = (
-  element: HTMLElement,
-  e: MouseEvent,
-  x: number,
-  y: number
-) => {
+const isHoveringClickableElement = (element: HTMLElement, e: MouseEvent, x: number, y: number) => {
   // cancel the click event
   for (const ele of e.composedPath() as HTMLElement[]) {
-    if (
-      ele instanceof HTMLElement &&
-      ele.getAttribute(CLICKABLE_ATTR) === 'true'
-    ) {
+    if (ele instanceof HTMLElement && ele.getAttribute(CLICKABLE_ATTR) === 'true') {
       return true;
     }
   }
   const bounding = element.getBoundingClientRect();
-  const elementUnderMouse = document.elementFromPoint(
-    x + bounding.left,
-    y + bounding.top
-  ) as HTMLElement | null;
+  const elementUnderMouse = document.elementFromPoint(x + bounding.left, y + bounding.top) as HTMLElement | null;
   if (!elementUnderMouse) {
     return false;
   }
@@ -249,10 +214,7 @@ export class ArrowFollower extends React.Component<ArrowFollowerProps> {
   shouldRender = (x: number): boolean => {
     const element = getContainerById(this.props.id);
     const containerWidth = element.offsetWidth;
-    const realMaxWidth = Math.min(
-      this.props.mouseCursorContainerMaxWidth,
-      this.props.isTheOnlyArrow ? 100 : 50
-    );
+    const realMaxWidth = Math.min(this.props.mouseCursorContainerMaxWidth, this.props.isTheOnlyArrow ? 100 : 50);
     const amountOfPixelsNeeded = containerWidth * (realMaxWidth / 100);
     const isLeft = amountOfPixelsNeeded >= x;
     const isRight = x > containerWidth - amountOfPixelsNeeded;

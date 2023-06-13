@@ -20,8 +20,7 @@ describe('layoutParams_structure_columnRatios - e2e', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.responsiveMode]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
-          .SET_ITEMS_PER_ROW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW,
       [optionsMap.layoutParams.structure.columnRatios]: [1, 2, 4],
       [optionsMap.layoutParams.structure.numberOfColumns]: 4,
     });

@@ -15,24 +15,17 @@ const defaultOptions = flattenObject({
     structure: {
       galleryLayout: -1,
       galleryRatio: { value: 0, includeExternalInfo: false },
-      scrollDirection:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+      scrollDirection: GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
       gallerySpacing: 0,
       itemSpacing: 10,
       enableStreching: true,
-      responsiveMode:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
-          .FIT_TO_SCREEN,
+      responsiveMode: GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].FIT_TO_SCREEN,
       scatter: {
         randomScatter: 0,
         manualScatter: '',
       },
-      layoutOrientation:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-          .HORIZONTAL,
-      groupsOrder:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.groupsOrder].BY_HEIGHT,
+      layoutOrientation: GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].HORIZONTAL,
+      groupsOrder: GALLERY_CONSTS[optionsMap.layoutParams.structure.groupsOrder].BY_HEIGHT,
       numberOfGridRows: 1,
       numberOfColumns: 3,
       columnRatios: [],
@@ -59,29 +52,18 @@ const defaultOptions = flattenObject({
       spacing: 4,
       marginToGallery: 0,
       enable: false,
-      position:
-        GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position]
-          .OUTSIDE_GALLERY,
-      alignment:
-        GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM,
+      position: GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].OUTSIDE_GALLERY,
+      alignment: GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM,
     },
     navigationArrows: {
       enable: true,
-      position:
-        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
-          .ON_GALLERY,
+      position: GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position].ON_GALLERY,
       padding: 23,
       size: 23,
-      verticalAlignment:
-        GALLERY_CONSTS[
-          optionsMap.layoutParams.navigationArrows.verticalAlignment
-        ].ITEM_CENTER,
-      type: GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.type]
-        .DEFAULT_ARROW,
+      verticalAlignment: GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment].ITEM_CENTER,
+      type: GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.type].DEFAULT_ARROW,
       container: {
-        type: GALLERY_CONSTS[
-          optionsMap.layoutParams.navigationArrows.container.type
-        ].SHADOW,
+        type: GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type].SHADOW,
         backgroundColor: '',
         borderRadius: -1,
       },
@@ -108,12 +90,9 @@ const defaultOptions = flattenObject({
   },
   behaviourParams: {
     item: {
-      clickAction:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING,
+      clickAction: GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING,
       video: {
-        playTrigger:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
-            .HOVER,
+        playTrigger: GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER,
         loop: true,
         volume: 0,
         enableControls: false,
@@ -123,42 +102,23 @@ const defaultOptions = flattenObject({
         enablePlaceholder: true,
       },
       overlay: {
-        hoveringBehaviour:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-          ].APPEARS,
-        hoverAnimation:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
-            .NO_EFFECT,
-        position:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.position].LEFT,
+        hoveringBehaviour: GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].APPEARS,
+        hoverAnimation: GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation].NO_EFFECT,
+        position: GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.position].LEFT,
         size: 100,
-        sizeUnits:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.sizeUnits]
-            .PERCENT,
+        sizeUnits: GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.sizeUnits].PERCENT,
         padding: 0,
       },
       content: {
-        hoverAnimation:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
-            .NO_EFFECT,
-        loader:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader].BLUR,
-        placementAnimation:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.item.content.placementAnimation
-          ].NO_EFFECT,
+        hoverAnimation: GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation].NO_EFFECT,
+        loader: GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader].BLUR,
+        placementAnimation: GALLERY_CONSTS[optionsMap.behaviourParams.item.content.placementAnimation].NO_EFFECT,
         magnificationValue: 2,
         tiltAngleValue: -4,
       },
       secondaryMedia: {
-        trigger:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger]
-            .OFF,
-        behaviour:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.item.secondaryMedia.behaviour
-          ].APPEARS,
+        trigger: GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger].OFF,
+        behaviour: GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.behaviour].APPEARS,
       },
       threeDimensionalScene: {
         controls: {
@@ -172,10 +132,7 @@ const defaultOptions = flattenObject({
           scale: 'x1y1z1',
           position: 'x0y0z0',
         },
-        playTrigger:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.item.threeDimensionalScene.playTrigger
-          ].HOVER,
+        playTrigger: GALLERY_CONSTS[optionsMap.behaviourParams.item.threeDimensionalScene.playTrigger].HOVER,
         enablePlayButton: false,
         enableThumbnailsPlayButton: false,
         enablePlaceholder: true,
@@ -183,41 +140,25 @@ const defaultOptions = flattenObject({
     },
     gallery: {
       blockContextMenu: true, //is this actually a default??
-      layoutDirection:
-        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-          .LEFT_TO_RIGHT,
-      scrollAnimation:
-        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation]
-          .NO_EFFECT,
+      layoutDirection: GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].LEFT_TO_RIGHT,
+      scrollAnimation: GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation].NO_EFFECT,
       enableIndexingShareLinks: true,
       horizontal: {
         enableScrollSnap: false,
         navigationDuration: 400,
         blockScroll: false,
         loop: false,
-        slideTransition:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.gallery.horizontal.slideTransition
-          ].EASE,
-        slideAnimation:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.gallery.horizontal.slideAnimation
-          ].SCROLL,
+        slideTransition: GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideTransition].EASE,
+        slideAnimation: GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation].SCROLL,
         autoSlide: {
-          behaviour:
-            GALLERY_CONSTS[
-              optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-            ].OFF,
+          behaviour: GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour].OFF,
           interval: 4,
           pauseOnHover: true,
           speed: 200,
         },
         slideshowInfo: {
           buttonsAlignment:
-            GALLERY_CONSTS[
-              optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
-                .buttonsAlignment
-            ].CENTER,
+            GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideshowInfo.buttonsAlignment].CENTER,
           enablePlayButton: false,
           enableCounter: false,
         },
@@ -226,10 +167,7 @@ const defaultOptions = flattenObject({
         loadMore: {
           enable: false,
           text: '',
-          amount:
-            GALLERY_CONSTS[
-              optionsMap.behaviourParams.gallery.vertical.loadMore.amount
-            ].ALL,
+          amount: GALLERY_CONSTS[optionsMap.behaviourParams.gallery.vertical.loadMore.amount].ALL,
         },
       },
     },

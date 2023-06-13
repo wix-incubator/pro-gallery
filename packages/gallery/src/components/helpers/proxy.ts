@@ -1,6 +1,4 @@
-export function proxy<T extends Record<string, any>>(
-  getter: (key: keyof T) => T[keyof T]
-): T {
+export function proxy<T extends Record<string, any>>(getter: (key: keyof T) => T[keyof T]): T {
   return new Proxy(
     {},
     {

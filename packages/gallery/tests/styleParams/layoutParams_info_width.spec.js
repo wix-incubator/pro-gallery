@@ -22,13 +22,10 @@ describe('options - layoutParams_info_width', () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].RIGHT,
+      [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].RIGHT,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
-      [optionsMap.layoutParams.info.sizeUnits]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.sizeUnits].PIXEL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
+      [optionsMap.layoutParams.info.sizeUnits]: GALLERY_CONSTS[optionsMap.layoutParams.info.sizeUnits].PIXEL,
       [optionsMap.layoutParams.info.width]: 250,
     });
     driver.mount.proGallery(initialProps);

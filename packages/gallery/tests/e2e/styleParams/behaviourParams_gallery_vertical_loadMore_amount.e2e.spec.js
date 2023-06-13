@@ -21,9 +21,7 @@ describe('behaviourParams_gallery_vertical_loadMore_amount - e2e', () => {
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.gallery.vertical.loadMore.enable]: true,
       [optionsMap.behaviourParams.gallery.vertical.loadMore.amount]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.gallery.vertical.loadMore.amount
-        ].ALL,
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.vertical.loadMore.amount].ALL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.actions.click('show-more');

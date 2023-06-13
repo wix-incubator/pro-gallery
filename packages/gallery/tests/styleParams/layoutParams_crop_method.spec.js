@@ -22,8 +22,7 @@ describe('options - layoutParams_crop_method', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.layoutParams.crop.enable]: true,
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
+      [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -36,8 +35,7 @@ describe('options - layoutParams_crop_method', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.layoutParams.crop.enable]: true,
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
+      [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -50,8 +48,7 @@ describe('options - layoutParams_crop_method', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.layoutParams.crop.enable]: true,
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
+      [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -65,8 +62,7 @@ describe('options - layoutParams_crop_method', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.layoutParams.crop.enable]: true,
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
+      [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -81,8 +77,7 @@ describe('options - layoutParams_crop_method', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.layoutParams.crop.enable]: true,
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
+      [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

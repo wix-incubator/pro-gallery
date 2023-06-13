@@ -20,8 +20,7 @@ describe('behaviourParams_gallery_layoutDirection - e2e', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.behaviourParams.gallery.layoutDirection]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-          .LEFT_TO_RIGHT,
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].LEFT_TO_RIGHT,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -32,8 +31,7 @@ describe('behaviourParams_gallery_layoutDirection - e2e', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.behaviourParams.gallery.layoutDirection]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-          .RIGHT_TO_LEFT,
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');

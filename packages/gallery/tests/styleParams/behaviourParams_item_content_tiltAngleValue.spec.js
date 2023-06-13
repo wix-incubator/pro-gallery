@@ -20,18 +20,14 @@ describe('options - behaviourParams_item_content_tiltAngleValue', () => {
     const TILE_ANGLE_VALUE = 20;
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.behaviourParams.item.content.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
-          .TILT,
-      [optionsMap.behaviourParams.item.content.tiltAngleValue]:
-        TILE_ANGLE_VALUE,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation].TILT,
+      [optionsMap.behaviourParams.item.content.tiltAngleValue]: TILE_ANGLE_VALUE,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
     const animatedItem = driver.find.selector('.gallery-item-wrapper').at(0);
     animatedItem.simulate('mouseover');
-    const computedAngle = getComputedStyle(
-      animatedItem.getDOMNode()
-    ).getPropertyValue('--tiltAngleValue');
+    const computedAngle = getComputedStyle(animatedItem.getDOMNode()).getPropertyValue('--tiltAngleValue');
     expect(computedAngle).to.be.eq(TILE_ANGLE_VALUE.toString());
     driver.detach.proGallery();
   });

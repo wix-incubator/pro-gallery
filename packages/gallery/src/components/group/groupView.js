@@ -49,8 +49,7 @@ class GroupView extends React.Component {
     const { options } = this.props.galleryConfig; //v5 TODO - why is this not from the options in the gallery. this comes from the layouter
     const isRTL =
       options[optionsMap.behaviourParams.gallery.layoutDirection] ===
-      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-        .RIGHT_TO_LEFT;
+      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT;
 
     return this.shouldRender() ? (
       <div

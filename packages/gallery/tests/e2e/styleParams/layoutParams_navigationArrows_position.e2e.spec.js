@@ -18,11 +18,9 @@ describe('layoutParams_navigationArrows_position - e2e', () => {
   it('should have navigation arrows inside the gallery ', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW,
       [optionsMap.layoutParams.navigationArrows.position]:
-        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
-          .ON_GALLERY,
+        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position].ON_GALLERY,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -31,11 +29,9 @@ describe('layoutParams_navigationArrows_position - e2e', () => {
   it('should have navigation arrows outside the gallery ', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW,
       [optionsMap.layoutParams.navigationArrows.position]:
-        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
-          .OUTSIDE_GALLERY,
+        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position].OUTSIDE_GALLERY,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');

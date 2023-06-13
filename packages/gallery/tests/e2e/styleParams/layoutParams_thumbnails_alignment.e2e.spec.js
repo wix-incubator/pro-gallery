@@ -18,8 +18,7 @@ describe('layoutParams_thumbnails_alignment - e2e', () => {
   it('should place thumbnails in the bottom', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
       [optionsMap.layoutParams.thumbnails.alignment]:
         GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM,
     });
@@ -30,10 +29,8 @@ describe('layoutParams_thumbnails_alignment - e2e', () => {
   it('should place thumbnails on top', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
-      [optionsMap.layoutParams.thumbnails.alignment]:
-        GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
+      [optionsMap.layoutParams.thumbnails.alignment]: GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -42,10 +39,8 @@ describe('layoutParams_thumbnails_alignment - e2e', () => {
   it('should place thumbnails on the left', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
-      [optionsMap.layoutParams.thumbnails.alignment]:
-        GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
+      [optionsMap.layoutParams.thumbnails.alignment]: GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     const page = await driver.grab.elemScreenshot('.pro-gallery');
@@ -54,8 +49,7 @@ describe('layoutParams_thumbnails_alignment - e2e', () => {
   it('should place thumbnails on the right', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .THUMBNAIL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
       [optionsMap.layoutParams.thumbnails.alignment]:
         GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].RIGHT,
     });

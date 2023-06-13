@@ -46,12 +46,9 @@ describe('ItemHover', () => {
     });
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].APPEARS,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].APPEARS,
       [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
-          .SLIDE_UP,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation].SLIDE_UP,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(0);
@@ -63,12 +60,9 @@ describe('ItemHover', () => {
     });
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].APPEARS,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].APPEARS,
       [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
-          .SLIDE_UP,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation].SLIDE_UP,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(0);
@@ -80,12 +74,9 @@ describe('ItemHover', () => {
     });
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].APPEARS,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].APPEARS,
       [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
-          .SLIDE_UP,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation].SLIDE_UP,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(0);
@@ -97,12 +88,9 @@ describe('ItemHover', () => {
     });
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].DISAPPEARS,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].DISAPPEARS,
       [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
-          .SLIDE_UP,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation].SLIDE_UP,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(1);
@@ -114,12 +102,9 @@ describe('ItemHover', () => {
     });
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].DISAPPEARS,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].DISAPPEARS,
       [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
-          .NO_EFFECT,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation].NO_EFFECT,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(1);
@@ -131,12 +116,9 @@ describe('ItemHover', () => {
     });
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].APPEARS,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].APPEARS,
       [optionsMap.behaviourParams.item.overlay.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation]
-          .SLIDE_UP,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation].SLIDE_UP,
     });
     driver.mount(ItemHover, sampleItemViewProps);
     expect(driver.find.class('gallery-item-hover-inner').length).to.equal(1);

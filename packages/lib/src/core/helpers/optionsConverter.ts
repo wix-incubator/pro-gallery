@@ -1,8 +1,4 @@
-import {
-  trimUndefinedValues_flat,
-  flattenObject,
-  flatToNested,
-} from './optionsUtils';
+import { trimUndefinedValues_flat, flattenObject, flatToNested } from './optionsUtils';
 
 import { isLayout } from '../../common/constants/layoutParams_structure_galleryLayout';
 import optionsMap from './optionsMap';
@@ -66,8 +62,7 @@ function migrateOptions(flatOptionsObject) {
   migratedOptions = process_old_to_new_VideoPlayTrigger(migratedOptions);
   migratedOptions = process_old_to_new_VideoVolume(migratedOptions);
   migratedOptions = process_old_to_new_VideoSpeed(migratedOptions);
-  migratedOptions =
-    process_old_to_new_OverlayHoveringBehaviour(migratedOptions);
+  migratedOptions = process_old_to_new_OverlayHoveringBehaviour(migratedOptions);
   migratedOptions = process_old_to_new_InfoPlacement(migratedOptions);
   migratedOptions = process_old_to_new_layoutDirection(migratedOptions);
   migratedOptions = process_old_to_new_LoadMoreAmount(migratedOptions);
@@ -85,23 +80,13 @@ function migrateOptions(flatOptionsObject) {
 function process_old_to_new_columnRatios(obj) {
   let _obj = obj;
 
-  _obj = namingChange(
-    _obj,
-    'columnWidths',
-    optionsMap.layoutParams.structure.columnRatios
-  );
+  _obj = namingChange(_obj, 'columnWidths', optionsMap.layoutParams.structure.columnRatios);
   if (_obj[optionsMap.layoutParams.structure.columnRatios]?.length === 0) {
     _obj[optionsMap.layoutParams.structure.columnRatios] = [];
   } else {
-    _obj[optionsMap.layoutParams.structure.columnRatios] = _obj[
-      optionsMap.layoutParams.structure.columnRatios
-    ]
+    _obj[optionsMap.layoutParams.structure.columnRatios] = _obj[optionsMap.layoutParams.structure.columnRatios]
       ? _obj[optionsMap.layoutParams.structure.columnRatios]?.split
-        ? [
-            ..._obj[optionsMap.layoutParams.structure.columnRatios]
-              ?.split(',')
-              .map(Number),
-          ]
+        ? [..._obj[optionsMap.layoutParams.structure.columnRatios]?.split(',').map(Number)]
         : _obj[optionsMap.layoutParams.structure.columnRatios]
       : undefined;
   }
@@ -134,40 +119,27 @@ function process_old_to_new_targetItemSizeValue(obj) {
 function process_old_to_new_cropMethod(obj) {
   let _obj = obj;
   _obj = namingChange(_obj, 'cubeType', optionsMap.layoutParams.crop.method);
-  _obj[optionsMap.layoutParams.crop.method] =
-    _obj[optionsMap.layoutParams.crop.method]?.toUpperCase();
+  _obj[optionsMap.layoutParams.crop.method] = _obj[optionsMap.layoutParams.crop.method]?.toUpperCase();
   return _obj;
 }
 function process_old_to_new_ThumbnailAlignment(obj) {
   //['galleryThumbnailsAlignment', optionsMap.layoutParams.thumbnails.alignment'],
   let _obj = obj;
-  _obj = namingChange(
-    _obj,
-    'galleryThumbnailsAlignment',
-    optionsMap.layoutParams.thumbnails.alignment
-  );
+  _obj = namingChange(_obj, 'galleryThumbnailsAlignment', optionsMap.layoutParams.thumbnails.alignment);
   _obj[optionsMap.layoutParams.thumbnails.alignment] =
     _obj[optionsMap.layoutParams.thumbnails.alignment]?.toUpperCase();
   return _obj;
 }
 function process_old_to_new_VideoPlayTrigger(obj) {
   let _obj = obj;
-  _obj = namingChange(
-    _obj,
-    'videoPlay',
-    optionsMap.behaviourParams.item.video.playTrigger
-  );
+  _obj = namingChange(_obj, 'videoPlay', optionsMap.behaviourParams.item.video.playTrigger);
   _obj[optionsMap.behaviourParams.item.video.playTrigger] =
     _obj[optionsMap.behaviourParams.item.video.playTrigger]?.toUpperCase();
   return _obj;
 }
 function process_old_to_new_targetItemSizeUnit(obj) {
   let _obj = obj;
-  _obj = namingChange(
-    _obj,
-    'gallerySizeType',
-    optionsMap.layoutParams.targetItemSize.unit
-  );
+  _obj = namingChange(_obj, 'gallerySizeType', optionsMap.layoutParams.targetItemSize.unit);
   switch (_obj[optionsMap.layoutParams.targetItemSize.unit]) {
     case 'px':
       _obj[optionsMap.layoutParams.targetItemSize.unit] = 'PIXEL';
@@ -183,27 +155,15 @@ function process_old_to_new_targetItemSizeUnit(obj) {
 }
 function process_old_to_new_VideoVolume(obj) {
   let _obj = obj;
-  _obj = namingChange(
-    _obj,
-    'videoSound',
-    optionsMap.behaviourParams.item.video.volume
-  );
-  if (
-    typeof _obj[optionsMap.behaviourParams.item.video.volume] !== 'undefined'
-  ) {
-    _obj[optionsMap.behaviourParams.item.video.volume] = Number(
-      _obj[optionsMap.behaviourParams.item.video.volume]
-    );
+  _obj = namingChange(_obj, 'videoSound', optionsMap.behaviourParams.item.video.volume);
+  if (typeof _obj[optionsMap.behaviourParams.item.video.volume] !== 'undefined') {
+    _obj[optionsMap.behaviourParams.item.video.volume] = Number(_obj[optionsMap.behaviourParams.item.video.volume]);
   }
   return _obj;
 }
 function process_old_to_new_VideoSpeed(obj) {
   let _obj = obj;
-  _obj = namingChange(
-    _obj,
-    'videoSpeed',
-    optionsMap.behaviourParams.item.video.speed
-  );
+  _obj = namingChange(_obj, 'videoSpeed', optionsMap.behaviourParams.item.video.speed);
   _obj[optionsMap.behaviourParams.item.video.speed] =
     Number(_obj[optionsMap.behaviourParams.item.video.speed]) >= 0
       ? Number(_obj[optionsMap.behaviourParams.item.video.speed])
@@ -211,9 +171,7 @@ function process_old_to_new_VideoSpeed(obj) {
   return _obj;
 }
 function process_old_to_new_gallerySpacing(obj) {
-  if (
-    typeof obj[optionsMap.layoutParams.structure.gallerySpacing] !== 'undefined'
-  ) {
+  if (typeof obj[optionsMap.layoutParams.structure.gallerySpacing] !== 'undefined') {
     return obj;
   }
   let _obj = obj;
@@ -230,18 +188,13 @@ function process_old_to_new_gallerySpacing(obj) {
 }
 function process_old_to_new_arrowsPosition(obj) {
   let _obj = obj;
-  _obj = namingChange(
-    _obj,
-    'arrowsPosition',
-    optionsMap.layoutParams.navigationArrows.position
-  );
+  _obj = namingChange(_obj, 'arrowsPosition', optionsMap.layoutParams.navigationArrows.position);
   switch (_obj[optionsMap.layoutParams.navigationArrows.position]) {
     case 0:
       _obj[optionsMap.layoutParams.navigationArrows.position] = 'ON_GALLERY';
       break;
     case 1:
-      _obj[optionsMap.layoutParams.navigationArrows.position] =
-        'OUTSIDE_GALLERY';
+      _obj[optionsMap.layoutParams.navigationArrows.position] = 'OUTSIDE_GALLERY';
       break;
     case 2:
       _obj[optionsMap.layoutParams.navigationArrows.position] = 'MOUSE_CURSOR';
@@ -253,18 +206,13 @@ function process_old_to_new_arrowsPosition(obj) {
 }
 function process_old_to_new_responsiveMode(obj) {
   let _obj = obj;
-  _obj = namingChange(
-    _obj,
-    'gridStyle',
-    optionsMap.layoutParams.structure.responsiveMode
-  );
+  _obj = namingChange(_obj, 'gridStyle', optionsMap.layoutParams.structure.responsiveMode);
   switch (_obj[optionsMap.layoutParams.structure.responsiveMode]) {
     case 0:
       _obj[optionsMap.layoutParams.structure.responsiveMode] = 'FIT_TO_SCREEN';
       break;
     case 1:
-      _obj[optionsMap.layoutParams.structure.responsiveMode] =
-        'SET_ITEMS_PER_ROW';
+      _obj[optionsMap.layoutParams.structure.responsiveMode] = 'SET_ITEMS_PER_ROW';
       break;
     default:
       break;
@@ -273,11 +221,7 @@ function process_old_to_new_responsiveMode(obj) {
 }
 function process_old_to_new_ScrollDirection(obj) {
   let _obj = obj;
-  _obj = namingChange(
-    _obj,
-    'scrollDirection',
-    optionsMap.layoutParams.structure.scrollDirection
-  );
+  _obj = namingChange(_obj, 'scrollDirection', optionsMap.layoutParams.structure.scrollDirection);
   switch (_obj[optionsMap.layoutParams.structure.scrollDirection]) {
     case 0:
       _obj[optionsMap.layoutParams.structure.scrollDirection] = 'VERTICAL';
@@ -292,19 +236,13 @@ function process_old_to_new_ScrollDirection(obj) {
 }
 function process_old_to_new_layoutDirection(obj) {
   let _obj = obj;
-  _obj = namingChange(
-    _obj,
-    'isRTL',
-    optionsMap.behaviourParams.gallery.layoutDirection
-  );
+  _obj = namingChange(_obj, 'isRTL', optionsMap.behaviourParams.gallery.layoutDirection);
   switch (_obj[optionsMap.behaviourParams.gallery.layoutDirection]) {
     case true:
-      _obj[optionsMap.behaviourParams.gallery.layoutDirection] =
-        'RIGHT_TO_LEFT';
+      _obj[optionsMap.behaviourParams.gallery.layoutDirection] = 'RIGHT_TO_LEFT';
       break;
     case false:
-      _obj[optionsMap.behaviourParams.gallery.layoutDirection] =
-        'LEFT_TO_RIGHT';
+      _obj[optionsMap.behaviourParams.gallery.layoutDirection] = 'LEFT_TO_RIGHT';
       break;
     default:
       break;
@@ -315,22 +253,12 @@ function process_old_to_new_slideshowInfoSize(obj) {
   let _obj = obj;
   const isSlideshow = isLayout('SLIDESHOW')({
     galleryLayout:
-      obj['galleryLayout'] >= -3
-        ? obj['galleryLayout']
-        : obj[optionsMap.layoutParams.structure.galleryLayout],
+      obj['galleryLayout'] >= -3 ? obj['galleryLayout'] : obj[optionsMap.layoutParams.structure.galleryLayout],
   });
   if (isSlideshow) {
-    _obj = namingChange(
-      _obj,
-      'slideshowInfoSize',
-      optionsMap.layoutParams.info.height
-    );
+    _obj = namingChange(_obj, 'slideshowInfoSize', optionsMap.layoutParams.info.height);
   } else {
-    _obj = namingChange(
-      _obj,
-      'textBoxHeight',
-      optionsMap.layoutParams.info.height
-    );
+    _obj = namingChange(_obj, 'textBoxHeight', optionsMap.layoutParams.info.height);
   }
   delete _obj['slideshowInfoSize'];
   delete _obj['textBoxHeight'];
@@ -338,28 +266,16 @@ function process_old_to_new_slideshowInfoSize(obj) {
 }
 function process_old_to_new_textBoxSizeMode(obj) {
   let _obj = obj;
-  _obj = namingChange(
-    _obj,
-    'calculateTextBoxWidthMode',
-    optionsMap.layoutParams.info.sizeUnits
-  );
+  _obj = namingChange(_obj, 'calculateTextBoxWidthMode', optionsMap.layoutParams.info.sizeUnits);
   switch (_obj[optionsMap.layoutParams.info.sizeUnits]) {
     case 'PERCENT':
       _obj[optionsMap.layoutParams.info.sizeUnits] = 'PERCENT';
-      _obj = namingChange(
-        _obj,
-        'textBoxWidthPercent',
-        optionsMap.layoutParams.info.width
-      );
+      _obj = namingChange(_obj, 'textBoxWidthPercent', optionsMap.layoutParams.info.width);
       delete _obj['textBoxWidth'];
       break;
     case 'MANUAL':
       _obj[optionsMap.layoutParams.info.sizeUnits] = 'PIXEL';
-      _obj = namingChange(
-        _obj,
-        'textBoxWidth',
-        optionsMap.layoutParams.info.width
-      );
+      _obj = namingChange(_obj, 'textBoxWidth', optionsMap.layoutParams.info.width);
       delete _obj['textBoxWidthPercent'];
       break;
     default:
@@ -369,11 +285,7 @@ function process_old_to_new_textBoxSizeMode(obj) {
 }
 function process_old_to_new_LayoutOrientation(obj) {
   let _obj = obj;
-  _obj = namingChange(
-    _obj,
-    'isVertical',
-    optionsMap.layoutParams.structure.layoutOrientation
-  );
+  _obj = namingChange(_obj, 'isVertical', optionsMap.layoutParams.structure.layoutOrientation);
   switch (_obj[optionsMap.layoutParams.structure.layoutOrientation]) {
     case true:
       _obj[optionsMap.layoutParams.structure.layoutOrientation] = 'VERTICAL';
@@ -388,11 +300,7 @@ function process_old_to_new_LayoutOrientation(obj) {
 }
 function process_old_to_new_groupsOrder(obj) {
   let _obj = obj;
-  _obj = namingChange(
-    _obj,
-    'placeGroupsLtr',
-    optionsMap.layoutParams.structure.groupsOrder
-  );
+  _obj = namingChange(_obj, 'placeGroupsLtr', optionsMap.layoutParams.structure.groupsOrder);
   switch (_obj[optionsMap.layoutParams.structure.groupsOrder]) {
     case true:
       _obj[optionsMap.layoutParams.structure.groupsOrder] = 'LEFT_TO_RIGHT';
@@ -413,35 +321,20 @@ function process_old_to_new_galleryTextAlign(obj) {
     'galleryTextAlign',
     optionsMap.behaviourParams.gallery.horizontal.slideshowInfo.buttonsAlignment
   );
-  _obj[
-    optionsMap.behaviourParams.gallery.horizontal.slideshowInfo.buttonsAlignment
-  ] =
-    _obj[
-      optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
-        .buttonsAlignment
-    ]?.toUpperCase();
+  _obj[optionsMap.behaviourParams.gallery.horizontal.slideshowInfo.buttonsAlignment] =
+    _obj[optionsMap.behaviourParams.gallery.horizontal.slideshowInfo.buttonsAlignment]?.toUpperCase();
   return _obj;
 }
 function process_old_to_new_LoadMoreAmount(obj) {
   let _obj = obj;
-  _obj = namingChange(
-    _obj,
-    'loadMoreAmount',
-    optionsMap.behaviourParams.gallery.vertical.loadMore.amount
-  );
+  _obj = namingChange(_obj, 'loadMoreAmount', optionsMap.behaviourParams.gallery.vertical.loadMore.amount);
   _obj[optionsMap.behaviourParams.gallery.vertical.loadMore.amount] =
-    _obj[
-      optionsMap.behaviourParams.gallery.vertical.loadMore.amount
-    ]?.toUpperCase();
+    _obj[optionsMap.behaviourParams.gallery.vertical.loadMore.amount]?.toUpperCase();
   return _obj;
 }
 function process_old_to_new_CroppedAlignment(obj) {
   let _obj = obj;
-  _obj = namingChange(
-    _obj,
-    'cubeFitPosition',
-    optionsMap.layoutParams.crop.alignment
-  );
+  _obj = namingChange(_obj, 'cubeFitPosition', optionsMap.layoutParams.crop.alignment);
   switch (_obj[optionsMap.layoutParams.crop.alignment]) {
     case 'MIDDLE':
       _obj[optionsMap.layoutParams.crop.alignment] = 'CENTER';
@@ -453,19 +346,13 @@ function process_old_to_new_CroppedAlignment(obj) {
 }
 function process_old_to_new_OverlayHoveringBehaviour(obj) {
   let _obj = obj;
-  _obj = namingChange(
-    _obj,
-    'hoveringBehaviour',
-    optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-  );
+  _obj = namingChange(_obj, 'hoveringBehaviour', optionsMap.behaviourParams.item.overlay.hoveringBehaviour);
   switch (_obj[optionsMap.behaviourParams.item.overlay.hoveringBehaviour]) {
     case 'NO_CHANGE':
-      _obj[optionsMap.behaviourParams.item.overlay.hoveringBehaviour] =
-        'ALWAYS_SHOW';
+      _obj[optionsMap.behaviourParams.item.overlay.hoveringBehaviour] = 'ALWAYS_SHOW';
       break;
     case 'NEVER_SHOW':
-      _obj[optionsMap.behaviourParams.item.overlay.hoveringBehaviour] =
-        'NEVER_SHOW';
+      _obj[optionsMap.behaviourParams.item.overlay.hoveringBehaviour] = 'NEVER_SHOW';
       break;
     default:
       break;
@@ -474,11 +361,7 @@ function process_old_to_new_OverlayHoveringBehaviour(obj) {
 }
 function process_old_to_new_InfoPlacement(obj) {
   let _obj = obj;
-  _obj = namingChange(
-    _obj,
-    'titlePlacement',
-    optionsMap.layoutParams.info.placement
-  );
+  _obj = namingChange(_obj, 'titlePlacement', optionsMap.layoutParams.info.placement);
   switch (_obj[optionsMap.layoutParams.info.placement]) {
     case 'SHOW_ON_HOVER':
       _obj[optionsMap.layoutParams.info.placement] = 'OVERLAY';
@@ -508,13 +391,8 @@ function process_old_to_new_InfoPlacement(obj) {
 }
 function process_old_to_new_ClickAction(obj) {
   let _obj = obj;
-  _obj = namingChange(
-    _obj,
-    'itemClick',
-    optionsMap.behaviourParams.item.clickAction
-  );
-  _obj[optionsMap.behaviourParams.item.clickAction] =
-    _obj[optionsMap.behaviourParams.item.clickAction]?.toUpperCase();
+  _obj = namingChange(_obj, 'itemClick', optionsMap.behaviourParams.item.clickAction);
+  _obj[optionsMap.behaviourParams.item.clickAction] = _obj[optionsMap.behaviourParams.item.clickAction]?.toUpperCase();
   switch (_obj[optionsMap.behaviourParams.item.clickAction]) {
     case 'FULLSCREEN':
     case 'EXPAND':
@@ -526,11 +404,7 @@ function process_old_to_new_ClickAction(obj) {
   return _obj;
 }
 function process_old_to_new_AutoSlideBehaviour(obj) {
-  if (
-    typeof obj[
-      optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-    ] !== 'undefined'
-  ) {
+  if (typeof obj[optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour] !== 'undefined') {
     return obj;
   }
   let _obj = obj;
@@ -550,8 +424,7 @@ function process_old_to_new_AutoSlideBehaviour(obj) {
       }
     }
   }
-  _obj[optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour] =
-    finalVal;
+  _obj[optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour] = finalVal;
   delete _obj['isAutoSlideshow'];
   delete _obj['autoSlideshowType'];
   return _obj;
@@ -576,23 +449,19 @@ function process_old_to_new_CropRatio(obj) {
       return ele;
     }
   };
-  _obj[optionsMap.layoutParams.crop.ratios] =
-    finalVal && String(finalVal).split(',').map(getVal);
+  _obj[optionsMap.layoutParams.crop.ratios] = finalVal && String(finalVal).split(',').map(getVal);
   delete _obj['cubeRatio'];
   delete _obj['layoutParams_cropRatio'];
   delete _obj['rotatingCropRatios'];
   return _obj;
 }
 function process_old_to_new_AllowedGroupTypes(obj) {
-  if (
-    typeof obj[optionsMap.layoutParams.groups.allowedGroupTypes] !== 'undefined'
-  ) {
+  if (typeof obj[optionsMap.layoutParams.groups.allowedGroupTypes] !== 'undefined') {
     return obj;
   }
   let _obj = obj;
 
-  _obj[optionsMap.layoutParams.groups.allowedGroupTypes] = _obj['groupTypes']
-    ?.split
+  _obj[optionsMap.layoutParams.groups.allowedGroupTypes] = _obj['groupTypes']?.split
     ? _obj['groupTypes'].split(',')
     : _obj['groupTypes']
     ? _obj['groupTypes']
@@ -601,15 +470,11 @@ function process_old_to_new_AllowedGroupTypes(obj) {
   return _obj;
 }
 function process_old_to_new_repeatingGroupTypes(obj) {
-  if (
-    typeof obj[optionsMap.layoutParams.groups.repeatingGroupTypes] !==
-    'undefined'
-  ) {
+  if (typeof obj[optionsMap.layoutParams.groups.repeatingGroupTypes] !== 'undefined') {
     return obj;
   }
   let _obj = obj;
-  let repeatingVal =
-    _obj['rotatingGroupTypes'] || _obj['layoutParams_repeatingGroupTypes'];
+  let repeatingVal = _obj['rotatingGroupTypes'] || _obj['layoutParams_repeatingGroupTypes'];
   let finalVal;
   if (typeof repeatingVal === 'string' && repeatingVal !== '') {
     finalVal = repeatingVal.split(',');
@@ -624,10 +489,7 @@ function process_old_to_new_repeatingGroupTypes(obj) {
   return _obj;
 }
 function process_old_to_new_NumberOfColumns(obj) {
-  if (
-    typeof obj[optionsMap.layoutParams.structure.numberOfColumns] !==
-    'undefined'
-  ) {
+  if (typeof obj[optionsMap.layoutParams.structure.numberOfColumns] !== 'undefined') {
     return obj;
   }
   let _obj = obj;
@@ -639,8 +501,4 @@ function process_old_to_new_NumberOfColumns(obj) {
   return _obj;
 }
 
-export {
-  migrateOptions,
-  addMigratedOptions,
-  extendNestedOptionsToIncludeOldAndNew,
-};
+export { migrateOptions, addMigratedOptions, extendNestedOptionsToIncludeOldAndNew };

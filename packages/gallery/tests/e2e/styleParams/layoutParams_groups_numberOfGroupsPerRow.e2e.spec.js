@@ -21,8 +21,7 @@ describe('layoutParams_groups_numberOfGroupsPerRow - e2e', () => {
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.layoutParams.groups.numberOfGroupsPerRow]: 3,
       [optionsMap.layoutParams.structure.responsiveMode]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
-          .SET_ITEMS_PER_ROW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW,
       [optionsMap.layoutParams.groups.groupSize]: 1,
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -35,8 +34,7 @@ describe('layoutParams_groups_numberOfGroupsPerRow - e2e', () => {
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       [optionsMap.layoutParams.groups.numberOfGroupsPerRow]: 7,
       [optionsMap.layoutParams.structure.responsiveMode]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
-          .SET_ITEMS_PER_ROW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW,
       [optionsMap.layoutParams.groups.groupSize]: 1,
     });
     await driver.waitFor.hookToBeVisible('item-container');

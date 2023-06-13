@@ -22,22 +22,15 @@ describe('options - layoutParams_info_spacing', () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
-      [optionsMap.layoutParams.info.layout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.layout]
-          .SEPARATED_BACKGROUND,
+      [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
+      [optionsMap.layoutParams.info.layout]: GALLERY_CONSTS[optionsMap.layoutParams.info.layout].SEPARATED_BACKGROUND,
       [optionsMap.layoutParams.info.spacing]: 20,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
-    const item = driver.find
-      .selector('.gallery-item-bottom-info')
-      .at(0)
-      .parent();
+    const item = driver.find.selector('.gallery-item-bottom-info').at(0).parent();
     // expect marginTop to equal layoutParams_info_spacing value.
     expect(item.props().style.marginTop).to.eq(20);
     driver.detach.proGallery();
@@ -46,15 +39,11 @@ describe('options - layoutParams_info_spacing', () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].ABOVE,
-      [optionsMap.layoutParams.info.layout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.layout]
-          .SEPARATED_BACKGROUND,
+      [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].ABOVE,
+      [optionsMap.layoutParams.info.layout]: GALLERY_CONSTS[optionsMap.layoutParams.info.layout].SEPARATED_BACKGROUND,
       [optionsMap.layoutParams.info.spacing]: 20,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -67,14 +56,11 @@ describe('options - layoutParams_info_spacing', () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].ABOVE,
-      [optionsMap.layoutParams.info.layout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.layout].NO_BACKGROUND,
+      [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].ABOVE,
+      [optionsMap.layoutParams.info.layout]: GALLERY_CONSTS[optionsMap.layoutParams.info.layout].NO_BACKGROUND,
       [optionsMap.layoutParams.info.spacing]: 20,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

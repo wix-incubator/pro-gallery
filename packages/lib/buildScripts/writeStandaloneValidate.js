@@ -3,14 +3,7 @@ module.exports = writeES5StandaloneValidateMethod;
 const browserify = require('browserify');
 const Ajv = require('ajv');
 
-function writeES5StandaloneValidateMethod({
-  schema,
-  targetFile,
-  tempFile,
-  writeFileSync,
-  createWriteStream,
-  rmSync,
-}) {
+function writeES5StandaloneValidateMethod({ schema, targetFile, tempFile, writeFileSync, createWriteStream, rmSync }) {
   const code = buildValidationFunction(schema);
   writeFileSync(tempFile, code);
   const fileWriter = createWriteStream(targetFile);
