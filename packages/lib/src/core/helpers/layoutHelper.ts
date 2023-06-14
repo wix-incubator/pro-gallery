@@ -328,6 +328,7 @@ const cropItemsWithCropOnlyFillParam = (options) => {
 const convertSimpleScrollAnimationsToAdvanced = (options) => {
   const scrollAnimation = options[optionsMap.behaviourParams.gallery.scrollAnimation];
   if (scrollAnimation === GALLERY_CONSTS.behaviourParams_gallery_scrollAnimation.NO_EFFECT) return options;
+  if (options[optionsMap.behaviourParams.gallery.jsonScrollAnimation]?.length > 0) return options;
   options[optionsMap.behaviourParams.gallery.jsonScrollAnimation] = jsonScrollAnimationConverter(scrollAnimation);
   return options;
 }

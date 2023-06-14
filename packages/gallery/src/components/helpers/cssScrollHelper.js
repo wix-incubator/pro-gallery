@@ -17,12 +17,8 @@ const getContainerSize = (options, container) =>
 
 class CssScrollHelper {
   constructor() {
-    this.galleryId = "???";
+    this.galleryId = "?";
     this.pgScrollSteps = [];
-    // for (let i = 1; i < 50000; i *= 2) {
-    //   this.pgScrollSteps.push(i);
-    // }
-    // this.pgScrollSteps.reverse();
     this.pgScrollClassName = "pgs";
     this.pgScrollSteps = [40960, 20480, 10240, 5120, 2560, 1280, 640, 320, 160, 80, 40, 20, 10];
     

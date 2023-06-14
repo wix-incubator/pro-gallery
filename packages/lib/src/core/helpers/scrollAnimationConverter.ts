@@ -1,8 +1,9 @@
 // import scrollAnimations from '../../common/constants/behaviourParams_gallery_scrollAnimation';
 // type AvailableAnimations = keyof scrollAnimations;
 
-// See Liron's animations here:
-// https://docs.google.com/document/d/1dMqp0_gL0cjye2eiMYYaO1rOHRP04FRxEE3gOKQ5zvU
+// See the animations guide here: https://github.com/wix-incubator/pro-gallery/wiki/Creating-New-Scroll-Animations
+// Designed animations here: https://docs.google.com/document/d/1dMqp0_gL0cjye2eiMYYaO1rOHRP04FRxEE3gOKQ5zvU
+
 type AnimationSpec = {
   type:
     | 'FADE'
@@ -70,7 +71,7 @@ interface AdvancedAnimations {
   [key: string]: AnimationSpec[];
 }
 
-const advancedAnimations: AdvancedAnimations = {
+export const advancedAnimations: AdvancedAnimations = {
   FADE: [
     {
       type: 'FADE',
