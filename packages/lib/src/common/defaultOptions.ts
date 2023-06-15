@@ -143,6 +143,8 @@ const defaultOptions = flattenObject({
       layoutDirection: GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].LEFT_TO_RIGHT,
       scrollAnimation: GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation].NO_EFFECT,
       jsonScrollAnimation: [],
+      infiniteScrollAnimation: false,
+      scrollAnimationReset: false,
       enableIndexingShareLinks: true,
       horizontal: {
         enableScrollSnap: false,
