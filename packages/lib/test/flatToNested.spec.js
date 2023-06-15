@@ -361,6 +361,7 @@ function input() {
     gallerySizeRatio: 0,
     columnWidths: '',
     placeGroupsLtr: false,
+    forceFullStrips: false,
   };
 }
 
@@ -806,6 +807,9 @@ function expected() {
         },
         blockContextMenu: true,
         layoutDirection: 'LEFT_TO_RIGHT',
+        infiniteScrollAnimation: false,
+        jsonScrollAnimation: [],
+        scrollAnimationReset: false,
       },
     },
     rotatingCropRatios: '',
