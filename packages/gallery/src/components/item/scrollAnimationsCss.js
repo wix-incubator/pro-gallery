@@ -1,6 +1,6 @@
 import React from 'react';
 
-export class ScrollAnimations extends React.Component {
+export class ScrollAnimationsCss extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,6 +19,7 @@ export class ScrollAnimations extends React.Component {
       <style
         id={`scrollAnimationsCss_${this.props.idx}`}
         key={`scrollAnimationsCss_${this.props.idx}`}
+        className={`scrollAnimationsCss`}
         dangerouslySetInnerHTML={{
           __html: this.state.css,
         }}

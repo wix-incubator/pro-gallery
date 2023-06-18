@@ -876,9 +876,9 @@ export class GalleryContainer extends React.Component {
           {(this.layoutCss || []).filter(Boolean).map((css, idx) => (
             <style id={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{ __html: css }} />
           ))}
-          {(this.scrollCss || []).filter(Boolean).map((css, idx) => (
+          {/* {(this.scrollCss || []).filter(Boolean).map((css, idx) => (
             <style id={`scrollCss_${idx}`} key={`scrollCss_${idx}`} dangerouslySetInnerHTML={{ __html: css }} />
-          ))}
+          ))} */}
           {!!this.dynamicStyles && <style dangerouslySetInnerHTML={{ __html: this.dynamicStyles }} />}
         </div>
         {this.props.proGalleryRole === 'application' && (
