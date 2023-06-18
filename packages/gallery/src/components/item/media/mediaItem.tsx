@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React from 'react';
+import React, { useMemo } from 'react';
 import { optionsMap, GALLERY_CONSTS, isEditMode } from 'pro-gallery-lib';
 import { GalleryUI } from './GalleryUI';
 import { Options, Settings, utils } from 'pro-gallery-lib';
@@ -67,7 +67,7 @@ export default function MediaItem<T extends Record<string, any>>(props: MediaPro
   const { behaviourParams_item_clickAction: clickAction, behaviourParams_item_video_playTrigger: playTrigger } =
     options;
 
-  const isMediaPlayable = /* useMemo( */ () => {
+  const isMediaPlayable = useMemo(() => {
     if (utils.isSSR()) {
       return false;
     }
@@ -83,7 +83,7 @@ export default function MediaItem<T extends Record<string, any>>(props: MediaPro
       return true;
     }
     return false;
-  }; /* , [hasLink, playTrigger, clickAction]) */
+  }, [hasLink, playTrigger, clickAction]);
 
   const createIframePlayer = () => (
     <IframeVideoPlayer dimensions={imageDimensions} url={isVideoPlaceholder ? videoPlaceholderUrl : props.videoUrl} />
