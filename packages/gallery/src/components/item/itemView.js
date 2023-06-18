@@ -7,7 +7,6 @@ import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
 import { changeActiveElementIfNeeded, onAnchorFocus } from './itemHelper.js';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
-import { ScrollAnimations } from './scrollAnimations';
 import { getOuterInfoStyle, getInnerInfoStyle, getContainerStyle, getImageStyle } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
 import { getCustomInfoRendererProps, getLinkParams } from './pure';
@@ -374,7 +373,6 @@ class ItemView extends React.Component {
       customComponents,
       scene,
       activeIndex,
-      isCurrentHover,
     } = this.props;
 
     return (
@@ -390,7 +388,7 @@ class ItemView extends React.Component {
           handleItemMouseUp: this.handleItemMouseUp,
         }}
         hasLink={this.itemHasLink()}
-        // isCurrentHover={this.simulateHover()}
+        isCurrentHover={this.simulateHover()}
         hover={itemHover}
         activeIndex={activeIndex}
         calculatedAlt={calculatedAlt}
@@ -407,7 +405,6 @@ class ItemView extends React.Component {
         scene={scene}
         style={style}
         settings={settings}
-        isCurrentHover={isCurrentHover}
       />
     );
   }
@@ -1020,12 +1017,19 @@ class ItemView extends React.Component {
       tabIndex: -1,
       onKeyDown: handleKeyDown,
     };
-    return (
-      <a key={'item-container-link-' + id} {...elementProps} {...(linkParams?.href?.length > 0 && linkParams)}>
-        {innerDiv}
-        {this.props.scrollAnimationCss ? <ScrollAnimations idx={idx} css={this.props.scrollAnimationCss[idx]} /> : null}
-      </a>
-    );
+    if (linkParams?.href?.length > 0) {
+      return (
+        <a key={'item-container-link-' + id} {...elementProps} {...linkParams}>
+          {innerDiv}
+        </a>
+      );
+    } else {
+      return (
+        <div key={'item-container-div-' + id} {...elementProps}>
+          {innerDiv}
+        </div>
+      );
+    }
   }
 
   //-----------------------------------------| RENDER |--------------------------------------------//
@@ -1036,4 +1040,3 @@ class ItemView extends React.Component {
 }
 
 export default ItemView;
-/* eslint-enable prettier/prettier */
