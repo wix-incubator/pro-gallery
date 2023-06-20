@@ -390,7 +390,7 @@ class ItemView extends React.Component {
           handleItemMouseUp: this.handleItemMouseUp,
         }}
         hasLink={this.itemHasLink()}
-        // isCurrentHover={this.simulateHover()}
+        isCurrentHover={this.simulateHover()}
         hover={itemHover}
         activeIndex={activeIndex}
         calculatedAlt={calculatedAlt}
@@ -1024,7 +1024,7 @@ class ItemView extends React.Component {
     const hasLink = linkParams?.href?.length > 0;
 
     const itemProps = {
-      key: 'item-container-link-' + id,
+      key: `item-container-${hasLink ? 'link' : 'div'}-${id}`,
       ...elementProps,
       ...(hasLink && linkParams),
       children: [

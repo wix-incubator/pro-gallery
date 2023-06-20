@@ -75,7 +75,7 @@ export function scrollToItemImp(scrollParams) {
       to: Math.round(to),
       duration: durationInMS,
       isRTL,
-      slideTransition,
+      slideTransition: slideTransition,
       isContinuousScrolling,
       autoSlideshowContinuousSpeed,
     });
@@ -187,7 +187,6 @@ function horizontalCssScrollTo({
   if (change === 0) {
     return new Promise((resolve) => resolve(to));
   }
-  const marginProp = `margin-${isRTL ? 'right' : 'left'}`;
 
   if (isContinuousScrolling) {
     duration = (Math.abs(change) / autoSlideshowContinuousSpeed) * 1000;
@@ -214,13 +213,11 @@ function horizontalCssScrollTo({
   const scrollTransitionEvent = new CustomEvent('scrollTransition', {
     detail: change / intervals,
   });
-
   const scrollTransitionInterval = setInterval(() => {
     scroller.dispatchEvent(scrollTransitionEvent);
   }, Math.round(duration / intervals));
   let scrollDeffered = new Deferred();
-  // const currentScrollEndTimeout =  TODO - what is this timeout about??
-  setTimeout(() => {
+  const currentScrollEndTimeout = setTimeout(() => {
     clearInterval(scrollTransitionInterval);
     Object.assign(
       scrollerInner.style,
@@ -238,34 +235,19 @@ function horizontalCssScrollTo({
     scrollDeffered.resolve(to);
   }, duration);
 
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      clearInterval(scrollTransitionInterval);
-
-      Object.assign(scrollerInner.style, {
-        transition: `none`,
-        [marginProp]: 0,
-      });
-      scroller.style.removeProperty('scroll-snap-type');
-      scroller.scrollLeft = to;
-      scroller.setAttribute('data-scrolling', '');
-      resolve(to);
-    }, duration);
-  });
-  // return {
-  //   scrollDeffered,
-  //   scroller,
-  //   from,
-  //   to,
-  //   duration,
-  //   isRTL,
-  //   slideTransition,
-  //   isContinuousScrolling,
-  //   autoSlideshowContinuousSpeed,
-  //   currentScrollEndTimeout,
-  // };
+  return {
+    scrollDeffered,
+    scroller,
+    from,
+    to,
+    duration,
+    isRTL,
+    slideTransition,
+    isContinuousScrolling,
+    autoSlideshowContinuousSpeed,
+    currentScrollEndTimeout,
+  };
 }
-
 function animateStopScroll({ scroller, at, isRTL }) {
   Object.assign(scroller.style, {
     'scroll-snap-type': 'none',

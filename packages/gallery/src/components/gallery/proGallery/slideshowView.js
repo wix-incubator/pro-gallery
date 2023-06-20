@@ -588,7 +588,6 @@ class SlideshowView extends React.Component {
       settings: this.props.settings,
       scrollAnimationCss: this.props.scrollAnimationCss,
       noFollowForSEO: this.props.noFollowForSEO,
-      domId: this.props.domId,
       activeIndex: this.state.activeIndex,
       customComponents: this.props.customComponents,
       galleryId: this.props.id,

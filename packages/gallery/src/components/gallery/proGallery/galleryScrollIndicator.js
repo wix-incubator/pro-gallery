@@ -83,19 +83,19 @@ export default class ScrollIndicator extends React.Component {
         left = Math.abs(left); //this.props.totalWidth - left;
       }
       const minScrollPosition = this.props.infiniteScrollAnimation ? 0 : this.state.scrollLeft;
-      if (left >= minScrollPosition) {
-        if (
-          this.props.galleryScrollDirection ===
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
-        ) {
+      if (
+        this.props.galleryScrollDirection ===
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
+      ) {
+        if (left >= minScrollPosition) {
           this.setState({
             scrollingHorizontally: true,
             scrollLeft: Math.round(left),
           });
           this.pauseHorizontalScrolling();
           this.props.getMoreItemsIfNeeded(left);
-          this.debouncedOnScroll({ left });
         }
+        this.debouncedOnScroll({ left });
       }
     };
 
@@ -132,14 +132,11 @@ export default class ScrollIndicator extends React.Component {
           this.props.galleryScrollDirection ===
           GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL
         ) {
-          this.setState({
-            scrollTop: top,
-          });
           this.props.getMoreItemsIfNeeded(top);
         }
         this.pauseVerticalScrolling();
-        this.debouncedOnScroll({ top });
       }
+      this.debouncedOnScroll({ top });
     };
     try {
       scrollingElement.vertical().addEventListener('scroll', this.onVerticalScroll);
