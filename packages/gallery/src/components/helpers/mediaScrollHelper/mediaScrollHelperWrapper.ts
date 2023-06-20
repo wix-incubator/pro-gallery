@@ -39,6 +39,7 @@ class MediaScrollHelper {
   };
   updateGalleryStructure: UpdateGalleryData = (data) => {
     if (data.isSSR) {
+      //TODO - This could be broken in hydrate since we use inPrerenderMode. (diff between hydrate and ssr are breaking)
       return;
     }
     for (const scrollHelper of this.scrollHelpers) {

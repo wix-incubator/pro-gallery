@@ -143,7 +143,7 @@ class GalleryView extends React.Component {
       ? 'auto'
       : this.props.container.galleryWidth - options[optionsMap.layoutParams.structure.itemSpacing];
 
-    const items = getVisibleItems(galleryStructure.galleryItems, container);
+    const items = getVisibleItems(galleryStructure.galleryItems, container, this.props.isPrerenderMode);
     const itemsWithVirtualizationData = getItemsInViewportOrMarginByScrollLocation({
       items,
       options,
