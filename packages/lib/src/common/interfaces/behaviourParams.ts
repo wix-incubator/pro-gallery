@@ -29,6 +29,9 @@ export interface Gallery {
   enableIndexingShareLinks?: boolean;
   vertical?: Vertical;
   horizontal?: Horizontal;
+  jsonScrollAnimation?: string;
+  infiniteScrollAnimation?: boolean;
+  scrollAnimationReset?: boolean;
 }
 export interface SecondaryMedia {
   trigger: 'OFF' | 'HOVER';

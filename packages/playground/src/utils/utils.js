@@ -44,7 +44,9 @@ function generateUUID() {
 
 export function mixAndSlice(array, length, startIdx = 0, customMetadata = {}) {
   let result = [];
-  if (array.length > 0) {
+  window.mixedItems = window.mixedItems || {};
+  const key = `${length}_${startIdx}`;
+  if (!window.mixedItems[key] && array.length > 0) {
     const rnd = (num) => Math.floor(Math.random() * num);
     while (result.length < length) {
       const idx = rnd(array.length);
@@ -60,8 +62,9 @@ export function mixAndSlice(array, length, startIdx = 0, customMetadata = {}) {
       // console.log('ITEM CREATED', item, array[idx]);
       result.push(item);
     }
+    window.mixedItems[key] = result;
   }
-  return result;
+  return window.mixedItems[key];
 }
 
 export const debounce = (callback, wait) => {

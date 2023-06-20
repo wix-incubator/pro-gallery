@@ -332,8 +332,7 @@ export class GalleryContainer extends React.Component {
 
     // // ------------ TODO. This is using GalleryItem and I am leaving it here for now ---------- //
 
-    const shouldUseScrollCss =
-      !isSEOMode() && (isEditMode() || this.state.gotFirstScrollEvent || this.state.showMoreClickedAtLeastOnce);
+    const shouldUseScrollCss = !isSEOMode();
     if (shouldUseScrollCss) {
       this.getScrollCss({
         id,
@@ -618,12 +617,6 @@ export class GalleryContainer extends React.Component {
     const needToHandleShowMoreClick = true;
     //before clicking "load more" at the first time
     if (!this.state.showMoreClickedAtLeastOnce) {
-      this.getScrollCss({
-        id: this.props.id,
-        items: this.galleryStructure.galleryItems,
-        options: this.state.options,
-        container: this.state.container,
-      });
       const initialGalleryHeight = this.state.container.height; //container.height before clicking "load more" at the first time
       this.setState(
         {
@@ -650,12 +643,6 @@ export class GalleryContainer extends React.Component {
 
   setGotFirstScrollIfNeeded() {
     if (!this.state.gotFirstScrollEvent) {
-      this.getScrollCss({
-        id: this.props.id,
-        items: this.galleryStructure.galleryItems,
-        options: this.state.options,
-        container: this.state.container,
-      });
       this.setState({
         gotFirstScrollEvent: true,
       });
@@ -831,6 +818,7 @@ export class GalleryContainer extends React.Component {
             this.props.options[optionsMap.behaviourParams.gallery.layoutDirection] ===
             GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT
           }
+          infiniteScrollAnimation={this.props.options[optionsMap.behaviourParams.gallery.infiniteScrollAnimation]}
           totalWidth={this.galleryStructure.width}
           scrollBase={this.props.container.scrollBase}
           scrollingElement={this._scrollingElement}
@@ -854,6 +842,7 @@ export class GalleryContainer extends React.Component {
           options={this.props.options}
           container={this.props.container}
           settings={this.props.settings}
+          scrollAnimationCss={this.scrollCss}
           displayShowMore={displayShowMore}
           id={this.props.id}
           activeIndex={this.props.activeIndex || 0}
@@ -887,9 +876,9 @@ export class GalleryContainer extends React.Component {
           {(this.layoutCss || []).filter(Boolean).map((css, idx) => (
             <style id={`layoutCss-${idx}`} key={`layoutCss-${idx}`} dangerouslySetInnerHTML={{ __html: css }} />
           ))}
-          {(this.scrollCss || []).filter(Boolean).map((css, idx) => (
+          {/* {(this.scrollCss || []).filter(Boolean).map((css, idx) => (
             <style id={`scrollCss_${idx}`} key={`scrollCss_${idx}`} dangerouslySetInnerHTML={{ __html: css }} />
-          ))}
+          ))} */}
           {!!this.dynamicStyles && <style dangerouslySetInnerHTML={{ __html: this.dynamicStyles }} />}
         </div>
         {this.props.proGalleryRole === 'application' && (

@@ -18,6 +18,7 @@ import {
 import { INPUT_TYPES, isInPreset, optionsMap, GALLERY_CONSTS } from 'pro-gallery-lib';
 import ColorPicker from '../ColorPicker/ColorPicker';
 import { settingsManager } from '../../constants/settings';
+import JSONInput from 'react-json-ide';
 
 class JsonEditor extends React.Component {
   constructor() {
@@ -172,6 +173,30 @@ class JsonEditor extends React.Component {
             {settings.text}
           </Button>
         );
+      case INPUT_TYPES.JSON: {
+        const formatJson = (json) => {
+          if (json.jsObject) return json.jsObject;
+          if (typeof json === 'object') return json;
+          try {
+            return JSON.parse(json);
+          } catch (e) {
+            return [];
+          }
+        };
+
+        return (
+          // theValue.plainText
+          <JSONInput
+            placeholder={formatJson(theValue)}
+            reset={false}
+            onKeyPressUpdate={false}
+            theme="light_mitsuketa_tribute"
+            height="550px"
+            width="360px"
+            onChange={(e) => e.jsObject && this.onFieldChanged(key, JSON.stringify(e.jsObject))}
+          />
+        );
+      }
       case INPUT_TYPES.TRANSFORM: {
         // format x{number}y{number}z{number}
         const transform = GALLERY_CONSTS.parse3DDimensions(theValue);
@@ -269,7 +294,11 @@ class JsonEditor extends React.Component {
         accordion={true}
         bordered={false}
         onChange={() => {}}
-        style={{ whiteSpace: 'pre-wrap', margin: '-17px -15px', background: '#fff' }}
+        style={{
+          whiteSpace: 'pre-wrap',
+          margin: '-17px -15px',
+          background: '#fff',
+        }}
         expandIconPosition={expandIcon ? 'right' : 'left'}
         {...activeKey}
         expandIcon={expandIcon}

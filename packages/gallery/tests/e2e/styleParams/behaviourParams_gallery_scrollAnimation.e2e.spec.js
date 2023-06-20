@@ -24,9 +24,9 @@ describe('behaviourParams_gallery_scrollAnimation - e2e', () => {
         });
         await driver.waitFor.hookToBeVisible('item-container');
         const numberOfAnimationStyleTags = await driver.page.evaluate(() => {
-          const styleTags = Array.from(document.querySelectorAll('div[data-key="items-styles"] style'));
-          const AnimationStyleTags = styleTags.filter((styleTag) => styleTag.id.includes('scrollCss'));
-          return AnimationStyleTags.length;
+          const styleTags = Array.from(document.querySelectorAll('style.scrollAnimationsCss'));
+          // const AnimationStyleTags = styleTags.filter((styleTag) => styleTag.id.includes('scrollCss'));
+          return styleTags.length;
         });
         // the default e2e images is always 20 so we should get 20 animation style tags
         expect(numberOfAnimationStyleTags).toEqual(20);

@@ -55,7 +55,7 @@ export default class ExpandableProGallery extends React.Component {
         this.setState({ fullscreenIdx: eventData.idx });
         break;
       default:
-        console.log({ eventName, eventData });
+        // console.log({eventName, eventData});
         break;
     }
     if (typeof this.props.eventsListener === 'function') {
@@ -67,7 +67,12 @@ export default class ExpandableProGallery extends React.Component {
     const Gallery = this.props.useBlueprints ? ProGalleryRenderer : ProGallery;
     return (
       <>
-        <section style={{ ...styles.gallery, display: this.state.fullscreenIdx < 0 ? 'block' : 'none' }}>
+        <section
+          style={{
+            ...styles.gallery,
+            display: this.state.fullscreenIdx < 0 ? 'block' : 'none',
+          }}
+        >
           <Gallery
             {...this.props}
             key={`pro-gallery-${this.props.id}`}
@@ -76,7 +81,12 @@ export default class ExpandableProGallery extends React.Component {
           />
         </section>
         {this.state.fullscreenIdx < 0 ? null : (
-          <section style={{ ...styles.fullscreen, ...(this.state.fullscreenIdx >= 0 && styles.shown) }}>
+          <section
+            style={{
+              ...styles.fullscreen,
+              ...(this.state.fullscreenIdx >= 0 && styles.shown),
+            }}
+          >
             <CloseButton style={styles.close} onClick={() => this.setState({ fullscreenIdx: -1 })} />
             <Gallery
               {...this.props}

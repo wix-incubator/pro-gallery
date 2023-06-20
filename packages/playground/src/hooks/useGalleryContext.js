@@ -106,12 +106,17 @@ export function useGalleryContext(blueprintsManager) {
   };
 
   const setItems = (items) => {
+    window.galleryItems = items;
     const newContext = { items };
     if (getGallerySettings().useBlueprints) {
       requestNewBlueprint(newContext, true);
     }
 
     setContext(newContext);
+  };
+
+  const getItems = () => {
+    return context.items || window.galleryItems;
   };
 
   const setBlueprint = (blueprint) => {
@@ -175,8 +180,9 @@ export function useGalleryContext(blueprintsManager) {
     setPreset,
     options: addPresetOptions(context.options || getInitialOptions()), //TODO - this is a double even for the normal flow - maybe used for the sidebar somehow?
     setOptions,
-    items: context.items,
+    items: context.items || window.galleryItems,
     setItems,
+    getItems,
     blueprint: context.blueprint,
     setBlueprint,
     galleryReady: context.galleryReady,

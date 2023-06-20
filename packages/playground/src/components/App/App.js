@@ -46,6 +46,7 @@ export function App() {
     setContainer,
     options,
     setItems,
+    getItems: getContextItems,
     items,
     gallerySettings,
     setBlueprint,
@@ -88,7 +89,7 @@ export function App() {
   const setGalleryReady = () => {
     window.dispatchEvent(galleryReadyEvent);
   };
-  const eventListener = (eventName, eventData, event) => {
+  const eventListener = (eventName, eventData) => {
     switch (eventName) {
       case GALLERY_EVENTS.APP_LOADED:
         setGalleryReady();
@@ -106,7 +107,7 @@ export function App() {
         }
         break;
       case GALLERY_EVENTS.ITEM_ACTION_TRIGGERED:
-        console.log({ eventName, eventData, event });
+        // console.log({ eventName, eventData, event });
         // setFullscreenIdx(eventData.idx);
         break;
       case GALLERY_EVENTS.LOAD_MORE_CLICKED:
@@ -156,7 +157,7 @@ export function App() {
       return monochromeImages.slice(0, 20);
     }
 
-    const theItems = items || initialItems[mediaTypes];
+    const theItems = items || getContextItems() || initialItems[mediaTypes];
     if (numberOfItems > 0) {
       return theItems.slice(0, numberOfItems);
     } else {
@@ -174,10 +175,18 @@ export function App() {
   };
 
   const getOrInitBlueprint = () => {
+    // const params = {
+    //   domId: 'pro-gallery-playground',
+    //   totalItemsCount: getTotalItemsCount(),
+    //   dimensions: getContainer(),
+    //   options: getOptions(),
+    //   items: getItems(),
+    // };
     if (blueprint) {
       return blueprint;
     } else if (gallerySettings.shouldUseBlueprintsFromServer) {
       const params = {
+        totalItemsCount: getTotalItemsCount(),
         container: getContainer(),
         options: getOptions(),
         items: getItems(),
@@ -345,7 +354,13 @@ export function App() {
     <main id="sidebar_main" className={s.main}>
       {/* <Loader/> */}
       <SideBarButton className={s.toggleButton} onClick={switchState} isOpen={showSide} />
-      <aside className={s.sideBar} style={{ width: SIDEBAR_WIDTH, marginLeft: !showSide ? -1 * SIDEBAR_WIDTH : 0 }}>
+      <aside
+        className={s.sideBar}
+        style={{
+          width: SIDEBAR_WIDTH,
+          marginLeft: !showSide ? -1 * SIDEBAR_WIDTH : 0,
+        }}
+      >
         <div className={s.heading}>
           Pro Gallery Playground{' '}
           <a
@@ -363,7 +378,12 @@ export function App() {
           </Suspense>
         )}
       </aside>
-      <section className={s.gallery} style={{ paddingLeft: showSide && !utils.isMobile() ? SIDEBAR_WIDTH : 0 }}>
+      <section
+        className={s.gallery}
+        style={{
+          paddingLeft: showSide && !utils.isMobile() ? SIDEBAR_WIDTH : 0,
+        }}
+      >
         {!canRender() ? (
           <div>Waiting for blueprint...</div>
         ) : (
@@ -436,7 +456,10 @@ const addResizable = (Component, props, resizedDims, setResizedDims, gallerySett
           }}
           onResizeStop={(...args) => {
             // console.log('args', args[3], resizedDims, resizedDims.width + args[3].width);
-            setResizedDims({ width: resizedDims.width + args[3].width, height: resizedDims.height + args[3].height });
+            setResizedDims({
+              width: resizedDims.width + args[3].width,
+              height: resizedDims.height + args[3].height,
+            });
             // console.log('args', args[3], resizedDims);
           }}
         >
