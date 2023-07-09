@@ -51,18 +51,6 @@ const generateSubdomains = subdomain => {
   return subdomains;
 };
 
-function build() {
-  const buildCommand = 'npm run build';
-  console.log(chalk.magenta(`Running: "${buildCommand}"`));
-  exec(buildCommand);
-}
-
-function getLatestCommit(commitSha) {
-    const gitCommand = `git log --pretty=format${commitSha}`;
-    return execSync(gitCommand, {
-        stdio: 'pipe'
-    });
-}
 
 function shouldPublishVersionSpecific(commit) {
     const regex = /^v\d.\d{1,2}.\d{1,3}$/gm;
