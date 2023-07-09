@@ -70,6 +70,8 @@ export default class BlueprintsManager {
 
     this.updateLastParamsIfNeeded(params, changedParams, blueprintCreated);
 
+    await new Promise((resolve) => setTimeout(resolve, 0)); //yeild to main thread. (this splits the task to 2 frames, so the UI thread will not be blocked for too long)
+    
     blueprintCreated &&
       this.api.onBlueprintReady &&
       this.api.onBlueprintReady({ blueprint, blueprintChanged, reasons });
@@ -123,7 +125,7 @@ export default class BlueprintsManager {
     const blueprintCreated = Object.keys(blueprint).length > 0;
 
     this.updateLastParamsIfNeeded(params, changedParams, blueprintCreated);
-
+    
     blueprintCreated &&
       this.api.onBlueprintReady &&
       this.api.onBlueprintReady({

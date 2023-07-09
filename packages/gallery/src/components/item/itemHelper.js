@@ -1,21 +1,10 @@
-import {
-  window,
-  utils,
-  isSiteMode,
-  isSEOMode,
-  GALLERY_CONSTS,
-  optionsMap,
-} from 'pro-gallery-lib';
+import { window, utils, isSiteMode, isSEOMode, GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
 
 function shouldChangeActiveElement() {
   return (isSiteMode() || isSEOMode()) && !utils.isMobile() && window.document;
 }
 
-export function onAnchorFocus({
-  itemContainer,
-  enableExperimentalFeatures,
-  itemAnchor,
-}) {
+export function onAnchorFocus({ itemContainer, enableExperimentalFeatures, itemAnchor }) {
   if (shouldChangeActiveElement() && enableExperimentalFeatures) {
     /* Relevant only for Screen-Reader cases:
          When we navigate on the accessibility tree, screen readers stops and focuses on the <a> tag,
@@ -31,34 +20,18 @@ function isThisGalleryElementInFocus(className, galleryId) {
   const activeElement = window.document.activeElement;
   return (
     String(activeElement.className).includes(className) &&
-    !!window.document.querySelector(
-      `#pro-gallery-${galleryId} #${String(activeElement.id)}`
-    )
+    !!window.document.querySelector(`#pro-gallery-${galleryId} #${String(activeElement.id)}`)
   );
 }
 
-export function changeActiveElementIfNeeded({
-  prevProps,
-  currentProps,
-  itemContainer,
-}) {
+export function changeActiveElementIfNeeded({ prevProps, currentProps, itemContainer }) {
   try {
-    if (
-      shouldChangeActiveElement() &&
-      window.document.activeElement.className
-    ) {
-      const isGalleryItemInFocus = isThisGalleryElementInFocus(
-        'gallery-item-container',
-        currentProps.galleryId
-      );
-      const isShowMoreInFocus = isThisGalleryElementInFocus(
-        'show-more',
-        currentProps.galleryId
-      );
+    if (shouldChangeActiveElement() && window.document.activeElement.className) {
+      const isGalleryItemInFocus = isThisGalleryElementInFocus('gallery-item-container', currentProps.galleryId);
+      const isShowMoreInFocus = isThisGalleryElementInFocus('show-more', currentProps.galleryId);
       if (isGalleryItemInFocus || isShowMoreInFocus) {
         if (
-          currentProps.thumbnailHighlightId !==
-            prevProps.thumbnailHighlightId &&
+          currentProps.thumbnailHighlightId !== prevProps.thumbnailHighlightId &&
           currentProps.thumbnailHighlightId === currentProps.id
         ) {
           // if the highlighted thumbnail changed and it is the same as this itemview's

@@ -1,8 +1,5 @@
 export { default as GALLERY_CONSTS } from './common/constants';
-export {
-  default as defaultOptions,
-  populateWithDefaultOptions,
-} from './common/defaultOptions';
+export { default as defaultOptions, populateWithDefaultOptions } from './common/defaultOptions';
 export { default as v4DefaultOptions } from './common/v4DefaultOptions';
 export { flatV4DefaultOptions } from './common/v4DefaultOptions';
 export { default as dimensionsHelper } from './core/helpers/dimensionsHelper';
@@ -13,10 +10,7 @@ export {
   addMigratedOptions,
   extendNestedOptionsToIncludeOldAndNew,
 } from './core/helpers/optionsConverter';
-export {
-  addOldOptions,
-  reverseMigrateOptions,
-} from './core/helpers/optionsBackwardConverter';
+export { addOldOptions, reverseMigrateOptions } from './core/helpers/optionsBackwardConverter';
 export { assignByString } from './core/helpers/optionsUtils';
 export { mutatingAssignMultipleByStrings } from './core/helpers/optionsUtils';
 export { default as optionsMap } from './core/helpers/optionsMap';
@@ -55,10 +49,8 @@ export { Structure } from './common/interfaces/Structure';
 export { GalleryProps, GalleryState } from './common/interfaces/galleryTypes';
 export { Options as NestedOptions } from './common/interfaces/options';
 export { FlattenOptions as Options } from './common/interfaces/flatten';
-export {
-  ThreeDimensionalScene,
-  PlayTrigger,
-} from './common/interfaces/behaviourParams';
+export { ThreeDimensionalScene, PlayTrigger } from './common/interfaces/behaviourParams';
 export { Settings } from './common/interfaces/Settings';
 export { GalleryRendererProps } from './common/interfaces/galleryRendererTypes';
 export { VirtualizationSettings } from './common/interfaces/virtualization';
+export { default as thumbnailsLogic } from './core/helpers/thumbnailsLogic';

@@ -21,14 +21,11 @@ class GalleryView extends React.Component {
   }
 
   handleKeys(e) {
-    const activeItemIdx =
-      window.document.activeElement.getAttribute('data-idx');
+    const activeItemIdx = window.document.activeElement.getAttribute('data-idx');
 
     if (activeItemIdx) {
       const findNeighborItem =
-        this.props.actions.findNeighborItem ||
-        this.props.galleryStructure.findNeighborItem ||
-        (() => {}); //temp change for tests to pass
+        this.props.actions.findNeighborItem || this.props.galleryStructure.findNeighborItem || (() => {}); //temp change for tests to pass
 
       const idx = Number(activeItemIdx);
 
@@ -41,21 +38,15 @@ class GalleryView extends React.Component {
         case 37: //left
           newIdx = findNeighborItem(
             idx,
-            this.props.options[
-              optionsMap.behaviourParams.gallery.layoutDirection
-            ] ===
-              GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-                .RIGHT_TO_LEFT
+            this.props.options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+              GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT
               ? 'right'
               : 'left'
           );
           break;
         case 40: //down
           newIdx = findNeighborItem(idx, 'down');
-          if (
-            this.props.totalItemsCount - 1 === newIdx &&
-            newIdx === this.state.activeIndex
-          ) {
+          if (this.props.totalItemsCount - 1 === newIdx && newIdx === this.state.activeIndex) {
             // If we are on the last item in the gallery and we pressed the down arrow
             // we want to move the focus to the out0fGallery element
             e.stopPropagation();
@@ -66,11 +57,8 @@ class GalleryView extends React.Component {
         case 39: //right
           newIdx = findNeighborItem(
             idx,
-            this.props.options[
-              optionsMap.behaviourParams.gallery.layoutDirection
-            ] ===
-              GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-                .RIGHT_TO_LEFT
+            this.props.options[optionsMap.behaviourParams.gallery.layoutDirection] ===
+              GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT
               ? 'left'
               : 'right'
           );
@@ -112,9 +100,7 @@ class GalleryView extends React.Component {
 
   lastVisibleItemIdx() {
     //the item must be visible and above the show more button
-    return this.lastVisibleItemIdxInHeight(
-      this.props.container.galleryHeight - 100
-    );
+    return this.lastVisibleItemIdxInHeight(this.props.container.galleryHeight - 100);
   }
   showMoreItems() {
     if (this.props.settings?.isAccessible) {
@@ -141,15 +127,8 @@ class GalleryView extends React.Component {
   }
 
   createGallery(showMore) {
-    const {
-      options,
-      settings,
-      container,
-      galleryStructure,
-      getVisibleItems,
-      virtualizationSettings,
-      scrollTop,
-    } = this.props;
+    const { options, settings, container, galleryStructure, getVisibleItems, virtualizationSettings, scrollTop } =
+      this.props;
     const galleryConfig = this.createGalleryConfig();
     const showMoreContainerHeight = 138; //according to the scss
     const debugMsg = <GalleryDebugMessage {...this.props.debug} />;
@@ -162,34 +141,27 @@ class GalleryView extends React.Component {
     }
     const galleryWidth = this.props.isPrerenderMode
       ? 'auto'
-      : this.props.container.galleryWidth -
-        options[optionsMap.layoutParams.structure.itemSpacing];
+      : this.props.container.galleryWidth - options[optionsMap.layoutParams.structure.itemSpacing];
 
-    const items = getVisibleItems(galleryStructure.galleryItems, container);
-    const itemsWithVirtualizationData =
-      getItemsInViewportOrMarginByScrollLocation({
-        items,
-        options,
-        virtualizationSettings,
-        galleryHeight: Math.min(
-          galleryStructure.height,
-          container.screen?.height || galleryStructure.height
-        ),
-        scrollPosition: scrollTop || 0,
+    const items = getVisibleItems(galleryStructure.galleryItems, container, this.props.isPrerenderMode);
+    const itemsWithVirtualizationData = getItemsInViewportOrMarginByScrollLocation({
+      items,
+      options,
+      virtualizationSettings,
+      galleryHeight: Math.min(galleryStructure.height, container.screen?.height || galleryStructure.height),
+      scrollPosition: scrollTop || 0,
+    });
+    const layout = itemsWithVirtualizationData.map(({ item, shouldRender }, index) => {
+      const itemProps = item.renderProps({
+        ...galleryConfig,
+        visible: item.isVisible,
+        key: `itemView-${item.id}-${index}`,
       });
-    const layout = itemsWithVirtualizationData.map(
-      ({ item, shouldRender }, index) => {
-        const itemProps = item.renderProps({
-          ...galleryConfig,
-          visible: item.isVisible,
-          key: `itemView-${item.id}-${index}`,
-        });
-        return React.createElement(itemView, {
-          ...itemProps,
-          type: shouldRender ? itemProps.type : 'dummy',
-        });
-      }
-    );
+      return React.createElement(itemView, {
+        ...itemProps,
+        type: shouldRender ? itemProps.type : 'dummy',
+      });
+    });
 
     return (
       <div
@@ -197,14 +169,12 @@ class GalleryView extends React.Component {
         className={
           'pro-gallery inline-styles ' +
           (options[optionsMap.layoutParams.structure.scrollDirection] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-            .HORIZONTAL
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
             ? ' one-row slider hide-scrollbars '
             : '') +
           (settings?.isAccessible ? ' accessible ' : '') +
           (options[optionsMap.behaviourParams.gallery.layoutDirection] ===
-          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-            .RIGHT_TO_LEFT
+          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT
             ? ' rtl '
             : ' ltr ')
         }
@@ -221,9 +191,7 @@ class GalleryView extends React.Component {
           style={{
             margin:
               (this.props.options.galleryMargin ||
-                this.props.options[
-                  optionsMap.layoutParams.structure.gallerySpacing
-                ]) + 'px',
+                this.props.options[optionsMap.layoutParams.structure.gallerySpacing]) + 'px',
             height: galleryHeight,
             width: galleryWidth,
             overflow: 'visible',
@@ -263,11 +231,9 @@ class GalleryView extends React.Component {
   screenLogs() {
     return utils.shouldDebug('screenLogs') ? (
       <div className="screen-logs">
-        URL width: {utils.parseGetParam('width')}, Container:{' '}
-        {JSON.stringify(this.props.container.galleryWidth)},
-        window.document.body.clientWidth {document.body.clientWidth},
-        window.innerWidth {window.innerWidth}, window.screen.width:{' '}
-        {window.screen.width}
+        URL width: {utils.parseGetParam('width')}, Container: {JSON.stringify(this.props.container.galleryWidth)},
+        window.document.body.clientWidth {document.body.clientWidth}, window.innerWidth {window.innerWidth},
+        window.screen.width: {window.screen.width}
       </div>
     ) : (
       ''
@@ -275,33 +241,18 @@ class GalleryView extends React.Component {
   }
 
   createShowMoreButton() {
-    if (
-      typeof this.props.customComponents.customLoadMoreRenderer === 'function'
-    ) {
-      return (
-        <div onClick={this.showMoreItems}>
-          {this.props.customComponents.customLoadMoreRenderer(this.props)}
-        </div>
-      );
+    if (typeof this.props.customComponents.customLoadMoreRenderer === 'function') {
+      return <div onClick={this.showMoreItems}>{this.props.customComponents.customLoadMoreRenderer(this.props)}</div>;
     }
     const { options } = this.props;
     let showMoreButton = false;
     const buttonState = this.props.displayShowMore;
-    const shouldShowButton =
-      buttonState &&
-      this.props.galleryStructure.height > this.props.container.height;
+    const shouldShowButton = buttonState && this.props.galleryStructure.height > this.props.container.height;
 
     if (shouldShowButton) {
-      const buttonText =
-        options[optionsMap.behaviourParams.gallery.vertical.loadMore.text] ||
-        'Load More';
+      const buttonText = options[optionsMap.behaviourParams.gallery.vertical.loadMore.text] || 'Load More';
       showMoreButton = (
-        <div
-          className={
-            'show-more-container' +
-            (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')
-          }
-        >
+        <div className={'show-more-container' + (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')}>
           <button
             tabIndex={utils.getTabIndex('loadMoreButton')}
             id={'show-more-' + this.props.id}

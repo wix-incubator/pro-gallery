@@ -7,10 +7,8 @@ export default {
   description: `Choose if you want the closest image to snap in to place when scrolling horizontally`,
   isRelevant: (options) =>
     options[optionsMap.layoutParams.structure.scrollDirection] ===
-    GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-      .HORIZONTAL,
-  isRelevantDescription:
-    'Set a Horizontal gallery ("Scroll Direction" as "Horizontal").',
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL,
+  isRelevantDescription: 'Set a Horizontal gallery ("Scroll Direction" as "Horizontal").',
   type: INPUT_TYPES.BOOLEAN,
   default: false, //one source
 };

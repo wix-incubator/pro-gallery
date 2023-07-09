@@ -20,8 +20,7 @@ describe('layoutParams_crop_enable - e2e', () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]: -1,
       [optionsMap.layoutParams.crop.enable]: true,
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
+      [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
       [optionsMap.layoutParams.crop.ratios]: [1],
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -32,8 +31,7 @@ describe('layoutParams_crop_enable - e2e', () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]: -1,
       [optionsMap.layoutParams.crop.enable]: true,
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
+      [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
       [optionsMap.layoutParams.crop.ratios]: [1],
     });
     await driver.waitFor.hookToBeVisible('item-container');
@@ -44,8 +42,7 @@ describe('layoutParams_crop_enable - e2e', () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]: -1,
       [optionsMap.layoutParams.crop.enable]: true,
-      [optionsMap.layoutParams.crop.method]:
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
+      [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL,
       [optionsMap.layoutParams.crop.ratios]: [2],
     });
     await driver.waitFor.hookToBeVisible('item-container');

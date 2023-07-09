@@ -7,12 +7,8 @@ export default {
   title: 'Auto Slide Play/Pause Button',
   isRelevant: (options) =>
     autoSlideBehaviour.isRelevant(options) &&
-    options[
-      optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-    ] !==
-      GALLERY_CONSTS[
-        optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-      ].OFF,
+    options[optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour] !==
+      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour].OFF,
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Auto Slide" behaviour.',
   type: INPUT_TYPES.BOOLEAN,

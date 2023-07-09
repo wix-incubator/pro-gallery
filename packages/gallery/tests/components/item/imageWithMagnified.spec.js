@@ -37,10 +37,7 @@ describe('imageWithMagnified', () => {
       },
     });
   });
-  const createAndgetMagnifiedContainer = (
-    galleryDriver,
-    selector = '.magnified-item-container'
-  ) => {
+  const createAndgetMagnifiedContainer = (galleryDriver, selector = '.magnified-item-container') => {
     galleryDriver.mount(MagnifiedImage, imageItemsProps);
     return galleryDriver.find.selector(selector).at(0);
   };

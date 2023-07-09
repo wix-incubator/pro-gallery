@@ -22,18 +22,13 @@ describe('options - behaviourParams_gallery_horizontal_autoSlide_pauseOnHover', 
   it('should not auto slide when Hovering over the gallery', () => {
     Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL,
       [optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-        ].INTERVAL,
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour].INTERVAL,
       [optionsMap.behaviourParams.gallery.horizontal.autoSlide.interval]: 1,
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
-      [optionsMap.behaviourParams.gallery.horizontal.autoSlide
-        .pauseOnHover]: true,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW,
+      [optionsMap.behaviourParams.gallery.horizontal.autoSlide.pauseOnHover]: true,
     });
     galleryViewProps = driver.props.galleryView(initialProps);
     const stub = sinon.stub(SlideshowView.prototype, 'next');

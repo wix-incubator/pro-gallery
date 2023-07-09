@@ -71,21 +71,8 @@ export interface Controls {
 }
 export interface Overlay {
   hoveringBehaviour?: 'APPEARS' | 'DISAPPEARS' | 'ALWAYS_SHOW' | 'NEVER_SHOW';
-  hoverAnimation?:
-    | 'NO_EFFECT'
-    | 'FADE_IN'
-    | 'EXPAND'
-    | 'SLIDE_UP'
-    | 'SLIDE_RIGHT'
-    | 'SLIDE_DOWN'
-    | 'SLIDE_LEFT';
-  position?:
-    | 'LEFT'
-    | 'TOP'
-    | 'RIGHT'
-    | 'BUTTOM'
-    | 'CENTERED_VERTICALLY'
-    | 'CENTERED_HORIZONTALLY';
+  hoverAnimation?: 'NO_EFFECT' | 'FADE_IN' | 'EXPAND' | 'SLIDE_UP' | 'SLIDE_RIGHT' | 'SLIDE_DOWN' | 'SLIDE_LEFT';
+  position?: 'LEFT' | 'TOP' | 'RIGHT' | 'BUTTOM' | 'CENTERED_VERTICALLY' | 'CENTERED_HORIZONTALLY';
   size?: number;
   sizeUnits?: 'PIXEL' | 'PERCENT';
   padding?: number;
@@ -96,6 +83,7 @@ export interface Content {
   hoverAnimation?:
     | 'NO_EFFECT'
     | 'ZOOM_IN'
+    | 'TILT'
     | 'BLUR'
     | 'GRAYSCALE'
     | 'SHRINK'
@@ -105,6 +93,7 @@ export interface Content {
   placementAnimation?: 'NO_EFFECT' | 'SLIDE';
   loader?: 'BLUR' | 'COLOR' | 'MAIN_COLOR';
   magnificationValue?: number;
+  tiltAngleValue?: number;
 }
 
 export interface Vertical {

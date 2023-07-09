@@ -22,12 +22,24 @@ describe('options - behaviourParams_item_content_hoverAnimation', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.content.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
-          .ZOOM_IN,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation].ZOOM_IN,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
     const animatedItems = driver.find.selector('.zoom-in-on-hover').at(0);
+    expect(animatedItems.length).to.be.greaterThan(0);
+    driver.detach.proGallery();
+  });
+  it('should have "Tilt" animation on items', async () => {
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
+      [optionsMap.behaviourParams.item.content.hoverAnimation]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation].TILT,
+    });
+    driver.mount.proGallery(initialProps);
+    await driver.update();
+    const animatedItems = driver.find.selector('.tilt-on-hover').at(0);
     expect(animatedItems.length).to.be.greaterThan(0);
     driver.detach.proGallery();
   });
@@ -36,8 +48,7 @@ describe('options - behaviourParams_item_content_hoverAnimation', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.content.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
-          .BLUR,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation].BLUR,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -50,8 +61,7 @@ describe('options - behaviourParams_item_content_hoverAnimation', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.content.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
-          .GRAYSCALE,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation].GRAYSCALE,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -64,8 +74,7 @@ describe('options - behaviourParams_item_content_hoverAnimation', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.content.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
-          .SHRINK,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation].SHRINK,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -78,8 +87,7 @@ describe('options - behaviourParams_item_content_hoverAnimation', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.content.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
-          .INVERT,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation].INVERT,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -92,8 +100,7 @@ describe('options - behaviourParams_item_content_hoverAnimation', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.content.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
-          .COLOR_IN,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation].COLOR_IN,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -106,8 +113,7 @@ describe('options - behaviourParams_item_content_hoverAnimation', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.behaviourParams.item.content.hoverAnimation]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
-          .DARKENED,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation].DARKENED,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

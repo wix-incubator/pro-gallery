@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  GALLERY_CONSTS,
-  window,
-  utils,
-  isEditMode,
-  isPreviewMode,
-  optionsMap,
-} from 'pro-gallery-lib';
+import { GALLERY_CONSTS, window, utils, isEditMode, isPreviewMode, optionsMap } from 'pro-gallery-lib';
 import MagnifiedImage from './imageWithMagnified.js';
 import ThreeDItem from './3d/3dItemWrapper';
 import withSecondaryMedia from '../hoc/withSecondMedia.js';
@@ -14,12 +7,7 @@ import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
 import { changeActiveElementIfNeeded, onAnchorFocus } from './itemHelper.js';
 import { cssScrollHelper } from '../helpers/cssScrollHelper';
-import {
-  getOuterInfoStyle,
-  getInnerInfoStyle,
-  getContainerStyle,
-  getImageStyle,
-} from './itemViewStyleProvider';
+import { getOuterInfoStyle, getInnerInfoStyle, getContainerStyle, getImageStyle } from './itemViewStyleProvider';
 import VideoItemWrapper from './videos/videoItemWrapper';
 import { getCustomInfoRendererProps, getLinkParams } from './pure';
 import { getSlideAnimationClassNames } from '../gallery/proGallery/scrollLessAnimationHelper';
@@ -29,10 +17,7 @@ const TextWithSecondMedia = withSecondaryMedia(TextItem);
 class ItemView extends React.Component {
   constructor(props) {
     super(props);
-    this.props.actions.eventsListener(
-      GALLERY_CONSTS.events.ITEM_CREATED,
-      this.props
-    );
+    this.props.actions.eventsListener(GALLERY_CONSTS.events.ITEM_CREATED, this.props);
 
     this.init();
 
@@ -74,33 +59,24 @@ class ItemView extends React.Component {
     this.onMouseLeave = this.onMouseLeave.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.onBlur = this.onBlur.bind(this);
-    this.checkIfCurrentHoverChanged =
-      this.checkIfCurrentHoverChanged.bind(this);
+    this.checkIfCurrentHoverChanged = this.checkIfCurrentHoverChanged.bind(this);
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
   setItemLoaded() {
-    this.props.actions.eventsListener(
-      GALLERY_CONSTS.events.ITEM_LOADED,
-      this.props
-    );
+    this.props.actions.eventsListener(GALLERY_CONSTS.events.ITEM_LOADED, this.props);
     this.setState({
       loaded: true,
     });
   }
 
   isIconTag(tagName) {
-    return (
-      ['button', 'i', 'a', 'svg', 'path'].indexOf(tagName.toLowerCase()) >= 0
-    );
+    return ['button', 'i', 'a', 'svg', 'path'].indexOf(tagName.toLowerCase()) >= 0;
   }
 
   onMouseEnter() {
     if (!utils.isMobile()) {
-      this.props.actions.eventsListener(
-        GALLERY_CONSTS.events.HOVER_SET,
-        this.props.idx
-      );
+      this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, this.props.idx);
     }
   }
 
@@ -112,25 +88,16 @@ class ItemView extends React.Component {
 
   onFocus() {
     if (this.props.settings?.isAccessible) {
-      this.props.actions.eventsListener(
-        GALLERY_CONSTS.events.HOVER_SET,
-        this.props.idx
-      );
+      this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, this.props.idx);
     }
-    this.props.actions.eventsListener(
-      GALLERY_CONSTS.events.ITEM_FOCUSED,
-      this.props
-    );
+    this.props.actions.eventsListener(GALLERY_CONSTS.events.ITEM_FOCUSED, this.props);
   }
 
   onBlur() {
     if (this.props.settings?.isAccessible) {
       this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
     }
-    this.props.actions.eventsListener(
-      GALLERY_CONSTS.events.ITEM_LOST_FOCUS,
-      this.props
-    );
+    this.props.actions.eventsListener(GALLERY_CONSTS.events.ITEM_LOST_FOCUS, this.props);
   }
 
   onAnchorKeyDown(e) {
@@ -148,11 +115,7 @@ class ItemView extends React.Component {
   }
 
   handleGalleryItemAction(e) {
-    this.props.actions.eventsListener(
-      GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED,
-      this.props,
-      e
-    );
+    this.props.actions.eventsListener(GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED, this.props, e);
   }
 
   onItemWrapperClick(e) {
@@ -167,11 +130,7 @@ class ItemView extends React.Component {
   }
 
   onItemClick(e, clickTarget, shouldPreventDefault = true) {
-    this.props.actions.eventsListener(
-      GALLERY_CONSTS.events.ITEM_CLICKED,
-      { ...this.props, clickTarget },
-      e
-    );
+    this.props.actions.eventsListener(GALLERY_CONSTS.events.ITEM_CLICKED, { ...this.props, clickTarget }, e);
 
     if (this.shouldUseDirectLink()) {
       return;
@@ -181,10 +140,7 @@ class ItemView extends React.Component {
       e.preventDefault();
     }
 
-    if (
-      this.shouldShowHoverOnMobile() ||
-      this.shouldShowSecondMediaOnMobile()
-    ) {
+    if (this.shouldShowHoverOnMobile() || this.shouldShowSecondMediaOnMobile()) {
       this.handleHoverClickOnMobile(e);
     } else {
       this.handleGalleryItemAction(e);
@@ -201,9 +157,7 @@ class ItemView extends React.Component {
         GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK
     );
     const shouldUseDirectLinkOnMobile =
-      this.shouldShowHoverOnMobile() &&
-      this.isClickOnCurrentHoveredItem() &&
-      useDirectLink;
+      this.shouldShowHoverOnMobile() && this.isClickOnCurrentHoveredItem() && useDirectLink;
 
     if (shouldUseDirectLinkOnMobile) {
       this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
@@ -217,21 +171,15 @@ class ItemView extends React.Component {
 
   isClickOnCurrentHoveredItem = () =>
     this.state.isCurrentHover || // this single item was already hovered.
-    this.props.options[
-      optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-    ] ===
-      GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour]
-        .ALWAYS_SHOW; // all the items are always 'already' hovered
+    this.props.options[optionsMap.behaviourParams.item.overlay.hoveringBehaviour] ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].ALWAYS_SHOW; // all the items are always 'already' hovered
 
   handleHoverClickOnMobile(e) {
     if (this.isClickOnCurrentHoveredItem()) {
       this.handleGalleryItemAction(e);
       this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
     } else {
-      this.props.actions.eventsListener(
-        GALLERY_CONSTS.events.HOVER_SET,
-        this.props.idx
-      );
+      this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, this.props.idx);
     }
   }
 
@@ -259,18 +207,12 @@ class ItemView extends React.Component {
   shouldShowHoverOnMobile() {
     if (utils.isMobile()) {
       const {
-        [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-          hoveringBehaviour,
+        [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]: hoveringBehaviour,
         alwaysShowHover,
         previewHover,
       } = this.props.options;
 
-      if (
-        hoveringBehaviour ===
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].NEVER_SHOW
-      ) {
+      if (hoveringBehaviour === GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].NEVER_SHOW) {
         return false;
       }
       if (
@@ -282,13 +224,8 @@ class ItemView extends React.Component {
         return true;
       } else if (
         this.props.customComponents.customHoverRenderer &&
-        GALLERY_CONSTS.hasHoverPlacement(
-          this.props.options[optionsMap.layoutParams.info.placement]
-        ) &&
-        hoveringBehaviour !==
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-          ].NEVER_SHOW
+        GALLERY_CONSTS.hasHoverPlacement(this.props.options[optionsMap.layoutParams.info.placement]) &&
+        hoveringBehaviour !== GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].NEVER_SHOW
       ) {
         return true;
       }
@@ -310,11 +247,8 @@ class ItemView extends React.Component {
         this.props.type !== '3d'
       ) {
         return (
-          this.props.options[
-            optionsMap.behaviourParams.item.secondaryMedia.trigger
-          ] ===
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger]
-            .HOVER
+          this.props.options[optionsMap.behaviourParams.item.secondaryMedia.trigger] ===
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger].HOVER
         );
       } else {
         return false;
@@ -324,22 +258,16 @@ class ItemView extends React.Component {
   }
 
   isHighlight() {
-    return (
-      this.props.thumbnailHighlightId &&
-      this.props.thumbnailHighlightId === this.props.id
-    );
+    return this.props.thumbnailHighlightId && this.props.thumbnailHighlightId === this.props.id;
   }
 
   shouldHover() {
     //see if this could be decided in the preset
     const { options } = this.props;
     const { alwaysShowHover, previewHover } = options;
-    const hoveringBehaviour =
-      options[optionsMap.behaviourParams.item.overlay.hoveringBehaviour];
-    const { NEVER_SHOW, APPEARS } =
-      GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour];
-    const { NO_EFFECT } =
-      GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation];
+    const hoveringBehaviour = options[optionsMap.behaviourParams.item.overlay.hoveringBehaviour];
+    const { NEVER_SHOW, APPEARS } = GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour];
+    const { NO_EFFECT } = GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation];
 
     if (hoveringBehaviour === NEVER_SHOW) {
       return false;
@@ -349,8 +277,7 @@ class ItemView extends React.Component {
       return true;
     } else if (
       hoveringBehaviour === APPEARS &&
-      options[optionsMap.behaviourParams.item.overlay.hoverAnimation] ===
-        NO_EFFECT &&
+      options[optionsMap.behaviourParams.item.overlay.hoverAnimation] === NO_EFFECT &&
       !this.state.itemWasHovered
     ) {
       //when there is no overlayHoverAnimation, we want to render the itemHover only on first hover and on (and not before)
@@ -384,10 +311,7 @@ class ItemView extends React.Component {
           }}
           renderCustomInfo={
             customComponents.customHoverRenderer
-              ? () =>
-                  customComponents.customHoverRenderer(
-                    getCustomInfoRendererProps(this.props)
-                  )
+              ? () => customComponents.customHoverRenderer(getCustomInfoRendererProps(this.props))
               : null
           }
         ></ItemHover>
@@ -412,6 +336,7 @@ class ItemView extends React.Component {
       'style',
       'hasSecondaryMedia',
       'secondaryMediaItem',
+      'customComponents',
     ]);
 
     return (
@@ -650,34 +575,18 @@ class ItemView extends React.Component {
     let info = null;
     //if there is no url for videos and images, we will not render the itemWrapper
     //but will render the info element if exists, with the whole size of the item
-    const infoHeight =
-      options[optionsMap.layoutParams.info.height] +
-      (this.hasRequiredMediaUrl ? 0 : style.height);
-    const infoWidth =
-      style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
+    const infoHeight = options[optionsMap.layoutParams.info.height] + (this.hasRequiredMediaUrl ? 0 : style.height);
+    const infoWidth = style.infoWidth + (this.hasRequiredMediaUrl ? 0 : style.width);
 
-    const itemExternalInfo = customComponents.customInfoRenderer(
-      getCustomInfoRendererProps(this.props),
-      placement
-    );
+    const itemExternalInfo = customComponents.customInfoRenderer(getCustomInfoRendererProps(this.props), placement);
 
-    const overrideDeckTransition = GALLERY_CONSTS.isLayout('SLIDESHOW')(
-      this.props.options
-    );
+    const overrideDeckTransition = GALLERY_CONSTS.isLayout('SLIDESHOW')(this.props.options);
 
     info = (
       <div
-        className={
-          'gallery-item-common-info-outer ' +
-          getSlideAnimationClassNames(this.props, overrideDeckTransition)
-        }
+        className={'gallery-item-common-info-outer ' + getSlideAnimationClassNames(this.props, overrideDeckTransition)}
         style={{
-          ...getOuterInfoStyle(
-            placement,
-            options,
-            style.height,
-            options[optionsMap.layoutParams.info.height]
-          ),
+          ...getOuterInfoStyle(placement, options, style.height, options[optionsMap.layoutParams.info.height]),
         }}
       >
         <div
@@ -704,40 +613,25 @@ class ItemView extends React.Component {
   simulateOverlayHover() {
     return (
       this.simulateHover() ||
-      this.props.options[
-        optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-      ] ===
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].ALWAYS_SHOW
+      this.props.options[optionsMap.behaviourParams.item.overlay.hoveringBehaviour] ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].ALWAYS_SHOW
     );
   }
 
   itemHasLink() {
     const { linkData, linkUrl } = this.props;
-    const itemDoesntHaveLink =
-      linkData.type === undefined && (linkUrl === undefined || linkUrl === ''); //when itemClickAction is 'LINK' but no link was added to this specific item
+    const itemDoesntHaveLink = linkData.type === undefined && (linkUrl === undefined || linkUrl === ''); //when itemClickAction is 'LINK' but no link was added to this specific item
     return !itemDoesntHaveLink;
   }
 
   getItemContainerStyles() {
-    const {
-      idx,
-      activeIndex,
-      offset,
-      style,
-      options,
-      settings = {},
-    } = this.props;
+    const { idx, activeIndex, offset, style, options, settings = {} } = this.props;
     const itemSpacing = options[optionsMap.layoutParams.structure.itemSpacing];
-    const slideAnimation =
-      options[optionsMap.behaviourParams.gallery.horizontal.slideAnimation];
+    const slideAnimation = options[optionsMap.behaviourParams.gallery.horizontal.slideAnimation];
     const isRTL =
       options[optionsMap.behaviourParams.gallery.layoutDirection] ===
-      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-        .RIGHT_TO_LEFT;
-    const scrollDirection =
-      options[optionsMap.layoutParams.structure.scrollDirection];
+      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT;
+    const scrollDirection = options[optionsMap.layoutParams.structure.scrollDirection];
     const containerStyleByoptions = getContainerStyle(options);
 
     const itemStyles = {
@@ -745,9 +639,7 @@ class ItemView extends React.Component {
       position: 'absolute',
       bottom: 'auto',
       margin:
-        scrollDirection ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL
+        scrollDirection === GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
           ? itemSpacing / 2 + 'px'
           : 0,
       cursor: this.isItemClickable(options),
@@ -755,8 +647,7 @@ class ItemView extends React.Component {
 
     const { avoidInlineStyles } = settings;
 
-    const hideOnSSR =
-      this.props.isPrerenderMode && !this.props.settings.disableSSROpacity;
+    const hideOnSSR = this.props.isPrerenderMode && !this.props.settings.disableSSROpacity;
     const opacityStyles = avoidInlineStyles
       ? {}
       : {
@@ -777,9 +668,7 @@ class ItemView extends React.Component {
 
     let slideAnimationStyles;
     switch (slideAnimation) {
-      case GALLERY_CONSTS[
-        optionsMap.behaviourParams.gallery.horizontal.slideAnimation
-      ].FADE:
+      case GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation].FADE:
         slideAnimationStyles = {
           left: isRTL ? 'auto' : 0,
           right: !isRTL ? 'auto' : 0,
@@ -787,9 +676,7 @@ class ItemView extends React.Component {
           zIndex: activeIndex === idx ? 0 : 1,
         };
         break;
-      case GALLERY_CONSTS[
-        optionsMap.behaviourParams.gallery.horizontal.slideAnimation
-      ].DECK:
+      case GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation].DECK:
         slideAnimationStyles = {
           left: isRTL ? 'auto' : 0,
           right: !isRTL ? 'auto' : 0,
@@ -830,35 +717,32 @@ class ItemView extends React.Component {
     let styles = {};
     if (type === 'text') {
       styles.backgroundColor =
-        options[optionsMap.layoutParams.crop.method] !==
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
+        options[optionsMap.layoutParams.crop.method] !== GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
           ? 'transparent'
           : 'inherit';
     } else {
       styles.backgroundColor =
-        (options[optionsMap.layoutParams.crop.method] !==
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
+        (options[optionsMap.layoutParams.crop.method] !== GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
           ? style.bgColor
           : 'inherit') || 'transparent';
     }
 
     if (
       options[optionsMap.behaviourParams.item.content.hoverAnimation] ===
-      GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation]
-        .MAIN_COLOR
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation].MAIN_COLOR
     ) {
       styles = {
         ...styles,
-        background: `url(${createUrl(
-          GALLERY_CONSTS.urlSizes.PIXEL,
-          GALLERY_CONSTS.urlTypes.HIGH_RES
-        )})`,
+        background: `url(${createUrl(GALLERY_CONSTS.urlSizes.PIXEL, GALLERY_CONSTS.urlTypes.HIGH_RES)})`,
         backgroundSize: `${innerWidth}px ${innerHeight}px`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: `top ${innerTop}px left ${innerLeft}px`,
       };
     }
-
+    const { TILT } = GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation];
+    if (options[optionsMap.behaviourParams.item.content.hoverAnimation] === TILT) {
+      styles['--tiltAngleValue'] = options[optionsMap.behaviourParams.item.content.tiltAngleValue];
+    }
     styles.height = height + 'px';
     styles.width = width + 'px';
     styles.margin = -options[optionsMap.stylingParams.itemBorderWidth] + 'px';
@@ -892,24 +776,13 @@ class ItemView extends React.Component {
 
   getItemContainerClass() {
     const { options } = this.props;
-    const contentPlacementAnimation =
-      options[optionsMap.behaviourParams.item.content.placementAnimation];
-    const overlayHoverAnimation =
-      options[optionsMap.behaviourParams.item.overlay.hoverAnimation];
-    const contentHoverAnimation =
-      options[optionsMap.behaviourParams.item.content.hoverAnimation];
+    const contentPlacementAnimation = options[optionsMap.behaviourParams.item.content.placementAnimation];
+    const overlayHoverAnimation = options[optionsMap.behaviourParams.item.overlay.hoverAnimation];
+    const contentHoverAnimation = options[optionsMap.behaviourParams.item.content.hoverAnimation];
     const { FADE_IN, EXPAND, SLIDE_UP, SLIDE_RIGHT, SLIDE_DOWN, SLIDE_LEFT } =
       GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation];
-    const {
-      MAIN_COLOR,
-      ZOOM_IN,
-      BLUR,
-      GRAYSCALE,
-      SHRINK,
-      INVERT,
-      COLOR_IN,
-      DARKENED,
-    } = GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation];
+    const { MAIN_COLOR, ZOOM_IN, TILT, BLUR, GRAYSCALE, SHRINK, INVERT, COLOR_IN, DARKENED } =
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation];
 
     const isHovered = this.simulateHover();
     const classNames = {
@@ -925,16 +798,11 @@ class ItemView extends React.Component {
       'hide-hover': !this.simulateHover() && utils.isMobile(),
       'invert-hover':
         options[optionsMap.behaviourParams.item.overlay.hoveringBehaviour] ===
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].DISAPPEARS,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].DISAPPEARS,
 
       //animations
       'animation-slide':
-        contentPlacementAnimation ===
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.content.placementAnimation
-        ].SLIDE,
+        contentPlacementAnimation === GALLERY_CONSTS[optionsMap.behaviourParams.item.content.placementAnimation].SLIDE,
 
       //overlay animations
       'hover-animation-fade-in': overlayHoverAnimation === FADE_IN,
@@ -947,6 +815,7 @@ class ItemView extends React.Component {
       //image hover animations
       'main-color-on-hover': contentHoverAnimation === MAIN_COLOR,
       'zoom-in-on-hover': contentHoverAnimation === ZOOM_IN,
+      'tilt-on-hover': contentHoverAnimation === TILT,
       'blur-on-hover': contentHoverAnimation === BLUR,
       'grayscale-on-hover': contentHoverAnimation === GRAYSCALE,
       'shrink-on-hover': contentHoverAnimation === SHRINK,
@@ -969,10 +838,7 @@ class ItemView extends React.Component {
     const classes = ['gallery-item-wrapper', 'visible'];
 
     if (options[optionsMap.layoutParams.crop.enable]) {
-      classes.push(
-        'cube-type-' +
-          options[optionsMap.layoutParams.crop.method].toLowerCase()
-      );
+      classes.push('cube-type-' + options[optionsMap.layoutParams.crop.method].toLowerCase());
     }
     if (type === 'text') {
       classes.push('gallery-item-wrapper-text');
@@ -1002,18 +868,12 @@ class ItemView extends React.Component {
       }
     }
 
-    window.addEventListener(
-      'current_hover_change',
-      this.checkIfCurrentHoverChanged
-    );
+    window.addEventListener('current_hover_change', this.checkIfCurrentHoverChanged);
   }
 
   componentWillUnmount() {
     clearTimeout(this.itemLoadedTimeout);
-    window.removeEventListener(
-      'current_hover_change',
-      this.checkIfCurrentHoverChanged
-    );
+    window.removeEventListener('current_hover_change', this.checkIfCurrentHoverChanged);
   }
 
   componentDidUpdate(prevProps) {
@@ -1031,10 +891,7 @@ class ItemView extends React.Component {
           isCurrentHover: true,
           itemWasHovered: true,
         });
-      } else if (
-        this.state.isCurrentHover &&
-        e.currentHoverIdx !== this.props.idx
-      ) {
+      } else if (this.state.isCurrentHover && e.currentHoverIdx !== this.props.idx) {
         this.setState({
           isCurrentHover: false,
         });
@@ -1043,10 +900,7 @@ class ItemView extends React.Component {
   }
 
   onContextMenu(e) {
-    if (
-      !utils.isDev() &&
-      this.props.options[optionsMap.behaviourParams.gallery.blockContextMenu]
-    ) {
+    if (!utils.isDev() && this.props.options[optionsMap.behaviourParams.gallery.blockContextMenu]) {
       e.preventDefault(e);
     }
   }
@@ -1086,8 +940,7 @@ class ItemView extends React.Component {
     //if info placement !== OVERLAY and !this.hasRequiredMediaUrl, we will NOT render the itemWrapper (but will render the info element with the whole size of the item)
     const isItemWrapperEmpty =
       options[optionsMap.layoutParams.info.placement] !==
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY &&
-      !this.hasRequiredMediaUrl;
+        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY && !this.hasRequiredMediaUrl;
     const innerDiv = (
       <div
         className={this.getItemContainerClass()}

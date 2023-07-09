@@ -2,9 +2,7 @@ import { GALLERY_CONSTS, window, utils, optionsMap } from 'pro-gallery-lib';
 
 class CssScrollHelper {
   constructor() {
-    this.pgScrollSteps = [
-      40960, 20480, 10240, 5120, 2560, 1280, 640, 320, 160, 80, 40, 20, 10,
-    ];
+    this.pgScrollSteps = [40960, 20480, 10240, 5120, 2560, 1280, 640, 320, 160, 80, 40, 20, 10];
     this.pgScrollClassName = 'pgscl';
 
     this.screenSize = Math.max(window.screen.width, window.screen.height);
@@ -20,10 +18,7 @@ class CssScrollHelper {
     this.allPagePadding = () => [Infinity, Infinity];
     this.inScreenPadding = () => [0, 0];
     this.aboveScreenPadding = () => [0, Infinity];
-    this.justBelowScreenPadding = (itemHeight) => [
-      Infinity,
-      -1 * (itemHeight + this.screenSize),
-    ];
+    this.justBelowScreenPadding = (itemHeight) => [Infinity, -1 * (itemHeight + this.screenSize)];
     this.justBelowAndAboveScreenPadding = () => [2560, Infinity];
     this.justBelowAndInScreenPadding = () => [5120, 0];
     this.belowScreenPadding = () => [Infinity, 0];
@@ -39,22 +34,14 @@ class CssScrollHelper {
 
   buildScrollClassName(id, idx, val) {
     const shortId = String(id).replace(/[\W]+/g, '').slice(-8);
-    return `${this.pgScrollClassName}_${shortId}_${val}-${
-      this.pgScrollSteps[idx] + Number(val)
-    }`;
+    return `${this.pgScrollClassName}_${shortId}_${val}-${this.pgScrollSteps[idx] + Number(val)}`;
   }
 
   calcScrollClasses(id, scrollTop) {
     return (
       `${this.pgScrollClassName}-${scrollTop} ` +
       this.pgScrollSteps
-        .map((step, idx) =>
-          this.buildScrollClassName(
-            id,
-            idx,
-            Math.floor(scrollTop / step) * step
-          )
-        )
+        .map((step, idx) => this.buildScrollClassName(id, idx, Math.floor(scrollTop / step) * step))
         .join(' ')
     );
   }
@@ -64,29 +51,18 @@ class CssScrollHelper {
     if (!(items && items.length)) {
       return [];
     }
-    const scrollAnimation =
-      options[optionsMap.behaviourParams.gallery.scrollAnimation];
-    if (
-      scrollAnimation ===
-      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation]
-        .NO_EFFECT
-    ) {
+    const scrollAnimation = options[optionsMap.behaviourParams.gallery.scrollAnimation];
+    if (scrollAnimation === GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation].NO_EFFECT) {
       return [];
     }
     this.screenSize =
       options[optionsMap.layoutParams.structure.scrollDirection] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-        .HORIZONTAL
-        ? Math.min(
-            window.outerWidth,
-            window.screen.width,
-            container.galleryWidth
-          )
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
+        ? Math.min(window.outerWidth, window.screen.width, container.galleryWidth)
         : Math.min(window.outerHeight, window.screen.height);
     if (
       options[optionsMap.layoutParams.structure.scrollDirection] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL &&
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL &&
       utils.isMobile()
     ) {
       this.screenSize += 50;
@@ -100,8 +76,7 @@ class CssScrollHelper {
     this.maxHeight =
       (Math.ceil(
         ((options[optionsMap.layoutParams.structure.scrollDirection] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
           ? right
           : top) +
           this.screenSize) /
@@ -110,9 +85,7 @@ class CssScrollHelper {
         1) *
       maxStep;
 
-    const cssScroll = items.map((item) =>
-      this.calcScrollCssForItem({ id, item, options })
-    );
+    const cssScroll = items.map((item) => this.calcScrollCssForItem({ id, item, options }));
     utils.isVerbose() && console.timeEnd('CSS Scroll');
 
     return cssScroll;
@@ -128,21 +101,17 @@ class CssScrollHelper {
   createScrollSelectorsFunction({ id, item, options }) {
     const imageTop =
       options[optionsMap.layoutParams.structure.scrollDirection] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-        .HORIZONTAL
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
         ? item.offset.left - this.screenSize
         : item.offset.top - this.screenSize;
     const imageBottom =
       options[optionsMap.layoutParams.structure.scrollDirection] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-        .HORIZONTAL
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
         ? item.offset.left + item.width
         : item.offset.top + item.height;
     const minStep = this.pgScrollSteps[this.pgScrollSteps.length - 1];
-    const ceil = (num, step) =>
-      Math.ceil(Math.min(this.maxHeight, num) / step) * step;
-    const floor = (num, step) =>
-      Math.floor(Math.max(this.minHeight, num) / step) * step;
+    const ceil = (num, step) => Math.ceil(Math.min(this.maxHeight, num) / step) * step;
+    const floor = (num, step) => Math.floor(Math.max(this.minHeight, num) / step) * step;
     const sellectorDomId = this.getSellectorDomId(item);
     return (padding, suffix) => {
       const [before, after] = padding;
@@ -173,11 +142,7 @@ class CssScrollHelper {
           break;
         }
         scrollClasses.push(
-          `.${this.buildScrollClassName(
-            id,
-            largestDividerIdx,
-            from
-          )} ~ div #${sellectorDomId} ${suffix}`
+          `.${this.buildScrollClassName(id, largestDividerIdx, from)} ~ div #${sellectorDomId} ${suffix}`
         );
         from += this.pgScrollSteps[largestDividerIdx];
         // console.count('pgScroll class created');
@@ -218,27 +183,14 @@ class CssScrollHelper {
   }
 
   createScrollAnimationsIfNeeded({ idx, options, createScrollSelectors }) {
-    const scrollAnimation =
-      options[optionsMap.behaviourParams.gallery.scrollAnimation];
-    const {
-      NO_EFFECT,
-      FADE_IN,
-      GRAYSCALE,
-      SLIDE_UP,
-      EXPAND,
-      SHRINK,
-      ZOOM_OUT,
-      ONE_COLOR,
-      MAIN_COLOR,
-      BLUR,
-    } = GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation];
+    const scrollAnimation = options[optionsMap.behaviourParams.gallery.scrollAnimation];
+    const { NO_EFFECT, FADE_IN, GRAYSCALE, SLIDE_UP, EXPAND, SHRINK, ZOOM_OUT, ONE_COLOR, MAIN_COLOR, BLUR } =
+      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation];
 
     const isRTL =
       options[optionsMap.behaviourParams.gallery.layoutDirection] ===
-      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection]
-        .RIGHT_TO_LEFT;
-    const scrollDirection =
-      options[optionsMap.layoutParams.structure.scrollDirection];
+      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT;
+    const scrollDirection = options[optionsMap.layoutParams.structure.scrollDirection];
     if (scrollAnimation === NO_EFFECT) {
       return '';
     }
@@ -253,89 +205,59 @@ class CssScrollHelper {
     // notice: these 2 animations must have the blurry image
     if (scrollAnimation === MAIN_COLOR || scrollAnimation === BLUR) {
       scrollAnimationCss +=
-        createScrollSelectors(
-          animationPreparationPadding,
-          ` [data-hook="image-item-overlay"]`
-        ) +
+        createScrollSelectors(animationPreparationPadding, ` [data-hook="image-item-overlay"]`) +
         `{filter: opacity(1); transition: filter 1.${_randomDuration}s ease-in ${_randomDelay}ms !important;}`;
       scrollAnimationCss +=
-        createScrollSelectors(
-          animationActivePadding,
-          ` [data-hook="image-item-overlay"]`
-        ) + `{filter: opacity(0) !important;}`;
+        createScrollSelectors(animationActivePadding, ` [data-hook="image-item-overlay"]`) +
+        `{filter: opacity(0) !important;}`;
     }
 
     if (scrollAnimation === FADE_IN) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
         `{filter: opacity(0); transition: filter 1.${_randomDuration}s ease-in !important;}`;
-      scrollAnimationCss +=
-        createScrollSelectors(animationActivePadding, '') +
-        `{filter: opacity(1) !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{filter: opacity(1) !important;}`;
     }
 
     if (scrollAnimation === GRAYSCALE) {
       scrollAnimationCss +=
-        createScrollSelectors(
-          animationPreparationPadding,
-          ' .gallery-item-wrapper'
-        ) +
-        `{filter: grayscale(100%); transition: filter 1.${
-          200 + _randomDuration
-        }s ease-in !important;}`;
+        createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') +
+        `{filter: grayscale(100%); transition: filter 1.${200 + _randomDuration}s ease-in !important;}`;
       scrollAnimationCss +=
-        createScrollSelectors(
-          animationActivePadding,
-          ' .gallery-item-wrapper'
-        ) + `{filter: grayscale(0) !important;}`;
+        createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{filter: grayscale(0) !important;}`;
     }
 
     if (scrollAnimation === SLIDE_UP) {
       const axis =
-        scrollDirection ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL
-          ? 'X'
-          : 'Y';
+        scrollDirection === GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL ? 'X' : 'Y';
       const direction = isRTL ? '-' : '';
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
         `{transform: translate${axis}(${direction}100px); transition: transform 0.8s cubic-bezier(.13,.78,.53,.92) !important;}`;
       scrollAnimationCss +=
-        createScrollSelectors(animationActivePadding, '') +
-        `{transform: translate${axis}(0) !important;}`;
+        createScrollSelectors(animationActivePadding, '') + `{transform: translate${axis}(0) !important;}`;
     }
 
     if (scrollAnimation === EXPAND) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
         `{transform: scale(0.95); transition: transform 1s cubic-bezier(.13,.78,.53,.92) ${_randomDelay}ms !important;}`;
-      scrollAnimationCss +=
-        createScrollSelectors(animationActivePadding, '') +
-        `{transform: scale(1) !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{transform: scale(1) !important;}`;
     }
 
     if (scrollAnimation === SHRINK) {
       scrollAnimationCss +=
         createScrollSelectors(animationPreparationPadding, '') +
         `{transform: scale(1.05); transition: transform 1s cubic-bezier(.13,.78,.53,.92) ${_randomDelay}ms !important;}`;
-      scrollAnimationCss +=
-        createScrollSelectors(animationActivePadding, '') +
-        `{transform: scale(1) !important;}`;
+      scrollAnimationCss += createScrollSelectors(animationActivePadding, '') + `{transform: scale(1) !important;}`;
     }
 
     if (scrollAnimation === ZOOM_OUT) {
       scrollAnimationCss +=
-        createScrollSelectors(
-          animationPreparationPadding,
-          ' .gallery-item-wrapper'
-        ) +
+        createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') +
         `{transform: scale(1.1); transition: transform 1.2s cubic-bezier(.13,.78,.53,.92) ${_randomDelay}ms !important;}`;
       scrollAnimationCss +=
-        createScrollSelectors(
-          animationActivePadding,
-          ' .gallery-item-wrapper'
-        ) + `{transform: scale(1) !important;}`;
+        createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{transform: scale(1) !important;}`;
     }
 
     if (scrollAnimation === ONE_COLOR) {
@@ -345,21 +267,12 @@ class CssScrollHelper {
           : 'transparent';
 
       scrollAnimationCss +=
-        createScrollSelectors(animationPreparationPadding, '') +
-        `{background-color: ${oneColorAnimationColor};}`;
+        createScrollSelectors(animationPreparationPadding, '') + `{background-color: ${oneColorAnimationColor};}`;
       scrollAnimationCss +=
-        createScrollSelectors(
-          animationPreparationPadding,
-          ' .gallery-item-wrapper'
-        ) +
-        `{filter: opacity(0); transition: filter 0.${
-          600 + _randomDuration
-        }s ease-in !important;}`;
+        createScrollSelectors(animationPreparationPadding, ' .gallery-item-wrapper') +
+        `{filter: opacity(0); transition: filter 0.${600 + _randomDuration}s ease-in !important;}`;
       scrollAnimationCss +=
-        createScrollSelectors(
-          animationActivePadding,
-          ' .gallery-item-wrapper'
-        ) + `{filter: opacity(1) !important;}`;
+        createScrollSelectors(animationActivePadding, ' .gallery-item-wrapper') + `{filter: opacity(1) !important;}`;
     }
 
     return scrollAnimationCss;

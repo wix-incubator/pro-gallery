@@ -6,10 +6,7 @@ export type OmitUndefinedRecursive<T> = T extends object
     }
   : T;
 
-export type FlattenTypePossibilities<
-  T extends object,
-  Prefix extends string = ''
-> = keyof T extends string
+export type FlattenTypePossibilities<T extends object, Prefix extends string = ''> = keyof T extends string
   ? {
       [K in keyof T]: T[K] extends object
         ? FlattenTypePossibilities<T[K], `${Prefix}${K}_`>
@@ -20,13 +17,7 @@ export type FlattenTypePossibilities<
 
 // convert typescript OR to union, e.g. { a: 1 } | { b: 2 } => { a: 1 } & { b: 2 }
 type UnionToType<U extends Record<string, unknown>> = {
-  [K in U extends unknown ? keyof U : never]: U extends unknown
-    ? K extends keyof U
-      ? U[K]
-      : never
-    : never;
+  [K in U extends unknown ? keyof U : never]: U extends unknown ? (K extends keyof U ? U[K] : never) : never;
 };
 
-export type FlattenOptions = UnionToType<
-  FlattenTypePossibilities<OmitUndefinedRecursive<Options>>
->;
+export type FlattenOptions = UnionToType<FlattenTypePossibilities<OmitUndefinedRecursive<Options>>>;

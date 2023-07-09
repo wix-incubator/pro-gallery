@@ -1,9 +1,9 @@
 export const getContainerUrlParams = (gallerySettings) => {
-    let urlParams = '';
+  let urlParams = '';
 
-    if (!gallerySettings.isUnknownDimensions){
-        urlParams = `&containerWidth=${window.innerWidth}&containerHeight=${window.innerHeight}`
-    }
+  if (!gallerySettings.isUnknownDimensions) {
+    urlParams = `&containerWidth=${window.innerWidth}&containerHeight=${window.innerHeight}`;
+  }
 
-    return urlParams;
-}
+  return urlParams;
+};

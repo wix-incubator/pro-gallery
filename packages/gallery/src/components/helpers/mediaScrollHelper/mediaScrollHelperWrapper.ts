@@ -1,18 +1,10 @@
 import { isEditMode } from 'pro-gallery-lib';
-import {
-  HandleEvents,
-  MediaScrollHelperHandlerConfiguration,
-  SetItemIdx,
-  SetScroll,
-  UpdateGalleryData,
-} from './types';
+import { HandleEvents, MediaScrollHelperHandlerConfiguration, SetItemIdx, SetScroll, UpdateGalleryData } from './types';
 
 class MediaScrollHelper {
   left: number;
   top: number;
-  private scrollHelpers: InstanceType<
-    typeof import('./mediaScrollHelper')['default']
-  >[] = [];
+  private scrollHelpers: InstanceType<typeof import('./mediaScrollHelper')['default']>[] = [];
   constructor(private config: MediaScrollHelperHandlerConfiguration) {
     this.left = 0;
     this.top = 0;
@@ -47,6 +39,7 @@ class MediaScrollHelper {
   };
   updateGalleryStructure: UpdateGalleryData = (data) => {
     if (data.isSSR) {
+      //TODO - This could be broken in hydrate since we use inPrerenderMode. (diff between hydrate and ssr are breaking)
       return;
     }
     for (const scrollHelper of this.scrollHelpers) {
@@ -60,24 +53,14 @@ class MediaScrollHelper {
     if (isEditMode()) {
       return;
     }
-    if (
-      !data.galleryStructure.galleryItems.some((item) =>
-        this.config.some((c) => c.supportedItemsFilter(item))
-      )
-    ) {
+    if (!data.galleryStructure.galleryItems.some((item) => this.config.some((c) => c.supportedItemsFilter(item)))) {
       return;
     }
-    this.scrollHelperPromise = import(
-      /* webpackChunkName: "proGallery_videoScrollHelper" */ './mediaScrollHelper'
-    )
+    this.scrollHelperPromise = import(/* webpackChunkName: "proGallery_videoScrollHelper" */ './mediaScrollHelper')
       .then(({ default: VideoScrollHelper }) => {
         for (const config of this.config) {
           this.scrollHelpers.push(
-            new VideoScrollHelper(
-              config.onSetPlayingIdx,
-              config.supportedItemsFilter,
-              config.getPlayTrigger
-            )
+            new VideoScrollHelper(config.onSetPlayingIdx, config.supportedItemsFilter, config.getPlayTrigger)
           );
         }
         this.updateGalleryStructure(this.latestGalleryStructure);

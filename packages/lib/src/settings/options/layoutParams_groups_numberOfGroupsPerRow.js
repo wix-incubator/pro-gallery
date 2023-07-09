@@ -9,14 +9,11 @@ export default {
   isRelevant: (options) => {
     return (
       options[optionsMap.layoutParams.structure.scrollDirection] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL &&
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL &&
       options[optionsMap.layoutParams.structure.layoutOrientation] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-          .HORIZONTAL &&
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].HORIZONTAL &&
       options[optionsMap.layoutParams.structure.responsiveMode] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode]
-          .SET_ITEMS_PER_ROW
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW
     );
   },
   isRelevantDescription:

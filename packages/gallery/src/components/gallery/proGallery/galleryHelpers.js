@@ -20,8 +20,7 @@ export class Deferred {
 export function isGalleryInViewport({ container, scrollTop }) {
   try {
     const isTopVisible = container.scrollBase < scrollTop + window.innerHeight;
-    const isBottomVisible =
-      container.scrollBase + container.galleryHeight > scrollTop;
+    const isBottomVisible = container.scrollBase + container.galleryHeight > scrollTop;
     return isTopVisible && isBottomVisible;
   } catch (e) {
     console.warn('Could not calculate viewport', e);

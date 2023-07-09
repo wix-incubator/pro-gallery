@@ -8,8 +8,7 @@ export default {
   isRelevantDescription: 'Set "Crop Type" to anything but "Fit".',
   isRelevant: (options) =>
     cropMethod.isRelevant(options) &&
-    options[optionsMap.layoutParams.crop.method] !==
-      GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
+    options[optionsMap.layoutParams.crop.method] !== GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
   type: INPUT_TYPES.COLOR_PICKER,
   default: 'rgba(208, 208 ,208, 1)',
 };

@@ -28,8 +28,7 @@ describe('options - behaviourParams_gallery_vertical_loadMore_enable', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
       [optionsMap.behaviourParams.gallery.vertical.loadMore.enable]: true,
     });
     driver.mount.proGallery(initialProps);
@@ -45,8 +44,7 @@ describe('options - behaviourParams_gallery_vertical_loadMore_enable', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
       [optionsMap.behaviourParams.gallery.vertical.loadMore.enable]: false,
     });
     driver.mount.proGallery(initialProps);
@@ -62,8 +60,7 @@ describe('options - behaviourParams_gallery_vertical_loadMore_enable', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL,
       [optionsMap.behaviourParams.gallery.vertical.loadMore.enable]: true,
     });
     driver.mount.proGallery(initialProps);
@@ -79,8 +76,7 @@ describe('options - behaviourParams_gallery_vertical_loadMore_enable', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
       [optionsMap.behaviourParams.gallery.vertical.loadMore.enable]: true,
     });
     driver.mount.proGallery(initialProps);
@@ -98,8 +94,7 @@ describe('options - behaviourParams_gallery_vertical_loadMore_enable', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
       [optionsMap.behaviourParams.gallery.vertical.loadMore.enable]: false,
     });
     driver.mount.proGallery(initialProps);

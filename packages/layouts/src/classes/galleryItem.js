@@ -27,11 +27,7 @@ class GalleryItem {
 
   mapItemConfig(config) {
     const dto = {};
-    Object.assign(
-      dto,
-      config.dto.secondaryMedia,
-      config.dto.secondaryMedia.metadata
-    );
+    Object.assign(dto, config.dto.secondaryMedia, config.dto.secondaryMedia.metadata);
     return {
       ...config,
       dto,
@@ -179,13 +175,7 @@ class GalleryItem {
       title: metadata.title,
       itemWidth: metadata.width,
       itemType: metadata.type || 'image',
-      imageUrl: this.processedMediaUrl(
-        GALLERY_CONSTS.resizeMethods.FIT,
-        200,
-        200,
-        null,
-        null
-      ).img(),
+      imageUrl: this.processedMediaUrl(GALLERY_CONSTS.resizeMethods.FIT, 200, 200, null, null).img(),
       imagePurchasedUrl: this.dto.mediaUrl,
       fpX: focalPoint[0],
       fpY: focalPoint[1],
@@ -198,13 +188,7 @@ class GalleryItem {
     return { width, height };
   }
 
-  processedMediaUrl(
-    resizeMethod,
-    requiredWidth,
-    requiredHeight,
-    sharpParams,
-    createMultipleUrls = false
-  ) {
+  processedMediaUrl(resizeMethod, requiredWidth, requiredHeight, sharpParams, createMultipleUrls = false) {
     const mediaUrl = (
       item,
       url,
@@ -267,10 +251,7 @@ class GalleryItem {
     requiredHeight = Math.ceil(requiredHeight);
     const thumbSize = 250;
 
-    const focalPoint =
-      resizeMethod === GALLERY_CONSTS.resizeMethods.FILL &&
-      this.isCropped &&
-      this.focalPoint;
+    const focalPoint = resizeMethod === GALLERY_CONSTS.resizeMethods.FILL && this.isCropped && this.focalPoint;
 
     const urls = {};
     let imgUrl = this.url;
@@ -293,26 +274,12 @@ class GalleryItem {
         urls[GALLERY_CONSTS.urlTypes.VIDEO] = () => this.url;
       } else {
         urls[GALLERY_CONSTS.urlTypes.VIDEO] = () =>
-          mediaUrl(
-            this,
-            this.url,
-            GALLERY_CONSTS.resizeMethods.VIDEO,
-            requiredWidth,
-            requiredHeight
-          );
+          mediaUrl(this, this.url, GALLERY_CONSTS.resizeMethods.VIDEO, requiredWidth, requiredHeight);
       }
     }
 
     urls[GALLERY_CONSTS.urlTypes.HIGH_RES] = () =>
-      mediaUrl(
-        this,
-        imgUrl,
-        resizeMethod,
-        requiredWidth,
-        requiredHeight,
-        sharpParams,
-        focalPoint
-      );
+      mediaUrl(this, imgUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, focalPoint);
 
     urls[GALLERY_CONSTS.urlTypes.LOW_RES] = () =>
       mediaUrl(
@@ -350,10 +317,8 @@ class GalleryItem {
 
   get cubeTypeResizeMethod() {
     return {
-      [GALLERY_CONSTS.layoutParams_crop_method.FIT]:
-        GALLERY_CONSTS.resizeMethods.FIT,
-      [GALLERY_CONSTS.layoutParams_crop_method.FILL]:
-        GALLERY_CONSTS.resizeMethods.FILL,
+      [GALLERY_CONSTS.layoutParams_crop_method.FIT]: GALLERY_CONSTS.resizeMethods.FIT,
+      [GALLERY_CONSTS.layoutParams_crop_method.FILL]: GALLERY_CONSTS.resizeMethods.FILL,
     }[this.cubeType];
   }
 
@@ -413,14 +378,9 @@ class GalleryItem {
 
   get pixel_url() {
     if (!this.urls.pixel_url) {
-      this.urls.pixel_url = this.processedMediaUrl(
-        GALLERY_CONSTS.resizeMethods.FILL,
-        1,
-        1,
-        {
-          quality: 90,
-        }
-      );
+      this.urls.pixel_url = this.processedMediaUrl(GALLERY_CONSTS.resizeMethods.FILL, 1, 1, {
+        quality: 90,
+      });
     }
     return this.urls.pixel_url;
   }
@@ -439,14 +399,9 @@ class GalleryItem {
 
   get square_url() {
     if (!this.urls.square_url) {
-      this.urls.square_url = this.processedMediaUrl(
-        GALLERY_CONSTS.resizeMethods.FILL,
-        100,
-        100,
-        {
-          quality: 80,
-        }
-      );
+      this.urls.square_url = this.processedMediaUrl(GALLERY_CONSTS.resizeMethods.FILL, 100, 100, {
+        quality: 80,
+      });
     }
     return this.urls.square_url;
   }
@@ -465,12 +420,7 @@ class GalleryItem {
 
   get sample_url() {
     if (!this.urls.sample_url) {
-      this.urls.sample_url = this.processedMediaUrl(
-        GALLERY_CONSTS.resizeMethods.FIT,
-        500,
-        500,
-        this.sharpParams
-      );
+      this.urls.sample_url = this.processedMediaUrl(GALLERY_CONSTS.resizeMethods.FIT, 500, 500, this.sharpParams);
     }
     return this.urls.sample_url;
   }
@@ -496,11 +446,7 @@ class GalleryItem {
       this.urls.download_url._img = this.urls.download_url.img;
       this.urls.download_url.img = () => {
         const downloadUrl = this.urls.download_url._img();
-        return (
-          downloadUrl +
-          (downloadUrl.includes('?') ? '&' : '?') +
-          `dn=${this.fileName}`
-        );
+        return downloadUrl + (downloadUrl.includes('?') ? '&' : '?') + `dn=${this.fileName}`;
       };
     }
     return this.urls.download_url;
@@ -508,11 +454,7 @@ class GalleryItem {
 
   updateSharpParams() {
     // override sharpParams with item sharpParams
-    if (
-      this.dto.metaData &&
-      this.dto.metaData.sharpParams &&
-      this.dto.metaData.sharpParams.L
-    ) {
+    if (this.dto.metaData && this.dto.metaData.sharpParams && this.dto.metaData.sharpParams.L) {
       const sharpParams = this.dto.metaData.sharpParams.L;
       if (sharpParams.quality && sharpParams.overrideQuality === true) {
         this.sharpParams.quality = sharpParams.quality;
@@ -553,8 +495,7 @@ class GalleryItem {
     if (this.isText) {
       bg =
         this.metadata &&
-        ((this.metadata.textStyle && this.metadata.textStyle.backgroundColor) ||
-          this.metadata.backgroundColor);
+        ((this.metadata.textStyle && this.metadata.textStyle.backgroundColor) || this.metadata.backgroundColor);
     } else {
       bg = 'none';
     }
@@ -562,10 +503,7 @@ class GalleryItem {
   }
 
   get isCropped() {
-    return (
-      this.cubeImages &&
-      this.cubeTypeResizeMethod === GALLERY_CONSTS.resizeMethods.FILL
-    );
+    return this.cubeImages && this.cubeTypeResizeMethod === GALLERY_CONSTS.resizeMethods.FILL;
   }
 
   get focalPoint() {
@@ -584,12 +522,7 @@ class GalleryItem {
 
   get key() {
     if (!this._key) {
-      this._key = (
-        this.dto.key ||
-        this.id ||
-        this.dto.url ||
-        'no_key_found'
-      ).replace(/\W/g, '');
+      this._key = (this.dto.key || this.id || this.dto.url || 'no_key_found').replace(/\W/g, '');
     }
     return this._key;
   }
@@ -610,13 +543,7 @@ class GalleryItem {
 
   get url() {
     // todo :change from mediaUrl
-    return (
-      this.dto.file_url ||
-      this.dto.mediaUrl ||
-      this.dto.url ||
-      this.dto.src ||
-      ''
-    );
+    return this.dto.file_url || this.dto.mediaUrl || this.dto.url || this.dto.src || '';
   }
 
   get mediaUrl() {
@@ -624,9 +551,7 @@ class GalleryItem {
   }
 
   get html() {
-    return (
-      this.dto.html || this.dto.text || this.metadata.html || this.metadata.text
-    );
+    return this.dto.html || this.dto.text || this.metadata.html || this.metadata.text;
   }
 
   get lastModified() {
@@ -653,9 +578,7 @@ class GalleryItem {
     return (
       this.metadata.poster ||
       (this.metadata.customPoster && this.metadata.customPoster) ||
-      (this.metadata.posters
-        ? this.metadata.posters[this.metadata.posters.length - 1]
-        : null)
+      (this.metadata.posters ? this.metadata.posters[this.metadata.posters.length - 1] : null)
     );
   }
 
@@ -680,12 +603,7 @@ class GalleryItem {
   }
 
   get type() {
-    switch (
-      this._type ||
-      this.dto.type ||
-      this.metadata.type ||
-      this.dto.media_type
-    ) {
+    switch (this._type || this.dto.type || this.metadata.type || this.dto.media_type) {
       case 'dummy':
         return 'dummy';
       case 'v':
@@ -705,19 +623,11 @@ class GalleryItem {
   }
 
   get isVideoPlaceholder() {
-    return !!(
-      this.dto.isVideoPlaceholder ||
-      this.metadata.isVideoPlaceholder ||
-      this.dto.media_isVideoPlaceholder
-    );
+    return !!(this.dto.isVideoPlaceholder || this.metadata.isVideoPlaceholder || this.dto.media_isVideoPlaceholder);
   }
 
   get videoPlaceholderUrl() {
-    return (
-      this.dto.videoPlaceholderUrl ||
-      this.metadata.videoPlaceholderUrl ||
-      this.dto.media_videoPlaceholderUrl
-    );
+    return this.dto.videoPlaceholderUrl || this.metadata.videoPlaceholderUrl || this.dto.media_videoPlaceholderUrl;
   }
 
   get htmlContent() {
@@ -725,9 +635,7 @@ class GalleryItem {
   }
 
   get alt() {
-    return (
-      (utils.isMeaningfulString(this.metadata.alt) && this.metadata.alt) || ''
-    );
+    return (utils.isMeaningfulString(this.metadata.alt) && this.metadata.alt) || '';
   }
 
   set alt(value) {
@@ -897,9 +805,7 @@ class GalleryItem {
   }
 
   get linkText() {
-    return (
-      (this.metadata.link && this.metadata.link.text) || this.defaultLinkText
-    );
+    return (this.metadata.link && this.metadata.link.text) || this.defaultLinkText;
   }
 
   set linkText(value) {
@@ -949,10 +855,7 @@ class GalleryItem {
   get linkOpenType() {
     if (this.metadata.link && !utils.isUndefined(this.metadata.link.target)) {
       return this.unprotectedLinkOpenType;
-    } else if (
-      this.metadata.link &&
-      !utils.isUndefined(this.metadata.link.targetBlank)
-    ) {
+    } else if (this.metadata.link && !utils.isUndefined(this.metadata.link.targetBlank)) {
       return this.metadata.link.targetBlank ? '_blank' : '_top';
     } else {
       return '_blank';
@@ -981,9 +884,7 @@ class GalleryItem {
       this.metadata.isDemo ||
       this.dto.isDemo ||
       this.metadata.sourceName === 'public' ||
-      (this.metadata.tags &&
-        Array.isArray(this.metadata.tags) &&
-        this.metadata.tags.indexOf('_paid') >= 0)
+      (this.metadata.tags && Array.isArray(this.metadata.tags) && this.metadata.tags.indexOf('_paid') >= 0)
     );
   }
 
@@ -1016,9 +917,7 @@ class GalleryItem {
   }
 
   get isTransparent() {
-    return (
-      this.url && (this.url.indexOf('.png') > 0 || this.url.indexOf('.gif') > 0)
-    );
+    return this.url && (this.url.indexOf('.png') > 0 || this.url.indexOf('.gif') > 0);
   }
 
   get webLink() {

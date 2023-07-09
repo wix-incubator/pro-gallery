@@ -20,10 +20,7 @@ export const nameChangedLayoutParams = [
   ['thumbnailSize', optionsMap.layoutParams.thumbnails.size],
   ['showArrows', optionsMap.layoutParams.navigationArrows.enable],
   ['arrowsPadding', optionsMap.layoutParams.navigationArrows.padding],
-  [
-    'arrowsVerticalPosition',
-    optionsMap.layoutParams.navigationArrows.verticalAlignment,
-  ],
+  ['arrowsVerticalPosition', optionsMap.layoutParams.navigationArrows.verticalAlignment],
   ['arrowsSize', optionsMap.layoutParams.navigationArrows.size],
   ['imageInfoType', optionsMap.layoutParams.info.layout],
 
@@ -34,97 +31,41 @@ export const nameChangedLayoutParams = [
   ['textBoxBorderRadius', optionsMap.layoutParams.info.border.radius],
 ];
 
-export const reversedLayoutParams = [
-  ['useMaxDimensions', optionsMap.layoutParams.structure.enableStreching],
-];
+export const reversedLayoutParams = [['useMaxDimensions', optionsMap.layoutParams.structure.enableStreching]];
 
 export const nameChangedBehaviourParams = [
-  [
-    'magnificationLevel',
-    optionsMap.behaviourParams.item.content.magnificationValue,
-  ],
+  ['magnificationLevel', optionsMap.behaviourParams.item.content.magnificationValue],
+  ['tiltAngleValue', optionsMap.behaviourParams.item.content.tiltAngleValue],
   ['videoLoop', optionsMap.behaviourParams.item.video.loop],
-  [
-    'showVideoPlayButton',
-    optionsMap.behaviourParams.item.video.enablePlayButton,
-  ],
+  ['showVideoPlayButton', optionsMap.behaviourParams.item.video.enablePlayButton],
   ['showVideoControls', optionsMap.behaviourParams.item.video.enableControls],
-  [
-    'enableVideoPlaceholder',
-    optionsMap.behaviourParams.item.video.enablePlaceholder,
-  ],
+  ['enableVideoPlaceholder', optionsMap.behaviourParams.item.video.enablePlaceholder],
   ['overlayAnimation', optionsMap.behaviourParams.item.overlay.hoverAnimation],
   ['overlayPosition', optionsMap.behaviourParams.item.overlay.position],
   ['overlaySize', optionsMap.behaviourParams.item.overlay.size],
   ['overlaySizeType', optionsMap.behaviourParams.item.overlay.sizeUnits],
   ['overlayPadding', optionsMap.behaviourParams.item.overlay.padding],
-  [
-    'overlayBackground',
-    optionsMap.behaviourParams.item.overlay.backgroundColor,
-  ],
-  [
-    'imageHoverAnimation',
-    optionsMap.behaviourParams.item.content.hoverAnimation,
-  ],
-  [
-    'imagePlacementAnimation',
-    optionsMap.behaviourParams.item.content.placementAnimation,
-  ],
+  ['overlayBackground', optionsMap.behaviourParams.item.overlay.backgroundColor],
+  ['imageHoverAnimation', optionsMap.behaviourParams.item.content.hoverAnimation],
+  ['imagePlacementAnimation', optionsMap.behaviourParams.item.content.placementAnimation],
   ['imageLoadingMode', optionsMap.behaviourParams.item.content.loader],
-  [
-    'scrollSnap',
-    optionsMap.behaviourParams.gallery.horizontal.enableScrollSnap,
-  ],
+  ['scrollSnap', optionsMap.behaviourParams.gallery.horizontal.enableScrollSnap],
   ['scrollAnimation', optionsMap.behaviourParams.gallery.scrollAnimation],
-  [
-    'shouldIndexDirectShareLinkInSEO',
-    optionsMap.behaviourParams.gallery.enableIndexingShareLinks,
-  ],
-  [
-    'loadMoreButtonText',
-    optionsMap.behaviourParams.gallery.vertical.loadMore.text,
-  ],
-  [
-    'slideAnimation',
-    optionsMap.behaviourParams.gallery.horizontal.slideAnimation,
-  ],
-  [
-    'slideTransition',
-    optionsMap.behaviourParams.gallery.horizontal.slideTransition,
-  ],
-  [
-    'scrollDuration',
-    optionsMap.behaviourParams.gallery.horizontal.navigationDuration,
-  ], //This might need to move to navigationArrows in layoutParams.
+  ['shouldIndexDirectShareLinkInSEO', optionsMap.behaviourParams.gallery.enableIndexingShareLinks],
+  ['loadMoreButtonText', optionsMap.behaviourParams.gallery.vertical.loadMore.text],
+  ['slideAnimation', optionsMap.behaviourParams.gallery.horizontal.slideAnimation],
+  ['slideTransition', optionsMap.behaviourParams.gallery.horizontal.slideTransition],
+  ['scrollDuration', optionsMap.behaviourParams.gallery.horizontal.navigationDuration], //This might need to move to navigationArrows in layoutParams.
   ['slideshowLoop', optionsMap.behaviourParams.gallery.horizontal.loop],
-  [
-    'autoSlideshowInterval',
-    optionsMap.behaviourParams.gallery.horizontal.autoSlide.interval,
-  ],
-  [
-    'pauseAutoSlideshowOnHover',
-    optionsMap.behaviourParams.gallery.horizontal.autoSlide.pauseOnHover,
-  ],
-  [
-    'autoSlideshowContinuousSpeed',
-    optionsMap.behaviourParams.gallery.horizontal.autoSlide.speed,
-  ],
-  [
-    'allowSlideshowCounter',
-    optionsMap.behaviourParams.gallery.horizontal.slideshowInfo.enableCounter,
-  ],
-  [
-    'playButtonForAutoSlideShow',
-    optionsMap.behaviourParams.gallery.horizontal.slideshowInfo
-      .enablePlayButton,
-  ],
+  ['autoSlideshowInterval', optionsMap.behaviourParams.gallery.horizontal.autoSlide.interval],
+  ['pauseAutoSlideshowOnHover', optionsMap.behaviourParams.gallery.horizontal.autoSlide.pauseOnHover],
+  ['autoSlideshowContinuousSpeed', optionsMap.behaviourParams.gallery.horizontal.autoSlide.speed],
+  ['allowSlideshowCounter', optionsMap.behaviourParams.gallery.horizontal.slideshowInfo.enableCounter],
+  ['playButtonForAutoSlideShow', optionsMap.behaviourParams.gallery.horizontal.slideshowInfo.enablePlayButton],
 ];
 
 export const reversedBehaviourParams = [
-  [
-    'enableInfiniteScroll',
-    optionsMap.behaviourParams.gallery.vertical.loadMore.enable,
-  ],
+  ['enableInfiniteScroll', optionsMap.behaviourParams.gallery.vertical.loadMore.enable],
   ['allowContextMenu', optionsMap.behaviourParams.gallery.blockContextMenu],
   ['enableScroll', optionsMap.behaviourParams.gallery.horizontal.blockScroll], //requires a reversal! (blocks instead of allowing),
 ];
@@ -132,10 +73,7 @@ export const reversedBehaviourParams = [
 export const nameChangedStylingParams = [
   ['itemShadowBlur', optionsMap.stylingParams.itemShadowBlur],
   ['itemShadowDirection', optionsMap.stylingParams.itemShadowDirection],
-  [
-    'itemShadowOpacityAndColor',
-    optionsMap.stylingParams.itemShadowOpacityAndColor,
-  ],
+  ['itemShadowOpacityAndColor', optionsMap.stylingParams.itemShadowOpacityAndColor],
   ['arrowsColor', optionsMap.stylingParams.arrowsColor],
   ['itemShadowSize', optionsMap.stylingParams.itemShadowSize],
   ['itemEnableShadow', optionsMap.stylingParams.itemEnableShadow],
@@ -160,20 +98,14 @@ export function reverseBooleans(obj, pairsArray) {
   return _obj;
 }
 export function namingChange(obj, oldName, newName) {
-  if (
-    typeof obj[newName] === 'undefined' &&
-    typeof obj[oldName] !== 'undefined'
-  ) {
+  if (typeof obj[newName] === 'undefined' && typeof obj[oldName] !== 'undefined') {
     obj[newName] = obj[oldName];
   }
   delete obj[oldName];
   return obj;
 }
 export function reverseBooleanTo(obj, oldName, newName) {
-  if (
-    typeof obj[newName] === 'undefined' &&
-    typeof obj[oldName] !== 'undefined'
-  ) {
+  if (typeof obj[newName] === 'undefined' && typeof obj[oldName] !== 'undefined') {
     obj[newName] = !obj[oldName];
   }
   delete obj[oldName];

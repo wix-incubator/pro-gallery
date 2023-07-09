@@ -20,12 +20,9 @@ describe('options - behaviourParams_item_overlay_hoveringBehaviour', () => {
   it('should not have class "force-hover" when there is no hover event (when "behaviourParams_item_overlay_hoveringBehaviour" is "APPEARS")', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       // layoutParams_info_placement also deals with the hover on items. when it's value is 'OVERLAY', hoveringBehaviour takes controll.
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
+      [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
       [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].APPEARS,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].APPEARS,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -38,12 +35,9 @@ describe('options - behaviourParams_item_overlay_hoveringBehaviour', () => {
   it('should not have class "force-hover" when there is no hover event (when "behaviourParams_item_overlay_hoveringBehaviour" is "DISAPPEARS")', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       // layoutParams_info_placement also deals with the hover on items. when it's value is 'OVERLAY', hoveringBehaviour takes controll.
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
+      [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
       [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].DISAPPEARS,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].DISAPPEARS,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -54,12 +48,9 @@ describe('options - behaviourParams_item_overlay_hoveringBehaviour', () => {
   });
   it('should have class invert-hover when "behaviourParams_item_overlay_hoveringBehaviour" is "DISAPPEARS"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
+      [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
       [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].DISAPPEARS,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].DISAPPEARS,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();
@@ -70,12 +61,9 @@ describe('options - behaviourParams_item_overlay_hoveringBehaviour', () => {
   });
   it('should have default class force-hover when "behaviourParams_item_overlay_hoveringBehaviour" is "ALWAYS_SHOW"', async () => {
     initialProps.options = Object.assign(initialProps.options, {
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
+      [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
       [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.item.overlay.hoveringBehaviour
-        ].ALWAYS_SHOW,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].ALWAYS_SHOW,
     });
     driver.mount.proGallery(initialProps);
     await driver.update();

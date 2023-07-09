@@ -23,8 +23,7 @@ describe.skip('options - stylingParams_itemShadow', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
       [optionsMap.stylingParams.itemShadowBlur]: 20,
       [optionsMap.stylingParams.itemShadowSize]: 10,
       [optionsMap.stylingParams.itemShadowDirection]: 135,
@@ -44,8 +43,7 @@ describe.skip('options - stylingParams_itemShadow', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
       [optionsMap.stylingParams.itemShadowBlur]: 20,
       [optionsMap.stylingParams.itemShadowSize]: 10,
       [optionsMap.stylingParams.itemShadowDirection]: 135,
@@ -64,8 +62,7 @@ describe.skip('options - stylingParams_itemShadow', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL,
       [optionsMap.stylingParams.itemShadowBlur]: 20,
       [optionsMap.stylingParams.itemShadowSize]: 10,
       [optionsMap.stylingParams.itemShadowDirection]: 135,
@@ -85,8 +82,7 @@ describe.skip('options - stylingParams_itemShadow', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
       [optionsMap.stylingParams.itemShadowBlur]: 20,
       [optionsMap.stylingParams.itemShadowSize]: 10,
       [optionsMap.stylingParams.itemShadowDirection]: 135,
@@ -106,8 +102,7 @@ describe.skip('options - stylingParams_itemShadow', () => {
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
       [optionsMap.stylingParams.itemEnableShadow]: true,
       [optionsMap.stylingParams.itemShadowDirection]: 100,
       [optionsMap.stylingParams.itemShadowSize]: 20,
@@ -118,9 +113,7 @@ describe.skip('options - stylingParams_itemShadow', () => {
     driver.mount.proGallery(initialProps);
     await driver.update();
     const item = driver.find.hook('item-container').at(0);
-    expect(item.props().style.boxShadow).to.equal(
-      '20px 3px 20px rgba(0,0,0,.4)'
-    );
+    expect(item.props().style.boxShadow).to.equal('20px 3px 20px rgba(0,0,0,.4)');
     driver.detach.proGallery();
   });
 });

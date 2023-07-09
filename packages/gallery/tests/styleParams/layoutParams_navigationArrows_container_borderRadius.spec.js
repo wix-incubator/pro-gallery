@@ -20,11 +20,9 @@ describe('options - layoutParams_navigationArrows_container_borderRadius', () =>
   it('should set arrows border-radius', async () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW,
       [optionsMap.layoutParams.navigationArrows.container.type]:
-        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type]
-          .BOX,
+        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type].BOX,
       [optionsMap.layoutParams.navigationArrows.container.borderRadius]: 10,
     });
     driver.mount.proGallery(initialProps);

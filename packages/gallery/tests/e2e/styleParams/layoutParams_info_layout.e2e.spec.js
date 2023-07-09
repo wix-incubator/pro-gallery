@@ -19,15 +19,12 @@ describe('layoutParams_info_layout - e2e', () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.info.layout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.layout].NO_BACKGROUND,
+      [optionsMap.layoutParams.info.layout]: GALLERY_CONSTS[optionsMap.layoutParams.info.layout].NO_BACKGROUND,
       [optionsMap.stylingParams.itemBorderWidth]: 5,
       [optionsMap.layoutParams.info.border.width]: 5,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
+      [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -38,15 +35,12 @@ describe('layoutParams_info_layout - e2e', () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.info.layout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.layout].ATTACHED_BACKGROUND,
+      [optionsMap.layoutParams.info.layout]: GALLERY_CONSTS[optionsMap.layoutParams.info.layout].ATTACHED_BACKGROUND,
       [optionsMap.stylingParams.itemBorderWidth]: 5,
       [optionsMap.layoutParams.info.border.width]: 5,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
+      [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -57,16 +51,12 @@ describe('layoutParams_info_layout - e2e', () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.info.layout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.layout]
-          .SEPARATED_BACKGROUND,
+      [optionsMap.layoutParams.info.layout]: GALLERY_CONSTS[optionsMap.layoutParams.info.layout].SEPARATED_BACKGROUND,
       [optionsMap.stylingParams.itemBorderWidth]: 5,
       [optionsMap.layoutParams.info.border.width]: 5,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
+      [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
@@ -77,15 +67,12 @@ describe('layoutParams_info_layout - e2e', () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
-      [optionsMap.layoutParams.info.layout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.layout].DONT_SHOW,
+      [optionsMap.layoutParams.info.layout]: GALLERY_CONSTS[optionsMap.layoutParams.info.layout].DONT_SHOW,
       [optionsMap.stylingParams.itemBorderWidth]: 5,
       [optionsMap.layoutParams.info.border.width]: 5,
-      [optionsMap.layoutParams.info.placement]:
-        GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
+      [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
     });
     await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);

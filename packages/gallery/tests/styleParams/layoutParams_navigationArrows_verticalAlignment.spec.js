@@ -29,8 +29,7 @@ describe('styleParam - layoutParams_navigationArrows_verticalAlignment', () => {
       options: {
         ...options,
         [optionsMap.layoutParams.structure.itemSpacing]: 0, //v5 TODO test w/o and remove, should be handled by the new addPresetStyles of slideshow.
-        [optionsMap.layoutParams.info.placement]:
-          GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW, //v5 TODO test w/o and remove, should be handled by the new addPresetStyles of slideshow.
+        [optionsMap.layoutParams.info.placement]: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].BELOW, //v5 TODO test w/o and remove, should be handled by the new addPresetStyles of slideshow.
       },
       customComponents: {
         customHoverRenderer: () => {},
@@ -41,8 +40,7 @@ describe('styleParam - layoutParams_navigationArrows_verticalAlignment', () => {
     //base layout styles for entire test-suite
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW,
       [optionsMap.layoutParams.info.height]: 39,
     });
   });
@@ -66,9 +64,7 @@ describe('styleParam - layoutParams_navigationArrows_verticalAlignment', () => {
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.info.height]: 38, // info height is 39 when default, so slideshowInfoSize < layoutParams_navigationArrows_size
       [optionsMap.layoutParams.navigationArrows.verticalAlignment]:
-        GALLERY_CONSTS[
-          optionsMap.layoutParams.navigationArrows.verticalAlignment
-        ].INFO_CENTER,
+        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment].INFO_CENTER,
     });
     const navArrows = await mountGalleryAndGetArrows(initialProps);
     expect(navArrows).to.have.lengthOf(0);
@@ -78,30 +74,22 @@ describe('styleParam - layoutParams_navigationArrows_verticalAlignment', () => {
     // Exact style params relevant to this sub-test
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.navigationArrows.verticalAlignment]:
-        GALLERY_CONSTS[
-          optionsMap.layoutParams.navigationArrows.verticalAlignment
-        ].INFO_CENTER,
+        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment].INFO_CENTER,
       [optionsMap.layoutParams.info.height]: 39,
     });
     const navArrows = await mountGalleryAndGetArrows(initialProps);
     const galleryContainer = driver.getContainer();
     const { height: galleryHeight } = galleryContainer.props().style;
     const { top } = navArrows.props().style;
-    const expectedInfoSpace =
-      (-1 * galleryHeight) / 2 +
-      initialProps.options[optionsMap.layoutParams.info.height] / 2;
-    expect(top.replace(/\s/g, '')).to.eq(
-      getExpectedCalcExpression(expectedInfoSpace)
-    );
+    const expectedInfoSpace = (-1 * galleryHeight) / 2 + initialProps.options[optionsMap.layoutParams.info.height] / 2;
+    expect(top.replace(/\s/g, '')).to.eq(getExpectedCalcExpression(expectedInfoSpace));
   });
 
   it('Checks if "ITEM_CENTER" has correct distance from top for SlideShow', async () => {
     // Exact style params relevant to this sub-test
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.navigationArrows.verticalAlignment]:
-        GALLERY_CONSTS[
-          optionsMap.layoutParams.navigationArrows.verticalAlignment
-        ].ITEM_CENTER,
+        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment].ITEM_CENTER,
       [optionsMap.layoutParams.info.height]: 39,
     });
     const navArrows = await mountGalleryAndGetArrows(initialProps);
@@ -113,16 +101,11 @@ describe('styleParam - layoutParams_navigationArrows_verticalAlignment', () => {
     // Exact style params relevant to this sub-test
     initialProps.options = Object.assign(initialProps.options, {
       [optionsMap.layoutParams.navigationArrows.verticalAlignment]:
-        GALLERY_CONSTS[
-          optionsMap.layoutParams.navigationArrows.verticalAlignment
-        ].IMAGE_CENTER,
+        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment].IMAGE_CENTER,
     });
     const navArrows = await mountGalleryAndGetArrows(initialProps);
     const { top } = navArrows.props().style;
-    const expectedInfoSpace =
-      initialProps.options[optionsMap.layoutParams.info.height] / 2;
-    expect(top.replace(/\s/g, '')).to.eq(
-      getExpectedCalcExpression(expectedInfoSpace)
-    );
+    const expectedInfoSpace = initialProps.options[optionsMap.layoutParams.info.height] / 2;
+    expect(top.replace(/\s/g, '')).to.eq(getExpectedCalcExpression(expectedInfoSpace));
   });
 });

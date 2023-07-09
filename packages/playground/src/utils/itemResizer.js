@@ -35,14 +35,9 @@ const createProcessedVideoUrl = ({ item, originalUrl, requiredHeight }) => {
   if (item.qualities && item.qualities.length) {
     let suffix = '/';
 
-    const mp4Qualities = item.qualities.filter(
-      (video) => video.formats[0] === 'mp4',
-    );
+    const mp4Qualities = item.qualities.filter((video) => video.formats[0] === 'mp4');
     // search for the first quality bigger that the required one
-    if (
-      mp4Qualities.length > 1 &&
-      mp4Qualities[0].height > mp4Qualities[1].height
-    ) {
+    if (mp4Qualities.length > 1 && mp4Qualities[0].height > mp4Qualities[1].height) {
       // some have reversed quality order. not sure how or when this happened
       mp4Qualities.reverse();
     }
@@ -70,11 +65,9 @@ const createProcessedVideoUrl = ({ item, originalUrl, requiredHeight }) => {
   }
 };
 
-const createProcessed3dUrl = ({
-  item,
-}) => {
+const createProcessed3dUrl = ({ item }) => {
   return item.metadata.url;
-}
+};
 
 const createProcessedImageUrl = ({
   item,
@@ -102,18 +95,9 @@ const createProcessedImageUrl = ({
     sharpParams.quality = Math.min(90, sharpParams.quality);
 
     if (sharpParams.allowUsm === true) {
-      sharpParams.usm.usm_a = Math.min(
-        5,
-        Math.max(0, sharpParams.usm.usm_a || 0),
-      );
-      sharpParams.usm.usm_r = Math.min(
-        128,
-        Math.max(0, sharpParams.usm.usm_r || 0),
-      ); // should be max 500 - but it's returning a 404
-      sharpParams.usm.usm_t = Math.min(
-        1,
-        Math.max(0, sharpParams.usm.usm_t || 0),
-      );
+      sharpParams.usm.usm_a = Math.min(5, Math.max(0, sharpParams.usm.usm_a || 0));
+      sharpParams.usm.usm_r = Math.min(128, Math.max(0, sharpParams.usm.usm_r || 0)); // should be max 500 - but it's returning a 404
+      sharpParams.usm.usm_t = Math.min(1, Math.max(0, sharpParams.usm.usm_t || 0));
     }
 
     let retUrl = '';
@@ -180,23 +164,13 @@ const createProcessedImageUrl = ({
       if (requiredHeight <= 1 && requiredWidth <= 1) resizeMethod = 'fill';
       return `/v1/${resizeMethod}/w_${requiredWidth},h_${requiredHeight}`;
     } else {
-      const { x, y, scale } = calcCropParams(
-        item,
-        requiredWidth,
-        requiredHeight,
-        focalPoint,
-      );
+      const { x, y, scale } = calcCropParams(item, requiredWidth, requiredHeight, focalPoint);
       return `/v1/crop/w_${requiredWidth},h_${requiredHeight},x_${x},y_${y},scl_${scale}`;
     }
   };
 
   const addFilename = () => {
-    return (
-      '/' +
-      (useWebp ? originalUrl.replace(/[^.]\w*$/, 'webp') : originalUrl).match(
-        /[^/][\w.]*$/,
-      )[0]
-    );
+    return '/' + (useWebp ? originalUrl.replace(/[^.]\w*$/, 'webp') : originalUrl).match(/[^/][\w.]*$/)[0];
   };
 
   requiredWidth = Math.ceil(requiredWidth * devicePixelRatio);
@@ -212,15 +186,15 @@ const createProcessedImageUrl = ({
 };
 
 const createMediaUrl = ({
-                          item,
-                          originalUrl,
-                          resizeMethod,
-                          requiredWidth,
-                          requiredHeight,
-                          sharpParams,
-                          focalPoint,
-                          createMultiple
-                        }) => {
+  item,
+  originalUrl,
+  resizeMethod,
+  requiredWidth,
+  requiredHeight,
+  sharpParams,
+  focalPoint,
+  createMultiple,
+}) => {
   const hasImageToken = item.dto.imageToken || item.dto.token;
 
   originalUrl = removeResizeParams(originalUrl);
@@ -236,7 +210,8 @@ const createMediaUrl = ({
   };
   if (resizeMethod === 'video') {
     return createProcessedVideoUrl(params);
-  } if (resizeMethod === '3d') {
+  }
+  if (resizeMethod === '3d') {
     return createProcessed3dUrl(params);
   } else if (isExternalUrl(originalUrl)) {
     return originalUrl;
@@ -258,7 +233,7 @@ const createMediaUrl = ({
                 ...params,
                 useWebp: false,
                 devicePixelRatio: dpr,
-              }) + ` ${dpr}x`,
+              }) + ` ${dpr}x`
           )
           .join(', '),
       },
@@ -276,7 +251,7 @@ const createMediaUrl = ({
                 ...params,
                 useWebp: true,
                 devicePixelRatio: dpr,
-              }) + ` ${dpr}x`,
+              }) + ` ${dpr}x`
           )
           .join(', '),
       },

@@ -11,12 +11,8 @@ export default {
   isRelevant: (options) => {
     return (
       autoSlideBehaviour.isRelevant(options) &&
-      options[
-        optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-      ] ===
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-        ].CONTINUOUS
+      options[optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour] ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour].CONTINUOUS
     );
   },
   type: INPUT_TYPES.NUMBER,

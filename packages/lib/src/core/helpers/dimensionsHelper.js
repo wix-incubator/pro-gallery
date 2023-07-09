@@ -33,9 +33,7 @@ class DimensionsHelper {
       const res = {
         galleryWidth: Math.ceil(this.getGalleryWidth()),
         galleryHeight: Math.ceil(this.getGalleryHeight()),
-        scrollBase: this.container.scrollBase
-          ? Math.ceil(this.container.scrollBase)
-          : 0,
+        scrollBase: this.container.scrollBase ? Math.ceil(this.container.scrollBase) : 0,
         height: Math.ceil(this.container.height),
         width: Math.ceil(this.container.width),
       };
@@ -47,11 +45,14 @@ class DimensionsHelper {
       if (
         this.options[optionsMap.layoutParams.thumbnails.enable] &&
         this.options[optionsMap.layoutParams.thumbnails.position] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position]
-            .OUTSIDE_GALLERY
+          GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].OUTSIDE_GALLERY
       ) {
         res.galleryHeight -= this.getThumbnailHeightDelta();
         res.galleryWidth -= this.getThumbnailWidthDelta();
+      }
+      if (this.options[optionsMap.layoutParams.thumbnails.enable]) {
+        res.navigationBarHeight = this.getThumbnailHeightDelta() || res.galleryHeight;
+        res.navigationBarWidth = this.getThumbnailWidthDelta() || res.galleryWidth;
       }
       return res;
     });
@@ -62,11 +63,9 @@ class DimensionsHelper {
       let width = Math.floor(this.container.width) + this.getDimensionFix() * 2; //add margins to width and then remove them in css negative margins
       if (
         this.options[optionsMap.layoutParams.navigationArrows.position] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position]
-            .OUTSIDE_GALLERY &&
+          GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.position].OUTSIDE_GALLERY &&
         this.options[optionsMap.layoutParams.structure.scrollDirection] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-            .HORIZONTAL
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
       ) {
         width -=
           2 *
@@ -83,13 +82,10 @@ class DimensionsHelper {
       //const offsetTop = this.options.scrollDirection === GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL ? this.container.offsetTop : 0;
       const dimensionFix = () =>
         this.options[optionsMap.layoutParams.structure.scrollDirection] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
           ? this.getDimensionFix()
           : 0;
-      const res = Math.floor(
-        (this.container.height > 0 ? this.container.height : 0) + dimensionFix()
-      );
+      const res = Math.floor((this.container.height > 0 ? this.container.height : 0) + dimensionFix());
       return res;
     });
   }
@@ -97,9 +93,7 @@ class DimensionsHelper {
   getDimensionFix() {
     return this.getOrPutInCache('dimensionFix', () => {
       return (
-        Number(
-          this.options[optionsMap.layoutParams.structure.itemSpacing] / 2
-        ) -
+        Number(this.options[optionsMap.layoutParams.structure.itemSpacing] / 2) -
         Number(this.options[optionsMap.layoutParams.structure.gallerySpacing])
       );
     });
@@ -148,48 +142,35 @@ class DimensionsHelper {
   fixHeightForHorizontalGalleryIfNeeded() {
     if (
       this.options[optionsMap.layoutParams.structure.scrollDirection] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL &&
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL &&
       this.options[optionsMap.layoutParams.structure.galleryRatio.value] > 0
     ) {
       if (
         this.options[optionsMap.layoutParams.thumbnails.enable] &&
         this.options[optionsMap.layoutParams.thumbnails.position] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position]
-            .OUTSIDE_GALLERY
+          GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].OUTSIDE_GALLERY
       ) {
         switch (this.options[optionsMap.layoutParams.thumbnails.alignment]) {
           case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP:
-          case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment]
-            .BOTTOM:
+          case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM:
             this.container.height =
-              this.container.width *
-                this.options[
-                  optionsMap.layoutParams.structure.galleryRatio.value
-                ] +
+              this.container.width * this.options[optionsMap.layoutParams.structure.galleryRatio.value] +
               this.getThumbnailHeightDelta();
             break;
-          case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment]
-            .RIGHT:
-          case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment]
-            .LEFT:
+          case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].RIGHT:
+          case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT:
             this.container.height =
               (this.container.width - this.getThumbnailWidthDelta()) *
-              this.options[
-                optionsMap.layoutParams.structure.galleryRatio.value
-              ];
+              this.options[optionsMap.layoutParams.structure.galleryRatio.value];
             break;
           default:
             break;
         }
       } else {
         this.container.height =
-          this.container.width *
-          this.options[optionsMap.layoutParams.structure.galleryRatio.value];
+          this.container.width * this.options[optionsMap.layoutParams.structure.galleryRatio.value];
         if (
-          !this.options[
-            optionsMap.layoutParams.structure.galleryRatio.includeExternalInfo
-          ] &&
+          !this.options[optionsMap.layoutParams.structure.galleryRatio.includeExternalInfo] &&
           includeExternalInfo.isRelevant(this.options)
         ) {
           this.container.height += this.options.externalInfoHeight;

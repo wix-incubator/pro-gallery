@@ -13,8 +13,7 @@ describe('Image Item', () => {
     imageItemsProps = galleryDriver.props.itemView(sampleItem);
     Object.assign(imageItemsProps, {
       options: {
-        [optionsMap.layoutParams.crop.method]:
-          GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
+        [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
         [optionsMap.layoutParams.crop.enable]: true,
       },
       imageDimensions: { borderRadius: null },
@@ -28,8 +27,7 @@ describe('Image Item', () => {
 
   it('should set grid-fit if layoutParams_crop_method is fit', () => {
     galleryDriver.mount(ImageItem, imageItemsProps);
-    expect(galleryDriver.find.hook('image-item').hasClass('grid-fit')).to.be
-      .true;
+    expect(galleryDriver.find.hook('image-item').hasClass('grid-fit')).to.be.true;
   });
 
   //These tests are not working with the new gallery container (using css scroll)

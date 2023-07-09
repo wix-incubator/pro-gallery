@@ -40,12 +40,7 @@ function flattenObject(ob) {
     // eslint-disable-next-line no-prototype-builtins
     if (!ob.hasOwnProperty(i)) continue;
 
-    if (
-      typeof ob[i] == 'object' &&
-      !(ob[i] instanceof Array) &&
-      ob[i] !== null &&
-      Object.keys(ob[i]).length > 0
-    ) {
+    if (typeof ob[i] == 'object' && !(ob[i] instanceof Array) && ob[i] !== null && Object.keys(ob[i]).length > 0) {
       var flatObject = flattenObject(ob[i]);
       for (var x in flatObject) {
         // eslint-disable-next-line no-prototype-builtins
@@ -62,22 +57,15 @@ function flattenObject(ob) {
 
 function flatToNested(ob) {
   const cloneObject = false;
-  return Object.entries(ob).reduce(
-    (obj, [option, value]) => assignByString(obj, option, value, cloneObject),
-    {}
-  );
+  return Object.entries(ob).reduce((obj, [option, value]) => assignByString(obj, option, value, cloneObject), {});
 }
 function trimUndefinedValues_nested(object) {
   const flatObject = flattenObject(object);
-  Object.keys(flatObject).forEach((key) =>
-    flatObject[key] === undefined ? delete flatObject[key] : {}
-  );
+  Object.keys(flatObject).forEach((key) => (flatObject[key] === undefined ? delete flatObject[key] : {}));
   return flatToNested(flatObject);
 }
 function trimUndefinedValues_flat(flatObject) {
-  Object.keys(flatObject).forEach((key) =>
-    flatObject[key] === undefined ? delete flatObject[key] : {}
-  );
+  Object.keys(flatObject).forEach((key) => (flatObject[key] === undefined ? delete flatObject[key] : {}));
   return flatObject;
 }
 

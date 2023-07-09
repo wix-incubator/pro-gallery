@@ -5,31 +5,26 @@ import optionsMap from '../../core/helpers/optionsMap';
 
 export default {
   title: 'Texts Placement',
-  isRelevantDescription:
-    'Set "Layout Orientation" to "Columns" and set "Max Group Size" to "1".',
+  isRelevantDescription: 'Set "Layout Orientation" to "Columns" and set "Max Group Size" to "1".',
   isRelevant: (options, option) => {
     // specific isRelevant functions
     const isHorizontalInfoCompatibleLayout = (options) => {
       return (
         options[optionsMap.layoutParams.structure.layoutOrientation] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-            .VERTICAL &&
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].VERTICAL &&
         options[optionsMap.layoutParams.groups.groupSize] === 1 &&
         options[optionsMap.layoutParams.structure.scrollDirection] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-            .VERTICAL
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL
       );
     };
     const isVerticalInfoCompatibleLayout = (options) => {
       return {
-        [GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL]:
+        [GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL]:
           options[optionsMap.layoutParams.structure.layoutOrientation] ===
-            GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-              .VERTICAL &&
+            GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].VERTICAL &&
           options[optionsMap.layoutParams.groups.groupSize] === 1,
-        [GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL]: options[optionsMap.layoutParams.groups.groupSize] === 1,
+        [GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL]:
+          options[optionsMap.layoutParams.groups.groupSize] === 1,
       }[options[optionsMap.layoutParams.structure.scrollDirection]];
     };
     // Distribution of the specific isRelevant functions
@@ -45,9 +40,7 @@ export default {
       ALTERNATE_VERTICALLY: isVerticalInfoCompatibleLayout,
     };
     // specific option isRelevant : general titlePlacement isRelevant (Hover always true)
-    return option
-      ? placementOptions[option](options)
-      : Object.values(placementOptions).some((val) => val(options));
+    return option ? placementOptions[option](options) : Object.values(placementOptions).some((val) => val(options));
   },
   type: INPUT_TYPES.MULTISELECT,
   default: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,

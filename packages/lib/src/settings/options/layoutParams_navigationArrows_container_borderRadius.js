@@ -7,12 +7,10 @@ export default {
   isRelevant: (options) => {
     return (
       options[optionsMap.layoutParams.structure.scrollDirection] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL &&
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL &&
       options[optionsMap.layoutParams.navigationArrows.enable] &&
       options[optionsMap.layoutParams.navigationArrows.container.type] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type]
-          .BOX
+        GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type].BOX
     );
   },
   isRelevantDescription:
