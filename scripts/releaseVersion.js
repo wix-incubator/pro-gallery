@@ -29,7 +29,7 @@ const VERSION_LOGGER = 'packages/gallery/src/versionLogger.js';
 
 const getPackageDetails = memoize(() => {
     try {
-        const npmShowCommand = `npm show ${PACKAGE} --json`;
+        const npmShowCommand = `yarn info ${PACKAGE} --json`;
         return JSON.parse(execSync(npmShowCommand, {
             stdio: ['pipe', 'pipe', 'ignore']
         }));

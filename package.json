@@ -4,12 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "lerna bootstrap --force-local --hoist --strict",
     "lint": "lerna run lint",
     "lint:fix": "lerna run lint:fix",
     "build": "lerna run build",
     "changelog": "sh scripts/changelog-builder.sh > CHANGELOG.md",
-    "start-playground": "cd packages/playground && npm run start",
+    "start-playground": "cd packages/playground && yarn start",
     "test:e2e": "start-server-and-test build-all-and-start-playground http-get://localhost:3006 'lerna run test:e2e-all'",
     "test": "echo 'not running tests from root - runnign it using GitHub actions",
     "ci:run-playground": "cd packages/playground && npx serve -s build -l 3006 && cd ../..",
@@ -17,7 +16,7 @@
     "ci:test-e2e-layouts": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-layouts'",
     "ci:test-e2e-styleParams": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-styleParams'",
     "ci:test-e2e-integration": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-integration'",
-    "build-all-and-start-playground": "npm run start-playground"
+    "build-all-and-start-playground": "yarn run start-playground"
   },
   "husky": {
     "hooks": {
@@ -51,7 +50,10 @@
     "set-value": "^4.1.0"
   },
   "dependencies": {
-    "pro-gallery": "3.1.38",
     "start-server-and-test": "^1.10.6"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "packageManager": "yarn@3.2.1"
 }

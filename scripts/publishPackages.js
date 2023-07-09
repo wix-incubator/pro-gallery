@@ -13,7 +13,7 @@ const publishedPackages = [];
 
 const getPackageDetails = memoize(pkg => {
   try {
-    const npmShowCommand = `npm show ${pkg.name} --registry=${pkg.registry} --json`;
+    const npmShowCommand = `yarn info ${pkg.name} --registry=${pkg.registry} --json`;
     return JSON.parse(execSync(npmShowCommand, { stdio: ['pipe', 'pipe', 'ignore'] }));
   } catch (error) {
     if (!error.stdout.toString().includes('E404')) {
@@ -55,7 +55,7 @@ function getTag(pkg) {
 }
 
 function publish(pkg) {
-  const publishCommand = `npm publish ${pkg.path} --tag=${getTag(pkg)} --registry=${pkg.registry}`;
+  const publishCommand = `yarn publish ${pkg.path} --tag=${getTag(pkg)} --registry=${pkg.registry}`;
   console.log(chalk.magenta(`Running: "${publishCommand}" for ${pkg.name}@${pkg.version}`));
   execSync(publishCommand, { stdio: 'inherit' });
   publishedPackages.push(pkg);

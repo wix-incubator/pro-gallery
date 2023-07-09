@@ -10,7 +10,7 @@
     "test": "echo 'no test in wix CI'",
     "deploy": "node scripts/build.js",
     "lint": "eslint src/**/*.js",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "yarn run lint -- --fix",
     "start-playground": "node scripts/start.js"
   },
   "dependencies": {
