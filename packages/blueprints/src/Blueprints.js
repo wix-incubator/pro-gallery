@@ -1,6 +1,6 @@
 import { Layouter, ItemsHelper } from 'pro-layouts';
 import { populateWithDefaultOptions, addPresetOptions, dimensionsHelper, processLayouts, utils } from 'pro-gallery-lib';
-console.log('LOCAL BLUEPRINTS');
+
 class Blueprints {
   createBlueprint({ params, lastParams, existingBlueprint, blueprintManagerId, isUsingCustomInfoElements }) {
     // cacheBlocker
