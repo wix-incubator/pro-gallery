@@ -64,7 +64,6 @@ export default function MediaItem<T extends Record<string, any>>(props: MediaPro
     isVideoPlaceholder,
     videoPlaceholderUrl,
   } = props;
-  console.log(showPlayButton, 'showPlayButton');
   const { behaviourParams_item_clickAction: clickAction, behaviourParams_item_video_playTrigger: playTrigger } =
     options;
 
