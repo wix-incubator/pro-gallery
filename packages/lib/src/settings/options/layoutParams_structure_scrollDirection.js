@@ -9,6 +9,8 @@ export default {
   isRelevantDescription: 'Always relevant.',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
-  options: createOptions(optionsMap.layoutParams.structure.scrollDirection),
+  get options() {
+    return createOptions(optionsMap.layoutParams.structure.scrollDirection);
+  },
   description: `Toggle between two types of galleries. Vertical and Horizontal. Notice that many options are available only for a specific scroll direction.`,
 };

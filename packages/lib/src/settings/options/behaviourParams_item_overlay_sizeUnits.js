@@ -12,5 +12,7 @@ export default {
     GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].NEVER_SHOW,
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.sizeUnits].PERCENT,
-  options: createOptions(optionsMap.behaviourParams.item.overlay.sizeUnits),
+  get options() {
+    return createOptions(optionsMap.behaviourParams.item.overlay.sizeUnits);
+  },
 };

@@ -15,7 +15,9 @@ export default {
       GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL &&
       options[optionsMap.behaviourParams.gallery.horizontal.slideAnimation] ===
         GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation].SCROLL),
-  options: createOptions(optionsMap.behaviourParams.gallery.scrollAnimation),
+  get options() {
+    return createOptions(optionsMap.behaviourParams.gallery.scrollAnimation);
+  },
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation].NO_EFFECT, //one source
 };

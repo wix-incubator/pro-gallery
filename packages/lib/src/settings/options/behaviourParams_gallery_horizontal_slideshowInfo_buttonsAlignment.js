@@ -9,6 +9,8 @@ export default {
   isRelevantDescription: 'Always relevant.',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideshowInfo.buttonsAlignment].CENTER, //one source
-  options: createOptions(optionsMap.behaviourParams.gallery.horizontal.slideshowInfo.buttonsAlignment),
+  get options() {
+    return createOptions(optionsMap.behaviourParams.gallery.horizontal.slideshowInfo.buttonsAlignment);
+  },
   description: `This option effects the slideshow Play Button and slideshow number location.`,
 };

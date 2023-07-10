@@ -8,6 +8,8 @@ export default {
   isRelevant: (options) => options[optionsMap.layoutParams.groups.groupSize] > 1,
   isRelevantDescription: 'Set "Max Group Size" to be greater than "1".',
   type: INPUT_TYPES.MULTIREPEAT,
-  options: createOptions(optionsMap.layoutParams.groups.allowedGroupTypes),
+  get options() {
+    return createOptions(optionsMap.layoutParams.groups.allowedGroupTypes);
+  },
   default: [],
 };

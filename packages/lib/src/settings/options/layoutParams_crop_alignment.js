@@ -11,6 +11,8 @@ export default {
     options[optionsMap.layoutParams.crop.method] === GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
   isRelevantDescription: 'Set `Crop Images` to true and `Crop Method` to FIT',
   type: INPUT_TYPES.OPTIONS,
-  options: createOptions('layoutParams_crop_alignment'),
+  get options() {
+    return createOptions('layoutParams_crop_alignment');
+  },
   default: GALLERY_CONSTS[optionsMap.layoutParams.crop.alignment].CENTER,
 };

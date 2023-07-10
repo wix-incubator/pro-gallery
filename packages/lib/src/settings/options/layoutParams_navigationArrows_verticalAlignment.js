@@ -17,6 +17,8 @@ export default {
     ' and make sure arrow position is set to "on gallery" or "outside gallery"',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.verticalAlignment].ITEM_CENTER,
-  options: createOptions('layoutParams_navigationArrows_verticalAlignment'),
+  get options() {
+    return createOptions('layoutParams_navigationArrows_verticalAlignment');
+  },
   description: `Set the vertical position of the navigation arrows in sliders. You can choose to position the arrows on the center of the whole item, the center of the image or the center of the info`,
 };

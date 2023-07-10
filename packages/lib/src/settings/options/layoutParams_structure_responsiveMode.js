@@ -17,7 +17,9 @@ export default {
     'Set a Vertical gallery ("Scroll Direction" as "Vertical") and set "Layout Orientation" to "Columns".',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].FIT_TO_SCREEN,
-  options: createOptions(optionsMap.layoutParams.structure.responsiveMode),
+  get options() {
+    return createOptions(optionsMap.layoutParams.structure.responsiveMode);
+  },
   description: `Choose between adjusting the number of columns addording to the container
   size or setting it manually and keep it fixed.`,
   alert: 'This option will disable the responsive feature of the gallery!',
