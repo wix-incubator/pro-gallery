@@ -15,6 +15,8 @@ export default {
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal"), set "Max Group Size" to "1" and set "Crop Images" to true.',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation].SCROLL, //one source
-  options: createOptions(optionsMap.behaviourParams.gallery.horizontal.slideAnimation),
+  get options() {
+    return createOptions(optionsMap.behaviourParams.gallery.horizontal.slideAnimation);
+  },
   description: `Choose the slide animation effect to be used when navigating between items in a slideshow`,
 };

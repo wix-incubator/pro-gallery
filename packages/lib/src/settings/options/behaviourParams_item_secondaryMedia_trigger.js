@@ -9,6 +9,8 @@ export default {
   isRelevantDescription: 'Not relevant when arowsPosition is MOUSE_CURSOR and mouseCursorContainerMaxWidth is 100',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger].OFF, //one source
-  options: createOptions(optionsMap.behaviourParams.item.secondaryMedia.trigger),
+  get options() {
+    return createOptions(optionsMap.behaviourParams.item.secondaryMedia.trigger);
+  },
   description: `Select the triggering action that will show the second media.`,
 };

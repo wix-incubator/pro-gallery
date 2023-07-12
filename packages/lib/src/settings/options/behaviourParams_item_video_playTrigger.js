@@ -24,7 +24,9 @@ export default {
     return option ? videoPlayOptions[option](options) : Object.values(videoPlayOptions).some((val) => val(options));
   },
   isRelevantDescription: 'Always Relevant',
-  options: createOptions(optionsMap.behaviourParams.item.video.playTrigger),
+  get options() {
+    return createOptions(optionsMap.behaviourParams.item.video.playTrigger);
+  },
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER, //one source
 };

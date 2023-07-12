@@ -44,7 +44,9 @@ export default {
   },
   type: INPUT_TYPES.MULTISELECT,
   default: GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY,
-  options: createOptions(optionsMap.layoutParams.info.placement),
+  get options() {
+    return createOptions(optionsMap.layoutParams.info.placement);
+  },
   description: `Choose the the placement of the texts (title and description) relative to the items in the gallery.
   Notes:
    - this option also deals with the hover effects and may overide "hoveringBehaviour" when set to anything but "SHOW_ON_HOVER".

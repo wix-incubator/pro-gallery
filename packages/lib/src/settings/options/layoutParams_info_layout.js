@@ -14,7 +14,9 @@ export default {
     options[optionsMap.layoutParams.structure.layoutOrientation] ===
       GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].VERTICAL &&
     !GALLERY_CONSTS.hasHoverPlacement(options[optionsMap.layoutParams.info.placement]),
-  options: createOptions('layoutParams_info_layout'),
+  get options() {
+    return createOptions('layoutParams_info_layout');
+  },
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.layoutParams_info_layout.NO_BACKGROUND,
 };

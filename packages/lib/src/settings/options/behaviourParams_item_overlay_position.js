@@ -15,5 +15,7 @@ export default {
   },
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.position].LEFT,
-  options: createOptions(optionsMap.behaviourParams.item.overlay.position),
+  get options() {
+    return createOptions(optionsMap.behaviourParams.item.overlay.position);
+  },
 };

@@ -9,7 +9,9 @@ export default {
   isRelevantDescription: 'Always relevant.',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation].NO_EFFECT,
-  options: createOptions(optionsMap.behaviourParams.item.content.hoverAnimation),
+  get options() {
+    return createOptions(optionsMap.behaviourParams.item.content.hoverAnimation);
+  },
   description: `Choose the image animation effect to be used when hovering on each item.
   `,
 };

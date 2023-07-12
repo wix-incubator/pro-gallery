@@ -9,7 +9,9 @@ export default {
   isRelevantDescription: 'Set "Crop Images" to "true".',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL, //one source
-  options: createOptions(optionsMap.layoutParams.crop.method),
+  get options() {
+    return createOptions(optionsMap.layoutParams.crop.method);
+  },
   description: `Choose between croping the image to fill it's container ("fill") or fiting the whole image ("fit").
   `,
 };

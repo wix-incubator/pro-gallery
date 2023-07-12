@@ -9,6 +9,8 @@ export default {
   isRelevantDescription: 'Always relevant.',
   isRelevant: () => true,
   type: INPUT_TYPES.OPTIONS,
-  options: createOptions(optionsMap.layoutParams.structure.galleryLayout),
+  get options() {
+    return createOptions(optionsMap.layoutParams.structure.galleryLayout);
+  },
   default: GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
 };

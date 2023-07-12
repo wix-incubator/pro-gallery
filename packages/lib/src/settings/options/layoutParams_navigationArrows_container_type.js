@@ -15,7 +15,9 @@ export default {
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal") and set "Show Navigation Arrows" to "true".',
   type: INPUT_TYPES.OPTIONS,
-  options: createOptions(optionsMap.layoutParams.navigationArrows.container.type),
+  get options() {
+    return createOptions(optionsMap.layoutParams.navigationArrows.container.type);
+  },
   default: GALLERY_CONSTS[optionsMap.layoutParams.navigationArrows.container.type].SHADOW,
   description: `Choose the type of styling the arrows.
   `,

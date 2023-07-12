@@ -9,6 +9,8 @@ export default {
   isRelevantDescription: 'Always relevant.',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].LEFT_TO_RIGHT, //one source
-  options: createOptions(optionsMap.behaviourParams.gallery.layoutDirection),
+  get options() {
+    return createOptions(optionsMap.behaviourParams.gallery.layoutDirection);
+  },
   description: `Set the direction of the gallery layout (right to left or left to right)`,
 };

@@ -17,6 +17,8 @@ export default {
     );
   },
   type: INPUT_TYPES.OPTIONS,
-  options: createOptions(optionsMap.layoutParams.info.sizeUnits),
+  get options() {
+    return createOptions(optionsMap.layoutParams.info.sizeUnits);
+  },
   default: GALLERY_CONSTS[optionsMap.layoutParams.info.sizeUnits].PERCENT,
 };

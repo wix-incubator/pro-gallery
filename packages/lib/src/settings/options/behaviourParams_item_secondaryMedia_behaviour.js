@@ -17,6 +17,8 @@ export default {
     'Secondary Media Trigger is not "OFF" and when arrowsPosition is MOUSE_CURSOR there must be some space to hover (mouseCursorContainerMaxWidth less then 100)',
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.behaviour].APPEARS,
-  options: createOptions(optionsMap.behaviourParams.item.secondaryMedia.behaviour),
+  get options() {
+    return createOptions(optionsMap.behaviourParams.item.secondaryMedia.behaviour);
+  },
   description: `Select the behaviour for the second media on action.`,
 };
