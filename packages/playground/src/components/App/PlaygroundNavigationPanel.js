@@ -38,7 +38,7 @@ export function NavigationPanel(props) {
     const percent = (activeIdx + 1) / props.totalItemsCount;
     const totalForProgress = props.totalItemsCount === Infinity ? 100 : props.totalItemsCount;
     let containerStyles = {
-      maxWidth: props.options.layoutParams.thumbnails.position === 'ON_GALLERY' ? '150px' : '',
+      maxWidth: props.options.layoutParams_thumbnails_position === 'ON_GALLERY' ? '150px' : '',
     };
     return (
       <div style={containerStyles}>
@@ -51,14 +51,14 @@ export function NavigationPanel(props) {
     let items = props.galleryStructure.items;
     let direction;
     switch (
-      props.options.galleryThumbnailsAlignment // TODO use new sp when they work well with the playground
+      props.options.layoutParams_thumbnails_alignment // TODO use new sp when they work well with the playground
     ) {
-      case 'top':
-      case 'bottom':
+      case 'TOP':
+      case 'BOTTOM':
         direction = 'horizontal';
         break;
-      case 'right':
-      case 'left':
+      case 'RIGHT':
+      case 'LEFT':
       default:
         direction = 'vertical';
         break;
@@ -98,14 +98,14 @@ export function NavigationPanel(props) {
     let items = props.galleryStructure.items;
     let direction;
     switch (
-      props.options.galleryThumbnailsAlignment // TODO use new sp when they work well with the playground
+      props.options.layoutParams_thumbnails_alignment // TODO use new sp when they work well with the playground
     ) {
-      case 'top':
-      case 'bottom':
+      case 'TOP':
+      case 'BOTTOM':
         direction = 'horizontal';
         break;
-      case 'right':
-      case 'left':
+      case 'RIGHT':
+      case 'LEFT':
       default:
         direction = 'vertical';
         break;
