@@ -110,7 +110,7 @@ function withMagnified(WrappedComponent) {
     }
 
     getHighResImage() {
-      const { createMagnifiedUrl, id, alt, options } = this.props;
+      const { createMagnifiedUrl, id, alt, options, isPrerenderMode } = this.props;
       const { magnifiedWidth, magnifiedHeight } = this.getMagnifiedDimensions();
       const src = createMagnifiedUrl(options[optionsMap.behaviourParams.item.content.magnificationValue]);
       return (
@@ -121,6 +121,7 @@ function withMagnified(WrappedComponent) {
           src={src}
           alt={typeof alt === 'string' ? alt : 'untitled image'}
           id={id}
+          isPrerenderMode={isPrerenderMode}
           style={{
             width: magnifiedWidth,
             height: magnifiedHeight,
