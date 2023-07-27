@@ -11,6 +11,7 @@ function getSchemaFromTypes(typesFileAbsolutePath) {
   // optionally pass ts compiler options
   const compilerOptions = {
     strictNullChecks: true,
+    skipLibCheck: true,
   };
 
   // optionally pass a base path
