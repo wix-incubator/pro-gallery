@@ -696,7 +696,7 @@ class GalleryItem {
 
   get alt() {
     return (
-      (this.metadata.alt && utils.isMeaningfulString(this.metadata.alt)) || ''
+      (utils.isMeaningfulString(this.metadata.alt) && this.metadata.alt) || ''
     );
   }
 
