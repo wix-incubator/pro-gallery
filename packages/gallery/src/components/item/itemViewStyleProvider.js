@@ -4,9 +4,7 @@ export function getContainerStyle(options) {
   return {
     ...((options[optionsMap.layoutParams.info.layout] ===
       GALLERY_CONSTS[optionsMap.layoutParams.info.layout].ATTACHED_BACKGROUND ||
-      GALLERY_CONSTS.hasHoverPlacement(
-        options[optionsMap.layoutParams.info.placement]
-      )) && {
+      GALLERY_CONSTS.hasHoverPlacement(options[optionsMap.layoutParams.info.placement])) && {
       ...getBorderStyle(
         options[optionsMap.stylingParams.itemBorderRadius],
         options[optionsMap.stylingParams.itemBorderWidth],
@@ -21,11 +19,9 @@ function boxShadow(options) {
   let _boxShadow = {};
   if (options[optionsMap.stylingParams.itemEnableShadow]) {
     const itemShadowBlur = options[optionsMap.stylingParams.itemShadowBlur];
-    const itemShadowDirection =
-      options[optionsMap.stylingParams.itemShadowDirection];
+    const itemShadowDirection = options[optionsMap.stylingParams.itemShadowDirection];
     const itemShadowSize = options[optionsMap.stylingParams.itemShadowSize];
-    const alpha =
-      ((-1 * (Number(itemShadowDirection) - 90)) / 360) * 2 * Math.PI;
+    const alpha = ((-1 * (Number(itemShadowDirection) - 90)) / 360) * 2 * Math.PI;
     const shadowX = Math.round(itemShadowSize * Math.cos(alpha));
     const shadowY = Math.round(-1 * itemShadowSize * Math.sin(alpha));
     _boxShadow = {
@@ -39,14 +35,11 @@ function boxShadow(options) {
 
 export function getImageStyle(options) {
   return {
-    ...(!GALLERY_CONSTS.hasHoverPlacement(
-      options[optionsMap.layoutParams.info.placement]
-    ) &&
+    ...(!GALLERY_CONSTS.hasHoverPlacement(options[optionsMap.layoutParams.info.placement]) &&
       (options[optionsMap.layoutParams.info.layout] ===
         GALLERY_CONSTS[optionsMap.layoutParams.info.layout].NO_BACKGROUND ||
         options[optionsMap.layoutParams.info.layout] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.info.layout]
-            .SEPARATED_BACKGROUND) && {
+          GALLERY_CONSTS[optionsMap.layoutParams.info.layout].SEPARATED_BACKGROUND) && {
         ...getBorderStyle(
           options[optionsMap.stylingParams.itemBorderRadius],
           options[optionsMap.stylingParams.itemBorderWidth],
@@ -72,9 +65,7 @@ export function getOuterInfoStyle(placement, options, mediaHeight, infoHeight) {
   const styles = {
     ...(GALLERY_CONSTS.hasExternalHorizontalPlacement(placement) && {
       height: mediaHeight,
-      float: GALLERY_CONSTS.isExternalRightPlacement(placement)
-        ? 'right'
-        : 'left',
+      float: GALLERY_CONSTS.isExternalRightPlacement(placement) ? 'right' : 'left',
     }),
     ...(GALLERY_CONSTS.hasExternalVerticalPlacement(placement) && {
       height: infoHeight,
@@ -120,11 +111,9 @@ function getInnerInfoStylesRightOrLeft(options, infoWidth) {
 export function getInnerInfoStyle(placement, options, infoHeight, infoWidth) {
   const commonStyles = {
     ...((options[optionsMap.layoutParams.info.layout] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.info.layout]
-        .SEPARATED_BACKGROUND ||
+      GALLERY_CONSTS[optionsMap.layoutParams.info.layout].SEPARATED_BACKGROUND ||
       options[optionsMap.layoutParams.info.layout] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.info.layout]
-          .ATTACHED_BACKGROUND) &&
+        GALLERY_CONSTS[optionsMap.layoutParams.info.layout].ATTACHED_BACKGROUND) &&
       options.textBoxFillColor &&
       options.textBoxFillColor.value && {
         backgroundColor: options.textBoxFillColor.value,
@@ -133,15 +122,12 @@ export function getInnerInfoStyle(placement, options, infoHeight, infoWidth) {
     boxSizing: 'border-box',
   };
 
-  const infoAboveOrBelow =
-    GALLERY_CONSTS.hasExternalVerticalPlacement(placement);
-  const infoRightOrLeft =
-    GALLERY_CONSTS.hasExternalHorizontalPlacement(placement);
+  const infoAboveOrBelow = GALLERY_CONSTS.hasExternalVerticalPlacement(placement);
+  const infoRightOrLeft = GALLERY_CONSTS.hasExternalHorizontalPlacement(placement);
 
   return {
     ...commonStyles,
-    ...(infoAboveOrBelow &&
-      getInnerInfoStylesAboveOrBelow(options, infoHeight)),
+    ...(infoAboveOrBelow && getInnerInfoStylesAboveOrBelow(options, infoHeight)),
     ...(infoRightOrLeft && getInnerInfoStylesRightOrLeft(options, infoWidth)),
   };
 }

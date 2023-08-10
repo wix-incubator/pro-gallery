@@ -5,7 +5,6 @@ import sinon from 'sinon';
 import GalleryDriver from '../../drivers/reactDriver';
 import { testImages } from '../../drivers/mocks/images-mock';
 import ItemView from '../../../src/components/item/itemView';
-import VideoItemPlaceholder from '../../../src/components/item/videos/videoItemPlaceholder';
 
 describe('Item View', () => {
   let driver;
@@ -52,11 +51,9 @@ describe('Item View', () => {
         type: 'image',
       });
       sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
-        [optionsMap.behaviourParams.item.clickAction]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
+        [optionsMap.behaviourParams.item.clickAction]: GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
         [optionsMap.behaviourParams.item.video.playTrigger]:
-          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger]
-            .CLICK,
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].CLICK,
       });
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
@@ -65,7 +62,7 @@ describe('Item View', () => {
       stub.restore();
     });
 
-    it('should onItemClicked for items with expand', () => {
+    it('should onItemClicked for items with ACTION', () => {
       Object.assign(sampleItemViewProps, {
         thumbnailHighlightId: null,
         type: 'image',
@@ -77,8 +74,7 @@ describe('Item View', () => {
       driver.mount(ItemView, sampleItemViewProps);
       const stub = sinon.stub(driver.get.props().actions, 'eventsListener');
       driver.find.hook('item-wrapper').simulate('click');
-      expect(stub.calledWith(GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED)).to.be
-        .true;
+      expect(stub.calledWith(GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED)).to.be.true;
       stub.restore();
     });
 
@@ -114,7 +110,7 @@ describe('Item View', () => {
           GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].EMPTY,
       });
       driver.mount(ItemView, sampleItemViewProps);
-      expect(driver.find.selector(VideoItemPlaceholder).length).to.equal(1);
+      expect(driver.find.selector('.video-item.image-item').length).to.equal(1);
     });
   });
   //compunentDidUpdate not tested
@@ -122,8 +118,7 @@ describe('Item View', () => {
     it('should have boxshadow if defined1', () => {
       sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
         [optionsMap.stylingParams.itemEnableShadow]: true,
-        [optionsMap.stylingParams.itemShadowOpacityAndColor]:
-          'rgba(0, 0, 0, 0.2)',
+        [optionsMap.stylingParams.itemShadowOpacityAndColor]: 'rgba(0, 0, 0, 0.2)',
         [optionsMap.stylingParams.itemShadowBlur]: 15,
         [optionsMap.stylingParams.itemShadowDirection]: 0,
         [optionsMap.stylingParams.itemShadowSize]: 18,
@@ -137,8 +132,7 @@ describe('Item View', () => {
     it('should have boxshadow if defined2', () => {
       sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
         [optionsMap.stylingParams.itemEnableShadow]: false,
-        [optionsMap.stylingParams.itemShadowOpacityAndColor]:
-          'rgba(0, 0, 0, 0.2)',
+        [optionsMap.stylingParams.itemShadowOpacityAndColor]: 'rgba(0, 0, 0, 0.2)',
         [optionsMap.stylingParams.itemShadowBlur]: 20,
         [optionsMap.stylingParams.itemShadowDirection]: 135,
         [optionsMap.stylingParams.itemShadowSize]: 10,
@@ -156,26 +150,21 @@ describe('Item View', () => {
         [optionsMap.layoutParams.crop.method]: 'foo',
       });
       driver.mount(ItemView, sampleItemViewProps);
-      expect(
-        driver.find.hook('item-wrapper').hasClass('cube-type-foo')
-      ).to.equal(true);
+      expect(driver.find.hook('item-wrapper').hasClass('cube-type-foo')).to.equal(true);
     });
     it('item-Wrapper should have class based on cubeType2', () => {
       sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
         [optionsMap.layoutParams.crop.enable]: false,
       });
       driver.mount(ItemView, sampleItemViewProps);
-      expect(
-        driver.find.hook('item-wrapper').hasClass('cube-type-foo')
-      ).to.equal(false);
+      expect(driver.find.hook('item-wrapper').hasClass('cube-type-foo')).to.equal(false);
     });
     it('should toggle overflowY inherit test2', () => {
       Object.assign(sampleItemViewProps, {
         style: { ...sampleItemViewProps.style, bgColor: 'red' },
       });
       sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
-        [optionsMap.layoutParams.crop.method]:
-          GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
+        [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT,
       });
       driver.mount(ItemView, sampleItemViewProps);
       const style = driver.find.hook('item-wrapper').get(0).props.style;
@@ -186,8 +175,7 @@ describe('Item View', () => {
         style: { ...sampleItemViewProps.style, bgColor: 'red' },
       });
       sampleItemViewProps.options = Object.assign(sampleItemViewProps.options, {
-        [optionsMap.layoutParams.crop.method]:
-          GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL, // this is amazing, ill leave it as is instead of undefined
+        [optionsMap.layoutParams.crop.method]: GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FILL, // this is amazing, ill leave it as is instead of undefined
       });
       driver.mount(ItemView, sampleItemViewProps);
       const style = driver.find.hook('item-wrapper').get(0).props.style;

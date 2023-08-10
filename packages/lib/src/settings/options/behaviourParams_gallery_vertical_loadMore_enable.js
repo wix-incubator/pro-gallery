@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import optionsMap from '../../core/helpers/optionsMap';
@@ -10,8 +9,7 @@ export default {
   isRelevant: (options) =>
     options[optionsMap.layoutParams.structure.scrollDirection] ===
     GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
-  isRelevantDescription:
-    'Set a Vertical gallery ("Scroll Direction" as "Vertical").',
+  isRelevantDescription: 'Set a Vertical gallery ("Scroll Direction" as "Vertical").',
   type: INPUT_TYPES.BOOLEAN,
-  default: false, //NEW STYPEPARAMS METHOD use one source
+  default: false, //one source
 };

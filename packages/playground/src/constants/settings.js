@@ -1,5 +1,5 @@
 import { galleryOptions } from 'pro-gallery-lib';
-import {optionsMap} from 'pro-gallery-lib';
+import { optionsMap } from 'pro-gallery-lib';
 
 export const INPUT_TYPES = {
   NUMBER: 'NUMBER',
@@ -23,6 +23,7 @@ export const SECTIONS = {
   ANIMATION: 'Animations',
   // IMAGE: 'Image',
   VIDEO: 'Videos',
+  ThreeD: '3D',
 };
 
 export const SECTIONS_ORDER = {
@@ -41,7 +42,6 @@ export const SECTIONS_ORDER = {
 export const optionsBySection = {
   [SECTIONS.PRESET]: [optionsMap.layoutParams.structure.galleryLayout],
   [SECTIONS.LAYOUT]: [
-    // 'allowLeanGallery',
     optionsMap.layoutParams.structure.scrollDirection,
     optionsMap.layoutParams.structure.galleryRatio.value,
     optionsMap.layoutParams.structure.galleryRatio.includeExternalInfo,
@@ -60,8 +60,7 @@ export const optionsBySection = {
 
     optionsMap.layoutParams.targetItemSize.minimum,
     optionsMap.layoutParams.targetItemSize.value,
-    optionsMap.layoutParams.targetItemSize.unit
-
+    optionsMap.layoutParams.targetItemSize.unit,
   ],
   [SECTIONS.ADVANCED]: [
     optionsMap.layoutParams.structure.responsiveMode,
@@ -78,10 +77,11 @@ export const optionsBySection = {
     // [optionsMap.layoutParams.crop.enableSmartCrop],
 
     optionsMap.layoutParams.thumbnails.position,
-      optionsMap.layoutParams.thumbnails.alignment,
-      optionsMap.layoutParams.thumbnails.size,
-      optionsMap.layoutParams.thumbnails.spacing,
-      optionsMap.layoutParams.structure.enableStreching,
+    optionsMap.layoutParams.thumbnails.alignment,
+    optionsMap.layoutParams.thumbnails.size,
+    optionsMap.layoutParams.thumbnails.spacing,
+    optionsMap.layoutParams.thumbnails.marginToGallery,
+    optionsMap.layoutParams.structure.enableStreching,
   ],
   [SECTIONS.INFO]: [
     optionsMap.layoutParams.info.placement,
@@ -101,19 +101,20 @@ export const optionsBySection = {
     optionsMap.behaviourParams.item.video.loop,
     optionsMap.behaviourParams.item.video.playTrigger,
     optionsMap.behaviourParams.item.video.enablePlayButton,
+    optionsMap.behaviourParams.item.video.enableThumbnailsPlayButton,
     optionsMap.behaviourParams.item.video.enableControls,
     optionsMap.behaviourParams.item.video.enablePlaceholder,
-
     optionsMap.behaviourParams.item.content.placementAnimation,
     optionsMap.behaviourParams.item.content.loader,
     optionsMap.behaviourParams.item.content.magnificationValue,
+    optionsMap.behaviourParams.item.content.tiltAngleValue,
     optionsMap.behaviourParams.item.secondaryMedia.trigger,
     optionsMap.behaviourParams.item.secondaryMedia.behaviour,
     optionsMap.behaviourParams.item.secondaryMedia.trigger,
     optionsMap.behaviourParams.item.secondaryMedia.behaviour,
+    optionsMap.behaviourParams.gallery.horizontal.loop,
   ],
   [SECTIONS.DESIGN]: [
-
     optionsMap.layoutParams.navigationArrows.enable,
     optionsMap.layoutParams.navigationArrows.size,
     optionsMap.layoutParams.navigationArrows.padding,
@@ -169,8 +170,18 @@ export const optionsBySection = {
     optionsMap.behaviourParams.item.video.loop,
     optionsMap.behaviourParams.item.video.playTrigger,
     optionsMap.behaviourParams.item.video.enablePlayButton,
+    optionsMap.behaviourParams.item.video.enableThumbnailsPlayButton,
+
     optionsMap.behaviourParams.item.video.enableControls,
     optionsMap.behaviourParams.item.video.enablePlaceholder,
+  ],
+  [SECTIONS.ThreeD]: [
+    optionsMap.behaviourParams.item.threeDimensionalScene.playTrigger,
+    optionsMap.behaviourParams.item.threeDimensionalScene.enablePlayButton,
+    optionsMap.behaviourParams.item.threeDimensionalScene.enableThumbnailsPlayButton,
+    optionsMap.behaviourParams.item.threeDimensionalScene.keepPosterAfterObjectLoad,
+    ...Object.values(optionsMap.behaviourParams.item.threeDimensionalScene.controls),
+    ...Object.values(optionsMap.behaviourParams.item.threeDimensionalScene.transform),
   ],
 };
 

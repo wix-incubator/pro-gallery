@@ -9,25 +9,11 @@ export default {
   min: 100,
   max: 1000,
   isRelevant: (options) => {
-    if (options.newSPs) {
-      return (
-        autoSlideBehaviour.isRelevant(options) &&
-        options[
-          optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-        ] ===
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-          ].CONTINUOUS
-      );
-    } else {
-      return (
-        options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL && //NEW STYPEPARAMS METHOD use new sps
-        options.behaviourParams.gallery.horizontal.autoSlide.behaviour ===
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-          ].CONTINUOUS
-      );
-    }
+    return (
+      autoSlideBehaviour.isRelevant(options) &&
+      options[optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour] ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour].CONTINUOUS
+    );
   },
   type: INPUT_TYPES.NUMBER,
   isRelevantDescription:

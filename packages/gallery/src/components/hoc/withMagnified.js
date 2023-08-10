@@ -9,8 +9,7 @@ function withMagnified(WrappedComponent) {
       this.onMouseMove = this.onMouseMove.bind(this);
       this.onMouseDown = this.onMouseDown.bind(this);
       this.onMouseUp = this.onMouseUp.bind(this);
-      this.isMagnifiedBiggerThanContainer =
-        this.isMagnifiedBiggerThanContainer.bind(this);
+      this.isMagnifiedBiggerThanContainer = this.isMagnifiedBiggerThanContainer.bind(this);
       this.toggleMagnify = this.toggleMagnify.bind(this);
       this.getMagnifyInitialPos = this.getMagnifyInitialPos.bind(this);
       this.getBoundrys = this.getBoundrys.bind(this);
@@ -29,21 +28,14 @@ function withMagnified(WrappedComponent) {
 
     onMouseMove(e) {
       if (this.dragStarted) {
-        const { magnifiedWidth, magnifiedHeight } =
-          this.getMagnifiedDimensions();
+        const { magnifiedWidth, magnifiedHeight } = this.getMagnifiedDimensions();
         this.isDragging = true;
         const { cubedWidth, cubedHeight } = this.props.style;
         const { clientY, clientX } = e;
         const { boundryY, boundryX } = this.getBoundrys();
         this.setState({
-          x: Math.max(
-            -boundryX,
-            Math.min(this.dragStartX - clientX, magnifiedWidth - cubedWidth)
-          ),
-          y: Math.max(
-            -boundryY,
-            Math.min(this.dragStartY - clientY, magnifiedHeight - cubedHeight)
-          ),
+          x: Math.max(-boundryX, Math.min(this.dragStartX - clientX, magnifiedWidth - cubedWidth)),
+          y: Math.max(-boundryY, Math.min(this.dragStartY - clientY, magnifiedHeight - cubedHeight)),
         });
       }
     }
@@ -80,10 +72,7 @@ function withMagnified(WrappedComponent) {
       const {
         style: { innerHeight, innerWidth },
       } = this.props;
-      const magnificationValue =
-        this.props.options[
-          optionsMap.behaviourParams.item.content.magnificationValue
-        ];
+      const magnificationValue = this.props.options[optionsMap.behaviourParams.item.content.magnificationValue];
       return {
         magnifiedHeight: innerHeight * magnificationValue,
         magnifiedWidth: innerWidth * magnificationValue,
@@ -94,12 +83,8 @@ function withMagnified(WrappedComponent) {
       const { innerWidth, innerHeight } = style;
       const { marginTop, marginLeft } = imageDimensions;
       const { shouldMagnify, x, y } = this.state;
-      const magnificationValue =
-        options[optionsMap.behaviourParams.item.content.magnificationValue];
-      const src = createUrl(
-        GALLERY_CONSTS.urlSizes.RESIZED,
-        GALLERY_CONSTS.urlTypes.HIGH_RES
-      );
+      const magnificationValue = options[optionsMap.behaviourParams.item.content.magnificationValue];
+      const src = createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.HIGH_RES);
       const scale = shouldMagnify ? magnificationValue : 1;
       return (
         <ImageRenderer
@@ -114,12 +99,10 @@ function withMagnified(WrappedComponent) {
             zIndex: 1,
             opacity: shouldMagnify ? 1 : 0,
             transform: `scale(${scale})`,
-            transformOrigin: `${
-              (x + marginLeft) / (magnificationValue - 1)
-            }px ${(y + marginTop) / (magnificationValue - 1)}px`,
-            transition: `transform 0.3s ease${
-              shouldMagnify ? '' : ', opacity 0.1s ease 0.3s'
-            }`,
+            transformOrigin: `${(x + marginLeft) / (magnificationValue - 1)}px ${
+              (y + marginTop) / (magnificationValue - 1)
+            }px`,
+            transition: `transform 0.3s ease${shouldMagnify ? '' : ', opacity 0.1s ease 0.3s'}`,
           }}
           customImageRenderer={this.props.customComponents?.customImageRenderer}
         />
@@ -127,11 +110,9 @@ function withMagnified(WrappedComponent) {
     }
 
     getHighResImage() {
-      const { createMagnifiedUrl, id, alt, options } = this.props;
+      const { createMagnifiedUrl, id, alt, options, isPrerenderMode } = this.props;
       const { magnifiedWidth, magnifiedHeight } = this.getMagnifiedDimensions();
-      const src = createMagnifiedUrl(
-        options[optionsMap.behaviourParams.item.content.magnificationValue]
-      );
+      const src = createMagnifiedUrl(options[optionsMap.behaviourParams.item.content.magnificationValue]);
       return (
         <ImageRenderer
           key={`magnified-item-${id}`}
@@ -140,6 +121,7 @@ function withMagnified(WrappedComponent) {
           src={src}
           alt={typeof alt === 'string' ? alt : 'untitled image'}
           id={id}
+          isPrerenderMode={isPrerenderMode}
           style={{
             width: magnifiedWidth,
             height: magnifiedHeight,
@@ -164,10 +146,8 @@ function withMagnified(WrappedComponent) {
       const { cubedWidth, cubedHeight } = style;
       const { top, left } = this.containerRef.getBoundingClientRect();
 
-      const x =
-        ((clientX - left) / cubedWidth) * magnifiedWidth - (clientX - left);
-      const y =
-        ((clientY - top) / cubedHeight) * magnifiedHeight - (clientY - top);
+      const x = ((clientX - left) / cubedWidth) * magnifiedWidth - (clientX - left);
+      const y = ((clientY - top) / cubedHeight) * magnifiedHeight - (clientY - top);
 
       const { boundryY, boundryX } = this.getBoundrys();
       return {
@@ -180,12 +160,8 @@ function withMagnified(WrappedComponent) {
       const { style } = this.props;
       const { magnifiedWidth, magnifiedHeight } = this.getMagnifiedDimensions();
       const { cubedWidth, cubedHeight } = style;
-      const boundryY =
-        magnifiedHeight < cubedHeight
-          ? cubedHeight / 2 - magnifiedHeight / 2
-          : 0;
-      const boundryX =
-        magnifiedWidth < cubedWidth ? cubedWidth / 2 - magnifiedWidth / 2 : 0;
+      const boundryY = magnifiedHeight < cubedHeight ? cubedHeight / 2 - magnifiedHeight / 2 : 0;
+      const boundryX = magnifiedWidth < cubedWidth ? cubedWidth / 2 - magnifiedWidth / 2 : 0;
       return {
         boundryY,
         boundryX,
@@ -241,10 +217,7 @@ function withMagnified(WrappedComponent) {
         >
           <WrappedComponent {...this.props} />
           {this.getPreloadImage()}
-          <div
-            className={'magnified-images'}
-            style={this.getMagnifiedImageStyle()}
-          >
+          <div className={'magnified-images'} style={this.getMagnifiedImageStyle()}>
             {shouldMagnify && this.getHighResImage()}
           </div>
         </div>

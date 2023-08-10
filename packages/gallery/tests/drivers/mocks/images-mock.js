@@ -8,8 +8,7 @@ const testImages = [
       width: 1920,
       sourceName: 'private',
       title: 'Image 0',
-      description:
-        'Description of image 0 -> now we are testing long description, lets see how it works',
+      description: 'Description of image 0 -> now we are testing long description, lets see how it works',
     },
     orderIndex: 0,
     photoId: '8b72558253b2502b401bb46e5599f22a',
@@ -22,8 +21,7 @@ const testImages = [
       name: '2d3b675ea857dc41158bad3b28300824',
       size: 8128464,
       width: 3737,
-      title:
-        'Image 1 Image 1 Image 1 Image 1 Image 1 Image 1 Image 1 Image 1 Image 1',
+      title: 'Image 1 Image 1 Image 1 Image 1 Image 1 Image 1 Image 1 Image 1 Image 1',
     },
     orderIndex: 1,
     photoId: '2d3b675ea857dc41158bad3b28300824',
@@ -64,8 +62,7 @@ const testImages = [
       size: 6528300,
       width: 5600,
       title: '4',
-      description:
-        'DescriptionOfImage4DescriptionOfImage4 DescriptionOfImage4DescriptionOfImage4',
+      description: 'DescriptionOfImage4DescriptionOfImage4 DescriptionOfImage4DescriptionOfImage4',
     },
     orderIndex: 4,
     photoId: '5dd5a6e757c702b2856a3a2f4bb00154',
@@ -106,8 +103,7 @@ const testImages = [
       size: 9294683,
       width: 5600,
       title: 'Image 7',
-      description:
-        'DescriptionOfImage7DescriptionOfImage7DescriptionOfImage7DescriptionOfImage7',
+      description: 'DescriptionOfImage7DescriptionOfImage7DescriptionOfImage7DescriptionOfImage7',
     },
     orderIndex: 7,
     photoId: '0db65a80624a2e0b8c71e553b6f4b3f6',
@@ -147,8 +143,7 @@ const testImages = [
       size: 9556027,
       width: 5600,
       title: 'Image 10',
-      description:
-        'Description of image 10 -> now we are testing long description, lets see how it works',
+      description: 'Description of image 10 -> now we are testing long description, lets see how it works',
     },
     orderIndex: 10,
     photoId: '8e0bf32b6fade59dcfd7757ead8a0478',

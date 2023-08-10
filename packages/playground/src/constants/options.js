@@ -3,27 +3,23 @@ import {
   NEW_PRESETS,
   galleryOptions,
   optionsMap,
-  flatV4DefaultOptions,
-  extendNestedOptionsToIncludeOldAndNew,
+  defaultOptions,
   addPresetOptions,
 } from 'pro-gallery-lib';
-import {optionsList} from './settings'
+import { optionsList } from './settings';
 import deeplyEqual from 'deep-equal';
 
-optionsList.forEach( 
-  (option) => {
-    if(galleryOptions[option]?.default !== undefined) { 
-    flatV4DefaultOptions[option] = galleryOptions[option].default
-    }
+optionsList.forEach((option) => {
+  if (galleryOptions[option]?.default !== undefined) {
+    defaultOptions[option] = galleryOptions[option].default;
   }
-);
+});
 
 export const getInitialOptions = () => {
   const savedOptions = getOptionsFromUrl(window.location.search);
 
   return {
-    newSPs: true,
-    ...flatV4DefaultOptions,
+    ...defaultOptions,
     ...savedOptions,
   };
 };
@@ -32,13 +28,13 @@ const arrayKeys = [
   optionsMap.layoutParams.structure.columnRatios,
   optionsMap.layoutParams.groups.allowedGroupTypes,
   optionsMap.layoutParams.groups.repeatingGroupTypes,
-]
+];
 const formatValue = (val, option) => {
-  if(typeof val === 'object') {
+  if (typeof val === 'object') {
     return val;
   }
-  if(arrayKeys.includes(option)){
-    return val.split(',')
+  if (arrayKeys.includes(option)) {
+    return val.split(',');
   }
   if (String(val) === 'true') {
     return true;
@@ -64,19 +60,18 @@ export const isValidOption = (option, value, options) => {
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is undefined`);
     return false;
   }
-  if (deeplyEqual(value,flatV4DefaultOptions[option])) {
+  if (deeplyEqual(value, defaultOptions[option])) {
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is as the default: ${value}`);
     return false;
   }
-  options = { ...flatV4DefaultOptions, ...options };
-  const fixedPresetOptions = NEW_PRESETS['newSPs_' + getLayoutName(options[optionsMap.layoutParams.structure.galleryLayout])];
-  options = { ...options, ...fixedPresetOptions, }
+  options = { ...defaultOptions, ...options };
+  const fixedPresetOptions = NEW_PRESETS[getLayoutName(options[optionsMap.layoutParams.structure.galleryLayout])];
+  options = { ...options, ...fixedPresetOptions };
   if (option !== optionsMap.layoutParams.structure.galleryLayout && deeplyEqual(value, fixedPresetOptions[option])) {
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} value is as the fixedPresetOptions: ${value}`, fixedPresetOptions, getLayoutName(options.galleryLayout));
     return false;
   }
   if (!galleryOptions[option]) {
-
     // console.log(`[STYLE PARAMS - VALIDATION] ${option} has not galleryOptions`);
     return false;
   }
@@ -90,23 +85,17 @@ export const isValidOption = (option, value, options) => {
 export const getOptionsFromUrl = (locationSearchString) => {
   try {
     let options = locationSearchString
-    .replace('?', '')
-    .split('&')
-    .map((option) => option.split('='))
-    .reduce(
+      .replace('?', '')
+      .split('&')
+      .map((option) => option.split('='))
+      .reduce((obj, [option, value]) => Object.assign(obj, { [option]: formatValue(value, option) }), {});
+    options = addPresetOptions(options);
+    const relevantOptions = Object.entries(options).reduce(
       (obj, [option, value]) =>
-      Object.assign(obj, { [option]: formatValue(value, option) }),
+        isValidOption(option, value, options) ? Object.assign(obj, { [option]: formatValue(value, option) }) : obj,
       {}
-      );
-      options = extendNestedOptionsToIncludeOldAndNew(addPresetOptions({newSPs:true, ...options}))
-      const relevantOptions = Object.entries(options).reduce(
-        (obj, [option, value]) =>
-        isValidOption(option, value, options)
-        ? Object.assign(obj, { [option]: formatValue(value, option) })
-        : obj,
-        {}
-        );
-    return relevantOptions; 
+    );
+    return relevantOptions;
   } catch (e) {
     console.error('Cannot getOptionsFromUrl', e);
     return {};
@@ -115,11 +104,10 @@ export const getOptionsFromUrl = (locationSearchString) => {
 
 export const setOptionsInUrl = (options) => {
   // console.log(`[STYLE PARAMS - VALIDATION] setting options in the url`, options);
-  const urlParams = Object.entries(options).filter(option => optionsList.includes(option[0])).reduce(
-      (arr, [option, value]) =>
-        isValidOption(option, value, options)
-          ? arr.concat(`${option}=${value}`)
-          : arr,
+  const urlParams = Object.entries(options)
+    .filter((option) => optionsList.includes(option[0]))
+    .reduce(
+      (arr, [option, value]) => (isValidOption(option, value, options) ? arr.concat(`${option}=${value}`) : arr),
       []
     )
     .join('&');

@@ -15,23 +15,14 @@ export default class TextItem extends React.Component {
     const { marginLeft, marginTop } = imageDimensions;
     //text dimensions include scaling
     const textHeight =
-      (isVerticalItem
-        ? style.height / style.maxHeight
-        : style.width / style.maxWidth) * style.maxHeight;
+      (isVerticalItem ? style.height / style.maxHeight : style.width / style.maxWidth) * style.maxHeight;
     const textWidth =
-      (!isVerticalItem
-        ? style.width / style.maxWidth
-        : style.height / style.maxHeight) * style.maxWidth;
+      (!isVerticalItem ? style.width / style.maxWidth : style.height / style.maxHeight) * style.maxWidth;
     const translate =
-      options[optionsMap.layoutParams.crop.method] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
+      options[optionsMap.layoutParams.crop.method] === GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
         ? '0, 0'
-        : `${Math.round((style.width - textWidth) / 2)}px, ${Math.round(
-            (style.height - textHeight) / 2
-          )}px`;
-    const scale = isVerticalItem
-      ? style.height / style.maxHeight
-      : style.width / style.maxWidth;
+        : `${Math.round((style.width - textWidth) / 2)}px, ${Math.round((style.height - textHeight) / 2)}px`;
+    const scale = isVerticalItem ? style.height / style.maxHeight : style.width / style.maxWidth;
     const transform = `translate(${translate}) scale(${scale})`;
     const scaledMarginLeft = Math.round(marginLeft / scale);
     const scaledMarginTop = Math.round(marginTop / scale);
@@ -66,8 +57,7 @@ export default class TextItem extends React.Component {
     const changeBgColor = {
       style: Object.assign(
         dimensions,
-        options[optionsMap.layoutParams.crop.method] ===
-          GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
+        options[optionsMap.layoutParams.crop.method] === GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
           ? { backgroundColor: style.bgColor }
           : {}
       ),
@@ -77,13 +67,9 @@ export default class TextItem extends React.Component {
       ...changeBgColor,
     };
     const itemContentStyle = {
-      height:
-        imageDimensions && !this.props.isPrerenderMode
-          ? imageDimensions.height
-          : 'inherit',
+      height: imageDimensions && !this.props.isPrerenderMode ? imageDimensions.height : 'inherit',
       backgroundColor:
-        options[optionsMap.layoutParams.crop.method] !==
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
+        options[optionsMap.layoutParams.crop.method] !== GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
           ? style.bgColor
           : 'inherit',
     };
@@ -98,9 +84,7 @@ export default class TextItem extends React.Component {
     return (
       <div className={containerClasses.join(' ')} style={itemContentStyle}>
         <div
-          className={
-            'gallery-item-visible gallery-item gallery-item-loaded text-item'
-          }
+          className={'gallery-item-visible gallery-item gallery-item-loaded text-item'}
           key={'item-text-' + id}
           onTouchStart={actions.handleItemMouseDown}
           onTouchEnd={actions.handleItemMouseUp}

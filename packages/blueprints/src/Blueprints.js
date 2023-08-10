@@ -1,30 +1,8 @@
 import { Layouter, ItemsHelper } from 'pro-layouts';
-import {
-  populateWithDefaultOptions,
-  addPresetOptions,
-  newSPs_processLayouts,
-  dimensionsHelper,
-  newSPs_dimensionsHelper,
-  processLayouts,
-  utils,
-  extendNestedOptionsToIncludeOldAndNew,
-} from 'pro-gallery-lib';
+import { populateWithDefaultOptions, addPresetOptions, dimensionsHelper, processLayouts, utils } from 'pro-gallery-lib';
 
 class Blueprints {
-  getProcessLayoutsFunc(newSPs) {
-    if (newSPs) {
-      return newSPs_processLayouts;
-    } else {
-      return processLayouts;
-    }
-  }
-  createBlueprint({
-    params,
-    lastParams,
-    existingBlueprint,
-    blueprintManagerId,
-    isUsingCustomInfoElements,
-  }) {
+  createBlueprint({ params, lastParams, existingBlueprint, blueprintManagerId, isUsingCustomInfoElements }) {
     // cacheBlocker
     // if (this.cache[params]) return this.cache[params];
 
@@ -37,34 +15,23 @@ class Blueprints {
 
     let changedParams = {};
     try {
-      const {
-        container: newContainerParams,
-        items: newItemsParams,
-        options: newOptions,
-      } = params;
-      const {
-        container: oldContainerParams,
-        items: oldItemsParams,
-        options: oldOptions,
-      } = lastParams;
+      const { container: newContainerParams, items: newItemsParams, options: newOptions } = params;
+      const { container: oldContainerParams, items: oldItemsParams, options: oldOptions } = lastParams;
       // getItems,options and dimesions if not supplied in params;
 
-      const { formattedItems, changed: itemsChanged } =
-        this.formatItemsIfNeeded(newItemsParams, oldItemsParams);
-      const { formattedOptions, changed: optionsChanged } =
-        this.formatOptionsIfNeeded(
-          newOptions,
-          oldOptions,
-          isUsingCustomInfoElements
-        );
-      const { formattedContainer, changed: containerChanged } =
-        this.formatContainerIfNeeded(
-          newContainerParams,
-          oldContainerParams,
-          oldOptions,
-          formattedOptions || existingBlueprint.options,
-          optionsChanged
-        );
+      const { formattedItems, changed: itemsChanged } = this.formatItemsIfNeeded(newItemsParams, oldItemsParams);
+      const { formattedOptions, changed: optionsChanged } = this.formatOptionsIfNeeded(
+        newOptions,
+        oldOptions,
+        isUsingCustomInfoElements
+      );
+      const { formattedContainer, changed: containerChanged } = this.formatContainerIfNeeded(
+        newContainerParams,
+        oldContainerParams,
+        oldOptions,
+        formattedOptions || existingBlueprint.options,
+        optionsChanged
+      );
 
       const changed = itemsChanged || optionsChanged || containerChanged;
       changedParams = { itemsChanged, optionsChanged, containerChanged };
@@ -76,8 +43,7 @@ class Blueprints {
 
         const structure = this.createStructure(
           {
-            formattedContainer:
-              formattedContainer || existingBlueprint.container,
+            formattedContainer: formattedContainer || existingBlueprint.container,
             formattedItems: formattedItems || existingBlueprint.items,
             formattedOptions: formattedOptions || existingBlueprint.options,
           },
@@ -97,12 +63,9 @@ class Blueprints {
         existingBlueprint.structure = structure;
 
         // if its an infinite gallery - let the container loose
-        const isInfinite = utils.isHeightSetByGallery(
-          existingBlueprint.options
-        );
+        const isInfinite = utils.isHeightSetByGallery(existingBlueprint.options);
         if (isInfinite) {
-          existingBlueprint.container.height =
-            existingBlueprint.container.galleryHeight = structure.height;
+          existingBlueprint.container.height = existingBlueprint.container.galleryHeight = structure.height;
         }
       }
     } catch (error) {
@@ -110,10 +73,7 @@ class Blueprints {
     }
 
     const reasons = Object.entries(this.reasons)
-      .reduce(
-        (reasons, [param, reason]) => [...reasons, `${param}: ${reason}`],
-        []
-      )
+      .reduce((reasons, [param, reason]) => [...reasons, `${param}: ${reason}`], [])
       .join(', ');
 
     // return the existing or the modified existing object
@@ -187,8 +147,7 @@ class Blueprints {
               existingItem.metaData &&
               (newItem.metaData.type !== existingItem.metaData.type ||
                 newItem.metaData.title !== existingItem.metaData.title ||
-                newItem.metaData.description !==
-                  existingItem.metaData.description)) ||
+                newItem.metaData.description !== existingItem.metaData.description)) ||
             (newItem.metaData &&
               newItem.metaData.type === 'text' &&
               existingItem.metaData &&
@@ -196,10 +155,8 @@ class Blueprints {
               (newItem.metaData.width !== existingItem.metaData.width ||
                 newItem.metaData.height !== existingItem.metaData.height ||
                 newItem.metaData.html !== existingItem.metaData.html ||
-                newItem.metaData.textStyle !==
-                  existingItem.metaData.textStyle ||
-                newItem.metaData.editorHtml !==
-                  existingItem.metaData.editorHtml));
+                newItem.metaData.textStyle !== existingItem.metaData.textStyle ||
+                newItem.metaData.editorHtml !== existingItem.metaData.editorHtml));
           if (itemsChanged) {
             this.reasons.items = `items #${idx} id was changed.`;
           }
@@ -223,9 +180,7 @@ class Blueprints {
       this.gettingMoreItems = false; // probably finished getting more items       //TODO - what is this and how we keep it alive if needed?
       changed = true;
     } else if (itemsHaveChanged(items, oldItemsParams)) {
-      formattedItems = items.map((item) =>
-        Object.assign(ItemsHelper.convertDtoToLayoutItem(item))
-      );
+      formattedItems = items.map((item) => Object.assign(ItemsHelper.convertDtoToLayoutItem(item)));
       this.gettingMoreItems = false; // probably finished getting more items
       changed = true;
     }
@@ -251,8 +206,7 @@ class Blueprints {
         Object.keys(newOptions)
           .sort() // sort by keys alphabetically
           .forEach((key) => (newOptionsSorted[key] = newOptions[key]));
-        const wasChanged =
-          JSON.stringify(newOptionsSorted) !== JSON.stringify(oldOptionsSorted);
+        const wasChanged = JSON.stringify(newOptionsSorted) !== JSON.stringify(oldOptionsSorted);
         if (wasChanged) {
           this.reasons.options = 'options were changed.';
         }
@@ -267,35 +221,16 @@ class Blueprints {
     let changed = false;
     let formattedOptions;
     if (optionsHaveChanged(options, oldOptions)) {
-      const mergedOldAndNewStyles =
-        extendNestedOptionsToIncludeOldAndNew(options); //add both old and new options
-      const fullOptionsOverDefualts = populateWithDefaultOptions(
-        mergedOldAndNewStyles
-      ); //add default for any undefined option
-      formattedOptions = extendNestedOptionsToIncludeOldAndNew(
-        this.getProcessLayoutsFunc(fullOptionsOverDefualts.newSPs)(
-          addPresetOptions(fullOptionsOverDefualts),
-          isUsingCustomInfoElements
-        )
-      ); // TODO make sure the processLayouts is up to date. delete addLayoutStyles from layoutsHelper when done with it...
+      const optionsOverDefaults = populateWithDefaultOptions(options); //add default for any undefined option
+      formattedOptions = processLayouts(addPresetOptions(optionsOverDefaults), isUsingCustomInfoElements);
       changed = true;
     }
 
     return { formattedOptions, changed };
   }
 
-  formatContainerIfNeeded(
-    container,
-    lastContainer,
-    lastOptions,
-    formattedOptions,
-    optionsChanged
-  ) {
-    const containerHasChanged = ({
-      newContainerParams,
-      oldContainerParams,
-      oldOptions,
-    }) => {
+  formatContainerIfNeeded(container, lastContainer, lastOptions, formattedOptions, optionsChanged) {
+    const containerHasChanged = ({ newContainerParams, oldContainerParams, oldOptions }) => {
       if (!oldOptions || !oldContainerParams) {
         this.reasons.container = 'no old container or options. ';
         return true; // no old container or options (style may change container)
@@ -307,12 +242,9 @@ class Blueprints {
       const containerHasChanged = {
         height: utils.isHeightSetByGallery(formattedOptions) // height doesnt matter if the new gallery is going to be vertical
           ? false
-          : !!newContainerParams.height &&
-            newContainerParams.height !== oldContainerParams.height,
+          : !!newContainerParams.height && newContainerParams.height !== oldContainerParams.height,
         width:
-          !oldContainerParams ||
-          (!!newContainerParams.width &&
-            newContainerParams.width !== oldContainerParams.width),
+          !oldContainerParams || (!!newContainerParams.width && newContainerParams.width !== oldContainerParams.width),
       };
       return Object.keys(containerHasChanged).reduce((is, key) => {
         if (containerHasChanged[key]) {
@@ -334,29 +266,12 @@ class Blueprints {
         oldOptions,
       })
     ) {
-      if (formattedOptions.newSPs) {
-        newSPs_dimensionsHelper.updateParams({
-          options: formattedOptions,
-          container,
-        });
-        changed = true;
-        formattedContainer = Object.assign(
-          {},
-          container,
-          newSPs_dimensionsHelper.getGalleryDimensions()
-        );
-      } else {
-        dimensionsHelper.updateParams({
-          options: formattedOptions,
-          container,
-        });
-        changed = true;
-        formattedContainer = Object.assign(
-          {},
-          container,
-          dimensionsHelper.getGalleryDimensions()
-        );
-      }
+      dimensionsHelper.updateParams({
+        options: formattedOptions,
+        container,
+      });
+      changed = true;
+      formattedContainer = Object.assign({}, container, dimensionsHelper.getGalleryDimensions());
     }
     return { formattedContainer, changed };
   }

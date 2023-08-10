@@ -1,11 +1,13 @@
 export default disableAnimationsForSlideshowLayouts;
 
-import IMAGE_PLACEMENT_ANIMATIONS from '../../common/constants/imagePlacementAnimations';
-import IMAGE_HOVER_ANIMATIONS from '../../common/constants/imageHoverAnimations';
-import OVERLAY_ANIMATIONS from '../../common/constants/overlayAnimations';
+import optionsMap from '../helpers/optionsMap';
+import { GALLERY_CONSTS } from '../..';
 
 function disableAnimationsForSlideshowLayouts(presetOptions) {
-  presetOptions.imagePlacementAnimation = IMAGE_PLACEMENT_ANIMATIONS.NO_EFFECT;
-  presetOptions.overlayAnimation = OVERLAY_ANIMATIONS.NO_EFFECT;
-  presetOptions.imageHoverAnimation = IMAGE_HOVER_ANIMATIONS.NO_EFFECT;
+  presetOptions[optionsMap.behaviourParams.item.content.placementAnimation] =
+    GALLERY_CONSTS[optionsMap.behaviourParams.item.content.placementAnimation].NO_EFFECT;
+  presetOptions[optionsMap.behaviourParams.item.overlay.hoverAnimation] =
+    GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoverAnimation].NO_EFFECT;
+  presetOptions[optionsMap.behaviourParams.item.content.hoverAnimation] =
+    GALLERY_CONSTS[optionsMap.behaviourParams.item.content.hoverAnimation].NO_EFFECT;
 }

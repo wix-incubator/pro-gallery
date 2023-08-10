@@ -22,11 +22,7 @@ class Gallery extends React.Component<GalleryProps, GalleryState> {
           typeof props.eventsListener === 'function' &&
             props.eventsListener(GALLERY_CONSTS.events.NEED_MORE_ITEMS, from);
         },
-        onBlueprintReady: ({
-          blueprint,
-          blueprintChanged,
-          initialBlueprint,
-        }) => {
+        onBlueprintReady: ({ blueprint, blueprintChanged, initialBlueprint }) => {
           if (blueprintChanged) {
             this.setBlueprint(blueprint, initialBlueprint);
           } else {
@@ -64,8 +60,7 @@ class Gallery extends React.Component<GalleryProps, GalleryState> {
       if (eventName === GALLERY_CONSTS.events.NEED_MORE_ITEMS) {
         this.blueprintsManager.getMoreItems(eventData);
       } else {
-        typeof eventsListener === 'function' &&
-          eventsListener(eventName, eventData, event);
+        typeof eventsListener === 'function' && eventsListener(eventName, eventData, event);
       }
     };
     this.galleryProps = {

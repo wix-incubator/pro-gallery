@@ -15,9 +15,7 @@ function findNeighborItem(itemIdx, dir, layoutItems) {
     layoutItems.forEach((item) => {
       itemY = item.offset.top + item.height / 2;
       itemX = item.offset.left + item.width / 2;
-      distance = Math.sqrt(
-        Math.pow(itemY - currentItemY, 2) + Math.pow(itemX - currentItemX, 2)
-      );
+      distance = Math.sqrt(Math.pow(itemY - currentItemY, 2) + Math.pow(itemX - currentItemX, 2));
       if (
         (minDistance === null || (distance > 0 && distance < minDistance)) &&
         condition(currentItemX, currentItemY, itemX, itemY)

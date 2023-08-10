@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import { addMigratedOptions } from '../src/core/helpers/optionsConverter';
-import GALLERY_CONSTS from '../src/common/constants';
 
 describe('addMigratedOptions', () => {
   it('should create a nested object out of a flat object', () => {
@@ -149,8 +148,7 @@ function input() {
     itemFont_preset: 'Custom',
     itemFont_editorKey: 'font_5',
     itemFont_fontStyleParam: true,
-    itemFont_value:
-      'font:normal normal normal 22px/27px proxima-n-w01-reg,sans-serif;',
+    itemFont_value: 'font:normal normal normal 22px/27px proxima-n-w01-reg,sans-serif;',
     itemFontSlideshow_family: 'proxima-n-w01-reg',
     itemFontSlideshow_displayName: 'Heading 5',
     itemFontSlideshow_style_bold: false,
@@ -160,8 +158,7 @@ function input() {
     itemFontSlideshow_preset: 'Custom',
     itemFontSlideshow_editorKey: 'font_5',
     itemFontSlideshow_fontStyleParam: true,
-    itemFontSlideshow_value:
-      'font:normal normal normal 22px/27px proxima-n-w01-reg,sans-serif;',
+    itemFontSlideshow_value: 'font:normal normal normal 22px/27px proxima-n-w01-reg,sans-serif;',
     itemDescriptionFontSlideshow_family: 'proxima-n-w01-reg',
     itemDescriptionFontSlideshow_displayName: 'Paragraph 2',
     itemDescriptionFontSlideshow_style_bold: false,
@@ -171,8 +168,7 @@ function input() {
     itemDescriptionFontSlideshow_preset: 'Custom',
     itemDescriptionFontSlideshow_editorKey: 'font_8',
     itemDescriptionFontSlideshow_fontStyleParam: true,
-    itemDescriptionFontSlideshow_value:
-      'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
+    itemDescriptionFontSlideshow_value: 'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
     itemDescriptionFont_family: 'proxima-n-w01-reg',
     itemDescriptionFont_displayName: 'Paragraph 2',
     itemDescriptionFont_style_bold: false,
@@ -182,8 +178,7 @@ function input() {
     itemDescriptionFont_preset: 'Custom',
     itemDescriptionFont_editorKey: 'font_8',
     itemDescriptionFont_fontStyleParam: true,
-    itemDescriptionFont_value:
-      'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
+    itemDescriptionFont_value: 'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
     itemFontColor_themeName: 'color_11',
     itemFontColor_value: 'rgba(255,255,255,1)',
     itemFontColorSlideshow_themeName: 'color_15',
@@ -201,8 +196,7 @@ function input() {
     loadMoreButtonFont_preset: 'Body-M',
     loadMoreButtonFont_editorKey: 'font_8',
     loadMoreButtonFont_fontStyleParam: true,
-    loadMoreButtonFont_value:
-      'font:normal normal normal 15px/1.4em proxima-n-w01-reg,sans-serif;',
+    loadMoreButtonFont_value: 'font:normal normal normal 15px/1.4em proxima-n-w01-reg,sans-serif;',
     loadMoreButtonFontColor_themeName: 'color_15',
     loadMoreButtonFontColor_value: 'rgba(0,0,0,1)',
     loadMoreButtonColor_themeName: 'color_11',
@@ -218,8 +212,7 @@ function input() {
     customButtonFontForHover_preset: 'Custom',
     customButtonFontForHover_editorKey: 'font_8',
     customButtonFontForHover_fontStyleParam: true,
-    customButtonFontForHover_value:
-      'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
+    customButtonFontForHover_value: 'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
     customButtonFontColorForHover_themeName: 'color_15',
     customButtonFontColorForHover_value: 'rgba(0,0,0,1)',
     externalCustomButtonColor_themeName: 'color_18',
@@ -235,8 +228,7 @@ function input() {
     customButtonFont_preset: 'Custom',
     customButtonFont_editorKey: 'font_8',
     customButtonFont_fontStyleParam: true,
-    customButtonFont_value:
-      'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
+    customButtonFont_value: 'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
     customButtonFontColor_themeName: 'color_11',
     customButtonFontColor_value: 'rgba(255,255,255,1)',
     customButtonColor_themeName: 'color_11',
@@ -253,9 +245,8 @@ function input() {
     targetItemSize: 650,
     enableScroll: true,
     cropOnlyFill: false,
-    layoutParams_navigationArrows_type: GALLERY_CONSTS.arrowsType.DEFAULT_ARROW,
-    layoutParams_navigationArrows_container_type:
-      GALLERY_CONSTS.arrowsContainerStyleType.SHADOW,
+    layoutParams_navigationArrows_type: 'DEFAULT_ARROW',
+    layoutParams_navigationArrows_container_type: 'SHADOW',
     layoutParams_navigationArrows_container_backgroundColor: 'rgba(0,0,0,0)',
     layoutParams_navigationArrows_container_borderRadius: 0,
   };
@@ -320,8 +311,7 @@ function expected() {
     itemFont_preset: 'Custom',
     itemFont_editorKey: 'font_5',
     itemFont_fontStyleParam: true,
-    itemFont_value:
-      'font:normal normal normal 22px/27px proxima-n-w01-reg,sans-serif;',
+    itemFont_value: 'font:normal normal normal 22px/27px proxima-n-w01-reg,sans-serif;',
     itemFontSlideshow_family: 'proxima-n-w01-reg',
     itemFontSlideshow_displayName: 'Heading 5',
     itemFontSlideshow_style_bold: false,
@@ -331,8 +321,7 @@ function expected() {
     itemFontSlideshow_preset: 'Custom',
     itemFontSlideshow_editorKey: 'font_5',
     itemFontSlideshow_fontStyleParam: true,
-    itemFontSlideshow_value:
-      'font:normal normal normal 22px/27px proxima-n-w01-reg,sans-serif;',
+    itemFontSlideshow_value: 'font:normal normal normal 22px/27px proxima-n-w01-reg,sans-serif;',
     itemDescriptionFontSlideshow_family: 'proxima-n-w01-reg',
     itemDescriptionFontSlideshow_displayName: 'Paragraph 2',
     itemDescriptionFontSlideshow_style_bold: false,
@@ -342,8 +331,7 @@ function expected() {
     itemDescriptionFontSlideshow_preset: 'Custom',
     itemDescriptionFontSlideshow_editorKey: 'font_8',
     itemDescriptionFontSlideshow_fontStyleParam: true,
-    itemDescriptionFontSlideshow_value:
-      'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
+    itemDescriptionFontSlideshow_value: 'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
     itemDescriptionFont_family: 'proxima-n-w01-reg',
     itemDescriptionFont_displayName: 'Paragraph 2',
     itemDescriptionFont_style_bold: false,
@@ -353,8 +341,7 @@ function expected() {
     itemDescriptionFont_preset: 'Custom',
     itemDescriptionFont_editorKey: 'font_8',
     itemDescriptionFont_fontStyleParam: true,
-    itemDescriptionFont_value:
-      'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
+    itemDescriptionFont_value: 'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
     itemFontColor_themeName: 'color_11',
     itemFontColor_value: 'rgba(255,255,255,1)',
     itemFontColorSlideshow_themeName: 'color_15',
@@ -372,8 +359,7 @@ function expected() {
     loadMoreButtonFont_preset: 'Body-M',
     loadMoreButtonFont_editorKey: 'font_8',
     loadMoreButtonFont_fontStyleParam: true,
-    loadMoreButtonFont_value:
-      'font:normal normal normal 15px/1.4em proxima-n-w01-reg,sans-serif;',
+    loadMoreButtonFont_value: 'font:normal normal normal 15px/1.4em proxima-n-w01-reg,sans-serif;',
     loadMoreButtonFontColor_themeName: 'color_15',
     loadMoreButtonFontColor_value: 'rgba(0,0,0,1)',
     loadMoreButtonColor_themeName: 'color_11',
@@ -389,8 +375,7 @@ function expected() {
     customButtonFontForHover_preset: 'Custom',
     customButtonFontForHover_editorKey: 'font_8',
     customButtonFontForHover_fontStyleParam: true,
-    customButtonFontForHover_value:
-      'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
+    customButtonFontForHover_value: 'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
     customButtonFontColorForHover_themeName: 'color_15',
     customButtonFontColorForHover_value: 'rgba(0,0,0,1)',
     externalCustomButtonColor_themeName: 'color_18',
@@ -406,8 +391,7 @@ function expected() {
     customButtonFont_preset: 'Custom',
     customButtonFont_editorKey: 'font_8',
     customButtonFont_fontStyleParam: true,
-    customButtonFont_value:
-      'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
+    customButtonFont_value: 'font:normal normal normal 15px/18px proxima-n-w01-reg,sans-serif;',
     customButtonFontColor_themeName: 'color_11',
     customButtonFontColor_value: 'rgba(255,255,255,1)',
     customButtonColor_themeName: 'color_11',
@@ -439,9 +423,8 @@ function expected() {
     layoutParams_navigationArrows_padding: 23,
     layoutParams_navigationArrows_verticalAlignment: 'ITEM_CENTER',
     layoutParams_navigationArrows_size: 23,
-    layoutParams_navigationArrows_type: GALLERY_CONSTS.arrowsType.DEFAULT_ARROW,
-    layoutParams_navigationArrows_container_type:
-      GALLERY_CONSTS.arrowsContainerStyleType.SHADOW,
+    layoutParams_navigationArrows_type: 'DEFAULT_ARROW',
+    layoutParams_navigationArrows_container_type: 'SHADOW',
     layoutParams_navigationArrows_container_backgroundColor: 'rgba(0,0,0,0)',
     layoutParams_navigationArrows_container_borderRadius: 0,
     layoutParams_info_layout: 'NO_BACKGROUND',
@@ -451,15 +434,7 @@ function expected() {
     layoutParams_thumbnails_alignment: 'BOTTOM',
     layoutParams_structure_scrollDirection: 'VERTICAL',
     layoutParams_structure_layoutOrientation: 'HORIZONTAL',
-    layoutParams_groups_allowedGroupTypes: [
-      '1',
-      '2h',
-      '2v',
-      '3t',
-      '3b',
-      '3l',
-      '3r',
-    ],
+    layoutParams_groups_allowedGroupTypes: ['1', '2h', '2v', '3t', '3b', '3l', '3r'],
     layoutParams_structure_numberOfColumns: 3,
     layoutParams_crop_ratios: [1],
     layoutParams_crop_method: 'FILL',
@@ -477,8 +452,7 @@ function expected() {
     behaviourParams_gallery_scrollAnimation: 'NO_EFFECT',
     behaviourParams_gallery_enableIndexingShareLinks: false,
     behaviourParams_gallery_horizontal_slideAnimation: 'SCROLL',
-    behaviourParams_gallery_horizontal_slideTransition:
-      'cubic-bezier(0.46,0.1,0.25,1)',
+    behaviourParams_gallery_horizontal_slideTransition: 'cubic-bezier(0.46,0.1,0.25,1)',
     behaviourParams_gallery_horizontal_loop: false,
     behaviourParams_gallery_horizontal_autoSlide_interval: 4,
     behaviourParams_gallery_horizontal_autoSlide_pauseOnHover: true,

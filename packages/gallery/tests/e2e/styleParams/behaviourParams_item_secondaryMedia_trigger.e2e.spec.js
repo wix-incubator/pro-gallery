@@ -24,22 +24,22 @@ describe('behaviourParams_item_secondaryMedia_trigger - e2e', () => {
   it('should not reveal second media on hover', async () => {
     const page = await navigateAndHoverTakeSnapshot(driver, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW,
       [optionsMap.behaviourParams.item.secondaryMedia.trigger]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger]
-          .OFF,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger].OFF,
+      [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].NEVER_SHOW,
     });
     expect(page).toMatchImageSnapshot();
   });
   it('should reveal second media on hover', async () => {
     const page = await navigateAndHoverTakeSnapshot(driver, {
       [optionsMap.layoutParams.structure.galleryLayout]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-          .SLIDESHOW,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW,
       [optionsMap.behaviourParams.item.secondaryMedia.trigger]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger]
-          .HOVER,
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.secondaryMedia.trigger].HOVER,
+      [optionsMap.behaviourParams.item.overlay.hoveringBehaviour]:
+        GALLERY_CONSTS[optionsMap.behaviourParams.item.overlay.hoveringBehaviour].NEVER_SHOW,
     });
     expect(page).toMatchImageSnapshot();
   });

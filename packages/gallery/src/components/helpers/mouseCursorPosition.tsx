@@ -1,58 +1,72 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Emitter from './emitter';
 import { proxy } from './proxy';
 import { utils } from 'pro-gallery-lib';
 
 type MouseFollowerEvents = {
   mouseMove: (x: number, y: number) => void;
-  mouseClick: (e: MouseEvent) => void;
+  mouseClickInteractionEvent: (e: MouseEvent) => void;
   mouseEnterState: (mouseIn: boolean, x: number, y: number) => void;
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function mouseFollower(container: HTMLElement) {
   const emitter = new Emitter<MouseFollowerEvents>();
+  let state = {
+    mouseIn: false,
+    position: [0, 0] as [number, number],
+  };
+  emitter.listen.mouseEnterState((mouseIn, ...position) => {
+    state = {
+      mouseIn,
+      position,
+    };
+  });
+  emitter.listen.mouseMove((x, y) => {
+    state = {
+      ...state,
+      position: [x, y],
+    };
+  });
   const getMousePosition = (event: MouseEvent) => {
     const bounding = container.getBoundingClientRect();
-    const position = [
-      event.clientX - bounding.left,
-      event.clientY - bounding.top,
-    ] as [number, number];
+    const position = [event.clientX - bounding.left, event.clientY - bounding.top] as [number, number];
     return position;
   };
 
   function onMouseEnter(event: MouseEvent) {
     const position = getMousePosition(event);
-    emitter.call.mouseEnterState(
-      !isHoveringClickableElement(container, event, ...position),
-      ...position
-    );
+    emitter.call.mouseEnterState(!isHoveringClickableElement(container, event, ...position), ...position);
   }
   function onMouseMove(event: MouseEvent) {
     const position = getMousePosition(event);
-    emitter.call.mouseEnterState(
-      !isHoveringClickableElement(container, event, ...position),
-      ...position
-    );
+    emitter.call.mouseEnterState(!isHoveringClickableElement(container, event, ...position), ...position);
     emitter.call.mouseMove(...position);
   }
   function onMouseLeave() {
     emitter.call.mouseEnterState(false, 0, 0);
   }
-  function onClick(event: MouseEvent) {
-    emitter.call.mouseClick(event);
+  function onMouseClickInteractionEvent(event: MouseEvent) {
+    emitter.call.mouseClickInteractionEvent(event);
   }
   container.addEventListener('mouseenter', onMouseEnter);
   container.addEventListener('mousemove', onMouseMove);
   container.addEventListener('mouseleave', onMouseLeave);
-  container.addEventListener('click', onClick);
+  container.addEventListener('click', onMouseClickInteractionEvent);
+  container.addEventListener('mousedown', onMouseClickInteractionEvent);
+  container.addEventListener('mouseup', onMouseClickInteractionEvent);
   return {
     listen: emitter.listen,
+    get state() {
+      return state;
+    },
     destroy: () => {
       container.removeEventListener('mouseenter', onMouseEnter);
       container.removeEventListener('mousemove', onMouseMove);
       container.removeEventListener('mouseleave', onMouseLeave);
-      container.removeEventListener('click', onClick);
+      container.removeEventListener('click', onMouseClickInteractionEvent);
+      container.removeEventListener('mousedown', onMouseClickInteractionEvent);
+      container.removeEventListener('mouseup', onMouseClickInteractionEvent);
     },
   };
 }
@@ -60,6 +74,7 @@ export function mouseFollower(container: HTMLElement) {
 interface MouseCursorProps {
   render: (x: number, y: number) => React.ReactNode;
   onClick: (e: MouseEvent) => void;
+  onMouseDownOrUp: (e: MouseEvent) => void;
   onEnterState?: (mouseIn: boolean) => void;
   getElement: () => HTMLElement;
   shouldRenderAtPosition: (x: number, y: number) => boolean;
@@ -71,26 +86,48 @@ interface MouseCursorState {
   mouseIn: boolean;
 }
 
-const getContainerById = (id: string) =>
-  document.getElementById(`pro-gallery-container-${id}`) as HTMLElement;
+const getContainerById = (id: string) => document.getElementById(`pro-gallery-container-${id}`) as HTMLElement;
 
-export class MouseCursor extends React.Component<
-  MouseCursorProps,
-  MouseCursorState
-> {
-  private mouseFollower?: ReturnType<typeof mouseFollower>;
+const MouseFollowerContext = React.createContext<ReturnType<typeof mouseFollower> | undefined>(undefined);
+
+export const MouseFollowerProvider = ({ children, id }: { children: React.ReactNode; id: string }) => {
+  const [mouseFollowerValue, setMouseFollowerValue] = React.useState<ReturnType<typeof mouseFollower>>();
+  useEffect(() => {
+    const container = getContainerById(id);
+    const mouseFollowerValue = mouseFollower(container);
+    setMouseFollowerValue(mouseFollowerValue);
+    return () => {
+      mouseFollowerValue.destroy();
+    };
+  }, [id]);
+
+  return (
+    <MouseFollowerContext.Provider value={mouseFollowerValue}>
+      {mouseFollowerValue && children}
+    </MouseFollowerContext.Provider>
+  );
+};
+
+export class MouseCursor extends React.Component<MouseCursorProps, MouseCursorState> {
+  declare context: NonNullable<React.ContextType<typeof MouseFollowerContext>>;
+
+  static contextType = MouseFollowerContext;
+
+  cleanup: (() => void) | undefined;
   componentDidMount(): void {
-    const element = this.props.getElement();
-    this.mouseFollower = mouseFollower(element);
-    this.mouseFollower.listen.mouseMove(
+    if (!this.context) {
+      throw new Error('MouseFollowerContext is undefined');
+    }
+    const removeMoveListener = this.context.listen.mouseMove(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (utils as any).throttle((x, y) => {
+      (utils as any).throttle(() => {
         this.setState({
-          position: [x, y],
+          position: this.context.state.position,
         });
       }, this.props.throttle)
     );
-    this.mouseFollower.listen.mouseEnterState((mouseIn, ...position) => {
+    const removeEnterListener = this.context.listen.mouseEnterState(() => {
+      const { mouseIn, position } = this.context.state;
       if (this.state.mouseIn !== mouseIn) {
         this.setState({
           mouseIn: mouseIn,
@@ -101,7 +138,7 @@ export class MouseCursor extends React.Component<
         }
       }
     });
-    this.mouseFollower.listen.mouseClick((e) => {
+    const removeClickListener = this.context.listen.mouseClickInteractionEvent((e) => {
       if (!this.state.mouseIn) {
         return;
       }
@@ -109,15 +146,25 @@ export class MouseCursor extends React.Component<
       if (!this.props.shouldRenderAtPosition(x, y)) {
         return;
       }
+      if (e.type === 'mousedown' || e.type === 'mouseup') {
+        this.props.onMouseDownOrUp(e);
+        return;
+      }
       this.props.onClick(e);
     });
+    this.cleanup = () => {
+      removeMoveListener();
+      removeEnterListener();
+      removeClickListener();
+    };
   }
   componentWillUnmount(): void {
-    this.mouseFollower?.destroy();
+    this.cleanup?.();
   }
+
   state: MouseCursorState = {
-    position: [0, 0],
-    mouseIn: false,
+    position: this.context?.state.position || [0, 0],
+    mouseIn: this.context?.state.mouseIn || false,
   };
   render(): React.ReactNode {
     if (!this.state.mouseIn) {
@@ -141,26 +188,15 @@ interface ArrowFollowerProps {
   isTheOnlyArrow: boolean;
 }
 
-const isHoveringClickableElement = (
-  element: HTMLElement,
-  e: MouseEvent,
-  x: number,
-  y: number
-) => {
+const isHoveringClickableElement = (element: HTMLElement, e: MouseEvent, x: number, y: number) => {
   // cancel the click event
   for (const ele of e.composedPath() as HTMLElement[]) {
-    if (
-      ele instanceof HTMLElement &&
-      ele.getAttribute(CLICKABLE_ATTR) === 'true'
-    ) {
+    if (ele instanceof HTMLElement && ele.getAttribute(CLICKABLE_ATTR) === 'true') {
       return true;
     }
   }
   const bounding = element.getBoundingClientRect();
-  const elementUnderMouse = document.elementFromPoint(
-    x + bounding.left,
-    y + bounding.top
-  ) as HTMLElement | null;
+  const elementUnderMouse = document.elementFromPoint(x + bounding.left, y + bounding.top) as HTMLElement | null;
   if (!elementUnderMouse) {
     return false;
   }
@@ -178,12 +214,9 @@ export class ArrowFollower extends React.Component<ArrowFollowerProps> {
   shouldRender = (x: number): boolean => {
     const element = getContainerById(this.props.id);
     const containerWidth = element.offsetWidth;
-    const realMaxWidth = Math.min(
-      this.props.mouseCursorContainerMaxWidth,
-      this.props.isTheOnlyArrow ? 100 : 50
-    );
+    const realMaxWidth = Math.min(this.props.mouseCursorContainerMaxWidth, this.props.isTheOnlyArrow ? 100 : 50);
     const amountOfPixelsNeeded = containerWidth * (realMaxWidth / 100);
-    const isLeft = amountOfPixelsNeeded > x;
+    const isLeft = amountOfPixelsNeeded >= x;
     const isRight = x > containerWidth - amountOfPixelsNeeded;
 
     return this.props.direction === 'left' ? isLeft : isRight;
@@ -215,6 +248,7 @@ export class ArrowFollower extends React.Component<ArrowFollowerProps> {
         }}
         shouldRenderAtPosition={this.shouldRender}
         onClick={this.onNavigation}
+        onMouseDownOrUp={(e) => e.stopPropagation()}
         throttle={50}
       />
     );

@@ -6,9 +6,7 @@ class ImageItem extends React.Component {
   constructor(props) {
     super(props);
     this.getImageContainer = this.getImageContainer.bind(this);
-    this.getImageContainerClassNames =
-      this.getImageContainerClassNames.bind(this);
-    this.getImageElement = this.getImageElement.bind(this);
+    this.getImageContainerClassNames = this.getImageContainerClassNames.bind(this);
 
     this.state = {
       isHighResImageLoaded: false,
@@ -37,7 +35,7 @@ class ImageItem extends React.Component {
   }
 
   getImageContainerClassNames() {
-    const { isCurrentHover, options, isTransparent } = this.props;
+    const { isCurrentHover, options } = this.props;
     const { isHighResImageLoaded } = this.state;
 
     const imageContainerClassNames = [
@@ -48,13 +46,11 @@ class ImageItem extends React.Component {
       'gallery-item',
       'gallery-item-preloaded',
       options[optionsMap.layoutParams.crop.enable] &&
-      options[optionsMap.layoutParams.crop.method] ===
-        GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
+      options[optionsMap.layoutParams.crop.method] === GALLERY_CONSTS[optionsMap.layoutParams.crop.method].FIT
         ? 'grid-fit'
         : '',
       options[optionsMap.behaviourParams.item.content.loader] ===
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader].COLOR &&
-      !isTransparent
+      GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader].COLOR
         ? `load-with-color ${isHighResImageLoaded ? 'image-loaded' : ''}`
         : '',
     ].join(' ');
@@ -85,19 +81,11 @@ class ImageItem extends React.Component {
 
     let imageAnimationUrl = null;
     switch (options[optionsMap.behaviourParams.gallery.scrollAnimation]) {
-      case GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation]
-        .BLUR:
-        imageAnimationUrl = createUrl(
-          GALLERY_CONSTS.urlSizes.RESIZED,
-          GALLERY_CONSTS.urlTypes.LOW_RES
-        );
+      case GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation].BLUR:
+        imageAnimationUrl = createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.LOW_RES);
         break;
-      case GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation]
-        .MAIN_COLOR:
-        imageAnimationUrl = createUrl(
-          GALLERY_CONSTS.urlSizes.PIXEL,
-          GALLERY_CONSTS.urlTypes.HIGH_RES
-        );
+      case GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation].MAIN_COLOR:
+        imageAnimationUrl = createUrl(GALLERY_CONSTS.urlSizes.PIXEL, GALLERY_CONSTS.urlTypes.HIGH_RES);
         break;
     }
 
@@ -121,23 +109,10 @@ class ImageItem extends React.Component {
   }
 
   getImageElement() {
-    const {
-      calculatedAlt,
-      imageDimensions,
-      createUrl,
-      id,
-      idx,
-      settings = {},
-      options,
-      isTransparent,
-    } = this.props;
+    const { alt, imageDimensions, createUrl, id, idx, settings = {}, options } = this.props;
     const { isHighResImageLoaded } = this.state;
     const imageProps =
-      settings &&
-      settings.imageProps &&
-      typeof settings.imageProps === 'function'
-        ? settings.imageProps(id)
-        : {};
+      settings && settings.imageProps && typeof settings.imageProps === 'function' ? settings.imageProps(id) : {};
 
     // eslint-disable-next-line no-unused-vars
     const { marginLeft, marginTop, ...imageSizing } = imageDimensions;
@@ -145,8 +120,7 @@ class ImageItem extends React.Component {
     const image = () => {
       const imagesComponents = [];
       const blockDownloadStyles =
-        utils.isMobile() &&
-        this.props.options[optionsMap.behaviourParams.gallery.blockContextMenu]
+        utils.isMobile() && this.props.options[optionsMap.behaviourParams.gallery.blockContextMenu]
           ? {
               '-webkit-user-select': 'none',
               '-webkit-touch-callout': 'none',
@@ -159,8 +133,7 @@ class ImageItem extends React.Component {
             height: '100%',
           }
         : {};
-
-      if (!isHighResImageLoaded && !isTransparent) {
+      if (!isHighResImageLoaded) {
         let preload = null;
         const preloadProps = {
           className: 'gallery-item-visible gallery-item gallery-item-preloaded',
@@ -170,47 +143,35 @@ class ImageItem extends React.Component {
           ...imageProps,
         };
         switch (options[optionsMap.behaviourParams.item.content.loader]) {
-          case GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader]
-            .BLUR:
+          case GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader].BLUR:
             preload = (
               <ImageRenderer
                 alt=""
                 key={'image_preload_blur-' + id}
-                src={createUrl(
-                  GALLERY_CONSTS.urlSizes.RESIZED,
-                  GALLERY_CONSTS.urlTypes.LOW_RES
-                )}
+                src={createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.LOW_RES)}
                 style={{
                   ...imageSizing,
                   ...preloadStyles,
                   ...blockDownloadStyles,
                 }}
                 {...preloadProps}
-                customImageRenderer={
-                  this.props.customComponents?.customImageRenderer
-                }
+                customImageRenderer={this.props.customComponents?.customImageRenderer}
               />
             );
             break;
-          case GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader]
-            .MAIN_COLOR:
+          case GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader].MAIN_COLOR:
             preload = (
               <ImageRenderer
                 alt=""
                 key={'image_preload_main_color-' + id}
-                src={createUrl(
-                  GALLERY_CONSTS.urlSizes.PIXEL,
-                  GALLERY_CONSTS.urlTypes.HIGH_RES
-                )}
+                src={createUrl(GALLERY_CONSTS.urlSizes.PIXEL, GALLERY_CONSTS.urlTypes.HIGH_RES)}
                 style={{
                   ...imageSizing,
                   ...preloadStyles,
                   ...blockDownloadStyles,
                 }}
                 {...preloadProps}
-                customImageRenderer={
-                  this.props.customComponents?.customImageRenderer
-                }
+                customImageRenderer={this.props.customComponents?.customImageRenderer}
               />
             );
             break;
@@ -222,7 +183,7 @@ class ImageItem extends React.Component {
       const shouldRenderHighResImages = !this.props.isPrerenderMode;
       const imageType =
         options[optionsMap.stylingParams.itemResolutionMode] ===
-        GALLERY_CONSTS.itemResolutionMode.FULL
+        GALLERY_CONSTS[optionsMap.stylingParams.itemResolutionMode].FULL
           ? GALLERY_CONSTS.urlSizes.FULL
           : GALLERY_CONSTS.urlSizes.MULTI;
       const src = createUrl(imageType, GALLERY_CONSTS.urlTypes.HIGH_RES);
@@ -234,9 +195,7 @@ class ImageItem extends React.Component {
           data-hook="gallery-item-image-img"
           data-idx={idx}
           src={src}
-          alt={
-            typeof calculatedAlt === 'string' ? calculatedAlt : 'untitled image'
-          }
+          alt={typeof alt === 'string' ? alt : 'untitled image'}
           onLoad={this.handleHighResImageLoad}
           loading={this.props.isPrerenderMode ? 'lazy' : 'eager'}
           style={{
@@ -259,16 +218,10 @@ class ImageItem extends React.Component {
 
   render() {
     const imageRenderer = this.getImageElement();
-    const imageContainerClassNames = `${this.getImageContainerClassNames()} ${
-      this.props.extraClasses || ''
-    }`;
-    const animationOverlay =
-      this.props.overlay || this.getImageAnimationOverlay();
-    const renderedItem = this.getImageContainer(
-      imageRenderer,
-      imageContainerClassNames,
-      animationOverlay
-    );
+    const imageContainerClassNames = `${this.getImageContainerClassNames()} ${this.props.extraClasses || ''}`;
+    const animationOverlay = this.props.overlay || this.getImageAnimationOverlay();
+
+    const renderedItem = this.getImageContainer(imageRenderer, imageContainerClassNames, animationOverlay);
     return renderedItem;
   }
 }

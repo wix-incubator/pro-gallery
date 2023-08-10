@@ -14,13 +14,10 @@ describe('Slideshow View', () => {
   beforeEach(() => {
     driver = new GalleryDriver();
     initialGalleryViewProps = driver.props.galleryView();
-    initialGalleryViewProps.options = _.cloneDeep(
-      initialGalleryViewProps.options
-    );
+    initialGalleryViewProps.options = _.cloneDeep(initialGalleryViewProps.options);
     Object.assign(initialGalleryViewProps.options, {
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL,
     });
     clock = sinon.useFakeTimers();
   });
@@ -75,12 +72,8 @@ describe('Slideshow View', () => {
     it('Handle keypress correctly (next/prev image)', () => {
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
-      const stubLast = sinon
-        .stub(SlideshowView.prototype, 'isLastItem')
-        .returns(false);
-      const stubFirst = sinon
-        .stub(SlideshowView.prototype, 'isFirstItem')
-        .returns(true);
+      const stubLast = sinon.stub(SlideshowView.prototype, 'isLastItem').returns(false);
+      const stubFirst = sinon.stub(SlideshowView.prototype, 'isFirstItem').returns(true);
       expect(driver.get.state('activeIndex')).to.equal(0);
       //nextItem - forward
       driver.get.instance().handleSlideshowKeyPress({
@@ -177,12 +170,9 @@ describe('Slideshow View', () => {
       });
       // constants determining the gallery's height
       const galleryHeight = initialGalleryViewProps.container.galleryHeight;
-      const imageMargin =
-        initialGalleryViewProps.options[
-          optionsMap.layoutParams.structure.itemSpacing
-        ]; // assigning the height parameter as in this.props.container to gallery's height
+      const itemSpacing = initialGalleryViewProps.options[optionsMap.layoutParams.structure.itemSpacing]; // assigning the height parameter as in this.props.container to gallery's height
       Object.assign(initialGalleryViewProps.container, {
-        height: galleryHeight - imageMargin,
+        height: galleryHeight - itemSpacing,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
@@ -206,9 +196,7 @@ describe('Slideshow View', () => {
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
       expect(driver.find.hook('gallery-thumbnails').length).to.equal(1);
-      expect(driver.find.hook('gallery-thumbnails-column').length).to.not.equal(
-        0
-      );
+      expect(driver.find.hook('gallery-thumbnails-column').length).to.not.equal(0);
     });
   });
 
@@ -223,9 +211,7 @@ describe('Slideshow View', () => {
       });
       Object.assign(initialGalleryViewProps.options, {
         [optionsMap.behaviourParams.gallery.horizontal.slideAnimation]:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.gallery.horizontal.slideAnimation
-          ].SCROLL,
+          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation].SCROLL,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
@@ -241,19 +227,13 @@ describe('Slideshow View', () => {
       });
       Object.assign(initialGalleryViewProps.options, {
         [optionsMap.behaviourParams.gallery.horizontal.slideAnimation]:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.gallery.horizontal.slideAnimation
-          ].FADE,
+          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation].FADE,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(SlideshowView, galleryViewProps);
       const imagesWithoutFirst = driver.images.slice(1, driver.images.length);
-      const imagesSize = imagesWithoutFirst.reduce(
-        (acc, image) => acc + image.props.style.width,
-        0
-      );
-      const buffer =
-        imagesSize / initialGalleryViewProps.container.galleryWidth;
+      const imagesSize = imagesWithoutFirst.reduce((acc, image) => acc + image.props.style.width, 0);
+      const buffer = imagesSize / initialGalleryViewProps.container.galleryWidth;
       expect(Math.floor(buffer)).to.equal(3);
     });
   });
@@ -268,12 +248,9 @@ describe('Slideshow View', () => {
       Object.assign(initialGalleryViewProps.options, {
         [optionsMap.behaviourParams.gallery.horizontal.autoSlide.interval]: 1,
         [optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour]:
-          GALLERY_CONSTS[
-            optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour
-          ].INTERVAL,
+          GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.autoSlide.behaviour].INTERVAL,
         [optionsMap.layoutParams.structure.galleryLayout]:
-          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout]
-            .SLIDER,
+          GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDER,
       });
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       const stub = sinon.stub(SlideshowView.prototype, 'next');

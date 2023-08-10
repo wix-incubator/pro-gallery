@@ -6,6 +6,7 @@ export interface BehaviourParams {
 export interface Item {
   clickAction?: 'NOTHING' | 'LINK' | 'ACTION' | 'MAGNIFY';
   video?: Video;
+  threeDimensionalScene?: ThreeDimensionalScene;
   overlay?: Overlay;
   content?: Content;
   secondaryMedia?: SecondaryMedia;
@@ -28,39 +29,50 @@ export interface Gallery {
   enableIndexingShareLinks?: boolean;
   vertical?: Vertical;
   horizontal?: Horizontal;
-  // allowLeanGallery?: 'behaviourParams_gallery_enableLeanGallery', //think about removing this!
 }
 export interface SecondaryMedia {
   trigger: 'OFF' | 'HOVER';
   behaviour: 'APPEARS';
 }
+
+export type PlayTrigger = 'CLICK' | 'HOVER' | 'AUTO';
 export interface Video {
   speed?: number;
   volume?: number;
   loop?: boolean;
-  playTrigger?: 'CLICK' | 'HOVER' | 'AUTO';
+  playTrigger?: PlayTrigger;
   enablePlayButton?: boolean;
+  enableThumbnailsPlayButton?: boolean;
   enableControls?: boolean;
   enablePlaceholder?: boolean;
 }
 
+export interface ThreeDimensionalScene {
+  transform?: Transform;
+  controls?: Controls;
+  enablePlayButton?: boolean;
+  enableThumbnailsPlayButton?: boolean;
+  playTrigger?: PlayTrigger;
+}
+
+export type Dimensions = string;
+// due to a bug in typescript 4.1.2 - https://github.com/microsoft/TypeScript/pull/41693
+
+export interface Transform {
+  rotation?: Dimensions;
+  scale?: Dimensions;
+  position?: Dimensions;
+}
+export interface Controls {
+  enableZoom?: boolean;
+  enableRotate?: boolean;
+  enablePan?: boolean;
+  enableAutoRotate?: boolean;
+}
 export interface Overlay {
   hoveringBehaviour?: 'APPEARS' | 'DISAPPEARS' | 'ALWAYS_SHOW' | 'NEVER_SHOW';
-  hoverAnimation?:
-    | 'NO_EFFECT'
-    | 'FADE_IN'
-    | 'EXPAND'
-    | 'SLIDE_UP'
-    | 'SLIDE_RIGHT'
-    | 'SLIDE_DOWN'
-    | 'SLIDE_LEFT';
-  position?:
-    | 'LEFT'
-    | 'TOP'
-    | 'RIGHT'
-    | 'BUTTOM'
-    | 'CENTERED_VERTICALLY'
-    | 'CENTERED_HORIZONTALLY';
+  hoverAnimation?: 'NO_EFFECT' | 'FADE_IN' | 'EXPAND' | 'SLIDE_UP' | 'SLIDE_RIGHT' | 'SLIDE_DOWN' | 'SLIDE_LEFT';
+  position?: 'LEFT' | 'TOP' | 'RIGHT' | 'BUTTOM' | 'CENTERED_VERTICALLY' | 'CENTERED_HORIZONTALLY';
   size?: number;
   sizeUnits?: 'PIXEL' | 'PERCENT';
   padding?: number;
@@ -71,6 +83,7 @@ export interface Content {
   hoverAnimation?:
     | 'NO_EFFECT'
     | 'ZOOM_IN'
+    | 'TILT'
     | 'BLUR'
     | 'GRAYSCALE'
     | 'SHRINK'
@@ -80,6 +93,7 @@ export interface Content {
   placementAnimation?: 'NO_EFFECT' | 'SLIDE';
   loader?: 'BLUR' | 'COLOR' | 'MAIN_COLOR';
   magnificationValue?: number;
+  tiltAngleValue?: number;
 }
 
 export interface Vertical {

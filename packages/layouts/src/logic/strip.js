@@ -75,11 +75,10 @@ export class Strip {
     const { galleryWidth } = this.container;
 
     let isStripSmallEnough;
-    if (scrollDirection === 1) {
+    if (scrollDirection === 'HORIZONTAL') {
       isStripSmallEnough = false; //horizontal layout is one long strip
     } else {
-      const withNewGroup =
-        galleryWidth / (this.ratio + newGroup.ratio) - targetItemSize; //start a new strip BEFORE adding the current group
+      const withNewGroup = galleryWidth / (this.ratio + newGroup.ratio) - targetItemSize; //start a new strip BEFORE adding the current group
       const withoutNewGroup = galleryWidth / this.ratio - targetItemSize; //start a new strip AFTER adding the current group
       if (isNaN(withNewGroup) || isNaN(withoutNewGroup)) {
         isStripSmallEnough = false;
@@ -97,8 +96,7 @@ export class Strip {
 
       if (isStripSmallEnough && isLastImage) {
         //if it is the last image - prefer adding it to the last strip rather putting it on a new strip
-        isStripSmallEnough =
-          Number(Math.abs(withoutNewGroup)) < Math.abs(withNewGroup);
+        isStripSmallEnough = Number(Math.abs(withoutNewGroup)) < Math.abs(withNewGroup);
       }
     }
 

@@ -1,8 +1,6 @@
 import { proxy } from './proxy';
 
-export default class Emitter<
-  T extends Record<string, (...args: any[]) => void>
-> {
+export default class Emitter<T extends Record<string, (...args: any[]) => void>> {
   private listeners: Partial<{
     [K in keyof T]: T[K][];
   }> = {};

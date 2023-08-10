@@ -15,26 +15,24 @@ describe('mix - e2e', () => {
   afterAll(async () => {
     await driver.closePage();
   });
-  it('mix - scrollDirection = vertical', async () => {
+  it('mix - layoutParams_structure_scrollDirection = VERTICAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].MIX,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .VERTICAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL,
     });
     // await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);
     const page = await driver.grab.partialScreenshot();
     expect(page).toMatchImageSnapshot();
   });
-  it('mix - scrollDirection = horizontal', async () => {
+  it('mix - layoutParams_structure_scrollDirection = HORIZONTAL', async () => {
     await driver.navigate({
       [optionsMap.layoutParams.structure.galleryLayout]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].MIX,
       [optionsMap.layoutParams.structure.scrollDirection]:
-        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-          .HORIZONTAL,
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL,
     });
     // await driver.waitFor.hookToBeVisible('item-container');
     await driver.waitFor.timer(200);

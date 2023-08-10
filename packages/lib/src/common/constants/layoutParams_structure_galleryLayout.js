@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import optionsMap from '../../core/helpers/optionsMap';
 
 const LAYOUTS = {
@@ -21,10 +20,7 @@ const LAYOUTS = {
 };
 
 const isLayout = (layoutName) => (options) => {
-  return (
-    options[optionsMap.layoutParams.structure.galleryLayout] ===
-    LAYOUTS[layoutName]
-  );
+  return options[optionsMap.layoutParams.structure.galleryLayout] === LAYOUTS[layoutName];
 };
 
 export default LAYOUTS;

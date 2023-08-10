@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import { createOptions } from '../utils/utils';
@@ -13,12 +12,11 @@ export default {
   isRelevant: (options) =>
     options[optionsMap.layoutParams.groups.groupSize] === 1 &&
     options[optionsMap.layoutParams.structure.layoutOrientation] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation]
-        .VERTICAL &&
-    !GALLERY_CONSTS.hasHoverPlacement(
-      options[optionsMap.layoutParams.info.placement]
-    ),
-  options: createOptions('layoutParams_info_layout'),
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.layoutOrientation].VERTICAL &&
+    !GALLERY_CONSTS.hasHoverPlacement(options[optionsMap.layoutParams.info.placement]),
+  get options() {
+    return createOptions('layoutParams_info_layout');
+  },
   type: INPUT_TYPES.OPTIONS,
   default: GALLERY_CONSTS.layoutParams_info_layout.NO_BACKGROUND,
 };

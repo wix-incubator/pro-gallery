@@ -5,8 +5,7 @@ export const getBoundingClientRect = (elem) => {
     right: removePx(left) + removePx(width),
   };
 };
-export const removePx = (value) =>
-  Number(value.substring(0, value.indexOf('px')));
+export const removePx = (value) => Number(value.substring(0, value.indexOf('px')));
 
 export const getElementDimensions = (elem) => {
   const { width, top, left, height } = getComputedStyle(elem.getDOMNode());

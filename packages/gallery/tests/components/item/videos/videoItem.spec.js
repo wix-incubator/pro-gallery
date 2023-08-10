@@ -27,21 +27,15 @@ describe('Video Item ', () => {
   });
 
   it('should create PlayerElement if video can play in gallery, and is set to play', async () => {
-    //utils.isMobile() && itemClick !== 'expand'
     stub = sinon.stub(utils, 'isMobile').returns(true);
     Object.assign(sampleItemViewProps.options, {
-      [optionsMap.behaviourParams.item.clickAction]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
+      [optionsMap.behaviourParams.item.clickAction]: GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
     });
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
-    expect(
-      driver.find.hook('video_container-video-player-element').length
-    ).to.equal(1);
+    expect(driver.find.hook('video_container-video-player-element').length).to.equal(1);
     expect(driver.find.tag('video').length).to.equal(0);
-    expect(driver.find.hook('video_container-image-element').length).to.equal(
-      0
-    );
+    expect(driver.find.hook('video_container-image-element').length).to.equal(0);
 
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.clickAction]:
@@ -49,46 +43,31 @@ describe('Video Item ', () => {
     });
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
-    expect(
-      driver.find.hook('video_container-video-player-element').length
-    ).to.equal(1);
+    expect(driver.find.hook('video_container-video-player-element').length).to.equal(1);
     expect(driver.find.tag('video').length).to.equal(0);
-    expect(driver.find.hook('video_container-image-element').length).to.equal(
-      0
-    );
+    expect(driver.find.hook('video_container-image-element').length).to.equal(0);
     stub.restore();
 
-    //!utils.isMobile() && itemClick !== 'expand'
     stub = sinon.stub(utils, 'isMobile').returns(false);
     Object.assign(sampleItemViewProps.options, {
-      [optionsMap.behaviourParams.item.clickAction]:
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
+      [optionsMap.behaviourParams.item.clickAction]: GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK,
     });
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
-    expect(
-      driver.find.hook('video_container-video-player-element').length
-    ).to.equal(1);
+    expect(driver.find.hook('video_container-video-player-element').length).to.equal(1);
     expect(driver.find.tag('video').length).to.equal(0);
-    expect(driver.find.hook('video_container-image-element').length).to.equal(
-      0
-    );
+    expect(driver.find.hook('video_container-image-element').length).to.equal(0);
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.clickAction]:
         GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING,
     });
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
-    expect(
-      driver.find.hook('video_container-video-player-element').length
-    ).to.equal(1);
+    expect(driver.find.hook('video_container-video-player-element').length).to.equal(1);
     expect(driver.find.tag('video').length).to.equal(0);
-    expect(driver.find.hook('video_container-image-element').length).to.equal(
-      0
-    );
+    expect(driver.find.hook('video_container-image-element').length).to.equal(0);
     stub.restore();
 
-    //!utils.isMobile() && videoPlay !== 'onClick'
     stub = sinon.stub(utils, 'isMobile').returns(false);
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.video.playTrigger]:
@@ -96,26 +75,18 @@ describe('Video Item ', () => {
     });
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
-    expect(
-      driver.find.hook('video_container-video-player-element').length
-    ).to.equal(1);
+    expect(driver.find.hook('video_container-video-player-element').length).to.equal(1);
     expect(driver.find.tag('video').length).to.equal(0);
-    expect(driver.find.hook('video_container-image-element').length).to.equal(
-      0
-    );
+    expect(driver.find.hook('video_container-image-element').length).to.equal(0);
     Object.assign(sampleItemViewProps.options, {
       [optionsMap.behaviourParams.item.video.playTrigger]:
         GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO,
     });
     driver.mount(VideoItem, sampleItemViewProps);
     driver.set.props({ playing: true });
-    expect(
-      driver.find.hook('video_container-video-player-element').length
-    ).to.equal(1);
+    expect(driver.find.hook('video_container-video-player-element').length).to.equal(1);
     expect(driver.find.tag('video').length).to.equal(0);
-    expect(driver.find.hook('video_container-image-element').length).to.equal(
-      0
-    );
+    expect(driver.find.hook('video_container-image-element').length).to.equal(0);
     stub.restore();
   });
 

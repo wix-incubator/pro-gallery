@@ -1,4 +1,3 @@
-//NEW STYPEPARAMS METHOD
 import { INPUT_TYPES } from '../utils/constants';
 import { default as GALLERY_CONSTS } from '../../common/constants';
 import { createOptions } from '../utils/utils';
@@ -11,18 +10,14 @@ export default {
     'To enable "Scroll Animation" either set a Vertical gallery ("Scroll Direction" as "Vertical")\nor set a Horizontal gallery ("Scroll Direction" as "Horizontal") with "Slide Animation" set to "Scroll".',
   isRelevant: (options) =>
     options[optionsMap.layoutParams.structure.scrollDirection] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-        .VERTICAL ||
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL ||
     (options[optionsMap.layoutParams.structure.scrollDirection] ===
-      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection]
-        .HORIZONTAL &&
+      GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL &&
       options[optionsMap.behaviourParams.gallery.horizontal.slideAnimation] ===
-        GALLERY_CONSTS[
-          optionsMap.behaviourParams.gallery.horizontal.slideAnimation
-        ].SCROLL),
-  options: createOptions(optionsMap.behaviourParams.gallery.scrollAnimation),
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation].SCROLL),
+  get options() {
+    return createOptions(optionsMap.behaviourParams.gallery.scrollAnimation);
+  },
   type: INPUT_TYPES.OPTIONS,
-  default:
-    GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation]
-      .NO_EFFECT, //NEW STYPEPARAMS METHOD one source
+  default: GALLERY_CONSTS[optionsMap.behaviourParams.gallery.scrollAnimation].NO_EFFECT, //one source
 };

@@ -1,3 +1,4 @@
+import { optionsMap } from 'pro-gallery-lib';
 import { utils } from './utils';
 
 export class Item {
@@ -18,24 +19,25 @@ export class Item {
     this.idx = config.idx;
     this.inGroupIdx = config.inGroupIdx;
     this.container = config.container;
-    this.cubeType = 'fill';
+    this.cubeType = 'FILL';
 
     if (config.styleParams) {
       const { styleParams } = config;
-      this.cubeType = styleParams.cubeType;
-      this.cubeImages = styleParams.cubeImages;
-      this._cropRatio = styleParams.layoutParams.cropRatio;
-      this.rotatingCropRatios = styleParams.rotatingCropRatios;
-      this.smartCrop = styleParams.smartCrop;
-      this.cropOnlyFill = styleParams.cropOnlyFill;
-      this.imageMargin = styleParams.imageMargin;
-      this.gallerySpacing = styleParams.layoutParams.gallerySpacing;
-      this.scatter = styleParams.scatter;
-      this.rotatingScatter = styleParams.rotatingScatter;
-      this.smartCrop = styleParams.smartCrop;
+      this.cubeType = styleParams[optionsMap.layoutParams.crop.method];
+      this.cubeImages = styleParams[optionsMap.layoutParams.crop.enable];
+      this._cropRatio = styleParams[optionsMap.layoutParams.crop.ratios];
+      this.rotatingCropRatios =
+        styleParams[optionsMap.layoutParams.crop.ratios].length > 1 && styleParams[optionsMap.layoutParams.crop.ratios];
+      this.smartCrop = styleParams[optionsMap.layoutParams.crop.enableSmartCrop];
+      this.cropOnlyFill = styleParams[optionsMap.layoutParams.crop.cropOnlyFill];
+      this.imageMargin = styleParams[optionsMap.layoutParams.structure.itemSpacing];
+      this.gallerySpacing = styleParams[optionsMap.layoutParams.structure.gallerySpacing];
+      this.scatter = styleParams[optionsMap.layoutParams.structure.scatter.randomScatter];
+      this.rotatingScatter = styleParams[optionsMap.layoutParams.structure.scatter.manualScatter];
+      this.smartCrop = styleParams[optionsMap.layoutParams.crop.enableSmartCrop];
       this.useMaxDimensions =
-        styleParams.useMaxDimensions && this.itemType !== 'text';
-      this.cubeFitPosition = styleParams.cubeFitPosition;
+        !styleParams[optionsMap.layoutParams.structure.enableStreching] && this.itemType !== 'text';
+      this.cubeFitPosition = styleParams[optionsMap.layoutParams.crop.alignment];
     }
 
     this._groupOffset = {
@@ -133,11 +135,9 @@ export class Item {
     const g = this.gallerySpacing;
 
     const spaceLeft = offset.left > 0 ? m : g;
-    const spaceRight =
-      this.container.galleryWidth - offset.right > 2 * m ? m : g;
+    const spaceRight = this.container.galleryWidth - offset.right > 2 * m ? m : g;
     const spaceUp = offset.top > 0 ? m : g;
-    const spaceDown =
-      this.container.galleryHeight - offset.bottom > 2 * m ? m : g;
+    const spaceDown = this.container.galleryHeight - offset.bottom > 2 * m ? m : g;
 
     if (this.rotatingScatter.length > 0) {
       try {
@@ -155,33 +155,22 @@ export class Item {
     } else if (this.scatter > 0) {
       const minShift = 0.4 * (this.scatter / 100);
 
-      let horizontalShift = utils.hashToRandomInt(
-        this.seed + offset.right + 'x',
-        -spaceLeft,
-        spaceRight
-      );
+      let horizontalShift = utils.hashToRandomInt(this.seed + offset.right + 'x', -spaceLeft, spaceRight);
 
       horizontalShift *= this.scatter / 100;
       horizontalShift *= 1 - minShift;
 
       horizontalShift +=
-        (horizontalShift > 0 ? minShift * spaceRight : minShift * spaceLeft) *
-        Math.sign(horizontalShift);
+        (horizontalShift > 0 ? minShift * spaceRight : minShift * spaceLeft) * Math.sign(horizontalShift);
 
       horizontalShift = Math.round(horizontalShift);
 
-      let verticalShift = utils.hashToRandomInt(
-        this.seed + offset.right + 'y',
-        -spaceUp,
-        spaceDown
-      );
+      let verticalShift = utils.hashToRandomInt(this.seed + offset.right + 'y', -spaceUp, spaceDown);
 
       verticalShift *= this.scatter / 100;
       verticalShift *= 1 - minShift;
 
-      verticalShift +=
-        (verticalShift > 0 ? minShift * spaceDown : minShift * spaceUp) *
-        Math.sign(verticalShift);
+      verticalShift += (verticalShift > 0 ? minShift * spaceDown : minShift * spaceUp) * Math.sign(verticalShift);
 
       verticalShift = Math.round(verticalShift);
 
@@ -223,21 +212,14 @@ export class Item {
     const offset = {
       top:
         this._groupOffset.top +
-          (this.isPinnedTop
-            ? this.calcPinOffset(this._group.height, 'top')
-            : this._group.height - this.outerHeight) || 0,
+          (this.isPinnedTop ? this.calcPinOffset(this._group.height, 'top') : this._group.height - this.outerHeight) ||
+        0,
       left:
         this._groupOffset.left +
-          (this.isPinnedLeft
-            ? this.calcPinOffset(this._group.width, 'left')
-            : this._group.width - this.outerWidth) || 0,
+          (this.isPinnedLeft ? this.calcPinOffset(this._group.width, 'left') : this._group.width - this.outerWidth) ||
+        0,
     };
-    const {
-      fixTop = 0,
-      fixLeft = 0,
-      fixRight = 0,
-      fixBottom = 0,
-    } = this.dimensions;
+    const { fixTop = 0, fixLeft = 0, fixRight = 0, fixBottom = 0 } = this.dimensions;
 
     offset.innerTop = fixTop;
     offset.innerLeft = fixLeft;
@@ -375,21 +357,17 @@ export class Item {
   }
 
   get dimensions() {
-    const isGridFit = this.cubeImages && this.cubeType === 'fit';
+    const isGridFit = this.cubeImages && this.cubeType === 'FIT';
 
     let targetWidth = this.width;
     let targetHeight = this.height;
 
     const setTargetDimensions = (setByWidth, ratio) => {
       if (setByWidth) {
-        targetWidth = this.useMaxDimensions
-          ? Math.min(this.width, this.maxWidth)
-          : this.width;
+        targetWidth = this.useMaxDimensions ? Math.min(this.width, this.maxWidth) : this.width;
         targetHeight = targetWidth / ratio;
       } else {
-        targetHeight = this.useMaxDimensions
-          ? Math.min(this.height, this.maxHeight)
-          : this.height;
+        targetHeight = this.useMaxDimensions ? Math.min(this.height, this.maxHeight) : this.height;
         targetWidth = targetHeight * ratio;
       }
     };
@@ -397,10 +375,7 @@ export class Item {
     const isLandscape = this.ratio >= this.cropRatio; //relative to container size
     if (isGridFit) {
       setTargetDimensions(isLandscape, this.ratio);
-    } else if (
-      this.useMaxDimensions &&
-      (this.width > this.maxWidth || this.height > this.maxHeight)
-    ) {
+    } else if (this.useMaxDimensions && (this.width > this.maxWidth || this.height > this.maxHeight)) {
       if (this.cubeImages) {
         setTargetDimensions(!isLandscape, this.cropRatio);
       } else {
@@ -441,20 +416,19 @@ export class Item {
     let ratio;
     if (this.rotatingCropRatio) {
       ratio = this.rotatingCropRatio;
-    } else if (this.rotatingCropRatios && this.rotatingCropRatios.length > 0) {
-      const cropRatiosArr = String(this.rotatingCropRatios).split(',');
-      ratio = this.rotatingCropRatio =
-        cropRatiosArr[this.idx % cropRatiosArr.length];
+    } else if (this.rotatingCropRatios && this.rotatingCropRatios.length > 1) {
+      const cropRatiosArr = this.rotatingCropRatios;
+      ratio = this.rotatingCropRatio = cropRatiosArr[this.idx % cropRatiosArr.length];
     }
     if (!ratio && typeof this._cropRatio === 'function') {
       ratio = this._cropRatio();
     }
-    if (!ratio && this.cropOnlyFill && this.cubeType === 'fit') {
+    if (!ratio && this.cropOnlyFill && this.cubeType === 'FIT') {
       ratio = this.ratio;
     }
 
     if (!ratio) {
-      ratio = this._cropRatio || this.ratio;
+      ratio = (this._cropRatio && this._cropRatio[0]) || this.ratio;
     }
 
     if (this.dynamicCropRatios !== null && typeof ratio === 'string') {
@@ -483,9 +457,7 @@ export class Item {
       if (this.dynamicCropRatios) {
         const dynamicCropRatio = this.dynamicCropRatios.map((r) => {
           if (r.type === '%') {
-            const dim =
-              this.container[r.dim] +
-              (r.dim === 'galleryHeight' ? this.imageMargin / 2 : 0);
+            const dim = this.container[r.dim] + (r.dim === 'galleryHeight' ? this.imageMargin / 2 : 0);
             const relativeDim = r.val * dim - this.imageMargin;
             return relativeDim;
           } else {
@@ -506,9 +478,9 @@ export class Item {
       }
     }
 
-    if (this.cubeType === 'min') {
+    if (this.cubeType === 'MIN') {
       ratio = Math.max(ratio, this.orgRatio);
-    } else if (this.cubeType === 'max') {
+    } else if (this.cubeType === 'MAX') {
       ratio = Math.min(ratio, this.orgRatio);
     }
 
