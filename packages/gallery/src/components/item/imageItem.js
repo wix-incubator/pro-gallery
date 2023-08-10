@@ -205,6 +205,7 @@ class ImageItem extends React.Component {
           }}
           {...imageProps}
           customImageRenderer={this.props.customComponents?.customImageRenderer}
+          itemWrapperProps={this.props}
         />
       );
 
