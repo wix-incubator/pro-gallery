@@ -51,6 +51,7 @@
   "devDependencies": {
     "@babel/core": "7.16.7",
     "@babel/preset-env": "^7.5.5",
+    "@cfaester/enzyme-adapter-react-18": "^0.7.0",
     "@types/react": "18.0.26",
     "@types/three": "0.143.1",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
