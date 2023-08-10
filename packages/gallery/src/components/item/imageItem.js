@@ -149,6 +149,7 @@ class ImageItem extends React.Component {
                 alt=""
                 key={'image_preload_blur-' + id}
                 src={createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.LOW_RES)}
+                data-idx={idx}
                 style={{
                   ...imageSizing,
                   ...preloadStyles,
@@ -165,6 +166,7 @@ class ImageItem extends React.Component {
                 alt=""
                 key={'image_preload_main_color-' + id}
                 src={createUrl(GALLERY_CONSTS.urlSizes.PIXEL, GALLERY_CONSTS.urlTypes.HIGH_RES)}
+                data-idx={idx}
                 style={{
                   ...imageSizing,
                   ...preloadStyles,

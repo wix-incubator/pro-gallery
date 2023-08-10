@@ -1,5 +1,37 @@
 import React from 'react';
-const getImageAdjustments = ({ maxWidth, maxHeight, width, height }) => {
+const calcCropParams = ({ maxWidth, maxHeight, requiredWidth, requiredHeight, focalPoint }) => {
+  let scale;
+  let x;
+  let y;
+  let orgW;
+  let orgH;
+  const requiredRatio = requiredWidth / requiredHeight;
+  const itemRatio = maxWidth / maxHeight;
+  // find the scale
+  if (itemRatio > requiredRatio) {
+    // the original is wider than the required ratio
+    scale = requiredHeight / maxHeight;
+    orgW = Math.floor(requiredHeight * itemRatio);
+    y = 0;
+    x = Math.round(orgW * focalPoint[0] - requiredWidth / 2);
+    x = Math.min(orgW - requiredWidth, x);
+    x = Math.max(0, x);
+  } else {
+    // the original is narrower than the required ratio
+    scale = requiredWidth / maxWidth;
+    orgH = Math.floor(requiredWidth / itemRatio);
+    x = 0;
+    y = Math.round(orgH * focalPoint[1] - requiredHeight / 2);
+    y = Math.min(orgH - requiredHeight, y);
+    y = Math.max(0, y);
+  }
+
+  // make sure scale is not lower than needed
+  // scale must be higher to prevent cases that there will be white margins (or 404)
+  scale = Math.ceil(scale * 100) / 100;
+  return { x, y, scale };
+};
+const getImageAdjustments = ({ maxWidth, maxHeight, width, height, focalPointForItem }) => {
   const originalImage = {
     width: maxWidth,
     height: maxHeight,
@@ -8,69 +40,47 @@ const getImageAdjustments = ({ maxWidth, maxHeight, width, height }) => {
     width,
     height,
   };
-  const focal = {
-    x: 0.5,
-    y: 0.5,
-  };
+
   const originalWidth = originalImage.width;
   const originalHeight = originalImage.height;
 
   const newWidth = newImage.width;
   const newHeight = newImage.height;
 
-  const originalAspectRatio = originalWidth / originalHeight;
-  const newAspectRatio = newWidth / newHeight;
+  const { x, y, scale } = calcCropParams({
+    maxWidth: originalWidth,
+    maxHeight: originalHeight,
+    requiredWidth: newWidth,
+    requiredHeight: newHeight,
+    focalPoint: focalPointForItem,
+  });
 
-  const isCroppedHorizontally = originalAspectRatio < newAspectRatio;
-  const isCroppedVertically = originalAspectRatio > newAspectRatio;
-
-  const uncroppedDimensions = {
-    ...newImage,
-  };
-  let margin;
-  const margins = {
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-  };
-
-  if (isCroppedHorizontally) {
-    uncroppedDimensions.height = newWidth / originalAspectRatio;
-    margin = uncroppedDimensions.height - newHeight;
-    margins.top = margin * (1 - focal.y);
-    margins.bottom = margin * focal.y;
-  } else if (isCroppedVertically) {
-    uncroppedDimensions.width = newHeight * originalAspectRatio;
-    margin = uncroppedDimensions.width - newWidth;
-    margins.left = margin * (1 - focal.x);
-    margins.right = margin * focal.x;
-  }
-
-  const scaleX = uncroppedDimensions.width / originalWidth;
-  const scaleY = uncroppedDimensions.height / originalHeight;
-
-  margins.top = margins.top / scaleY;
-  margins.bottom = margins.bottom / scaleY;
-  margins.left = margins.left / scaleX;
-  margins.right = margins.right / scaleX;
-
-  return { margins, scaleX, scaleY };
+  return { focalFixX: x, focalFixY: y, scale };
 };
 const ImageWrapperHOC = (items) => (WrappedComponent) => {
   return (props) => {
+    const item = items[props['data-idx']];
+    const focalPointForItem = item?.metadata?.focalPoint;
+
     const { itemWrapperProps, ...restProps } = props;
+
     if (itemWrapperProps) {
       const { maxWidth, maxHeight, width, height } = itemWrapperProps.style;
-      const { margins, scaleX, scaleY } = getImageAdjustments({ maxWidth, maxHeight, width, height });
+      const { focalFixX, focalFixY, scale } = getImageAdjustments({
+        maxWidth,
+        maxHeight,
+        width,
+        height,
+        focalPointForItem,
+      });
 
-      const pois = items[props['data-idx']]?.pois;
+      const pois = item?.pois;
       const PinOnCroppedImage = (poi) => {
         const { x, y } = poi;
         const posX = maxWidth * x;
         const posY = maxHeight * y;
-        const adjustedPinX = scaleX * (posX - margins.left);
-        const adjustedPinY = scaleY * (posY - margins.top);
+        const adjustedPinX = scale * posX - focalFixX;
+        const adjustedPinY = scale * posY - focalFixY;
 
         return (
           <div
@@ -94,7 +104,7 @@ const ImageWrapperHOC = (items) => (WrappedComponent) => {
         </div>
       );
     } else {
-      return null; //<WrappedComponent {...restProps} />;
+      return <WrappedComponent {...restProps} />;
     }
   };
 };

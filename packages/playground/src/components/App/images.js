@@ -5,6 +5,7 @@ const testImages = [
     metadata: {
       height: 1000,
       width: 1920,
+      focalPoint: [0.3, 0.9],
     },
     pois: [
       {
@@ -23,6 +24,7 @@ const testImages = [
     metadata: {
       height: 1000,
       width: 1920,
+      focalPoint: [0.3, 0.9],
     },
     pois: [
       {
@@ -41,6 +43,7 @@ const testImages = [
     metadata: {
       height: 1000,
       width: 1920,
+      focalPoint: [0.3, 0.9],
     },
     pois: [
       {
@@ -59,6 +62,7 @@ const testImages = [
     metadata: {
       height: 1000,
       width: 1920,
+      focalPoint: [0.3, 0.9],
     },
     pois: [
       {
@@ -77,6 +81,7 @@ const testImages = [
     metadata: {
       height: 1000,
       width: 1920,
+      focalPoint: [0.3, 0.9],
     },
     pois: [
       {
@@ -95,6 +100,7 @@ const testImages = [
     metadata: {
       height: 1000,
       width: 1920,
+      focalPoint: [0.3, 0.9],
     },
     pois: [
       {
@@ -113,6 +119,7 @@ const testImages = [
     metadata: {
       height: 1000,
       width: 1920,
+      focalPoint: [0.3, 0.9],
     },
     pois: [
       {
@@ -131,6 +138,7 @@ const testImages = [
     metadata: {
       height: 1000,
       width: 1920,
+      focalPoint: [0.3, 0.9],
     },
     pois: [
       {
@@ -149,6 +157,7 @@ const testImages = [
     metadata: {
       height: 1000,
       width: 1920,
+      focalPoint: [0.3, 0.9],
     },
     pois: [
       {
@@ -843,7 +852,7 @@ const itemsWithSecondaryMedia = [
     metadata: {
       height: 1000,
       width: 1920,
-      focalPoint: [0.1, 0.1],
+      focalPoint: [0.3, 0.9],
     },
     itemId: '8b72558253b2502b401bb46e5599f22a',
     url: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
@@ -879,7 +888,7 @@ const itemsWithSecondaryMedia = [
     metadata: {
       height: 3032,
       width: 2021,
-      focalPoint: [0.1, 0.9],
+      focalPoint: [0.3, 0.9],
     },
     itemId: 'aa0c3adcc23504ac822d5c3ed5f3b6a1',
     url: 'https://static.wixstatic.com/media/8bb438_6ad0d6b1ab9b4f8ea4f93389a3d68a4d.jpg',
