@@ -259,6 +259,12 @@ function SideBar({ blueprintsManager, visible }) {
                   onChange={(e) => setGallerySettings({ isUnknownDimensions: e })}
                 />
               </Form.Item>
+              <Form.Item label="Poits of Interest" labelAlign="left">
+                <Switch
+                  checked={!!gallerySettings.useImagePointsOfInterest}
+                  onChange={(e) => setGallerySettings({ useImagePointsOfInterest: e })}
+                />
+              </Form.Item>
               <Form.Item label="Use Blueprints" labelAlign="left">
                 <Switch
                   checked={!!gallerySettings.useBlueprints}

@@ -262,7 +262,9 @@ export function App() {
         ? navigationPanel
         : undefined,
       EXPERIMENTAL_customGalleryUI: gallerySettings.useCustomGalleryUI ? galleryUI() : undefined,
-      customImageRenderer: PointsHOC(items)(CustomImageRenderer),
+      customImageRenderer: gallerySettings.useImagePointsOfInterest
+        ? PointsHOC(items)(CustomImageRenderer)
+        : new CustomImageRenderer(),
     };
   };
 
@@ -308,6 +310,7 @@ export function App() {
       mediaType,
       numberOfItems,
       isUnknownDimensions,
+      useImagePointsOfInterest,
       useCustomNavigationPanel,
       useCustomGalleryUI,
       navPanelType,
@@ -323,6 +326,7 @@ export function App() {
       mediaType,
       numberOfItems,
       isUnknownDimensions,
+      useImagePointsOfInterest,
       useCustomNavigationPanel,
       useCustomGalleryUI,
       navPanelType,
