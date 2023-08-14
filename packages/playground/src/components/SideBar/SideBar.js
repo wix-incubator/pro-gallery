@@ -179,7 +179,7 @@ function SideBar({ blueprintsManager, visible }) {
               </Form.Item>
               <Form.Item label="Media Type">
                 <Select
-                  defaultValue={gallerySettings.mediaTypes || 'media'}
+                  defaultValue={gallerySettings.mediaTypes || 'images'}
                   onChange={(val) => setGallerySettings({ mediaTypes: val })}
                 >
                   <Select.Option value="media">Images & Videos</Select.Option>
