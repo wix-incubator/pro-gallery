@@ -11,12 +11,12 @@ const testImages = [
       {
         y: 0.53,
         x: 0.67,
-        title: 'Couch',
+        title: 'Couch, Go to product page',
       },
       {
         y: 0.67,
         x: 0.15,
-        title: 'Shaped Table',
+        title: 'Shaped Table, Go to product page',
       },
     ],
     itemId: '8b72558253b2502b401bb46e5599f22a',

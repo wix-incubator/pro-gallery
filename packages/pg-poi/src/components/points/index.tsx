@@ -60,7 +60,7 @@ const getImageAdjustments = ({ maxWidth, maxHeight, width, height, focalPointFor
 };
 const ImageWrapperHOC = (items) => (WrappedComponent) => {
   return (props): React.JSX.Element => {
-    const [activeTooltip, setActiveTooltip] = useState(-1);
+    const [activeTooltip, setActiveTooltip] = useState(1);
     const item = items[props['data-idx']];
     const focalPointForItem = item?.metadata?.focalPoint;
     const { itemWrapperProps, ...restProps } = props;
