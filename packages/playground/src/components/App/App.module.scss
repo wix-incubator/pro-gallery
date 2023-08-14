@@ -119,9 +119,45 @@ input, button, select, optgroup, textarea {
       border-bottom-left-radius: 24px;
     }
   }
+
+
 }
 
 :global {
+  .poi-point {
+    position: absolute;
+    transform: translate(-50%, -50%); // Center the pin
+    background: black;
+    width: 20px;
+    height: 20px;
+    border: 4px solid white;
+    border-radius: 50%;
+    opacity: 0.8;
+    &.active,
+    &:hover {
+      width: 26px;
+      height: 26px;
+      cursor: pointer;
+    }
+  }
+  .poi-wrapper {
+    position: absolute;
+  }
+  .poi-tooltip {
+    position: absolute;
+    top: -45px;
+    transform: translate(-50%, -50%); // Center the pin
+    background-color: #2b222ac9;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 24px;
+    content: attr(aria-label);
+    padding: .5rem;
+    text-transform: none;
+    transition: all 0.5s ease;
+    width: auto;
+  }
+
   .playground-info {
     text-align: center;
     word-wrap: break-word;

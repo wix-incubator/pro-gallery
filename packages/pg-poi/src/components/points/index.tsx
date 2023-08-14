@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import React from 'react';
 const calcCropParams = ({ maxWidth, maxHeight, requiredWidth, requiredHeight, focalPoint }) => {
   let scale;
@@ -58,10 +59,10 @@ const getImageAdjustments = ({ maxWidth, maxHeight, width, height, focalPointFor
   return { focalFixX: x, focalFixY: y, scale };
 };
 const ImageWrapperHOC = (items) => (WrappedComponent) => {
-  return (props) => {
+  return (props): React.JSX.Element => {
+    const [activeTooltip, setActiveTooltip] = useState(-1);
     const item = items[props['data-idx']];
     const focalPointForItem = item?.metadata?.focalPoint;
-
     const { itemWrapperProps, ...restProps } = props;
 
     if (itemWrapperProps) {
@@ -75,26 +76,30 @@ const ImageWrapperHOC = (items) => (WrappedComponent) => {
       });
 
       const pois = item?.pois;
-      const PinOnCroppedImage = (poi) => {
+      const PinOnCroppedImage = (poi, index) => {
         const { x, y } = poi;
         const posX = maxWidth * x;
         const posY = maxHeight * y;
         const adjustedPinX = scale * posX - focalFixX;
         const adjustedPinY = scale * posY - focalFixY;
-
         return (
-          <div
-            style={{
-              position: 'absolute',
-              left: adjustedPinX,
-              top: adjustedPinY,
-              transform: 'translate(-50%, -50%)', // Center the pin
-              background: 'red',
-              width: '10px',
-              height: '10px',
-              borderRadius: '50%',
-            }}
-          />
+          <div className="poi poi-wrapper" style={{ left: adjustedPinX, top: adjustedPinY }}>
+            <div
+              className={`poi poi-point ${activeTooltip === index ? 'active' : ''}`}
+              key={item.itemId + '_poi_' + index}
+              onMouseEnter={() => setActiveTooltip(index)}
+              //style={{ left: adjustedPinX, top: adjustedPinY }}
+            ></div>
+            <div
+              className={`poi poi-tooltip ${activeTooltip === index ? 'active' : ''}`}
+              key={item.itemId + '_poi_tooltip_' + index}
+              id={item.itemId + '_poi_tooltip_' + index}
+              aria-label={poi.title}
+              style={{
+                opacity: activeTooltip === index ? 1 : 0,
+              }}
+            >{`${poi.title}`}</div>
+          </div>
         );
       };
       return (

@@ -3,170 +3,103 @@ import { quotes } from './quotes';
 const testImages = [
   {
     metadata: {
-      height: 1000,
-      width: 1920,
-      focalPoint: [0.3, 0.9],
+      height: 3470,
+      width: 3477,
+      focalPoint: [0.5, 0.8],
     },
     pois: [
       {
-        y: 0.24,
-        x: 0.541,
+        y: 0.53,
+        x: 0.67,
+        title: 'Couch',
       },
       {
-        y: 0.555,
-        x: 0.54,
+        y: 0.67,
+        x: 0.15,
+        title: 'Shaped Table',
       },
     ],
     itemId: '8b72558253b2502b401bb46e5599f22a',
-    url: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
+    url: 'https://static.wixstatic.com/media/e5cd3ad084a34184b28c215fd992e83d.jpg',
+  },
+  {
+    metadata: {
+      height: 2811,
+      width: 5000,
+      focalPoint: [0.5, 0.5],
+    },
+    pois: [
+      {
+        y: 0.11,
+        x: 0.8,
+        title: 'Standing Lamp',
+      },
+      {
+        y: 0.84,
+        x: 0.58,
+        title: 'Boxes',
+      },
+      {
+        y: 0.15,
+        x: 0.16,
+        title: 'Round Mirror',
+      },
+      {
+        y: 0.45,
+        x: 0.6,
+        title: 'Printed Pillow Cover',
+      },
+    ],
+    itemId: '8b72558253b2502b401bb46e5599f22a',
+    url: 'https://static.wixstatic.com/media/11062b_0a7ade68e3084dbab78eda5f9f336269~mv2.jpg',
+  },
+  {
+    metadata: {
+      height: 4128,
+      width: 6192,
+      focalPoint: [0.99, 0.3],
+    },
+    pois: [
+      {
+        y: 0.25,
+        x: 0.3,
+        title: 'Dudu',
+      },
+      {
+        y: 0.3,
+        x: 0.43,
+        title: 'Emma',
+      },
+      {
+        y: 0.26,
+        x: 0.61,
+        title: 'Lucy',
+      },
+      {
+        y: 0.22,
+        x: 0.73,
+        title: 'Kidogo',
+      },
+    ],
+    itemId: '8b72558253b2502b401bb46e5599f22a',
+    url: 'https://static.wixstatic.com/media/11062b_27523801e2f94f9c9b630af46e90c481~mv2.jpg',
   },
   {
     metadata: {
       height: 1000,
       width: 1920,
-      focalPoint: [0.3, 0.9],
+      focalPoint: [0.5, 0.5],
     },
     pois: [
       {
         y: 0.24,
         x: 0.541,
+        title: 'Eye',
       },
       {
         y: 0.555,
         x: 0.54,
-      },
-    ],
-    itemId: '8b72558253b2502b401bb46e5599f22a',
-    url: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-  },
-  {
-    metadata: {
-      height: 1000,
-      width: 1920,
-      focalPoint: [0.3, 0.9],
-    },
-    pois: [
-      {
-        y: 0.24,
-        x: 0.541,
-      },
-      {
-        y: 0.555,
-        x: 0.54,
-      },
-    ],
-    itemId: '8b72558253b2502b401bb46e5599f22a',
-    url: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-  },
-  {
-    metadata: {
-      height: 1000,
-      width: 1920,
-      focalPoint: [0.3, 0.9],
-    },
-    pois: [
-      {
-        y: 0.24,
-        x: 0.541,
-      },
-      {
-        y: 0.555,
-        x: 0.54,
-      },
-    ],
-    itemId: '8b72558253b2502b401bb46e5599f22a',
-    url: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-  },
-  {
-    metadata: {
-      height: 1000,
-      width: 1920,
-      focalPoint: [0.3, 0.9],
-    },
-    pois: [
-      {
-        y: 0.24,
-        x: 0.541,
-      },
-      {
-        y: 0.555,
-        x: 0.54,
-      },
-    ],
-    itemId: '8b72558253b2502b401bb46e5599f22a',
-    url: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-  },
-  {
-    metadata: {
-      height: 1000,
-      width: 1920,
-      focalPoint: [0.3, 0.9],
-    },
-    pois: [
-      {
-        y: 0.24,
-        x: 0.541,
-      },
-      {
-        y: 0.555,
-        x: 0.54,
-      },
-    ],
-    itemId: '8b72558253b2502b401bb46e5599f22a',
-    url: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-  },
-  {
-    metadata: {
-      height: 1000,
-      width: 1920,
-      focalPoint: [0.3, 0.9],
-    },
-    pois: [
-      {
-        y: 0.24,
-        x: 0.541,
-      },
-      {
-        y: 0.555,
-        x: 0.54,
-      },
-    ],
-    itemId: '8b72558253b2502b401bb46e5599f22a',
-    url: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-  },
-  {
-    metadata: {
-      height: 1000,
-      width: 1920,
-      focalPoint: [0.3, 0.9],
-    },
-    pois: [
-      {
-        y: 0.24,
-        x: 0.541,
-      },
-      {
-        y: 0.555,
-        x: 0.54,
-      },
-    ],
-    itemId: '8b72558253b2502b401bb46e5599f22a',
-    url: 'https://static.wixstatic.com/media/8bb438_1b73a6b067b24175bd087e86613bd00c.jpg',
-  },
-  {
-    metadata: {
-      height: 1000,
-      width: 1920,
-      focalPoint: [0.3, 0.9],
-    },
-    pois: [
-      {
-        y: 0.24,
-        x: 0.541,
-      },
-      {
-        y: 0.555,
-        x: 0.54,
+        title: 'Eye',
       },
     ],
     itemId: '8b72558253b2502b401bb46e5599f22a',
