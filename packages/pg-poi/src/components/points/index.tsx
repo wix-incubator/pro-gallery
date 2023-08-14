@@ -60,7 +60,7 @@ const getImageAdjustments = ({ maxWidth, maxHeight, width, height, focalPointFor
 };
 const ImageWrapperHOC = (items) => (WrappedComponent) => {
   return (props): React.JSX.Element => {
-    const [activeTooltip, setActiveTooltip] = useState(1);
+    const [activeTooltip, setActiveTooltip] = useState(-1);
     const item = items[props['data-idx']];
     const focalPointForItem = item?.metadata?.focalPoint;
     const { itemWrapperProps, ...restProps } = props;
@@ -83,11 +83,16 @@ const ImageWrapperHOC = (items) => (WrappedComponent) => {
         const adjustedPinX = scale * posX - focalFixX;
         const adjustedPinY = scale * posY - focalFixY;
         return (
-          <div className="poi poi-wrapper" style={{ left: adjustedPinX, top: adjustedPinY }}>
+          <div
+            className="poi poi-wrapper"
+            onMouseOut={() => setActiveTooltip(-1)}
+            style={{ left: adjustedPinX, top: adjustedPinY }}
+          >
             <div
               className={`poi poi-point ${activeTooltip === index ? 'active' : ''}`}
               key={item.itemId + '_poi_' + index}
               onMouseEnter={() => setActiveTooltip(index)}
+              onMouseOut={() => setActiveTooltip(-1)}
               //style={{ left: adjustedPinX, top: adjustedPinY }}
             ></div>
             <div
