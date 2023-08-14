@@ -65,7 +65,8 @@ const ImageWrapperHOC = (items) => (WrappedComponent) => {
     const focalPointForItem = item?.metadata?.focalPoint;
     const { itemWrapperProps, ...restProps } = props;
 
-    if (itemWrapperProps) {
+    const pois = item?.pois;
+    if (itemWrapperProps && pois) {
       const { maxWidth, maxHeight, width, height } = itemWrapperProps.style;
       const { focalFixX, focalFixY, scale } = getImageAdjustments({
         maxWidth,
@@ -75,7 +76,6 @@ const ImageWrapperHOC = (items) => (WrappedComponent) => {
         focalPointForItem,
       });
 
-      const pois = item?.pois;
       const PinOnCroppedImage = (poi, index) => {
         const { x, y } = poi;
         const posX = maxWidth * x;
