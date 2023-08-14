@@ -1,6 +1,8 @@
 import React, { useEffect, Suspense, useState } from 'react';
 import { NavigationPanel } from './PlaygroundNavigationPanel';
 import { useGalleryContext } from '../../hooks/useGalleryContext';
+import { PointsHOC } from 'pg-poi';
+import { CustomImageRenderer } from './ImageSourceRenderer.tsx';
 import {
   testMedia,
   testItems,
@@ -252,7 +254,7 @@ export function App() {
     };
   };
 
-  const getCustomComponents = () => {
+  const getCustomComponents = (items) => {
     return {
       customHoverRenderer: hoverInfoElement,
       customInfoRenderer: externalInfoElement,
@@ -260,6 +262,9 @@ export function App() {
         ? navigationPanel
         : undefined,
       EXPERIMENTAL_customGalleryUI: gallerySettings.useCustomGalleryUI ? galleryUI() : undefined,
+      customImageRenderer: gallerySettings.useImagePointsOfInterest
+        ? PointsHOC(items)(CustomImageRenderer)
+        : new CustomImageRenderer(),
     };
   };
 
@@ -305,6 +310,7 @@ export function App() {
       mediaType,
       numberOfItems,
       isUnknownDimensions,
+      useImagePointsOfInterest,
       useCustomNavigationPanel,
       useCustomGalleryUI,
       navPanelType,
@@ -320,6 +326,7 @@ export function App() {
       mediaType,
       numberOfItems,
       isUnknownDimensions,
+      useImagePointsOfInterest,
       useCustomNavigationPanel,
       useCustomGalleryUI,
       navPanelType,
@@ -382,7 +389,7 @@ export function App() {
                 disableSSROpacity: gallerySettings.viewMode === 'PRERENDER',
               },
               activeIndex: gallerySettings.initialIdx,
-              customComponents: getCustomComponents(),
+              customComponents: getCustomComponents(getItems()),
               ...blueprintProps,
             },
             resizedDims,

@@ -179,7 +179,7 @@ function SideBar({ blueprintsManager, visible }) {
               </Form.Item>
               <Form.Item label="Media Type">
                 <Select
-                  defaultValue={gallerySettings.mediaTypes || 'media'}
+                  defaultValue={gallerySettings.mediaTypes || 'images'}
                   onChange={(val) => setGallerySettings({ mediaTypes: val })}
                 >
                   <Select.Option value="media">Images & Videos</Select.Option>
@@ -257,6 +257,12 @@ function SideBar({ blueprintsManager, visible }) {
                 <Switch
                   checked={!!gallerySettings.isUnknownDimensions}
                   onChange={(e) => setGallerySettings({ isUnknownDimensions: e })}
+                />
+              </Form.Item>
+              <Form.Item label="Poits of Interest" labelAlign="left">
+                <Switch
+                  checked={!!gallerySettings.useImagePointsOfInterest}
+                  onChange={(e) => setGallerySettings({ useImagePointsOfInterest: e })}
                 />
               </Form.Item>
               <Form.Item label="Use Blueprints" labelAlign="left">

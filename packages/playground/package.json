@@ -23,6 +23,7 @@
     "lodash.clonedeep": "^4.5.0",
     "moment": "2.29.2",
     "pro-gallery": "5.0.64",
+    "pg-poi": "*",
     "pro-gallery-blueprints": "5.0.64",
     "pro-gallery-lib": "5.0.64",
     "pro-layouts": "5.0.64",
