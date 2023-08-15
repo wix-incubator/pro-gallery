@@ -389,7 +389,6 @@ class ItemView extends React.Component {
           handleItemMouseUp: this.handleItemMouseUp,
         }}
         hasLink={this.itemHasLink()}
-        isCurrentHover={this.simulateHover()}
         hover={itemHover}
         activeIndex={activeIndex}
         calculatedAlt={calculatedAlt}
@@ -958,6 +957,7 @@ class ItemView extends React.Component {
         data-idx={idx}
         role={this.getItemAriaRole()}
         data-hook="item-container"
+        data-testid="gallery-item-container"
         key={'item-container-' + id}
         style={this.getItemContainerStyles()}
         onKeyUp={this.onContainerKeyUp}
@@ -981,6 +981,7 @@ class ItemView extends React.Component {
           {!isItemWrapperEmpty && (
             <div
               data-hook="item-wrapper"
+              data-testid="item-wrapper"
               className={this.getItemWrapperClass()}
               key={'item-wrapper-' + id}
               id={'item-wrapper-' + id}

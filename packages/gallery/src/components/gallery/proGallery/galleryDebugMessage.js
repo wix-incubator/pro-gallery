@@ -35,7 +35,7 @@ class GalleryDebugMessage extends React.Component {
     );
 
     return (
-      <div>
+      <div data-hook='gallery-debug-message'>
         {version}
         {debugMsg}
       </div>

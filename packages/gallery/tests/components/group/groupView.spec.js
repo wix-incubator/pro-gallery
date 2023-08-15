@@ -15,7 +15,7 @@ describe('Group View ', () => {
     });
   });
   it('should init', () => {
-    galleryDriver.shallow(GroupView, groupViewProps);
+    galleryDriver.mount(GroupView, groupViewProps);
     expect(galleryDriver.find.hook('group-view').length).to.equal(1);
   });
   it('should create item container from dtos', () => {
