@@ -260,6 +260,7 @@ class GalleryView extends React.Component {
             onClick={this.showMoreItems}
             onMouseDown={(e) => e.preventDefault()}
             data-hook="show-more"
+            data-testid="show-more"
             aria-label={buttonText}
           >
             {buttonText}

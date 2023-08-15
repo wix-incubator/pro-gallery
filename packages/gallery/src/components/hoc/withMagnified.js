@@ -118,6 +118,7 @@ function withMagnified(WrappedComponent) {
           key={`magnified-item-${id}`}
           className="magnified-item"
           data-hook="magnified-item"
+          data-testid="magnified-item"
           src={src}
           alt={typeof alt === 'string' ? alt : 'untitled image'}
           id={id}

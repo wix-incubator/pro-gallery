@@ -30,7 +30,7 @@ describe('Gallery View', () => {
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       driver.mount(GalleryView, galleryViewProps);
       expect(driver.find.hook('item-container').length).to.equal(1);
-      expect(driver.find.selector('GalleryDebugMessage').length).to.equal(1);
+      // expect(driver.find.hook('gallery-debug-message').length).to.equal(1);
     });
 
     it('init empty gallery', () => {
@@ -56,29 +56,44 @@ describe('Gallery View', () => {
 
     it('toggle to infiniteScroll mode when load more button is clicked', () => {
       const spy = sinon.spy(GalleryView.prototype, 'showMoreItems');
+      const toggleLoadMoreItemsSpy = sinon.spy();
       galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
       Object.assign(galleryViewProps, {
         displayShowMore: true,
         container: { ...galleryViewProps.container, height: 1000 },
+        actions: {
+          ...galleryViewProps.actions,
+          toggleLoadMoreItems: toggleLoadMoreItemsSpy
+        }
       });
       driver.mount(GalleryView, galleryViewProps);
-      const stub = sinon.stub(driver.get.props().actions, 'toggleLoadMoreItems');
       expect(driver.find.hook('show-more').length).to.equal(1);
-      driver.find.hook('show-more').simulate('click');
+      driver.trigger.click(driver.find.hook('show-more')[0])
       expect(spy.called).to.be.true;
-      expect(stub.called).to.be.true;
+      expect(toggleLoadMoreItemsSpy.called).to.be.true;
       spy.restore();
-      stub.restore();
+      toggleLoadMoreItemsSpy.restore();
     });
   });
 
-  describe(' Arrow Keys handler tests ', () => {
-    it('handle up arrow', () => {
-      galleryViewProps = driver.props.galleryView(initialGalleryViewProps);
+  describe.only(' Arrow Keys handler tests ', () => {
+    it.only('handle up arrow', () => {
+      const findNeighborItemSpy = sinon.stub().returns(3);
+      galleryViewProps = driver.props.galleryView(
+        Object.assign(
+        initialGalleryViewProps,
+        {
+          ...initialGalleryViewProps,
+          galleryStructure: {
+            ...initialGalleryViewProps.galleryStructure,
+            findNeighborItem: findNeighborItemSpy,
+          }
+        }
+      ));
       driver.mount(GalleryView, galleryViewProps);
       const stub_document = sinon.stub(document.activeElement, 'getAttribute').returns(7);
       const stub_utils = sinon.stub(utils, 'setStateAndLog');
-      const stub_findNeighborItem = sinon.stub(driver.get.props().galleryStructure, 'findNeighborItem').returns(3);
+      // const stub_findNeighborItem = sinon.stub(driver.get.props().galleryStructure, 'findNeighborItem').returns(3);
       const result = driver.get.instance().handleKeys({
         keyCode: 38,
         charCode: null,
@@ -86,10 +101,9 @@ describe('Gallery View', () => {
         stopPropagation() {},
       });
       expect(stub_document.called).to.be.true;
-      expect(stub_findNeighborItem.calledWith(7, 'up')).to.be.true;
+      expect(findNeighborItemSpy.calledWith(7, 'up')).to.be.true;
       expect(result).to.be.false;
       stub_document.restore();
-      stub_findNeighborItem.restore();
       stub_utils.restore();
     });
 

@@ -68,6 +68,7 @@ class ImageItem extends React.Component {
         onTouchEnd={actions.handleItemMouseUp}
         key={'image_container-' + id}
         data-hook={'image-item'}
+        data-testid="image-item"
         style={imageDimensions}
       >
         {imageRenderer()}
@@ -94,6 +95,7 @@ class ImageItem extends React.Component {
         <div
           key={'image_container-overlay-' + id}
           data-hook={'image-item-overlay'}
+          data-testid={'image-item-overlay'}
           style={{
             ...imageDimensions,
             backgroundImage: `url(${imageAnimationUrl})`,

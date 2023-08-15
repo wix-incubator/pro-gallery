@@ -1,14 +1,11 @@
 import { Layouter, GalleryItem, ItemsHelper } from 'pro-layouts';
 import { window, addOldOptions, defaultOptions } from 'pro-gallery-lib';
 import { testImages } from './mocks/images-mock.js';
-import { mount, shallow, configure } from 'enzyme';
+import { render, act } from '@testing-library/react';
 import { GalleryContainer } from '../../src/components/gallery/proGallery/galleryContainer'; //import GalleryContainer before the connect (without redux)
 import React from 'react';
-import Adapter from 'enzyme-adapter-react-16';
 import ProGallery from '../../src/components/gallery';
 import _ from 'lodash';
-
-configure({ adapter: new Adapter() });
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -108,14 +105,18 @@ class galleryDriver {
           ...addOldOptions(props.galleryConfig.options),
           ...props.galleryConfig.options,
         });
-      this.wrapper = mount(<Component {...props} />);
+      const { container, unmount } = render(<Component {...props} />);
+      this.wrapper = container;
+      this.unmountWrapper = unmount;
       return this;
     };
     res.galleryContainer = (props) => {
       const defaultProps = this.props.galleryContainer();
       props = Object.assign(defaultProps, props || {});
       props.options = { ...addOldOptions(props.options), ...props.options };
-      this.wrapper = mount(<GalleryContainer actions={{}} {...props} />);
+      const { container, unmount } = render(<GalleryContainer actions={{}} {...props} />);
+      this.wrapper = container;
+      this.unmountWrapper = unmount;
       return this;
     };
     res.proGallery = (props) => {
@@ -123,21 +124,25 @@ class galleryDriver {
       div.setAttribute('id', 'testing-container');
       document.body.appendChild(div);
       props.options = { ...addOldOptions(props.options), ...props.options };
-      this.wrapper = mount(<ProGallery {...props} />, {
-        attachTo: document.getElementById('testing-container'),
-      });
+      // this.wrapper = render(<ProGallery {...props} />, {
+      //   attachTo: document.getElementById('testing-container'),
+      // });
+      const { container, unmount } = render(<ProGallery {...props} />);
+      this.wrapper = container;
+      this.unmountWrapper = unmount;
     };
     return res;
   }
   get trigger() {
     return {
       scroll: () => document.dispatchEvent(new CustomEvent('scroll')),
+      click: (wrapper) => act(() => wrapper.click())
     };
   }
   get detach() {
     return {
       proGallery: () => {
-        this.wrapper.detach();
+        this.unmountWrapper();
         const div = document.getElementById('testing-container');
         if (div) {
           document.body.removeChild(div);
@@ -168,20 +173,24 @@ class galleryDriver {
   get find() {
     return {
       hook: (str) => {
-        return this.wrapper.find({ 'data-hook': str });
+        // return queryHelpers.queryAllByAttribute.bind(null, )
+        return this.wrapper.querySelectorAll(`[data-hook="${str}"]`);
       },
       tag: (str) => {
-        return this.wrapper.find(`${str}`);
+        return this.wrapper.querySelectorAll(`${str}`);
       },
       id: (str) => {
-        return this.wrapper.find(`#${str}`);
+        return this.wrapper.querySelectorAll(`#${str}`);
       },
       class: (str) => {
-        return this.wrapper.find(`.${str}`);
+        return this.wrapper.querySelectorAll(`.${str}`);
       },
       selector: (str) => {
-        return this.wrapper.find(str);
+        return this.wrapper.querySelectorAll(str);
       },
+      // getByTestId: (str) => {
+      //   return this.wrapper.getByTestId(str);
+      // }
     };
   }
 
@@ -200,7 +209,7 @@ class galleryDriver {
 
   async update(ms = 0) {
     await sleep(ms);
-    this.wrapper.update();
+    // this.wrapper.update();
   }
 
   get props() {
