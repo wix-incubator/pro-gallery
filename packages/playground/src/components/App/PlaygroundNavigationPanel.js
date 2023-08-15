@@ -22,6 +22,9 @@ import {
   Steps,
   // Card,
 } from 'antd';
+
+import { optionsMap, GALLERY_CONSTS } from 'pro-gallery-lib';
+
 const { Step } = Steps;
 
 export function NavigationPanel(props) {
@@ -38,7 +41,11 @@ export function NavigationPanel(props) {
     const percent = (activeIdx + 1) / props.totalItemsCount;
     const totalForProgress = props.totalItemsCount === Infinity ? 100 : props.totalItemsCount;
     let containerStyles = {
-      maxWidth: props.options.layoutParams_thumbnails_position === 'ON_GALLERY' ? '150px' : '',
+      maxWidth:
+        props.options[optionsMap.layoutParams.thumbnails.position] ===
+        GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].ON_GALLERY
+          ? '150px'
+          : '',
     };
     return (
       <div style={containerStyles}>
@@ -51,14 +58,14 @@ export function NavigationPanel(props) {
     let items = props.galleryStructure.items;
     let direction;
     switch (
-      props.options.layoutParams_thumbnails_alignment // TODO use new sp when they work well with the playground
+      props.options[optionsMap.layoutParams.thumbnails.alignment] // TODO use new sp when they work well with the playground
     ) {
-      case 'TOP':
-      case 'BOTTOM':
+      case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP:
+      case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM:
         direction = 'horizontal';
         break;
-      case 'RIGHT':
-      case 'LEFT':
+      case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].RIGHT:
+      case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT:
       default:
         direction = 'vertical';
         break;
@@ -98,14 +105,14 @@ export function NavigationPanel(props) {
     let items = props.galleryStructure.items;
     let direction;
     switch (
-      props.options.layoutParams_thumbnails_alignment // TODO use new sp when they work well with the playground
+      props.options[optionsMap.layoutParams.thumbnails.alignment] // TODO use new sp when they work well with the playground
     ) {
-      case 'TOP':
-      case 'BOTTOM':
+      case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP:
+      case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM:
         direction = 'horizontal';
         break;
-      case 'RIGHT':
-      case 'LEFT':
+      case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].RIGHT:
+      case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT:
       default:
         direction = 'vertical';
         break;
