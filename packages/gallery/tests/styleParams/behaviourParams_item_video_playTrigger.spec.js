@@ -25,7 +25,7 @@ describe('options - behaviourParams_item_video_playTrigger', () => {
         GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].GRID,
     });
     driver.mount.proGallery(initialProps);
-    await driver.update(200);
+    await driver.update(500);
     const galleryVideoItems = driver.find.hook('video_container-video-player-element');
     expect(galleryVideoItems.length).to.be.greaterThan(0);
     driver.detach.proGallery();
