@@ -26,7 +26,7 @@
     "start": "concurrently \"npm run css-watch\" \"npm run code-watch\"",
     "code-watch": "tsc && tsc -w -p tsconfig-esm-dev.json",
     "css-watch": "sass --watch src/components/styles/gallery.scss:dist/statics/main.css",
-    "unit": "jest --silent",
+    "unit": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
     "test": "echo 'no test in wix CI'",
     "test:e2e-all": "jest --testPathPattern='.*/e2e/.*.e2e.spec.js'",
     "test:e2e-layouts": "jest --testPathPattern='.*/e2e/layouts/.*.e2e.spec.js'",
@@ -101,8 +101,7 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "<rootDir>/dist",
-      "<rootDir>/target",
-      ".*/e2e/.*.e2e.spec.js"
+      "<rootDir>/target"
     ],
     "setupFilesAfterEnv": [
       "<rootDir>/tests/drivers/mocks/jest-setup.js"
