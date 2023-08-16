@@ -389,7 +389,6 @@ class ItemView extends React.Component {
           handleItemMouseUp: this.handleItemMouseUp,
         }}
         hasLink={this.itemHasLink()}
-        isCurrentHover={this.simulateHover()}
         hover={itemHover}
         activeIndex={activeIndex}
         calculatedAlt={calculatedAlt}
