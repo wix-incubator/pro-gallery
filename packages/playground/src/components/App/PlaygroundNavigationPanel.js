@@ -57,9 +57,7 @@ export function NavigationPanel(props) {
   const circlesNavigationPanel = (props) => {
     let items = props.galleryStructure.items;
     let direction;
-    switch (
-      props.options[optionsMap.layoutParams.thumbnails.alignment] // TODO use new sp when they work well with the playground
-    ) {
+    switch (props.options[optionsMap.layoutParams.thumbnails.alignment]) {
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP:
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM:
         direction = 'horizontal';
@@ -104,9 +102,7 @@ export function NavigationPanel(props) {
   const stepsNavigationPanel = (props) => {
     let items = props.galleryStructure.items;
     let direction;
-    switch (
-      props.options[optionsMap.layoutParams.thumbnails.alignment] // TODO use new sp when they work well with the playground
-    ) {
+    switch (props.options[optionsMap.layoutParams.thumbnails.alignment]) {
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP:
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM:
         direction = 'horizontal';
