@@ -1063,10 +1063,6 @@ class SlideshowView extends React.Component {
       classNames += ' gallery-columns';
     }
 
-    if (this.isFullWidthGallery()) {
-      classNames += ' streched';
-    }
-
     return classNames;
   }
   getStyles() {
