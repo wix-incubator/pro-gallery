@@ -1,6 +1,7 @@
 module.exports = getSchemaFromTypes;
 
 const TJS = require('typescript-json-schema');
+const path = require('path');
 
 function getSchemaFromTypes(typesFileAbsolutePath) {
   // optionally pass argument to schema generator
@@ -8,22 +9,9 @@ function getSchemaFromTypes(typesFileAbsolutePath) {
     required: true,
   };
 
-  // optionally pass ts compiler options
-  const compilerOptions = {
-    strictNullChecks: true,
-    skipLibCheck: true,
-  };
+  const program = TJS.programFromConfig(path.join(__dirname, '..', 'tsconfig.json'), [typesFileAbsolutePath]);
 
-  // optionally pass a base path
-  // const basePath = "./my-dir";
-
-  const program = TJS.getProgramFromFiles(
-    [typesFileAbsolutePath],
-    compilerOptions
-    // basePath
-  );
-
-  // We can either get the schema for one file and one type...
-  const schema = TJS.generateSchema(program, 'Options', settings);
+  const generator = TJS.buildGenerator(program, settings);
+  const schema = TJS.generateSchema(program, 'Options', settings, [], generator);
   return schema;
 }

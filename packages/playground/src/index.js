@@ -1,7 +1,7 @@
 import './utils/polyfills';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { App } from './components/App/App';
 import { PlaygroundGalleryProvider } from './hooks/GalleryContext';
 
@@ -11,4 +11,4 @@ const Root = () => (
   </PlaygroundGalleryProvider>
 );
 
-ReactDOM.render(<Root />, document.getElementById('root'));
+ReactDOM.createRoot(document.getElementById('root')).render(<Root />);
