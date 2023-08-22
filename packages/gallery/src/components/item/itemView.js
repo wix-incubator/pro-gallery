@@ -641,7 +641,6 @@ class ItemView extends React.Component {
         scrollDirection === GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
           ? itemSpacing / 2 + 'px'
           : 0,
-      cursor: this.isItemClickable(options),
     };
 
     const { avoidInlineStyles } = settings;
