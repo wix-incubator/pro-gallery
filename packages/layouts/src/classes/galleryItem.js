@@ -281,18 +281,20 @@ class GalleryItem {
     urls[GALLERY_CONSTS.urlTypes.HIGH_RES] = () =>
       mediaUrl(this, imgUrl, resizeMethod, requiredWidth, requiredHeight, sharpParams, focalPoint);
 
-    urls[GALLERY_CONSTS.urlTypes.LOW_RES] = () =>
-      mediaUrl(
+    urls[GALLERY_CONSTS.urlTypes.LOW_RES] = () => {
+      const resizedRatio = this.resizeWidth / this.resizeHeight;
+      return mediaUrl(
         this,
         imgUrl,
         this.cubeImages && resizeMethod !== GALLERY_CONSTS.resizeMethods.FIT
           ? GALLERY_CONSTS.resizeMethods.FILL
           : GALLERY_CONSTS.resizeMethods.FIT,
-        thumbSize,
+        thumbSize * resizedRatio,
         thumbSize,
         { ...sharpParams, quality: 30, blur: 30 },
         focalPoint
       );
+    };
     return urls;
   }
 
