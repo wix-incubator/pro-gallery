@@ -131,7 +131,7 @@ export class GalleryContainer extends React.Component {
   }
 
   componentDidMount() {
-    windowWrapper.isGalleryMounted = true;
+    windowWrapper.stopUsingMock();
     const { body, documentElement: html } = document;
     const viewportHeight = window.innerHeight;
     const height = Math.max(

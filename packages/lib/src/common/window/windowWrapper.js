@@ -2,6 +2,7 @@ import WindowMock, { dimsMock, scrollMock } from './window.mock';
 
 class WindowWrapper {
   constructor() {
+    this.shouldUseMock = true;
     this.initProxyWindow = this.initProxyWindow.bind(this);
     if (this.windowIsAvailable()) {
       // this will wrap the real window with partial mock for the dimensions
@@ -30,7 +31,7 @@ class WindowWrapper {
         };
         if (
           Object.keys(dimsAndScrollMock).includes(property) &&
-          !this.isGalleryMounted
+          this.shouldUseMock
         ) {
           return dimsAndScrollMock[property];
         } else if (typeof targetObj == 'function') {
@@ -50,12 +51,14 @@ class WindowWrapper {
   initFinalWindow() {
     this.window = window;
   }
-
-  get isGalleryMounted() {
-    return this._isGalleryMounted;
+  stopUsingMock() {
+    this.shouldUseMock = false;
   }
-  set isGalleryMounted(isGalleryMounted) {
-    this._isGalleryMounted = isGalleryMounted;
+  get shouldUseMock() {
+    return this._shouldUseMock;
+  }
+  set shouldUseMock(shouldUseMock) {
+    this._shouldUseMock = shouldUseMock;
   }
 }
 
