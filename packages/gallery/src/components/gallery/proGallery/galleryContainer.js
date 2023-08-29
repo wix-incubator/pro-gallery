@@ -7,6 +7,7 @@ import {
   isSEOMode,
   isPreviewMode,
   isSiteMode,
+  windowWrapper,
 } from 'pro-gallery-lib';
 import { ItemsHelper } from 'pro-layouts';
 import GalleryView from './galleryView';
@@ -130,6 +131,7 @@ export class GalleryContainer extends React.Component {
   }
 
   componentDidMount() {
+    windowWrapper.stopUsingMock();
     const { body, documentElement: html } = document;
     const viewportHeight = window.innerHeight;
     const height = Math.max(
@@ -301,7 +303,6 @@ export class GalleryContainer extends React.Component {
     const scrollY = window.scrollY;
     const { galleryHeight, scrollBase, galleryWidth } = container;
     if (
-      utils.isSSR() ||
       isSEOMode() ||
       isEditMode() ||
       gotFirstScrollEvent ||
