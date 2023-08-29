@@ -1,4 +1,4 @@
-import WindowMock, { dimsMock, scrollMock } from './window.mock';
+import WindowMock, { hydrateMockMap } from './window.mock';
 
 class WindowWrapper {
   constructor() {
@@ -22,31 +22,25 @@ class WindowWrapper {
   }
 
   initProxyWindow() {
-    const customWindowProps = [];
+    const customWindowPropsSet = new Set();
     const handler = {
+      // here the proxy target is the global window object
       get: function (target, property) {
-        let targetObj = target[property];
-        const dimsAndScrollMock = {
-          ...dimsMock,
-          ...scrollMock,
-        };
+        if (hydrateMockMap.has(property) && this.shouldUseMock) {
+          return hydrateMockMap.get(property);
+        }
         if (
-          Object.keys(dimsAndScrollMock).includes(property) &&
-          this.shouldUseMock
-        ) {
-          return dimsAndScrollMock[property];
-        } else if (
-          typeof targetObj == 'function' &&
-          !customWindowProps.includes(property)
+          typeof target[property] === 'function' &&
+          !customWindowPropsSet.has(property)
         ) {
           return target[property].bind(target);
-        } else {
-          return targetObj;
         }
+        return target[property];
       }.bind(this),
+      // here we push to the custom props Set to know later if we want to bind the prop
+      // reflect just assigns the proprty and returns boolean if the assign was successfull
       set: function (target, property, value) {
-        // we don't want to bind properties we set to the window
-        customWindowProps.push(property);
+        customWindowPropsSet.add(property);
         return Reflect.set(target, property, value);
       },
     };

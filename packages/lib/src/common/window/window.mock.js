@@ -50,6 +50,10 @@ export const scrollMock = {
   scrollTop: 0,
   scrollY: 0,
 };
+const windowHydrateMock = {
+  ...dimsMock,
+  ...scrollMock,
+};
 const windowMock = {
   isMock: true,
   isSSR: true,
@@ -71,10 +75,12 @@ const windowMock = {
   getComputedStyle: noop,
   localStorage: {},
   frames: [],
-  ...dimsMock,
-  ...scrollMock,
+  ...windowHydrateMock,
 };
 
+export const hydrateMockMap = new Map(
+  Object.keys(windowHydrateMock).map((key) => [key, windowHydrateMock[key]])
+);
 windowMock.parent = windowMock;
 
 export default windowMock;
