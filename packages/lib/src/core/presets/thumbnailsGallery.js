@@ -30,6 +30,8 @@ const fixToThumbnail = (options) => {
   presetOptions[optionsMap.layoutParams.structure.scatter.randomScatter] = 0;
   presetOptions[optionsMap.layoutParams.structure.scatter.manualScatter] = '';
   presetOptions[optionsMap.layoutParams.structure.itemSpacing] = 0;
+  presetOptions[optionsMap.layoutParams.targetItemSize.value] = 550;
+
   return presetOptions;
 };
 export const fixedOptions = fixToThumbnail({});
