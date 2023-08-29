@@ -22,6 +22,7 @@ class WindowWrapper {
   }
 
   initProxyWindow() {
+    const customWindowProps = [];
     const handler = {
       get: function (target, property) {
         let targetObj = target[property];
@@ -34,12 +35,20 @@ class WindowWrapper {
           this.shouldUseMock
         ) {
           return dimsAndScrollMock[property];
-        } else if (typeof targetObj == 'function') {
-          return (...args) => target[property].apply(target, args);
+        } else if (
+          typeof targetObj == 'function' &&
+          !customWindowProps.includes(property)
+        ) {
+          return target[property].bind(target);
         } else {
           return targetObj;
         }
       }.bind(this),
+      set: function (target, property, value) {
+        // we don't want to bind properties we set to the window
+        customWindowProps.push(property);
+        return Reflect.set(target, property, value);
+      },
     };
     // eslint-disable-next-line no-undef
     this.window = new Proxy(window, handler);
@@ -47,9 +56,6 @@ class WindowWrapper {
   initMockWindow() {
     this.window = WindowMock;
     this.window.mockInstanceId = Math.floor(Math.random() * 100000);
-  }
-  initFinalWindow() {
-    this.window = window;
   }
   stopUsingMock() {
     this.shouldUseMock = false;
