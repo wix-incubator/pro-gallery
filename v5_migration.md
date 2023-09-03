@@ -74,9 +74,15 @@ const App = () => {
 
 ### Migration Utilities
 
-You can also use our utility functions to migrate/flatten your old `options` object for the new version
+You can also use our utility functions to migrate/flatten your old `options` object for the new version.
 
-If you used only the old options from V3 in V4 then you may want to use `migrateOptions` function from `pro-gallery-lib` package to migrate the keys and the values:
+If you used only the old options from V3 in V4 then you may want to use `migrateOptions` function from `pro-gallery-lib` package to migrate the keys and the values.
+
+**Please Note:**
+- We recommend avoiding migration functions in V5 (v4 uses this internally) as this is a performance load.
+- in V5 there is no old format. everything is flat and new. This also includes the events API or any outgoing API from the gallery - will only include the options in their new format - requiering a migration to your handler functions as well/custom components as well.
+
+Please consider using the migration functions once to get the new format of options and save them instead of migrating the old format in runtime:
 
 ```jsx
 import { ProGallery } from 'pro-gallery';
