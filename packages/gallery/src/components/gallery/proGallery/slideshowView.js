@@ -447,7 +447,11 @@ class SlideshowView extends React.Component {
     //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
     this.props.setGotFirstScrollIfNeeded(); //load all the images in the thumbnails bar
 
-    const direction = itemIdx - this.state.activeIndex;
+    const isRTL =
+      this.props.options.behaviourParams_gallery_layoutDirection ===
+      GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT;
+
+    const direction = isRTL ? this.state.activeIndex - itemIdx : itemIdx - this.state.activeIndex;
     return this.next({
       direction,
       isAutoTrigger: false,
