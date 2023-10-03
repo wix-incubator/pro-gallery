@@ -488,14 +488,18 @@ class SlideshowView extends React.Component {
       GALLERY_CONSTS.events.THUMBNAIL_CLICKED,
       this.props
     );
-    this.scrollToIndex({ itemIdx, scrollDuration });
+    this.scrollToIndex({
+      itemIdx,
+      scrollDuration,
+      isRTL: this.props.options.isRTL,
+    });
   }
 
-  scrollToIndex({ itemIdx, scrollDuration }) {
+  scrollToIndex({ itemIdx, scrollDuration, isRTL }) {
     //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
     this.props.setGotFirstScrollIfNeeded(); //load all the images in the thumbnails bar
 
-    const direction = this.options.isRTL
+    const direction = isRTL
       ? this.state.activeIndex - itemIdx
       : itemIdx - this.state.activeIndex;
     return this.next({
@@ -972,7 +976,7 @@ class SlideshowView extends React.Component {
         // previousItem,
         // previousGroup,
         toIndex: (itemIdx) =>
-          this.scrollToIndex({ itemIdx, scrollDuration: 400 }),
+          this.scrollToIndex({ itemIdx, scrollDuration: 400, isRTL }),
         // getCurrentActiveItemIndex,
         // getCurrentActiveGroupIndex,
         assignIndexChangeCallback: (func) => {
