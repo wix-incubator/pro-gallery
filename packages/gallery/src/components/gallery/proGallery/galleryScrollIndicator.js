@@ -69,8 +69,7 @@ export default class ScrollIndicator extends React.Component {
           GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
         ) {
           this.setState({
-            scrollTop: left,
-            scrollLeft: left,
+            scrollLeft: Math.round(left),
           });
           this.props.getMoreItemsIfNeeded(left);
           this.debouncedOnScroll({ left });
@@ -101,7 +100,7 @@ export default class ScrollIndicator extends React.Component {
           GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL
         ) {
           this.setState({
-            scrollTop: top,
+            scrollTop: Math.round(top),
           });
           this.props.getMoreItemsIfNeeded(top);
         }
@@ -143,7 +142,10 @@ export default class ScrollIndicator extends React.Component {
         GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].VERTICAL && this.props.scrollBase > 0
         ? this.props.scrollBase
         : 0;
-    const scrollTopWithoutBase = this.state.scrollTop - verticalScrollBase;
+    const scrollPosition =
+      this.props.scrollDirection === GALLERY_CONSTS.scrollDirection.VERTICAL
+        ? this.state.scrollTop - verticalScrollBase
+        : this.state.scrollLeft;
     const { id } = this.props;
     return (
       <div
@@ -151,7 +153,8 @@ export default class ScrollIndicator extends React.Component {
         data-hook="css-scroll-indicator"
         data-scroll-base={verticalScrollBase}
         data-scroll-top={this.state.scrollTop}
-        className={cssScrollHelper.calcScrollClasses(id, scrollTopWithoutBase)}
+        data-scroll-left={this.state.scrollLeft}
+        className={cssScrollHelper.calcScrollClasses(id, scrollPosition)}
         style={{ display: 'none' }}
       />
     );
