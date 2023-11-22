@@ -116,7 +116,12 @@ export default function MediaItem<T extends Record<string, any>>(props: MediaPro
   }
 
   if (isEditMode()) {
-    return thumbnail;
+    return (
+      <>
+        {thumbnail}
+        {props.hover}
+      </>
+    );
   }
 
   return (
