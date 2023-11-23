@@ -13,7 +13,7 @@
         "plugin:prettier/recommended",
         "prettier/@typescript-eslint"
     ],
-    "ignorePatterns": ['standaloneValidateCode.js'],
+    "ignorePatterns": ["standaloneValidateCode.js", "optionsMap.js"],
     "rules": {
     }
 }
