@@ -86,7 +86,7 @@ function process_old_to_new_columnRatios(obj) {
   } else {
     _obj[optionsMap.layoutParams.structure.columnRatios] = _obj[optionsMap.layoutParams.structure.columnRatios]
       ? _obj[optionsMap.layoutParams.structure.columnRatios]?.split
-        ? [..._obj[optionsMap.layoutParams.structure.columnRatios]?.split(',').map(Number)]
+        ? [...(_obj[optionsMap.layoutParams.structure.columnRatios]?.split(',') || []).map(Number)]
         : _obj[optionsMap.layoutParams.structure.columnRatios]
       : undefined;
   }
