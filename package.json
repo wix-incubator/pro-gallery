@@ -50,6 +50,9 @@
     "semver": "^6.3.0",
     "set-value": "^4.1.0"
   },
+  "workspaces":[
+    "packages/*"
+  ],
   "dependencies": {
     "start-server-and-test": "^1.10.6"
   }
