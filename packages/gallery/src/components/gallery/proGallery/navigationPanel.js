@@ -68,7 +68,7 @@ class NavigationPanel extends React.Component {
           style={{ ...thumbnailsStyle }}
         >
           {items.map(({ thumbnailItem, location, idx }) => {
-            const highlighted = idx === activeIndex;
+            const highlighted = idx === activeIndex % items.length;
             const itemStyle = {
               width: options[optionsMap.layoutParams.thumbnails.size],
               height: options[optionsMap.layoutParams.thumbnails.size],
@@ -94,7 +94,7 @@ class NavigationPanel extends React.Component {
                 }
                 data-key={thumbnailItem.id}
                 style={itemStyle}
-                onClick={() => this.scrollToThumbnail(idx)}
+                onClick={() => this.scrollToThumbnail(idx, activeIndex)}
               >
                 {thumbnailItem.type === 'video' &&
                   options[optionsMap.behaviourParams.item.video.enableThumbnailsPlayButton] && (
