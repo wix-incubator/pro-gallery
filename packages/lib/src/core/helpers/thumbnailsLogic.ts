@@ -109,7 +109,7 @@ function getThumbnailsData({
     height,
     thumbnailSizeWithSpacing,
     activeIndex: activeIndexWithOffset,
-    numberOfGalleryItems: galleryItems.length,
+    itemsCount: galleryItems.length,
   });
 
   const thumbnailsStyleWithRTLCalc = isRTL
@@ -194,14 +194,14 @@ function getThumbnailsStyles({
   height,
   activeIndex,
   thumbnailSizeWithSpacing,
-  numberOfGalleryItems: numberOfItems,
+  itemsCount: numberOfItems,
 }: {
   horizontalThumbnails: boolean;
   width: number;
   height: number;
   activeIndex: number;
   thumbnailSizeWithSpacing: number;
-  numberOfGalleryItems: number;
+  itemsCount: number;
 }): any {
   const baseStyle = {
     overflow: 'visible',

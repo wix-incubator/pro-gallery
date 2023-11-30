@@ -434,20 +434,19 @@ class SlideshowView extends React.Component {
     }
   };
 
-  findFirstIdx(itemIdx) {
+  getFirstIdx(itemIdx) {
     const activeItem = this.props.galleryStructure.galleryItems[itemIdx];
-    const itemId = activeItem.itemId;
-    const firstItemInstance = this.props.galleryStructure.galleryItems.find((item) => item.itemId === itemId);
-    const firstItemInstanceIdx = firstItemInstance.idx;
-    return firstItemInstanceIdx;
+    const activeItemId = activeItem.itemId;
+    const firstItemInstance = this.props.galleryStructure.galleryItems.find((item) => item.itemId === activeItemId);
+    return firstItemInstance.idx;
   }
 
   scrollToThumbnail(itemIdx, scrollDuration) {
     //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
 
     this.props.actions.eventsListener(GALLERY_CONSTS.events.THUMBNAIL_CLICKED, this.props);
-    const activeItemFirstIdx = this.findFirstIdx(this.state.activeIndex);
-    const firstTargetItemIdx = this.findFirstIdx(itemIdx);
+    const activeItemFirstIdx = this.getFirstIdx(this.state.activeIndex);
+    const firstTargetItemIdx = this.getFirstIdx(itemIdx);
     const distance = firstTargetItemIdx - activeItemFirstIdx;
     const targetIdx = this.state.activeIndex + distance;
 
