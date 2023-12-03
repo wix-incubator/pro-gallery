@@ -139,7 +139,6 @@ class SlideshowView extends React.Component {
       nextItem >= this.skipFromSlide
     ) {
       const skipToSlide = this.skipFromSlide - this.props.totalItemsCount;
-
       toggleScrollLessAnimation(() => this.onScrollToItemOrGroup(skipToSlide, false));
     }
   }
