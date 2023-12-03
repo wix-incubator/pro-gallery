@@ -442,7 +442,6 @@ class SlideshowView extends React.Component {
 
   scrollToThumbnail(itemIdx, scrollDuration) {
     //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
-
     this.props.actions.eventsListener(GALLERY_CONSTS.events.THUMBNAIL_CLICKED, this.props);
     const activeIdx = this.state.activeIndex;
     const targetIdx = activeIdx + (this.getFirstIdx(itemIdx) - this.getFirstIdx(activeIdx));
