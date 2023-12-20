@@ -85,22 +85,14 @@ div.pro-gallery {
 
     &.shrink-on-hover:not(.hide-hover) {
       transition: background-color .4s ease !important;
-
-      .gallery-item-content,
-      .gallery-item-hover:not(.hide-hover) {
-        transition: transform .4s ease !important;
-      }
+      transition: transform .4s ease !important;
 
       &.simulate-hover,
       &:hover {
-        background-color: transparent !important;
+        transform: scale(0.985);
 
-        .gallery-item-content {
-          transform: scale(0.985);
-        }
-
-        .gallery-item-hover:not(.hide-hover) {
-          transform: scale(0.987);
+        div {
+          transform: none !important;
         }
       }
     }
