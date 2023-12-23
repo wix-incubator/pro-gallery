@@ -59,7 +59,7 @@ class ImageItem extends React.Component {
   }
 
   getImageContainer(imageRenderer, classNames, extraNodes) {
-    const { imageDimensions, id, actions } = this.props;
+    const { id, actions } = this.props;
 
     return (
       <div
@@ -68,7 +68,7 @@ class ImageItem extends React.Component {
         onTouchEnd={actions.handleItemMouseUp}
         key={'image_container-' + id}
         data-hook={'image-item'}
-        style={imageDimensions}
+        style={{ boxSizing: 'border-box' }}
       >
         {imageRenderer()}
         {extraNodes}
@@ -150,7 +150,6 @@ class ImageItem extends React.Component {
                 key={'image_preload_blur-' + id}
                 src={createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.LOW_RES)}
                 style={{
-                  ...imageSizing,
                   ...preloadStyles,
                   ...blockDownloadStyles,
                 }}
@@ -166,7 +165,6 @@ class ImageItem extends React.Component {
                 key={'image_preload_main_color-' + id}
                 src={createUrl(GALLERY_CONSTS.urlSizes.PIXEL, GALLERY_CONSTS.urlTypes.HIGH_RES)}
                 style={{
-                  ...imageSizing,
                   ...preloadStyles,
                   ...blockDownloadStyles,
                 }}
@@ -199,7 +197,6 @@ class ImageItem extends React.Component {
           onLoad={this.handleHighResImageLoad}
           loading={this.props.isPrerenderMode ? 'lazy' : 'eager'}
           style={{
-            ...imageSizing,
             ...blockDownloadStyles,
             ...(!shouldRenderHighResImages && preloadStyles),
           }}
