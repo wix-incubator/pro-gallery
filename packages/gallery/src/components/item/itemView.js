@@ -710,7 +710,6 @@ class ItemView extends React.Component {
 
   getItemWrapperStyles() {
     const { createUrl, options, style, type, offset } = this.props;
-    const { height, width, innerWidth, innerHeight } = style;
     const { innerTop, innerLeft } = offset;
     let styles = {};
     if (type === 'text') {
@@ -732,7 +731,6 @@ class ItemView extends React.Component {
       styles = {
         ...styles,
         background: `url(${createUrl(GALLERY_CONSTS.urlSizes.PIXEL, GALLERY_CONSTS.urlTypes.HIGH_RES)})`,
-        backgroundSize: `${innerWidth}px ${innerHeight}px`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: `top ${innerTop}px left ${innerLeft}px`,
       };
@@ -741,8 +739,6 @@ class ItemView extends React.Component {
     if (options[optionsMap.behaviourParams.item.content.hoverAnimation] === TILT) {
       styles['--tiltAngleValue'] = options[optionsMap.behaviourParams.item.content.tiltAngleValue];
     }
-    styles.height = height + 'px';
-    styles.width = width + 'px';
     styles.margin = -options[optionsMap.stylingParams.itemBorderWidth] + 'px';
 
     return styles;
@@ -974,6 +970,7 @@ class ItemView extends React.Component {
               this.props.options[optionsMap.layoutParams.info.placement],
               this.props.idx
             ) && { float: 'right' }),
+            height: '100%',
           }}
         >
           {!isItemWrapperEmpty && (

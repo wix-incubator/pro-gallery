@@ -115,7 +115,7 @@ class ImageItem extends React.Component {
       settings && settings.imageProps && typeof settings.imageProps === 'function' ? settings.imageProps(id) : {};
 
     // eslint-disable-next-line no-unused-vars
-    const { marginLeft, marginTop, ...imageSizing } = imageDimensions;
+    const { marginLeft, marginTop } = imageDimensions;
 
     const image = () => {
       const imagesComponents = [];
