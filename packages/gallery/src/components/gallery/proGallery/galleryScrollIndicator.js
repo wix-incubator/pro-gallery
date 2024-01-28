@@ -87,12 +87,12 @@ export default class ScrollIndicator extends React.Component {
     ) {
       try {
         scrollingElement
-          .horizontal()
-          .addEventListener('scroll', this.onHorizontalScroll);
+          ?.horizontal()
+          ?.addEventListener('scroll', this.onHorizontalScroll);
 
         scrollingElement
-          .horizontal()
-          .addEventListener(
+          ?.horizontal()
+          ?.addEventListener(
             'scrollTransition',
             this.onHorizontalScrollTransition
           );
