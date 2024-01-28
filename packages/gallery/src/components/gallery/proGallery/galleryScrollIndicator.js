@@ -82,9 +82,8 @@ export default class ScrollIndicator extends React.Component {
       this.props.galleryScrollDirection === GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
     ) {
       try {
-        scrollingElement.horizontal().addEventListener('scroll', this.onHorizontalScroll);
-
-        scrollingElement.horizontal().addEventListener('scrollTransition', this.onHorizontalScrollTransition);
+        scrollingElement?.horizontal()?.addEventListener('scroll', this.onHorizontalScroll);
+        scrollingElement?.horizontal()?.addEventListener('scrollTransition', this.onHorizontalScrollTransition);
       } catch (e) {
         console.error(e);
       }
