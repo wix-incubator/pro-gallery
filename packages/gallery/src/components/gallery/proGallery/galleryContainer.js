@@ -192,8 +192,9 @@ export class GalleryContainer extends React.Component {
     };
 
     const getSignificantProps = (props) => {
-      const { id, options, container, items, isInDisplay } = props;
-      return { id, options, container, items, isInDisplay };
+      const { id, options, container, items, isInDisplay, isPrerenderMode } =
+        props;
+      return { id, options, container, items, isInDisplay, isPrerenderMode };
     };
 
     if (this.reCreateGalleryTimer) {
