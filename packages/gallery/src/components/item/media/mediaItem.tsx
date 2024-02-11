@@ -71,7 +71,6 @@ export default function MediaItem<T extends Record<string, any>>(props: MediaPro
     if (utils.isSSR()) {
       return false;
     }
-
     if (
       playTrigger === GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER ||
       playTrigger === GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO
@@ -80,6 +79,8 @@ export default function MediaItem<T extends Record<string, any>>(props: MediaPro
     } else if (clickAction === GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING) {
       return true;
     } else if (clickAction === GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK && !hasLink) {
+      return true;
+    } else if (clickAction === 'ACTION' || clickAction === 'MAGNIFY') {
       return true;
     }
     return false;
