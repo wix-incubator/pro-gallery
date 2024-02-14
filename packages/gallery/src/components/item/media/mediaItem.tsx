@@ -45,7 +45,7 @@ export type MediaImplementationProps<T = {}> = T &
 
 const getPlayButtonComponentByItemType = (type: string) => {
   if (type === 'video') {
-    return <GalleryUI type={'videoPlayButton'} size={12} />;
+    return <GalleryUI type={'videoPlayButton'} size={60} />;
   } else if (type === '3d') {
     return <GalleryUI type={'rotateArrow'} size={60} />;
   } else {
@@ -71,9 +71,15 @@ export default function MediaItem<T extends Record<string, any>>(props: MediaPro
     if (utils.isSSR()) {
       return false;
     }
-    if (playTrigger) {
+    if (
+      playTrigger === GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER ||
+      playTrigger === GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].AUTO
+    ) {
       return true;
-    } else if (clickAction === GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING) {
+    } else if (
+      clickAction === GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING ||
+      clickAction === GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].MAGNIFY
+    ) {
       return true;
     } else if (clickAction === GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK && !hasLink) {
       return true;
