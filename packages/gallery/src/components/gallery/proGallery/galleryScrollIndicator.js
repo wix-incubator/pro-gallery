@@ -59,7 +59,7 @@ export default class ScrollIndicator extends React.Component {
     this.onHorizontalScroll = (e) => {
       this.props.setGotFirstScrollIfNeeded();
       const target = e.currentTarget || e.target || e;
-      let left = target && (target.scrollX || target.scrollLeft || target.x);
+      let left = target && (target.scrollX || target.scrollLeft !== undefined ? target.scrollLeft : target.x);
       if (this.props.isRTL) {
         left = Math.abs(left); //this.props.totalWidth - left;
       }
