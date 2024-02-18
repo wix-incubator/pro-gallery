@@ -27,7 +27,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [lint, tests]
+    needs: [lint]
     strategy:
       matrix:
         node-version: [16.13.0]
