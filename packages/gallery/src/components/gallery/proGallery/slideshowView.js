@@ -860,9 +860,8 @@ class SlideshowView extends React.Component {
     const isRTL =
       this.props.options.behaviourParams_gallery_layoutDirection ===
       GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT;
-    return (
-      this.navigationPanelAPI ||
-      (this.navigationPanelAPI = {
+    if (!this.navigationPanelAPI) {
+      this.navigationPanelAPI = {
         next: () =>
           this.next({
             scrollDuration: 400,
@@ -909,8 +908,10 @@ class SlideshowView extends React.Component {
         assignIndexChangeCallback: (func) => {
           this.navigationPanelCallbackOnIndexChange = func;
         },
-      })
-    );
+      };
+    }
+    this.props.actions.eventsListener(GALLERY_CONSTS.events.NAVIGATION_API_READY, this.navigationPanelAPI);
+    return this.navigationPanelAPI;
   };
 
   getNavigationPanelArray() {
@@ -1144,6 +1145,7 @@ class SlideshowView extends React.Component {
       this.setCurrentItemByScroll();
     }
     this.startAutoSlideshowIfNeeded(this.props.options);
+    this.createOrGetCustomNavigationPanelAPI();
   }
 
   componentWillUnmount() {
