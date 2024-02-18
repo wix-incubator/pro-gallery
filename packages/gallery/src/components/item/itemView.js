@@ -591,7 +591,7 @@ class ItemView extends React.Component {
         <div
           style={getInnerInfoStyle(placement, options, infoHeight, infoWidth)}
           className={'gallery-item-common-info ' + elementName}
-          onClick={this.onItemInfoClick}
+          onClick={setTimeout(this.onItemInfoClick(), 0)}
         >
           {itemExternalInfo}
         </div>
@@ -959,7 +959,7 @@ class ItemView extends React.Component {
         key={'item-container-' + id}
         style={this.getItemContainerStyles()}
         onKeyUp={this.onContainerKeyUp}
-        onClick={this.onItemWrapperClick}
+        onClick={() => setTimeout(this.onItemWrapperClick(), 0)}
       >
         {this.getTopInfoElementIfNeeded()}
         {this.getLeftInfoElementIfNeeded()}
