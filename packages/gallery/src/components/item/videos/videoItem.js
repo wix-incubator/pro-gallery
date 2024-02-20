@@ -107,7 +107,8 @@ class VideoItem extends React.Component {
     try {
       const { shouldPlay } = props;
       if (shouldPlay && !this.isPlaying) {
-        this.videoElement = this.videoElement || window.document.querySelector(`#video-${this.props.id} video`);
+        this.videoElement =
+          this.videoElement || window.document.querySelector(`#video-${this.props.id}-${this.props.galleryId} video`);
         if (this.videoElement) {
           this.isPlaying = true;
           this.videoElement.play();
@@ -154,7 +155,7 @@ class VideoItem extends React.Component {
       <PlayerElement
         playsinline
         className={'gallery-item-visible video gallery-item'}
-        id={`video-${this.props.id}`}
+        id={`video-${this.props.id}-${this.props.galleryId}`}
         width="100%"
         height="100%"
         url={url}
@@ -212,7 +213,8 @@ class VideoItem extends React.Component {
 
   fixIFrameTabIndexIfNeeded() {
     if (this.props.isExternalVideo) {
-      const videoGalleryItem = window.document && window.document.getElementById(`video-${this.props.id}`);
+      const videoGalleryItem =
+        window.document && window.document.getElementById(`video-${this.props.id}-${this.props.galleryId}`);
       const videoIFrames = videoGalleryItem && videoGalleryItem.getElementsByTagName('iframe');
       const videoIFrame = videoIFrames && videoIFrames[0];
       if (videoIFrame) {
