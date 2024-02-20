@@ -196,6 +196,7 @@ class ImageItem extends React.Component {
           data-idx={idx}
           src={src}
           alt={typeof alt === 'string' ? alt : 'untitled image'}
+          tabIndex="0"
           onLoad={this.handleHighResImageLoad}
           loading={this.props.isPrerenderMode ? 'lazy' : 'eager'}
           style={{
