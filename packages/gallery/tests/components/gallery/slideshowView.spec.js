@@ -169,6 +169,7 @@ describe('Slideshow View', () => {
     });
 
     it('Handle nav arrows click correctly (next/prev image)', () => {
+      jest.useFakeTimers();
       Object.assign(initialGalleryViewProps.scroll, {
         top: 1,
         left: 1,
@@ -187,6 +188,7 @@ describe('Slideshow View', () => {
       setTimeout(() => {
         expect(driver.get.state('activeIndex')).to.equal(1); //navigates
         driver.find.hook('nav-arrow-next').simulate('click');
+        jest.advanceTimersByTime(1000);
         setTimeout(() => {
           expect(driver.get.state('activeIndex')).to.equal(2);
         }, 450);
