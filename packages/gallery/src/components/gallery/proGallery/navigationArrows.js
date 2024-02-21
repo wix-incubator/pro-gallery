@@ -180,7 +180,7 @@ export function ArrowButton({
 
   const buttonProps = {
     className: arrowsBaseClasses.join(' '),
-    onClick: () => next({ direction: directionIsLeft ? -1 : 1 }),
+    onClick: () => setTimeout(next({ direction: directionIsLeft ? -1 : 1 }), 0),
     ['aria-label']: `${isNext ? 'Next' : 'Previous'} Item`,
     tabIndex: tabIndex(isNext ? 'slideshowNext' : 'slideshowPrev'),
     key: !isNext ? 'nav-arrow-back' : 'nav-arrow-next',
