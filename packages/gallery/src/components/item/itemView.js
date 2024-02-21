@@ -989,6 +989,7 @@ class ItemView extends React.Component {
         key={'item-container-' + id}
         style={this.getItemContainerStyles()}
         onKeyUp={this.onContainerKeyUp}
+        // dummy
         onClick={(event) => setTimeout(this.onItemWrapperClick(event), 0)}
       >
         {this.getTopInfoElementIfNeeded()}
