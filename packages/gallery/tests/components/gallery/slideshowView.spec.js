@@ -179,10 +179,11 @@ describe('Slideshow View', () => {
       driver.mount(SlideshowView, galleryViewProps);
       expect(driver.get.state('activeIndex')).to.equal(0);
       driver.find.hook('nav-arrow-next').simulate('click');
+      jest.advanceTimersByTime(5000);
       setTimeout(() => {
         expect(driver.get.state('activeIndex')).to.equal(1); //navigates
         driver.find.hook('nav-arrow-next').simulate('click');
-        jest.advanceTimersByTime(1000);
+        jest.advanceTimersByTime(5000);
         setTimeout(() => {
           expect(driver.get.state('activeIndex')).to.equal(2);
         }, 450);
