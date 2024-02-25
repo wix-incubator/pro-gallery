@@ -764,7 +764,14 @@ export class GalleryContainer extends React.Component {
       }
     }
     if (typeof this.props.eventsListener === 'function') {
-      this.props.eventsListener(eventName, eventData, event);
+      switch (eventName) {
+        case GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED:
+        case GALLERY_CONSTS.events.ITEM_CLICKED:
+          setTimeout(this.props.eventsListener(eventName, eventData, event), 0);
+          break;
+        default:
+          this.props.eventsListener(eventName, eventData, event);
+      }
     }
 
     if (eventName === GALLERY_CONSTS.events.GALLERY_SCROLLED) {
