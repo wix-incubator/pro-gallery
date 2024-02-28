@@ -175,10 +175,10 @@ export function ArrowButton({
   navigationArrowPortalId,
 }) {
   const isNext = (directionIsLeft && isRTL) || (!directionIsLeft && !isRTL);
-
+  const nextAction = () => next({ direction: directionIsLeft ? -1 : 1 });
   const buttonProps = {
     className: arrowsBaseClasses.join(' '),
-    onClick: () => setTimeout(next({ direction: directionIsLeft ? -1 : 1 }), 0),
+    onClick: () => setTimeout(nextAction, 0),
     ['aria-label']: `${isNext ? 'Next' : 'Previous'} Item`,
     tabIndex: tabIndex(isNext ? 'slideshowNext' : 'slideshowPrev'),
     key: !isNext ? 'nav-arrow-back' : 'nav-arrow-next',
