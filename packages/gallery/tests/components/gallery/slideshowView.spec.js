@@ -163,7 +163,8 @@ describe('Slideshow View', () => {
       }, 450);
     });
 
-    it('Handle nav arrows click correctly (next/prev image)', () => {
+    it('Handle nav arrows click correctly (next/prev image)', async () => {
+      jest.useFakeTimers();
       Object.assign(initialGalleryViewProps.scroll, {
         top: 1,
         left: 1,
@@ -178,9 +179,13 @@ describe('Slideshow View', () => {
       driver.mount(SlideshowView, galleryViewProps);
       expect(driver.get.state('activeIndex')).to.equal(0);
       driver.find.hook('nav-arrow-next').simulate('click');
-      setTimeout(() => {
+      jest.advanceTimersByTime(1000);
+      await Promise.resolve();
+      setTimeout(async () => {
         expect(driver.get.state('activeIndex')).to.equal(1); //navigates
         driver.find.hook('nav-arrow-next').simulate('click');
+        jest.advanceTimersByTime(1000);
+        await Promise.resolve();
         setTimeout(() => {
           expect(driver.get.state('activeIndex')).to.equal(2);
         }, 450);
