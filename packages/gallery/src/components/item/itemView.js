@@ -141,7 +141,7 @@ class ItemView extends React.Component {
     }
 
     if (this.shouldShowHoverOnMobile() || this.shouldShowSecondMediaOnMobile()) {
-      setTimeout(this.handleHoverClickOnMobile(e), 0);
+      this.handleHoverClickOnMobile(e);
     } else {
       this.handleGalleryItemAction(e);
     }
