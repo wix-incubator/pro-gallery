@@ -139,7 +139,7 @@ class ItemView extends React.Component {
     if (shouldPreventDefault) {
       e.preventDefault();
     }
-
+    //dummy
     if (this.shouldShowHoverOnMobile() || this.shouldShowSecondMediaOnMobile()) {
       setTimeout(this.handleHoverClickOnMobile(e), 0);
     } else {
