@@ -119,6 +119,7 @@ class ImageItem extends React.Component {
 
     const image = () => {
       const imagesComponents = [];
+      const altText = typeof alt === 'string' ? alt : 'untitled image';
       const blockDownloadStyles =
         utils.isMobile() && this.props.options[optionsMap.behaviourParams.gallery.blockContextMenu]
           ? {
@@ -146,7 +147,7 @@ class ImageItem extends React.Component {
           case GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader].BLUR:
             preload = (
               <ImageRenderer
-                alt=""
+                alt={altText}
                 key={'image_preload_blur-' + id}
                 src={createUrl(GALLERY_CONSTS.urlSizes.RESIZED, GALLERY_CONSTS.urlTypes.LOW_RES)}
                 style={{
@@ -162,7 +163,7 @@ class ImageItem extends React.Component {
           case GALLERY_CONSTS[optionsMap.behaviourParams.item.content.loader].MAIN_COLOR:
             preload = (
               <ImageRenderer
-                alt=""
+                alt={altText}
                 key={'image_preload_main_color-' + id}
                 src={createUrl(GALLERY_CONSTS.urlSizes.PIXEL, GALLERY_CONSTS.urlTypes.HIGH_RES)}
                 style={{
@@ -195,7 +196,7 @@ class ImageItem extends React.Component {
           data-hook="gallery-item-image-img"
           data-idx={idx}
           src={src}
-          alt={typeof alt === 'string' ? alt : 'untitled image'}
+          alt={altText}
           tabIndex="0"
           onLoad={this.handleHighResImageLoad}
           loading={this.props.isPrerenderMode ? 'lazy' : 'eager'}
