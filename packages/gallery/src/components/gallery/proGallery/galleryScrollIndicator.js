@@ -2,7 +2,7 @@ import React from 'react';
 import { utils, GALLERY_CONSTS } from 'pro-gallery-lib';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper';
 
-export default class ScrollIndicator extends React.Component {
+export class ScrollIndicator extends React.Component {
   constructor(props) {
     super();
 
@@ -175,3 +175,5 @@ export default class ScrollIndicator extends React.Component {
     );
   }
 }
+
+export default ScrollIndicator;
