@@ -4,7 +4,7 @@ import GalleryDebugMessage from './galleryDebugMessage';
 import itemView from '../../item/itemView.js';
 import { getItemsInViewportOrMarginByScrollLocation } from '../../helpers/virtualization';
 
-class GalleryView extends React.Component {
+export class GalleryView extends React.Component {
   constructor(props) {
     super(props);
     this.handleKeys = this.handleKeys.bind(this);

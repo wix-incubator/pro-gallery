@@ -1,4 +1,4 @@
-function findNeighborItem(itemIdx, dir, layoutItems) {
+export function findNeighborItem(itemIdx, dir, layoutItems) {
   const currentItem = layoutItems[itemIdx];
 
   let neighborItem;
