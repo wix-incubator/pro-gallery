@@ -1,6 +1,6 @@
 import { isEditMode } from 'pro-gallery-lib';
 
-export class VideoScrollHelperWrapper {
+class VideoScrollHelperWrapper {
   constructor(setPlayingIdxState) {
     this.left = 0;
     this.top = 0;

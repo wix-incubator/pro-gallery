@@ -306,7 +306,6 @@ class VideoItem extends React.Component {
     if (this.state.playedOnce && this.state.ready) {
       baseClassName.push('playedOnce');
     }
-    //
     if (this.props.isCurrentHover) {
       baseClassName.push('item-content-hover');
     } else {

@@ -28,7 +28,7 @@ function getDirection(code) {
   throw new Error(`no direction is defined for charCode: ${code}`);
 }
 
-export class SlideshowView extends React.Component {
+class SlideshowView extends React.Component {
   constructor(props) {
     super(props);
     this.navigationPanelCallbackOnIndexChange = () => {};
