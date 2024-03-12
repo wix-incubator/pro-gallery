@@ -10,18 +10,18 @@ import {
   windowWrapper,
 } from 'pro-gallery-lib';
 import { ItemsHelper } from 'pro-layouts';
-import { GalleryView } from './galleryView';
-import { SlideshowView } from './slideshowView';
+import GalleryView from './galleryView';
+import SlideshowView from './slideshowView';
 import {
   scrollToItemImp,
   scrollToGroupImp,
   haltScroll,
 } from '../../helpers/scrollHelper';
-import { ScrollIndicator } from './galleryScrollIndicator';
+import ScrollIndicator from './galleryScrollIndicator';
 import { createCssLayouts } from '../../helpers/cssLayoutsHelper.js';
 import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
-import { VideoScrollHelperWrapper } from '../../helpers/videoScrollHelperWrapper';
-import { findNeighborItem } from '../../helpers/layoutUtils';
+import VideoScrollHelperWrapper from '../../helpers/videoScrollHelperWrapper';
+import findNeighborItem from '../../helpers/layoutUtils';
 import { isGalleryInViewport, Deferred } from './galleryHelpers';
 
 export class GalleryContainer extends React.Component {

@@ -26,5 +26,3 @@ function getStyle(isCrop, isWiderThenContainer) {
     };
   }
 }
-
-export default getStyle;
