@@ -1,7 +1,7 @@
 import React from 'react';
 import { GALLERY_CONSTS, window, utils, optionsMap } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
-import getStyle from './getStyle';
+import { getStyle } from './getStyle';
 
 class VideoItem extends React.Component {
   constructor(props) {
@@ -140,7 +140,7 @@ class VideoItem extends React.Component {
 
     const attributes = {
       controlsList: 'nodownload',
-      disablePictureInPicture: 'true',
+      disablePictureInPicture: true,
       muted: !this.props.options[optionsMap.behaviourParams.item.video.volume],
       preload: 'metadata',
       style: getStyle(isCrop, isWiderThenContainer),
