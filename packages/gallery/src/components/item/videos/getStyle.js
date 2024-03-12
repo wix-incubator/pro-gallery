@@ -1,6 +1,4 @@
-module.exports = getStyle;
-
-function getStyle(isCrop, isWiderThenContainer) {
+export function getStyle(isCrop, isWiderThenContainer) {
   const CALC = 'calc(100% + 1px)';
   return isCrop ? getCrop() : getNonCrop();
 
