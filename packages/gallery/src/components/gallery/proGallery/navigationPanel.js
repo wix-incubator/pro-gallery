@@ -96,6 +96,11 @@ class NavigationPanel extends React.Component {
                 style={itemStyle}
                 onClick={() => this.scrollToThumbnail(idx)}
                 tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    this.scrollToThumbnail(idx);
+                  }
+                }}
               >
                 {thumbnailItem.type === 'video' &&
                   options[optionsMap.behaviourParams.item.video.enableThumbnailsPlayButton] && (
