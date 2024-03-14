@@ -4,6 +4,8 @@ import { GalleryUI } from '../../item/media/GalleryUI';
 
 import TextItem from '../../item/textItem.js';
 
+const ENTER_KEY = 'Enter'
+
 class NavigationPanel extends React.Component {
   constructor(props) {
     super(props);
@@ -33,7 +35,6 @@ class NavigationPanel extends React.Component {
         activeIndexOffsetMemory: this.activeIndexOffsetMemory,
         prevActiveIndex: this.prevActiveIndex,
       });
-    const enterKey = 'Enter';
 
     this.prevActiveIndex = activeIndex;
     this.activeIndexOffsetMemory = activeIndexOffsetMemory;
@@ -98,7 +99,7 @@ class NavigationPanel extends React.Component {
                 onClick={() => this.scrollToThumbnail(idx)}
                 tabIndex={0}
                 onKeyDown={(e) => {
-                  if (e.key === enterKey) {
+                  if (e.key === ENTER_KEY) {
                     this.scrollToThumbnail(idx);
                   }
                 }}
