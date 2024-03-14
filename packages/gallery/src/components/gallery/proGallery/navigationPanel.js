@@ -8,6 +8,8 @@ import {
   clearGalleryItems,
 } from '../../helpers/thumbnailsLogic';
 
+const ENTER_KEY = 'Enter';
+
 class NavigationPanel extends React.Component {
   constructor(props) {
     super(props);
@@ -51,7 +53,6 @@ class NavigationPanel extends React.Component {
       activeIndexOffsetMemory: this.activeIndexOffsetMemory,
       prevActiveIndex: this.prevActiveIndex,
     });
-    const enterKey = 'Enter';
 
     this.prevActiveIndex = activeIndex;
     this.activeIndexOffsetMemory = activeIndexOffsetMemory;
@@ -113,7 +114,7 @@ class NavigationPanel extends React.Component {
                 style={itemStyle}
                 onClick={() => this.scrollToThumbnail(idx)}
                 onKeyDown={(e) => {
-                  if (e.key === enterKey) {
+                  if (e.key === ENTER_KEY) {
                     this.scrollToThumbnail(idx);
                   }
                 }}
