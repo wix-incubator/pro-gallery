@@ -4,7 +4,7 @@ import { GalleryUI } from '../../item/media/GalleryUI';
 
 import TextItem from '../../item/textItem.js';
 
-const ENTER_KEY = 'Enter'
+const ENTER_KEY = 'Enter';
 
 class NavigationPanel extends React.Component {
   constructor(props) {
