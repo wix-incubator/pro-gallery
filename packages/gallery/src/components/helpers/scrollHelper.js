@@ -110,7 +110,10 @@ export function scrollToGroupImp(scrollParams) {
 
   const rtlFix = isRTL ? -1 : 1;
   //default = scroll by half the container size
-  if (scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL) {
+  if (
+    scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
+    horizontalElement
+  ) {
     from = horizontalElement.scrollLeft;
     to = from + (groupIdx * galleryWidth) / 2;
     // console.log('[RTL SCROLL] scrollTogroupImp: ', from, to);
