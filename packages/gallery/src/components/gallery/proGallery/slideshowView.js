@@ -857,7 +857,6 @@ class SlideshowView extends React.Component {
     }
   };
   createOrGetCustomNavigationPanelAPI = () => {
-    console.log('createOrGetCustomNavigationPanelAPI!!!!!!!!');
     const isRTL =
       this.props.options.behaviourParams_gallery_layoutDirection ===
       GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT;
