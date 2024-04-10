@@ -902,7 +902,8 @@ class SlideshowView extends React.Component {
         // nextGroup,
         // previousItem,
         // previousGroup,
-        toIndex: (itemIdx) => this.scrollToIndex({ itemIdx, scrollDuration: 400 }),
+        toIndex: (itemIdx, animationDuration = 400) =>
+          this.scrollToIndex({ itemIdx, scrollDuration: animationDuration }),
         // getCurrentActiveItemIndex,
         // getCurrentActiveGroupIndex,
         assignIndexChangeCallback: (func) => {
