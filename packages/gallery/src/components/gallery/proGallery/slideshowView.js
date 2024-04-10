@@ -862,7 +862,7 @@ class SlideshowView extends React.Component {
       GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT;
     if (!this.navigationPanelAPI) {
       this.navigationPanelAPI = {
-        next: () => 
+        next: () =>
           this.next({
             scrollDuration: 400,
             isKeyboardNavigation: false,
@@ -891,10 +891,7 @@ class SlideshowView extends React.Component {
         },
         triggerItemAction: (e, { itemIndex = this.state.activeIndex } = {}) => {
           const galleryConfig = this.createGalleryConfig();
-          const item =
-            this.props.galleryStructure.galleryItems[
-              itemIndex % this.props.totalItemsCount
-            ];
+          const item = this.props.galleryStructure.galleryItems[itemIndex % this.props.totalItemsCount];
           const props = item?.renderProps({
             ...galleryConfig,
             visible: true,
