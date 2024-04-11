@@ -862,7 +862,13 @@ class SlideshowView extends React.Component {
       GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT;
     if (!this.navigationPanelAPI) {
       this.navigationPanelAPI = {
-        next: () =>
+        willNavigate(fromIndex, toIndex) {
+          this.props.actions.eventsListener(GALLERY_CONSTS.events.WILL_NAVIGATE, { fromIndex, toIndex });
+        },
+        next: () => {
+          const fromIndex = this.state.activeIndex;
+          const toIndex = (fromIndex + 1) % this.props.totalItemsCount;
+          this.navigationPanelAPI.willNavigate(fromIndex, toIndex);
           this.next({
             scrollDuration: 400,
             isKeyboardNavigation: false,
@@ -870,8 +876,11 @@ class SlideshowView extends React.Component {
             avoidIndividualNavigation: false,
             isContinuousScrolling: false,
             direction: isRTL ? -1 : 1,
-          }),
-        back: () =>
+          })},
+        back: () => {
+          const fromIndex = this.state.activeIndex;
+          const toIndex = (fromIndex - 1 + this.props.totalItemsCount) % this.props.totalItemsCount;
+          this.navigationPanelAPI.willNavigate(toIndex);
           this.next({
             scrollDuration: 400,
             isKeyboardNavigation: false,
@@ -879,7 +888,7 @@ class SlideshowView extends React.Component {
             avoidIndividualNavigation: false,
             isContinuousScrolling: false,
             direction: isRTL ? 1 : -1,
-          }),
+          })},
         isAbleToNavigateNext: () => {
           return isRTL ? !this.state.hideLeftArrow : !this.state.hideRightArrow;
         },
@@ -902,13 +911,15 @@ class SlideshowView extends React.Component {
         // nextGroup,
         // previousItem,
         // previousGroup,
-        toIndex: (itemIdx, animationDuration = 400) =>
-          this.scrollToIndex({ itemIdx, scrollDuration: animationDuration }),
+        toIndex: (itemIdx, animationDuration = 400) => {
+          const fromIndex = this.state.activeIndex;
+          this.willNavigate(fromIndex, itemIdx);
+          this.scrollToIndex({ itemIdx, scrollDuration: animationDuration })},
         // getCurrentActiveItemIndex,
         // getCurrentActiveGroupIndex,
-        assignIndexChangeCallback: (func) => {
-          this.navigationPanelCallbackOnIndexChange = func;
-        },
+        // assignIndexChangeCallback: (func) => {
+        //   this.navigationPanelCallbackOnIndexChange = func;
+        // },
       };
     }
     this.props.actions.eventsListener(GALLERY_CONSTS.events.NAVIGATION_API_READY, this.navigationPanelAPI);
