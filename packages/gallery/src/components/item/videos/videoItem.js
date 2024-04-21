@@ -27,11 +27,11 @@ class VideoItem extends React.Component {
   }
 
   dynamiclyImportVideoPlayers() {
-    if (!(window && window?.[window.location.href]?.ReactPlayer)) {
+    if (!(window && window.ReactPlayer)) {
       import(
         /* webpackChunkName: "proGallery_reactPlayer" */ 'react-player'
       ).then((ReactPlayer) => {
-        window[window.location.href] = { ReactPlayer: ReactPlayer.default };
+        window.ReactPlayer = ReactPlayer.default;
         this.setState({ reactPlayerLoaded: true });
         this.playVideoIfNeeded();
       });
@@ -144,13 +144,13 @@ class VideoItem extends React.Component {
     if (
       !(
         window &&
-        window?.[window.location.href]?.ReactPlayer &&
+        window.ReactPlayer &&
         (this.state.loadVideo || this.props.playing)
       )
     ) {
       return null;
     }
-    const PlayerElement = window?.[window.location.href]?.ReactPlayer;
+    const PlayerElement = window.ReactPlayer;
     const isWiderThenContainer = this.props.style.ratio >= this.props.cropRatio;
 
     // adding 1 pixel to compensate for the difference we have sometimes from layouter in grid fill
