@@ -885,16 +885,16 @@ class SlideshowView extends React.Component {
             direction: isRTL ? 1 : -1,
           });
         },
-        isAbleToNavigateNext: () => {
+        navigateNextEnabled: () => {
           return isRTL ? !this.state.hideLeftArrow : !this.state.hideRightArrow;
         },
-        isAbleToNavigateBack: () => {
+        navigatePreviousEnabled: () => {
           return isRTL ? !this.state.hideRightArrow : !this.state.hideLeftArrow;
         },
-        getActiveItemIndex: () => {
+        getCurrentItemIndex: () => {
           return this.state.activeIndex;
         },
-        triggerItemAction: (e, { itemIndex = this.state.activeIndex } = {}) => {
+        triggerItemClick: (e, { itemIndex = this.state.activeIndex } = {}) => {
           const galleryConfig = this.createGalleryConfig();
           const item = this.props.galleryStructure.galleryItems[itemIndex % this.props.totalItemsCount];
           const props = item?.renderProps({
@@ -907,7 +907,7 @@ class SlideshowView extends React.Component {
         // nextGroup,
         // previousItem,
         // previousGroup,
-        toIndex: (itemIdx, animationDuration = 400) => {
+        navigateToIndex: (itemIdx, animationDuration = 400) => {
           this.scrollToIndex({ itemIdx, scrollDuration: animationDuration });
         },
         // getCurrentActiveItemIndex,
