@@ -862,13 +862,10 @@ class SlideshowView extends React.Component {
       GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT;
     if (!this.navigationPanelAPI) {
       this.navigationPanelAPI = {
-        willNavigate(fromIndex, toIndex) {
-          this.props.actions.eventsListener(GALLERY_CONSTS.events.WILL_NAVIGATE, { fromIndex, toIndex });
+        onGalleryNavigationStart: (handler) => {
+          this.props.actions.eventsListener(GALLERY_CONSTS.events.GALLERY_NAVIGATION_START, handler);
         },
         next: () => {
-          const fromIndex = this.state.activeIndex;
-          const toIndex = (fromIndex + 1) % this.props.totalItemsCount;
-          this.navigationPanelAPI.willNavigate(fromIndex, toIndex);
           this.next({
             scrollDuration: 400,
             isKeyboardNavigation: false,
@@ -876,11 +873,9 @@ class SlideshowView extends React.Component {
             avoidIndividualNavigation: false,
             isContinuousScrolling: false,
             direction: isRTL ? -1 : 1,
-          })},
-        back: () => {
-          const fromIndex = this.state.activeIndex;
-          const toIndex = (fromIndex - 1 + this.props.totalItemsCount) % this.props.totalItemsCount;
-          this.navigationPanelAPI.willNavigate(toIndex);
+          });
+        },
+        previous: () => {
           this.next({
             scrollDuration: 400,
             isKeyboardNavigation: false,
@@ -888,7 +883,8 @@ class SlideshowView extends React.Component {
             avoidIndividualNavigation: false,
             isContinuousScrolling: false,
             direction: isRTL ? 1 : -1,
-          })},
+          });
+        },
         isAbleToNavigateNext: () => {
           return isRTL ? !this.state.hideLeftArrow : !this.state.hideRightArrow;
         },
@@ -912,9 +908,8 @@ class SlideshowView extends React.Component {
         // previousItem,
         // previousGroup,
         toIndex: (itemIdx, animationDuration = 400) => {
-          const fromIndex = this.state.activeIndex;
-          this.willNavigate(fromIndex, itemIdx);
-          this.scrollToIndex({ itemIdx, scrollDuration: animationDuration })},
+          this.scrollToIndex({ itemIdx, scrollDuration: animationDuration });
+        },
         // getCurrentActiveItemIndex,
         // getCurrentActiveGroupIndex,
         // assignIndexChangeCallback: (func) => {
