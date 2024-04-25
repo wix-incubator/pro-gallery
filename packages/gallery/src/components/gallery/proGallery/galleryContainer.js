@@ -42,7 +42,7 @@ export class GalleryContainer extends React.Component {
     this.onMouseLeave = this.onMouseLeave.bind(this);
     this.mediaScrollHelper = new MediaScrollHelperWrapper([
       {
-        getPlayTrigger: (options) => (utils.isMobile() ? 'CLICK' : options.behaviourParams_item_video_playTrigger),
+        getPlayTrigger: (options) => options.behaviourParams_item_video_playTrigger,
         onSetPlayingIdx: (idx) => this.setState({ playingVideoIdx: idx }),
         supportedItemsFilter: (item) =>
           item.type === 'video' ||
