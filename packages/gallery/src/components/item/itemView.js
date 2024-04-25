@@ -73,7 +73,8 @@ class ItemView extends React.Component {
     this.onBlur = this.onBlur.bind(this);
     this.checkIfCurrentHoverChanged =
       this.checkIfCurrentHoverChanged.bind(this);
-    this.shouldHoverWithoutOverlayAndClickOnMobile = this.shouldHoverWithoutOverlayAndClickOnMobile.bind(this);
+    this.shouldHoverWithoutOverlayAndClickOnMobile =
+      this.shouldHoverWithoutOverlayAndClickOnMobile.bind(this);
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -329,13 +330,12 @@ class ItemView extends React.Component {
     return false;
   }
 
-
   shouldHoverWithoutOverlayAndClickOnMobile() {
     return (
       utils.isMobile() &&
       this.props.options.behaviourParams.item.video.playTrigger ===
-      GALLERY_CONSTS.videoPlay.HOVER &&
-      this.props.options.itemClick === GALLERY_CONSTS.itemClick.NOTHING 
+        GALLERY_CONSTS.videoPlay.HOVER &&
+      this.props.options.itemClick === GALLERY_CONSTS.itemClick.NOTHING
     );
   }
 
