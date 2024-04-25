@@ -73,6 +73,8 @@ class ItemView extends React.Component {
     this.onBlur = this.onBlur.bind(this);
     this.checkIfCurrentHoverChanged =
       this.checkIfCurrentHoverChanged.bind(this);
+    this.shouldHoverWithoutOverlayAndClickOnMobile =
+      this.shouldHoverWithoutOverlayAndClickOnMobile.bind(this);
   }
 
   //----------------------------------------| ACTIONS |-------------------------------------------//
@@ -204,6 +206,11 @@ class ItemView extends React.Component {
       this.shouldShowSecondMediaOnMobile()
     ) {
       setTimeout(this.handleHoverClickOnMobile(e), 0);
+    } else if (this.shouldHoverWithoutOverlayAndClickOnMobile()) {
+      this.props.actions.eventsListener(
+        GALLERY_CONSTS.events.HOVER_SET,
+        this.props.idx
+      );
     } else {
       this.handleGalleryItemAction(e);
     }
@@ -321,6 +328,15 @@ class ItemView extends React.Component {
       }
     }
     return false;
+  }
+
+  shouldHoverWithoutOverlayAndClickOnMobile() {
+    return (
+      utils.isMobile() &&
+      this.props.options.behaviourParams.item.video.playTrigger ===
+        GALLERY_CONSTS.videoPlay.HOVER &&
+      this.props.options.itemClick === GALLERY_CONSTS.itemClick.NOTHING
+    );
   }
 
   isHighlight() {
