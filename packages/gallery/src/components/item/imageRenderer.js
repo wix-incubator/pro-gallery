@@ -10,11 +10,11 @@ const ImageRenderer = (props) => {
   } else if (typeof props.src === 'object') {
     return (
       <picture id={`multi_picture_${props.id}`} key={`multi_picture_${props.id}`}>
-        {props.src.map((src) =>
+        {props.src.map((src, index) =>
           src.forPrinting ? (
-            <PrintOnlyImageSource srcSet={src.dpr} type={`image/${src.type}`} />
+            <PrintOnlyImageSource key={`print-only-image-${index}`} srcSet={src.dpr} type={`image/${src.type}`} />
           ) : (
-            <source srcSet={src.dpr || src.url} type={`image/${src.type}`} />
+            <source key={`image-source-${index}`} srcSet={src.dpr || src.url} type={`image/${src.type}`} />
           )
         )}
         <img alt={props.alt} {...imageProps} src={props.src[props.src.length - 1].url} />

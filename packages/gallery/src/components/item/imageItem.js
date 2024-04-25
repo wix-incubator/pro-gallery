@@ -123,8 +123,8 @@ class ImageItem extends React.Component {
       const blockDownloadStyles =
         utils.isMobile() && this.props.options[optionsMap.behaviourParams.gallery.blockContextMenu]
           ? {
-              '-webkit-user-select': 'none',
-              '-webkit-touch-callout': 'none',
+              WebkitUserSelect: 'none',
+              WebkitTouchCallout: 'none',
             }
           : {};
 
