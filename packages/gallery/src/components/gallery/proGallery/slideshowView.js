@@ -342,7 +342,7 @@ class SlideshowView extends React.Component {
     return {
       scrollMarginCorrection: this.getStyles().margin || 0,
       _scrollDuration:
-        scrollDuration || this.props.options.behaviourParams_gallery_horizontal_navigationDuration || 400,
+        scrollDuration ?? this.props.options.behaviourParams_gallery_horizontal_navigationDuration ?? 400,
     };
   }
 
@@ -891,7 +891,7 @@ class SlideshowView extends React.Component {
         navigatePreviousEnabled: () => {
           return isRTL ? !this.state.hideRightArrow : !this.state.hideLeftArrow;
         },
-        getCurrentItemIndex: () => {
+        currentIndex: () => {
           return this.state.activeIndex;
         },
         triggerItemClick: (e, { itemIndex = this.state.activeIndex } = {}) => {

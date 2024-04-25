@@ -28,16 +28,16 @@ import { optionsMap, GALLERY_CONSTS } from 'pro-gallery-lib';
 const { Step } = Steps;
 
 export function NavigationPanel(props) {
-  const [activeIdx, setActiveIndex] = useState(props.navigationPanelAPI.getCurrentItemIndex());
+  const [activeIdx, setActiveIndex] = useState(props.navigationPanelAPI.currentIndex());
   props.navigationPanelAPI.assignIndexChangeCallback(setActiveIndex);
   useEffect(() => {
-    if (props.navigationPanelAPI.getCurrentItemIndex() !== activeIdx) {
+    if (props.navigationPanelAPI.currentIndex() !== activeIdx) {
       props.navigationPanelAPI.navigateToIndex(activeIdx);
     }
   }, [activeIdx, props.navigationPanelAPI]);
 
   const APINavigationPanel = (props) => {
-    const activeIdx = props.navigationPanelAPI.getCurrentItemIndex();
+    const activeIdx = props.navigationPanelAPI.currentIndex();
     const percent = (activeIdx + 1) / props.totalItemsCount;
     const totalForProgress = props.totalItemsCount === Infinity ? 100 : props.totalItemsCount;
     let containerStyles = {
