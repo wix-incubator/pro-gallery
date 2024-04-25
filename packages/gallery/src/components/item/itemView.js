@@ -140,14 +140,14 @@ class ItemView extends React.Component {
       e.preventDefault();
     }
 
-    if (this.shouldShowHoverOnMobile() || this.shouldShowSecondMediaOnMobile()) {
-      this.handleHoverClickOnMobile(e);
-    } else if (
-      utils.isMobile() &&
-      this.props.options[optionsMap.behaviourParams.item.video.playTrigger] ===
-        GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER
+    if (
+      this.shouldShowHoverOnMobile() ||
+      this.shouldShowSecondMediaOnMobile() ||
+      (utils.isMobile() &&
+        this.props.options[optionsMap.behaviourParams.item.video.playTrigger] ===
+          GALLERY_CONSTS[optionsMap.behaviourParams.item.video.playTrigger].HOVER)
     ) {
-      this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, this.props.idx);
+      this.handleHoverClickOnMobile(e);
     } else {
       this.handleGalleryItemAction(e);
     }
