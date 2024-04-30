@@ -333,8 +333,7 @@ class ItemView extends React.Component {
   shouldHoverWithoutOverlayAndClickOnMobile() {
     return (
       utils.isMobile() &&
-      this.props.options.behaviourParams.item.video.playTrigger ===
-        GALLERY_CONSTS.videoPlay.HOVER &&
+      this.props.options.videoPlay === GALLERY_CONSTS.videoPlay.HOVER &&
       this.props.options.itemClick === GALLERY_CONSTS.itemClick.NOTHING
     );
   }
