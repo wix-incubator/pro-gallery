@@ -29,12 +29,6 @@ class WindowWrapper {
         if (hydrateMockMap.has(property) && this.shouldUseMock) {
           return hydrateMockMap.get(property);
         }
-        if (
-          typeof target[property] === 'function' &&
-          !customWindowPropsSet.has(property)
-        ) {
-          return target[property].bind(target);
-        }
         return target[property];
       }.bind(this),
       // here we push to the custom props Set to know later if we want to bind the prop
@@ -45,7 +39,24 @@ class WindowWrapper {
       },
     };
     // eslint-disable-next-line no-undef
-    this.window = new Proxy(window, handler);
+    const windowProxy = new Proxy(window, handler);
+    const windowFuncHandler = {
+      get: function (target, property) {
+        if (
+          !customWindowPropsSet.has(property) &&
+          typeof windowProxy[property] === 'function'
+        ) {
+          return windowProxy[property].bind(window);
+        }
+        return windowProxy[property];
+      },
+      set: function (target, property, value) {
+        return Reflect.set(windowProxy, property, value);
+      },
+    };
+    // this second proxy that returnes binded functions to avoid issues with non configurable proprties
+    // eslint-disable-next-line no-undef
+    this.window = new Proxy({}, windowFuncHandler);
   }
   initMockWindow() {
     this.window = WindowMock;
