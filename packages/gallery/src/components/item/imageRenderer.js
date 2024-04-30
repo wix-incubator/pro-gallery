@@ -6,7 +6,7 @@ class ImageRenderer extends React.Component {
     this.imageRef = null;
   }
   componentDidMount() {
-    if (this.imageRef.complete && typeof this.props.onLoad === 'function') {
+    if (this.imageRef?.complete && typeof this.props.onLoad === 'function') {
       this.props.onLoad();
     }
   }
