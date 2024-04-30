@@ -767,7 +767,9 @@ export class GalleryContainer extends React.Component {
       switch (eventName) {
         case GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED:
         case GALLERY_CONSTS.events.ITEM_CLICKED:
-          setTimeout(this.props.eventsListener(eventName, eventData, event), 0);
+          setTimeout(() => {
+            this.props.eventsListener(eventName, eventData, event);
+          }, 0);
           break;
         default:
           this.props.eventsListener(eventName, eventData, event);
