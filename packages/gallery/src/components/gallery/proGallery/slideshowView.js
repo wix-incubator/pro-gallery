@@ -904,17 +904,9 @@ class SlideshowView extends React.Component {
 
           this.props.actions.eventsListener(GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED, props, e);
         },
-        // nextGroup,
-        // previousItem,
-        // previousGroup,
         navigateToIndex: (itemIdx, animationDuration = 400) => {
           this.scrollToIndex({ itemIdx, scrollDuration: animationDuration });
         },
-        // getCurrentActiveItemIndex,
-        // getCurrentActiveGroupIndex,
-        // assignIndexChangeCallback: (func) => {
-        //   this.navigationPanelCallbackOnIndexChange = func;
-        // },
       };
     }
     this.props.actions.eventsListener(GALLERY_CONSTS.events.NAVIGATION_API_READY, this.navigationPanelAPI);
