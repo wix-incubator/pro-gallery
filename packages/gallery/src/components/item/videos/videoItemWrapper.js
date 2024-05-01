@@ -76,8 +76,7 @@ class VideoItemWrapper extends React.Component {
         isThumbnail={!!this.props.thumbnailHighlightId}
         id={this.props.idx}
         videoPlayButton={
-          showVideoPlayButton &&
-          !this.mightPlayVideo() && (
+          showVideoPlayButton && (
             <VideoPlayButton
               pointerEvents={
                 !useTransparentPlayButtonAndForceLoadVideo(this.props)
@@ -97,6 +96,7 @@ class VideoItemWrapper extends React.Component {
         );
         this.VideoItem = VideoItem.default;
         if (this.mightPlayVideo()) {
+          console.log('VideoItemLoaded ==>');
           this.setState({ VideoItemLoaded: true });
         }
       } catch (e) {
@@ -113,6 +113,7 @@ class VideoItemWrapper extends React.Component {
 
     const VideoItem = this.VideoItem;
     if (!this.mightPlayVideo() || !VideoItem) {
+      console.log('placeholder ==>');
       return (
         <div>
           {shouldCreateVideoPlaceholder(this.props.options) && videoPlaceholder}
