@@ -33,7 +33,7 @@ class VideoItemWrapper extends React.Component {
     super(props);
     this.mightPlayVideo = this.mightPlayVideo.bind(this);
     this.createVideoPlaceholder = this.createVideoPlaceholder.bind(this);
-    this.state = { VideoItemLoaded: false };
+    this.state = { videoItemLoaded: false };
   }
 
   mightPlayVideo() {
@@ -77,7 +77,7 @@ class VideoItemWrapper extends React.Component {
         id={this.props.idx}
         videoPlayButton={
           showVideoPlayButton &&
-          !this.mightPlayVideo() && (
+          !this.state.videoItemLoaded && (
             <VideoPlayButton
               pointerEvents={
                 !useTransparentPlayButtonAndForceLoadVideo(this.props)
@@ -90,15 +90,13 @@ class VideoItemWrapper extends React.Component {
   }
 
   async componentDidMount() {
-    if (!isEditMode()) {
+    if (!isEditMode() && this.mightPlayVideo()) {
       try {
         const VideoItem = await import(
           /* webpackChunkName: "proGallery_videoItem" */ './videoItem'
         );
         this.VideoItem = VideoItem.default;
-        if (this.mightPlayVideo()) {
-          this.setState({ VideoItemLoaded: true });
-        }
+        this.setState({ videoItemLoaded: true });
       } catch (e) {
         console.error('Failed to fetch VideoItem');
       }
@@ -112,7 +110,7 @@ class VideoItemWrapper extends React.Component {
     const videoPlaceholder = this.createVideoPlaceholder(showVideoPlayButton);
 
     const VideoItem = this.VideoItem;
-    if (!this.mightPlayVideo() || !VideoItem) {
+    if (!this.state.videoItemLoaded) {
       return (
         <div>
           {shouldCreateVideoPlaceholder(this.props.options) && videoPlaceholder}
