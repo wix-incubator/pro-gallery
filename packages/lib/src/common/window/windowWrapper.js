@@ -22,7 +22,6 @@ class WindowWrapper {
   }
 
   initProxyWindow() {
-    const customWindowPropsSet = new Set();
     const handler = {
       // here the proxy target is the global window object
       get: function (target, property) {
@@ -34,16 +33,16 @@ class WindowWrapper {
       // here we push to the custom props Set to know later if we want to bind the prop
       // reflect just assigns the proprty and returns boolean if the assign was successfull
       set: function (target, property, value) {
-        customWindowPropsSet.add(property);
         return Reflect.set(target, property, value);
       },
     };
     // eslint-disable-next-line no-undef
     const windowProxy = new Proxy(window, handler);
     const windowFuncHandler = {
+      customWindowProps: new Set(),
       get: function (target, property) {
         if (
-          !customWindowPropsSet.has(property) &&
+          !this.customWindowProps.has(property) &&
           typeof windowProxy[property] === 'function'
         ) {
           return windowProxy[property].bind(window);
@@ -51,6 +50,7 @@ class WindowWrapper {
         return windowProxy[property];
       },
       set: function (target, property, value) {
+        this.customWindowProps.add(property);
         return Reflect.set(windowProxy, property, value);
       },
     };
