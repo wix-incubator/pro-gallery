@@ -39,10 +39,9 @@ class WindowWrapper {
     // eslint-disable-next-line no-undef
     const windowProxy = new Proxy(window, handler);
     const windowFuncHandler = {
-      customWindowProps: new Set(),
       get: function (target, property) {
         if (
-          !this.customWindowProps.has(property) &&
+          !windowProxy.proGalleryCustomProps.has(property) &&
           typeof windowProxy[property] === 'function'
         ) {
           return windowProxy[property].bind(window);
@@ -50,10 +49,13 @@ class WindowWrapper {
         return windowProxy[property];
       },
       set: function (target, property, value) {
-        this.customWindowProps.add(property);
+        windowProxy.proGalleryCustomProps.add(property);
         return Reflect.set(windowProxy, property, value);
       },
     };
+    if (!windowProxy.proGalleryCustomProps) {
+      windowProxy.proGalleryCustomProps = new Set();
+    }
     // this second proxy that returnes binded functions to avoid issues with non configurable proprties
     // eslint-disable-next-line no-undef
     this.window = new Proxy({}, windowFuncHandler);
