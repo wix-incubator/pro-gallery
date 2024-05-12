@@ -309,7 +309,7 @@ export class GalleryContainer extends React.Component {
       isEditMode() ||
       gotFirstScrollEvent ||
       scrollY > 0 || // Can be an inner container with its own scroll
-      window.scrollY ||
+      window.scrollY > 0 ||
       isPreviewMode() ||
       this.props.activeIndex > 0
     ) {
