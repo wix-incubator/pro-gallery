@@ -308,7 +308,8 @@ export class GalleryContainer extends React.Component {
       isSEOMode() ||
       isEditMode() ||
       gotFirstScrollEvent ||
-      scrollY > 0 ||
+      scrollY > 0 || // Can be an inner container with its own scroll
+      window.scrollY > 0 ||
       isPreviewMode() ||
       this.props.activeIndex > 0
     ) {
