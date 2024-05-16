@@ -241,6 +241,10 @@ class VideoItem extends React.Component {
             attributes,
             forceHLS: this.shouldUseHlsPlayer(),
             forceVideo: this.shouldForceVideoForHLS(),
+            hlsOptions: {
+              startLevel: 3,
+              testBandwidth: false,
+            },
           },
         }}
         key={'video-' + this.props.id}
