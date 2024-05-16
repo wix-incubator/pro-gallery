@@ -165,6 +165,7 @@ class ImageItem extends React.Component {
           case GALLERY_CONSTS.loadingMode.BLUR:
             preload = (
               <ImageRenderer
+                id={id}
                 alt=""
                 key={'image_preload_blur-' + id}
                 src={createUrl(
@@ -186,6 +187,7 @@ class ImageItem extends React.Component {
           case GALLERY_CONSTS.loadingMode.MAIN_COLOR:
             preload = (
               <ImageRenderer
+                id={id}
                 alt=""
                 key={'image_preload_main_color-' + id}
                 src={createUrl(
@@ -222,6 +224,7 @@ class ImageItem extends React.Component {
 
       const highres = (
         <ImageRenderer
+          id={id}
           key={'image_highres-' + id}
           className={`gallery-item-visible gallery-item gallery-item-preloaded`}
           data-hook="gallery-item-image-img"
