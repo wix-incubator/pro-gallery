@@ -781,7 +781,6 @@ export class GalleryContainer extends React.Component {
     }
 
     if (eventName === GALLERY_CONSTS.events.GALLERY_SCROLLED) {
-      console.log('GALLERY_SCROLLED ==>');
       this.videoScrollHelper.trigger.SCROLL(eventData);
       const newScrollPosition = {
         ...this.state.scrollPosition,
