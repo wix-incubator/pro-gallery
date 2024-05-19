@@ -749,7 +749,10 @@ export class GalleryContainer extends React.Component {
     }
     if (eventName === GALLERY_CONSTS.events.CURRENT_ITEM_CHANGED) {
       this.setCurrentSlideshowViewIdx(eventData.idx);
-      if (this.getIsScrollLessGallery(this.state.options)) {
+      if (
+        this.getIsScrollLessGallery(this.state.options) &&
+        this.state.firstUserInteractionExecuted
+      ) {
         this.simulateHorizontalScrollToItem(
           this.galleryStructure.items[eventData.idx]
         );
