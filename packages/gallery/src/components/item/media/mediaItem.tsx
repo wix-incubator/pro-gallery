@@ -113,7 +113,7 @@ export default function MediaItem<T extends Record<string, any>>(props: MediaPro
       {props.hover}
     </>
   );
-  if (!isMediaPlayable) {
+  if (!isMediaPlayable || props.isPrerenderMode) {
     return placeholder;
   }
 
