@@ -763,7 +763,6 @@ export class GalleryContainer extends React.Component {
         case GALLERY_CONSTS.events.HOVER_SET:
         case GALLERY_CONSTS.events.LOAD_MORE_CLICKED:
         case GALLERY_CONSTS.events.ITEM_ACTION_TRIGGERED:
-        case GALLERY_CONSTS.events.ITEM_CLICKED:
           this.setState({ firstUserInteractionExecuted: true });
           break;
       }
