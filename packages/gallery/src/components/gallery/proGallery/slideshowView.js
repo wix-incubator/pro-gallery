@@ -306,10 +306,8 @@ class SlideshowView extends React.Component {
         this.props.options.groupSize === 1 &&
         !this.props.isScrollLessGallery
       ) {
-        const skipToSlide = this.skipFromSlide - this.props.totalItemsCount;
-
         if (nextItem >= this.skipFromSlide) {
-          nextItem = skipToSlide;
+          nextItem = utils.inRange(nextItem, this.props.totalItemsCount);
           await this.props.actions.scrollToItem(nextItem);
         }
       }
@@ -487,6 +485,12 @@ class SlideshowView extends React.Component {
     }
   };
 
+  getFirstIdx(itemIdx) {
+    const { galleryItems } = this.props.galleryStructure;
+    const activeItemId = galleryItems[itemIdx].itemId;
+    return galleryItems.find((item) => item.itemId === activeItemId).idx;
+  }
+
   scrollToThumbnail(itemIdx, scrollDuration) {
     //not to confuse with this.props.actions.scrollToItem. this is used to replace it only for thumbnail items
 
@@ -494,8 +498,11 @@ class SlideshowView extends React.Component {
       GALLERY_CONSTS.events.THUMBNAIL_CLICKED,
       this.props
     );
+    const activeIdx = this.state.activeIndex;
+    const targetIdx =
+      activeIdx + (this.getFirstIdx(itemIdx) - this.getFirstIdx(activeIdx));
     this.scrollToIndex({
-      itemIdx,
+      itemIdx: targetIdx,
       scrollDuration,
       isRTL: this.props.options.isRTL,
     });

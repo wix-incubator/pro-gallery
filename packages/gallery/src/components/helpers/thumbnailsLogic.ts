@@ -34,7 +34,7 @@ function calculateActiveIndexOffset({
 export function clearGalleryItems(items: any[], galleryItems: any[]): any[] {
   const clear = (list) =>
     utils
-      .uniqueBy(list, 'idx')
+      .uniqueBy(list, 'id')
       .filter((item) => item.idx !== undefined)
       .sort((a, b) => a.idx - b.idx);
   const clearedGalleryItems = clear(galleryItems);
@@ -117,6 +117,7 @@ export function getThumbnailsData({
     height,
     thumbnailSizeWithSpacing,
     activeIndex: activeIndexWithOffset,
+    itemsCount: galleryItems.length,
   });
 
   const thumbnailsStyleWithRTLCalc = isRTL
@@ -201,12 +202,14 @@ function getThumbnailsStyles({
   height,
   activeIndex,
   thumbnailSizeWithSpacing,
+  itemsCount: numberOfItems,
 }: {
   horizontalThumbnails: boolean;
   width: number;
   height: number;
   activeIndex: number;
   thumbnailSizeWithSpacing: number;
+  itemsCount: number;
 }): CSSProperties {
   const baseStyle = {
     overflow: 'visible',
@@ -215,7 +218,7 @@ function getThumbnailsStyles({
   };
   const size = horizontalThumbnails ? width : height;
   const unit = horizontalThumbnails ? 'left' : 'top';
-  const distance = thumbnailSizeWithSpacing * activeIndex;
+  const distance = thumbnailSizeWithSpacing * (activeIndex % numberOfItems);
   const initialCenter = size / 2 - thumbnailSizeWithSpacing / 2;
 
   return {
