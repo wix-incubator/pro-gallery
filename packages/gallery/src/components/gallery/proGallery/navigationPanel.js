@@ -3,10 +3,7 @@ import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 
 import TextItem from '../../item/textItem.js';
 
-import {
-  getThumbnailsData,
-  clearGalleryItems,
-} from '../../helpers/thumbnailsLogic';
+import { getThumbnailsData, clearGalleryItems } from 'pro-gallery-lib';
 
 const ENTER_KEY = 'Enter';
 

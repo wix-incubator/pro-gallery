@@ -272,3 +272,13 @@ function getThumbnailLocation({
     [isRTL ? 'bottom' : 'top']: offsetSize,
   };
 }
+export default {
+  getThumbnailsData,
+  getThumbnailsContainerSize,
+  getNumberOfThumbnails,
+  getThumbnailsStyles,
+  getThumbnailsContainerMargin,
+  getThumbnailLocation,
+  calculateActiveIndexOffset,
+  clearGalleryItems,
+};
