@@ -3,7 +3,7 @@ import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 
 import TextItem from '../../item/textItem.js';
 
-import { getThumbnailsData, clearGalleryItems } from 'pro-gallery-lib';
+import { thumbnailsLogic } from 'pro-gallery-lib';
 
 const ENTER_KEY = 'Enter';
 
@@ -24,7 +24,7 @@ class NavigationPanel extends React.Component {
     galleryStructure,
     settings,
   }) {
-    const clearedGalleryItems = clearGalleryItems(
+    const clearedGalleryItems = thumbnailsLogic.clearGalleryItems(
       this.props.items,
       this.props.galleryStructure.galleryItems
     );
@@ -39,7 +39,7 @@ class NavigationPanel extends React.Component {
       thumbnailsMargins,
       thumbnailsStyle,
       activeIndexOffsetMemory,
-    } = getThumbnailsData({
+    } = thumbnailsLogic.getThumbnailsData({
       items: this.props.items,
       activeIndex,
       options,
