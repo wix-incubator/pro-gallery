@@ -14,7 +14,6 @@ const fixToMasonry = (options) => {
     GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['1'],
   ];
   presetOptions[optionsMap.behaviourParams.gallery.horizontal.loop] = false;
-  presetOptions[optionsMap.behaviourParams.gallery.horizontal.blockScroll] = false;
   presetOptions[optionsMap.layoutParams.crop.cropOnlyFill] = false;
   return presetOptions;
 };
