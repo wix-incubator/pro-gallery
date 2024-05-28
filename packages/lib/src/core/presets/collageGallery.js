@@ -23,7 +23,6 @@ const fixToCollage = (options) => {
   presetOptions[optionsMap.layoutParams.structure.responsiveMode] =
     GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].FIT_TO_SCREEN;
   presetOptions[optionsMap.layoutParams.structure.numberOfColumns] = 0;
-  presetOptions[optionsMap.behaviourParams.gallery.horizontal.blockScroll] = false;
   presetOptions[optionsMap.layoutParams.crop.cropOnlyFill] = false;
   presetOptions[optionsMap.behaviourParams.gallery.horizontal.slideAnimation] =
     GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation].SCROLL;
