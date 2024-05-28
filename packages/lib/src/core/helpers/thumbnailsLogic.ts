@@ -1,4 +1,6 @@
-import { GalleryProps, GALLERY_CONSTS, utils } from 'pro-gallery-lib';
+import { default as GALLERY_CONSTS } from '../../common/constants/index';
+import utils from '../../common/utils';
+import { GalleryProps } from '../../common/interfaces/galleryTypes';
 import { CSSProperties } from 'react';
 
 function calculateActiveIndexOffset({
