@@ -7,7 +7,9 @@ import VideoItemPlaceholder from './videoItemPlaceholder';
 
 const isIos = utils.isiOS();
 const useTransparentPlayButtonAndForceLoadVideo = (props) =>
-  (props.videoUrl || props.url).includes('youtube.com') && isIos;
+  ((props.videoUrl || props.url).includes('youtube.com') ||
+    (props.videoUrl || props.url).includes('youtu.be')) &&
+  isIos;
 
 const VideoPlayButton = ({ pointerEvents }) => (
   <div style={{ pointerEvents: pointerEvents ? 'initial' : 'none' }}>
