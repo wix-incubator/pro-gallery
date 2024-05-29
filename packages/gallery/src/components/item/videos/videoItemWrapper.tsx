@@ -6,7 +6,8 @@ import MediaImage, { MediaImplementationProps, MediaBaseProps } from '../media/m
 
 const isIos = utils.isiOS();
 const useTransparentPlayButtonAndForceLoadVideo = (props) =>
-  (props.videoUrl || props.url).includes('youtube.com') && isIos;
+  ((props.videoUrl || props.url).includes('youtube.com') || (props.videoUrl || props.url).includes('youtu.be')) &&
+  isIos;
 
 const VideoItem = React.lazy(() => {
   return import(/* webpackChunkName: "proGallery_videoItem" */ './videoItem');
