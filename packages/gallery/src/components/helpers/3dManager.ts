@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
 import * as THREE from 'three';
-import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader';
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { GLTFLoader, GLTF } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { LoadingManager } from 'three';
 
@@ -219,7 +219,7 @@ export function createSceneManager(container: HTMLElement, canvas: HTMLCanvasEle
       },
       async loadHDR(url) {
         const { RGBELoader } = await import(
-          /* webpackChunkName: "three-rbdl-loader" */ 'three/examples/jsm/loaders/RGBELoader'
+          /* webpackChunkName: "three-rbdl-loader" */ 'three/examples/jsm/loaders/RGBELoader.js'
         );
         const hdrLoader = new RGBELoader();
         const hdr = await new Promise<THREE.Texture>((resolve) => {
