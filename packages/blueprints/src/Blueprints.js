@@ -180,14 +180,14 @@ class Blueprints {
               (newItem.metaData.type !== existingItem.metaData.type ||
                 newItem.metaData.title !== existingItem.metaData.title ||
                 newItem.metaData.description !==
-                  existingItem.metaData.description)) ||
+                  existingItem.metaData.description ||
+                newItem.metaData.width !== existingItem.metaData.width ||
+                newItem.metaData.height !== existingItem.metaData.height)) ||
             (newItem.metaData &&
               newItem.metaData.type === 'text' &&
               existingItem.metaData &&
               existingItem.metaData.type === 'text' &&
-              (newItem.metaData.width !== existingItem.metaData.width ||
-                newItem.metaData.height !== existingItem.metaData.height ||
-                newItem.metaData.html !== existingItem.metaData.html ||
+              (newItem.metaData.html !== existingItem.metaData.html ||
                 newItem.metaData.textStyle !==
                   existingItem.metaData.textStyle ||
                 newItem.metaData.editorHtml !==
