@@ -967,7 +967,7 @@ class ItemView extends React.Component {
         data-hash={hash}
         data-id={photoId}
         data-idx={idx}
-        role={this.getItemAriaRole()}
+        {...(this.getItemAriaRole() && { role: this.getItemAriaRole() })}
         data-hook="item-container"
         key={'item-container-' + id}
         style={this.getItemContainerStyles()}

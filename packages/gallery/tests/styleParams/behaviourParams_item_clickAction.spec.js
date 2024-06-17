@@ -40,7 +40,7 @@ describe('options - behaviourParams_item_clickAction', () => {
       expect(item.props().role).to.eq('button');
       driver.detach.proGallery();
     });
-    it('expect "role" to be "" when "behaviourParams_item_clickAction" is "nothing"', async () => {
+    it('expect no "role" attribute when "behaviourParams_item_clickAction" is "nothing"', async () => {
       initialProps.options = Object.assign(initialProps.options, {
         [optionsMap.behaviourParams.item.clickAction]:
           GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].NOTHING,
@@ -48,7 +48,7 @@ describe('options - behaviourParams_item_clickAction', () => {
       driver.mount.proGallery(initialProps);
       await driver.update();
       const item = driver.find.hook('item-container').at(3);
-      expect(item.props().role).to.eq('');
+      expect(item.props()).to.not.have.property('role');
       driver.detach.proGallery();
     });
   });
