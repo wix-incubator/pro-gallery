@@ -2,7 +2,7 @@ const noop = () => ({});
 const width = 2560;
 const height = 1440;
 
-const dims = {
+export const dimsMock = {
   y: 0,
   x: 0,
   width,
@@ -16,8 +16,8 @@ const dims = {
 };
 
 const elem = {
-  ...dims,
-  getBoundingClientRect: () => dims,
+  ...dimsMock,
+  getBoundingClientRect: () => dimsMock,
 };
 
 const documentMock = {
@@ -30,8 +30,8 @@ const documentMock = {
   querySelector: () => [elem],
   documentElement: elem,
   activeElement: elem,
-  style: dims,
-  ...dims,
+  style: dimsMock,
+  ...dimsMock,
 };
 
 documentMock.body = documentMock;
@@ -46,18 +46,24 @@ const locationMock = {
   search: '',
   hash: '',
 };
-
+export const scrollMock = {
+  scrollTop: 0,
+  scrollY: 0,
+};
+const windowHydrateMock = {
+  ...dimsMock,
+  ...scrollMock,
+};
 const windowMock = {
   isMock: true,
   isSSR: true,
   orientation: 0,
   devicePixelRatio: 1,
-  scrollTop: 0,
   addEventListener: noop,
   removeEventListener: noop,
   createEvent: noop,
   CustomEvent: noop,
-  screen: dims,
+  screen: dimsMock,
   open: noop,
   petri: {},
   search: {},
@@ -69,9 +75,10 @@ const windowMock = {
   getComputedStyle: noop,
   localStorage: {},
   frames: [],
-  ...dims,
+  ...windowHydrateMock,
 };
 
+export const hydrateMockMap = new Map(Object.keys(windowHydrateMock).map((key) => [key, windowHydrateMock[key]]));
 windowMock.parent = windowMock;
 
 export default windowMock;

@@ -22,7 +22,7 @@ export { NEW_PRESETS } from './core/presets/presets';
 export { getLayoutName } from './core/presets/presets';
 export { isInPreset } from './core/presets/presets';
 
-export { default as window } from './common/window/windowWrapper';
+export { default as window, windowWrapper } from './common/window/windowWrapper';
 export { default as utils } from './common/utils';
 
 export { viewModeWrapper } from './common/window/viewModeWrapper';
