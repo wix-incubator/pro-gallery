@@ -24,7 +24,6 @@ const fixToThumbnail = (options) => {
   presetOptions[optionsMap.layoutParams.structure.numberOfGridRows] = 1;
   presetOptions[optionsMap.layoutParams.crop.enableSmartCrop] = false;
   presetOptions[optionsMap.layoutParams.thumbnails.enable] = true;
-  presetOptions[optionsMap.behaviourParams.gallery.horizontal.blockScroll] = false;
   presetOptions[optionsMap.behaviourParams.gallery.horizontal.enableScrollSnap] = true;
   presetOptions[optionsMap.layoutParams.crop.cropOnlyFill] = false;
   presetOptions[optionsMap.layoutParams.structure.scatter.randomScatter] = 0;

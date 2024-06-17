@@ -21,7 +21,6 @@ const fixToGrid = (options) => {
   presetOptions[optionsMap.behaviourParams.gallery.horizontal.loop] = false;
   presetOptions[optionsMap.layoutParams.crop.enableSmartCrop] = false;
   // presetOptions.galleryType = 'Columns';
-  presetOptions[optionsMap.behaviourParams.gallery.horizontal.blockScroll] = false;
   presetOptions[optionsMap.layoutParams.crop.cropOnlyFill] = false;
   presetOptions[optionsMap.layoutParams.targetItemSize.minimum] = 50;
   presetOptions[optionsMap.behaviourParams.gallery.horizontal.slideAnimation] =

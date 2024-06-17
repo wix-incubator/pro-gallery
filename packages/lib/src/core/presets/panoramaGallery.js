@@ -18,7 +18,6 @@ const fixToPanorama = (options) => {
   presetOptions[optionsMap.layoutParams.structure.responsiveMode] =
     GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW;
   presetOptions[optionsMap.layoutParams.structure.numberOfColumns] = 1;
-  presetOptions[optionsMap.behaviourParams.gallery.horizontal.blockScroll] = false;
   presetOptions[optionsMap.layoutParams.crop.cropOnlyFill] = false;
   presetOptions[optionsMap.behaviourParams.gallery.horizontal.loop] = false;
 

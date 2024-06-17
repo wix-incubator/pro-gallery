@@ -10,7 +10,7 @@ export default {
       GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL &&
     options[optionsMap.layoutParams.groups.groupSize] === 1 &&
     options[optionsMap.layoutParams.crop.enable] &&
-    options[optionsMap.layoutParams.crop.ratios] === ['100%/100%'], //v5 TODO check that this works
+    JSON.stringify(options[optionsMap.layoutParams.crop.ratios]) === JSON.stringify(['100%/100%']), //v5 TODO check that this works
   isRelevantDescription:
     'Set a Horizontal gallery ("Scroll Direction" as "Horizontal"), set "Max Group Size" to "1" and set "Crop Images" to true.',
   type: INPUT_TYPES.OPTIONS,

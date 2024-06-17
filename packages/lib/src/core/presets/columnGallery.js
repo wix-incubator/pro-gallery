@@ -21,7 +21,6 @@ const fixToColumn = (options) => {
   presetOptions[optionsMap.layoutParams.crop.enableSmartCrop] = false;
 
   presetOptions[optionsMap.layoutParams.structure.numberOfColumns] = 0;
-  presetOptions[optionsMap.behaviourParams.gallery.horizontal.blockScroll] = false;
   presetOptions[optionsMap.layoutParams.crop.cropOnlyFill] = false;
 
   presetOptions[optionsMap.behaviourParams.gallery.horizontal.slideAnimation] =
