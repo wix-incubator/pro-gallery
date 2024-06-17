@@ -22,7 +22,7 @@ class WindowWrapper {
   }
 
   initProxyWindow() {
-    const customWindowPropsSet = new Set();
+    console.log('locall pro-gallery ==>');
     const handler = {
       // here the proxy target is the global window object
       get: function (target, property) {
@@ -34,7 +34,6 @@ class WindowWrapper {
       // here we push to the custom props Set to know later if we want to bind the prop
       // reflect just assigns the proprty and returns boolean if the assign was successfull
       set: function (target, property, value) {
-        customWindowPropsSet.add(property);
         return Reflect.set(target, property, value);
       },
     };
@@ -42,15 +41,19 @@ class WindowWrapper {
     const windowProxy = new Proxy(window, handler);
     const windowFuncHandler = {
       get: function (target, property) {
-        if (!customWindowPropsSet.has(property) && typeof windowProxy[property] === 'function') {
+        if (!windowProxy.proGalleryCustomProps.has(property) && typeof windowProxy[property] === 'function') {
           return windowProxy[property].bind(window);
         }
         return windowProxy[property];
       },
       set: function (target, property, value) {
+        windowProxy.proGalleryCustomProps.add(property);
         return Reflect.set(windowProxy, property, value);
       },
     };
+    if (!windowProxy.proGalleryCustomProps) {
+      windowProxy.proGalleryCustomProps = new Set();
+    }
     // this second proxy that returnes binded functions to avoid issues with non configurable proprties
     // eslint-disable-next-line no-undef
     this.window = new Proxy({}, windowFuncHandler);
