@@ -670,7 +670,7 @@ class SlideshowView extends React.Component {
         }
       : {
           height,
-          width: this.props.container.galleryWidth,
+          width: this.props.container.galleryWidth, //
         };
   }
 
