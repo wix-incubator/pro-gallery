@@ -49,14 +49,14 @@ describe('options - itemClick', () => {
       expect(item.props().role).to.eq('button');
       driver.detach.proGallery();
     });
-    it('expect "role" to be "" when "itemClick" is "nothing"', async () => {
+    it('expect no "role" attribute when "itemClick" is "nothing"', async () => {
       initialProps.options = mergeNestedObjects(initialProps.options, {
         itemClick: 'nothing',
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
       const item = driver.find.hook('item-container').at(3);
-      expect(item.props().role).to.eq('');
+      expect(item.props()).to.not.have.property('role');
       driver.detach.proGallery();
     });
   });
