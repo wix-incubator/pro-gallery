@@ -1081,7 +1081,11 @@ class SlideshowView extends React.Component {
         }
       );
     }
-    if (this.props.totalItemsCount !== props.totalItemsCount) {
+    if (
+      this.props.totalItemsCount !== props.totalItemsCount ||
+      this.props.container.galleryHeight !== props.container.galleryHeight ||
+      this.props.container.galleryWidth !== props.container.galleryWidth
+    ) {
       this.removeArrowsIfNeeded();
     }
     if (isEditMode() || isPreviewMode()) {
