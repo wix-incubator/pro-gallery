@@ -952,6 +952,7 @@ class ItemView extends React.Component {
     const isItemWrapperEmpty =
       options[optionsMap.layoutParams.info.placement] !==
         GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY && !this.hasRequiredMediaUrl;
+    const itemAriaRole = this.getItemAriaRole();
     const innerDiv = (
       <div
         className={this.getItemContainerClass()}
@@ -967,7 +968,7 @@ class ItemView extends React.Component {
         data-hash={hash}
         data-id={photoId}
         data-idx={idx}
-        {...(this.getItemAriaRole() && { role: this.getItemAriaRole() })}
+        {...(itemAriaRole && { role: itemAriaRole })}
         data-hook="item-container"
         key={'item-container-' + id}
         style={this.getItemContainerStyles()}
