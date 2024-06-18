@@ -736,7 +736,7 @@ class SlideshowView extends React.Component {
   }
 
   isFullWidthGallery() {
-    return this.props.container.galleryWidth >= utils.getWindowWidth() - 10;
+    return this.props.container.galleryWidth >= utils.getWindowWidth() - 10; //
   }
 
   onAutoSlideshowAutoPlayKeyPress(e) {
