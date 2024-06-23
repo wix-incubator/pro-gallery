@@ -78,7 +78,7 @@ class SlideshowView extends React.Component {
     return this.scrollPosition() <= 1;
   }
 
-  isScrollEnd() {
+  isScrollEnd(props = this.props) {
     const slideAnimation = this.props.options.behaviourParams_gallery_horizontal_slideAnimation;
     if (
       this.props.options.behaviourParams_gallery_horizontal_loop ||
@@ -88,7 +88,8 @@ class SlideshowView extends React.Component {
       return false;
     }
     return (
-      this.isAllItemsLoaded() && this.scrollPositionAtTheAndOfTheGallery() >= Math.floor(this.getScrollElementWidth())
+      this.isAllItemsLoaded() &&
+      this.scrollPositionAtTheAndOfTheGallery() >= Math.floor(this.getScrollElementWidth(props))
     );
   }
 
@@ -98,8 +99,8 @@ class SlideshowView extends React.Component {
     return visibleItemsCount >= totalItemsCount;
   }
 
-  getScrollElementWidth() {
-    const { galleryStructure } = this.props;
+  getScrollElementWidth(props = this.props) {
+    const { galleryStructure } = props;
     return galleryStructure.width - this.props.options.layoutParams_structure_itemSpacing / 2;
   }
 
@@ -1086,7 +1087,7 @@ class SlideshowView extends React.Component {
       this.props.container.galleryHeight !== props.container.galleryHeight ||
       this.props.container.galleryWidth !== props.container.galleryWidth
     ) {
-      this.removeArrowsIfNeeded();
+      this.removeArrowsIfNeeded(props);
     }
     if (isEditMode() || isPreviewMode()) {
       if (
@@ -1108,15 +1109,15 @@ class SlideshowView extends React.Component {
       props.options.behaviourParams_gallery_horizontal_slideshowInfo_enablePlayButton;
   }
 
-  removeArrowsIfNeeded() {
+  removeArrowsIfNeeded(props = this.props) {
     const isRTL =
-      this.props.options.behaviourParams_gallery_layoutDirection ===
+      props.options.behaviourParams_gallery_layoutDirection ===
       GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT;
     const { hideLeftArrow, hideRightArrow } = this.state;
 
     const isScrollStart = this.isScrollStart();
     const isFirstItem = this.isFirstItem();
-    const isScrollEnd = this.isScrollEnd();
+    const isScrollEnd = this.isScrollEnd(props);
     const isLastItem = this.isLastItem();
 
     const atStart = isScrollStart || isFirstItem;
