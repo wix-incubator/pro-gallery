@@ -44,9 +44,12 @@ describe('options - behaviourParams_gallery_horizontal_slideAnimation', () => {
       expect(nextItem.hasClass(FADE_CLASSED.HIDDEN)).toBeTruthy();
       const button = driver.find.hook('nav-arrow-next');
       button.simulate('click');
+      console.log('!!! button before update', button);
       await driver.update(400);
       const prevItem = driver.find.selector('[data-hook="item-wrapper"]').at(0);
       expect(prevItem.hasClass(FADE_CLASSED.HIDDEN)).toBeTruthy();
+      const prevItem2 = driver.find.selector('[data-hook="item-wrapper"]').at(1);
+      expect(prevItem2.hasClass(FADE_CLASSED.HIDDEN)).toBeTruthy();
       expect(1).toEqual(1);
     });
     it('should not have Fade animation styles when "behaviourParams_gallery_horizontal_slideAnimation" is "Scroll"', async () => {
