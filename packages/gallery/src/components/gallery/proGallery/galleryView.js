@@ -174,7 +174,7 @@ class GalleryView extends React.Component {
           ...galleryConfig,
           visible: item.isVisible,
           key: `itemView-${item.id}-${index}`,
-          shouldIgnoreFocusRing: this.props.shouldIgnoreFocusRing,
+          shouldDisableItemFocus: this.props.shouldDisableItemFocus,
         });
         return React.createElement(itemView, {
           ...itemProps,
