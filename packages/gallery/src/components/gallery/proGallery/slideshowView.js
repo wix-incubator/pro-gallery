@@ -1068,7 +1068,7 @@ class SlideshowView extends React.Component {
         this.startAutoSlideshowIfNeeded(props.options);
       });
     }
-    if (this.props.activeIndex !== props.activeIndex || this.state.activeIndex !== props.activeIndex) {
+    if (this.props.activeIndex !== props.activeIndex) {
       utils.setStateAndLog(
         this,
         'Next Item',
@@ -1083,7 +1083,8 @@ class SlideshowView extends React.Component {
     if (
       this.props.totalItemsCount !== props.totalItemsCount ||
       this.props.container.galleryHeight !== props.container.galleryHeight ||
-      this.props.container.galleryWidth !== props.container.galleryWidth
+      this.props.container.galleryWidth !== props.container.galleryWidth ||
+      this.state.activeIndex !== props.activeIndex
     ) {
       this.removeArrowsIfNeeded(props);
     }
