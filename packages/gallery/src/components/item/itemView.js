@@ -898,7 +898,9 @@ class ItemView extends React.Component {
   }
 
   getItemContainerTabIndex() {
-    const tabIndex = this.isHighlight()
+    const tabIndex = this.props.shouldDisableItemFocus
+      ? -1
+      : this.isHighlight()
       ? utils.getTabIndex('currentThumbnail')
       : this.props.activeIndex === this.props.idx
       ? utils.getTabIndex('currentGalleryItem')

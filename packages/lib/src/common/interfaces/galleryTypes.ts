@@ -32,6 +32,7 @@ export interface GalleryProps {
   isInDisplay?: boolean;
   enableExperimentalFeatures?: boolean;
   virtualizationSettings?: VirtualizationSettings;
+  shouldDisableItemFocus?: boolean;
 }
 
 export interface GalleryState {
