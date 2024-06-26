@@ -111,11 +111,9 @@ class SlideshowView extends React.Component {
     return !this.props.options.behaviourParams_gallery_horizontal_loop && this.isScrollEnd();
   }
 
-  isLastItem() {
-    return (
-      !this.props.options.behaviourParams_gallery_horizontal_loop &&
-      this.state.activeIndex >= this.props.totalItemsCount - 1
-    );
+  isLastItem(props = this.props) {
+    const activeIndex = props?.activeIndex ?? this.state.activeIndex;
+    return !this.props.options.behaviourParams_gallery_horizontal_loop && activeIndex >= this.props.totalItemsCount - 1;
   }
 
   //__________________________________Slide show loop functions_____________________________________________
@@ -347,7 +345,7 @@ class SlideshowView extends React.Component {
     };
   }
 
-  onCurrentItemChanged() {
+  onCurrentItemChanged(props = this.props) {
     if (this.lastCurrentItem !== this.state.activeIndex) {
       this.lastCurrentItem = this.state.activeIndex;
       //this.props.actions.onCurrentItemChanged(this.state.currentIdx);
@@ -363,7 +361,7 @@ class SlideshowView extends React.Component {
       }
       this.navigationPanelCallbackOnIndexChange(this.state.activeIndex);
     }
-    this.removeArrowsIfNeeded();
+    this.removeArrowsIfNeeded(props);
   }
   clearAutoSlideshowInterval() {
     clearInterval(this.autoSlideshowInterval);
@@ -1078,14 +1076,15 @@ class SlideshowView extends React.Component {
           activeIndex: props.activeIndex,
         },
         () => {
-          this.onCurrentItemChanged();
+          this.onCurrentItemChanged(props);
         }
       );
     }
     if (
       this.props.totalItemsCount !== props.totalItemsCount ||
       this.props.container.galleryHeight !== props.container.galleryHeight ||
-      this.props.container.galleryWidth !== props.container.galleryWidth
+      this.props.container.galleryWidth !== props.container.galleryWidth ||
+      this.state.activeIndex !== props.activeIndex
     ) {
       this.removeArrowsIfNeeded(props);
     }
@@ -1118,7 +1117,7 @@ class SlideshowView extends React.Component {
     const isScrollStart = this.isScrollStart();
     const isFirstItem = this.isFirstItem();
     const isScrollEnd = this.isScrollEnd(props);
-    const isLastItem = this.isLastItem();
+    const isLastItem = this.isLastItem(props);
 
     const atStart = isScrollStart || isFirstItem;
     const atEnd = isScrollEnd || isLastItem;
