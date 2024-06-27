@@ -87,7 +87,7 @@ class VideoScrollHelper {
   };
 
   private readonly itemClicked: SetItemIdx = (idx) => {
-    if (!this.shouldTriggerAction(idx, 'CLICK')) {
+    if (!this.shouldTriggerAction(idx, 'CLICK') && !this.shouldTriggerAction(idx, 'ONCLICK')) {
       return;
     }
     if (this.currentPlayingIdx === idx) {
