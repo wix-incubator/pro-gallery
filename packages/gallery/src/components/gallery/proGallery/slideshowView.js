@@ -403,7 +403,7 @@ class SlideshowView extends React.Component {
     return {
       scrollMarginCorrection: this.getStyles().margin || 0,
       _scrollDuration:
-        scrollDuration || this.props.options.scrollDuration || 400,
+        scrollDuration ?? this.props.options.scrollDuration ?? 400,
     };
   }
 
@@ -943,10 +943,12 @@ class SlideshowView extends React.Component {
   };
   createOrGetCustomNavigationPanelAPI = () => {
     const isRTL = this.props.options.isRTL;
-    return (
-      this.navigationPanelAPI ||
-      (this.navigationPanelAPI = {
-        next: () =>
+    if (!this.navigationPanelAPI) {
+      this.navigationPanelAPI = {
+        onGalleryNavigationStart: (handler) => {
+          this.props.actions.eventsListener(GALLERY_CONSTS.events.GALLERY_NAVIGATION_START, handler);
+        },
+        next: () => {
           this.next({
             scrollDuration: 400,
             isKeyboardNavigation: false,
@@ -954,8 +956,9 @@ class SlideshowView extends React.Component {
             avoidIndividualNavigation: false,
             isContinuousScrolling: false,
             direction: isRTL ? -1 : 1,
-          }),
-        back: () =>
+          });
+        },
+        previous: () => {
           this.next({
             scrollDuration: 400,
             isKeyboardNavigation: false,
@@ -963,17 +966,18 @@ class SlideshowView extends React.Component {
             avoidIndividualNavigation: false,
             isContinuousScrolling: false,
             direction: isRTL ? 1 : -1,
-          }),
-        isAbleToNavigateNext: () => {
+          });
+        },
+        navigateNextEnabled: () => {
           return isRTL ? !this.state.hideLeftArrow : !this.state.hideRightArrow;
         },
-        isAbleToNavigateBack: () => {
+        navigatePreviousEnabled: () => {
           return isRTL ? !this.state.hideRightArrow : !this.state.hideLeftArrow;
         },
-        getActiveItemIndex: () => {
+        currentIndex: () => {
           return this.state.activeIndex;
         },
-        triggerItemAction: (e, { itemIndex = this.state.activeIndex } = {}) => {
+        triggerItemClick: (e, { itemIndex = this.state.activeIndex } = {}) => {
           const galleryConfig = this.createGalleryConfig();
           const item =
             this.props.galleryStructure.galleryItems[
@@ -990,18 +994,16 @@ class SlideshowView extends React.Component {
             e
           );
         },
-        // nextGroup,
-        // previousItem,
-        // previousGroup,
-        toIndex: (itemIdx) =>
-          this.scrollToIndex({ itemIdx, scrollDuration: 400, isRTL }),
-        // getCurrentActiveItemIndex,
-        // getCurrentActiveGroupIndex,
-        assignIndexChangeCallback: (func) => {
-          this.navigationPanelCallbackOnIndexChange = func;
+        navigateToIndex: (itemIdx, animationDuration = 400) => {
+          this.scrollToIndex({ itemIdx, scrollDuration: animationDuration });
         },
-      })
+      };
+    }
+    this.props.actions.eventsListener(
+      GALLERY_CONSTS.events.NAVIGATION_API_READY,
+      this.navigationPanelAPI
     );
+    return this.navigationPanelAPI;
   };
 
   getNavigationPanelArray() {
