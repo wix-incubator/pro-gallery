@@ -181,11 +181,6 @@ export class GalleryContainer extends React.Component {
       this.props.activeIndex !== nextProps.activeIndex &&
       nextProps.activeIndex !== this.currentSlideshowViewIdx
     ) {
-      console.log(
-        'scrolling to item',
-        this.props.activeIndex,
-        nextProps.activeIndex
-      );
       this.scrollToItem(nextProps.activeIndex, false, true, 0);
     }
 
