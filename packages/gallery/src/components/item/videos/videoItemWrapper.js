@@ -92,7 +92,7 @@ class VideoItemWrapper extends React.Component {
   }
 
   async componentDidMount() {
-    if (!isEditMode() && this.mightPlayVideo()) {
+    if (!isEditMode()) {
       try {
         const VideoItem = await import(
           /* webpackChunkName: "proGallery_videoItem" */ './videoItem'
@@ -104,7 +104,6 @@ class VideoItemWrapper extends React.Component {
       }
     }
   }
-
   render() {
     const hover = this.props.hover;
     const showVideoPlayButton =
@@ -112,7 +111,11 @@ class VideoItemWrapper extends React.Component {
     const videoPlaceholder = this.createVideoPlaceholder(showVideoPlayButton);
 
     const VideoItem = this.VideoItem;
-    if (!this.state.videoItemLoaded) {
+    const shouldRenderVideoItem =
+      !this.mightPlayVideo() ||
+      !this.state.videoItemLoaded ||
+      this.props.isPrerenderMode;
+    if (shouldRenderVideoItem) {
       return (
         <div>
           {shouldCreateVideoPlaceholder(this.props.options) && videoPlaceholder}
