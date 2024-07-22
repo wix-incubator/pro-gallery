@@ -479,6 +479,10 @@ export class GalleryContainer extends React.Component {
             this.state.options.autoSlideshowContinuousSpeed,
           imageMargin: this.state.options.imageMargin,
         };
+        this.eventsListener(GALLERY_CONSTS.events.GALLERY_NAVIGATION_START, {
+          current: 'scrollToItem',
+          scrollParams,
+        });
         this.currentScrollData = scrollToItemImp(scrollParams);
         return this.currentScrollData.scrollDeffered.promise.then(() => {
           this.currentScrollData = null;
@@ -538,6 +542,10 @@ export class GalleryContainer extends React.Component {
             this.state.options.autoSlideshowContinuousSpeed,
           imageMargin: this.state.options.imageMargin,
         };
+        this.eventsListener(GALLERY_CONSTS.events.GALLERY_NAVIGATION_START, {
+          current: 'scrollToGroup',
+          scrollParams,
+        });
         this.currentScrollData = scrollToGroupImp(scrollParams);
         return this.currentScrollData.scrollDeffered.promise.then(() => {
           this.currentScrollData = null;

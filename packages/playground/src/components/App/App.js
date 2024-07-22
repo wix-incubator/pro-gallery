@@ -90,6 +90,8 @@ export function App() {
         break;
       case GALLERY_EVENTS.LOAD_MORE_CLICKED:
         break;
+      case GALLERY_EVENTS.NAVIGATION_API_READY:
+        break;
       default:
         // console.log({eventName, eventData});
         break;
