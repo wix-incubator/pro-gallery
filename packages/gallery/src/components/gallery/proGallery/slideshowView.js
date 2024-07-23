@@ -998,10 +998,7 @@ class SlideshowView extends React.Component {
   }
   getStyles() {
     return {
-      margin:
-        -1 *
-        (this.props.options.layoutParams_structure_itemSpacing / 2 -
-          this.props.options.layoutParams_structure_gallerySpacing),
+      overflow: 'hidden',
       width: this.props.container.width,
       height: this.props.container.height,
     };
