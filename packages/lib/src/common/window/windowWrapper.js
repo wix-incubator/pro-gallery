@@ -22,7 +22,6 @@ class WindowWrapper {
   }
 
   initProxyWindow() {
-    console.log('locall pro-gallery ==>');
     const handler = {
       // here the proxy target is the global window object
       get: function (target, property) {
