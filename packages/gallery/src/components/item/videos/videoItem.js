@@ -58,8 +58,7 @@ class VideoItem extends React.Component {
       import(/* webpackChunkName: "proGallery_HlsPlayer" */ 'hls.js').then(
         (Player) => {
           window.Hls = Player.default;
-          this.setState({ hlsPlayerLoaded: true });
-          this.playVideoIfNeeded();
+          this.setState({ hlsPlayerLoaded: true }, this.playVideoIfNeeded);
         }
       );
     }
@@ -114,8 +113,22 @@ class VideoItem extends React.Component {
   }
 
   playVideoIfNeeded(props = this.props) {
+    const { playingVideoIdx } = props;
+    const { reactPlayerLoaded, vimeoPlayerLoaded, hlsPlayerLoaded } =
+      this.state;
+
+    //ensure the necessary player is loaded
+    if (
+      (this.isHLSVideo() && !hlsPlayerLoaded) ||
+      (this.props.videoUrl &&
+        this.props.videoUrl.includes('vimeo.com') &&
+        !vimeoPlayerLoaded) ||
+      !reactPlayerLoaded
+    ) {
+      return;
+    }
+
     try {
-      const { playingVideoIdx } = props;
       if (playingVideoIdx === this.props.idx && !this.isPlaying) {
         this.videoElement =
           this.videoElement ||
