@@ -58,7 +58,8 @@ class VideoItem extends React.Component {
       import(/* webpackChunkName: "proGallery_HlsPlayer" */ 'hls.js').then(
         (Player) => {
           window.Hls = Player.default;
-          this.setState({ hlsPlayerLoaded: true }, this.playVideoIfNeeded);
+          this.setState({ hlsPlayerLoaded: true });
+          this.playVideoIfNeeded();
         }
       );
     }
