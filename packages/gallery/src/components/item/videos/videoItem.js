@@ -2,7 +2,6 @@ import React from 'react';
 import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import { getStyle } from './getStyle';
-import Hls from 'hls.js';
 
 class VideoItem extends React.Component {
   constructor(props) {
@@ -21,6 +20,9 @@ class VideoItem extends React.Component {
       vimeoPlayerLoaded: false,
       hlsPlayerLoaded: false,
     };
+    if (this.props.options.videoPlay === 'auto') {
+      this.dynamiclyImportVideoPlayers();
+    }
   }
 
   componentDidMount() {
@@ -57,9 +59,13 @@ class VideoItem extends React.Component {
       this.isHLSVideo()
     ) {
       {
-        window.Hls = Hls;
-        this.setState({ hlsPlayerLoaded: true });
-        this.playVideoIfNeeded();
+        import(/* webpackChunkName: "proGallery_HlsPlayer" */ 'hls.js').then(
+          (Player) => {
+            window.Hls = Player.default;
+            this.setState({ hlsPlayerLoaded: true });
+            this.playVideoIfNeeded();
+          }
+        );
       }
     }
   }
