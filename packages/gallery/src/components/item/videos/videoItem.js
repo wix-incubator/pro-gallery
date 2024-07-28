@@ -2,6 +2,7 @@ import React from 'react';
 import { GALLERY_CONSTS, window, utils } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import { getStyle } from './getStyle';
+import Hls from 'hls.js';
 
 class VideoItem extends React.Component {
   constructor(props) {
@@ -55,13 +56,11 @@ class VideoItem extends React.Component {
       !(window && window.Hls) &&
       this.isHLSVideo()
     ) {
-      import(/* webpackChunkName: "proGallery_HlsPlayer" */ 'hls.js').then(
-        (Player) => {
-          window.Hls = Player.default;
-          this.setState({ hlsPlayerLoaded: true });
-          this.playVideoIfNeeded();
-        }
-      );
+      {
+        window.Hls = Hls;
+        this.setState({ hlsPlayerLoaded: true });
+        this.playVideoIfNeeded();
+      }
     }
   }
 
