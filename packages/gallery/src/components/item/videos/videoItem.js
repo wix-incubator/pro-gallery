@@ -26,6 +26,12 @@ class VideoItem extends React.Component {
     this.dynamiclyImportVideoPlayers();
   }
 
+  UNSAFE_componentWillMount() {
+    if (this.props.options.videoPlay === 'auto') {
+      this.dynamiclyImportVideoPlayers();
+    }
+  }
+
   dynamiclyImportVideoPlayers() {
     if (!(window && window.ReactPlayer)) {
       import(
@@ -55,13 +61,15 @@ class VideoItem extends React.Component {
       !(window && window.Hls) &&
       this.isHLSVideo()
     ) {
-      import(/* webpackChunkName: "proGallery_HlsPlayer" */ 'hls.js').then(
-        (Player) => {
-          window.Hls = Player.default;
-          this.setState({ hlsPlayerLoaded: true });
-          this.playVideoIfNeeded();
-        }
-      );
+      {
+        import(/* webpackChunkName: "proGallery_HlsPlayer" */ 'hls.js').then(
+          (Player) => {
+            window.Hls = Player.default;
+            this.setState({ hlsPlayerLoaded: true });
+            this.playVideoIfNeeded();
+          }
+        );
+      }
     }
   }
 
