@@ -20,13 +20,16 @@ class VideoItem extends React.Component {
       vimeoPlayerLoaded: false,
       hlsPlayerLoaded: false,
     };
-    if (this.props.options.videoPlay === 'auto') {
-      this.dynamiclyImportVideoPlayers();
-    }
   }
 
   componentDidMount() {
     this.dynamiclyImportVideoPlayers();
+  }
+
+  UNSAFE_componentWillMount() {
+    if (this.props.options.videoPlay === 'auto') {
+      this.dynamiclyImportVideoPlayers();
+    }
   }
 
   dynamiclyImportVideoPlayers() {
