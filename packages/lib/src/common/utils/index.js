@@ -324,7 +324,7 @@ class Utils {
 
   // TODO : Replace with isPrerender mode
   isSSR() {
-    return typeof global?.window === 'undefined';
+    return typeof global !== 'undefined' && typeof global?.window === 'undefined';
   }
 
   isOOI() {
