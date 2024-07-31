@@ -1168,18 +1168,6 @@ class SlideshowView extends React.Component {
         this.startAutoSlideshowIfNeeded(props.options);
       });
     }
-    if (this.state.activeIndex > props.items.length - 1) {
-      utils.setStateAndLog(
-        this,
-        'Next Item',
-        {
-          activeIndex: 0,
-        },
-        () => {
-          this.onCurrentItemChanged();
-        }
-      );
-    }
     if (this.props.activeIndex !== props.activeIndex) {
       utils.setStateAndLog(
         this,
