@@ -4,10 +4,9 @@ import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import { GalleryUI } from '../media/GalleryUI';
 import MediaImage, { MediaImplementationProps, MediaBaseProps } from '../media/mediaItem';
 
-const isIos = utils.isiOS();
 const useTransparentPlayButtonAndForceLoadVideo = (props) =>
   ((props.videoUrl || props.url).includes('youtube.com') || (props.videoUrl || props.url).includes('youtu.be')) &&
-  isIos;
+  utils.isiOS();
 
 const VideoItem = React.lazy(() => {
   return import(/* webpackChunkName: "proGallery_videoItem" */ './videoItem');
