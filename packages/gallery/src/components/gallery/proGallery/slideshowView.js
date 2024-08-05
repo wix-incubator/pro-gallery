@@ -77,8 +77,8 @@ class SlideshowView extends React.Component {
     return this.state.activeIndex === 0;
   }
 
-  isScrollStart() {
-    const { slideAnimation } = this.props.options;
+  isScrollStart(props = this.props) {
+    const { slideAnimation } = props.options;
 
     if (
       slideAnimation !== GALLERY_CONSTS.slideAnimations.SCROLL ||
@@ -90,7 +90,7 @@ class SlideshowView extends React.Component {
   }
 
   isScrollEnd(props = this.props) {
-    const { slideshowLoop, slideAnimation } = this.props.options;
+    const { slideshowLoop, slideAnimation } = props.options;
     if (
       slideshowLoop ||
       slideAnimation === GALLERY_CONSTS.slideAnimations.FADE ||
@@ -134,10 +134,10 @@ class SlideshowView extends React.Component {
     return !this.props.options.slideshowLoop && this.isScrollEnd();
   }
 
-  isLastItem() {
+  isLastItem(props = this.props) {
     return (
-      !this.props.options.slideshowLoop &&
-      this.state.activeIndex >= this.props.totalItemsCount - 1
+      !props.options.slideshowLoop &&
+      this.state.activeIndex >= props.totalItemsCount - 1
     );
   }
 
@@ -1218,10 +1218,10 @@ class SlideshowView extends React.Component {
     const { isRTL } = props.options;
     const { hideLeftArrow, hideRightArrow } = this.state;
 
-    const isScrollStart = this.isScrollStart();
+    const isScrollStart = this.isScrollStart(props);
     const isFirstItem = this.isFirstItem();
     const isScrollEnd = this.isScrollEnd(props);
-    const isLastItem = this.isLastItem();
+    const isLastItem = this.isLastItem(props);
 
     const atStart = isScrollStart || isFirstItem;
     const atEnd = isScrollEnd || isLastItem;
