@@ -89,7 +89,7 @@ class SlideshowView extends React.Component {
     return this.scrollPosition() <= 1;
   }
 
-  isScrollEnd() {
+  isScrollEnd(props = this.props) {
     const { slideshowLoop, slideAnimation } = this.props.options;
     if (
       slideshowLoop ||
@@ -101,7 +101,7 @@ class SlideshowView extends React.Component {
     return (
       this.isAllItemsLoaded() &&
       this.scrollPositionAtTheAndOfTheGallery() >=
-        Math.floor(this.getScrollElementWidth())
+        Math.floor(this.getScrollElementWidth(props))
     );
   }
 
@@ -121,8 +121,8 @@ class SlideshowView extends React.Component {
     return visibleItemsCount >= totalItemsCount;
   }
 
-  getScrollElementWidth() {
-    const { galleryStructure } = this.props;
+  getScrollElementWidth(props = this.props) {
+    const { galleryStructure } = props;
     const { imageMargin } = this.props.options;
     return galleryStructure.width - imageMargin / 2;
   }
@@ -1193,7 +1193,7 @@ class SlideshowView extends React.Component {
       );
     }
     if (this.props.totalItemsCount !== props.totalItemsCount) {
-      this.removeArrowsIfNeeded();
+      this.removeArrowsIfNeeded(props);
     }
     if (isEditMode() || isPreviewMode()) {
       if (
@@ -1210,13 +1210,13 @@ class SlideshowView extends React.Component {
       props.options.isAutoSlideshow && props.options.playButtonForAutoSlideShow;
   }
 
-  removeArrowsIfNeeded() {
-    const { isRTL } = this.props.options;
+  removeArrowsIfNeeded(props = this.props) {
+    const { isRTL } = props.options;
     const { hideLeftArrow, hideRightArrow } = this.state;
 
     const isScrollStart = this.isScrollStart();
     const isFirstItem = this.isFirstItem();
-    const isScrollEnd = this.isScrollEnd();
+    const isScrollEnd = this.isScrollEnd(props);
     const isLastItem = this.isLastItem();
 
     const atStart = isScrollStart || isFirstItem;
