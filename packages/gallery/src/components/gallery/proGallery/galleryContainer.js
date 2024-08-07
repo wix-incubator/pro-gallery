@@ -384,14 +384,7 @@ export class GalleryContainer extends React.Component {
     return { vertical, horizontal };
   }
 
-  scrollToItem(
-    itemIdx,
-    fixedScroll,
-    isManual,
-    durationInMS = 0,
-    scrollMarginCorrection,
-    isContinuousScrolling = false
-  ) {
+  scrollToItem(itemIdx, fixedScroll, isManual, durationInMS = 0, isContinuousScrolling = false) {
     if (itemIdx >= 0) {
       if (!this.state.gotFirstScrollEvent) {
         this.setState({
@@ -405,7 +398,6 @@ export class GalleryContainer extends React.Component {
       const horizontalElement = scrollingElement.horizontal();
       try {
         const scrollParams = {
-          scrollMarginCorrection,
           isRTL:
             this.state.options[optionsMap.behaviourParams.gallery.layoutDirection] ===
             GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT,
@@ -456,20 +448,12 @@ export class GalleryContainer extends React.Component {
       }
     }
   }
-  scrollToGroup(
-    groupIdx,
-    fixedScroll,
-    isManual,
-    durationInMS = 0,
-    scrollMarginCorrection,
-    isContinuousScrolling = false
-  ) {
+  scrollToGroup(groupIdx, fixedScroll, isManual, durationInMS = 0, isContinuousScrolling = false) {
     if (groupIdx >= 0) {
       const scrollingElement = this._scrollingElement;
       const horizontalElement = scrollingElement.horizontal();
       try {
         const scrollParams = {
-          scrollMarginCorrection,
           isRTL:
             this.state.options[optionsMap.behaviourParams.gallery.layoutDirection] ===
             GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT,

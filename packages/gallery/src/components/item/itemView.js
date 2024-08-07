@@ -638,22 +638,16 @@ class ItemView extends React.Component {
 
   getItemContainerStyles() {
     const { idx, activeIndex, offset, style, options, settings = {} } = this.props;
-    const itemSpacing = options[optionsMap.layoutParams.structure.itemSpacing];
     const slideAnimation = options[optionsMap.behaviourParams.gallery.horizontal.slideAnimation];
     const isRTL =
       options[optionsMap.behaviourParams.gallery.layoutDirection] ===
       GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT;
-    const scrollDirection = options[optionsMap.layoutParams.structure.scrollDirection];
     const containerStyleByoptions = getContainerStyle(options);
 
     const itemStyles = {
       overflowY: 'hidden',
       position: 'absolute',
       bottom: 'auto',
-      margin:
-        scrollDirection === GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL
-          ? itemSpacing / 2 + 'px'
-          : 0,
     };
 
     const { avoidInlineStyles } = settings;

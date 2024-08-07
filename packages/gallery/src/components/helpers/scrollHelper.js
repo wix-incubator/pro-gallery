@@ -5,7 +5,6 @@ import { Deferred } from '../gallery/proGallery/galleryHelpers';
 export function scrollToItemImp(scrollParams) {
   let to, from;
   const {
-    scrollMarginCorrection = 0,
     durationInMS,
     horizontalElement,
     scrollingElement,
@@ -60,7 +59,7 @@ export function scrollToItemImp(scrollParams) {
       const diff = (galleryWidth - item.width - itemSpacing) / 2;
       to -= diff;
       to = Math.max(0, to);
-      to = Math.min(to, totalWidth - galleryWidth + scrollMarginCorrection);
+      to = Math.min(to, totalWidth - galleryWidth);
       to *= rtlFix;
       from *= rtlFix;
       if (utils.isVerbose()) {
@@ -89,7 +88,6 @@ export function scrollToItemImp(scrollParams) {
 export function scrollToGroupImp(scrollParams) {
   let to, from;
   const {
-    scrollMarginCorrection = 0,
     durationInMS,
     horizontalElement,
     scrollingElement,
@@ -145,7 +143,7 @@ export function scrollToGroupImp(scrollParams) {
       const diff = (galleryWidth - group.width - itemSpacing) / 2;
       to -= diff;
       to = Math.max(0, to);
-      to = Math.min(to, totalWidth - galleryWidth + scrollMarginCorrection);
+      to = Math.min(to, totalWidth - galleryWidth);
       to *= rtlFix;
       if (utils.isVerbose()) {
         console.log('Scrolling to new position ' + to, this);

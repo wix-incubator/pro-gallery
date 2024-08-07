@@ -30,6 +30,7 @@ function getDirection(code) {
  */
 class SlideshowView extends React.Component {
   constructor(props) {
+    console.log('local container ==>');
     super(props);
     this.navigationPanelCallbackOnIndexChange = () => {};
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
@@ -310,9 +311,8 @@ class SlideshowView extends React.Component {
     const shouldAllowScroll = !this.shouldNotAllowScroll({
       scrollingUpTheGallery,
     });
-    const { scrollMarginCorrection, _scrollDuration } = this.getScrollParameters(scrollDuration);
-    shouldAllowScroll &&
-      (await func(indexToScroll, false, true, _scrollDuration, scrollMarginCorrection, isContinuousScrolling));
+    const { _scrollDuration } = this.getScrollParameters(scrollDuration);
+    shouldAllowScroll && (await func(indexToScroll, false, true, _scrollDuration, isContinuousScrolling));
   }
 
   onThrowScrollError(massage, e) {
@@ -339,7 +339,6 @@ class SlideshowView extends React.Component {
 
   getScrollParameters(scrollDuration) {
     return {
-      scrollMarginCorrection: this.getStyles().margin || 0,
       _scrollDuration:
         scrollDuration ?? this.props.options.behaviourParams_gallery_horizontal_navigationDuration ?? 400,
     };
@@ -997,10 +996,6 @@ class SlideshowView extends React.Component {
   }
   getStyles() {
     return {
-      margin:
-        -1 *
-        (this.props.options.layoutParams_structure_itemSpacing / 2 -
-          this.props.options.layoutParams_structure_gallerySpacing),
       width: this.props.container.width,
       height: this.props.container.height,
     };
