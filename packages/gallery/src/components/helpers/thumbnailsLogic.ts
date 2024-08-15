@@ -104,7 +104,8 @@ export function getThumbnailsData({
     minNumOfThumbnails % 2 === 1 ? minNumOfThumbnails : minNumOfThumbnails + 1;
   const thumbnailsInEachSide = (numberOfThumbnails - 1) / 2;
 
-  const itemRangeStart = activeIndexWithOffset - thumbnailsInEachSide;
+  const itemRangeStart =
+    (activeIndexWithOffset % galleryItems.length) - thumbnailsInEachSide;
   const itemRangeEnd = itemRangeStart + numberOfThumbnails;
 
   const itemToDisplay = withInfiniteScroll
