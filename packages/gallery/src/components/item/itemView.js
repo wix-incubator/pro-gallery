@@ -127,7 +127,12 @@ class ItemView extends React.Component {
   onItemInfoClick(e) {
     const clickTarget = 'item-info';
     this.onItemClick(e, clickTarget, false);
-    e.stopPropagation();
+    if (!this.shouldUseDirectLink()) {
+      // stop propagation only if we are not using direct link.
+      // stop propagation will prevent listening and manipulating the anchor navigations as some users do.
+      // we dont want to do this when we use a direct link via a tag.
+      e.stopPropagation();
+    }
   }
 
   onItemClick(e, clickTarget, shouldPreventDefault = true) {
