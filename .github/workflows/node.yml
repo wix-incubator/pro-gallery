@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.13.0]
+        node-version: [16.20.0]
     steps:
     - uses: actions/checkout@v2
     - name: Install and run lint
@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.13.0]
+        node-version: [16.20.0]
         test-script: ["ci:test-unit", "ci:test-e2e-layouts","ci:test-e2e-styleParams", "ci:test-e2e-integration"]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
@@ -51,7 +51,7 @@ jobs:
     needs: [lint, tests]
     strategy:
       matrix:
-        node-version: [16.13.0]
+        node-version: [16.20.0]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
     - uses: actions/checkout@v2
@@ -92,7 +92,7 @@ jobs:
     needs: [lint, tests]
     strategy:
       matrix:
-        node-version: [16.13.0]
+        node-version: [16.20.0]
     steps:
     - uses: actions/checkout@v2
     - name: update-playground
