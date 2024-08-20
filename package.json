@@ -42,7 +42,7 @@
   "homepage": "https://github.com/wix/pro-gallery#readme",
   "devDependencies": {
     "chalk": "^2.4.2",
-    "gh-pages": "2.0.1",
+    "gh-pages": "5.0.0",
     "husky": "^4.3.0",
     "lerna": "^4.0.0",
     "lerna-packages": "0.0.1",
