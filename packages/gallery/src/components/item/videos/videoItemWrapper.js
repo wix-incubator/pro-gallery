@@ -69,7 +69,6 @@ class VideoItemWrapper extends React.Component {
       'isCurrentHover',
       'customComponents',
     ]);
-
     return (
       <VideoItemPlaceholder
         {...props}
@@ -78,8 +77,7 @@ class VideoItemWrapper extends React.Component {
         isThumbnail={!!this.props.thumbnailHighlightId}
         id={this.props.idx}
         videoPlayButton={
-          showVideoPlayButton &&
-          !this.state.videoItemLoaded && (
+          showVideoPlayButton && (
             <VideoPlayButton
               pointerEvents={
                 !useTransparentPlayButtonAndForceLoadVideo(this.props)
@@ -111,11 +109,11 @@ class VideoItemWrapper extends React.Component {
     const videoPlaceholder = this.createVideoPlaceholder(showVideoPlayButton);
 
     const VideoItem = this.VideoItem;
-    const shouldRenderVideoItem =
+    const shouldRenderVideoPlaceholder =
       !this.mightPlayVideo() ||
       !this.state.videoItemLoaded ||
       this.props.isPrerenderMode;
-    if (shouldRenderVideoItem) {
+    if (shouldRenderVideoPlaceholder) {
       return (
         <div>
           {shouldCreateVideoPlaceholder(this.props.options) && videoPlaceholder}
