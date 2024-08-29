@@ -250,8 +250,9 @@ class VideoItem extends React.Component {
             forceHLS: this.shouldUseHlsPlayer(),
             forceVideo: this.shouldForceVideoForHLS(),
             hlsOptions: {
+              startLevel: 3,
               testBandwidth: false,
-              abrEwmaDefaultEstimate: 6000000,
+              abrEwmaDefaultEstimate: 7000000,
             },
           },
         }}
