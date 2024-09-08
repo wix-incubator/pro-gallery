@@ -17,7 +17,8 @@ const fixToSlider = (options) => {
   ];
   presetOptions[optionsMap.layoutParams.structure.numberOfGridRows] = 1;
   presetOptions[optionsMap.layoutParams.crop.enableSmartCrop] = false;
-
+  presetOptions[optionsMap.layoutParams.structure.responsiveMode] =
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW;
   presetOptions[optionsMap.behaviourParams.gallery.horizontal.enableScrollSnap] = true;
   presetOptions[optionsMap.layoutParams.crop.cropOnlyFill] = true;
   presetOptions[optionsMap.behaviourParams.gallery.horizontal.slideAnimation] =

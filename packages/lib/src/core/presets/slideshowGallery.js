@@ -8,6 +8,8 @@ const fixToSlideshow = (options) => {
   presetOptions[optionsMap.layoutParams.structure.galleryLayout] =
     GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].SLIDESHOW;
   presetOptions[optionsMap.layoutParams.crop.ratios] = ['100%/100%'];
+  presetOptions[optionsMap.layoutParams.structure.responsiveMode] =
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW;
   presetOptions[optionsMap.layoutParams.crop.enable] = true;
 
   presetOptions[optionsMap.layoutParams.structure.scrollDirection] =
