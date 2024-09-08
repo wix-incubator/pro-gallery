@@ -20,6 +20,8 @@ const fixToFullsize = (options) => {
   presetOptions[optionsMap.layoutParams.groups.allowedGroupTypes] = [
     GALLERY_CONSTS[optionsMap.layoutParams.groups.allowedGroupTypes]['1'],
   ];
+  presetOptions[optionsMap.layoutParams.structure.responsiveMode] =
+    GALLERY_CONSTS[optionsMap.layoutParams.structure.responsiveMode].SET_ITEMS_PER_ROW;
   presetOptions[optionsMap.layoutParams.structure.numberOfGridRows] = 1;
   presetOptions[optionsMap.layoutParams.crop.enableSmartCrop] = false;
   presetOptions[optionsMap.behaviourParams.gallery.horizontal.enableScrollSnap] = true;
