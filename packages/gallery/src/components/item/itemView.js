@@ -725,7 +725,7 @@ class ItemView extends React.Component {
           left: isRTL ? 'auto' : 0,
           right: !isRTL ? 'auto' : 0,
           pointerEvents: activeIndex === idx ? 'auto' : 'none',
-          zIndex: activeIndex === idx ? 0 : 1,
+          zIndex: activeIndex === idx ? 1 : 0,
         };
         break;
       case GALLERY_CONSTS.slideAnimations.DECK:
