@@ -99,20 +99,20 @@ class SlideshowView extends React.Component {
       return false;
     }
     return (
-      this.isAllItemsLoaded() &&
-      this.scrollPositionAtTheAndOfTheGallery() >=
+      this.isAllItemsLoaded(props) &&
+      this.scrollPositionAtTheAndOfTheGallery(props) >=
         Math.floor(this.getScrollElementWidth(props))
     );
   }
 
-  isAllItemsLoaded() {
+  isAllItemsLoaded(props = this.props) {
     const {
       totalItemsCount,
       getVisibleItems,
       galleryStructure,
       container,
       isPrerenderMode,
-    } = this.props;
+    } = props;
     const visibleItemsCount = getVisibleItems(
       galleryStructure.galleryItems,
       container,
@@ -1100,20 +1100,20 @@ class SlideshowView extends React.Component {
     };
   }
 
-  getScrollPosition() {
-    return this.scrollElement ? this.scrollPosition() : 0;
+  getScrollPosition(props = this.props) {
+    return this.scrollElement ? this.scrollPosition(props) : 0;
   }
 
   scrollPositionAtTheMiddleOfTheGallery() {
     return this.getScrollPosition() + this.props.container.galleryWidth / 2;
   }
 
-  scrollPositionAtTheAndOfTheGallery() {
-    return this.getScrollPosition() + this.props.container.galleryWidth;
+  scrollPositionAtTheAndOfTheGallery(props = this.props) {
+    return this.getScrollPosition(props) + props.container.galleryWidth;
   }
 
-  scrollPosition() {
-    return (this.props.options.isRTL ? -1 : 1) * this.scrollElement.scrollLeft;
+  scrollPosition(props = this.props) {
+    return (props.options.isRTL ? -1 : 1) * this.scrollElement.scrollLeft;
   }
 
   //-----------------------------------------| REACT |--------------------------------------------//
