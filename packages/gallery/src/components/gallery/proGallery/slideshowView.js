@@ -67,34 +67,34 @@ class SlideshowView extends React.Component {
     return this.state.activeIndex === 0;
   }
 
-  isScrollStart() {
-    const slideAnimation = this.props.options.behaviourParams_gallery_horizontal_slideAnimation;
+  isScrollStart(props = this.props) {
+    const slideAnimation = props.options.behaviourParams_gallery_horizontal_slideAnimation;
     if (
       slideAnimation !== GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation].SCROLL ||
       !this.scrollElement
     ) {
       return false;
     }
-    return this.scrollPosition() <= 1;
+    return this.scrollPosition(props) <= 1;
   }
 
   isScrollEnd(props = this.props) {
-    const slideAnimation = this.props.options.behaviourParams_gallery_horizontal_slideAnimation;
+    const slideAnimation = props.options.behaviourParams_gallery_horizontal_slideAnimation;
     if (
-      this.props.options.behaviourParams_gallery_horizontal_loop ||
+      props.options.behaviourParams_gallery_horizontal_loop ||
       slideAnimation === GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation].FADE ||
       slideAnimation === GALLERY_CONSTS[optionsMap.behaviourParams.gallery.horizontal.slideAnimation].DECK
     ) {
       return false;
     }
     return (
-      this.isAllItemsLoaded() &&
-      this.scrollPositionAtTheAndOfTheGallery() >= Math.floor(this.getScrollElementWidth(props))
+      this.isAllItemsLoaded(props) &&
+      this.scrollPositionAtTheAndOfTheGallery(props) >= Math.floor(this.getScrollElementWidth(props))
     );
   }
 
-  isAllItemsLoaded() {
-    const { totalItemsCount, getVisibleItems, galleryStructure, container, isPrerenderMode } = this.props;
+  isAllItemsLoaded(props = this.props) {
+    const { totalItemsCount, getVisibleItems, galleryStructure, container, isPrerenderMode } = props;
     const visibleItemsCount = getVisibleItems(galleryStructure.galleryItems, container, isPrerenderMode).length;
     return visibleItemsCount >= totalItemsCount;
   }
@@ -1006,21 +1006,21 @@ class SlideshowView extends React.Component {
     };
   }
 
-  getScrollPosition() {
-    return this.scrollElement ? this.scrollPosition() : 0;
+  getScrollPosition(props = this.props) {
+    return this.scrollElement ? this.scrollPosition(props) : 0;
   }
 
   scrollPositionAtTheMiddleOfTheGallery() {
     return this.getScrollPosition() + this.props.container.galleryWidth / 2;
   }
 
-  scrollPositionAtTheAndOfTheGallery() {
-    return this.getScrollPosition() + this.props.container.galleryWidth;
+  scrollPositionAtTheAndOfTheGallery(props = this.props) {
+    return this.getScrollPosition(props) + props.container.galleryWidth;
   }
 
-  scrollPosition() {
+  scrollPosition(props = this.props) {
     return (
-      (this.props.options.behaviourParams_gallery_layoutDirection ===
+      (props.options.behaviourParams_gallery_layoutDirection ===
       GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT
         ? -1
         : 1) * this.scrollElement.scrollLeft
@@ -1114,7 +1114,7 @@ class SlideshowView extends React.Component {
       GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT;
     const { hideLeftArrow, hideRightArrow } = this.state;
 
-    const isScrollStart = this.isScrollStart();
+    const isScrollStart = this.isScrollStart(props);
     const isFirstItem = this.isFirstItem();
     const isScrollEnd = this.isScrollEnd(props);
     const isLastItem = this.isLastItem(props);
