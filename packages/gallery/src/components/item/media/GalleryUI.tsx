@@ -1,25 +1,63 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGalleryUI } from '../../../context/GalleryContext';
-const galleryUiComponents = {
-  videoPlayButton: React.lazy(() => import(/* webpackChunkName: "defaultPlayButton" */ './playButton')),
-  rotateArrow: React.lazy(() => import(/* webpackChunkName: "defaultRotateArrow" */ './rotateArrow')),
+
+type ComponentType = React.ComponentType<{ size: number }>;
+
+interface GalleryComponents {
+  videoPlayButton: ComponentType;
+  rotateArrow: ComponentType;
+}
+
+const galleryUiComponents: Record<string, React.LazyExoticComponent<ComponentType>> = {
+  videoPlayButton: React.lazy(() => 
+    import(/* webpackChunkName: "defaultPlayButton" */ './playButton')
+      .then(module => ({
+        default: (props) => (
+          <div style={{ display: 'contents' }}>
+            <module.default {...props} />
+          </div>
+        )
+      }))
+  ),
+  rotateArrow: React.lazy(() => 
+    import(/* webpackChunkName: "defaultRotateArrow" */ './rotateArrow')
+      .then(module => ({
+        default: (props) => (
+          <div style={{ display: 'contents' }}>
+            <module.default {...props} />
+          </div>
+        )
+      }))
+  ),
 };
+
 interface GalleryUIProps {
   size: number;
-  type: 'videoPlayButton' | 'rotateArrow';
+  type: keyof GalleryComponents;
 }
 
 export const GalleryUI = ({ type, size }: GalleryUIProps): JSX.Element => {
-  let Component;
-
+  const [isMounted, setIsMounted] = useState(false);
   const galleryUI = useGalleryUI();
-  if (typeof galleryUI?.[type] === 'function') {
-    return galleryUI[type](size);
-  } else if (galleryUiComponents[type]) {
-    Component = galleryUiComponents[type];
-  } else {
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
     return <></>;
   }
+
+  if (typeof galleryUI?.[type] === 'function') {
+    return galleryUI[type](size);
+  }
+
+  const Component = galleryUiComponents[type];
+  
+  if (!Component) {
+    return <></>;
+  }
+
   return (
     <React.Suspense fallback={<></>}>
       <Component size={size} />
