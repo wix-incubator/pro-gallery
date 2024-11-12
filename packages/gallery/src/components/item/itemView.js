@@ -1065,7 +1065,8 @@ class ItemView extends React.Component {
       tabIndex: -1,
       onKeyDown: handleKeyDown,
     };
-    if (linkParams?.href?.length > 0) {
+
+    if (this.itemHasLink()) {
       return (
         <a key={'item-container-link-' + id} {...elementProps} {...linkParams}>
           {innerDiv}

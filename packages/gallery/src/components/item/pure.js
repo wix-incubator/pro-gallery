@@ -36,4 +36,5 @@ function getLinkParams({
       : {};
     return linkParams;
   }
+  return {};
 }
