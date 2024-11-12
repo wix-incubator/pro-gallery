@@ -9,25 +9,23 @@ interface GalleryComponents {
 }
 
 const galleryUiComponents: Record<string, React.LazyExoticComponent<ComponentType>> = {
-  videoPlayButton: React.lazy(() => 
-    import(/* webpackChunkName: "defaultPlayButton" */ './playButton')
-      .then(module => ({
-        default: (props) => (
-          <div style={{ display: 'contents' }}>
-            <module.default {...props} />
-          </div>
-        )
-      }))
+  videoPlayButton: React.lazy(() =>
+    import(/* webpackChunkName: "defaultPlayButton" */ './playButton').then((module) => ({
+      default: (props) => (
+        <div style={{ display: 'contents' }}>
+          <module.default {...props} />
+        </div>
+      ),
+    }))
   ),
-  rotateArrow: React.lazy(() => 
-    import(/* webpackChunkName: "defaultRotateArrow" */ './rotateArrow')
-      .then(module => ({
-        default: (props) => (
-          <div style={{ display: 'contents' }}>
-            <module.default {...props} />
-          </div>
-        )
-      }))
+  rotateArrow: React.lazy(() =>
+    import(/* webpackChunkName: "defaultRotateArrow" */ './rotateArrow').then((module) => ({
+      default: (props) => (
+        <div style={{ display: 'contents' }}>
+          <module.default {...props} />
+        </div>
+      ),
+    }))
   ),
 };
 
@@ -53,7 +51,7 @@ export const GalleryUI = ({ type, size }: GalleryUIProps): JSX.Element => {
   }
 
   const Component = galleryUiComponents[type];
-  
+
   if (!Component) {
     return <></>;
   }
