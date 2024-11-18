@@ -1,9 +1,13 @@
 import React from 'react';
 import { useGalleryUI } from '../../../context/GalleryContext';
+import PlayButton from './playButton';
+import RotateArrow from './rotateArrow';
+
 const galleryUiComponents = {
-  videoPlayButton: React.lazy(() => import(/* webpackChunkName: "defaultPlayButton" */ './playButton')),
-  rotateArrow: React.lazy(() => import(/* webpackChunkName: "defaultRotateArrow" */ './rotateArrow')),
+  videoPlayButton: PlayButton,
+  rotateArrow: RotateArrow,
 };
+
 interface GalleryUIProps {
   size: number;
   type: 'videoPlayButton' | 'rotateArrow';
@@ -20,9 +24,5 @@ export const GalleryUI = ({ type, size }: GalleryUIProps): JSX.Element => {
   } else {
     return <></>;
   }
-  return (
-    <React.Suspense fallback={<></>}>
-      <Component size={size} />
-    </React.Suspense>
-  );
+  return <Component size={size} />;
 };
