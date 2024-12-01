@@ -45,7 +45,10 @@ class VideoItemWrapper extends React.Component {
       '(prefers-reduced-motion: reduce)'
     ).matches;
 
-    if (prefersReducedMotion || this.props.isVideoPlaceholder) {
+    if (this.props.isVideoPlaceholder) {
+      return false;
+    }
+    if (prefersReducedMotion && videoPlay === 'auto') {
       return false;
     }
     if (videoPlay === 'hover' || videoPlay === 'auto') {
