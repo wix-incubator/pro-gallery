@@ -987,8 +987,9 @@ class ItemView extends React.Component {
       options.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER &&
       !this.hasRequiredMediaUrl;
     const itemAriaRole = this.getItemAriaRole();
+    const Element = this.props.options.as || 'div';
     const innerDiv = (
-      <div
+      <Element
         className={this.getItemContainerClass()}
         onContextMenu={(e) => this.onContextMenu(e)}
         id={cssScrollHelper.getSellectorDomId(this.props)}
@@ -1017,11 +1018,15 @@ class ItemView extends React.Component {
             ...(GALLERY_CONSTS.hasExternalRightPlacement(
               this.props.options.titlePlacement,
               this.props.idx
-            ) && { float: 'left' }),
+            ) && {
+              float: 'left',
+            }),
             ...(GALLERY_CONSTS.hasExternalLeftPlacement(
               this.props.options.titlePlacement,
               this.props.idx
-            ) && { float: 'right' }),
+            ) && {
+              float: 'right',
+            }),
           }}
         >
           {!isItemWrapperEmpty && (
@@ -1038,7 +1043,7 @@ class ItemView extends React.Component {
         </div>
         {this.getRightInfoElementIfNeeded()}
         {this.getBottomInfoElementIfNeeded()}
-      </div>
+      </Element>
     );
     const handleKeyDown = (e) => {
       /* Relvenat only for Screen-Reader case:
