@@ -987,7 +987,7 @@ class ItemView extends React.Component {
       options.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER &&
       !this.hasRequiredMediaUrl;
     const itemAriaRole = this.getItemAriaRole();
-    const Element = this.props.elementsOverride.item || 'div';
+    const Element = this.props?.elementsOverride?.item || 'div';
     const innerDiv = (
       <Element
         className={this.getItemContainerClass()}
