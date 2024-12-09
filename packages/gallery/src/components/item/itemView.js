@@ -958,8 +958,9 @@ class ItemView extends React.Component {
       options[optionsMap.layoutParams.info.placement] !==
         GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY && !this.hasRequiredMediaUrl;
     const itemAriaRole = this.getItemAriaRole();
+    const Element = this.props.elementsOverride?.item || 'div';
     const innerDiv = (
-      <div
+      <Element
         className={this.getItemContainerClass()}
         onContextMenu={(e) => this.onContextMenu(e)}
         id={cssScrollHelper.getSellectorDomId(this.props)}
@@ -1009,7 +1010,7 @@ class ItemView extends React.Component {
         </div>
         {this.getRightInfoElementIfNeeded()}
         {this.getBottomInfoElementIfNeeded()}
-      </div>
+      </Element>
     );
     const handleKeyDown = (e) => {
       /* Relvenat only for Screen-Reader case:
