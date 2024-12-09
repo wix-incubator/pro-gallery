@@ -958,7 +958,7 @@ class ItemView extends React.Component {
       options[optionsMap.layoutParams.info.placement] !==
         GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY && !this.hasRequiredMediaUrl;
     const itemAriaRole = this.getItemAriaRole();
-    const Element = this.props?.elementsOverride?.item || 'div';
+    const Element = this.props.elementsOverride?.item || 'div';
     const innerDiv = (
       <Element
         className={this.getItemContainerClass()}
