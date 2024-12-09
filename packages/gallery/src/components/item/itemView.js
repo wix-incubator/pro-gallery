@@ -958,12 +958,13 @@ class ItemView extends React.Component {
       options[optionsMap.layoutParams.info.placement] !==
         GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY && !this.hasRequiredMediaUrl;
     const itemAriaRole = this.getItemAriaRole();
+    const Element = this.props.elementsOverride.item || 'div';
     const innerDiv = (
-      <div
+      <Element
         className={this.getItemContainerClass()}
         onContextMenu={(e) => this.onContextMenu(e)}
         id={cssScrollHelper.getSellectorDomId(this.props)}
-        ref={this.itemContainer}
+        ref={(e) => (this.itemContainer = e)}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
         onFocus={this.onFocus}
@@ -985,14 +986,12 @@ class ItemView extends React.Component {
         <div
           style={{
             ...getImageStyle(this.props.options),
-            ...(GALLERY_CONSTS.hasExternalRightPlacement(
-              this.props.options[optionsMap.layoutParams.info.placement],
-              this.props.idx
-            ) && { float: 'left' }),
-            ...(GALLERY_CONSTS.hasExternalLeftPlacement(
-              this.props.options[optionsMap.layoutParams.info.placement],
-              this.props.idx
-            ) && { float: 'right' }),
+            ...(GALLERY_CONSTS.hasExternalRightPlacement(this.props.options.titlePlacement, this.props.idx) && {
+              float: 'left',
+            }),
+            ...(GALLERY_CONSTS.hasExternalLeftPlacement(this.props.options.titlePlacement, this.props.idx) && {
+              float: 'right',
+            }),
           }}
         >
           {!isItemWrapperEmpty && (
@@ -1009,7 +1008,7 @@ class ItemView extends React.Component {
         </div>
         {this.getRightInfoElementIfNeeded()}
         {this.getBottomInfoElementIfNeeded()}
-      </div>
+      </Element>
     );
     const handleKeyDown = (e) => {
       /* Relvenat only for Screen-Reader case:
