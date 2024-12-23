@@ -1,5 +1,5 @@
 import React from 'react';
-import { utils, isEditMode, windowWrapper } from 'pro-gallery-lib';
+import { utils, isEditMode, window } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
@@ -42,8 +42,8 @@ class VideoItemWrapper extends React.Component {
     const { videoPlay, itemClick } = this.props.options;
     const { hasLink } = this.props;
     const prefersReducedMotion =
-      windowWrapper.matchMedia &&
-      windowWrapper.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (this.props.isVideoPlaceholder) {
       return false;
