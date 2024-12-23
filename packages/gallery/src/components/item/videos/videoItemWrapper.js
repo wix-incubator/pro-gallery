@@ -1,5 +1,5 @@
 import React from 'react';
-import { utils, isEditMode } from 'pro-gallery-lib';
+import { utils, isEditMode, window } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
 import PlayBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
