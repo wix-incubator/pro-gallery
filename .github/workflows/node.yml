@@ -72,7 +72,7 @@ jobs:
         git config --global user.email "your.actual@email.com"
         git config --global user.name "GitHub Actions - Pro Gallery"
         # Using a different format for the remote URL
-        git remote set-url origin "https://${{ secrets.PAT_TOKEN }}@github.com/wix/pro-gallery.git"
+        git remote set-url origin "https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/wix/pro-gallery.git"
     - run: |
         echo "registry=http://registry.npmjs.org/" >> .npmrc
         echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
