@@ -3,7 +3,7 @@
   Pro Gallery
 </h1>
 
-Blazing fast & beautiful galleries built with React. [Try it out now.](https://pro-gallery.surge.sh)
+Blazing fast & beautiful galleries built with React. [Try it out now.](https://pro-gallery.surge.sh).
  - Responsive
  - Lazy loading
  - Infinite Scroll
