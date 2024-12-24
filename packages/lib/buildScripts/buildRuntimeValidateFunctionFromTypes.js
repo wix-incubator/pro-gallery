@@ -19,7 +19,7 @@ function start() {
   // fs.writeFileSync(
   //   path.join(libSrcFolder, 'schema.json'),
   //   JSON.stringify(schema, null, 4)
-  // );
+  // )
 
   writeES5StandaloneValidateMethod({
     schema,
