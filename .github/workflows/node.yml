@@ -1,6 +1,3 @@
-# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
 name: Test
 
 on:
@@ -9,6 +6,11 @@ on:
   pull_request:
     branches: [ master, V4_Final ]
 
+permissions:
+  contents: write
+  pull-requests: write
+  packages: write
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -16,25 +18,25 @@ jobs:
       matrix:
         node-version: [16.20.0]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Install and run lint
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
     - run: npm run lint
+
   tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [16.20.0]
         test-script: ["ci:test-unit", "ci:test-e2e-layouts","ci:test-e2e-styleParams", "ci:test-e2e-integration"]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Install, build and run test
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
@@ -52,20 +54,23 @@ jobs:
     strategy:
       matrix:
         node-version: [16.20.0]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
     - name: Install, build, configure git and lerna publish
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         registry-url: 'https://registry.npmjs.org'
     - run: npm ci
     - run: npm run build --if-present
-    - run: git config --global user.email "octocat@github.com"
-    - run: git config --global user.name "GitHub Actions"
-    - run: git remote set-url origin https://wix@github.com/wix/pro-gallery
+    - run: |
+        git config --global user.email "octocat@github.com"
+        git config --global user.name "GitHub Actions"
+        git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/wix/pro-gallery.git
     - run: |
         echo "registry=http://registry.npmjs.org/" >> .npmrc
         echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
@@ -73,19 +78,20 @@ jobs:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     - name: Push to master
       if: github.event_name == 'push'
-      # run: echo "this is a push to master"
       run: |
         git checkout ${{ github.ref_name }}
-        lerna publish patch --exact  --yes --dist-tag stable --registry https://registry.npmjs.org
+        lerna publish patch --exact  --yes --dist-tag stable --registry https://registry.npmjs.org --allow-branch ${{ github.ref_name }}
         npm run changelog
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        GH_TOKEN: ${{ secrets.PAT_TOKEN }}
     - name: Push to pull request
-      if: github.event_name == 'pull_request' && github.actor != 'dependabot' 
-      # run: echo "PULL REQUEST PUSH"
-      run: lerna publish --canary --preid ${{ github.sha }} --yes --registry https://registry.npmjs.org
+      if: github.event_name == 'pull_request' && github.actor != 'dependabot'
+      run: lerna publish --canary --preid ${{ github.sha }} --yes --registry https://registry.npmjs.org --allow-branch ${{ github.ref_name }}
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+
   update-playground:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
@@ -94,9 +100,9 @@ jobs:
       matrix:
         node-version: [16.20.0]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: update-playground
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
@@ -107,5 +113,3 @@ jobs:
       env:
         SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
         SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
-
-
