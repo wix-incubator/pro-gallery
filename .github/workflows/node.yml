@@ -57,7 +57,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.PAT_TOKEN }}
         fetch-depth: 0
     - name: Install, build, configure git and lerna publish
       uses: actions/setup-node@v3
@@ -67,9 +67,11 @@ jobs:
         registry-url: 'https://registry.npmjs.org'
     - run: npm ci
     - run: npm run build --if-present
-    - run: |
-        git config --global user.email "octocat@github.com"
-        git config --global user.name "GitHub Actions"
+    - name: Configure Git
+      run: |
+        git config --global user.email "your.actual@email.com"
+        git config --global user.name "GitHub Actions - Pro Gallery"
+        # Using a different format for the remote URL
         git remote set-url origin "https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/wix/pro-gallery.git"
     - run: |
         echo "registry=http://registry.npmjs.org/" >> .npmrc
@@ -80,17 +82,27 @@ jobs:
       if: github.event_name == 'push'
       run: |
         git checkout ${{ github.ref_name }}
-        lerna publish patch --exact  --yes --dist-tag stable --registry https://registry.npmjs.org --allow-branch ${{ github.ref_name }}
+        # Add these diagnostic commands
+        echo "Current branch: $(git branch --show-current)"
+        echo "Git status: $(git status)"
+        # Configure npm and lerna to use the PAT token for GitHub operations
+        npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
+        npm config set @wix:registry=https://registry.npmjs.org/
+        # Run lerna with explicit authentication
+        npx lerna publish patch --exact --yes --dist-tag stable --registry https://registry.npmjs.org/ --allow-branch ${{ github.ref_name }} --force-publish
         npm run changelog
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     - name: Push to pull request
       if: github.event_name == 'pull_request' && github.actor != 'dependabot'
-      run: lerna publish --canary --preid ${{ github.sha }} --yes --registry https://registry.npmjs.org --allow-branch ${{ github.ref_name }}
+      run: |
+        npx lerna publish --canary --preid ${{ github.sha }} --yes --registry https://registry.npmjs.org/ --allow-branch ${{ github.ref_name }} --force-publish
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   update-playground:
     runs-on: ubuntu-latest
