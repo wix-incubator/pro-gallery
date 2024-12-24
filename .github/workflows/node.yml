@@ -48,7 +48,7 @@ jobs:
         SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
         TEST_NAME: ${{ matrix.test-script }}
 
-    deploy:
+  deploy:
     runs-on: ubuntu-latest
     needs: [lint, tests]
     strategy:
