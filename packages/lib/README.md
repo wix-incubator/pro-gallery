@@ -8,7 +8,7 @@ The pro-gallery-lib exports `Blueprints` and `BlueprintsManager`
 ### BlueprintsManager
 The BlueprintsManager is a class that takes care of fetching needed params and creating a new blueprint when it might be needed.
 
-The blueprintsManager works with an api provided by the user (see blow)
+The blueprintsManager works with an api provided by the user (see blow).
 
 
 | Function Name | description       |  arguments  | return
