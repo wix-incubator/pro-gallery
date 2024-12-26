@@ -9,6 +9,12 @@ on:
   pull_request:
     branches: [ master, V4_Final ]
 
+permissions:
+  contents: write
+  pull-requests: write
+  packages: write
+
+
 jobs:
   lint:
     runs-on: ubuntu-latest
