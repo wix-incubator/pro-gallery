@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "pro-gallery",
-  "version": "5.0.110",
+  "version": "5.0.111",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
@@ -38,9 +38,9 @@
   "dependencies": {
     "@vimeo/player": "2.8.2",
     "hls.js": "1.4.12",
-    "pro-gallery-blueprints": "5.0.110",
-    "pro-gallery-lib": "5.0.110",
-    "pro-layouts": "5.0.110",
+    "pro-gallery-blueprints": "5.0.111",
+    "pro-gallery-lib": "5.0.111",
+    "pro-layouts": "5.0.111",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-player": "2.11.0",
