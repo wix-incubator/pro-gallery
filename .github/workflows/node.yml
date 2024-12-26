@@ -74,7 +74,7 @@ jobs:
     - run: |
         git config --global user.email "octocat@github.com"
         git config --global user.name "GitHub Actions"
-        git remote set-url origin https://${{ secrets.PAT_TOKEN }}@github.com/wix/pro-gallery
+        git remote set-url origin https://wix@github.com/wix/pro-gallery
         echo "registry=http://registry.npmjs.org/" >> .npmrc
         echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
       env:
