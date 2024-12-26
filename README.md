@@ -13,7 +13,7 @@ Blazing fast & beautiful galleries built with React. [Try it out now.](https://p
 [![NPM Version](https://img.shields.io/npm/v/pro-gallery.svg?style=flat)](https://www.npmjs.com/package/pro-gallery)
 [![Build Status](https://travis-ci.org/wix/pro-gallery.svg?branch=master)](https://travis-ci.com/wix/pro-gallery)
 
-This is V4 hotfix branch
+This is V4 hotfix branch.
 
 ## Gettings Started
 The best way to get started is by using the [Playground](https://pro-gallery.surge.sh). Use the sidebar to configure the gallery layout you need. When you're done,  click the `Generate Gallery Code` button to get the copy-paste-ready code.
