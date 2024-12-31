@@ -173,6 +173,7 @@ class VideoItem extends React.Component {
         );
 
     const attributes = {
+      playInline: true,
       controlsList: 'nodownload',
       disablePictureInPicture: true,
       muted: !this.props.options.videoSound,
