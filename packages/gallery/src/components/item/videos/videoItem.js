@@ -76,8 +76,8 @@ class VideoItem extends React.Component {
   isHLSVideo() {
     return (
       this.props.videoUrl &&
-      (this.props.videoUrl.includes('/hls') ||
-        this.props.videoUrl.includes('.m3u8'))
+      (this.props.videoUrl.toLowerCase().includes('/hls') ||
+        this.props.videoUrl.toLowerCase().includes('.m3u8'))
     );
   }
 
@@ -173,12 +173,13 @@ class VideoItem extends React.Component {
         );
 
     const attributes = {
+      playInline: true,
       controlsList: 'nodownload',
       disablePictureInPicture: true,
       muted: !this.props.options.videoSound,
       preload: 'metadata',
       style: getStyle(isCrop, isWiderThenContainer),
-      type: 'video/mp4',
+      type: utils.isiOS() ? 'application/x-mpegURL' : 'video/mp4', // Specify correct MIME type for iOS
     };
 
     if (shouldCreateVideoPlaceholder(this.props.options)) {
