@@ -41,6 +41,9 @@ class VideoItemWrapper extends React.Component {
   mightPlayVideo() {
     const { videoPlay, itemClick } = this.props.options;
     const { hasLink } = this.props;
+    const isInFullScreen = this.props.galleryId.includes(
+      'pro-gallery-fullscreen-wrapper'
+    );
     const prefersReducedMotion =
       window.matchMedia &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -48,7 +51,7 @@ class VideoItemWrapper extends React.Component {
     if (this.props.isVideoPlaceholder) {
       return false;
     }
-    if (prefersReducedMotion && videoPlay === 'auto') {
+    if (prefersReducedMotion && videoPlay === 'auto' && !isInFullScreen) {
       return false;
     }
     if (videoPlay === 'hover' || videoPlay === 'auto') {
