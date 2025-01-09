@@ -41,7 +41,7 @@ class VideoItemWrapper extends React.Component {
   mightPlayVideo() {
     const { videoPlay, itemClick } = this.props.options;
     const { hasLink } = this.props;
-    const isInFullScreen = this.props.galleryId.includes(
+    const isInFullScreen = this.props.galleryId?.includes(
       'pro-gallery-fullscreen-wrapper'
     );
     const prefersReducedMotion =
