@@ -131,7 +131,6 @@ class GalleryView extends React.Component {
   }
 
   onKeyPress(e) {
-    console.log('hadas onKeyPress');
     switch (e.keyCode || e.charCode) {
       case 32: // space
       case 13: // enter
@@ -145,7 +144,6 @@ class GalleryView extends React.Component {
   }
 
   onKeyReleased(e) {
-    console.log('hadas onKeyReleased');
     switch (e.keyCode || e.charCode) {
       case 32: // space
       case 13: // enter
