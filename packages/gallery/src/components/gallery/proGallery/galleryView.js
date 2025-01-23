@@ -9,6 +9,8 @@ class GalleryView extends React.Component {
     super(props);
     this.handleKeys = this.handleKeys.bind(this);
     this.showMoreItems = this.showMoreItems.bind(this);
+    this.onLoadMoreButtonKeyDown = this.onLoadMoreButtonKeyDown.bind(this);
+    this.onLoadMoreButtonKeyUp = this.onLoadMoreButtonKeyUp.bind(this);
     this.createGalleryConfig = this.createGalleryConfig.bind(this);
     this.screenLogs = this.screenLogs.bind(this);
     this.createGallery = this.createGallery.bind(this);
@@ -125,6 +127,30 @@ class GalleryView extends React.Component {
       }
     } else {
       this.props.actions.toggleLoadMoreItems();
+    }
+  }
+
+  onLoadMoreButtonKeyDown(e) {
+    switch (e.keyCode || e.charCode) {
+      case 32: // space
+      case 13: // enter
+        e.preventDefault();
+        e.stopPropagation();
+        this.props.actions.toggleLoadMoreItems();
+        return false;
+      default:
+        break;
+    }
+  }
+
+  onLoadMoreButtonKeyUp(e) {
+    switch (e.keyCode || e.charCode) {
+      case 32: // space
+      case 13: // enter
+        e.stopPropagation();
+        return false;
+      default:
+        break;
     }
   }
 
@@ -289,6 +315,8 @@ class GalleryView extends React.Component {
             onMouseDown={(e) => e.preventDefault()}
             data-hook="show-more"
             aria-label={buttonText}
+            onKeyDown={this.onLoadMoreButtonKeyDown}
+            onKeyUp={this.onLoadMoreButtonKeyUp}
           >
             {buttonText}
           </button>
