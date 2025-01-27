@@ -586,9 +586,10 @@ export class GalleryContainer extends React.Component {
   }
 
   setPlayingIdxState(playingVideoIdx) {
-    this.setState({
-      playingVideoIdx,
-    });
+    console.log('playingVideoIdx ', playingVideoIdx);
+    // this.setState({
+    //   playingVideoIdx,
+    // });
   }
 
   onGalleryScroll(scrollPosition) {
