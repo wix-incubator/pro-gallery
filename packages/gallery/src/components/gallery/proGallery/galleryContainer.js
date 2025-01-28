@@ -186,6 +186,24 @@ export class GalleryContainer extends React.Component {
 
     const reCreateGallery = () => {
       const galleryState = this.propsToState(nextProps);
+
+      const scrollHelperNewGalleryStructure = {
+        galleryStructure: this.galleryStructure,
+        galleryWidth: galleryState.container.galleryWidth,
+        scrollBase: galleryState.container.scrollBase,
+        videoPlay: galleryState.options.videoPlay,
+        videoLoop: galleryState.options.videoLoop,
+        itemClick: galleryState.options.itemClick,
+        scrollDirection: galleryState.options.scrollDirection,
+        cb: this.setPlayingIdxState,
+      };
+
+      this.videoScrollHelper.updateGalleryStructure(
+        scrollHelperNewGalleryStructure,
+        !utils.isSSR(),
+        galleryState.items
+      );
+
       if (Object.keys(galleryState).length > 0) {
         this.setState(galleryState, this.handleNewGalleryStructure);
       }
@@ -385,22 +403,6 @@ export class GalleryContainer extends React.Component {
         container: container,
       });
     }
-    const scrollHelperNewGalleryStructure = {
-      galleryStructure: this.galleryStructure,
-      galleryWidth: container.galleryWidth,
-      scrollBase: container.scrollBase,
-      videoPlay: options.videoPlay,
-      videoLoop: options.videoLoop,
-      itemClick: options.itemClick,
-      scrollDirection: options.scrollDirection,
-      cb: this.setPlayingIdxState,
-    };
-
-    this.videoScrollHelper.updateGalleryStructure(
-      scrollHelperNewGalleryStructure,
-      !utils.isSSR(),
-      items
-    );
 
     const layoutParams = {
       items: items,
