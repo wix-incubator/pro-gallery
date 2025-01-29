@@ -36,6 +36,7 @@ class VideoItemWrapper extends React.Component {
     this.mightPlayVideo = this.mightPlayVideo.bind(this);
     this.createVideoPlaceholder = this.createVideoPlaceholder.bind(this);
     this.state = { videoItemLoaded: false };
+    this.isCompMounted = false;
   }
 
   mightPlayVideo() {
@@ -96,17 +97,23 @@ class VideoItemWrapper extends React.Component {
   }
 
   async componentDidMount() {
+    this.isCompMounted = true;
     if (!isEditMode()) {
       try {
         const VideoItem = await import(
           /* webpackChunkName: "proGallery_videoItem" */ './videoItem'
         );
         this.VideoItem = VideoItem.default;
-        this.setState({ videoItemLoaded: true });
+        if (this.isCompMounted) {
+          this.setState({ videoItemLoaded: true });
+        }
       } catch (e) {
         console.error('Failed to fetch VideoItem');
       }
     }
+  }
+  componentWillUnmount() {
+    this.isCompMounted = false;
   }
   render() {
     const hover = this.props.hover;

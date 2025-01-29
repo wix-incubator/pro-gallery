@@ -131,6 +131,9 @@ export class GalleryContainer extends React.Component {
   }
 
   componentDidMount() {
+    this.videoScrollHelper.defferedScrollHelperPromise.promise.then(() => {
+      this.videoScrollHelper.onScroll({ top: 0, left: 0 });
+    });
     windowWrapper.stopUsingMock();
     const { body, documentElement: html } = document;
     const viewportHeight = window.innerHeight;

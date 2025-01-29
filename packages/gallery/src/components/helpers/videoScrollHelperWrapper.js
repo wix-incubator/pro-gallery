@@ -1,4 +1,5 @@
 import { isEditMode } from 'pro-gallery-lib';
+import { Deferred } from '../gallery/proGallery/galleryHelpers';
 
 class VideoScrollHelperWrapper {
   constructor(setPlayingIdxState) {
@@ -13,6 +14,7 @@ class VideoScrollHelperWrapper {
     };
     this.stop = () => {};
     this.initializePlayState = () => {};
+    this.defferedScrollHelperPromise = new Deferred();
   }
   onScroll({ top, left }) {
     this.top = top || this.top;
@@ -38,9 +40,10 @@ class VideoScrollHelperWrapper {
             new VideoScrollHelper.default(videoScrollHelperConfig)
           );
           this.updateGalleryStructure(galleryStructureData);
-          this.onScroll({ top: this.top, left: this.left });
+          this.defferedScrollHelperPromise.resolve();
         })
         .catch((e) => {
+          this.defferedScrollHelperPromise.resolve();
           console.error('Failed to load videoScrollHelper. error: ' + e);
         });
     }
