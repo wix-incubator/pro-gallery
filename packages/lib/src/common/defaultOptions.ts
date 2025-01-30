@@ -1,6 +1,6 @@
-import optionsMap from '../core/helpers/optionsMap';
-import { flattenObject } from '../core/helpers/optionsUtils';
-import GALLERY_CONSTS from './constants';
+import optionsMap from '../core/helpers/optionsMap.js';
+import { flattenObject } from '../core/helpers/optionsUtils.js';
+import GALLERY_CONSTS from './constants/index.js';
 
 const defaultOptions = flattenObject({
   layoutParams: {

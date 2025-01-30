@@ -1,5 +1,5 @@
-import { INPUT_TYPES } from '../utils/constants';
-import optionsMap from '../../core/helpers/optionsMap';
+import { INPUT_TYPES } from '../utils/constants.js';
+import optionsMap from '../../core/helpers/optionsMap.js';
 export default {
   title: 'Collage Group Density',
   description: `Determines how dense the collaging and grouping of images will be. Note that in order for this option to take any effect,

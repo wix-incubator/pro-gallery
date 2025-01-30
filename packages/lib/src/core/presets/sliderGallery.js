@@ -1,6 +1,6 @@
-import { calcTargetItemSize, removeBordersIfNeeded } from '../helpers/layoutHelper';
-import optionsMap from '../helpers/optionsMap';
-import { GALLERY_CONSTS } from '../..';
+import { calcTargetItemSize, removeBordersIfNeeded } from '../helpers/layoutHelper.js';
+import optionsMap from '../helpers/optionsMap.js';
+import { GALLERY_CONSTS } from '../../index.js';
 
 const fixToSlider = (options) => {
   let presetOptions = { ...options };

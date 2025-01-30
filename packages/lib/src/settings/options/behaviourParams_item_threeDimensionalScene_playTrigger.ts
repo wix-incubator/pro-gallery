@@ -1,7 +1,7 @@
-import { GALLERY_CONSTS } from '../..';
-import optionsMap from '../../core/helpers/optionsMap';
-import { INPUT_TYPES } from '../utils/constants';
-import { createOptions } from '../utils/utils';
+import { GALLERY_CONSTS } from '../../index.js';
+import optionsMap from '../../core/helpers/optionsMap.js';
+import { INPUT_TYPES } from '../utils/constants.js';
+import { createOptions } from '../utils/utils.js';
 
 export default {
   title: `3D play trigger`,

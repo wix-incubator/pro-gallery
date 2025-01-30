@@ -1,7 +1,7 @@
-import { INPUT_TYPES } from '../utils/constants';
-import { createOptions } from '../utils/utils';
-import { default as GALLERY_CONSTS } from '../../common/constants';
-import optionsMap from '../../core/helpers/optionsMap';
+import { INPUT_TYPES } from '../utils/constants.js';
+import { createOptions } from '../utils/utils.js';
+import { default as GALLERY_CONSTS } from '../../common/constants/index.js';
+import optionsMap from '../../core/helpers/optionsMap.js';
 
 export default {
   title: 'Click Action',

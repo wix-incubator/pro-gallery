@@ -1,4 +1,4 @@
-import { INPUT_TYPES } from '../utils/constants';
+import { INPUT_TYPES } from '../utils/constants.js';
 
 function createControlsOptions(name: string, defaultValue = true) {
   return {

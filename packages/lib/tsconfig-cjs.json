@@ -5,18 +5,19 @@
   "compilerOptions": {
     "allowJs": true,
     "target": "ES2017",
-    "module": "ESNext",
-    "outDir": "dist/esm",
+    "module": "CommonJS",
+    "outDir": "dist/cjs",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
     "incremental": true,
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node",
     "rootDir": "src",
-    "declarationDir": "dist/esm-types",
+    "declarationDir": "dist/types",
     "declaration": true,
+    "declarationMap": true,
     "sourceMap": true,
     "importHelpers": true,
     "esModuleInterop": true,

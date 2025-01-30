@@ -1,5 +1,5 @@
-import optionsMap from '../../core/helpers/optionsMap';
-import { INPUT_TYPES } from '../utils/constants';
+import optionsMap from '../../core/helpers/optionsMap.js';
+import { INPUT_TYPES } from '../utils/constants.js';
 
 export default {
   title: 'Thumbnail Size',
