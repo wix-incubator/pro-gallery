@@ -255,7 +255,7 @@ export class GalleryContainer extends React.Component {
     }
     const options = this.props.options;
     const numOfItems = this.state.items.length;
-    const layoutHeight = updatedHeight || this.props.container.height;
+    const layoutHeight = updatedHeight || this.galleryStructure.height;
     const layoutItems = this.props.structure.items;
     const isFixedHorizontlaGalleryRatio =
       this.containerInfiniteGrowthDirection() === 'horizontal' &&
