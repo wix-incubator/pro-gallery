@@ -10,6 +10,7 @@ class VideoItem extends React.Component {
     this.pause = this.pause.bind(this);
     this.play = this.play.bind(this);
     this.playVideoIfNeeded = this.playVideoIfNeeded.bind(this);
+    this.isCompMounted = false;
 
     this.state = {
       playedOnce: false,
@@ -23,7 +24,11 @@ class VideoItem extends React.Component {
   }
 
   componentDidMount() {
+    this.isCompMounted = true;
     this.dynamiclyImportVideoPlayers();
+  }
+  componentWillUnmount() {
+    this.isCompMounted = false;
   }
 
   UNSAFE_componentWillMount() {
@@ -38,8 +43,10 @@ class VideoItem extends React.Component {
         /* webpackChunkName: "proGallery_reactPlayer" */ 'react-player'
       ).then((ReactPlayer) => {
         window.ReactPlayer = ReactPlayer.default;
-        this.setState({ reactPlayerLoaded: true });
-        this.playVideoIfNeeded();
+        if (this.isCompMounted) {
+          this.setState({ reactPlayerLoaded: true });
+          this.playVideoIfNeeded();
+        }
       });
     }
     if (
@@ -52,8 +59,10 @@ class VideoItem extends React.Component {
         /* webpackChunkName: "proGallery_vimeoPlayer" */ '@vimeo/player'
       ).then((Player) => {
         window.Vimeo = { Player: Player.default };
-        this.setState({ vimeoPlayerLoaded: true });
-        this.playVideoIfNeeded();
+        if (this.isCompMounted) {
+          this.setState({ vimeoPlayerLoaded: true });
+          this.playVideoIfNeeded();
+        }
       });
     }
     if (
@@ -65,8 +74,10 @@ class VideoItem extends React.Component {
         import(/* webpackChunkName: "proGallery_HlsPlayer" */ 'hls.js').then(
           (Player) => {
             window.Hls = Player.default;
-            this.setState({ hlsPlayerLoaded: true });
-            this.playVideoIfNeeded();
+            if (this.isCompMounted) {
+              this.setState({ hlsPlayerLoaded: true });
+              this.playVideoIfNeeded();
+            }
           }
         );
       }
