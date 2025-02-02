@@ -998,7 +998,7 @@ class ItemView extends React.Component {
         onMouseLeave={this.onMouseLeave}
         onFocus={this.onFocus}
         onBlur={this.onBlur} // The onblur event is the opposite of the onfocus event.
-        tabIndex={this.getItemContainerTabIndex()}
+        tabIndex="-1"
         aria-label={this.getItemAriaLabel()}
         data-hash={hash}
         data-id={photoId}
