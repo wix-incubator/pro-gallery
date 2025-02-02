@@ -65,7 +65,6 @@ class ItemView extends React.Component {
     this.getItemAriaLabel = this.getItemAriaLabel.bind(this);
     this.getItemContainerClass = this.getItemContainerClass.bind(this);
     this.getItemWrapperClass = this.getItemWrapperClass.bind(this);
-    this.getItemContainerTabIndex = this.getItemContainerTabIndex.bind(this);
     this.isIconTag = this.isIconTag.bind(this);
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
@@ -895,17 +894,6 @@ class ItemView extends React.Component {
 
     classes.push(getSlideAnimationClassNames(this.props));
     return classes.join(' ');
-  }
-
-  getItemContainerTabIndex() {
-    const tabIndex = this.props.shouldDisableItemFocus
-      ? -1
-      : this.isHighlight()
-      ? utils.getTabIndex('currentThumbnail')
-      : this.props.activeIndex === this.props.idx
-      ? utils.getTabIndex('currentGalleryItem')
-      : -1;
-    return tabIndex;
   }
 
   //-----------------------------------------| REACT |--------------------------------------------//
