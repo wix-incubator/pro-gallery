@@ -41,6 +41,8 @@ export class GalleryContainer extends React.Component {
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
     this.getVisibleItems = this.getVisibleItems.bind(this);
     this.findNeighborItem = this.findNeighborItem.bind(this);
+    this.updateVideoScrollHelperStructure =
+      this.updateVideoScrollHelperStructure.bind(this);
     this.setCurrentSlideshowViewIdx =
       this.setCurrentSlideshowViewIdx.bind(this);
     this.getIsScrollLessGallery = this.getIsScrollLessGallery.bind(this);
@@ -131,6 +133,20 @@ export class GalleryContainer extends React.Component {
   }
 
   componentDidMount() {
+    const scrollHelperNewGalleryStructure = {
+      galleryStructure: this.galleryStructure,
+      galleryWidth: this.state.container.galleryWidth,
+      scrollBase: this.state.container.scrollBase,
+      videoPlay: this.state.options.videoPlay,
+      videoLoop: this.state.options.videoLoop,
+      itemClick: this.state.options.itemClick,
+      scrollDirection: this.state.options.scrollDirection,
+      cb: this.setPlayingIdxState,
+    };
+    this.updateVideoScrollHelperStructure(
+      scrollHelperNewGalleryStructure,
+      this.state.items
+    );
     windowWrapper.stopUsingMock();
     const { body, documentElement: html } = document;
     const viewportHeight = window.innerHeight;
@@ -172,7 +188,13 @@ export class GalleryContainer extends React.Component {
       this.currentHoverChangeEvent.galleryId = this.props.id;
     }
   }
-
+  updateVideoScrollHelperStructure(scrollHelperParams, items) {
+    this.videoScrollHelper.updateGalleryStructure(
+      scrollHelperParams,
+      !utils.isSSR(),
+      items
+    );
+  }
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (!this.currentHoverChangeEvent.galleryId && nextProps.id) {
       this.currentHoverChangeEvent.galleryId = nextProps.id;
@@ -186,6 +208,20 @@ export class GalleryContainer extends React.Component {
 
     const reCreateGallery = () => {
       const galleryState = this.propsToState(nextProps);
+      const scrollHelperNewGalleryStructure = {
+        galleryStructure: this.galleryStructure,
+        galleryWidth: galleryState.container.galleryWidth,
+        scrollBase: galleryState.container.scrollBase,
+        videoPlay: galleryState.options.videoPlay,
+        videoLoop: galleryState.options.videoLoop,
+        itemClick: galleryState.options.itemClick,
+        scrollDirection: galleryState.options.scrollDirection,
+        cb: this.setPlayingIdxState,
+      };
+      this.updateVideoScrollHelperStructure(
+        scrollHelperNewGalleryStructure,
+        galleryState.items
+      );
       if (Object.keys(galleryState).length > 0) {
         this.setState(galleryState, this.handleNewGalleryStructure);
       }
@@ -385,22 +421,6 @@ export class GalleryContainer extends React.Component {
         container: container,
       });
     }
-    const scrollHelperNewGalleryStructure = {
-      galleryStructure: this.galleryStructure,
-      galleryWidth: container.galleryWidth,
-      scrollBase: container.scrollBase,
-      videoPlay: options.videoPlay,
-      videoLoop: options.videoLoop,
-      itemClick: options.itemClick,
-      scrollDirection: options.scrollDirection,
-      cb: this.setPlayingIdxState,
-    };
-
-    this.videoScrollHelper.updateGalleryStructure(
-      scrollHelperNewGalleryStructure,
-      !utils.isSSR(),
-      items
-    );
 
     const layoutParams = {
       items: items,
