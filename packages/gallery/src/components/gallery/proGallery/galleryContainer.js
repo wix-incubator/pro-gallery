@@ -41,6 +41,8 @@ export class GalleryContainer extends React.Component {
     this.setPlayingIdxState = this.setPlayingIdxState.bind(this);
     this.getVisibleItems = this.getVisibleItems.bind(this);
     this.findNeighborItem = this.findNeighborItem.bind(this);
+    this.updateVideoScrollHelperStructure =
+      this.updateVideoScrollHelperStructure.bind(this);
     this.setCurrentSlideshowViewIdx =
       this.setCurrentSlideshowViewIdx.bind(this);
     this.getIsScrollLessGallery = this.getIsScrollLessGallery.bind(this);
@@ -141,10 +143,8 @@ export class GalleryContainer extends React.Component {
       scrollDirection: this.state.options.scrollDirection,
       cb: this.setPlayingIdxState,
     };
-
-    this.videoScrollHelper.updateGalleryStructure(
+    this.updateVideoScrollHelperStructure(
       scrollHelperNewGalleryStructure,
-      !utils.isSSR(),
       this.state.items
     );
     windowWrapper.stopUsingMock();
@@ -188,7 +188,13 @@ export class GalleryContainer extends React.Component {
       this.currentHoverChangeEvent.galleryId = this.props.id;
     }
   }
-
+  updateVideoScrollHelperStructure(scrollHelperParams, items) {
+    this.videoScrollHelper.updateGalleryStructure(
+      scrollHelperParams,
+      !utils.isSSR(),
+      items
+    );
+  }
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (!this.currentHoverChangeEvent.galleryId && nextProps.id) {
       this.currentHoverChangeEvent.galleryId = nextProps.id;
@@ -212,10 +218,8 @@ export class GalleryContainer extends React.Component {
         scrollDirection: galleryState.options.scrollDirection,
         cb: this.setPlayingIdxState,
       };
-
-      this.videoScrollHelper.updateGalleryStructure(
+      this.updateVideoScrollHelperStructure(
         scrollHelperNewGalleryStructure,
-        !utils.isSSR(),
         galleryState.items
       );
       if (Object.keys(galleryState).length > 0) {
