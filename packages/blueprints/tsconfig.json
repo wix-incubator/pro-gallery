@@ -2,6 +2,7 @@
   "extends": "./tsconfig-cjs.json",
   "compilerOptions": {
     "module": "ESNext",
+    "moduleResolution": "nodenext",
     "outDir": "dist/esm",
     "declarationDir": "dist/esm-types"
   }
