@@ -1,6 +1,6 @@
 import React from 'react';
 import { GALLERY_CONSTS, optionsMap, utils } from 'pro-gallery-lib';
-import ImageRenderer from './imageRenderer';
+import ImageRenderer from './imageRenderer.js';
 
 class ImageItem extends React.Component {
   constructor(props) {

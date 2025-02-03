@@ -3,7 +3,8 @@ import { ThreeDProps } from './types';
 import MediaItem, { MediaProps } from '../media/mediaItem';
 import { optionsMap } from 'pro-gallery-lib';
 
-const ThreeDItem = React.lazy(() => import(/* webpackChunkName: "ThreeDItem" */ './3dItem'));
+// @ts-expect-error wrong type inferred from js
+const ThreeDItem = React.lazy(() => import(/* webpackChunkName: "ThreeDItem" */ './3dItem.js'));
 
 export default function ThreeDItemWrapper(
   props: Omit<

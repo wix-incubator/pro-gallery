@@ -1,4 +1,4 @@
-import validateFunc from './standaloneValidateCode.cjs';
+import validateFunc from './standaloneValidateCode.js';
 export { validateTypes };
 function validateTypes(data?: any): Record<string, unknown>[] {
   validateFunc(data);

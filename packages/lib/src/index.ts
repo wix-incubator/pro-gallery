@@ -14,7 +14,7 @@ export { addOldOptions, reverseMigrateOptions } from './core/helpers/optionsBack
 export { assignByString } from './core/helpers/optionsUtils.js';
 export { mutatingAssignMultipleByStrings } from './core/helpers/optionsUtils.js';
 export { default as optionsMap } from './core/helpers/optionsMap.js';
-// export { validateTypes } from './common/validateTypes/validateTypes.js';
+export { validateTypes } from './common/validateTypes/validateTypes.js';
 export { flatToNested } from './core/helpers/optionsUtils.js';
 export { flattenObject } from './core/helpers/optionsUtils.js';
 export { mergeNestedObjects } from './core/helpers/optionsUtils.js';

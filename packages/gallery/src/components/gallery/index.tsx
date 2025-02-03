@@ -101,7 +101,7 @@ class Gallery extends React.Component<GalleryProps, GalleryState> {
       return;
     }
     const validateTypesModule = await import(
-      /* webpackChunkName: "proGallery_validateTypes" */ './typeValidator/validateTypes'
+      /* webpackChunkName: "proGallery_validateTypes" */ './typeValidator/validateTypes.js'
     );
     const { validate, typeErrorsUI } = validateTypesModule;
     const typeErrors = validate(this.state.blueprint.options);

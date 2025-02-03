@@ -9,8 +9,9 @@ const useTransparentPlayButtonAndForceLoadVideo = (props) =>
   ((props.videoUrl || props.url).includes('youtube.com') || (props.videoUrl || props.url).includes('youtu.be')) &&
   isIos;
 
+// @ts-expect-error wrong type infered from js
 const VideoItem = React.lazy(() => {
-  return import(/* webpackChunkName: "proGallery_videoItem" */ './videoItem');
+  return import(/* webpackChunkName: "proGallery_videoItem" */ './videoItem.js');
 });
 
 class VideoItemImplementation extends React.Component<MediaImplementationProps> {

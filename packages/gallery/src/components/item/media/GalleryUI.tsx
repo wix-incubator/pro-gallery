@@ -9,8 +9,10 @@ interface GalleryComponents {
 }
 
 const galleryUiComponents = {
-  videoPlayButton: React.lazy(() => import(/* webpackChunkName: "defaultPlayButton" */ './playButton')),
-  rotateArrow: React.lazy(() => import(/* webpackChunkName: "defaultRotateArrow" */ './rotateArrow')),
+  // @ts-expect-error wrong type inferred from js
+  videoPlayButton: React.lazy(() => import(/* webpackChunkName: "defaultPlayButton" */ './playButton.js')),
+  // @ts-expect-error wrong type inferred from js
+  rotateArrow: React.lazy(() => import(/* webpackChunkName: "defaultRotateArrow" */ './rotateArrow.js')),
 };
 
 interface GalleryUIProps {

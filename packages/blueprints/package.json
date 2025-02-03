@@ -20,11 +20,18 @@
   "scripts": {
     "watch": "tsc -w",
     "start": "tsc -w -p tsconfig-dev.json",
-    "build": "tsc && tsc -p tsconfig-esm.json",
+    "build": "tsc && tsc -p tsconfig-cjs.json && echo \"{ \\\"type\\\": \\\"module\\\" }\" > dist/esm/package.json",
     "unit": "mocha --require ts-node/register test/*.spec.*",
     "test": "echo 'no test in wix CI'",
     "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
     "lint:fix": "npm run lint -- --fix"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/esm-types/index.d.ts"
+    }
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "6.12.0",
