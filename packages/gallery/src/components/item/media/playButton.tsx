@@ -1,7 +1,7 @@
 import React from 'react';
-import PlayBackground from '../../svgs/components/play_background';
-import PlayTriangle from '../../svgs/components/play_triangle';
-import { clickable } from '../../helpers/mouseCursorPosition';
+import PlayBackground from '../../svgs/components/play_background.js';
+import PlayTriangle from '../../svgs/components/play_triangle.js';
+import { clickable } from '../../helpers/mouseCursorPosition.js';
 interface VideoPlayButtonProps {
   size?: number;
 }

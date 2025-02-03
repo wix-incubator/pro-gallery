@@ -66,7 +66,8 @@ class MediaScrollHelper {
       .then(({ default: VideoScrollHelper }) => {
         for (const config of this.config) {
           this.scrollHelpers.push(
-            // @ts-expect-error wrong type inferred from js
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             new VideoScrollHelper(config.onSetPlayingIdx, config.supportedItemsFilter, config.getPlayTrigger)
           );
         }

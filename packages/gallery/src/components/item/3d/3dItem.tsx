@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { ThreeDImplementation } from './types';
-import { use3DItem } from './hooks';
-import { GalleryUI } from '../media/GalleryUI';
+import { ThreeDImplementation } from './types.js';
+import { use3DItem } from './hooks.js';
+import { GalleryUI } from '../media/GalleryUI.js';
 export default function ThreeDItem(props: ThreeDImplementation): JSX.Element {
   const { canvasRef, isLoaded } = use3DItem(props);
 

@@ -1,9 +1,10 @@
 import React from 'react';
-import { ThreeDProps } from './types';
-import MediaItem, { MediaProps } from '../media/mediaItem';
+import { ThreeDProps } from './types.js';
+import MediaItem, { MediaProps } from '../media/mediaItem.js';
 import { optionsMap } from 'pro-gallery-lib';
 
-// @ts-expect-error wrong type inferred from js
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 const ThreeDItem = React.lazy(() => import(/* webpackChunkName: "ThreeDItem" */ './3dItem.js'));
 
 export default function ThreeDItemWrapper(
