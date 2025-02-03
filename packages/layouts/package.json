@@ -16,10 +16,17 @@
   "files": [
     "dist"
   ],
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/esm-types/index.d.ts"
+    }
+  },
   "scripts": {
     "watch": "tsc -w",
-    "start": "tsc -p tsconfig-esm.json -w",
-    "build": "tsc && tsc -p tsconfig-esm.json",
+    "start": "tsc -p tsconfig.json -w",
+    "build": "tsc && tsc -p tsconfig-cjs.json && echo \"{ \\\"type\\\": \\\"module\\\" }\" > dist/esm/package.json",
     "unit": "mocha --require ts-node/register test/*.spec.*",
     "test": "echo 'no test in wix CI'",
     "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
