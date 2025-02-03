@@ -863,7 +863,6 @@ class ItemView extends React.Component {
     return classes.join(' ');
   }
 
-
   //-----------------------------------------| REACT |--------------------------------------------//
 
   componentDidMount() {
