@@ -4,7 +4,7 @@ export { default as v4DefaultOptions } from './common/v4DefaultOptions.js';
 export { flatV4DefaultOptions } from './common/v4DefaultOptions.js';
 export { default as dimensionsHelper } from './core/helpers/dimensionsHelper.js';
 export { default as processLayouts } from './core/helpers/layoutHelper.js';
-export { addPresetOptions } from './core/presets/presets.e2w.js';
+export { addPresetOptions } from './core/presets/presets.js';
 export {
   migrateOptions,
   addMigratedOptions,

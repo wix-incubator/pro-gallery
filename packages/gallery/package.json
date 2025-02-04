@@ -55,7 +55,7 @@
     "ts-jest-resolver": "^2.0.1"
   },
   "devDependencies": {
-    "@babel/core": "7.16.7",
+    "@babel/core": "7.22.0",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.22.5",
     "@cfaester/enzyme-adapter-react-18": "^0.7.0",
