@@ -51,7 +51,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-player": "2.11.0",
-    "three": "0.143.0"
+    "three": "0.143.0",
+    "ts-jest-resolver": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "7.16.7",
@@ -92,9 +93,15 @@
   "jest": {
     "preset": "ts-jest",
     "transform": {
-      "^.+\\.(ts|tsx)?$": "ts-jest",
+      "^.+\\.(ts|tsx)?$": [
+        "ts-jest",
+        {
+          "tsconfig": "tsconfig.json"
+        }
+      ],
       "^.+\\.(js|jsx)$": "babel-jest"
     },
+    "resolver": "ts-jest-resolver",
     "transformIgnorePatterns": [
       "<rootDir>/node_modules/"
     ],
