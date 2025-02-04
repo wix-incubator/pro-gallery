@@ -54,6 +54,7 @@
     "set-value": "^4.1.0"
   },
   "dependencies": {
-    "start-server-and-test": "^1.10.6"
+    "start-server-and-test": "^1.10.6",
+    "cheerio": "1.0.0-rc.3"
   }
 }
