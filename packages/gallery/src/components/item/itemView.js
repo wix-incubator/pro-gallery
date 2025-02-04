@@ -53,6 +53,7 @@ class ItemView extends React.Component {
     this.getItemAriaLabel = this.getItemAriaLabel.bind(this);
     this.getItemContainerClass = this.getItemContainerClass.bind(this);
     this.getItemWrapperClass = this.getItemWrapperClass.bind(this);
+    this.getItemContainerTabIndex = this.getItemContainerTabIndex.bind(this);
     this.isIconTag = this.isIconTag.bind(this);
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
@@ -863,6 +864,15 @@ class ItemView extends React.Component {
     return classes.join(' ');
   }
 
+  getItemContainerTabIndex() {
+    const tabIndex = this.isHighlight()
+      ? utils.getTabIndex('currentThumbnail')
+      : this.props.activeIndex === this.props.idx
+      ? utils.getTabIndex('currentGalleryItem')
+      : -1;
+    return tabIndex;
+  }
+
   //-----------------------------------------| REACT |--------------------------------------------//
 
   componentDidMount() {
@@ -959,7 +969,7 @@ class ItemView extends React.Component {
         onMouseLeave={this.onMouseLeave}
         onFocus={this.onFocus}
         onBlur={this.onBlur} // The onblur event is the opposite of the onfocus event.
-        tabIndex="-1"
+        tabIndex={this.getItemContainerTabIndex()}
         aria-label={this.getItemAriaLabel()}
         data-hash={hash}
         data-id={photoId}
