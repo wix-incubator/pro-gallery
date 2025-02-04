@@ -21,7 +21,7 @@
     "watch": "tsc -w",
     "start": "tsc -w -p tsconfig-dev.json",
     "build": "tsc && tsc -p tsconfig-cjs.json && echo \"{ \\\"type\\\": \\\"module\\\" }\" > dist/esm/package.json",
-    "unit": "mocha --require ts-node/register test/*.spec.*",
+    "unit": "NODE_OPTIONS=\"--import=tsx\" mocha test/*.spec.*",
     "test": "echo 'no test in wix CI'",
     "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
     "lint:fix": "npm run lint -- --fix"
@@ -43,8 +43,8 @@
     "lodash": "^4.17.21",
     "mocha": "^8.2.1",
     "prettier": "^2.1.2",
-    "ts-node": "^10.9.1",
     "tslib": "^2.1.0",
+    "tsx": "^4.19.2",
     "typescript": "^4.9.5"
   },
   "dependencies": {
