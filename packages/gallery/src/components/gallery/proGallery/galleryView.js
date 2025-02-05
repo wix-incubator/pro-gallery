@@ -23,7 +23,6 @@ class GalleryView extends React.Component {
   }
 
   handleKeys(e) {
-    console.log('handleKeys', e.keyCode, e.charCode);
     const activeItemIdx =
       window.document.activeElement.getAttribute('data-idx');
 
