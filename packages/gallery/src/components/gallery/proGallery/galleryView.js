@@ -23,6 +23,7 @@ class GalleryView extends React.Component {
   }
 
   handleKeys(e) {
+    console.log('handleKeys', e.keyCode, e.charCode);
     const activeItemIdx =
       window.document.activeElement.getAttribute('data-idx');
 
@@ -66,8 +67,8 @@ class GalleryView extends React.Component {
           );
           break;
         case 27: //esc
-          e.stopPropagation();
-          utils.focusGalleryElement(this.props.galleryContainerRef);
+          // e.stopPropagation();
+          // utils.focusGalleryElement(this.props.galleryContainerRef);
           return false;
       }
 

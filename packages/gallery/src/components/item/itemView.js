@@ -110,6 +110,7 @@ class ItemView extends React.Component {
   }
 
   onFocus() {
+    // hover on focus
     if (this.props.settings?.isAccessible) {
       this.props.actions.eventsListener(
         GALLERY_CONSTS.events.HOVER_SET,
@@ -133,6 +134,7 @@ class ItemView extends React.Component {
   }
 
   onContainerKeyUp(e) {
+    console.log('Key up event detected:', e);
     const clickTarget = 'item-container';
     switch (e.keyCode || e.charCode) {
       case 32: //space
@@ -141,6 +143,21 @@ class ItemView extends React.Component {
         this.onItemClick(e, clickTarget, false); //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
         if (this.shouldUseDirectLink()) {
           this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
+        }
+        return false;
+      case 27: //esc
+        // The first ESC press removes the hover effect, the second removes focus
+        if (this.state.isCurrentHover) {
+          this.props.actions.eventsListener(
+            GALLERY_CONSTS.events.HOVER_SET,
+            -1
+          );
+        } else {
+          e.target.blur();
+          this.props.actions.eventsListener(
+            GALLERY_CONSTS.events.ITEM_LOST_FOCUS,
+            this.props
+          );
         }
         return false;
       default:
