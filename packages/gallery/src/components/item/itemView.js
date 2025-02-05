@@ -110,6 +110,7 @@ class ItemView extends React.Component {
   }
 
   onFocus() {
+    // hover on focus
     if (this.props.settings?.isAccessible) {
       this.props.actions.eventsListener(
         GALLERY_CONSTS.events.HOVER_SET,
@@ -133,6 +134,7 @@ class ItemView extends React.Component {
   }
 
   onContainerKeyUp(e) {
+    console.log('Key up event detected:', e);
     const clickTarget = 'item-container';
     switch (e.keyCode || e.charCode) {
       case 32: //space
