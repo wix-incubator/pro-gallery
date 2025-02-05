@@ -66,8 +66,8 @@ class GalleryView extends React.Component {
           );
           break;
         case 27: //esc
-          e.stopPropagation();
-          utils.focusGalleryElement(this.props.galleryContainerRef);
+          // e.stopPropagation();
+          // utils.focusGalleryElement(this.props.galleryContainerRef);
           return false;
       }
 

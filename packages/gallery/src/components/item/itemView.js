@@ -143,6 +143,21 @@ class ItemView extends React.Component {
           this.itemAnchor.click(); // when directLink, we want to simulate the 'enter' or 'space' press on an <a> element
         }
         return false;
+      case 27: //esc
+        // The first ESC press removes the hover effect, the second removes focus
+        if (this.state.isCurrentHover) {
+          this.props.actions.eventsListener(
+            GALLERY_CONSTS.events.HOVER_SET,
+            -1
+          );
+        } else {
+          e.target.blur();
+          this.props.actions.eventsListener(
+            GALLERY_CONSTS.events.ITEM_LOST_FOCUS,
+            this.props
+          );
+        }
+        return false;
       default:
         return true;
     }
