@@ -93,7 +93,7 @@ class VideoItem extends React.Component {
   }
 
   shouldUseHlsPlayer() {
-    return this.isHLSVideo() && !utils.isiOS();
+    return this.isHLSVideo(); // && !utils.isiOS();
   }
 
   shouldForceVideoForHLS() {
