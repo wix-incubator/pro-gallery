@@ -1,5 +1,5 @@
-import { INPUT_TYPES } from '../utils/constants';
-import optionsMap from '../../core/helpers/optionsMap';
+import { INPUT_TYPES } from '../utils/constants.js';
+import optionsMap from '../../core/helpers/optionsMap.js';
 
 export default {
   title: 'Group By Orientation',

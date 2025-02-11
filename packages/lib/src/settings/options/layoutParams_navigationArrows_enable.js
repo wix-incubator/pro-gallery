@@ -1,7 +1,7 @@
-import { INPUT_TYPES } from '../utils/constants';
-import { default as GALLERY_CONSTS } from '../../common/constants';
-import { default as layoutParams_structure_scrollDirection } from './layoutParams_structure_scrollDirection';
-import optionsMap from '../../core/helpers/optionsMap';
+import { INPUT_TYPES } from '../utils/constants.js';
+import { default as GALLERY_CONSTS } from '../../common/constants/index.js';
+import { default as layoutParams_structure_scrollDirection } from './layoutParams_structure_scrollDirection.js';
+import optionsMap from '../../core/helpers/optionsMap.js';
 
 export default {
   title: 'Show Navigation Arrows',

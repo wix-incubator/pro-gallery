@@ -1,6 +1,6 @@
-import { default as GALLERY_CONSTS } from '../../common/constants/index';
-import { default as includeExternalInfo } from '../../settings/options/layoutParams_structure_galleryRatio_includeExternalInfo';
-import optionsMap from './optionsMap';
+import { default as GALLERY_CONSTS } from '../../common/constants/index.js';
+import { default as includeExternalInfo } from '../../settings/options/layoutParams_structure_galleryRatio_includeExternalInfo.js';
+import optionsMap from './optionsMap.js';
 
 class DimensionsHelper {
   constructor() {

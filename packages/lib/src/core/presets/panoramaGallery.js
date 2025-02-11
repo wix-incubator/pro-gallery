@@ -1,6 +1,6 @@
-import { calcTargetItemSize } from '../helpers/layoutHelper';
-import optionsMap from '../helpers/optionsMap';
-import { GALLERY_CONSTS } from '../..';
+import { calcTargetItemSize } from '../helpers/layoutHelper.js';
+import optionsMap from '../helpers/optionsMap.js';
+import { GALLERY_CONSTS } from '../../index.js';
 
 const fixToPanorama = (options) => {
   let presetOptions = { ...options };

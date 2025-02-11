@@ -2,13 +2,13 @@ import React from 'react';
 import { GALLERY_CONSTS, window, utils, isEditMode, isPreviewMode, optionsMap } from 'pro-gallery-lib';
 import GroupView from '../../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
-import PlayIcon from '../../svgs/components/play';
-import PauseIcon from '../../svgs/components/pause';
-import NavigationPanel, { getCustomNavigationPanelInlineStyles } from './navigationPanel';
-import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
+import PlayIcon from '../../svgs/components/play.js';
+import PauseIcon from '../../svgs/components/pause.js';
+import NavigationPanel, { getCustomNavigationPanelInlineStyles } from './navigationPanel.js';
+import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization.js';
 import { NavigationArrows } from './navigationArrows.js';
 import { shouldRenderNavArrows } from '../../helpers/navigationArrowUtils.js';
-import { toggleScrollLessAnimation } from './scrollLessAnimationHelper';
+import { toggleScrollLessAnimation } from './scrollLessAnimationHelper.js';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
 

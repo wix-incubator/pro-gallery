@@ -1,7 +1,7 @@
 export default disableAnimationsForSlideshowLayouts;
 
-import optionsMap from '../helpers/optionsMap';
-import { GALLERY_CONSTS } from '../..';
+import optionsMap from '../helpers/optionsMap.js';
+import { GALLERY_CONSTS } from '../../index.js';
 
 function disableAnimationsForSlideshowLayouts(presetOptions) {
   presetOptions[optionsMap.behaviourParams.item.content.placementAnimation] =

@@ -1,6 +1,6 @@
-import { INPUT_TYPES } from '../utils/constants';
-import { default as stylingParams_itemEnableShadow } from './stylingParams_itemEnableShadow';
-import optionsMap from '../../core/helpers/optionsMap';
+import { INPUT_TYPES } from '../utils/constants.js';
+import { default as stylingParams_itemEnableShadow } from './stylingParams_itemEnableShadow.js';
+import optionsMap from '../../core/helpers/optionsMap.js';
 
 export default {
   title: 'Item Shadow Direction',

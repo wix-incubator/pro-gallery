@@ -1,10 +1,10 @@
-import DefaultArrow from './components/defaultArrow';
-import Arrow2 from './components/arrow2';
-import Arrow3 from './components/arrow3';
-import Arrow4 from './components/arrow4';
-import Arrow5 from './components/arrow5';
-import Arrow6 from './components/arrow6';
-import Arrow7 from './components/arrow7';
+import DefaultArrow from './components/defaultArrow.js';
+import Arrow2 from './components/arrow2.js';
+import Arrow3 from './components/arrow3.js';
+import Arrow4 from './components/arrow4.js';
+import Arrow5 from './components/arrow5.js';
+import Arrow6 from './components/arrow6.js';
+import Arrow7 from './components/arrow7.js';
 
 const ARROWS_DATA = {
   DEFAULT_ARROW: {

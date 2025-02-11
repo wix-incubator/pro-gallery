@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React, { useMemo } from 'react';
 import { optionsMap, GALLERY_CONSTS, isEditMode } from 'pro-gallery-lib';
-import { GalleryUI } from './GalleryUI';
+import { GalleryUI } from './GalleryUI.js';
 import { Options, Settings, utils } from 'pro-gallery-lib';
-import ImageItem from '../imageItem';
-import IframeVideoPlayer from '../videos/IframeVideoPlayer';
+import ImageItem from '../imageItem.js';
+import IframeVideoPlayer from '../videos/IframeVideoPlayer.js';
 
 export type MediaBaseProps = {
   calculatedAlt: string;

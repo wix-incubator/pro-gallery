@@ -1,6 +1,6 @@
-import { calcTargetItemSize, fixColumnsIfNeeded } from '../helpers/layoutHelper';
-import optionsMap from '../helpers/optionsMap';
-import { GALLERY_CONSTS } from '../..';
+import { calcTargetItemSize, fixColumnsIfNeeded } from '../helpers/layoutHelper.js';
+import optionsMap from '../helpers/optionsMap.js';
+import { GALLERY_CONSTS } from '../../index.js';
 
 const fixToEmpty = (options) => {
   let presetOptions = { ...options };

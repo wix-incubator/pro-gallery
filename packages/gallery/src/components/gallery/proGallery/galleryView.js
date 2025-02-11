@@ -1,8 +1,8 @@
 import React from 'react';
 import { window, utils, GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
-import GalleryDebugMessage from './galleryDebugMessage';
+import GalleryDebugMessage from './galleryDebugMessage.js';
 import itemView from '../../item/itemView.js';
-import { getItemsInViewportOrMarginByScrollLocation } from '../../helpers/virtualization';
+import { getItemsInViewportOrMarginByScrollLocation } from '../../helpers/virtualization.js';
 
 class GalleryView extends React.Component {
   constructor(props) {

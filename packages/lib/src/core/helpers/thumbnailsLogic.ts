@@ -1,7 +1,7 @@
-import { default as GALLERY_CONSTS } from '../../common/constants/index';
-import optionsMap from './optionsMap';
-import utils from '../../common/utils';
-import { GalleryProps } from '../../common/interfaces/galleryTypes';
+import { default as GALLERY_CONSTS } from '../../common/constants/index.js';
+import optionsMap from './optionsMap.js';
+import utils from '../../common/utils/index.js';
+import { GalleryProps } from '../../common/interfaces/galleryTypes.js';
 
 function calculateActiveIndexOffset({ activeIndex, prevActiveIndex, activeIndexOffsetMemory, items }) {
   const itemsLength = items.length;
