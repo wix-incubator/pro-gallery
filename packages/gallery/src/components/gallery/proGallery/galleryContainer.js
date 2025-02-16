@@ -23,6 +23,7 @@ import { isGalleryInViewport, Deferred } from './galleryHelpers';
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
+    // todo test
     super(props);
     if (utils.isVerbose()) {
       console.count('[OOISSR] galleryContainer constructor', window.isMock);

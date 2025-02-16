@@ -4,6 +4,7 @@ import optionsMap from './optionsMap';
 
 class DimensionsHelper {
   constructor() {
+    // todo test
     this.options = {};
     this.container = {};
     this.id = '';
