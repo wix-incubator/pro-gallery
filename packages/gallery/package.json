@@ -21,7 +21,8 @@
       "require": "./dist/cjs/index.js",
       "import": "./dist/esm/index.js",
       "types": "./dist/esm-types/index.d.ts"
-    }
+    },
+    "./dist/statics/main.css": "./dist/statics/main.css"
   },
   "files": [
     "dist"
