@@ -22,7 +22,8 @@
       "import": "./dist/esm/index.js",
       "types": "./dist/esm-types/index.d.ts"
     },
-    "./dist/statics/main.css": "./dist/statics/main.css"
+    "./dist/statics/main.css": "./dist/statics/main.css",
+    "./dist/statics/main": "./dist/statics/main.css"
   },
   "files": [
     "dist"
