@@ -1,6 +1,6 @@
-import { GalleryProps } from './galleryTypes';
-import { RendererContainer } from './RendererContainer';
-import { Structure } from './Structure';
+import { GalleryProps } from './galleryTypes.js';
+import { RendererContainer } from './RendererContainer.js';
+import { Structure } from './Structure.js';
 
 export interface GalleryRendererProps extends GalleryProps {
   container: RendererContainer;

@@ -1,4 +1,4 @@
-import { INPUT_TYPES } from '../utils/constants';
+import { INPUT_TYPES } from '../utils/constants.js';
 
 function createTransformOptions(name: string, defaultValue = 0) {
   return {

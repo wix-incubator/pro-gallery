@@ -1,6 +1,6 @@
 import { GALLERY_CONSTS, Options, ThreeDimensionalScene } from 'pro-gallery-lib';
-import { ThreeDImplementation } from './types';
-import { useSceneManager } from '../../helpers/3dManager';
+import { ThreeDImplementation } from './types.js';
+import { useSceneManager } from '../../helpers/3dManager.js';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 function mapSceneToStyleParams(scene: ThreeDimensionalScene, options: Options) {

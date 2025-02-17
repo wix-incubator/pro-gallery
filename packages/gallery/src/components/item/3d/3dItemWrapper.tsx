@@ -1,9 +1,11 @@
 import React from 'react';
-import { ThreeDProps } from './types';
-import MediaItem, { MediaProps } from '../media/mediaItem';
+import { ThreeDProps } from './types.js';
+import MediaItem, { MediaProps } from '../media/mediaItem.js';
 import { optionsMap } from 'pro-gallery-lib';
 
-const ThreeDItem = React.lazy(() => import(/* webpackChunkName: "ThreeDItem" */ './3dItem'));
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+const ThreeDItem = React.lazy(() => import(/* webpackChunkName: "ThreeDItem" */ './3dItem.js'));
 
 export default function ThreeDItemWrapper(
   props: Omit<

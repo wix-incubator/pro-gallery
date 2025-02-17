@@ -1,8 +1,8 @@
-import { INPUT_TYPES } from '../utils/constants';
-import { default as GALLERY_CONSTS } from '../../common/constants';
-import { createOptions } from '../utils/utils';
-import behaviourParams_item_secondaryMedia_trigger from './behaviourParams_item_secondaryMedia_trigger';
-import optionsMap from '../../core/helpers/optionsMap';
+import { INPUT_TYPES } from '../utils/constants.js';
+import { default as GALLERY_CONSTS } from '../../common/constants/index.js';
+import { createOptions } from '../utils/utils.js';
+import behaviourParams_item_secondaryMedia_trigger from './behaviourParams_item_secondaryMedia_trigger.js';
+import optionsMap from '../../core/helpers/optionsMap.js';
 
 export default {
   title: 'Second Media Behaivour',

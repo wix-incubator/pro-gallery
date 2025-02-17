@@ -1,8 +1,8 @@
 // NEW STYPEPARAMS METHOD
-import { INPUT_TYPES } from '../utils/constants';
-// import { default as GALLERY_CONSTS } from '../../common/constants';
-import optionsMap from '../../core/helpers/optionsMap';
-import { GALLERY_CONSTS } from '../..';
+import { INPUT_TYPES } from '../utils/constants.js';
+// import { default as GALLERY_CONSTS } from '../../common/constants/index.js';
+import optionsMap from '../../core/helpers/optionsMap.js';
+import { GALLERY_CONSTS } from '../../index.js';
 
 export default {
   title: 'Groups per Row',

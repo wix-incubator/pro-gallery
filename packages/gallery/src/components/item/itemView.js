@@ -1,16 +1,16 @@
 import React from 'react';
 import { GALLERY_CONSTS, window, utils, isEditMode, isPreviewMode, optionsMap } from 'pro-gallery-lib';
 import MagnifiedImage from './imageWithMagnified.js';
-import ThreeDItem from './3d/3dItemWrapper';
+import ThreeDItem from './3d/3dItemWrapper.js';
 import withSecondaryMedia from '../hoc/withSecondMedia.js';
 import TextItem from './textItem.js';
 import ItemHover from './itemHover.js';
 import { changeActiveElementIfNeeded, onAnchorFocus } from './itemHelper.js';
-import { cssScrollHelper } from '../helpers/cssScrollHelper';
-import { getOuterInfoStyle, getInnerInfoStyle, getContainerStyle, getImageStyle } from './itemViewStyleProvider';
-import VideoItemWrapper from './videos/videoItemWrapper';
-import { getCustomInfoRendererProps, getLinkParams } from './pure';
-import { getSlideAnimationClassNames } from '../gallery/proGallery/scrollLessAnimationHelper';
+import { cssScrollHelper } from '../helpers/cssScrollHelper.js';
+import { getOuterInfoStyle, getInnerInfoStyle, getContainerStyle, getImageStyle } from './itemViewStyleProvider.js';
+import VideoItemWrapper from './videos/videoItemWrapper.js';
+import { getCustomInfoRendererProps, getLinkParams } from './pure.js';
+import { getSlideAnimationClassNames } from '../gallery/proGallery/scrollLessAnimationHelper.js';
 
 const ImageWithSecondMedia = withSecondaryMedia(MagnifiedImage);
 const TextWithSecondMedia = withSecondaryMedia(TextItem);

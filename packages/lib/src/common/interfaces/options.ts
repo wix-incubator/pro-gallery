@@ -1,6 +1,6 @@
-import { LayoutParams } from './layoutParams';
-import { BehaviourParams } from './behaviourParams';
-import { StylingParams } from './stylingParams';
+import { LayoutParams } from './layoutParams.js';
+import { BehaviourParams } from './behaviourParams.js';
+import { StylingParams } from './stylingParams.js';
 
 export interface Options {
   layoutParams?: LayoutParams;

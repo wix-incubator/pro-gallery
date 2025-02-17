@@ -1,8 +1,8 @@
 import React from 'react';
 import { utils, defaultOptions } from 'pro-gallery-lib';
-import ProGallery from './proGallery/proGallery';
+import ProGallery from './proGallery/proGallery.js';
 import { GalleryRendererProps } from 'pro-gallery-lib';
-import { ViewModeWrapperHOC } from './proGallery/viewModeWrapper';
+import { ViewModeWrapperHOC } from './proGallery/viewModeWrapper.js';
 
 class GalleryRenderer extends React.Component<GalleryRendererProps> {
   render() {

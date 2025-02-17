@@ -1,8 +1,8 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom';
 import { GALLERY_CONSTS, utils, optionsMap } from 'pro-gallery-lib';
-import { ArrowFollower, MouseFollowerProvider } from '../../helpers/mouseCursorPosition';
-import { getArrowBoxStyle, getArrowsRenderData } from '../../helpers/navigationArrowUtils';
+import { ArrowFollower, MouseFollowerProvider } from '../../helpers/mouseCursorPosition.js';
+import { getArrowBoxStyle, getArrowsRenderData } from '../../helpers/navigationArrowUtils.js';
 
 export function NavigationArrows({
   options,

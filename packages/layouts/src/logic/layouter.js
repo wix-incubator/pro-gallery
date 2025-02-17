@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { utils } from './utils';
+import { utils } from './utils.js';
 import { Item } from './item.js';
 import { Group } from './group.js';
 import { Strip } from './strip.js';
