@@ -1,4 +1,4 @@
-import WindowMock, { hydrateMockMap } from './window.mock';
+import WindowMock, { hydrateMockMap } from './window.mock.js';
 
 class WindowWrapper {
   constructor() {

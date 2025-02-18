@@ -1,4 +1,4 @@
-import { INPUT_TYPES } from '../utils/constants';
+import { INPUT_TYPES } from '../utils/constants.js';
 
 export default {
   title: 'Enable streching images over their maximum original dimensions',

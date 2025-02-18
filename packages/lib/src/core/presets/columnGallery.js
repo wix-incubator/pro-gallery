@@ -1,6 +1,6 @@
-import { calcTargetItemSize } from '../helpers/layoutHelper';
-import { GALLERY_CONSTS } from '../..';
-import optionsMap from '../helpers/optionsMap';
+import { calcTargetItemSize } from '../helpers/layoutHelper.js';
+import { GALLERY_CONSTS } from '../../index.js';
+import optionsMap from '../helpers/optionsMap.js';
 
 const fixToColumn = (options) => {
   let presetOptions = { ...options };

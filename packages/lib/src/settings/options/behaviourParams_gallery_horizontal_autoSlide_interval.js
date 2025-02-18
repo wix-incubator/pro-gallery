@@ -1,7 +1,7 @@
-import { INPUT_TYPES } from '../utils/constants';
-import { default as GALLERY_CONSTS } from '../../common/constants';
-import optionsMap from '../../core/helpers/optionsMap';
-import { default as autoSlideBehaviour } from './behaviourParams_gallery_horizontal_autoSlide_behaviour';
+import { INPUT_TYPES } from '../utils/constants.js';
+import { default as GALLERY_CONSTS } from '../../common/constants/index.js';
+import optionsMap from '../../core/helpers/optionsMap.js';
+import { default as autoSlideBehaviour } from './behaviourParams_gallery_horizontal_autoSlide_behaviour.js';
 export default {
   title: 'Time Between Images',
   description: `Set an interval time when using autoSlide. `,

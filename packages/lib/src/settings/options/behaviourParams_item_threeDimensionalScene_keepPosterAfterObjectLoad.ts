@@ -1,4 +1,4 @@
-import { INPUT_TYPES } from '../utils/constants';
+import { INPUT_TYPES } from '../utils/constants.js';
 
 export default {
   title: `Show preview poster should be kept after object load`,

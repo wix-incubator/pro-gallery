@@ -1,4 +1,4 @@
-import { Group } from '../logic/group';
+import { Group } from '../logic/group.js';
 import { utils } from 'pro-gallery-lib';
 
 class GalleryGroup {

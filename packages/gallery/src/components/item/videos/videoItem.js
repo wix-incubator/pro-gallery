@@ -1,7 +1,7 @@
 import React from 'react';
 import { GALLERY_CONSTS, window, utils, optionsMap } from 'pro-gallery-lib';
-import { shouldCreateVideoPlaceholder } from '../itemHelper';
-import { getStyle } from './getStyle';
+import { shouldCreateVideoPlaceholder } from '../itemHelper.js';
+import { getStyle } from './getStyle.js';
 
 class VideoItem extends React.Component {
   constructor(props) {

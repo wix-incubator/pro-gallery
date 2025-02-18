@@ -13,7 +13,7 @@
       "esnext"
     ],
     "incremental": true,
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "rootDir": "src",
     "declarationDir": "dist/esm-types",
     "declaration": true,

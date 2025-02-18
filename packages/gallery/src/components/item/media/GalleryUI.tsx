@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useGalleryUI } from '../../../context/GalleryContext';
+import { useGalleryUI } from '../../../context/GalleryContext.js';
 
 type ComponentType = React.ComponentType<{ size: number }>;
 
@@ -9,8 +9,12 @@ interface GalleryComponents {
 }
 
 const galleryUiComponents = {
-  videoPlayButton: React.lazy(() => import(/* webpackChunkName: "defaultPlayButton" */ './playButton')),
-  rotateArrow: React.lazy(() => import(/* webpackChunkName: "defaultRotateArrow" */ './rotateArrow')),
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  videoPlayButton: React.lazy(() => import(/* webpackChunkName: "defaultPlayButton" */ './playButton.js')),
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  rotateArrow: React.lazy(() => import(/* webpackChunkName: "defaultRotateArrow" */ './rotateArrow.js')),
 };
 
 interface GalleryUIProps {

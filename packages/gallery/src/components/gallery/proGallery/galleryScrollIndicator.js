@@ -1,6 +1,6 @@
 import React from 'react';
 import { utils, GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
-import { cssScrollHelper } from '../../helpers/cssScrollHelper';
+import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 
 export default class ScrollIndicator extends React.Component {
   constructor(props) {

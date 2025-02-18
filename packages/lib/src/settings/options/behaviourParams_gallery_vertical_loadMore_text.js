@@ -1,6 +1,6 @@
-import { INPUT_TYPES } from '../utils/constants';
-import { default as enableLoadMore } from './behaviourParams_gallery_vertical_loadMore_enable';
-import optionsMap from '../../core/helpers/optionsMap';
+import { INPUT_TYPES } from '../utils/constants.js';
+import { default as enableLoadMore } from './behaviourParams_gallery_vertical_loadMore_enable.js';
+import optionsMap from '../../core/helpers/optionsMap.js';
 
 export default {
   title: 'Load More button text',

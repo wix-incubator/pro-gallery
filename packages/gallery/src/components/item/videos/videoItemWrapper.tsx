@@ -1,16 +1,18 @@
 import React from 'react';
 import { utils, optionsMap } from 'pro-gallery-lib';
-import { shouldCreateVideoPlaceholder } from '../itemHelper';
-import { GalleryUI } from '../media/GalleryUI';
-import MediaImage, { MediaImplementationProps, MediaBaseProps } from '../media/mediaItem';
+import { shouldCreateVideoPlaceholder } from '../itemHelper.js';
+import { GalleryUI } from '../media/GalleryUI.js';
+import MediaImage, { MediaImplementationProps, MediaBaseProps } from '../media/mediaItem.js';
 
 const isIos = utils.isiOS();
 const useTransparentPlayButtonAndForceLoadVideo = (props) =>
   ((props.videoUrl || props.url).includes('youtube.com') || (props.videoUrl || props.url).includes('youtu.be')) &&
   isIos;
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 const VideoItem = React.lazy(() => {
-  return import(/* webpackChunkName: "proGallery_videoItem" */ './videoItem');
+  return import(/* webpackChunkName: "proGallery_videoItem" */ './videoItem.js');
 });
 
 class VideoItemImplementation extends React.Component<MediaImplementationProps> {

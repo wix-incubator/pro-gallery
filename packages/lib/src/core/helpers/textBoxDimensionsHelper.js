@@ -1,9 +1,9 @@
 import {
   hasExternalVerticalPlacement,
   hasExternalHorizontalPlacement,
-} from '../../common/constants/layoutParams_info_placement';
-import { default as GALLERY_CONSTS } from '../../common/constants';
-import optionsMap from './optionsMap';
+} from '../../common/constants/layoutParams_info_placement.js';
+import { default as GALLERY_CONSTS } from '../../common/constants/index.js';
+import optionsMap from './optionsMap.js';
 
 const processTextDimensions = (options, customExternalInfoRendererExists) => {
   let _options = { ...options };
