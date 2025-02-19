@@ -29,7 +29,12 @@ class VideoItem extends React.Component {
   dynamiclyImportVideoPlayers() {
     if (!(window && window.ReactPlayer)) {
       import(/* webpackChunkName: "proGallery_reactPlayer" */ 'react-player').then((ReactPlayer) => {
-        window.ReactPlayer = ReactPlayer.default;
+        // cjs/esm interop hack
+        if (ReactPlayer.default.default) {
+          window.ReactPlayer = ReactPlayer.default.default;
+        } else {
+          window.ReactPlayer = ReactPlayer.default;
+        }
         this.setState({ reactPlayerLoaded: true });
         this.playVideoIfNeeded();
       });
