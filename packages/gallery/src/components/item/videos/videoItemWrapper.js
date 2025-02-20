@@ -41,7 +41,7 @@ class VideoItemWrapper extends React.Component {
 
   mightPlayVideo() {
     const { videoPlay, itemClick } = this.props.options;
-    const { hasLink, isCurrentHover } = this.props;
+    const { hasLink } = this.props;
     const prefersReducedMotion =
       window.matchMedia &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -52,7 +52,7 @@ class VideoItemWrapper extends React.Component {
     if (prefersReducedMotion && videoPlay === 'auto') {
       return false;
     }
-    if ((videoPlay === 'hover' && isCurrentHover) || videoPlay === 'auto') {
+    if (videoPlay === 'hover' || videoPlay === 'auto') {
       return true;
     } else if (itemClick === 'nothing') {
       return true;
