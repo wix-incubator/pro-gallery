@@ -94,6 +94,9 @@ class VideoScrollHelper {
         //case VIDEO_EVENTS.hovered:
         this.itemHovered(eventData);
         break;
+      case GALLERY_CONSTS.events.HOVER_UNSET:
+        this.itemHoveredUnset(eventData);
+        break;
       case GALLERY_CONSTS.events.VIDEO_ENDED:
         //case VIDEO_EVENTS.ended:
         this.videoEnded(eventData.idx);
@@ -116,6 +119,17 @@ class VideoScrollHelper {
     if (this.videoPlay !== 'hover') return;
     if (this.IdxExistsInVideoItems(idx)) {
       this.play(idx);
+    } else {
+      //do nothing
+    }
+  }
+
+  itemHoveredUnset(idx) {
+    if (this.videoPlay !== 'hover') return;
+    if (this.IdxExistsInVideoItems(idx)) {
+      if (this.currentPlayingIdx === idx) {
+        this.stop(idx);
+      }
     } else {
       //do nothing
     }

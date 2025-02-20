@@ -106,6 +106,10 @@ class ItemView extends React.Component {
   onMouseLeave() {
     if (!utils.isMobile()) {
       this.props.actions.eventsListener(GALLERY_CONSTS.events.HOVER_SET, -1);
+      this.props.actions.eventsListener(
+        GALLERY_CONSTS.events.HOVER_UNSET,
+        this.props.idx
+      );
     }
   }
 
