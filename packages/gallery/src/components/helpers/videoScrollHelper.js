@@ -240,10 +240,12 @@ class VideoScrollHelper {
 
   stop(indexInVideoItems) {
     if (indexInVideoItems >= 0) {
+      const currentVideoId = this.videoItems.find(
+        (item) => item.idx === indexInVideoItems
+      )?.id;
       const newRating =
-        this.videoRatingMap.get(this.videoItems[indexInVideoItems].id) +
-        this.currentItemCount;
-      this.videoRatingMap.set(this.videoItems[indexInVideoItems].id, newRating);
+        this.videoRatingMap.get(currentVideoId) + this.currentItemCount;
+      this.videoRatingMap.set(currentVideoId, newRating);
     }
     this.setPlayingIdx(-1);
     this.playing = false;
