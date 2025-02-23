@@ -130,8 +130,6 @@ class VideoScrollHelper {
       if (this.currentPlayingIdx === idx) {
         this.stop(idx);
       }
-    } else {
-      //do nothing
     }
   }
 
