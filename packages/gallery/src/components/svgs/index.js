@@ -1,6 +1,6 @@
 /* eslint-disable */
 /* tslint:disable */
-export {default as pause} from './components/pause';
+export {default as pause_bars} from './components/pause_bars';
 export {default as play_background} from './components/play_background';
 export {default as play_triangle} from './components/play_triangle';
 export {default as play} from './components/play';
