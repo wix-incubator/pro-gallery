@@ -173,7 +173,6 @@ class ItemView extends React.Component {
 
   onAnchorKeyDown(e) {
     // Similar to "onContainerKeyUp()" expect 'shouldUseDirectLink()' part, because we are already on the <a> tag (this.itemAnchor)
-    const clickTarget = 'item-container';
     switch (e.keyCode || e.charCode) {
       case 32: //space
       case 13: //enter
@@ -214,17 +213,18 @@ class ItemView extends React.Component {
       { ...this.props, clickTarget },
       e
     );
-    if (this.props.type === 'video') {
-      if (this.props.idx === this.props.playingVideoIdx) {
-        this.props.actions.eventsListener(
-          GALLERY_CONSTS.events.VIDEO_PAUSED,
-          { ...this.props, clickTarget },
-          e
-        );
-        return;
-      }
+    if (
+      this.props.type === 'video' &&
+      this.props.idx === this.props.playingVideoIdx
+    ) {
+      this.props.actions.eventsListener(
+        GALLERY_CONSTS.events.VIDEO_PAUSED,
+        { ...this.props, clickTarget },
+        e
+      );
+      return;
     }
-    
+
     if (this.shouldUseDirectLink()) {
       return;
     }

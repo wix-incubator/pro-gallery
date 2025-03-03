@@ -134,7 +134,8 @@ class VideoItemWrapper extends React.Component {
     const hover = this.props.hover;
     const showVideoPlayButton =
       !this.props.hidePlay && this.props.options.showVideoPlayButton;
-    const showVideoPauseButton = this.props.isCurrentHover && this.props.options.showVideoPlayButton;;
+    const showVideoPauseButton =
+      this.props.isCurrentHover && this.props.options.showVideoPlayButton;
     const videoPlaceholder = this.createVideoPlaceholder(showVideoPlayButton);
 
     const VideoItem = this.VideoItem;
