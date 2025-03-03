@@ -9,7 +9,7 @@ import {
 import GroupView from '../../group/groupView.js';
 import GalleryDebugMessage from './galleryDebugMessage.js';
 import PlayIcon from '../../svgs/components/play';
-import PauseIcon from '../../svgs/components/pause';
+import PauseIcon from '../../svgs/components/pause_bars.js';
 import NavigationPanel, {
   getCustomNavigationPanelInlineStyles,
 } from './navigationPanel';

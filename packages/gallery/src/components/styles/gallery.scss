@@ -463,7 +463,15 @@ div.pro-gallery {
           }
 
           &.playing {
+            &.pause-bars {
+              button,
+              i {
+                display: none;
+              }
+            }
+          }
 
+          &.pause-bars {
             button,
             i {
               display: none;
@@ -501,6 +509,11 @@ div.pro-gallery {
             }
 
             &.play-triangle,
+            &.pause-bars {
+              opacity: 1;
+            }
+
+            &.pause-bars,
             &.play-background {
               //padding-left: 6px;
               //width: 54px;
