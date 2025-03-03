@@ -138,7 +138,7 @@ class VideoScrollHelper {
     // if (this.itemClick !== 'nothing') return;
     if (this.IdxExistsInVideoItems(idx)) {
       if (this.currentPlayingIdx === idx) {
-        this.stop();
+        this.stop(idx);
       } else {
         this.play(idx);
       }

@@ -1,8 +1,9 @@
 import React from 'react';
 import { utils, isEditMode, window } from 'pro-gallery-lib';
 import { shouldCreateVideoPlaceholder } from '../itemHelper';
-import PlayBackground from '../../svgs/components/play_background';
+import VideoButtonBackground from '../../svgs/components/play_background';
 import PlayTriangle from '../../svgs/components/play_triangle';
+import PauseBars from '../../svgs/components/pause_bars';
 import VideoItemPlaceholder from './videoItemPlaceholder';
 
 const isIos = utils.isiOS();
@@ -11,21 +12,21 @@ const useTransparentPlayButtonAndForceLoadVideo = (props) =>
     (props.videoUrl || props.url).includes('youtu.be')) &&
   isIos;
 
-const VideoPlayButton = ({ pointerEvents }) => (
+const VideoButton = ({ pointerEvents, buttonRole, buttonSvg }) => (
   <div style={{ pointerEvents: pointerEvents ? 'initial' : 'none' }}>
     <i
-      key="play-triangle"
-      data-hook="play-triangle"
-      className={'gallery-item-video-play-triangle play-triangle '}
+      key={buttonRole}
+      data-hook={buttonRole}
+      className={`gallery-item-video-${buttonRole} ${buttonRole} `}
     >
-      <PlayTriangle />
+      {buttonSvg}
     </i>
     <i
       key="play-bg"
       data-hook="play-background"
       className={'gallery-item-video-play-background play-background '}
     >
-      <PlayBackground />
+      <VideoButtonBackground />
     </i>
   </div>
 );
@@ -76,6 +77,7 @@ class VideoItemWrapper extends React.Component {
       'isCurrentHover',
       'customComponents',
     ]);
+    const showVideoPauseButton = this.props.isCurrentHover;
     return (
       <VideoItemPlaceholder
         {...props}
@@ -85,10 +87,23 @@ class VideoItemWrapper extends React.Component {
         id={this.props.idx}
         videoPlayButton={
           showVideoPlayButton && (
-            <VideoPlayButton
+            <VideoButton
               pointerEvents={
                 !useTransparentPlayButtonAndForceLoadVideo(this.props)
               }
+              buttonRole={'play-triangle'}
+              buttonSvg={<PlayTriangle />}
+            />
+          )
+        }
+        videoPauseButton={
+          showVideoPauseButton && (
+            <VideoButton
+              pointerEvents={useTransparentPlayButtonAndForceLoadVideo(
+                this.props
+              )}
+              buttonRole={'pause-bars'}
+              buttonSvg={<PauseBars />}
             />
           )
         }
@@ -119,6 +134,7 @@ class VideoItemWrapper extends React.Component {
     const hover = this.props.hover;
     const showVideoPlayButton =
       !this.props.hidePlay && this.props.options.showVideoPlayButton;
+    const showVideoPauseButton = this.props.isCurrentHover && this.props.options.showVideoPlayButton;;
     const videoPlaceholder = this.createVideoPlaceholder(showVideoPlayButton);
 
     const VideoItem = this.VideoItem;
@@ -146,8 +162,23 @@ class VideoItemWrapper extends React.Component {
         videoPlaceholder={videoPlaceholder}
         videoPlayButton={
           showVideoPlayButton && (
-            <VideoPlayButton
-              pointerEvents={!shouldUseTransparentPlayButtonAndForceLoadVideo}
+            <VideoButton
+              pointerEvents={
+                !useTransparentPlayButtonAndForceLoadVideo(this.props)
+              }
+              buttonRole={'play-triangle'}
+              buttonSvg={<PlayTriangle />}
+            />
+          )
+        }
+        videoPauseButton={
+          showVideoPauseButton && (
+            <VideoButton
+              pointerEvents={useTransparentPlayButtonAndForceLoadVideo(
+                this.props
+              )}
+              buttonRole={'pause-bars'}
+              buttonSvg={<PauseBars />}
             />
           )
         }

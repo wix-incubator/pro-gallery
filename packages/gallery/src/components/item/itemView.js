@@ -178,7 +178,6 @@ class ItemView extends React.Component {
       case 32: //space
       case 13: //enter
         e.stopPropagation();
-        this.onItemClick(e, clickTarget, false); //pressing enter or space always behaves as click on main image, even if the click is on a thumbnail
         return false;
       default:
         return true;
@@ -215,7 +214,17 @@ class ItemView extends React.Component {
       { ...this.props, clickTarget },
       e
     );
-
+    if (this.props.type === 'video') {
+      if (this.props.idx === this.props.playingVideoIdx) {
+        this.props.actions.eventsListener(
+          GALLERY_CONSTS.events.VIDEO_PAUSED,
+          { ...this.props, clickTarget },
+          e
+        );
+        return;
+      }
+    }
+    
     if (this.shouldUseDirectLink()) {
       return;
     }
@@ -1031,6 +1040,7 @@ class ItemView extends React.Component {
         key={'item-container-' + id}
         style={this.getItemContainerStyles()}
         onKeyUp={this.onContainerKeyUp}
+        onKeyDown={this.handleKeyDown}
         onClick={this.onItemWrapperClick}
       >
         {this.getTopInfoElementIfNeeded()}
