@@ -32,7 +32,6 @@ const VideoButton = ({ pointerEvents, buttonRole, buttonSvg }) => (
 );
 
 class VideoItemWrapper extends React.Component {
-  // TO BE DELETED
   constructor(props) {
     super(props);
     this.mightPlayVideo = this.mightPlayVideo.bind(this);
