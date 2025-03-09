@@ -60,6 +60,7 @@ typings/
 
 # Lock files
 yarn.lock
+package-lock
 
 # Server output
 maven
