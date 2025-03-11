@@ -12,7 +12,7 @@ Blazing fast & beautiful galleries built with React. [try it out](https://pro-ga
 
 ## Gettings Started
 The best way to get started is using the [Playground](https://pro-gallery.surge.sh). Use the sidebar to configure the gallery layout you need for your site and click on `Generate Gallery Code` to get the code for your gallery.
-After that you will only need to add your items list and your gallery is ready!!
+After that you will only need to add your items list and your gallery is ready!
 
 ### Installation
 Install with `npm`
