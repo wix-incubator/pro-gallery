@@ -16,7 +16,7 @@ class Blueprints {
     blueprintManagerId,
     isUsingCustomInfoElements,
   }) {
-    // cacheBlocker
+    // cacheBlocker.
     // if (this.cache[params]) return this.cache[params];
 
     this.reasons = {
