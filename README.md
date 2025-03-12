@@ -17,7 +17,7 @@ This is V4 hotfix branch.
 
 ## Gettings Started
 The best way to get started is by using the [Playground](https://pro-gallery.surge.sh). Use the sidebar to configure the gallery layout you need. When you're done,  click the `Generate Gallery Code` button to get the copy-paste-ready code.
-All you need to do after that is specify the images `array` for the gallery to process - and your gallery is ready!
+All you need to do after that is specify the images `array` for the gallery to process - and your gallery is ready!!
 
 ### Installation
 Install with `npm`
