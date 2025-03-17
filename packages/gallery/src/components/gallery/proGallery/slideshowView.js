@@ -650,14 +650,13 @@ class SlideshowView extends React.Component {
       this.props.galleryContainerRef?.clientWidth ||
       container.galleryWidth ||
       0;
-
-    return getItemsInViewportOrMarginByActiveGroup({
-      groups,
-      activeIndex,
-      galleryWidth,
-      options,
-      virtualizationSettings,
-    });
+      
+      let slicedGroups = groups.slice(Math.max(0, activeIndex - 10), activeIndex + 10);
+      console.log('noam getBufferedItems', {groups, activeIndex, slicedGroups})
+      return slicedGroups.map((group) => ({
+        group,
+        shouldRender: true,
+      }));
   }
   createGalleryConfig() {
     return {
