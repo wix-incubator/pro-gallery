@@ -637,14 +637,14 @@ class SlideshowView extends React.Component {
 
   getBufferedItems(galleryGroups, container) {
     const { state, props } = this;
-    const {
-      getVisibleItems,
-      isPrerenderMode,
-    } = props;
+    const { getVisibleItems, isPrerenderMode } = props;
     const { activeIndex } = state;
     const groups = getVisibleItems(galleryGroups, container, isPrerenderMode);
-    let slicedGroups = groups.slice(Math.max(0, activeIndex - 10), activeIndex + 10);
-    console.log('noam getBufferedItems', { groups, activeIndex, slicedGroups })
+    let slicedGroups = groups.slice(
+      Math.max(0, activeIndex - 10),
+      activeIndex + 10
+    );
+    console.log('noam getBufferedItems', { groups, activeIndex, slicedGroups });
     return slicedGroups.map((group) => ({
       group,
       shouldRender: true,
