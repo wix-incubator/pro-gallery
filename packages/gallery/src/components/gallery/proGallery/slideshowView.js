@@ -13,7 +13,6 @@ import PauseIcon from '../../svgs/components/pause_bars.js';
 import NavigationPanel, {
   getCustomNavigationPanelInlineStyles,
 } from './navigationPanel';
-import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
 import { NavigationArrows } from './navigationArrows.js';
 import { shouldRenderNavArrows } from '../../helpers/navigationArrowUtils.js';
 import { toggleScrollLessAnimation } from './scrollLessAnimationHelper';
@@ -639,24 +638,17 @@ class SlideshowView extends React.Component {
   getBufferedItems(galleryGroups, container) {
     const { state, props } = this;
     const {
-      options,
-      virtualizationSettings,
       getVisibleItems,
       isPrerenderMode,
     } = props;
     const { activeIndex } = state;
     const groups = getVisibleItems(galleryGroups, container, isPrerenderMode);
-    const galleryWidth =
-      this.props.galleryContainerRef?.clientWidth ||
-      container.galleryWidth ||
-      0;
-      
-      let slicedGroups = groups.slice(Math.max(0, activeIndex - 10), activeIndex + 10);
-      console.log('noam getBufferedItems', {groups, activeIndex, slicedGroups})
-      return slicedGroups.map((group) => ({
-        group,
-        shouldRender: true,
-      }));
+    let slicedGroups = groups.slice(Math.max(0, activeIndex - 10), activeIndex + 10);
+    console.log('noam getBufferedItems', { groups, activeIndex, slicedGroups })
+    return slicedGroups.map((group) => ({
+      group,
+      shouldRender: true,
+    }));
   }
   createGalleryConfig() {
     return {
