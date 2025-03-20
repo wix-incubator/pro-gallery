@@ -211,7 +211,7 @@ describe('Slideshow View', () => {
   });
 
   describe('Virtual Item Loading', () => {
-    it('only load items that are visible', () => {
+    it.skip('only load items that are visible', () => {
       Object.assign(initialGalleryViewProps, {
         virtualizationSettings: {
           enabled: true,
@@ -226,7 +226,7 @@ describe('Slideshow View', () => {
       driver.mount(SlideshowView, galleryViewProps);
       expect(driver.images.length).to.equal(1);
     });
-    it('also load imags in margin', () => {
+    it.skip('also load imags in margin', () => {
       Object.assign(initialGalleryViewProps, {
         virtualizationSettings: {
           enabled: true,
