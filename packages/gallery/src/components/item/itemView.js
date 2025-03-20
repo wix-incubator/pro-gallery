@@ -213,15 +213,20 @@ class ItemView extends React.Component {
       { ...this.props, clickTarget },
       e
     );
-    if (
-      this.props.type === 'video' &&
-      this.props.idx === this.props.playingVideoIdx
-    ) {
-      this.props.actions.eventsListener(
-        GALLERY_CONSTS.events.VIDEO_PAUSED,
-        { ...this.props, clickTarget },
-        e
-      );
+    if (this.props.type === 'video') {
+      if (this.props.idx === this.props.playingVideoIdx) {
+        this.props.actions.eventsListener(
+          GALLERY_CONSTS.events.VIDEO_PAUSED,
+          { ...this.props, clickTarget },
+          e
+        );
+      } else if (this.props.playingVideoIdx === -1) {
+        this.props.actions.eventsListener(
+          GALLERY_CONSTS.events.VIDEO_PLAYED,
+          { ...this.props, clickTarget },
+          e
+        );
+      }
       return;
     }
 
