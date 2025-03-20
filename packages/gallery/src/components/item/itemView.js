@@ -220,7 +220,7 @@ class ItemView extends React.Component {
           { ...this.props, clickTarget },
           e
         );
-      } else if (this.props.playingVideoIdx === -1) {
+      } else {
         this.props.actions.eventsListener(
           GALLERY_CONSTS.events.VIDEO_PLAYED,
           { ...this.props, clickTarget },
