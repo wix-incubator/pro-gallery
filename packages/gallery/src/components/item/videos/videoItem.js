@@ -265,7 +265,10 @@ class VideoItem extends React.Component {
             this.setState({ shouldPlay: false });
           }
         }}
-        controls={this.props.options.showVideoControls}
+        controls={
+          this.props.activeIndex === this.props.idx &&
+          this.props.options.showVideoControls
+        }
         config={{
           file: {
             attributes,
