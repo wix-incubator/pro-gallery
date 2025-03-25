@@ -54,7 +54,6 @@ export function changeActiveElementIfNeeded({
         'show-more',
         currentProps.galleryId
       );
-      console.log({ isGalleryItemInFocus, isShowMoreInFocus });
       if (isGalleryItemInFocus || isShowMoreInFocus) {
         if (
           currentProps.thumbnailHighlightId !==
