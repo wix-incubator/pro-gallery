@@ -26,6 +26,16 @@ export function onAnchorFocus({
   }
 }
 
+function isThisGalleryElementInFocus(className, galleryId) {
+  const activeElement = window.document.activeElement;
+  return (
+    String(activeElement.className).includes(className) &&
+    !!window.document.querySelector(
+      `#pro-gallery-${galleryId} #${String(activeElement.id)}`
+    )
+  );
+}
+
 export function changeActiveElementIfNeeded({
   prevProps,
   currentProps,
@@ -36,7 +46,16 @@ export function changeActiveElementIfNeeded({
       shouldChangeActiveElement() &&
       window.document.activeElement.className
     ) {
-      if (currentProps.settings?.isAccessible) {
+      const isGalleryItemInFocus = isThisGalleryElementInFocus(
+        'gallery-item-container',
+        currentProps.galleryId
+      );
+      const isShowMoreInFocus = isThisGalleryElementInFocus(
+        'show-more',
+        currentProps.galleryId
+      );
+      console.log({ isGalleryItemInFocus, isShowMoreInFocus });
+      if (isGalleryItemInFocus || isShowMoreInFocus) {
         if (
           currentProps.thumbnailHighlightId !==
             prevProps.thumbnailHighlightId &&

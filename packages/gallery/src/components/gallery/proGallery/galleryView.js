@@ -148,10 +148,14 @@ class GalleryView extends React.Component {
       case 32: // space
       case 13: // enter
         e.stopPropagation();
-        this.props.actions.toggleLoadMoreItems();
         utils.setStateAndLog(this, 'Set Gallery Current Item', {
           activeIndex: this.lastVisibleItemIdx(),
         });
+        // this is to make sure that the focus is moved to the items first before the "load more" button disappears
+        // other wise the gallery will lose focus to the body
+        setTimeout(() => {
+          this.props.actions.toggleLoadMoreItems();
+        }, 0);
         return false;
       default:
         break;
