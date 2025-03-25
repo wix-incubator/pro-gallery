@@ -137,7 +137,6 @@ class GalleryView extends React.Component {
       case 13: // enter
         e.preventDefault();
         e.stopPropagation();
-        this.props.actions.toggleLoadMoreItems();
         return false;
       default:
         break;
@@ -149,6 +148,10 @@ class GalleryView extends React.Component {
       case 32: // space
       case 13: // enter
         e.stopPropagation();
+        this.props.actions.toggleLoadMoreItems();
+        utils.setStateAndLog(this, 'Set Gallery Current Item', {
+          activeIndex: this.lastVisibleItemIdx(),
+        });
         return false;
       default:
         break;
