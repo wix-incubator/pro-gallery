@@ -265,10 +265,7 @@ class VideoItem extends React.Component {
             this.setState({ shouldPlay: false });
           }
         }}
-        controls={
-          this.props.activeIndex === this.props.idx &&
-          this.props.options.showVideoControls
-        }
+        controls={this.props.options.showVideoControls}
         config={{
           file: {
             attributes,
@@ -290,7 +287,9 @@ class VideoItem extends React.Component {
     if (this.props.isExternalVideo) {
       const videoGalleryItem =
         window.document &&
-        window.document.getElementById(`video-${this.props.id}`);
+        window.document.querySelector(
+          `#pro-gallery-${this.props.galleryId} #video-${this.props.id}`
+        );
       const videoIFrames =
         videoGalleryItem && videoGalleryItem.getElementsByTagName('iframe');
       const videoIFrame = videoIFrames && videoIFrames[0];
