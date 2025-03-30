@@ -1039,20 +1039,20 @@ class ItemView extends React.Component {
         onKeyDown={this.handleKeyDown}
         onClick={this.onItemWrapperClick}
       >
-        {
-          <button
-            data-idx={idx}
-            id={'item-action-' + id}
-            className="item-action"
-            ref={(ref) => (this.itemActionRef = ref)}
-            onKeyUp={this.onContainerKeyUp}
-            tabIndex={this.getItemContainerTabIndex()}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            {...(itemAriaLabel && { ['aria-label']: itemAriaLabel })}
-            {...(itemAriaRole && { role: itemAriaRole })}
-          ></button>
-        }
+        <button
+          data-idx={idx}
+          id={'item-action-' + id}
+          className="item-action"
+          ref={(ref) => (this.itemActionRef = ref)}
+          onKeyUp={this.onContainerKeyUp}
+          tabIndex={this.getItemContainerTabIndex()}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          data-hook={'item-action'}
+          {...(itemAriaLabel && { ['aria-label']: itemAriaLabel })}
+          {...(itemAriaRole && { role: itemAriaRole })}
+        ></button>
+
         {this.getTopInfoElementIfNeeded()}
         {this.getLeftInfoElementIfNeeded()}
         <div
