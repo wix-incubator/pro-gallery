@@ -108,10 +108,14 @@ class VideoItem extends React.Component {
     this.props.pauseVideo();
   }
 
+  isPrefersReducedMotion() {
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
   playVideoIfNeeded(props = this.props) {
     try {
       const { shouldPlay } = props;
-      if (shouldPlay && !this.isPlaying) {
+      if (shouldPlay && !this.isPlaying && !this.isPrefersReducedMotion()) {
         this.videoElement =
           this.videoElement || window.document.querySelector(`#video-${this.props.id}-${this.props.galleryId} video`);
         if (this.videoElement) {
@@ -168,7 +172,7 @@ class VideoItem extends React.Component {
         loop={!!this.props.options[optionsMap.behaviourParams.item.video.loop]}
         ref={(player) => (this.video = player)}
         volume={this.props.options[optionsMap.behaviourParams.item.video.volume] ? 0.8 : 0}
-        playing={this.state.shouldPlay}
+        playing={this.state.shouldPlay && !this.isPrefersReducedMotion()}
         onEnded={() => {
           this.setState({ isPlaying: false });
           this.props.actions.eventsListener(GALLERY_CONSTS.events.VIDEO_ENDED, this.props);
