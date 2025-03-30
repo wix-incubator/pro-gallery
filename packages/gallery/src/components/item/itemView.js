@@ -969,7 +969,7 @@ class ItemView extends React.Component {
     changeActiveElementIfNeeded({
       prevProps,
       currentProps: this.props,
-      itemContainer: this.itemContainer,
+      itemActionRef: this.itemActionRef,
     });
   }
 
@@ -1019,6 +1019,7 @@ class ItemView extends React.Component {
       options.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER &&
       !this.hasRequiredMediaUrl;
     const itemAriaRole = this.getItemAriaRole();
+    const itemAriaLabel = this.getItemAriaLabel();
     const Element = this.props.elementsOverride?.item || 'div';
     const innerDiv = (
       <Element
@@ -1028,14 +1029,9 @@ class ItemView extends React.Component {
         ref={(e) => (this.itemContainer = e)}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
-        onFocus={this.onFocus}
-        onBlur={this.onBlur} // The onblur event is the opposite of the onfocus event.
-        tabIndex={this.getItemContainerTabIndex()}
-        aria-label={this.getItemAriaLabel()}
         data-hash={hash}
         data-id={photoId}
         data-idx={idx}
-        {...(itemAriaRole && { role: itemAriaRole })}
         data-hook="item-container"
         key={'item-container-' + id}
         style={this.getItemContainerStyles()}
@@ -1043,6 +1039,20 @@ class ItemView extends React.Component {
         onKeyDown={this.handleKeyDown}
         onClick={this.onItemWrapperClick}
       >
+        {
+          <button
+            data-idx={idx}
+            id={'item-action-' + id}
+            className="item-action"
+            ref={(ref) => (this.itemActionRef = ref)}
+            onKeyUp={this.onContainerKeyUp}
+            tabIndex={this.getItemContainerTabIndex()}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            {...(itemAriaLabel && { ['aria-label']: itemAriaLabel })}
+            {...(itemAriaRole && { role: itemAriaRole })}
+          ></button>
+        }
         {this.getTopInfoElementIfNeeded()}
         {this.getLeftInfoElementIfNeeded()}
         <div
