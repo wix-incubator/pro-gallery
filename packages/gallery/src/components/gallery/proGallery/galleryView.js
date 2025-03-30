@@ -100,6 +100,8 @@ class GalleryView extends React.Component {
     return this.items.length - 1;
   }
 
+  //to delete
+
   lastVisibleItemIdx() {
     let galleryHeight = this.props.displayShowMore
       ? this.props.container.height
