@@ -1039,7 +1039,7 @@ class ItemView extends React.Component {
         onKeyDown={this.handleKeyDown}
         onClick={this.onItemWrapperClick}
       >
-        <button
+        <div
           data-idx={idx}
           id={'item-action-' + id}
           className="item-action"
@@ -1051,7 +1051,7 @@ class ItemView extends React.Component {
           data-hook={'item-action'}
           {...(itemAriaLabel && { ['aria-label']: itemAriaLabel })}
           {...(itemAriaRole && { role: itemAriaRole })}
-        ></button>
+        ></div>
 
         {this.getTopInfoElementIfNeeded()}
         {this.getLeftInfoElementIfNeeded()}
