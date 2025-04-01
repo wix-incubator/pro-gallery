@@ -103,7 +103,7 @@ class GalleryView extends React.Component {
   lastVisibleItemIdx() {
     let galleryHeight = this.props.displayShowMore ? this.props.container.height : this.props.galleryStructure.height;
     //the item must be visible and above the show more button
-    return this.lastVisibleItemIdxInHeight(this.props.container.galleryHeight - 100);
+    return this.lastVisibleItemIdxInHeight(galleryHeight - 100);
   }
   showMoreItems() {
     if (this.props.settings?.isAccessible) {
