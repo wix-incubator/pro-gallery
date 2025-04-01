@@ -9,6 +9,8 @@ class GalleryView extends React.Component {
     super(props);
     this.handleKeys = this.handleKeys.bind(this);
     this.showMoreItems = this.showMoreItems.bind(this);
+    this.onLoadMoreButtonKeyDown = this.onLoadMoreButtonKeyDown.bind(this);
+    this.onLoadMoreButtonKeyUp = this.onLoadMoreButtonKeyUp.bind(this);
     this.createGalleryConfig = this.createGalleryConfig.bind(this);
     this.screenLogs = this.screenLogs.bind(this);
     this.createGallery = this.createGallery.bind(this);
@@ -99,6 +101,7 @@ class GalleryView extends React.Component {
   }
 
   lastVisibleItemIdx() {
+    let galleryHeight = this.props.displayShowMore ? this.props.container.height : this.props.galleryStructure.height;
     //the item must be visible and above the show more button
     return this.lastVisibleItemIdxInHeight(this.props.container.galleryHeight - 100);
   }
@@ -123,6 +126,37 @@ class GalleryView extends React.Component {
       }
     } else {
       this.props.actions.toggleLoadMoreItems();
+    }
+  }
+
+  onLoadMoreButtonKeyDown(e) {
+    switch (e.keyCode || e.charCode) {
+      case 32: // space
+      case 13: // enter
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      default:
+        break;
+    }
+  }
+
+  onLoadMoreButtonKeyUp(e) {
+    switch (e.keyCode || e.charCode) {
+      case 32: // space
+      case 13: // enter
+        e.stopPropagation();
+        utils.setStateAndLog(this, 'Set Gallery Current Item', {
+          activeIndex: this.lastVisibleItemIdx(),
+        });
+        // this is to make sure that the focus is moved to the items first before the "load more" button disappears
+        // other wise the gallery will lose focus to the body
+        setTimeout(() => {
+          this.props.actions.toggleLoadMoreItems();
+        }, 0);
+        return false;
+      default:
+        break;
     }
   }
 
@@ -261,6 +295,8 @@ class GalleryView extends React.Component {
             onMouseDown={(e) => e.preventDefault()}
             data-hook="show-more"
             aria-label={buttonText}
+            onKeyDown={this.onLoadMoreButtonKeyDown}
+            onKeyUp={this.onLoadMoreButtonKeyUp}
           >
             {buttonText}
           </button>
