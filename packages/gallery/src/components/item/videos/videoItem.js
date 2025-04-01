@@ -207,7 +207,10 @@ class VideoItem extends React.Component {
             this.setState({ shouldPlay: false });
           }
         }}
-        controls={this.props.options[optionsMap.behaviourParams.item.video.enableControls]}
+        controls={
+          this.props.activeIndex === this.props.idx &&
+          this.props.options[optionsMap.behaviourParams.item.video.enableControls]
+        }
         config={{
           file: {
             attributes,
@@ -223,7 +226,8 @@ class VideoItem extends React.Component {
   fixIFrameTabIndexIfNeeded() {
     if (this.props.isExternalVideo) {
       const videoGalleryItem =
-        window.document && window.document.getElementById(`video-${this.props.id}-${this.props.galleryId}`);
+        window.document &&
+        window.document.querySelector(`#pro-gallery-${this.props.galleryId} #video-${this.props.id}`);
       const videoIFrames = videoGalleryItem && videoGalleryItem.getElementsByTagName('iframe');
       const videoIFrame = videoIFrames && videoIFrames[0];
       if (videoIFrame) {
