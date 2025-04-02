@@ -1009,6 +1009,16 @@ class ItemView extends React.Component {
     }
   }
 
+  getItemAriaHaspopup() {
+    switch (this.props.options.itemClick) {
+      case 'expand':
+      case 'fullscreen':
+        return true;
+      default:
+        return '';
+    }
+  }
+
   composeItem() {
     const { photoId, id, hash, idx, options, type, url } = this.props;
 
@@ -1020,6 +1030,7 @@ class ItemView extends React.Component {
       !this.hasRequiredMediaUrl;
     const itemAriaRole = this.getItemAriaRole();
     const itemAriaLabel = this.getItemAriaLabel();
+    const itemAriaHaspopup = this.getItemAriaHaspopup();
     const Element = this.props.elementsOverride?.item || 'div';
     const innerDiv = (
       <Element
@@ -1051,6 +1062,7 @@ class ItemView extends React.Component {
           data-hook={'item-action'}
           {...(itemAriaLabel && { ['aria-label']: itemAriaLabel })}
           {...(itemAriaRole && { role: itemAriaRole })}
+          {...(itemAriaHaspopup && { ['aria-haspopup']: itemAriaHaspopup })}
         ></div>
 
         {this.getTopInfoElementIfNeeded()}
