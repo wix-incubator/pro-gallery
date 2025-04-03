@@ -760,7 +760,7 @@ class GalleryItem {
           return 'Go to Link';
         }
       case 'web':
-        return this.linkTitleFromUrl || this.linkUrl;
+        return this.linkUrl;
       case 'page':
         return this.linkTitle;
       default:
@@ -841,13 +841,6 @@ class GalleryItem {
 
   get isWixUrl() {
     return this.linkUrl && this.linkUrl.indexOf('wix') === 0;
-  }
-
-  get linkTitleFromUrl() {
-    const regex = /[^/]*\.\w+$/g;
-    const regexRes = regex.exec(this.linkUrl);
-    const match = regexRes && regexRes[0];
-    return match && match.split('.')[0];
   }
 
   get unprotectedLinkOpenType() {
