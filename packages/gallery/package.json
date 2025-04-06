@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "pro-gallery",
-  "version": "4.1.192",
+  "version": "4.1.193",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
