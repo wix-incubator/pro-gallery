@@ -361,9 +361,7 @@ class VideoItem extends React.Component {
         style={this.getVideoContainerStyles()}
       >
         {this.createPlayerElement()}
-        {this.state.isPlaying
-          ? this.props.videoPauseButton
-          : this.props.videoPlayButton}
+        {this.props.videoPlayButton}
       </div>
     );
 
