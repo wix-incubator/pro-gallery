@@ -39,35 +39,35 @@ function isThisGalleryElementInFocus(className, galleryId) {
 export function changeActiveElementIfNeeded({
   prevProps,
   currentProps,
-  itemActionRef,
+  itemContainer,
 }) {
   try {
     if (
       shouldChangeActiveElement() &&
       window.document.activeElement.className
     ) {
-      const isGalleryItemAction = isThisGalleryElementInFocus(
-        'item-action',
+      const isGalleryItemInFocus = isThisGalleryElementInFocus(
+        'gallery-item-container',
         currentProps.galleryId
       );
       const isShowMoreInFocus = isThisGalleryElementInFocus(
         'show-more',
         currentProps.galleryId
       );
-      if (isGalleryItemAction || isShowMoreInFocus) {
+      if (isGalleryItemInFocus || isShowMoreInFocus) {
         if (
           currentProps.thumbnailHighlightId !==
             prevProps.thumbnailHighlightId &&
           currentProps.thumbnailHighlightId === currentProps.id
         ) {
           // if the highlighted thumbnail changed and it is the same as this itemview's
-          itemActionRef.focus();
+          itemContainer.focus();
         } else if (
           currentProps.activeIndex !== prevProps.activeIndex &&
           currentProps.activeIndex === currentProps.idx
         ) {
           //check if activeIndex has changed to the current item
-          itemActionRef.focus();
+          itemContainer.focus();
         }
       }
     }
