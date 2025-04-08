@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import blueprints from './Blueprints.js';
 import { GALLERY_CONSTS, optionsMap, viewModeWrapper } from 'pro-gallery-lib';
-
+//Wow! such amazing code here!
 export default class BlueprintsManager {
   constructor({ id }) {
     this.id = id + `'s blueprintsManager`;
