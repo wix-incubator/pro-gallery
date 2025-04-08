@@ -5,7 +5,7 @@ name: Test
 
 on:
   push:
-    branches: [ master ]
+    branches-ignore: [ master ] # Changed to ignore pushes directly to master
   pull_request:
     branches: [ master ]
 permissions:
@@ -80,8 +80,8 @@ jobs:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
     - name: Push to master
-      if: github.event_name == 'push'
-      # run: echo "this is a push to master"
+      if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
+      # Changed condition to only run when a PR is merged to master
       run: |
         git checkout master
         lerna publish patch --exact  --yes --registry https://registry.npmjs.org
@@ -98,7 +98,8 @@ jobs:
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
   update-playground:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.base_ref == 'master'
+    # Changed condition to only run when a PR is merged to master
     needs: [lint, tests]
     strategy:
       matrix:
@@ -117,5 +118,3 @@ jobs:
       env:
         SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
         SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
-
-
