@@ -1031,6 +1031,8 @@ class ItemView extends React.Component {
         ref={(e) => (this.itemContainer = e)}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}
+        onFocus={this.onFocus}
+        onBlur={this.onBlur}
         data-hash={hash}
         data-id={photoId}
         data-idx={idx}
