@@ -5,9 +5,9 @@ name: Test
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, V4_Final ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, V4_Final ]
 permissions:
   contents: write
   pull-requests: write
@@ -26,7 +26,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
+    
+    - run: npm install
+    - run: git checkout -- package-lock.json
     - run: npm run lint
   tests:
     runs-on: ubuntu-latest
@@ -42,7 +44,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
+    - run: npm install
+    - run: git checkout -- package-lock.json
     - run: npm run build
     - run: npm run ${{ matrix.test-script }}
       env:
@@ -68,7 +71,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         registry-url: 'https://registry.npmjs.org'
-    - run: npm ci
+    - run: npm install
+    - run: git checkout -- package-lock.json
     - run: npm run build --if-present
     - run: git config --global user.email "octocat@github.com"
     - run: git config --global user.name "GitHub Actions"
@@ -83,8 +87,8 @@ jobs:
       if: github.event_name == 'push'
       # run: echo "this is a push to master"
       run: |
-        git checkout master
-        lerna publish patch --exact  --yes --registry https://registry.npmjs.org
+        git checkout ${{ github.ref_name }}
+        lerna publish patch --exact  --yes  --dist-tag stable --registry https://registry.npmjs.org
         npm run changelog
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -111,7 +115,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         registry-url: 'https://registry.npmjs.org'
-    - run: npm ci
+    - run: npm install
+    - run: git checkout -- package-lock.json
     - run: npm run build --if-present
     - run: node scripts/deployToSurge
       env:
