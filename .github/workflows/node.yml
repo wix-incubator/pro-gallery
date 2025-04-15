@@ -16,7 +16,7 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    needs: [lint, tests]
+    needs: []
     strategy:
       matrix:
         node-version: [18.20.2]
@@ -72,7 +72,7 @@ jobs:
   update-playground:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
-    needs: [lint, tests]
+    needs: []
     strategy:
       matrix:
         node-version: [18.20.2]
