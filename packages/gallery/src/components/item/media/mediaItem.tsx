@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { optionsMap, GALLERY_CONSTS, isEditMode } from 'pro-gallery-lib';
 import { GalleryUI } from './GalleryUI.js';
 import { Options, Settings, utils } from 'pro-gallery-lib';
@@ -67,6 +67,12 @@ export default function MediaItem<T extends Record<string, any>>(props: MediaPro
   const { behaviourParams_item_clickAction: clickAction, behaviourParams_item_video_playTrigger: playTrigger } =
     options;
 
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const isMediaPlayable = useMemo(() => {
     if (utils.isSSR()) {
       return false;
@@ -113,7 +119,7 @@ export default function MediaItem<T extends Record<string, any>>(props: MediaPro
       {props.hover}
     </>
   );
-  if (!isMediaPlayable || props.isPrerenderMode) {
+  if (!isMediaPlayable || props.isPrerenderMode || !isMounted) {
     return placeholder;
   }
 
