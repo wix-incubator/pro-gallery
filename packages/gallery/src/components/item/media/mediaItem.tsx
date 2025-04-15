@@ -69,9 +69,9 @@ export default function MediaItem<T extends Record<string, any>>(props: MediaPro
 
   const [isMounted, setIsMounted] = useState(false);
 
-    useEffect(() => {
-      setIsMounted(true)
-    }, [])
+  useEffect(() => {
+    setIsMounted(true)
+  }, []);
 
   const isMediaPlayable = useMemo(() => {
     if (utils.isSSR()) {
