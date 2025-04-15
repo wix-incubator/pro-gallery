@@ -60,6 +60,7 @@ jobs:
             gh pr checks $PR_URL --watch
             gh pr merge $PR_URL --admin --merge
       env:
+        GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
     - name: Push to pull request
@@ -67,6 +68,7 @@ jobs:
       # run: echo "PULL REQUEST PUSH"
       run: lerna publish --canary --preid ${{ github.sha }} --yes --registry https://registry.npmjs.org
       env:
+        GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
   update-playground:
