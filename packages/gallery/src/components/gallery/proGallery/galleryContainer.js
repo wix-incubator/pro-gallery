@@ -20,7 +20,6 @@ import { cssScrollHelper } from '../../helpers/cssScrollHelper.js';
 import MediaScrollHelperWrapper from '../../helpers/mediaScrollHelper/mediaScrollHelperWrapper.js';
 import findNeighborItem from '../../helpers/layoutUtils.js';
 import { isGalleryInViewport, Deferred } from './galleryHelpers.js';
-// dummy
 
 export class GalleryContainer extends React.Component {
   constructor(props) {
