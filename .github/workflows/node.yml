@@ -83,13 +83,21 @@ jobs:
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-    - name: Push to master
+    - name: Release via Pull Request
       if: github.event_name == 'push'
       # run: echo "this is a push to master"
       run: |
-        git checkout ${{ github.ref_name }}
-        lerna publish patch --exact  --yes  --dist-tag stable --registry https://registry.npmjs.org
-        npm run changelog
+            git checkout -b release-${{ github.sha }}
+            lerna publish patch --exact --yes --dist-tag stable --registry https://registry.npmjs.org --no-push
+            npm run changelog
+            git add .
+            git commit -m "Release $(date +%Y-%m-%d)"
+            git push -u origin release-${{ github.sha }}
+            gh pr create --title "Release $(date +%Y-%m-%d)" --body "Automated release" --base master
+            PR_URL=$(gh pr view --json url -q .url)
+            echo "Created PR: $PR_URL"
+            gh pr checks $PR_URL --watch
+            gh pr merge $PR_URL --admin --merge
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
