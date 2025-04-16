@@ -29,6 +29,7 @@ const fixToCollage = (options) => {
 
   //layouter direct API
   presetOptions.fixedColumns = 0;
+
   //layouter direct API
   return presetOptions;
 };
