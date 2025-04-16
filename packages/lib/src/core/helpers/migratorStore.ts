@@ -1,4 +1,4 @@
-import optionsMap from './optionsMap.js';
+import optionsMap from './optionsMap';
 
 export const nameChangedLayoutParams = [
   ['galleryLayout', optionsMap.layoutParams.structure.galleryLayout],

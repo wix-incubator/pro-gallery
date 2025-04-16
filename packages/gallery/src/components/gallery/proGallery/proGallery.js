@@ -1,10 +1,10 @@
-import '../../../common/utils/polyfills.js';
+import '../../../common/utils/polyfills';
 import React from 'react';
 import { utils } from 'pro-gallery-lib';
 import Gallery from './galleryContainer.js';
 
-import '../../../versionLogger.js';
-import { GalleryProvider } from '../../../context/GalleryContext.js';
+import '../../../versionLogger';
+import { GalleryProvider } from '../../../context/GalleryContext';
 
 export default class ProGallery extends React.Component {
   constructor() {

@@ -1,3 +1,3 @@
-import ImageItem from './imageItem.js';
-import withMagnified from '../hoc/withMagnified.js';
+import ImageItem from './imageItem';
+import withMagnified from '../hoc/withMagnified';
 export default withMagnified(ImageItem);

@@ -1,4 +1,4 @@
-import galleryOptions from './index.js';
+import galleryOptions from './index';
 
 const stylesSet = new Set([...Object.keys(galleryOptions)]);
 const styleList = [];

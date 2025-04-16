@@ -3,9 +3,9 @@ import {
   processNumberOfImagesPerRow,
   processNumberOfImagesPerCol,
   removeBordersIfNeeded,
-} from '../helpers/layoutHelper.js';
-import optionsMap from '../helpers/optionsMap.js';
-import { GALLERY_CONSTS } from '../../index.js';
+} from '../helpers/layoutHelper';
+import optionsMap from '../helpers/optionsMap';
+import { GALLERY_CONSTS } from '../..';
 
 const fixToGrid = (options) => {
   let presetOptions = { ...options };

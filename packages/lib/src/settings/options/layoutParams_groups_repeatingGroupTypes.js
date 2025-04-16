@@ -1,6 +1,6 @@
-import { INPUT_TYPES } from '../utils/constants.js';
-import { createOptions } from '../utils/utils.js';
-import optionsMap from '../../core/helpers/optionsMap.js';
+import { INPUT_TYPES } from '../utils/constants';
+import { createOptions } from '../utils/utils';
+import optionsMap from '../../core/helpers/optionsMap';
 export default {
   title: 'Repeating Group Types',
   description: `Choose the order of group types to appear in rotation in a collage gallery. Note that

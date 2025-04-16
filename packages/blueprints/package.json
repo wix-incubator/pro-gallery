@@ -20,18 +20,11 @@
   "scripts": {
     "watch": "tsc -w",
     "start": "tsc -w -p tsconfig-dev.json",
-    "build": "tsc && tsc -p tsconfig-cjs.json && echo \"{ \\\"type\\\": \\\"module\\\" }\" > dist/esm/package.json",
-    "unit": "NODE_OPTIONS=\"--import=tsx\" mocha test/*.spec.*",
+    "build": "tsc && tsc -p tsconfig-esm.json",
+    "unit": "mocha --require ts-node/register test/*.spec.*",
     "test": "echo 'no test in wix CI'",
     "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
     "lint:fix": "npm run lint -- --fix"
-  },
-  "exports": {
-    ".": {
-      "require": "./dist/cjs/index.js",
-      "import": "./dist/esm/index.js",
-      "types": "./dist/esm-types/index.d.ts"
-    }
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "6.12.0",
@@ -43,13 +36,13 @@
     "lodash": "^4.17.21",
     "mocha": "^8.2.1",
     "prettier": "^2.1.2",
+    "ts-node": "^10.9.1",
     "tslib": "^2.1.0",
-    "tsx": "^4.19.2",
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "pro-gallery-lib": "5.0.115",
-    "pro-layouts": "5.0.115"
+    "pro-gallery-lib": "5.0.114",
+    "pro-layouts": "5.0.114"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

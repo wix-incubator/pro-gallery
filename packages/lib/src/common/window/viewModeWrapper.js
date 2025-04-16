@@ -1,5 +1,5 @@
-import VIEW_MODE from '../constants/viewMode.js';
-import DEVICE_TYPE from '../constants/deviceType.js';
+import VIEW_MODE from '../constants/viewMode';
+import DEVICE_TYPE from '../constants/deviceType';
 
 class ViewModeWrapper {
   constructor() {

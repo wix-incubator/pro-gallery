@@ -1,4 +1,4 @@
-import { proxy } from './proxy.js';
+import { proxy } from './proxy';
 
 export default class Emitter<T extends Record<string, (...args: any[]) => void>> {
   private listeners: Partial<{

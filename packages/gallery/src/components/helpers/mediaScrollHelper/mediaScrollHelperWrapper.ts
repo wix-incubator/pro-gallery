@@ -1,11 +1,5 @@
 import { isEditMode } from 'pro-gallery-lib';
-import {
-  HandleEvents,
-  MediaScrollHelperHandlerConfiguration,
-  SetItemIdx,
-  SetScroll,
-  UpdateGalleryData,
-} from './types.js';
+import { HandleEvents, MediaScrollHelperHandlerConfiguration, SetItemIdx, SetScroll, UpdateGalleryData } from './types';
 
 class MediaScrollHelper {
   left: number;
@@ -62,12 +56,10 @@ class MediaScrollHelper {
     if (!data.galleryStructure.galleryItems.some((item) => this.config.some((c) => c.supportedItemsFilter(item)))) {
       return;
     }
-    this.scrollHelperPromise = import(/* webpackChunkName: "proGallery_videoScrollHelper" */ './mediaScrollHelper.js')
+    this.scrollHelperPromise = import(/* webpackChunkName: "proGallery_videoScrollHelper" */ './mediaScrollHelper')
       .then(({ default: VideoScrollHelper }) => {
         for (const config of this.config) {
           this.scrollHelpers.push(
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             new VideoScrollHelper(config.onSetPlayingIdx, config.supportedItemsFilter, config.getPlayTrigger)
           );
         }

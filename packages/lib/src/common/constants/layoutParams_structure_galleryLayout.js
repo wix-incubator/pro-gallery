@@ -1,4 +1,4 @@
-import optionsMap from '../../core/helpers/optionsMap.js';
+import optionsMap from '../../core/helpers/optionsMap';
 
 const LAYOUTS = {
   JSON_FIXED: -3,

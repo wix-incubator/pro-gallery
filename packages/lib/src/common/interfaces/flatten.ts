@@ -1,4 +1,4 @@
-import { Options } from './options.js';
+import { Options } from './options';
 
 export type OmitUndefinedRecursive<T> = T extends object
   ? {

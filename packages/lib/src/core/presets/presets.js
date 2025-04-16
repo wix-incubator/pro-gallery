@@ -1,32 +1,32 @@
 //#region Imports Layouts
-import { fixedOptions as alternate, createOptions as alternateOptions } from './alternateGallery.js';
-import { fixedOptions as bricks, createOptions as bricksOptions } from './bricksGallery.js';
+import { fixedOptions as alternate, createOptions as alternateOptions } from './alternateGallery';
+import { fixedOptions as bricks, createOptions as bricksOptions } from './bricksGallery';
 
-import { fixedOptions as collage, createOptions as collageOptions } from './collageGallery.js';
+import { fixedOptions as collage, createOptions as collageOptions } from './collageGallery';
 
-import { fixedOptions as fullsize, createOptions as fullsizeOptions } from './fullsizeGallery.js';
+import { fixedOptions as fullsize, createOptions as fullsizeOptions } from './fullsizeGallery';
 
-import { fixedOptions as column, createOptions as columnOptions } from './columnGallery.js';
+import { fixedOptions as column, createOptions as columnOptions } from './columnGallery';
 
-import { fixedOptions as grid, createOptions as gridOptions } from './gridGallery.js';
+import { fixedOptions as grid, createOptions as gridOptions } from './gridGallery';
 
-import { fixedOptions as masonry, createOptions as masonryOptions } from './masonryGallery.js';
+import { fixedOptions as masonry, createOptions as masonryOptions } from './masonryGallery';
 
-import { fixedOptions as mix, createOptions as mixOptions } from './mixGallery.js';
+import { fixedOptions as mix, createOptions as mixOptions } from './mixGallery';
 
-import { fixedOptions as panorama, createOptions as panoramaOptions } from './panoramaGallery.js';
+import { fixedOptions as panorama, createOptions as panoramaOptions } from './panoramaGallery';
 
-import { fixedOptions as slider, createOptions as sliderOptions } from './sliderGallery.js';
+import { fixedOptions as slider, createOptions as sliderOptions } from './sliderGallery';
 
-import { fixedOptions as slideshow, createOptions as slideshowOptions } from './slideshowGallery.js';
+import { fixedOptions as slideshow, createOptions as slideshowOptions } from './slideshowGallery';
 
-import { fixedOptions as thumbnails, createOptions as thumbnailsOptions } from './thumbnailsGallery.js';
+import { fixedOptions as thumbnails, createOptions as thumbnailsOptions } from './thumbnailsGallery';
 
-import { fixedOptions as empty, createOptions as emptyOptions } from './emptyGallery.js';
-import { createOptions as jsonFixedOptions } from './designedPresetGallery.js';
+import { fixedOptions as empty, createOptions as emptyOptions } from './emptyGallery';
+import { createOptions as jsonFixedOptions } from './designedPresetGallery';
 
-import optionsMap from '../helpers/optionsMap.js';
-import { GALLERY_CONSTS } from '../../index.js';
+import optionsMap from '../helpers/optionsMap';
+import { GALLERY_CONSTS } from '../..';
 
 //#endregion Imports
 

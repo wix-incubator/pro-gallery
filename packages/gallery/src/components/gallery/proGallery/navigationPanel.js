@@ -1,6 +1,6 @@
 import React from 'react';
 import { GALLERY_CONSTS, optionsMap, utils, thumbnailsLogic } from 'pro-gallery-lib';
-import { GalleryUI } from '../../item/media/GalleryUI.js';
+import { GalleryUI } from '../../item/media/GalleryUI';
 
 import TextItem from '../../item/textItem.js';
 

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import blueprints from './Blueprints.js';
+import blueprints from './Blueprints';
 import { GALLERY_CONSTS, optionsMap, viewModeWrapper } from 'pro-gallery-lib';
 export default class BlueprintsManager {
   constructor({ id }) {

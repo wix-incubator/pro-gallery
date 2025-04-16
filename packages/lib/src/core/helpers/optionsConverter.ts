@@ -1,8 +1,8 @@
-import { trimUndefinedValues_flat, flattenObject, flatToNested } from './optionsUtils.js';
+import { trimUndefinedValues_flat, flattenObject, flatToNested } from './optionsUtils';
 
-import { isLayout } from '../../common/constants/layoutParams_structure_galleryLayout.js';
-import optionsMap from './optionsMap.js';
-import { addOldOptions } from './optionsBackwardConverter.js';
+import { isLayout } from '../../common/constants/layoutParams_structure_galleryLayout';
+import optionsMap from './optionsMap';
+import { addOldOptions } from './optionsBackwardConverter';
 import {
   nameChangedLayoutParams,
   nameChangedBehaviourParams,
@@ -12,7 +12,7 @@ import {
   changeNames,
   namingChange,
   reverseBooleans,
-} from './migratorStore.js';
+} from './migratorStore';
 
 function extendNestedOptionsToIncludeOldAndNew(nestedOptions) {
   let flatOptions = flattenObject(nestedOptions);

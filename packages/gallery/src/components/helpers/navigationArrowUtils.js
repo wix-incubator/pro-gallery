@@ -1,6 +1,6 @@
 import React from 'react';
 import { utils, GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
-import { ARROWS_DATA } from '../svgs/index.js';
+import { ARROWS_DATA } from '../svgs';
 
 const getArrowsSizeData = ({ customNavArrowsRenderer, arrowsSize, svgData, containerStyleType }) => {
   const isLandscape = svgData.width / svgData.height > 1;

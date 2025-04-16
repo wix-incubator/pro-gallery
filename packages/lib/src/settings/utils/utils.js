@@ -1,4 +1,4 @@
-import { default as GALLERY_CONSTS } from '../../common/constants/index.js';
+import { default as GALLERY_CONSTS } from '../../common/constants';
 
 export const formatTitle = (title) =>
   title

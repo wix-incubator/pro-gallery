@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import Emitter from './emitter.js';
-import { proxy } from './proxy.js';
+import Emitter from './emitter';
+import { proxy } from './proxy';
 import { utils } from 'pro-gallery-lib';
 
 type MouseFollowerEvents = {
