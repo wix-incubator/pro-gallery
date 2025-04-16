@@ -2,7 +2,7 @@
 import { fixedOptions as alternate, createOptions as alternateOptions } from './alternateGallery.js';
 import { fixedOptions as bricks, createOptions as bricksOptions } from './bricksGallery.js';
 
-import { fixedOptions as collage, createOptions as collageOptions } from './collageGallery.js';
+import { fixedOptions as collage, createOptions as collageOptions } from './collageGalleryOptions.js';
 
 import { fixedOptions as fullsize, createOptions as fullsizeOptions } from './fullsizeGallery.js';
 
