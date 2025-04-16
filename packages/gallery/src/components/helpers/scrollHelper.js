@@ -1,6 +1,6 @@
 import { optionsMap, utils } from 'pro-gallery-lib';
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
-import { Deferred } from '../gallery/proGallery/galleryHelpers.js';
+import { Deferred } from '../gallery/proGallery/galleryHelpers';
 
 export function scrollToItemImp(scrollParams) {
   let to, from;

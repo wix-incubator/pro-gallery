@@ -1,7 +1,7 @@
-import { INPUT_TYPES } from '../utils/constants.js';
-import { default as behaviourParams_item_overlay_hoveringBehaviour } from './behaviourParams_item_overlay_hoveringBehaviour.js';
-import optionsMap from '../../core/helpers/optionsMap.js';
-import { GALLERY_CONSTS } from '../../index.js';
+import { INPUT_TYPES } from '../utils/constants';
+import { default as behaviourParams_item_overlay_hoveringBehaviour } from './behaviourParams_item_overlay_hoveringBehaviour';
+import optionsMap from '../../core/helpers/optionsMap';
+import { GALLERY_CONSTS } from '../..';
 export default {
   title: 'Overlay Background Color',
   isRelevantDescription:

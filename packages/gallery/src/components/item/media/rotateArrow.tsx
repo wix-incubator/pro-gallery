@@ -1,7 +1,7 @@
 import React from 'react';
-import PlayBackground from '../../svgs/components/play_background.js';
-import RotateArrow from '../../svgs/components/rotate_arrow.js';
-import { clickable } from '../../helpers/mouseCursorPosition.js';
+import PlayBackground from '../../svgs/components/play_background';
+import RotateArrow from '../../svgs/components/rotate_arrow';
+import { clickable } from '../../helpers/mouseCursorPosition';
 
 interface ThreeDimensionsRotateArrowProps {
   size: number;

@@ -1,7 +1,7 @@
-import { INPUT_TYPES } from '../utils/constants.js';
-import { default as GALLERY_CONSTS } from '../../common/constants/index.js';
-import { default as arrowsPosition } from './layoutParams_navigationArrows_position.js';
-import optionsMap from '../../core/helpers/optionsMap.js';
+import { INPUT_TYPES } from '../utils/constants';
+import { default as GALLERY_CONSTS } from '../../common/constants';
+import { default as arrowsPosition } from './layoutParams_navigationArrows_position';
+import optionsMap from '../../core/helpers/optionsMap';
 export default {
   title: 'Mouse Cursor Container Max Width',
   isRelevant: (options) => {

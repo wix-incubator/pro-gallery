@@ -1,10 +1,10 @@
 import React from 'react';
 import { GALLERY_CONSTS, utils } from 'pro-gallery-lib';
 import { BlueprintsManager } from 'pro-gallery-blueprints';
-import ProGallery from './proGallery/proGallery.js';
+import ProGallery from './proGallery/proGallery';
 import { GalleryProps, GalleryState } from 'pro-gallery-lib';
-import shouldValidate from './typeValidator/shouldValidate.js';
-import { ViewModeWrapperHOC } from './proGallery/viewModeWrapper.js';
+import shouldValidate from './typeValidator/shouldValidate';
+import { ViewModeWrapperHOC } from './proGallery/viewModeWrapper';
 
 class Gallery extends React.Component<GalleryProps, GalleryState> {
   private blueprintsManager: any;
@@ -101,7 +101,7 @@ class Gallery extends React.Component<GalleryProps, GalleryState> {
       return;
     }
     const validateTypesModule = await import(
-      /* webpackChunkName: "proGallery_validateTypes" */ './typeValidator/validateTypes.js'
+      /* webpackChunkName: "proGallery_validateTypes" */ './typeValidator/validateTypes'
     );
     const { validate, typeErrorsUI } = validateTypesModule;
     const typeErrors = validate(this.state.blueprint.options);

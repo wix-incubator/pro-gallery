@@ -9,7 +9,7 @@ function getSchemaFromTypes(typesFileAbsolutePath) {
     required: true,
   };
 
-  const program = TJS.programFromConfig(path.join(__dirname, '..', 'tsconfig-cjs.json'), [typesFileAbsolutePath]);
+  const program = TJS.programFromConfig(path.join(__dirname, '..', 'tsconfig.json'), [typesFileAbsolutePath]);
 
   const generator = TJS.buildGenerator(program, settings);
   const schema = TJS.generateSchema(program, 'Options', settings, [], generator);

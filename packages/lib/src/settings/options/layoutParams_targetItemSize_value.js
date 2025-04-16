@@ -1,6 +1,6 @@
-import { default as GALLERY_CONSTS } from '../../common/constants/index.js';
-import optionsMap from '../../core/helpers/optionsMap.js';
-import layoutParams_structure_responsiveMode from './layoutParams_structure_responsiveMode.js';
+import { default as GALLERY_CONSTS } from '../../common/constants';
+import optionsMap from '../../core/helpers/optionsMap';
+import layoutParams_structure_responsiveMode from './layoutParams_structure_responsiveMode';
 
 export default {
   title: 'Item Size (smart)',

@@ -1,4 +1,4 @@
-import { INPUT_TYPES } from '../utils/constants.js';
+import { INPUT_TYPES } from '../utils/constants';
 
 export default {
   title: '3d Play Button',

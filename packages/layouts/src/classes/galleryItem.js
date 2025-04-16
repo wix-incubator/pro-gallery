@@ -1,5 +1,5 @@
 import { utils, GALLERY_CONSTS } from 'pro-gallery-lib';
-import { Item } from '../logic/item.js';
+import { Item } from '../logic/item';
 
 class GalleryItem {
   constructor(config) {

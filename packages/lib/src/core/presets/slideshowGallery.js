@@ -1,7 +1,7 @@
-import { calcTargetItemSize, removeBordersIfNeeded } from '../helpers/layoutHelper.js';
-import disableAnimationsForSlideshowLayouts from './disableAnimationsForSlideshowLayouts.js';
-import optionsMap from '../helpers/optionsMap.js';
-import { GALLERY_CONSTS } from '../../index.js';
+import { calcTargetItemSize, removeBordersIfNeeded } from '../helpers/layoutHelper';
+import disableAnimationsForSlideshowLayouts from './disableAnimationsForSlideshowLayouts';
+import optionsMap from '../helpers/optionsMap';
+import { GALLERY_CONSTS } from '../..';
 
 const fixToSlideshow = (options) => {
   let presetOptions = { ...options };

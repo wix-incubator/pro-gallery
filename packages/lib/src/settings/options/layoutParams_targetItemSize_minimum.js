@@ -1,5 +1,5 @@
-import optionsMap from '../../core/helpers/optionsMap.js';
-import { INPUT_TYPES } from '../utils/constants.js';
+import optionsMap from '../../core/helpers/optionsMap';
+import { INPUT_TYPES } from '../utils/constants';
 
 export default {
   title: 'Minimum Item Size',

@@ -1,8 +1,8 @@
-import * as lodash from './lodash.js';
-import window from '../window/windowWrapper.js';
-import { isEditMode, isPreviewMode, isDeviceTypeMobile, isDeviceTypeTouch } from '../window/viewModeWrapper.js';
-import GALLERY_CONSTS from '../constants/index.js';
-import optionsMap from '../../core/helpers/optionsMap.js';
+import * as lodash from './lodash';
+import window from '../window/windowWrapper';
+import { isEditMode, isPreviewMode, isDeviceTypeMobile, isDeviceTypeTouch } from '../window/viewModeWrapper';
+import GALLERY_CONSTS from '../constants';
+import optionsMap from '../../core/helpers/optionsMap';
 
 class Utils {
   constructor() {

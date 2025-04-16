@@ -1,7 +1,7 @@
-import { INPUT_TYPES } from '../utils/constants.js';
-import { default as GALLERY_CONSTS } from '../../common/constants/index.js';
-import { default as autoSlideBehaviour } from './behaviourParams_gallery_horizontal_autoSlide_behaviour.js';
-import optionsMap from '../../core/helpers/optionsMap.js';
+import { INPUT_TYPES } from '../utils/constants';
+import { default as GALLERY_CONSTS } from '../../common/constants';
+import { default as autoSlideBehaviour } from './behaviourParams_gallery_horizontal_autoSlide_behaviour';
+import optionsMap from '../../core/helpers/optionsMap';
 
 export default {
   title: 'Auto Slide Play/Pause Button',

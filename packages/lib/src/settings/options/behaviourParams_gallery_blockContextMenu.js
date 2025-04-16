@@ -1,4 +1,4 @@
-import { INPUT_TYPES } from '../utils/constants.js';
+import { INPUT_TYPES } from '../utils/constants';
 // //dummy commit
 export default {
   title: 'Allow Right Click Menu',

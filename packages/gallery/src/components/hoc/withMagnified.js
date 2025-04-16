@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { GALLERY_CONSTS, optionsMap } from 'pro-gallery-lib';
-import ImageRenderer from '../item/imageRenderer.js';
+import ImageRenderer from '../item/imageRenderer';
 
 function withMagnified(WrappedComponent) {
   return class extends Component {

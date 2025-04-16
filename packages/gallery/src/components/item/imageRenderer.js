@@ -1,5 +1,5 @@
 import React from 'react';
-import { PrintOnlyImageSource } from './printOnlySource.js';
+import { PrintOnlyImageSource } from './printOnlySource';
 
 class ImageRenderer extends React.Component {
   constructor(props) {

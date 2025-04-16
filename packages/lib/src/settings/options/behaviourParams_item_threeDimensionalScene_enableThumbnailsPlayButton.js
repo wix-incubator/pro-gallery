@@ -1,4 +1,4 @@
-import { INPUT_TYPES } from '../utils/constants.js';
+import { INPUT_TYPES } from '../utils/constants';
 
 export default {
   title: 'Three dimensional scene Play Button on thumbnails',

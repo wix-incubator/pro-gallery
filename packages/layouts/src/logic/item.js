@@ -1,5 +1,5 @@
 import { optionsMap } from 'pro-gallery-lib';
-import { utils } from './utils.js';
+import { utils } from './utils';
 
 export class Item {
   /* @ngInject */

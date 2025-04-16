@@ -1,5 +1,5 @@
-// import { calcTargetItemSize } from './layoutHelper.js';
-import { mergeNestedObjects, flatToNested } from '../helpers/optionsUtils.js';
+// import { calcTargetItemSize } from './layoutHelper';
+import { mergeNestedObjects, flatToNested } from '../helpers/optionsUtils';
 
 export const createOptions = (options) => {
   try {

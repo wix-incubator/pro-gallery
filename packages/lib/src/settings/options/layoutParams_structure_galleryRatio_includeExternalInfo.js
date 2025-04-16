@@ -1,8 +1,8 @@
-import { default as galleryRatioValue } from './layoutParams_structure_galleryRatio_value.js';
-import { INPUT_TYPES } from '../utils/constants.js';
+import { default as galleryRatioValue } from './layoutParams_structure_galleryRatio_value';
+import { INPUT_TYPES } from '../utils/constants';
 
-import { isConstantVerticalPlacement, isHoverPlacement } from '../../common/constants/layoutParams_info_placement.js';
-import optionsMap from '../../core/helpers/optionsMap.js';
+import { isConstantVerticalPlacement, isHoverPlacement } from '../../common/constants/layoutParams_info_placement';
+import optionsMap from '../../core/helpers/optionsMap';
 export default {
   title: 'Include External Info in gallery Ratio',
   description: `Set to true with a single row horizontal gallery to include the external info (above or below) in the fixed gallery Ratio`,

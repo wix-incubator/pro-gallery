@@ -1,7 +1,7 @@
-import { INPUT_TYPES } from '../utils/constants.js';
-import { default as GALLERY_CONSTS } from '../../common/constants/index.js';
-import { default as layoutParams_navigationArrows_position } from './layoutParams_navigationArrows_position.js';
-import optionsMap from '../../core/helpers/optionsMap.js';
+import { INPUT_TYPES } from '../utils/constants';
+import { default as GALLERY_CONSTS } from '../../common/constants';
+import { default as layoutParams_navigationArrows_position } from './layoutParams_navigationArrows_position';
+import optionsMap from '../../core/helpers/optionsMap';
 
 export default {
   title: 'Navigation Arrows Padding',

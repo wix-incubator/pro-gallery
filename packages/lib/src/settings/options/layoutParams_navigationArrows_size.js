@@ -1,6 +1,6 @@
-import { INPUT_TYPES } from '../utils/constants.js';
-import { default as layoutParams_navigationArrows_enable } from './layoutParams_navigationArrows_enable.js';
-import optionsMap from '../../core/helpers/optionsMap.js';
+import { INPUT_TYPES } from '../utils/constants';
+import { default as layoutParams_navigationArrows_enable } from './layoutParams_navigationArrows_enable';
+import optionsMap from '../../core/helpers/optionsMap';
 
 export default {
   title: 'Navigation Arrows Size',

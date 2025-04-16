@@ -1,6 +1,6 @@
-import { trimUndefinedValues_flat } from './optionsUtils.js';
-import { isLayout } from '../../common/constants/layoutParams_structure_galleryLayout.js';
-import optionsMap from './optionsMap.js';
+import { trimUndefinedValues_flat } from './optionsUtils';
+import { isLayout } from '../../common/constants/layoutParams_structure_galleryLayout';
+import optionsMap from './optionsMap';
 import {
   nameChangedLayoutParams,
   nameChangedBehaviourParams,
@@ -10,7 +10,7 @@ import {
   changeNames,
   namingChange,
   reverseBooleans,
-} from './migratorStore.js';
+} from './migratorStore';
 
 function addOldOptions(flatOptions) {
   const flat_migrated = reverseMigrateOptions(flatOptions);

@@ -1,16 +1,16 @@
 /* eslint-disable prettier/prettier */
-import utils from '../../common/utils/index.js';
-import window from '../../common/window/windowWrapper.js';
+import utils from '../../common/utils';
+import window from '../../common/window/windowWrapper';
 import {
   hasHoverPlacement,
   isConstantVerticalPlacement,
   isHoverPlacement,
-} from '../../common/constants/layoutParams_info_placement.js';
-import { default as GALLERY_CONSTS } from '../../common/constants/index.js';
-import processTextDimensions from './textBoxDimensionsHelper.js'
-import { default as slideAnimation } from '../../settings/options/behaviourParams_gallery_horizontal_slideAnimation.js';
-import { default as arrowsPosition } from '../../settings/options/layoutParams_navigationArrows_position.js';
-import optionsMap from './optionsMap.js';
+} from '../../common/constants/layoutParams_info_placement';
+import { default as GALLERY_CONSTS } from '../../common/constants';
+import processTextDimensions from './textBoxDimensionsHelper'
+import { default as slideAnimation } from '../../settings/options/behaviourParams_gallery_horizontal_slideAnimation';
+import { default as arrowsPosition } from '../../settings/options/layoutParams_navigationArrows_position';
+import optionsMap from './optionsMap';
 
 export const calcTargetItemSize = (options, smartValue) => { 
   if (

@@ -1,10 +1,36 @@
 {
-  "extends": "./tsconfig-cjs.json",
+  "include": [
+    "src"
+  ],
   "compilerOptions": {
-    "module": "ESNext",
-    "moduleResolution": "nodenext",
-    "outDir": "dist/esm",
-    "declarationDir": "dist/esm-types",
-    "noImplicitAny": false
+    "allowJs": true,
+    "target": "ES2017",
+    "module": "CommonJS",
+    "outDir": "dist/cjs",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "incremental": true,
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "declarationDir": "dist/types",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "importHelpers": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "strict": true,
+    "noImplicitAny": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "noEmit": false,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true
   }
 }

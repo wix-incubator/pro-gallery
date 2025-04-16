@@ -1,7 +1,7 @@
-import { calcTargetItemSize, processNumberOfImagesPerRow, processGridStyle } from '../helpers/layoutHelper.js';
-import optionsMap from '../helpers/optionsMap.js';
+import { calcTargetItemSize, processNumberOfImagesPerRow, processGridStyle } from '../helpers/layoutHelper';
+import optionsMap from '../helpers/optionsMap';
 
-import { GALLERY_CONSTS } from '../../index.js';
+import { GALLERY_CONSTS } from '../..';
 const fixToMasonry = (options) => {
   let presetOptions = { ...options };
   presetOptions[optionsMap.layoutParams.structure.galleryLayout] =

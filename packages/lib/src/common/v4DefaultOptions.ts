@@ -1,6 +1,6 @@
-import optionsMap from '../core/helpers/optionsMap.js';
-import GALLERY_CONSTS from './constants/index.js';
-import { flattenObject } from '../core/helpers/optionsUtils.js';
+import optionsMap from '../core/helpers/optionsMap';
+import GALLERY_CONSTS from './constants';
+import { flattenObject } from '../core/helpers/optionsUtils';
 const defaultV4Options = {
   layoutParams: {
     crop: {

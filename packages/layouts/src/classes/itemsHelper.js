@@ -1,5 +1,5 @@
-import GalleryItem from './galleryItem.js';
-import GalleryGroup from './galleryGroup.js';
+import GalleryItem from './galleryItem';
+import GalleryGroup from './galleryGroup';
 import { utils } from 'pro-gallery-lib';
 
 export class ItemsHelper {

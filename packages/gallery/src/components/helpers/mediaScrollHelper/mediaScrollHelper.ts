@@ -1,6 +1,6 @@
 import { GALLERY_CONSTS, PlayTrigger, optionsMap, window } from 'pro-gallery-lib';
-import { isWithinPaddingVertically, isWithinPaddingHorizontally } from './utils.js';
-import { SetItemIdx, UpdateGalleryData, SetScroll, Scroll, HandleEvents, GetPlayTrigger } from './types.js';
+import { isWithinPaddingVertically, isWithinPaddingHorizontally } from './utils';
+import { SetItemIdx, UpdateGalleryData, SetScroll, Scroll, HandleEvents, GetPlayTrigger } from './types';
 
 class VideoScrollHelper {
   private scrollBase = 0;
