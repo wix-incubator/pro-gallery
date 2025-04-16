@@ -32,8 +32,6 @@ const fixToCollage = (options) => {
   //layouter direct API
   return presetOptions;
 };
-export const fixedOptions = fixToCollage({});
-
 export const createOptions = (options) => {
   let res = { ...options };
   res = fixToCollage(res);
@@ -41,3 +39,4 @@ export const createOptions = (options) => {
   res.targetItemSize = calcTargetItemSize(res, Math.round(userDefinedTargetItemSizeValue * 5 + 500));
   return res;
 };
+export const fixedOptions = fixToCollage({});
