@@ -48,8 +48,8 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "pro-gallery-lib": "5.0.115",
-    "pro-layouts": "5.0.115"
+    "pro-gallery-lib": "5.0.114",
+    "pro-layouts": "5.0.114"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"

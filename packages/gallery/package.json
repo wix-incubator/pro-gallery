@@ -47,9 +47,15 @@
   "dependencies": {
     "@vimeo/player": "2.8.2",
     "hls.js": "1.4.12",
+<<<<<<< HEAD
     "pro-gallery-blueprints": "5.0.124",
     "pro-gallery-lib": "5.0.115",
     "pro-layouts": "5.0.115",
+=======
+    "pro-gallery-blueprints": "5.0.114",
+    "pro-gallery-lib": "5.0.114",
+    "pro-layouts": "5.0.114",
+>>>>>>> parent of 6f0118b8a (v5.0.115)
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-player": "2.11.0",

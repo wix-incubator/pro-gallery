@@ -24,10 +24,17 @@
     "image-client-api": "^1.3130.0",
     "lodash.clonedeep": "^4.5.0",
     "moment": "2.29.2",
+<<<<<<< HEAD
     "pro-gallery": "5.0.124",
     "pro-gallery-blueprints": "5.0.124",
     "pro-gallery-lib": "5.0.115",
     "pro-layouts": "5.0.115",
+=======
+    "pro-gallery": "5.0.114",
+    "pro-gallery-blueprints": "5.0.114",
+    "pro-gallery-lib": "5.0.114",
+    "pro-layouts": "5.0.114",
+>>>>>>> parent of 6f0118b8a (v5.0.115)
     "re-resizable": "^6.10.3",
     "react": "^18.2.0",
     "react-color": "^2.17.3",
