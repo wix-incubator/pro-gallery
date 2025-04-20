@@ -27,6 +27,7 @@ const ImageWithSecondMedia = withSecondaryMedia(MagnifiedImage);
 const TextWithSecondMedia = withSecondaryMedia(TextItem);
 class ItemView extends React.Component {
   constructor(props) {
+    //dummy commit
     super(props);
     this.props.actions.eventsListener(
       GALLERY_CONSTS.events.ITEM_CREATED,
