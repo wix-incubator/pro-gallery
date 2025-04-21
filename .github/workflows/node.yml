@@ -78,7 +78,7 @@ jobs:
     - run: git config --global user.name "GitHub Actions"
     - run: git remote set-url origin https://wix@github.com/wix/pro-gallery
     - run: |
-        echo "registry=http://registry.npmjs.org/" >> .npmrc
+        echo "registry=https://registry.npmjs.org/" >> .npmrc
         echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
       env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
