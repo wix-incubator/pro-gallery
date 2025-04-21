@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up Node
       uses: actions/setup-node@v4
@@ -41,7 +41,7 @@ jobs:
       matrix:
         node-version: [18.20.2]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Install and run lint
       uses: actions/setup-node@v4
       with:
@@ -59,7 +59,7 @@ jobs:
         test-script: ["ci:test-unit", "ci:test-e2e-layouts","ci:test-e2e-styleParams", "ci:test-e2e-integration"]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Install, build and run test
       uses: actions/setup-node@v4
       with:
@@ -82,7 +82,7 @@ jobs:
         node-version: [18.20.2]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
         token: ${{ secrets.PAT_TOKEN }}
         fetch-depth: 0
@@ -128,7 +128,7 @@ jobs:
       matrix:
         node-version: [18.20.2]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: update-playground
       uses: actions/setup-node@v4
       with:
