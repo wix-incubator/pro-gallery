@@ -24,24 +24,24 @@ function isThisGalleryElementInFocus(className, galleryId) {
   );
 }
 
-export function changeActiveElementIfNeeded({ prevProps, currentProps, itemContainer }) {
+export function changeActiveElementIfNeeded({ prevProps, currentProps, itemActionRef }) {
   try {
     if (shouldChangeActiveElement() && window.document.activeElement.className) {
-      const isGalleryItemInFocus = isThisGalleryElementInFocus('gallery-item-container', currentProps.galleryId);
+      const isGalleryItemAction = isThisGalleryElementInFocus('item-action', currentProps.galleryId);
       const isShowMoreInFocus = isThisGalleryElementInFocus('show-more', currentProps.galleryId);
-      if (isGalleryItemInFocus || isShowMoreInFocus) {
+      if (isGalleryItemAction || isShowMoreInFocus) {
         if (
           currentProps.thumbnailHighlightId !== prevProps.thumbnailHighlightId &&
           currentProps.thumbnailHighlightId === currentProps.id
         ) {
           // if the highlighted thumbnail changed and it is the same as this itemview's
-          itemContainer.focus();
+          itemActionRef.focus();
         } else if (
           currentProps.activeIndex !== prevProps.activeIndex &&
           currentProps.activeIndex === currentProps.idx
         ) {
           //check if activeIndex has changed to the current item
-          itemContainer.focus();
+          itemActionRef.focus();
         }
       }
     }
