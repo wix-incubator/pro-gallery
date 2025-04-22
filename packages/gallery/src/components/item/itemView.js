@@ -820,8 +820,8 @@ class ItemView extends React.Component {
     const mapTypeToLabel = {
       dummy: '',
       text: htmlContent,
-      video: alt || '',
-      image: alt || '',
+      video: alt || type || '',
+      image: alt || type || '',
     };
     const label = mapTypeToLabel[type];
     return label + (options.isStoreGallery ? ', Buy Now' : '');
@@ -1010,6 +1010,8 @@ class ItemView extends React.Component {
       options.titlePlacement !== GALLERY_CONSTS.placements.SHOW_ON_HOVER &&
       !this.hasRequiredMediaUrl;
     const itemAriaRole = this.getItemAriaRole();
+    const itemAriaHasPopup =
+      this.props.options.itemClick === GALLERY_CONSTS.itemClick.EXPAND;
     const Element = this.props.elementsOverride?.item || 'div';
     const innerDiv = (
       <Element
@@ -1027,6 +1029,7 @@ class ItemView extends React.Component {
         data-id={photoId}
         data-idx={idx}
         {...(itemAriaRole && { role: itemAriaRole })}
+        aria-haspopup={itemAriaHasPopup ? 'dialog' : ''}
         data-hook="item-container"
         key={'item-container-' + id}
         style={this.getItemContainerStyles()}
