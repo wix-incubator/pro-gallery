@@ -16,15 +16,15 @@ permissions:
 jobs:
   test-npm-token:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.20.2]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Set up Node
         uses: actions/setup-node@v4
-        with:
-          node-version: [18.20.2]
-          registry-url: 'https://registry.npmjs.org'
 
       - name: Write .npmrc with NPM token
         run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
