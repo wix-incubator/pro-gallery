@@ -98,7 +98,9 @@ jobs:
     - run: git config --global user.email "octocat@github.com"
     - run: git config --global user.name "GitHub Actions"
     - run: git remote set-url origin https://wix@github.com/wix/pro-gallery
-    - run: echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
+    - run: |
+        echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
+        echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
@@ -107,7 +109,7 @@ jobs:
       # run: echo "this is a push to master"
       run: |
         git checkout ${{ github.ref_name }}
-        lerna publish patch --exact  --yes  --dist-tag stable --registry https://registry.npmjs.org
+        lerna publish patch --exact  --yes  --dist-tag stable --registry https://registry.npmjs.org --loglevel silly
         npm run changelog
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -115,7 +117,7 @@ jobs:
     - name: Push to pull request
       if: github.event_name == 'pull_request' && github.actor != 'dependabot' 
       # run: echo "PULL REQUEST PUSH"
-      run: lerna publish --canary --preid ${{ github.sha }} --yes --registry https://registry.npmjs.org
+      run: lerna publish --canary --preid ${{ github.sha }} --yes --registry https://registry.npmjs.org --loglevel silly
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
