@@ -2,10 +2,6 @@
   "packages": [
     "packages/*"
   ],
-  "command": {
-    "publish": {
-      "registry": "https://registry.npmjs.org/"
-    }
-  },
+  "registry":  "https://registry.npmjs.org/",
   "version": "5.0.124"
 }

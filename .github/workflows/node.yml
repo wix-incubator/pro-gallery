@@ -27,14 +27,14 @@ jobs:
         uses: actions/setup-node@v4
 
       - name: Write .npmrc with NPM token
-        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Test npm token
         run: npm whoami
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
   lint:
     runs-on: ubuntu-latest
     strategy:
@@ -98,9 +98,9 @@ jobs:
     - run: git config --global user.email "octocat@github.com"
     - run: git config --global user.name "GitHub Actions"
     - run: git remote set-url origin https://wix@github.com/wix/pro-gallery
-    - run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+    - run: echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
       env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
     - name: Push to master
       if: github.event_name == 'push'
@@ -110,14 +110,14 @@ jobs:
         lerna publish patch --exact  --yes  --dist-tag stable --registry https://registry.npmjs.org
         npm run changelog
       env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
     - name: Push to pull request
       if: github.event_name == 'pull_request' && github.actor != 'dependabot' 
       # run: echo "PULL REQUEST PUSH"
       run: lerna publish --canary --preid ${{ github.sha }} --yes --registry https://registry.npmjs.org
       env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
   update-playground:
     runs-on: ubuntu-latest
