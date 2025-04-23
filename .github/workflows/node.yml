@@ -14,27 +14,6 @@ permissions:
   packages: write
 
 jobs:
-  test-npm-token:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.20.2]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node
-        uses: actions/setup-node@v4
-
-      - name: Write .npmrc with NPM token
-        run: echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Test npm token
-        run: npm whoami
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
   lint:
     runs-on: ubuntu-latest
     strategy:
