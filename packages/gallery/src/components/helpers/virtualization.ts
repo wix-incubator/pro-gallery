@@ -11,6 +11,8 @@ export function getItemsInViewportOrMarginByActiveGroup({
   galleryWidth,
   galleryHeight,
   activeIndex,
+  totalItemsCount,
+  skipSlidesMultiplier = 1.5,
 }: {
   groups: any[];
   options: Options;
@@ -18,6 +20,8 @@ export function getItemsInViewportOrMarginByActiveGroup({
   galleryWidth: number;
   galleryHeight: number;
   activeIndex: number;
+  totalItemsCount?: number;
+  skipSlidesMultiplier?: number;
 }): { group: any; shouldRender: boolean }[] {
   const {
     enabled = false,
@@ -61,6 +65,47 @@ export function getItemsInViewportOrMarginByActiveGroup({
   let accoumilatedRightMargin = activeGroupPrecOfScreen;
   let accoumilatedLeftMargin = activeGroupPrecOfScreen;
   const groupsToRender: any[] = [activeGroup];
+
+  // Handle loop case - prepare items at loop destination
+  const loopDestinationGroups: any[] = [];
+  if (options.slideshowLoop && totalItemsCount) {
+    // Calculate the skipFromSlide and destination values
+    const skipFromSlide = Math.round(totalItemsCount * skipSlidesMultiplier);
+
+    // If we're approaching the skip point (within buffer distance)
+    if (activeIndex > skipFromSlide - rightRenderBuffer * 2) {
+      // Find the destination groups (around 0.5*totalItemsCount)
+      const skipToSlide = skipFromSlide - totalItemsCount;
+
+      const destinationGroupIndex = groups.findIndex((group) => {
+        const { items } = group;
+        const first = items[0];
+        const last = items[items.length - 1];
+        const firstIndex = first.idx ?? first.fullscreenIdx;
+        const lastIndex = last.idx ?? last.fullscreenIdx;
+        return firstIndex <= skipToSlide && lastIndex >= skipToSlide;
+      });
+
+      if (destinationGroupIndex >= 0) {
+        // Add the destination group and its buffer
+        const destGroup = groups[destinationGroupIndex];
+        loopDestinationGroups.push(destGroup);
+
+        // Add buffer groups around destination
+        for (
+          let i = 1;
+          i <= Math.max(leftRenderBuffer, rightRenderBuffer);
+          i++
+        ) {
+          if (groups[destinationGroupIndex + i])
+            loopDestinationGroups.push(groups[destinationGroupIndex + i]);
+          if (groups[destinationGroupIndex - i])
+            loopDestinationGroups.push(groups[destinationGroupIndex - i]);
+        }
+      }
+    }
+  }
+
   for (
     let index = 1;
     accoumilatedRightMargin < rightRenderBuffer ||
@@ -83,8 +128,12 @@ export function getItemsInViewportOrMarginByActiveGroup({
       break;
     }
   }
+
+  // Combine normal buffer and loop destination buffer
+  const allGroupsToRender = [...groupsToRender, ...loopDestinationGroups];
+
   return groups.map((group) => {
-    return { group, shouldRender: groupsToRender.includes(group) };
+    return { group, shouldRender: allGroupsToRender.includes(group) };
   });
 }
 
@@ -95,6 +144,8 @@ export function getItemsInViewportOrMarginByScrollLocation({
   galleryWidth,
   galleryHeight,
   scrollPosition,
+  totalItemsCount,
+  skipSlidesMultiplier = 1.5,
 }: {
   items: any[];
   options: Options;
@@ -102,6 +153,8 @@ export function getItemsInViewportOrMarginByScrollLocation({
   galleryWidth: number;
   galleryHeight: number;
   scrollPosition: number;
+  totalItemsCount?: number;
+  skipSlidesMultiplier?: number;
 }): { item: any; shouldRender: boolean }[] {
   const {
     enabled = false,
@@ -127,8 +180,34 @@ export function getItemsInViewportOrMarginByScrollLocation({
     const locationEnd = location + group[unit];
     const viewportStart = scrollPosition - size * backwardItemScrollMargin;
     const viewportEnd = scrollPosition + size * forwardItemScrollMargin;
-    return location > viewportStart && locationEnd < viewportEnd;
+
+    // Normal case - item is within viewport buffer
+    if (location > viewportStart && locationEnd < viewportEnd) {
+      return true;
+    }
+
+    // Additional check for loop case
+    if (options.slideshowLoop && totalItemsCount) {
+      const skipFromSlide = Math.round(totalItemsCount * skipSlidesMultiplier);
+      const skipToSlide = skipFromSlide - totalItemsCount;
+
+      // Get the expected position after loop jump
+      const idx = item.idx ?? item.fullscreenIdx;
+
+      // If we're close to skip threshold and this item would be visible after the jump
+      if (scrollPosition > skipFromSlide - size * forwardItemScrollMargin) {
+        // Calculate where this item would be in relation to the loop destination
+        const distanceFromDestination = Math.abs(idx - skipToSlide);
+        return (
+          distanceFromDestination <
+          Math.max(forwardItemScrollMargin, backwardItemScrollMargin)
+        );
+      }
+    }
+
+    return false;
   }
+
   return items.map((item) => ({
     item,
     shouldRender: shouldRenderItem(item),

@@ -643,6 +643,7 @@ class SlideshowView extends React.Component {
       virtualizationSettings,
       getVisibleItems,
       isPrerenderMode,
+      totalItemsCount,
     } = props;
     const { activeIndex } = state;
     const groups = getVisibleItems(galleryGroups, container, isPrerenderMode);
@@ -657,6 +658,8 @@ class SlideshowView extends React.Component {
       galleryWidth,
       options,
       virtualizationSettings,
+      totalItemsCount,
+      skipSlidesMultiplier: SKIP_SLIDES_MULTIPLIER,
     });
   }
   createGalleryConfig() {
