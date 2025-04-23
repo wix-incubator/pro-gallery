@@ -109,7 +109,7 @@ jobs:
       # run: echo "this is a push to master"
       run: |
         git checkout ${{ github.ref_name }}
-        lerna publish patch --exact  --yes  --dist-tag stable --registry https://registry.npmjs.org --loglevel silly
+        lerna publish patch --exact  --yes  --dist-tag stable --registry https://registry.npmjs.org
         npm run changelog
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -117,7 +117,7 @@ jobs:
     - name: Push to pull request
       if: github.event_name == 'pull_request' && github.actor != 'dependabot' 
       # run: echo "PULL REQUEST PUSH"
-      run: lerna publish --canary --preid ${{ github.sha }} --yes --registry https://registry.npmjs.org --loglevel silly
+      run: lerna publish --canary --preid ${{ github.sha }} --yes --registry https://registry.npmjs.org
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
