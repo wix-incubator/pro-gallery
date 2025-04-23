@@ -20,9 +20,9 @@ jobs:
       matrix:
         node-version: [18.20.2]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Install and run lint
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
@@ -38,9 +38,9 @@ jobs:
         test-script: ["ci:test-unit", "ci:test-e2e-layouts","ci:test-e2e-styleParams", "ci:test-e2e-integration"]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Install, build and run test
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
@@ -61,12 +61,12 @@ jobs:
         node-version: [18.20.2]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
         token: ${{ secrets.PAT_TOKEN }}
         fetch-depth: 0
     - name: Install, build, configure git and lerna publish
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
@@ -78,10 +78,10 @@ jobs:
     - run: git config --global user.name "GitHub Actions"
     - run: git remote set-url origin https://wix@github.com/wix/pro-gallery
     - run: |
-        echo "registry=http://registry.npmjs.org/" >> .npmrc
-        echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
+        echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
+        echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
       env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
     - name: Push to master
       if: github.event_name == 'push'
@@ -91,14 +91,14 @@ jobs:
         lerna publish patch --exact  --yes  --dist-tag stable --registry https://registry.npmjs.org
         npm run changelog
       env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
     - name: Push to pull request
       if: github.event_name == 'pull_request' && github.actor != 'dependabot' 
       # run: echo "PULL REQUEST PUSH"
       run: lerna publish --canary --preid ${{ github.sha }} --yes --registry https://registry.npmjs.org
       env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
   update-playground:
     runs-on: ubuntu-latest
@@ -108,9 +108,9 @@ jobs:
       matrix:
         node-version: [18.20.2]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: update-playground
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
