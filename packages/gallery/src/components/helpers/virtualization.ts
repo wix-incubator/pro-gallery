@@ -68,7 +68,11 @@ export function getItemsInViewportOrMarginByActiveGroup({
 
   // Handle loop case - prepare items at loop destination
   const loopDestinationGroups: any[] = [];
-  if (options.slideshowLoop && totalItemsCount) {
+  if (
+    options.slideshowLoop &&
+    totalItemsCount &&
+    options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+  ) {
     // Calculate the skipFromSlide and destination values
     const skipFromSlide = Math.round(totalItemsCount * skipSlidesMultiplier);
 
@@ -187,7 +191,11 @@ export function getItemsInViewportOrMarginByScrollLocation({
     }
 
     // Additional check for loop case
-    if (options.slideshowLoop && totalItemsCount) {
+    if (
+      options.slideshowLoop &&
+      totalItemsCount &&
+      options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL
+    ) {
       const skipFromSlide = Math.round(totalItemsCount * skipSlidesMultiplier);
       const skipToSlide = skipFromSlide - totalItemsCount;
 
