@@ -896,7 +896,7 @@ class ItemView extends React.Component {
     changeActiveElementIfNeeded({
       prevProps,
       currentProps: this.props,
-      itemContainer: this.itemActionRef,
+      itemActionRef: this.itemActionRef,
     });
   }
 
