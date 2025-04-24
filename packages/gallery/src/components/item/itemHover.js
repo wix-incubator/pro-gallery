@@ -158,7 +158,6 @@ export default class ItemHover extends React.Component {
         <div
           key={'item-hover-' + idx}
           data-hook={'item-hover-' + idx}
-          aria-hidden={true}
           className={hoverClass}
           onTouchStart={actions.handleItemMouseDown}
           onTouchEnd={actions.handleItemMouseUp}

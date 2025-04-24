@@ -896,7 +896,7 @@ class ItemView extends React.Component {
     changeActiveElementIfNeeded({
       prevProps,
       currentProps: this.props,
-      itemContainer: this.itemContainer.current,
+      itemActionRef: this.itemActionRef,
     });
   }
 
@@ -927,6 +927,16 @@ class ItemView extends React.Component {
         return 'button';
       case GALLERY_CONSTS[optionsMap.behaviourParams.item.clickAction].LINK:
         return 'link';
+      default:
+        return '';
+    }
+  }
+
+  getItemAriaHaspopup() {
+    switch (this.props.options.itemClick) {
+      case 'expand':
+      case 'fullscreen':
+        return true;
       default:
         return '';
     }
@@ -967,6 +977,8 @@ class ItemView extends React.Component {
       options[optionsMap.layoutParams.info.placement] !==
         GALLERY_CONSTS[optionsMap.layoutParams.info.placement].OVERLAY && !this.hasRequiredMediaUrl;
     const itemAriaRole = this.getItemAriaRole();
+    const itemAriaLabel = this.getItemAriaLabel();
+    const itemAriaHaspopup = this.getItemAriaHaspopup();
     const Element = this.props.elementsOverride?.item || 'div';
     const innerDiv = (
       <Element
@@ -978,18 +990,29 @@ class ItemView extends React.Component {
         onMouseLeave={this.onMouseLeave}
         onFocus={this.onFocus}
         onBlur={this.onBlur} // The onblur event is the opposite of the onfocus event.
-        tabIndex={this.getItemContainerTabIndex()}
-        aria-label={this.getItemAriaLabel()}
         data-hash={hash}
         data-id={photoId}
         data-idx={idx}
-        {...(itemAriaRole && { role: itemAriaRole })}
         data-hook="item-container"
         key={'item-container-' + id}
         style={this.getItemContainerStyles()}
         onKeyUp={this.onContainerKeyUp}
         onClick={this.onItemWrapperClick}
       >
+        <div
+          data-idx={idx}
+          id={'item-action-' + id}
+          className="item-action"
+          ref={(ref) => (this.itemActionRef = ref)}
+          onKeyUp={this.onContainerKeyUp}
+          tabIndex={this.getItemContainerTabIndex()}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          data-hook={'item-action'}
+          {...(itemAriaLabel && { ['aria-label']: itemAriaLabel })}
+          {...(itemAriaRole && { role: itemAriaRole })}
+          {...(itemAriaHaspopup && { ['aria-haspopup']: itemAriaHaspopup })}
+        ></div>
         {this.getTopInfoElementIfNeeded()}
         {this.getLeftInfoElementIfNeeded()}
         <div
