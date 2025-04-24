@@ -68,7 +68,7 @@ describe('options - behaviourParams_item_clickAction', () => {
       });
       driver.mount.proGallery(initialProps);
       await driver.update();
-      const item = driver.find.hook('item-action').at(3);
+      const item = driver.find.hook('item-container').at(3);
       expect(item.hasClass('clickable')).to.be.true;
       driver.detach.proGallery();
     });
