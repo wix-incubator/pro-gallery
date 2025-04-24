@@ -29,7 +29,7 @@ type ResizeMethods = 'fill' | 'fit' | 'full' | 'video';
 //   };
 //   metaData: {
 //     watermarkStr: string;
-//   };
+//   }
 //   ratio: number;
 //   maxHeight: number;
 //   maxWidth: number;
