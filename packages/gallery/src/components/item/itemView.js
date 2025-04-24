@@ -820,8 +820,8 @@ class ItemView extends React.Component {
     const mapTypeToLabel = {
       dummy: '',
       text: htmlContent,
-      video: alt || '',
-      image: alt || '',
+      video: alt || type || '',
+      image: alt || type || '',
     };
     const label = mapTypeToLabel[type];
     return label + (options.isStoreGallery ? ', Buy Now' : '');
@@ -1006,7 +1006,7 @@ class ItemView extends React.Component {
       case 'fullscreen':
         return true;
       default:
-        return '';
+        return false;
     }
   }
 
@@ -1054,7 +1054,9 @@ class ItemView extends React.Component {
           data-hook={'item-action'}
           {...(itemAriaLabel && { ['aria-label']: itemAriaLabel })}
           {...(itemAriaRole && { role: itemAriaRole })}
-          {...(itemAriaHaspopup && { ['aria-haspopup']: itemAriaHaspopup })}
+          {...(itemAriaHaspopup && {
+            ['aria-haspopup']: itemAriaHaspopup ? 'dialog' : '',
+          })}
         ></div>
 
         {this.getTopInfoElementIfNeeded()}
