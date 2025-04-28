@@ -7,7 +7,7 @@ import {
 } from 'pro-gallery-lib';
 
 function shouldChangeActiveElement() {
-  return (isSiteMode() || isSEOMode()) && !utils.isMobile() && window.document;
+  return (isSiteMode() || isSEOMode()) && window.document;
 }
 
 export function onAnchorFocus({
