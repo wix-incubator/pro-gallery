@@ -6,7 +6,11 @@ import {
   GALLERY_CONSTS,
 } from 'pro-gallery-lib';
 
-function shouldChangeActiveElement() {
+function shouldChangeActiveElement(isAccessible) {
+  if (isAccessible) {
+    // to reduce the number of users experiencing the change
+    return (isSiteMode() || isSEOMode()) && window.document;
+  }
   return (isSiteMode() || isSEOMode()) && !utils.isMobile() && window.document;
 }
 
@@ -14,8 +18,9 @@ export function onAnchorFocus({
   itemContainer,
   enableExperimentalFeatures,
   itemAnchor,
+  isAccessible,
 }) {
-  if (shouldChangeActiveElement() && enableExperimentalFeatures) {
+  if (shouldChangeActiveElement(isAccessible) && enableExperimentalFeatures) {
     /* Relevant only for Screen-Reader cases:
          When we navigate on the accessibility tree, screen readers stops and focuses on the <a> tag,
          so it will not go deeper to the item-container keyDown event */
@@ -40,10 +45,11 @@ export function changeActiveElementIfNeeded({
   prevProps,
   currentProps,
   itemActionRef,
+  isAccessible,
 }) {
   try {
     if (
-      shouldChangeActiveElement() &&
+      shouldChangeActiveElement(isAccessible) &&
       window.document.activeElement.className
     ) {
       const isGalleryItemAction = isThisGalleryElementInFocus(
