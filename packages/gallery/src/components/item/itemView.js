@@ -961,6 +961,7 @@ class ItemView extends React.Component {
       prevProps,
       currentProps: this.props,
       itemActionRef: this.itemActionRef,
+      isAccessible: this.props.settings?.isAccessible,
     });
   }
 
@@ -1106,6 +1107,7 @@ class ItemView extends React.Component {
         itemAnchor: this.itemAnchor,
         enableExperimentalFeatures: this.props.enableExperimentalFeatures,
         itemContainer: this.itemContainer,
+        isAccessible: this.props.settings?.isAccessible,
       });
     };
     const linkParams = getLinkParams(this.props);
