@@ -161,7 +161,7 @@ function SideBar({ items, blueprintsManager, visible }) {
         <Collapse.Panel header="Media" key="media">
           <Form layout="vertical">
             <Form.Item label="Number of Items" help="Set to 0 for Infinite items">
-              <InputNumber min={0} max={100} defaultValue={gallerySettings.numberOfItems || 0} onChange={val => setGallerySettings({ numberOfItems: val })} />
+              <InputNumber min={0} max={1000} defaultValue={gallerySettings.numberOfItems || 0} onChange={val => setGallerySettings({ numberOfItems: val })} />
             </Form.Item>
             <Form.Item label="Initial Item">
               <InputNumber min={0} max={gallerySettings.numberOfItems || Infinity} defaultValue={gallerySettings.initialIdx || 0} onChange={val => setGallerySettings({ initialIdx: val })} />
