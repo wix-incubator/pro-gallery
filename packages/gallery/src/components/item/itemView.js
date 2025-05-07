@@ -1042,6 +1042,7 @@ class ItemView extends React.Component {
         style={this.getItemContainerStyles()}
         onKeyUp={this.onContainerKeyUp}
         onClick={this.onItemWrapperClick}
+        aria-hidden={this.props.activeIndex !== this.props.idx}
       >
         <div
           data-idx={idx}
