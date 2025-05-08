@@ -771,8 +771,8 @@ class ItemView extends React.Component {
     const mapTypeToLabel = {
       dummy: '',
       text: htmlContent,
-      video: alt || 'Untitled video',
-      image: alt || 'Untitled image',
+      video: alt || type || '',
+      image: alt || type || '',
     };
     const label = mapTypeToLabel[type];
     return label + (options.isStoreGallery ? ', Buy Now' : '');
