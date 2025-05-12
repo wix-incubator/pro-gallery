@@ -26,7 +26,7 @@
   "scripts": {
     "watch": "tsc -w",
     "start": "tsc -p tsconfig.json -w",
-    "build": "tsc && tsc -p tsconfig-cjs.json && echo \"{ \\\"type\\\": \\\"module\\\" }\" > dist/esm/package.json",
+    "build": "tsc && tsc -p tsconfig-cjs.json && cp ../../scripts/esm_package.json dist/esm/package.json",
     "unit": "NODE_OPTIONS=\"--import=tsx\" mocha test/*.spec.*",
     "test": "echo 'no test in wix CI'",
     "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
