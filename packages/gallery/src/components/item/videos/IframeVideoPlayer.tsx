@@ -21,6 +21,7 @@ const IframePlayer: React.FC<Props> = ({ url, dimensions }) => {
     return (
       <iframe
         {...commonProps}
+        src={src}
         srcDoc={`
       <video controls preload='metadata'>
       <source src='${src}' type='video/mp4'>
