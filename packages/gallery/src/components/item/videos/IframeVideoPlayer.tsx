@@ -15,7 +15,7 @@ const IframePlayer: React.FC<Props> = ({ url, dimensions }) => {
     allowFullScreen: true,
     loading: 'lazy',
   };
-  if (url.includes('youtube.com') || url.includes('youtu.be') || url.includes('vimeo.com')) {
+  if (url?.includes('youtube.com') || url?.includes('youtu.be') || url?.includes('vimeo.com')) {
     return <iframe {...commonProps} src={url + '&autoplay=0&muted=1'} />;
   } else {
     return (
