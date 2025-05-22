@@ -33,7 +33,7 @@
     "build": "tsc && tsc -p tsconfig-cjs.json && cp ../../scripts/esm_package.json dist/esm/package.json && npm run css-compile",
     "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css src/components/styles/gallery.scss:dist/statics/main.css",
     "start": "concurrently \"npm run css-watch\" \"npm run code-watch\"",
-    "code-watch": "tsc && tsc -w -p tsconfig-esm-dev.json",
+    "code-watch": "tsc -p tsconfig-dev.json -w",
     "css-watch": "sass --watch src/components/styles/gallery.scss:dist/statics/main.css",
     "unit": "jest --testPathIgnorePatterns '.*/e2e/.*.e2e.spec.js' --silent",
     "test": "echo 'no test in wix CI'",
