@@ -4,6 +4,7 @@
     "target": "ES2017",
     "module": "ESNext",
     "outDir": "dist/esm",
-    "declarationDir": "dist/esm-types"
+    "declarationDir": "dist/esm-types",
+    "noEmit": false
   }
-}
+} 
