@@ -619,7 +619,7 @@ class SlideshowView extends React.Component {
         return layoutGroupView.map(({ group, shouldRender }) => {
           return group.rendered
             ? React.createElement(GroupView, {
-                hideItemAction: this.props.hideItemAction,
+                disableItemFocus: this.props.disableItemFocus,
                 activeIndex: this.state.activeIndex,
                 slideAnimation: this.props.options.behaviourParams_gallery_horizontal_slideAnimation,
                 allowLoop:

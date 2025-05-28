@@ -999,7 +999,7 @@ class ItemView extends React.Component {
         onKeyUp={this.onContainerKeyUp}
         onClick={this.onItemWrapperClick}
       >
-        {this.props.hideItemAction ? null : (
+        {this.props.disableItemFocus ? null : (
           <div
             data-idx={idx}
             id={'item-action-' + id}
