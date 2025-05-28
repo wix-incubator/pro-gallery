@@ -124,7 +124,7 @@ export default class ScrollIndicator extends React.Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     let didChange = false;
-    for (const prop of ['id', 'scrollDirection', 'isRTL', 'totalWidth', 'scrollBase']) {
+    for (const prop of ['id', 'scrollDirection', 'isRTL', 'totalWidth', 'scrollBase', 'scrollingElement']) {
       if (nextProps[prop] !== this.props[prop]) {
         didChange = true;
         break;

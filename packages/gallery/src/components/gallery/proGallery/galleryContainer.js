@@ -33,7 +33,6 @@ export class GalleryContainer extends React.Component {
     this.toggleLoadMoreItems = this.toggleLoadMoreItems.bind(this);
     this.scrollToItem = this.scrollToItem.bind(this);
     this.scrollToGroup = this.scrollToGroup.bind(this);
-    this._scrollingElement = this.getScrollingElement();
     this.eventsListener = this.eventsListener.bind(this);
     this.onGalleryScroll = this.onGalleryScroll.bind(this);
     this.getVisibleItems = this.getVisibleItems.bind(this);
@@ -71,6 +70,7 @@ export class GalleryContainer extends React.Component {
       firstUserInteractionExecuted: false,
       isInHover: false,
       isInViewport: true,
+      scrollingElement: this.getScrollingElement(),
     };
 
     this.state = initialState;
@@ -374,6 +374,7 @@ export class GalleryContainer extends React.Component {
       options,
       container,
       structure,
+      scrollingElement: this.getScrollingElement(),
     };
     return newState;
   }
@@ -402,7 +403,7 @@ export class GalleryContainer extends React.Component {
       if (this.getIsScrollLessGallery(this.state.options)) {
         return;
       }
-      const scrollingElement = this._scrollingElement;
+      const scrollingElement = this.state.scrollingElement;
       const horizontalElement = scrollingElement.horizontal();
       try {
         const scrollParams = {
@@ -466,7 +467,7 @@ export class GalleryContainer extends React.Component {
     isContinuousScrolling = false
   ) {
     if (groupIdx >= 0) {
-      const scrollingElement = this._scrollingElement;
+      const scrollingElement = this.state.scrollingElement;
       const horizontalElement = scrollingElement.horizontal();
       try {
         const scrollParams = {
@@ -852,7 +853,7 @@ export class GalleryContainer extends React.Component {
           }
           totalWidth={this.galleryStructure.width}
           scrollBase={this.props.container.scrollBase}
-          scrollingElement={this._scrollingElement}
+          scrollingElement={this.state.scrollingElement}
           getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
           setGotFirstScrollIfNeeded={this.setGotFirstScrollIfNeeded}
           onScroll={this.onGalleryScroll}
@@ -861,7 +862,7 @@ export class GalleryContainer extends React.Component {
           isInDisplay={this.props.isInDisplay}
           isInViewport={this.state.isInViewport}
           isPrerenderMode={this.props.isPrerenderMode}
-          scrollingElement={this._scrollingElement}
+          scrollingElement={this.state.scrollingElement}
           totalItemsCount={this.props.totalItemsCount} //the items passed in the props might not be all the items
           renderedItemsCount={this.props.renderedItemsCount}
           getMoreItemsIfNeeded={this.getMoreItemsIfNeeded}
