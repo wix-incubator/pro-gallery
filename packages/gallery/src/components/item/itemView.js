@@ -999,20 +999,22 @@ class ItemView extends React.Component {
         onKeyUp={this.onContainerKeyUp}
         onClick={this.onItemWrapperClick}
       >
-        <div
-          data-idx={idx}
-          id={'item-action-' + id}
-          className="item-action"
-          ref={(ref) => (this.itemActionRef = ref)}
-          onKeyUp={this.onContainerKeyUp}
-          tabIndex={this.getItemContainerTabIndex()}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          data-hook={'item-action'}
-          {...(itemAriaLabel && { ['aria-label']: itemAriaLabel })}
-          {...(itemAriaRole && { role: itemAriaRole })}
-          {...(itemAriaHaspopup && { ['aria-haspopup']: itemAriaHaspopup ? 'dialog' : '' })}
-        ></div>
+        {this.props.disableItemFocus ? null : (
+          <div
+            data-idx={idx}
+            id={'item-action-' + id}
+            className="item-action"
+            ref={(ref) => (this.itemActionRef = ref)}
+            onKeyUp={this.onContainerKeyUp}
+            tabIndex={this.getItemContainerTabIndex()}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            data-hook={'item-action'}
+            {...(itemAriaLabel && { ['aria-label']: itemAriaLabel })}
+            {...(itemAriaRole && { role: itemAriaRole })}
+            {...(itemAriaHaspopup && { ['aria-haspopup']: itemAriaHaspopup ? 'dialog' : '' })}
+          ></div>
+        )}
         {this.getTopInfoElementIfNeeded()}
         {this.getLeftInfoElementIfNeeded()}
         <div

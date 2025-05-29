@@ -15,6 +15,7 @@ class GroupView extends React.Component {
       const props = item.renderProps({ ...this.props.galleryConfig, visible });
       return React.createElement(itemView, {
         ...props,
+        disableItemFocus: this.props.disableItemFocus,
         type: empty ?? false ? 'dummy' : props.type,
       });
     });
