@@ -180,6 +180,21 @@ class SlideshowView extends React.Component {
     isKeyboardNavigation = false,
     isContinuousScrolling = false,
   }) {
+    console.log('=== SlideshowView.next() ===', {
+      direction,
+      isAutoTrigger,
+      scrollDuration,
+      isKeyboardNavigation,
+      isContinuousScrolling,
+      currentIndex: this.state.activeIndex,
+      totalItems: this.props.totalItemsCount,
+      options: {
+        slideshowLoop: this.props.options.slideshowLoop,
+        autoSlideshowType: this.props.options.autoSlideshowType,
+        autoSlideshowInterval: this.props.options.autoSlideshowInterval,
+      }
+    });
+
     const scrollingUpTheGallery = this.props.options.isRTL
       ? direction <= -1
       : direction >= 1;
@@ -408,6 +423,18 @@ class SlideshowView extends React.Component {
   }
 
   onCurrentItemChanged() {
+    console.log('=== SlideshowView.onCurrentItemChanged() ===', {
+      previousIndex: this.lastCurrentItem,
+      newIndex: this.state.activeIndex,
+      totalItems: this.props.totalItemsCount,
+      isLoop: this.props.options.slideshowLoop,
+      autoSlideshow: {
+        isEnabled: this.props.options.isAutoSlideshow,
+        type: this.props.options.autoSlideshowType,
+        interval: this.props.options.autoSlideshowInterval,
+      },
+    });
+
     if (this.lastCurrentItem !== this.state.activeIndex) {
       this.lastCurrentItem = this.state.activeIndex;
       //this.props.actions.onCurrentItemChanged(this.state.currentIdx);
@@ -438,6 +465,21 @@ class SlideshowView extends React.Component {
   }
 
   startAutoSlideshowIfNeeded(options) {
+    console.log('=== SlideshowView.startAutoSlideshowIfNeeded() ===', {
+      currentIndex: this.state.activeIndex,
+      options: {
+        isAutoSlideshow: options.isAutoSlideshow,
+        autoSlideshowType: options.autoSlideshowType,
+        autoSlideshowInterval: options.autoSlideshowInterval,
+        slideshowLoop: options.slideshowLoop,
+      },
+      state: {
+        isInView: this.state.isInView,
+        isInFocus: this.state.isInFocus,
+        shouldBlockAutoSlideshow: this.state.shouldBlockAutoSlideshow,
+      },
+    });
+
     this.clearAutoSlideshowInterval();
     if (this.canStartAutoSlideshow(options)) {
       if (
@@ -460,6 +502,17 @@ class SlideshowView extends React.Component {
   }
 
   autoScrollToNextItem = () => {
+    console.log('=== SlideshowView.autoScrollToNextItem() ===', {
+      isInViewport: this.props.isInViewport,
+      isInDisplay: this.props.isInDisplay,
+      currentIndex: this.state.activeIndex,
+      options: {
+        autoSlideshowType: this.props.options.autoSlideshowType,
+        isRTL: this.props.options.isRTL,
+        slideshowLoop: this.props.options.slideshowLoop,
+      },
+    });
+
     if (!isEditMode() && (this.props.isInViewport || isPreviewMode())) {
       const { options } = this.props;
       const direction = options.isRTL ? -1 : 1;
@@ -577,6 +630,18 @@ class SlideshowView extends React.Component {
   }
 
   setCurrentItemByScroll() {
+    console.log('=== SlideshowView.setCurrentItemByScroll() ===', {
+      isAutoScrolling: this.isAutoScrolling,
+      currentIndex: this.state.activeIndex,
+      scrollElement: this.scrollElement
+        ? {
+            scrolling: this.scrollElement.getAttribute('data-scrolling'),
+            scrollLeft: this.scrollElement.scrollLeft,
+            scrollTop: this.scrollElement.scrollTop,
+          }
+        : null,
+    });
+
     if (utils.isVerbose()) {
       console.log('Setting current Idx by scroll', this.isAutoScrolling);
     }

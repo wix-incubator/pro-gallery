@@ -88,6 +88,17 @@ export class GalleryContainer extends React.Component {
     //not sure if there needs to be a handleNEwGalleryStructure here with the intial state. currently looks like not
   }
   initializeScrollPosition() {
+    console.log('=== GalleryContainer.initializeScrollPosition() ===', {
+      activeIndex: this.props.activeIndex,
+      totalItems: this.props.items.length,
+      container: {
+        width: this.props.container.width,
+        height: this.props.container.height,
+        galleryWidth: this.props.container.galleryWidth,
+        galleryHeight: this.props.container.galleryHeight,
+      }
+    });
+
     if (this.props.activeIndex > 0) {
       this.scrollToItem(this.props.activeIndex, false, true, 0);
       const currentItem = this.galleryStructure.items[this.props.activeIndex];
@@ -196,6 +207,17 @@ export class GalleryContainer extends React.Component {
     );
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
+    console.log('=== GalleryContainer.componentWillReceiveProps() ===', {
+      currentIndex: this.props.activeIndex,
+      nextIndex: nextProps.activeIndex,
+      currentSlideshowViewIdx: this.currentSlideshowViewIdx,
+      options: {
+        slideshowLoop: nextProps.options.slideshowLoop,
+        autoSlideshow: nextProps.options.isAutoSlideshow,
+        autoSlideshowInterval: nextProps.options.autoSlideshowInterval,
+      }
+    });
+
     if (!this.currentHoverChangeEvent.galleryId && nextProps.id) {
       this.currentHoverChangeEvent.galleryId = nextProps.id;
     }
@@ -751,6 +773,11 @@ export class GalleryContainer extends React.Component {
   }
 
   setCurrentSlideshowViewIdx(idx) {
+    console.log('=== GalleryContainer.setCurrentSlideshowViewIdx() ===', {
+      previousIdx: this.currentSlideshowViewIdx,
+      newIdx: idx,
+      totalItems: this.props.items.length,
+    });
     this.currentSlideshowViewIdx = idx;
   }
 

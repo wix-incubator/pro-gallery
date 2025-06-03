@@ -19,8 +19,21 @@ export function getItemsInViewportOrMarginByActiveGroup({
   galleryHeight: number;
   activeIndex: number;
 }): { group: any; shouldRender: boolean }[] {
+  console.log('=== Virtualization by Active Group ===');
+  console.log('Input params:', {
+    activeIndex,
+    galleryWidth,
+    galleryHeight,
+    groupsCount: groups.length,
+    options: {
+      scrollDirection: options.scrollDirection,
+      slideAnimation: options.slideAnimation,
+    },
+    virtualizationSettings,
+  });
+
   const {
-    enabled = false,
+    enabled = true,
     forwardItemMargin = 3,
     backwardItemMargin = 3,
     forwardItemScrollMargin = 10,
@@ -32,7 +45,18 @@ export function getItemsInViewportOrMarginByActiveGroup({
   const isScrollable =
     !isHorizontal ||
     options.slideAnimation === GALLERY_CONSTS.slideAnimations.SCROLL;
+
+  console.log('Gallery settings:', {
+    isHorizontal,
+    isScrollable,
+    margins: {
+      forward: isScrollable ? forwardItemScrollMargin : forwardItemMargin,
+      backward: isScrollable ? backwardItemScrollMargin : backwardItemMargin,
+    },
+  });
+
   const getFallbackGroups = () => {
+    console.log('Using fallback - rendering all groups');
     return groups.map((group) => ({
       group,
       shouldRender: true,
@@ -52,6 +76,13 @@ export function getItemsInViewportOrMarginByActiveGroup({
       ? backwardItemScrollMargin
       : backwardItemMargin;
 
+    console.log('Buffer settings:', {
+      size,
+      unit,
+      rightRenderBuffer,
+      leftRenderBuffer,
+    });
+
     const activeGroupIndex = groups.findIndex((group) => {
       const { items } = group;
       const first = items[0];
@@ -61,11 +92,32 @@ export function getItemsInViewportOrMarginByActiveGroup({
       return firstIndex <= activeIndex && lastIndex >= activeIndex;
     });
 
+    console.log('Active group found:', {
+      activeGroupIndex,
+      activeIndex,
+      groupDetails:
+        activeGroupIndex !== -1
+          ? {
+              firstItem: groups[activeGroupIndex]?.items[0],
+              lastItem:
+                groups[activeGroupIndex]?.items[
+                  groups[activeGroupIndex]?.items.length - 1
+                ],
+      } : 'Not found',
+    });
+
     const activeGroup = groups[activeGroupIndex];
     const activeGroupPrecOfScreen = activeGroup[unit] / size;
     let accoumilatedRightMargin = activeGroupPrecOfScreen;
     let accoumilatedLeftMargin = activeGroupPrecOfScreen;
     const groupsToRender: any[] = [activeGroup];
+
+    console.log('Starting margin calculation:', {
+      activeGroupPrecOfScreen,
+      accoumilatedRightMargin,
+      accoumilatedLeftMargin,
+    });
+
     for (
       let index = 1;
       accoumilatedRightMargin < rightRenderBuffer ||
@@ -73,7 +125,26 @@ export function getItemsInViewportOrMarginByActiveGroup({
       index++
     ) {
       const groupToRight = groups[activeGroupIndex + index];
-      const groupToLeft = groups[activeGroupIndex - index];
+      const groupToLeft = groups[activeGroupIndex - index]; 
+      console.log(`Iteration ${index}:`, {
+        groupToRight: groupToRight
+          ? {
+              index: activeGroupIndex + index,
+              size: groupToRight[unit],
+            }
+          : null,
+        groupToLeft: groupToLeft
+          ? {
+              index: activeGroupIndex - index,
+              size: groupToLeft[unit],
+            }
+          : null,
+        currentMargins: {
+          right: accoumilatedRightMargin,
+          left: accoumilatedLeftMargin,
+        },
+      });
+
       if (groupToRight && accoumilatedRightMargin < rightRenderBuffer) {
         const groupPrecOfScreen = groupToRight[unit] / size;
         accoumilatedRightMargin += groupPrecOfScreen;
@@ -85,11 +156,25 @@ export function getItemsInViewportOrMarginByActiveGroup({
         groupsToRender.push(groupToLeft);
       }
       if (!groupToLeft && !groupToRight) {
+        console.log('No more groups to process');
         break;
       }
     }
+
+    console.log('Final groups to render:', {
+      totalGroups: groups.length,
+      groupsToRender: groupsToRender.length,
+      groupsToRenderIndices: groupsToRender.map(g => groups.indexOf(g)),
+    });
+
     return groups.map((group) => {
-      return { group, shouldRender: groupsToRender.includes(group) };
+      const shouldRender = groupsToRender.includes(group);
+      console.log(
+        `Group ${groups.indexOf(group)}: ${
+          shouldRender ? 'will render' : 'will not render'
+        }`
+      );
+      return { group, shouldRender };
     });
   } catch (error) {
     console.error('pro-gallery could virtualize groups: ', error);
@@ -112,13 +197,32 @@ export function getItemsInViewportOrMarginByScrollLocation({
   galleryHeight: number;
   scrollPosition: number;
 }): { item: any; shouldRender: boolean }[] {
+  console.log('=== Virtualization by Scroll Location ===');
+  console.log('Input params:', {
+    scrollPosition,
+    galleryWidth,
+    galleryHeight,
+    itemsCount: items.length,
+    options: {
+      scrollDirection: options.scrollDirection,
+      slideAnimation: options.slideAnimation,
+    },
+    virtualizationSettings,
+  });
+
   const {
     enabled = false,
     forwardItemScrollMargin = 10,
     backwardItemScrollMargin = 10,
   } = virtualizationSettings || {};
 
+  console.log('Scroll margins:', {
+    forward: forwardItemScrollMargin,
+    backward: backwardItemScrollMargin,
+  });
+
   const getFallbackItems = () => {
+    console.log('Using fallback - rendering all items');
     return items.map((item) => ({
       item,
       shouldRender: true,
@@ -134,6 +238,14 @@ export function getItemsInViewportOrMarginByScrollLocation({
     const size = isHorizontal ? galleryWidth : galleryHeight;
     const unit = isHorizontal ? 'width' : 'height';
 
+    console.log('Scroll settings:', {
+      isHorizontal,
+      size,
+      unit,
+      viewportStart: scrollPosition - size * backwardItemScrollMargin,
+      viewportEnd: scrollPosition + size * forwardItemScrollMargin,
+    });
+
     const shouldRenderItem = (item) => {
       const group = item.group;
       const locationUnit = unit === 'height' ? 'top' : 'left';
@@ -141,12 +253,29 @@ export function getItemsInViewportOrMarginByScrollLocation({
       const locationEnd = location + group[unit];
       const viewportStart = scrollPosition - size * backwardItemScrollMargin;
       const viewportEnd = scrollPosition + size * forwardItemScrollMargin;
-      return location > viewportStart && locationEnd < viewportEnd;
+      const shouldRender =
+        location > viewportStart && locationEnd < viewportEnd;
+      console.log(`Item ${item.idx ?? item.fullscreenIdx}:`, {
+        location,
+        locationEnd,
+        viewportStart,
+        viewportEnd,
+        shouldRender,
+      });
+      return shouldRender;
     };
-    return items.map((item) => ({
+
+    const result = items.map((item) => ({
       item,
       shouldRender: shouldRenderItem(item),
     }));
+
+    console.log('Final items to render:', {
+      totalItems: items.length,
+      itemsToRender: result.filter((r) => r.shouldRender).length,
+    });
+
+    return result;
   } catch (error) {
     console.error('pro-gallery could virtualize items: ', error);
     return getFallbackItems();

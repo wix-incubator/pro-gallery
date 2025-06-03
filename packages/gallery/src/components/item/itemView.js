@@ -697,6 +697,18 @@ class ItemView extends React.Component {
   }
 
   getItemContainerStyles() {
+    console.log('=== ItemView.getItemContainerStyles() ===', {
+      itemIndex: this.props.idx,
+      activeIndex: this.props.activeIndex,
+      offset: this.props.offset,
+      options: {
+        scrollDirection: this.props.options.scrollDirection,
+        slideAnimation: this.props.options.slideAnimation,
+        isRTL: this.props.options.isRTL,
+      },
+      isActive: this.props.activeIndex === this.props.idx,
+    });
+
     const {
       idx,
       activeIndex,
