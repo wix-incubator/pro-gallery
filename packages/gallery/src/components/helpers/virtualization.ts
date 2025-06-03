@@ -170,11 +170,6 @@ export function getItemsInViewportOrMarginByActiveGroup({
 
     return groups.map((group) => {
       const shouldRender = groupsToRender.includes(group);
-      console.log(
-        `Group ${groups.indexOf(group)}: ${
-          shouldRender ? 'will render' : 'will not render'
-        }`
-      );
       return { group, shouldRender };
     });
   } catch (error) {
