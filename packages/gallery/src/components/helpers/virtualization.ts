@@ -103,7 +103,8 @@ export function getItemsInViewportOrMarginByActiveGroup({
                 groups[activeGroupIndex]?.items[
                   groups[activeGroupIndex]?.items.length - 1
                 ],
-      } : 'Not found',
+            }
+          : 'Not found',
     });
 
     const activeGroup = groups[activeGroupIndex];
@@ -125,7 +126,7 @@ export function getItemsInViewportOrMarginByActiveGroup({
       index++
     ) {
       const groupToRight = groups[activeGroupIndex + index];
-      const groupToLeft = groups[activeGroupIndex - index]; 
+      const groupToLeft = groups[activeGroupIndex - index];
       console.log(`Iteration ${index}:`, {
         groupToRight: groupToRight
           ? {
@@ -164,7 +165,7 @@ export function getItemsInViewportOrMarginByActiveGroup({
     console.log('Final groups to render:', {
       totalGroups: groups.length,
       groupsToRender: groupsToRender.length,
-      groupsToRenderIndices: groupsToRender.map(g => groups.indexOf(g)),
+      groupsToRenderIndices: groupsToRender.map((g) => groups.indexOf(g)),
     });
 
     return groups.map((group) => {

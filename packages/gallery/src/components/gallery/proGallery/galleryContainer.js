@@ -96,7 +96,7 @@ export class GalleryContainer extends React.Component {
         height: this.props.container.height,
         galleryWidth: this.props.container.galleryWidth,
         galleryHeight: this.props.container.galleryHeight,
-      }
+      },
     });
 
     if (this.props.activeIndex > 0) {
@@ -215,7 +215,7 @@ export class GalleryContainer extends React.Component {
         slideshowLoop: nextProps.options.slideshowLoop,
         autoSlideshow: nextProps.options.isAutoSlideshow,
         autoSlideshowInterval: nextProps.options.autoSlideshowInterval,
-      }
+      },
     });
 
     if (!this.currentHoverChangeEvent.galleryId && nextProps.id) {

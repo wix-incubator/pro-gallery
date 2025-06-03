@@ -192,7 +192,7 @@ class SlideshowView extends React.Component {
         slideshowLoop: this.props.options.slideshowLoop,
         autoSlideshowType: this.props.options.autoSlideshowType,
         autoSlideshowInterval: this.props.options.autoSlideshowInterval,
-      }
+      },
     });
 
     const scrollingUpTheGallery = this.props.options.isRTL
