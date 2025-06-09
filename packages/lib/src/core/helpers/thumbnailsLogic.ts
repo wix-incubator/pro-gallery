@@ -96,7 +96,7 @@ function getThumbnailsData({
   const numberOfThumbnails = minNumOfThumbnails % 2 === 1 ? minNumOfThumbnails : minNumOfThumbnails + 1;
   const thumbnailsInEachSide = (numberOfThumbnails - 1) / 2;
 
-  const itemRangeStart = (activeIndexWithOffset % galleryItems.length) - thumbnailsInEachSide;
+  const itemRangeStart = activeIndexWithOffset - thumbnailsInEachSide;
   const itemRangeEnd = itemRangeStart + numberOfThumbnails;
 
   const itemToDisplay = withInfiniteScroll
