@@ -1,5 +1,6 @@
 export class Column {
   constructor(idx, width, left, cubedHeight, infoWidth) {
+    // todo test
     this.idx = idx;
     this.groups = [];
     this.height = 0;
