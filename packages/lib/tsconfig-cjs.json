@@ -19,6 +19,7 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
+    "inlineSources": true,
     "importHelpers": true,
     "esModuleInterop": true,
     "jsx": "react",
