@@ -20,11 +20,11 @@ export function getItemsInViewportOrMarginByActiveGroup({
   activeIndex: number;
 }): { group: any; shouldRender: boolean }[] {
   const {
-    enabled = false,
+    enabled = true,
     forwardItemMargin = 3,
     backwardItemMargin = 3,
-    forwardItemScrollMargin = 10,
-    backwardItemScrollMargin = 10,
+    forwardItemScrollMargin = 4,
+    backwardItemScrollMargin = 4,
   } = virtualizationSettings || {};
 
   const isHorizontal =

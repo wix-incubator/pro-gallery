@@ -21,7 +21,7 @@ class GroupView extends React.Component {
 
   shouldRender() {
     const { items } = this.props;
-    if (!items || !items.length || !items[0] || this.props.shouldRenderEmpty) {
+    if (!items || !items.length || !items[0]) {
       return false;
     }
 
