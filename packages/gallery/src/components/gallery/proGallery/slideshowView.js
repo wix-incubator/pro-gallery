@@ -89,7 +89,8 @@ class SlideshowView extends React.Component {
     }
     return (
       this.isAllItemsLoaded(props) &&
-      this.scrollPositionAtTheAndOfTheGallery(props) >= Math.floor(this.getScrollElementWidth(props))
+      (this.scrollPositionAtTheAndOfTheGallery(props) >= Math.floor(this.getScrollElementWidth(props)) ||
+        this.isLastItemByState())
     );
   }
 
@@ -114,6 +115,13 @@ class SlideshowView extends React.Component {
   isLastItem(props = this.props) {
     const activeIndex = props?.activeIndex ?? this.state.activeIndex;
     return !this.props.options.behaviourParams_gallery_horizontal_loop && activeIndex >= this.props.totalItemsCount - 1;
+  }
+
+  isLastItemByState() {
+    return (
+      !this.props.options.behaviourParams_gallery_horizontal_loop &&
+      this.state.activeIndex >= this.props.totalItemsCount - 1
+    );
   }
 
   //__________________________________Slide show loop functions_____________________________________________
