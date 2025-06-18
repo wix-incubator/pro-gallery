@@ -1025,7 +1025,7 @@ class ItemView extends React.Component {
     const itemAriaHaspopup = this.getItemAriaHaspopup();
     const Element = this.props.elementsOverride?.item || 'div';
     let innerDiv;
-    if (this.props.empty) {
+    if (this.props.type === 'dummy') {
       innerDiv = (
         <Element
           className={this.getItemContainerClass()}
