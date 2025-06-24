@@ -1024,78 +1024,85 @@ class ItemView extends React.Component {
     const itemAriaLabel = this.getItemAriaLabel();
     const itemAriaHaspopup = this.getItemAriaHaspopup();
     const Element = this.props.elementsOverride?.item || 'div';
-    const innerDiv = (
-      <Element
-        className={this.getItemContainerClass()}
-        onContextMenu={(e) => this.onContextMenu(e)}
-        id={cssScrollHelper.getSellectorDomId(this.props)}
-        ref={(e) => (this.itemContainer = e)}
-        onMouseEnter={this.onMouseEnter}
-        onMouseLeave={this.onMouseLeave}
-        onFocus={this.onFocus}
-        onBlur={this.onBlur}
-        data-hash={hash}
-        data-id={photoId}
-        data-idx={idx}
-        data-hook="item-container"
-        key={'item-container-' + id}
-        style={this.getItemContainerStyles()}
-        onKeyUp={this.onContainerKeyUp}
-        onClick={this.onItemWrapperClick}
-        aria-hidden={this.props.activeIndex !== this.props.idx}
-      >
-        <div
-          data-idx={idx}
-          id={'item-action-' + id}
-          className="item-action"
-          ref={(ref) => (this.itemActionRef = ref)}
-          onKeyUp={this.onContainerKeyUp}
-          tabIndex={this.getItemContainerTabIndex()}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          data-hook={'item-action'}
-          {...(itemAriaLabel && { ['aria-label']: itemAriaLabel })}
-          {...(itemAriaRole && { role: itemAriaRole })}
-          {...(itemAriaHaspopup && {
-            ['aria-haspopup']: itemAriaHaspopup ? 'dialog' : '',
-          })}
-        ></div>
+    const innerElementProps = {
+      className: this.getItemContainerClass(),
+      onContextMenu: (e) => this.onContextMenu(e),
+      id: cssScrollHelper.getSellectorDomId(this.props),
+      ref: (e) => (this.itemContainer = e),
+      onMouseEnter: this.onMouseEnter,
+      onMouseLeave: this.onMouseLeave,
+      onFocus: this.onFocus,
+      onBlur: this.onBlur,
+      'data-hash': hash,
+      'data-id': photoId,
+      'data-idx': idx,
+      'data-hook': 'item-container',
+      key: 'item-container-' + id,
+      style: this.getItemContainerStyles(),
+      onKeyUp: this.onContainerKeyUp,
+      onClick: this.onItemWrapperClick,
+      'aria-hidden': this.props.activeIndex !== this.props.idx,
+    };
 
-        {this.getTopInfoElementIfNeeded()}
-        {this.getLeftInfoElementIfNeeded()}
-        <div
-          style={{
-            ...getImageStyle(this.props.options),
-            ...(GALLERY_CONSTS.hasExternalRightPlacement(
-              this.props.options.titlePlacement,
-              this.props.idx
-            ) && {
-              float: 'left',
-            }),
-            ...(GALLERY_CONSTS.hasExternalLeftPlacement(
-              this.props.options.titlePlacement,
-              this.props.idx
-            ) && {
-              float: 'right',
-            }),
-          }}
-        >
-          {!isItemWrapperEmpty && (
-            <div
-              data-hook="item-wrapper"
-              className={this.getItemWrapperClass()}
-              key={'item-wrapper-' + id}
-              id={'item-wrapper-' + id}
-              style={this.getItemWrapperStyles()}
-            >
-              {this.getItemInner()}
-            </div>
-          )}
-        </div>
-        {this.getRightInfoElementIfNeeded()}
-        {this.getBottomInfoElementIfNeeded()}
-      </Element>
-    );
+    let innerDiv;
+    if (this.props.type === 'dummy') {
+      innerDiv = <Element {...innerElementProps} />;
+    } else {
+      innerDiv = (
+        <Element {...innerElementProps}>
+          <div
+            data-idx={idx}
+            id={'item-action-' + id}
+            className="item-action"
+            ref={(ref) => (this.itemActionRef = ref)}
+            onKeyUp={this.onContainerKeyUp}
+            tabIndex={this.getItemContainerTabIndex()}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            data-hook={'item-action'}
+            {...(itemAriaLabel && { ['aria-label']: itemAriaLabel })}
+            {...(itemAriaRole && { role: itemAriaRole })}
+            {...(itemAriaHaspopup && {
+              ['aria-haspopup']: itemAriaHaspopup ? 'dialog' : '',
+            })}
+          ></div>
+
+          {this.getTopInfoElementIfNeeded()}
+          {this.getLeftInfoElementIfNeeded()}
+          <div
+            style={{
+              ...getImageStyle(this.props.options),
+              ...(GALLERY_CONSTS.hasExternalRightPlacement(
+                this.props.options.titlePlacement,
+                this.props.idx
+              ) && {
+                float: 'left',
+              }),
+              ...(GALLERY_CONSTS.hasExternalLeftPlacement(
+                this.props.options.titlePlacement,
+                this.props.idx
+              ) && {
+                float: 'right',
+              }),
+            }}
+          >
+            {!isItemWrapperEmpty && (
+              <div
+                data-hook="item-wrapper"
+                className={this.getItemWrapperClass()}
+                key={'item-wrapper-' + id}
+                id={'item-wrapper-' + id}
+                style={this.getItemWrapperStyles()}
+              >
+                {this.getItemInner()}
+              </div>
+            )}
+          </div>
+          {this.getRightInfoElementIfNeeded()}
+          {this.getBottomInfoElementIfNeeded()}
+        </Element>
+      );
+    }
     const handleKeyDown = (e) => {
       /* Relvenat only for Screen-Reader case:
       Screen-Reader ignores the tabIdex={-1} and therefore stops and focuses on the <a> tag keyDown event,
