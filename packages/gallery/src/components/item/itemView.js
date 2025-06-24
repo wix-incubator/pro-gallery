@@ -1024,50 +1024,32 @@ class ItemView extends React.Component {
     const itemAriaLabel = this.getItemAriaLabel();
     const itemAriaHaspopup = this.getItemAriaHaspopup();
     const Element = this.props.elementsOverride?.item || 'div';
+    const innerElementProps = {
+      className: this.getItemContainerClass(),
+      onContextMenu: (e) => this.onContextMenu(e),
+      id: cssScrollHelper.getSellectorDomId(this.props),
+      ref: (e) => (this.itemContainer = e),
+      onMouseEnter: this.onMouseEnter,
+      onMouseLeave: this.onMouseLeave,
+      onFocus: this.onFocus,
+      onBlur: this.onBlur,
+      'data-hash': hash,
+      'data-id': photoId,
+      'data-idx': idx,
+      'data-hook': 'item-container',
+      key: 'item-container-' + id,
+      style: this.getItemContainerStyles(),
+      onKeyUp: this.onContainerKeyUp,
+      onClick: this.onItemWrapperClick,
+      'aria-hidden': this.props.activeIndex !== this.props.idx,
+    };
+
     let innerDiv;
     if (this.props.type === 'dummy') {
-      innerDiv = (
-        <Element
-          className={this.getItemContainerClass()}
-          onContextMenu={(e) => this.onContextMenu(e)}
-          id={cssScrollHelper.getSellectorDomId(this.props)}
-          ref={(e) => (this.itemContainer = e)}
-          onMouseEnter={this.onMouseEnter}
-          onMouseLeave={this.onMouseLeave}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          data-hash={hash}
-          data-id={photoId}
-          data-idx={idx}
-          data-hook="item-container"
-          key={'item-container-' + id}
-          style={this.getItemContainerStyles()}
-          onKeyUp={this.onContainerKeyUp}
-          onClick={this.onItemWrapperClick}
-          aria-hidden={this.props.activeIndex !== this.props.idx}
-        ></Element>
-      );
+      innerDiv = <Element {...innerElementProps} />;
     } else {
       innerDiv = (
-        <Element
-          className={this.getItemContainerClass()}
-          onContextMenu={(e) => this.onContextMenu(e)}
-          id={cssScrollHelper.getSellectorDomId(this.props)}
-          ref={(e) => (this.itemContainer = e)}
-          onMouseEnter={this.onMouseEnter}
-          onMouseLeave={this.onMouseLeave}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          data-hash={hash}
-          data-id={photoId}
-          data-idx={idx}
-          data-hook="item-container"
-          key={'item-container-' + id}
-          style={this.getItemContainerStyles()}
-          onKeyUp={this.onContainerKeyUp}
-          onClick={this.onItemWrapperClick}
-          aria-hidden={this.props.activeIndex !== this.props.idx}
-        >
+        <Element {...innerElementProps}>
           <div
             data-idx={idx}
             id={'item-action-' + id}
