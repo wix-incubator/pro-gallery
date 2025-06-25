@@ -111,8 +111,8 @@ class SlideshowView extends React.Component {
     return !this.props.options.behaviourParams_gallery_horizontal_loop && this.isScrollEnd();
   }
 
-  isLastItem(props = this.props) {
-    const activeIndex = props?.activeIndex ?? this.state.activeIndex;
+  isLastItem() {
+    const activeIndex = this.state.activeIndex;
     return !this.props.options.behaviourParams_gallery_horizontal_loop && activeIndex >= this.props.totalItemsCount - 1;
   }
 
@@ -1118,7 +1118,7 @@ class SlideshowView extends React.Component {
     const isScrollStart = this.isScrollStart(props);
     const isFirstItem = this.isFirstItem();
     const isScrollEnd = this.isScrollEnd(props);
-    const isLastItem = this.isLastItem(props);
+    const isLastItem = this.isLastItem();
 
     const atStart = isScrollStart || isFirstItem;
     const atEnd = isScrollEnd || isLastItem;
