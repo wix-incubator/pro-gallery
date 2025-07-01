@@ -178,7 +178,7 @@ export function ArrowButton({
     className: arrowsBaseClasses.join(' '),
     onClick: () => setTimeout(nextAction, 0),
     ['aria-label']: `${isNext ? 'Next' : 'Previous'} Item`,
-    tabIndex: '-1',
+    tabIndex: '0',
     key: !isNext ? 'nav-arrow-back' : 'nav-arrow-next',
     ['data-hook']: !isNext ? 'nav-arrow-back' : 'nav-arrow-next',
     style: {
