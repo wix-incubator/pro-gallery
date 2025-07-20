@@ -75,7 +75,7 @@ class Gallery extends React.Component<GalleryProps, GalleryState> {
       customComponents: props.customComponents || {},
     };
     if (calledByConstructor) {
-      // the blueprint will be initiated with the state
+      // the blueprint will be initiated with the state!
     } else {
       this.blueprintsManager.createBlueprint(this.galleryProps).catch((e) => {
         //TODOVER3 check totalItemsCount
