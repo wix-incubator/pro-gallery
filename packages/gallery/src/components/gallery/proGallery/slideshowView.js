@@ -117,7 +117,7 @@ class SlideshowView extends React.Component {
       galleryStructure.galleryItems,
       container,
       isPrerenderMode,
-      props.experimentalFeatures?.bypassPrerenderMode
+      props.experimentalFeatures?.disableVisibleItemsOnPrerenderMode
     ).length;
     return visibleItemsCount >= totalItemsCount;
   }
@@ -650,7 +650,7 @@ class SlideshowView extends React.Component {
       galleryGroups,
       container,
       isPrerenderMode,
-      props.experimentalFeatures?.bypassPrerenderMode
+      props.experimentalFeatures?.disableVisibleItemsOnPrerenderMode
     );
     const galleryWidth =
       this.props.galleryContainerRef?.clientWidth ||

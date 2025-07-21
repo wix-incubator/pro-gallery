@@ -339,13 +339,13 @@ export class GalleryContainer extends React.Component {
     items,
     container,
     isPrerenderMode,
-    bypassPrerenderMode = false
+    disableVisibleItemsOnPrerenderMode = false
   ) {
     const { gotFirstScrollEvent } = this.state;
     const scrollY = this.state?.scrollPosition?.top || 0;
     const { galleryHeight, scrollBase, galleryWidth } = container;
     if (
-      (isPrerenderMode && !bypassPrerenderMode) || // (used to be isSSR, had a hydrate bug, isPrerenderMode is the way to go in terms of hydrate issues)
+      (isPrerenderMode && !disableVisibleItemsOnPrerenderMode) || // (used to be isSSR, had a hydrate bug, isPrerenderMode is the way to go in terms of hydrate issues)
       isSEOMode() ||
       isEditMode() ||
       gotFirstScrollEvent ||

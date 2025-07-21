@@ -34,7 +34,7 @@ export interface GalleryProps {
   virtualizationSettings?: VirtualizationSettings;
   shouldDisableItemFocus?: boolean;
   experimentalFeatures?: {
-    bypassPrerenderMode?: boolean;
+    disableVisibleItemsOnPrerenderMode?: boolean;
   };
 }
 
