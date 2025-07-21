@@ -99,7 +99,7 @@ class SlideshowView extends React.Component {
       galleryStructure.galleryItems,
       container,
       isPrerenderMode,
-      props.experimentalFeatures?.shouldReturnAllItemsInPrerenderMode
+      props.experimentalFeatures?.bypassPrerenderMode
     ).length;
     return visibleItemsCount >= totalItemsCount;
   }
@@ -580,7 +580,7 @@ class SlideshowView extends React.Component {
     const { state, props } = this;
     const { options, virtualizationSettings, getVisibleItems, isPrerenderMode } = props;
     const { activeIndex } = state;
-    const groups = getVisibleItems(galleryGroups, container, isPrerenderMode, true);
+    const groups = getVisibleItems(galleryGroups, container, isPrerenderMode, props.experimentalFeatures?.bypassPrerenderMode);
     const galleryWidth = this.props.galleryContainerRef?.clientWidth || container.galleryWidth || 0;
 
     return getItemsInViewportOrMarginByActiveGroup({

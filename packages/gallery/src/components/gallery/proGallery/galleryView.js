@@ -181,7 +181,7 @@ class GalleryView extends React.Component {
       galleryStructure.galleryItems,
       container,
       this.props.isPrerenderMode,
-      this.props.experimentalFeatures?.shouldReturnAllItemsInPrerenderMode
+      this.props.experimentalFeatures?.bypassPrerenderMode
     );
     const itemsWithVirtualizationData = getItemsInViewportOrMarginByScrollLocation({
       items,
