@@ -1,27 +1,35 @@
 {
   "name": "pro-gallery-monorepo",
-  "version": "1.0.0",
+  "version": "5.0.143",
   "description": "",
-  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "packages/blueprints",
+    "packages/gallery",
+    "packages/layouts",
+    "packages/lib"
+  ],
+  "packageManager": "yarn@4.0.0",
   "scripts": {
-    "postinstall": "lerna bootstrap --force-local --hoist --strict",
-    "lint": "lerna run lint",
-    "lint:fix": "lerna run lint:fix",
-    "build": "lerna run build",
+    "lint": "yarn workspaces foreach --all run lint",
+    "lint:fix": "yarn workspaces foreach --all run lint:fix",
+    "build": "yarn workspaces foreach --all run build",
     "changelog": "sh scripts/changelog-builder.sh > CHANGELOG.md",
-    "start-playground": "cd packages/playground && npm run start",
-    "test:e2e": "start-server-and-test build-all-and-start-playground http-get://localhost:3006 'lerna run test:e2e-all'",
-    "test": "echo 'not running tests from root - runnign it using GitHub actions",
-    "ci:run-playground": "cd packages/playground && npx serve -s build -l 3006 && cd ../..",
-    "ci:test-unit": "lerna run unit",
-    "ci:test-e2e-layouts": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-layouts'",
-    "ci:test-e2e-styleParams": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-styleParams'",
+    "start-playground": "yarn workspace playground start",
+    "test:e2e": "start-server-and-test build-all-and-start-playground http-get://localhost:3006 'yarn workspaces foreach --all run test:e2e-all'",
+    "test": "echo 'not running tests from root - running it using GitHub actions'",
+    "ci:run-playground": "yarn workspace playground exec serve -s build -l 3006",
+    "ci:test-unit": "yarn workspaces foreach --all run unit",
+    "ci:test-e2e-layouts": "start-server-and-test ci:run-playground http-get://localhost:3006 'yarn workspaces foreach --all run test:e2e-layouts'",
+    "ci:test-e2e-styleParams": "start-server-and-test ci:run-playground http-get://localhost:3006 'yarn workspaces foreach --all run test:e2e-styleParams'",
     "lint-staged": "lint-staged",
-    "ci:test-e2e-integration": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-integration'",
-    "build-all-and-start-playground": "npm run start-playground"
+    "ci:test-e2e-integration": "start-server-and-test ci:run-playground http-get://localhost:3006 'yarn workspaces foreach --all run test:e2e-integration'",
+    "build-all-and-start-playground": "yarn start-playground",
+    "publish-packages": "yarn workspaces foreach --all --no-private npm publish --registry=https://registry.npmjs.org",
+    "version-packages": "yarn workspaces foreach --all version patch"
   },
   "overrides": {
-	  "cheerio": "1.0.0-rc.3"
+    "cheerio": "1.0.0-rc.3"
   },
   "husky": {
     "hooks": {
@@ -29,7 +37,7 @@
     }
   },
   "lint-staged": {
-    "packages/**/*.{js,jsx,ts,tsx}": "eslint --fix --"
+    "packages/**/*.{js,jsx,ts,tsx}": "yarn lint:fix"
   },
   "repository": {
     "type": "git",
@@ -45,8 +53,6 @@
     "chalk": "^2.4.2",
     "gh-pages": "2.0.1",
     "husky": "^4.3.0",
-    "lerna": "^4.0.0",
-    "lerna-packages": "0.0.1",
     "lint-staged": "^10.5.2",
     "lodash": "^4.17.21",
     "prettier": "^2.1.2",

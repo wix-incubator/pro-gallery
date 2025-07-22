@@ -1,7 +1,6 @@
 {
-  "private": false,
   "name": "pro-gallery",
-  "version": "5.0.142",
+  "version": "5.0.143",
   "sideEffects": [
     "./src/components/styles/gallery.scss"
   ],
@@ -42,14 +41,14 @@
     "test:e2e-styleParams": "jest --testPathPattern='.*/e2e/styleParams/.*.e2e.spec.js'",
     "test:e2e-integration": "jest --testPathPattern='.*/e2e/integration/.*.e2e.spec.js'",
     "lint": "eslint \"{src,tests}/**/*.{js,jsx,ts,tsx}\"",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "yarn lint -- --fix"
   },
   "dependencies": {
     "@vimeo/player": "2.8.2",
     "hls.js": "1.4.12",
-    "pro-gallery-blueprints": "5.0.139",
-    "pro-gallery-lib": "5.0.139",
-    "pro-layouts": "5.0.139",
+    "pro-gallery-blueprints": "5.0.143",
+    "pro-gallery-lib": "5.0.143",
+    "pro-layouts": "5.0.143",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-player": "2.11.0",

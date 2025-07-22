@@ -25,11 +25,10 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        cache: 'yarn'
     
-    - run: npm install
-    - run: git checkout -- package-lock.json
-    - run: npm run lint
+    - run: yarn install --immutable
+    - run: yarn lint
   tests:
     runs-on: ubuntu-latest
     strategy:
@@ -43,11 +42,10 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm install
-    - run: git checkout -- package-lock.json
-    - run: npm run build
-    - run: npm run ${{ matrix.test-script }}
+        cache: 'yarn'
+    - run: yarn install --immutable
+    - run: yarn build
+    - run: yarn ${{ matrix.test-script }}
       env:
         SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
         SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
@@ -65,15 +63,14 @@ jobs:
       with:
         token: ${{ secrets.PAT_TOKEN }}
         fetch-depth: 0
-    - name: Install, build, configure git and lerna publish
+    - name: Install, build, configure git and publish
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        cache: 'yarn'
         registry-url: 'https://registry.npmjs.org'
-    - run: npm install
-    - run: git checkout -- package-lock.json
-    - run: npm run build --if-present
+    - run: yarn install --immutable
+    - run: yarn build
     - run: git config --global user.email "octocat@github.com"
     - run: git config --global user.name "GitHub Actions"
     - run: git remote set-url origin https://wix@github.com/wix/pro-gallery
@@ -88,15 +85,16 @@ jobs:
       # run: echo "this is a push to master"
       run: |
         git checkout ${{ github.ref_name }}
-        lerna publish patch --exact  --yes  --dist-tag stable --registry https://registry.npmjs.org
-        npm run changelog
+        yarn version-packages
+        yarn publish-packages
+        yarn changelog
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
     - name: Push to pull request
       if: github.event_name == 'pull_request' && github.actor != 'dependabot' 
       # run: echo "PULL REQUEST PUSH"
-      run: lerna publish --canary --preid ${{ github.sha }} --yes --registry https://registry.npmjs.org
+      run: yarn workspaces foreach --no-private npm publish --tag canary-${{ github.sha }} --registry https://registry.npmjs.org
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
@@ -113,11 +111,10 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        cache: 'yarn'
         registry-url: 'https://registry.npmjs.org'
-    - run: npm install
-    - run: git checkout -- package-lock.json
-    - run: npm run build --if-present
+    - run: yarn install --immutable
+    - run: yarn build
     - run: node scripts/deployToSurge
       env:
         SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}

@@ -35,7 +35,7 @@ class DiffsReporter {
         });
         const reportPath = path.resolve(process.cwd(), 'jest-stare');
         console.log(`Will publish test report on failues to:${domain}`);
-        exec(`npx surge --project ${reportPath} --domain ${domain}`);
+        exec(`yarn dlx surge --project ${reportPath} --domain ${domain}`);
         console.log(`publish report successfully. Click here: ${domain}`);
       } catch (error) {
         console.error('Error publishing reporter: ', error);
