@@ -666,12 +666,20 @@ export class GalleryContainer extends React.Component {
   createDynamicStyles({ overlayBackground }, isPrerenderMode) {
     const useSSROpacity =
       isPrerenderMode && !this.props.settings.disableSSROpacity;
+
+    let prerenderSelectors = `#pro-gallery-${this.props.id} .gallery-item-container`;
+
+    // Add thumbnails selector if thumbnails are enabled
+    if (
+      this.props.options?.hasThumbnails &&
+      this.props.options?.scrollDirection ===
+        GALLERY_CONSTS.scrollDirection.HORIZONTAL
+    ) {
+      prerenderSelectors += `, #pro-gallery-${this.props.id} .thumbnails-gallery`;
+    }
+
     this.dynamicStyles = `
-      ${
-        !useSSROpacity
-          ? ''
-          : `#pro-gallery-${this.props.id} .gallery-item-container { opacity: 0 }`
-      }
+      ${!useSSROpacity ? '' : `${prerenderSelectors} { opacity: 0 }`}
       ${
         !overlayBackground
           ? ''
