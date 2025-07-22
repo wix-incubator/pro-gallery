@@ -48,7 +48,8 @@
   },
   "dependencies": {
     "pro-gallery-lib": "5.0.143",
-    "pro-layouts": "5.0.143"
+    "pro-layouts": "5.0.143",
+    "tsx": "^4.19.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
