@@ -13555,10 +13555,12 @@ const RAW_RUNTIME_STATE =
           ["jest-environment-jsdom", "virtual:77be1ff4c25991417821d96b53128daad9ac5dc50d7dbb54ae28df805f9bf069941056238fdf12f51f4c798bf79c7c0c2c815cf73b7c60178f355360eac3999e#npm:29.7.0"],\
           ["jest-image-snapshot", "virtual:77be1ff4c25991417821d96b53128daad9ac5dc50d7dbb54ae28df805f9bf069941056238fdf12f51f4c798bf79c7c0c2c815cf73b7c60178f355360eac3999e#npm:6.5.1"],\
           ["jest-stare", "npm:2.2.0"],\
+          ["jest-util", "npm:29.7.0"],\
           ["prettier", "npm:2.8.8"],\
           ["pro-gallery-blueprints", "workspace:packages/blueprints"],\
           ["pro-gallery-lib", "virtual:b9ae56a77741856fce57921d8544101e519629c8887104c1162a16e9dd93194cc9044f709b0c8f2c8cd57dcfa7d4c96a2611bd2cc9a1e385cbaf4b7b792ce73d#workspace:packages/lib"],\
           ["pro-layouts", "workspace:packages/layouts"],\
+          ["prop-types", "npm:15.8.1"],\
           ["puppeteer", "npm:1.20.0"],\
           ["react", "npm:18.3.1"],\
           ["react-dom", "virtual:77be1ff4c25991417821d96b53128daad9ac5dc50d7dbb54ae28df805f9bf069941056238fdf12f51f4c798bf79c7c0c2c815cf73b7c60178f355360eac3999e#npm:18.3.1"],\
@@ -16008,7 +16010,7 @@ const RAW_RUNTIME_STATE =
           ["esbuild", null],\
           ["fast-json-stable-stringify", "npm:2.1.0"],\
           ["jest", "virtual:77be1ff4c25991417821d96b53128daad9ac5dc50d7dbb54ae28df805f9bf069941056238fdf12f51f4c798bf79c7c0c2c815cf73b7c60178f355360eac3999e#npm:29.7.0"],\
-          ["jest-util", null],\
+          ["jest-util", "npm:29.7.0"],\
           ["json5", "npm:2.2.3"],\
           ["lodash.memoize", "npm:4.1.2"],\
           ["make-error", "npm:1.3.6"],\

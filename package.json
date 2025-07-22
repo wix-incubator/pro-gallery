@@ -27,7 +27,7 @@
     "build-all-and-start-playground": "yarn start-playground"
   },
   "overrides": {
-    "cheerio": "1.0.0-rc.3"
+    "cheerio": "1.0.0-rc.12"
   },
   "lint-staged": {
     "packages/**/*.{js,jsx,ts,tsx}": "yarn workspaces foreach --all run lint:fix"
