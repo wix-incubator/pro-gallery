@@ -31,13 +31,8 @@
   "overrides": {
     "cheerio": "1.0.0-rc.3"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
-    "packages/**/*.{js,jsx,ts,tsx}": "yarn lint:fix"
+    "packages/**/*.{js,jsx,ts,tsx}": "yarn workspaces foreach --all run lint:fix"
   },
   "repository": {
     "type": "git",
