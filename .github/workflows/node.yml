@@ -5,9 +5,9 @@ name: Test
 
 on:
   push:
-    branches: [ master, V4_Final ]
+    branches: [ master, V4_Final, move_to_yarn ]
   pull_request:
-    branches: [ master, V4_Final ]
+    branches: [ master, V4_Final, move_to_yarn ]
 permissions:
   contents: write
   pull-requests: write
