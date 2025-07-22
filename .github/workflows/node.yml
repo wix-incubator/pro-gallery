@@ -27,6 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
     
+    - run: corepack enable
     - run: yarn install --immutable
     - run: yarn lint
   tests:
@@ -43,6 +44,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
+    - run: corepack enable
     - run: yarn install --immutable
     - run: yarn build
     - run: yarn ${{ matrix.test-script }}
@@ -69,6 +71,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
         registry-url: 'https://registry.npmjs.org'
+    - run: corepack enable
     - run: yarn install --immutable
     - run: yarn build
     - run: git config --global user.email "octocat@github.com"
@@ -115,6 +118,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
         registry-url: 'https://registry.npmjs.org'
+    - run: corepack enable
     - run: yarn install --immutable
     - run: yarn build
     - run: node scripts/deployToSurge
