@@ -208,3 +208,6 @@ The result is an object containing the processed styles, items,container and str
 With the code that calculates the blueprint split from the rendering components we can create the blueprint for the gallery wherever we want and only import the rendering code (smaller) in the main thread. The blueprint itself can be calculated in a web worker or even in a server.
 
 To learn how to use the Blueprints and the BlueprintsManager go to the [pro-gallery-lib readme](https://github.com/wix/pro-gallery/tree/master/packages/lib).
+
+```
+<!-- Trigger CI build -->
