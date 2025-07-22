@@ -85,8 +85,8 @@ jobs:
       # run: echo "this is a push to master"
       run: |
         git checkout ${{ github.ref_name }}
-        yarn version-packages
-        yarn publish-packages
+        yarn workspaces foreach --all version patch
+        yarn workspaces foreach --all --no-private npm publish --registry https://registry.npmjs.org
         yarn changelog
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -94,7 +94,9 @@ jobs:
     - name: Push to pull request
       if: github.event_name == 'pull_request' && github.actor != 'dependabot' 
       # run: echo "PULL REQUEST PUSH"
-      run: yarn workspaces foreach --no-private npm publish --tag canary-${{ github.sha }} --registry https://registry.npmjs.org
+      run: |
+        CANARY_TAG="canary-$(echo ${{ github.sha }} | cut -c1-8)"
+        yarn workspaces foreach --all --no-private npm publish --tag $CANARY_TAG --registry https://registry.npmjs.org
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
