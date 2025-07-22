@@ -2367,6 +2367,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@firebase/app@npm:^0.7.33":
+  version: 0.7.33
+  resolution: "@firebase/app@npm:0.7.33"
+  dependencies:
+    "@firebase/component": "npm:0.5.17"
+    "@firebase/logger": "npm:0.3.3"
+    "@firebase/util": "npm:1.6.3"
+    idb: "npm:7.0.1"
+    tslib: "npm:^2.1.0"
+  checksum: d7eead17b2da45a62168d3c71542bff8a5f44418a03dab207d284119165b5a845d10d0058cfd174aadf70f4f7111eb090ec19379f36666dd770a04fcc620cefd
+  languageName: node
+  linkType: hard
+
 "@firebase/auth-interop-types@npm:0.1.6":
   version: 0.1.6
   resolution: "@firebase/auth-interop-types@npm:0.1.6"
@@ -2395,6 +2408,16 @@ __metadata:
   peerDependencies:
     "@firebase/app": 0.x
   checksum: 20b205d7f8d6965529d4503b9a12f625ed2ce63e0caa02fee4330cf08f7cf0e2a4f81f1f9cd9c41a762bea906298523d5945ed4ba17c178704dc5709404c32d6
+  languageName: node
+  linkType: hard
+
+"@firebase/component@npm:0.5.17":
+  version: 0.5.17
+  resolution: "@firebase/component@npm:0.5.17"
+  dependencies:
+    "@firebase/util": "npm:1.6.3"
+    tslib: "npm:^2.1.0"
+  checksum: 8d5b55d458bab5d9ddf84e370226b4470a6b34184328e42898d9aa8dd2cdf1c1cd7b2bb57c809d21cce1bfed964e8691d3ef2c48bb931af17445ccc1cf8d100f
   languageName: node
   linkType: hard
 
@@ -2518,6 +2541,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@firebase/logger@npm:0.3.3":
+  version: 0.3.3
+  resolution: "@firebase/logger@npm:0.3.3"
+  dependencies:
+    tslib: "npm:^2.1.0"
+  checksum: 049662ba252f749517358468e70bf353a98d487793d3e3b1f0ad5e7e38064b7109b6251652d54875855a6b74b8cbe45c6fec23cb853c02216e08f8796fa4d060
+  languageName: node
+  linkType: hard
+
 "@firebase/messaging-types@npm:0.5.0":
   version: 0.5.0
   resolution: "@firebase/messaging-types@npm:0.5.0"
@@ -2635,6 +2667,15 @@ __metadata:
   dependencies:
     tslib: "npm:^2.1.0"
   checksum: cf5c02698d27f9087d113c176c0f47cbeab591b2e71fa2c3f7a2ed7a72c073b24f3f6c4f6d6f357ff48d019c3628bb21c25aa7a5375d57334d6d4c644476a748
+  languageName: node
+  linkType: hard
+
+"@firebase/util@npm:1.6.3":
+  version: 1.6.3
+  resolution: "@firebase/util@npm:1.6.3"
+  dependencies:
+    tslib: "npm:^2.1.0"
+  checksum: fc9fce2bb78b2f857a26fc80b8a704c2613ff488fa4b34bb6e90ad0dad569405ae71df42f70b148f3ee5077e86c6234d8fd15c17682fda62ff95b1664745cc7f
   languageName: node
   linkType: hard
 
@@ -11475,6 +11516,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"idb@npm:7.0.1":
+  version: 7.0.1
+  resolution: "idb@npm:7.0.1"
+  checksum: 240f63358faefb1039a23e9af787005b7d6995f5e2ff4b8eab123a3052889b73483164e35bde1e8e6e04205b481bf1541f9330e91490a4b172608a87d229d742
+  languageName: node
+  linkType: hard
+
 "ieee754@npm:^1.1.4":
   version: 1.2.1
   resolution: "ieee754@npm:1.2.1"
@@ -15852,9 +15900,12 @@ __metadata:
     "@ant-design/colors": "npm:^6.0.0"
     "@ant-design/icons": "npm:^4.7.0"
     "@babel/core": "npm:7.22.0"
+    "@firebase/app": "npm:^0.7.33"
     "@svgr/webpack": "npm:^4.3.2"
     "@types/react": "npm:^18.2.0"
     "@types/react-dom": "npm:^18.2.0"
+    "@typescript-eslint/eslint-plugin": "npm:6.12.0"
+    "@typescript-eslint/parser": "npm:6.12.0"
     antd: "npm:^4.19.1"
     babel-eslint: "npm:^10.1.0"
     babel-jest: "npm:^29.6.2"
@@ -15866,9 +15917,11 @@ __metadata:
     css-loader: "npm:^2.1.1"
     deep-equal: "npm:^2.2.3"
     eslint: "npm:8.54.0"
+    eslint-config-prettier: "npm:^6.15.0"
     eslint-config-react-app: "npm:7.0.1"
     eslint-plugin-import: "npm:2.29.0"
     eslint-plugin-jsx-a11y: "npm:6.8.0"
+    eslint-plugin-prettier: "npm:^3.1.4"
     eslint-plugin-react: "npm:7.33.2"
     eslint-plugin-react-hooks: "npm:4.6.0"
     file-loader: "npm:^4.1.0"
@@ -15891,6 +15944,7 @@ __metadata:
     postcss-normalize: "npm:^8.0.1"
     postcss-preset-env: "npm:^6.7.0"
     postcss-safe-parser: "npm:^4.0.1"
+    prettier: "npm:^2.1.2"
     pro-gallery: "workspace:*"
     pro-gallery-blueprints: "workspace:*"
     pro-gallery-lib: "workspace:*"
@@ -15907,6 +15961,7 @@ __metadata:
     sass-loader: "npm:10.2.0 "
     style-loader: "npm:^1.0.0"
     terser-webpack-plugin: "npm:^1.4.5"
+    typescript: "npm:^4.9.5"
     url-loader: "npm:^2.1.0"
     webpack: "npm:^4.38.0"
     webpack-dev-server: "npm:^3.7.2"
