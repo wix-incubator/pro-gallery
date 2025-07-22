@@ -88,7 +88,10 @@ jobs:
       # run: echo "this is a push to master"
       run: |
         git checkout ${{ github.ref_name }}
-        yarn workspaces foreach --all version patch
+        cd packages/blueprints && yarn version patch && cd ../..
+        cd packages/gallery && yarn version patch && cd ../..
+        cd packages/layouts && yarn version patch && cd ../..
+        cd packages/lib && yarn version patch && cd ../..
         yarn workspaces foreach --all --no-private npm publish --registry https://registry.npmjs.org
         yarn changelog
       env:
