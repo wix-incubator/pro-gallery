@@ -49,7 +49,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "pro-gallery-lib": "5.0.143",
+    "pro-gallery-lib": "workspace:*",
     "tsx": "^4.19.2"
   }
 }

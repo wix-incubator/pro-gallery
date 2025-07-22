@@ -4,10 +4,7 @@
   "description": "",
   "private": true,
   "workspaces": [
-    "packages/blueprints",
-    "packages/gallery",
-    "packages/layouts",
-    "packages/lib"
+    "packages/*"
   ],
   "packageManager": "yarn@4.0.0",
   "scripts": {

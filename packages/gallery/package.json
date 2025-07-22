@@ -46,9 +46,9 @@
   "dependencies": {
     "@vimeo/player": "2.8.2",
     "hls.js": "1.4.12",
-    "pro-gallery-blueprints": "5.0.143",
-    "pro-gallery-lib": "5.0.143",
-    "pro-layouts": "5.0.143",
+    "pro-gallery-blueprints": "workspace:*",
+    "pro-gallery-lib": "workspace:*",
+    "pro-layouts": "workspace:*",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
