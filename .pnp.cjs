@@ -22364,6 +22364,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./packages/playground/",\
         "packageDependencies": [\
           ["playground", "workspace:packages/playground"],\
+          ["@ant-design/colors", "npm:6.0.0"],\
           ["@ant-design/icons", "virtual:3278bc467a2d902a7833b1f93555bcf06f263fe4986a6732b80daef29f6b1c5223fedf320e15e28029af60609a083e279633f97ce257799a5d2541be66afda81#npm:4.8.3"],\
           ["@babel/core", "npm:7.22.0"],\
           ["@svgr/webpack", "npm:4.3.3"],\
@@ -22378,6 +22379,7 @@ const RAW_RUNTIME_STATE =
           ["case-sensitive-paths-webpack-plugin", "npm:2.4.0"],\
           ["css-animation", "npm:1.5.0"],\
           ["css-loader", "virtual:3278bc467a2d902a7833b1f93555bcf06f263fe4986a6732b80daef29f6b1c5223fedf320e15e28029af60609a083e279633f97ce257799a5d2541be66afda81#npm:2.1.1"],\
+          ["deep-equal", "npm:2.2.3"],\
           ["eslint", "npm:8.54.0"],\
           ["eslint-config-react-app", "virtual:3278bc467a2d902a7833b1f93555bcf06f263fe4986a6732b80daef29f6b1c5223fedf320e15e28029af60609a083e279633f97ce257799a5d2541be66afda81#npm:7.0.1"],\
           ["eslint-plugin-import", "virtual:3278bc467a2d902a7833b1f93555bcf06f263fe4986a6732b80daef29f6b1c5223fedf320e15e28029af60609a083e279633f97ce257799a5d2541be66afda81#npm:2.29.0"],\

@@ -10,7 +10,7 @@
   "scripts": {
     "lint": "yarn workspaces foreach --all run lint",
     "lint:fix": "yarn workspaces foreach --all run lint:fix",
-    "build": "yarn workspaces foreach --all run build",
+    "build": "yarn workspaces foreach --exclude playground --all run build",
     "changelog": "sh scripts/changelog-builder.sh > CHANGELOG.md",
     "start-playground": "yarn workspace playground start",
     "test:e2e": "start-server-and-test build-all-and-start-playground http-get://localhost:3006 'yarn workspaces foreach --all run test:e2e-all'",

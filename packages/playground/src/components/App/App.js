@@ -25,7 +25,7 @@ import { optionsMap, utils } from 'pro-gallery-lib';
 import { Resizable } from 're-resizable';
 import PlaygroundCustomPlayButton from '../UI/playgroundCustomPlayButton.tsx';
 import PlaygroundCustomRotateArrow from '../UI/playgroundCustomRotateArrow.tsx';
-import 'pro-gallery/dist/statics/main.css';
+import './gallery.css';
 import s from './App.module.scss';
 
 // //dummy commit
