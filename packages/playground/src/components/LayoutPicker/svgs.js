@@ -14,6 +14,8 @@ import { ReactComponent as Panorama } from '../../assets/layouts/panorama-reg.sv
 import { ReactComponent as PanoramaSel } from '../../assets/layouts/panorama-sel.svg';
 import { ReactComponent as Column } from '../../assets/layouts/columns-reg.svg';
 import { ReactComponent as ColumnSel } from '../../assets/layouts/columns-sel.svg';
+import { ReactComponent as Flex } from '../../assets/layouts/flex-reg.svg';
+import { ReactComponent as FlexSel } from '../../assets/layouts/flex-sel.svg';
 
 // import {ReactComponent as Bricks} from '../../assets/layouts/bricks-reg.svg';
 // import {ReactComponent as BricksSel} from '../../assets/layouts/bricks-sel.svg';
@@ -58,5 +60,10 @@ export const svgs = {
     reg: Column,
     sel: ColumnSel,
     key: 7,
+  },
+  flex: {
+    reg: Flex,
+    sel: FlexSel,
+    key: 13,  // FLEX layout constant
   },
 };
