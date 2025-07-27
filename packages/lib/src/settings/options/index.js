@@ -108,6 +108,7 @@ import layoutParams_structure_scatter_manualScatter from './layoutParams_structu
 import layoutParams_structure_scatter_randomScatter from './layoutParams_structure_scatter_randomScatter.js';
 
 import layoutParams_structure_scrollDirection from './layoutParams_structure_scrollDirection.js';
+import layoutParams_structure_uniformDimensions from './layoutParams_structure_uniformDimensions.js';
 
 import layoutParams_targetItemSize_minimum from './layoutParams_targetItemSize_minimum.js';
 import layoutParams_targetItemSize_unit from './layoutParams_targetItemSize_unit.js';
@@ -250,6 +251,7 @@ export default {
   layoutParams_structure_scatter_randomScatter,
 
   layoutParams_structure_scrollDirection,
+  layoutParams_structure_uniformDimensions,
 
   layoutParams_targetItemSize_minimum,
   layoutParams_targetItemSize_unit,

@@ -375,7 +375,11 @@ export default class Layouter {
 
         if (this.strip.isFull(this.group, this.isLastImage)) {
           //close the current strip
-          this.strip.resizeToHeight(this.galleryWidth / this.strip.ratio);
+          if (this.styleParams[optionsMap.layoutParams.structure.uniformDimensions]) {
+            this.strip.resizeToHeight(this.targetItemSize);  // Fixed height for flex
+          } else {
+            this.strip.resizeToHeight(this.galleryWidth / this.strip.ratio);  // Current behavior
+          }
           this.strip.setWidth(this.galleryWidth);
           this.galleryHeight += this.strip.height;
           this.columns[0].addGroups(this.strip.groups);
@@ -416,8 +420,13 @@ export default class Layouter {
             this.strip.markAsIncomplete();
           }
 
-          this.strip.resizeToHeight(this.strip.height);
-          this.galleryHeight += this.strip.height;
+          if (this.styleParams[optionsMap.layoutParams.structure.uniformDimensions]) {
+            this.strip.resizeToHeight(this.targetItemSize);  // Fixed height for flex
+            this.galleryHeight += this.targetItemSize;
+          } else {
+            this.strip.resizeToHeight(this.strip.height);    // Current behavior
+            this.galleryHeight += this.strip.height;
+          }
           this.columns[0].addGroups(this.strip.groups);
           this.strips.push(this.strip);
         }
@@ -433,6 +442,10 @@ export default class Layouter {
         //resize the group and images
         this.group.setCubedHeight(minCol.cubedHeight); //fix last column's items ratio (caused by stretching it to fill the screen)
         this.group.resizeToWidth(minCol.width);
+        if (this.styleParams[optionsMap.layoutParams.structure.uniformDimensions]) {
+          // Force uniform height for flex vertical layout
+          this.group.resizeToHeight(this.targetItemSize);
+        }
         this.group.round();
 
         //update the group's position

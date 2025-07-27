@@ -29,6 +29,7 @@ const defaultOptions = flattenObject({
       numberOfGridRows: 1,
       numberOfColumns: 3,
       columnRatios: [],
+      uniformDimensions: false,
     },
 
     groups: {

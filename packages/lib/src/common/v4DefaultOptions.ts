@@ -28,6 +28,7 @@ const defaultV4Options = {
       numberOfGridRows: 1,
       numberOfColumns: 3,
       columnRatios: [],
+      uniformDimensions: false,
     },
 
     groups: {
