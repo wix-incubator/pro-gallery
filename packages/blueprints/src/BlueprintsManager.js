@@ -177,7 +177,7 @@ export default class BlueprintsManager {
     // If we've reached last items (no more items in server), and there are less items than the threshold
     const numOfItemsCondition = items.length < loopThreshold && items.length === totalItemsCount;
     // If the gallery is a horizontal scrolling gallery
-    const isHorizontalScrolling = options[optionsMap.layoutParams.structure.scrollDirection] === GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].HORIZONTAL;
+    const isHorizontalScrolling = options[optionsMap.layoutParams.structure.scrollDirection] === GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL;
     // If slideshowLoop is True and both conditions are True as well then we duplicate number of items to reach threshold
     if (options[optionsMap.behaviourParams.gallery.horizontal.loop] && numOfItemsCondition && isHorizontalScrolling){
       const duplicateFactor = Math.ceil(loopThreshold / items.length) - 1;
