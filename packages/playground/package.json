@@ -11,8 +11,8 @@
     "test:cjs": "node scripts/test-progallery.cjs",
     "test": "echo 'no test in wix CI'",
     "deploy": "node scripts/build.js",
-    "lint": "eslint src/**/*.js",
-    "lint:fix": "npm run lint -- --fix",
+    "lint": "cross-env NODE_ENV=production eslint src/**/*.js",
+    "lint:fix": "cross-env NODE_ENV=production npm run lint -- --fix",
     "start-playground": "node scripts/start.js"
   },
   "dependencies": {
@@ -44,6 +44,7 @@
     "babel-plugin-named-asset-import": "^0.3.2",
     "babel-preset-react-app": "^9.0.0",
     "case-sensitive-paths-webpack-plugin": "^2.2.0",
+    "cross-env": "^10.0.0",
     "css-loader": "^2.1.1",
     "eslint": "8.54.0",
     "eslint-config-react-app": "7.0.1",
@@ -133,11 +134,6 @@
     "watchPlugins": [
       "jest-watch-typeahead/filename",
       "jest-watch-typeahead/testname"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
     ]
   },
   "homepage": "https://pro-gallery.surge.sh/"
