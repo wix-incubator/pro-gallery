@@ -1,0 +1,45 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": ""
+      }
+    }
+  },
+  "github": {
+    "repository": "wix/pro-gallery",
+    "defaultBranch": "master",
+    "features": {
+      "issues": {
+        "enabled": true,
+        "permissions": ["read", "write"]
+      },
+      "pullRequests": {
+        "enabled": true,
+        "permissions": ["read", "write"]
+      },
+      "repository": {
+        "enabled": true,
+        "permissions": ["read"]
+      },
+      "commits": {
+        "enabled": true,
+        "permissions": ["read"]
+      },
+      "branches": {
+        "enabled": true,
+        "permissions": ["read", "write"]
+      },
+      "releases": {
+        "enabled": true,
+        "permissions": ["read", "write"]
+      },
+      "actions": {
+        "enabled": true,
+        "permissions": ["read"]
+      }
+    }
+  }
+} 

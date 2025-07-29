@@ -52,7 +52,7 @@ const generateSubdomains = subdomain => {
 };
 
 function build() {
-  const buildCommand = 'npm run build';
+  const buildCommand = 'yarn build';
   console.log(chalk.magenta(`Running: "${buildCommand}"`));
   exec(buildCommand);
 }
@@ -72,7 +72,7 @@ function shouldPublishVersionSpecific(commit) {
 function deploy(name) {
   console.log(chalk.cyan(`Deploying ${name} to surge...`));
   const subdomains = generateSubdomains(name).map(subdomain => toSurgeUrl(subdomain));
-  let deployCommand = subdomains.map(subdomain => `npx surge build ${subdomain}`).join(' && ');
+  let deployCommand = subdomains.map(subdomain => `yarn dlx surge build ${subdomain}`).join(' && ');
   console.log(chalk.magenta(`Deployed URLs: \n${subdomains.map(sd => 'https://' + sd).join('\n')}`));
 
   try {

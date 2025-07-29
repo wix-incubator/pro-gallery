@@ -59,7 +59,7 @@ typings/
 .yarn-integrity
 
 # Lock files
-yarn.lock
+# yarn.lock - now tracked for Yarn 4 migration
 
 # Server output
 maven

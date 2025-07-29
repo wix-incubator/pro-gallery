@@ -1,7 +1,6 @@
 {
   "name": "pro-gallery-blueprints",
-  "version": "5.0.139",
-  "private": false,
+  "version": "5.0.143",
   "author": {
     "name": "Nir Naor",
     "email": "nirna@wix.com"
@@ -24,7 +23,7 @@
     "unit": "NODE_OPTIONS=\"--import=tsx\" mocha test/*.spec.*",
     "test": "echo 'no test in wix CI'",
     "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "yarn lint -- --fix"
   },
   "exports": {
     ".": {
@@ -48,8 +47,9 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "pro-gallery-lib": "5.0.139",
-    "pro-layouts": "5.0.139"
+    "pro-gallery-lib": "workspace:*",
+    "pro-layouts": "workspace:*",
+    "tsx": "^4.19.2"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
