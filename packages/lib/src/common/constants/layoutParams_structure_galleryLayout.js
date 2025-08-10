@@ -17,6 +17,7 @@ const LAYOUTS = {
   BRICKS: 10,
   MIX: 11,
   ALTERNATE: 12,
+  FLEX: 13,
 };
 
 const isLayout = (layoutName) => (options) => {

@@ -47,6 +47,7 @@ export const optionsBySection = {
     optionsMap.layoutParams.structure.galleryRatio.includeExternalInfo,
     optionsMap.layoutParams.thumbnails.enable,
     optionsMap.layoutParams.structure.layoutOrientation,
+    optionsMap.layoutParams.structure.uniformDimensions,
     optionsMap.behaviourParams.gallery.layoutDirection,
     optionsMap.layoutParams.structure.itemSpacing,
 

@@ -51,6 +51,7 @@ function reverseMigrateOptions(flatOptionsObject) {
   oldOptions = process_new_to_old_gallerySpacing(oldOptions);
   oldOptions = process_new_to_old_slideshowInfoSize(oldOptions);
   oldOptions = process_new_to_old_arrowsPosition(oldOptions);
+  oldOptions = process_new_to_old_uniformDimensions(oldOptions);
   ///----------- BEHAVIOUR -------------///
   oldOptions = changeNames(
     oldOptions,
@@ -456,6 +457,13 @@ function process_new_to_old_NumberOfColumns(obj) {
   let _obj = obj;
   _obj.numberOfImagesPerRow = _obj[optionsMap.layoutParams.structure.numberOfColumns];
   delete _obj[optionsMap.layoutParams.structure.numberOfColumns];
+  return _obj;
+}
+
+function process_new_to_old_uniformDimensions(obj) {
+  let _obj = obj;
+  // uniformDimensions is a new v4 option that doesn't exist in v3, so delete it
+  delete _obj[optionsMap.layoutParams.structure.uniformDimensions];
   return _obj;
 }
 

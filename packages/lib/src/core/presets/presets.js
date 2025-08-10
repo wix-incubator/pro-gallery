@@ -23,6 +23,7 @@ import { fixedOptions as slideshow, createOptions as slideshowOptions } from './
 import { fixedOptions as thumbnails, createOptions as thumbnailsOptions } from './thumbnailsGallery.js';
 
 import { fixedOptions as empty, createOptions as emptyOptions } from './emptyGallery.js';
+import { fixedOptions as flex, createOptions as flexOptions } from './flexGallery.js';
 import { createOptions as jsonFixedOptions } from './designedPresetGallery.js';
 
 import optionsMap from '../helpers/optionsMap.js';
@@ -63,6 +64,8 @@ const addPresetOptions = (options) => {
       return emptyOptions(options);
     case LAYOUTS.JSON_FIXED:
       return jsonFixedOptions(options);
+    case LAYOUTS.FLEX:
+      return flexOptions(options);
     case LAYOUTS.COLLAGE:
     default:
       return collageOptions(options);
@@ -83,6 +86,7 @@ const NEW_PRESETS = {
   slideshow,
   thumbnails,
   empty,
+  flex,
 };
 
 const getLayoutName = (galleryLayout) => {
@@ -101,6 +105,7 @@ const getLayoutName = (galleryLayout) => {
     'bricks', // 10
     'mix', // 11,
     'alternate', // 12
+    'flex', // 13
   ];
   return galleyLayoutList[galleryLayout + 1];
 };

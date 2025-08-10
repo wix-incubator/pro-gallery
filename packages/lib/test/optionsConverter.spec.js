@@ -175,5 +175,9 @@ function defaultOptions_old() {
 }
 
 function defaultOptions_new() {
-  return v4DefaultOptions;
+  const newDefaults = { ...v4DefaultOptions };
+  // Remove v4-only options that shouldn't be added during v3->v4 migration
+  // These will be populated by the defaults system instead
+  delete newDefaults.layoutParams.structure.uniformDimensions;
+  return newDefaults;
 }
