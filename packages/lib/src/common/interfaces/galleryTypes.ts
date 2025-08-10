@@ -33,9 +33,7 @@ export interface GalleryProps {
   enableExperimentalFeatures?: boolean;
   virtualizationSettings?: VirtualizationSettings;
   shouldDisableItemFocus?: boolean;
-  experimentalFeatures?: {
-    disableVisibleItemsOnPrerenderMode?: boolean;
-  };
+  experimentalFeatures?: {};
 }
 
 export interface GalleryState {
