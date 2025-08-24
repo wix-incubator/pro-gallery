@@ -29,7 +29,7 @@ import 'pro-gallery/dist/statics/main.css';
 import s from './App.module.scss';
 
 // //dummy commit
-const SideBar = React.lazy(() => import('../SideBar'));
+const SideBar = React.lazy(() => import('../SideBar')); // todo test
 
 const pJson = require('../../../package.json');
 
