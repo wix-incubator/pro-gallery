@@ -170,6 +170,15 @@ export class GalleryContainer extends React.Component {
     if (this.props.id) {
       this.currentHoverChangeEvent.galleryId = this.props.id;
     }
+
+    this.startDOMReadyCheck();
+  }
+
+  componentWillUnmount() {
+    if (this.domReadyInterval) {
+      clearInterval(this.domReadyInterval);
+      this.domReadyInterval = null;
+    }
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -555,10 +564,45 @@ export class GalleryContainer extends React.Component {
     }
   }
 
+  startDOMReadyCheck = () => {
+    let attempts = 0;
+    const maxAttempts = 50;
+    this.domReadyInterval = setInterval(() => {
+      attempts++;
+      if (this.galleryContainerRef) {
+        const rect = this.galleryContainerRef.getBoundingClientRect();
+        const hasValidDimensions = rect.width > 0 && rect.height > 0;
+        const hasValidPosition = rect.top !== 0 || rect.left !== 0;
+        if (hasValidDimensions && (hasValidPosition || attempts >= 5)) {
+          clearInterval(this.domReadyInterval);
+          this.domReadyInterval = null;
+          this.updateVisibility();
+          return;
+        }
+      }
+      if (attempts >= maxAttempts) {
+        clearInterval(this.domReadyInterval);
+        this.domReadyInterval = null;
+        this.updateVisibility();
+      }
+    }, 10);
+  };
+
   updateVisibility = () => {
+    const scrollTop = this.state.scrollPosition.top;
+    let containerForViewportCalc = this.props.container;
+    if (this.galleryContainerRef) {
+      const rect = this.galleryContainerRef.getBoundingClientRect();
+      containerForViewportCalc = {
+        ...this.props.container,
+        scrollBase: rect.top + scrollTop,
+        galleryHeight: rect.height,
+      };
+    }
+
     const isInViewport = isGalleryInViewport({
-      container: this.props.container,
-      scrollTop: this.state.scrollPosition.top,
+      container: containerForViewportCalc,
+      scrollTop: scrollTop,
     });
     if (this.state.isInViewport !== isInViewport) {
       this.setState({
