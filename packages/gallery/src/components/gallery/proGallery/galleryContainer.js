@@ -572,8 +572,8 @@ export class GalleryContainer extends React.Component {
       if (this.galleryContainerRef) {
         const rect = this.galleryContainerRef.getBoundingClientRect();
         const hasValidDimensions = rect.width > 0 && rect.height > 0;
-        const hasValidPosition = rect.top !== 0 || rect.left !== 0;
-        if (hasValidDimensions && (hasValidPosition || attempts >= 5)) {
+        const hasValidPosition = typeof rect.top === 'number' && typeof rect.left === 'number';
+        if (hasValidDimensions && hasValidPosition) {
           clearInterval(this.domReadyInterval);
           this.domReadyInterval = null;
           this.updateVisibility();
