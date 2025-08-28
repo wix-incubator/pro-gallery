@@ -49,8 +49,12 @@ class SlideshowView extends React.Component {
       activeIndex: props.activeIndex || 0,
       isInView: true,
       pauseAutoSlideshowClicked: false,
-      hideLeftArrow: false, // Initialize to false, will be updated by removeArrowsIfNeeded
-      hideRightArrow: false, // Initialize to false, will be updated by removeArrowsIfNeeded
+      hideLeftArrow:
+        props.options.behaviourParams_gallery_layoutDirection ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].LEFT_TO_RIGHT,
+      hideRightArrow:
+        props.options.behaviourParams_gallery_layoutDirection ===
+        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT,
       shouldBlockAutoSlideshow: false,
       isInFocus: false,
     };
