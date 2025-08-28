@@ -1159,9 +1159,6 @@ class SlideshowView extends React.Component {
     }
     this.startAutoSlideshowIfNeeded(this.props.options);
     this.createOrGetCustomNavigationPanelAPI();
-
-    // Initialize arrow state properly
-    this.removeArrowsIfNeeded();
   }
 
   componentWillUnmount() {
