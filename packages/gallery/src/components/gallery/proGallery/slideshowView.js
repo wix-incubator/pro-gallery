@@ -71,9 +71,7 @@ class SlideshowView extends React.Component {
     ) {
       return false;
     }
-    const scrollPos = this.scrollPosition(props);
-    const result = scrollPos <= 1;
-    return result;
+    return this.scrollPosition(props) <= 1;
   }
 
   isScrollEnd(props = this.props) {
