@@ -49,12 +49,8 @@ class SlideshowView extends React.Component {
       activeIndex: props.activeIndex || 0,
       isInView: true,
       pauseAutoSlideshowClicked: false,
-      hideLeftArrow:
-        props.options.behaviourParams_gallery_layoutDirection ===
-        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].LEFT_TO_RIGHT,
-      hideRightArrow:
-        props.options.behaviourParams_gallery_layoutDirection ===
-        GALLERY_CONSTS[optionsMap.behaviourParams.gallery.layoutDirection].RIGHT_TO_LEFT,
+      hideLeftArrow: false, // Initialize to false, will be updated by removeArrowsIfNeeded
+      hideRightArrow: false, // Initialize to false, will be updated by removeArrowsIfNeeded
       shouldBlockAutoSlideshow: false,
       isInFocus: false,
     };
@@ -75,7 +71,9 @@ class SlideshowView extends React.Component {
     ) {
       return false;
     }
-    return this.scrollPosition(props) <= 1;
+    const scrollPos = this.scrollPosition(props);
+    const result = scrollPos <= 1;
+    return result;
   }
 
   isScrollEnd(props = this.props) {
@@ -87,10 +85,11 @@ class SlideshowView extends React.Component {
     ) {
       return false;
     }
-    return (
-      this.isAllItemsLoaded(props) &&
-      this.scrollPositionAtTheAndOfTheGallery(props) >= Math.floor(this.getScrollElementWidth(props))
-    );
+    const allItemsLoaded = this.isAllItemsLoaded(props);
+    const scrollPosAtEnd = this.scrollPositionAtTheAndOfTheGallery(props);
+    const scrollElementWidth = Math.floor(this.getScrollElementWidth(props));
+    const result = allItemsLoaded && scrollPosAtEnd >= scrollElementWidth;
+    return result;
   }
 
   isAllItemsLoaded(props = this.props) {
@@ -533,6 +532,9 @@ class SlideshowView extends React.Component {
       return;
     }
     this.startAutoSlideshowIfNeeded(this.props.options);
+    if (isEditMode()) {
+      return this.state.activeIndex;
+    }
 
     const activeIndex = this.getCenteredItemOrGroupIdxByScroll('galleryItems');
 
@@ -1120,8 +1122,14 @@ class SlideshowView extends React.Component {
     const isScrollEnd = this.isScrollEnd(props);
     const isLastItem = this.isLastItem();
 
-    const atStart = isScrollStart || isFirstItem;
-    const atEnd = isScrollEnd || isLastItem;
+    let atStart, atEnd;
+    if (isEditMode()) {
+      atStart = isFirstItem;
+      atEnd = isLastItem;
+    } else {
+      atStart = isScrollStart || isFirstItem;
+      atEnd = isScrollEnd || isLastItem;
+    }
 
     const nextHideLeft = (!isRTL && atStart) || (isRTL && atEnd);
     const nextHideRight = (isRTL && atStart) || (!isRTL && atEnd);
@@ -1150,6 +1158,9 @@ class SlideshowView extends React.Component {
     }
     this.startAutoSlideshowIfNeeded(this.props.options);
     this.createOrGetCustomNavigationPanelAPI();
+
+    // Initialize arrow state properly
+    this.removeArrowsIfNeeded();
   }
 
   componentWillUnmount() {
