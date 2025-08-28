@@ -1123,14 +1123,8 @@ class SlideshowView extends React.Component {
     const isScrollEnd = this.isScrollEnd(props);
     const isLastItem = this.isLastItem();
 
-    let atStart, atEnd;
-    if (isEditMode()) {
-      atStart = isFirstItem;
-      atEnd = isLastItem;
-    } else {
-      atStart = isScrollStart || isFirstItem;
-      atEnd = isScrollEnd || isLastItem;
-    }
+    const atStart = isScrollStart || isFirstItem;
+    const atEnd = isScrollEnd || isLastItem;
 
     const nextHideLeft = (!isRTL && atStart) || (isRTL && atEnd);
     const nextHideRight = (isRTL && atStart) || (!isRTL && atEnd);
