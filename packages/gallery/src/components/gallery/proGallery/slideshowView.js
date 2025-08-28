@@ -494,6 +494,11 @@ class SlideshowView extends React.Component {
   getCenteredItemOrGroupIdxByScroll(key) {
     const itemsOrGroups = this.props.galleryStructure[key];
     let centeredItemOrGroupIdx;
+
+    if (!this.scrollElement || !itemsOrGroups || itemsOrGroups.length === 0) {
+      return 0; // Default to first item if scroll element is not ready
+    }
+
     const scrollPositionAtTheMiddleOfTheGallery = this.scrollPositionAtTheMiddleOfTheGallery();
 
     if (scrollPositionAtTheMiddleOfTheGallery === 0) {
@@ -507,8 +512,8 @@ class SlideshowView extends React.Component {
         }
       }
     }
-    if (!(centeredItemOrGroupIdx >= 0)) {
-      centeredItemOrGroupIdx = itemsOrGroups.length - 1;
+    if (!(centeredItemOrGroupIdx >= 0) || centeredItemOrGroupIdx >= itemsOrGroups.length) {
+      centeredItemOrGroupIdx = 0;
     }
     return centeredItemOrGroupIdx;
   }
@@ -533,9 +538,6 @@ class SlideshowView extends React.Component {
       return;
     }
     this.startAutoSlideshowIfNeeded(this.props.options);
-    if (isEditMode()) {
-      return this.state.activeIndex;
-    }
 
     const activeIndex = this.getCenteredItemOrGroupIdxByScroll('galleryItems');
 
@@ -1149,7 +1151,11 @@ class SlideshowView extends React.Component {
       this.props.actions.scrollToItem(this.state.activeIndex);
       this.onCurrentItemChanged();
     } else {
-      this.setCurrentItemByScroll();
+      // Only call setCurrentItemByScroll if we have a proper scroll element
+      // This prevents the issue where scroll position detection fails in EDIT mode
+      if (this.scrollElement && this.scrollElement.scrollLeft !== undefined) {
+        this.setCurrentItemByScroll();
+      }
     }
     this.startAutoSlideshowIfNeeded(this.props.options);
     this.createOrGetCustomNavigationPanelAPI();
