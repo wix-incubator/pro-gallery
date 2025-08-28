@@ -83,11 +83,10 @@ class SlideshowView extends React.Component {
     ) {
       return false;
     }
-    const allItemsLoaded = this.isAllItemsLoaded(props);
-    const scrollPosAtEnd = this.scrollPositionAtTheAndOfTheGallery(props);
-    const scrollElementWidth = Math.floor(this.getScrollElementWidth(props));
-    const result = allItemsLoaded && scrollPosAtEnd >= scrollElementWidth;
-    return result;
+    return (
+      this.isAllItemsLoaded(props) &&
+      this.scrollPositionAtTheAndOfTheGallery(props) >= Math.floor(this.getScrollElementWidth(props))
+    );
   }
 
   isAllItemsLoaded(props = this.props) {
