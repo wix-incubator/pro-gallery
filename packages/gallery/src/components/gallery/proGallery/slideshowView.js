@@ -494,11 +494,6 @@ class SlideshowView extends React.Component {
   getCenteredItemOrGroupIdxByScroll(key) {
     const itemsOrGroups = this.props.galleryStructure[key];
     let centeredItemOrGroupIdx;
-
-    if (!this.scrollElement || !itemsOrGroups || itemsOrGroups.length === 0) {
-      return 0;
-    }
-
     const scrollPositionAtTheMiddleOfTheGallery = this.scrollPositionAtTheMiddleOfTheGallery();
 
     if (scrollPositionAtTheMiddleOfTheGallery === 0) {
@@ -512,7 +507,7 @@ class SlideshowView extends React.Component {
         }
       }
     }
-    if (centeredItemOrGroupIdx < 0 || centeredItemOrGroupIdx >= itemsOrGroups.length) {
+    if (!(centeredItemOrGroupIdx >= 0)) {
       centeredItemOrGroupIdx = 0;
     }
     return centeredItemOrGroupIdx;
@@ -1150,7 +1145,7 @@ class SlideshowView extends React.Component {
     if (this.state.activeIndex > 0) {
       this.props.actions.scrollToItem(this.state.activeIndex);
       this.onCurrentItemChanged();
-    } else if (this.scrollElement) {
+    } else {
       this.setCurrentItemByScroll();
     }
     this.startAutoSlideshowIfNeeded(this.props.options);
