@@ -512,7 +512,7 @@ class SlideshowView extends React.Component {
         }
       }
     }
-    if (!(centeredItemOrGroupIdx >= 0) || centeredItemOrGroupIdx >= itemsOrGroups.length) {
+    if (centeredItemOrGroupIdx < 0 || centeredItemOrGroupIdx >= itemsOrGroups.length) {
       centeredItemOrGroupIdx = 0;
     }
     return centeredItemOrGroupIdx;
@@ -1150,12 +1150,8 @@ class SlideshowView extends React.Component {
     if (this.state.activeIndex > 0) {
       this.props.actions.scrollToItem(this.state.activeIndex);
       this.onCurrentItemChanged();
-    } else {
-      // Only call setCurrentItemByScroll if we have a proper scroll element
-      // This prevents the issue where scroll position detection fails in EDIT mode
-      if (this.scrollElement && this.scrollElement.scrollLeft !== undefined) {
-        this.setCurrentItemByScroll();
-      }
+    } else if (this.scrollElement) {
+      this.setCurrentItemByScroll();
     }
     this.startAutoSlideshowIfNeeded(this.props.options);
     this.createOrGetCustomNavigationPanelAPI();
