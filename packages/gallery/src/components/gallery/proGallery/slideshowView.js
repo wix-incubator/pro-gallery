@@ -496,7 +496,7 @@ class SlideshowView extends React.Component {
     let centeredItemOrGroupIdx;
 
     if (!this.scrollElement || !itemsOrGroups || itemsOrGroups.length === 0) {
-      return 0; // Default to first item if scroll element is not ready
+      return 0;
     }
 
     const scrollPositionAtTheMiddleOfTheGallery = this.scrollPositionAtTheMiddleOfTheGallery();
