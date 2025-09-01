@@ -220,7 +220,6 @@ function withMagnified(WrappedComponent) {
       };
     }
     render() {
-      console.log('render ==>');
       const { shouldMagnify } = this.state;
       const { itemClick } = this.props.options;
       if (itemClick !== GALLERY_CONSTS.itemClick.MAGNIFY) {
