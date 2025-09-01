@@ -126,6 +126,8 @@ function withMagnified(WrappedComponent) {
             width: magnifiedWidth,
             height: magnifiedHeight,
             position: 'absolute',
+            top: 0,
+            left: 0,
           }}
           customImageRenderer={this.props.customComponents?.customImageRenderer}
         />
