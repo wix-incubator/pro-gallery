@@ -141,6 +141,8 @@ function withMagnified(WrappedComponent) {
             width: magnifiedWidth,
             height: magnifiedHeight,
             position: 'absolute',
+            top: 0,
+            left: 0,
           }}
           customImageRenderer={this.props.customComponents?.customImageRenderer}
         />
@@ -217,7 +219,6 @@ function withMagnified(WrappedComponent) {
         transitionDelay: shouldMagnify ? '0.3s' : 'none',
       };
     }
-
     render() {
       const { shouldMagnify } = this.state;
       const { itemClick } = this.props.options;
