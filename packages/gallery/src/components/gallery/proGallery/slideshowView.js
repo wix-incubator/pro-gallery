@@ -508,7 +508,7 @@ class SlideshowView extends React.Component {
       }
     }
     if (!(centeredItemOrGroupIdx >= 0)) {
-      centeredItemOrGroupIdx = 0;
+      centeredItemOrGroupIdx = this.isFirstItem() ? 0 : itemsOrGroups.length - 1;
     }
     return centeredItemOrGroupIdx;
   }
