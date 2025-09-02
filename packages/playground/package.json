@@ -1,6 +1,6 @@
 {
   "name": "pro-playground",
-  "version": "5.0.146",
+  "version": "5.0.147",
   "private": true,
   "scripts": {
     "watch": "sleep 10 && node scripts/start.js",
@@ -24,10 +24,10 @@
     "image-client-api": "^1.3130.0",
     "lodash.clonedeep": "^4.5.0",
     "moment": "2.29.2",
-    "pro-gallery": "5.0.146",
-    "pro-gallery-blueprints": "5.0.144",
-    "pro-gallery-lib": "5.0.139",
-    "pro-layouts": "5.0.139",
+    "pro-gallery": "5.0.147",
+    "pro-gallery-blueprints": "5.0.147",
+    "pro-gallery-lib": "5.0.147",
+    "pro-layouts": "5.0.147",
     "re-resizable": "^6.10.3",
     "react": "^18.2.0",
     "react-color": "^2.17.3",
