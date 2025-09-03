@@ -27,10 +27,6 @@ class NavigationPanel extends React.Component {
     galleryStructure,
     settings,
   }) {
-    const activeElement = document.activeElement;
-    const mainGalleryItemIsFocused =
-      activeElement.className &&
-      activeElement.className.includes('item-action');
     const clearedGalleryItems = clearGalleryItems(
       this.props.items,
       this.props.galleryStructure.galleryItems
@@ -39,6 +35,13 @@ class NavigationPanel extends React.Component {
       this.props.activeIndex,
       clearedGalleryItems.length
     );
+    const activeElement = document.activeElement;
+    const mainGalleryItemIsFocused =
+      activeElement.id &&
+      activeElement.id.includes(
+        'item-action-' +
+          this.props.galleryStructure.galleryItems[activeIndex].id
+      );
     const { thumbnailSize, thumbnailSpacings } = options;
     const {
       horizontalThumbnails,
