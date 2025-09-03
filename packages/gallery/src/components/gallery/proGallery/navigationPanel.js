@@ -16,6 +16,16 @@ class NavigationPanel extends React.Component {
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
   }
 
+  state = { focusedIndex: -1 };
+
+  onThumbnailFocus = (idx) => {
+    this.setState({ focusedIndex: idx });
+  };
+
+  onThumbnailBlur = () => {
+    this.setState({ focusedIndex: -1 });
+  };
+
   scrollToThumbnail(itemIdx) {
     this.props.navigationToIdxCB(itemIdx);
   }
@@ -85,6 +95,9 @@ class NavigationPanel extends React.Component {
           {items.map(({ thumbnailItem, location, idx }) => {
             const highlighted =
               idx === activeIndex % clearedGalleryItems.length;
+            const isFocused =
+              this.state.focusedIndex === idx &&
+              this.props.settings?.isAccessible;
             const itemStyle = {
               width: thumbnailSize,
               height: thumbnailSize,
@@ -106,14 +119,18 @@ class NavigationPanel extends React.Component {
                 }
                 className={
                   'thumbnailItem' +
-                  (highlighted
-                    ? ' pro-gallery-thumbnails-highlighted pro-gallery-highlight' +
+                  (highlighted ? ' pro-gallery-highlight' : '') +
+                  (isFocused
+                    ? ' pro-gallery-thumbnails-highlighted' +
                       (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')
                     : '')
                 }
                 data-key={thumbnailItem.id}
                 style={itemStyle}
+                tabIndex={highlighted ? 0 : -1}
                 onClick={() => this.scrollToThumbnail(idx)}
+                onFocus={() => this.onThumbnailFocus(idx)}
+                onBlur={this.onThumbnailBlur}
                 onKeyDown={(e) => {
                   if (e.key === ENTER_KEY) {
                     this.scrollToThumbnail(idx);
