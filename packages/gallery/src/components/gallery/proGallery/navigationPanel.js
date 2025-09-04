@@ -35,6 +35,13 @@ class NavigationPanel extends React.Component {
       this.props.activeIndex,
       clearedGalleryItems.length
     );
+    const activeElement = document.activeElement;
+    const mainGalleryItemIsFocused =
+      activeElement.id &&
+      activeElement.id.includes(
+        'item-action-' +
+          this.props.galleryStructure.galleryItems[activeIndex].id
+      );
     const { thumbnailSize, thumbnailSpacings } = options;
     const {
       horizontalThumbnails,
@@ -106,8 +113,9 @@ class NavigationPanel extends React.Component {
                 }
                 className={
                   'thumbnailItem' +
-                  (highlighted
-                    ? ' pro-gallery-thumbnails-highlighted pro-gallery-highlight' +
+                  (highlighted ? ' pro-gallery-highlight' : '') +
+                  (mainGalleryItemIsFocused && highlighted
+                    ? ' pro-gallery-thumbnails-highlighted' +
                       (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')
                     : '')
                 }
