@@ -35,8 +35,10 @@ class NavigationPanel extends React.Component {
       this.props.activeIndex,
       clearedGalleryItems.length
     );
-    const activeElement = document.activeElement;
+    const activeElement =
+      typeof document !== 'undefined' ? document.activeElement : null;
     const mainGalleryItemIsFocused =
+      activeElement &&
       activeElement.id &&
       activeElement.id.includes(
         'item-action-' +
