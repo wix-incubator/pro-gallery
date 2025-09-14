@@ -1004,6 +1004,7 @@ class SlideshowView extends React.Component {
           this.props.options.layoutParams_structure_gallerySpacing),
       width: this.props.container.width,
       height: this.props.container.height,
+      overflow: 'hidden',
     };
   }
 
