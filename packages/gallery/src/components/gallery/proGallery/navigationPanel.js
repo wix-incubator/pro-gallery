@@ -14,10 +14,24 @@ class NavigationPanel extends React.Component {
   constructor(props) {
     super(props);
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
+    this.state = { mainGalleryItemIsFocused: false };
   }
 
   scrollToThumbnail(itemIdx) {
     this.props.navigationToIdxCB(itemIdx);
+  }
+
+  UNSAFE_componentWillReceiveProps(props) {
+    const activeElement =
+      typeof document !== 'undefined' ? document.activeElement : null;
+    const isMainGalleryItemIsFocused =
+      activeElement &&
+      activeElement.id &&
+      activeElement.id.includes(
+        'item-action-' +
+          props.galleryStructure.galleryItems[props.activeIndex].id
+      );
+    this.setState({ mainGalleryItemIsFocused: isMainGalleryItemIsFocused });
   }
 
   createThumbnails({
@@ -35,13 +49,6 @@ class NavigationPanel extends React.Component {
       this.props.activeIndex,
       clearedGalleryItems.length
     );
-    const activeElement = document.activeElement;
-    const mainGalleryItemIsFocused =
-      activeElement.id &&
-      activeElement.id.includes(
-        'item-action-' +
-          this.props.galleryStructure.galleryItems[activeIndex].id
-      );
     const { thumbnailSize, thumbnailSpacings } = options;
     const {
       horizontalThumbnails,
@@ -114,7 +121,7 @@ class NavigationPanel extends React.Component {
                 className={
                   'thumbnailItem' +
                   (highlighted ? ' pro-gallery-highlight' : '') +
-                  (mainGalleryItemIsFocused && highlighted
+                  (this.state.mainGalleryItemIsFocused && highlighted
                     ? ' pro-gallery-thumbnails-highlighted' +
                       (utils.isMobile() ? ' pro-gallery-mobile-indicator' : '')
                     : '')
