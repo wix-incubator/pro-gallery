@@ -209,6 +209,7 @@ export const getCustomNavigationPanelInlineStyles = ({
   galleryWidth,
   height,
   width,
+  infoHeight,
   galleryThumbnailsAlignment,
   navigationPanelPosition,
 }) => {
@@ -224,16 +225,23 @@ export const getCustomNavigationPanelInlineStyles = ({
     ...getNavigationPanelOnGalleryPositionStyles({
       galleryThumbnailsAlignment,
       navigationPanelPosition,
+      infoHeight,
     }),
     overflow: 'hidden',
     float: 'left',
   };
 };
 
-const getNavigationPanelOnGalleryPositionStyles = ({ galleryThumbnailsAlignment, navigationPanelPosition }) => {
+const getNavigationPanelOnGalleryPositionStyles = ({
+  galleryThumbnailsAlignment,
+  navigationPanelPosition,
+  infoHeight,
+}) => {
   if (navigationPanelPosition === GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].ON_GALLERY) {
     let onGalleryStyles = { position: 'absolute' };
-    onGalleryStyles[galleryThumbnailsAlignment.toLowerCase()] = 0;
+    if (galleryThumbnailsAlignment === GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM) {
+      onGalleryStyles['bottom'] = infoHeight;
+    }
     return onGalleryStyles;
   }
 };
