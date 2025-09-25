@@ -235,10 +235,17 @@ class VideoItem extends React.Component {
         onPause={() => {
           this.setState({ isPlaying: false });
         }}
-        onError={(e) => {
+        onError={(error, data) => {
+          if (
+            error === 'hlsError' &&
+            data?.details === 'bufferSeekOverHole' &&
+            data?.fatal === false
+          ) {
+            return;
+          }
           this.props.actions.eventsListener(GALLERY_CONSTS.events.VIDEO_ERROR, {
             ...this.props,
-            videoError: e,
+            videoError: error,
           });
         }}
         playbackRate={Number(this.props.options.videoSpeed) || 1}
