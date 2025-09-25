@@ -1169,11 +1169,12 @@ class SlideshowView extends React.Component {
       });
     }
     if (this.state.activeIndex > props.items.length - 1) {
+      const lastValidIndex = Math.max(0, props.items.length - 1);
       utils.setStateAndLog(
         this,
         'Next Item',
         {
-          activeIndex: 0,
+          activeIndex: lastValidIndex,
         },
         () => {
           this.onCurrentItemChanged();
