@@ -346,8 +346,17 @@ class SlideshowView extends React.Component {
         scrollDuration,
         scrollingUpTheGallery
       );
-      const nextItem =
-        this.getCenteredItemOrGroupIdxByScroll('galleryItems') + direction;
+      let nextItem = this.getCenteredItemOrGroupIdxByScroll('galleryItems');
+      if (this.props.options.slideshowLoop) {
+        nextItem += direction;
+      } else {
+        if (direction > 0 && nextItem < this.props.totalItemsCount - 1) {
+          nextItem += direction;
+        } else if (direction < 0 && nextItem > 0) {
+          nextItem += direction;
+        }
+      }
+
       this.onScrollToItemOrGroup(nextItem, isContinuousScrolling);
     } catch (e) {
       this.onThrowScrollError('Cannot proceed to the next Group', e);
@@ -1169,12 +1178,11 @@ class SlideshowView extends React.Component {
       });
     }
     if (this.state.activeIndex > props.items.length - 1) {
-      const lastValidIndex = Math.max(0, props.items.length - 1);
       utils.setStateAndLog(
         this,
         'Next Item',
         {
-          activeIndex: lastValidIndex,
+          activeIndex: 0,
         },
         () => {
           this.onCurrentItemChanged();
