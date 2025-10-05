@@ -7,15 +7,15 @@ import {
   isPreviewMode,
 } from 'pro-gallery-lib';
 import GroupView from '../../group/groupView.js';
-import GalleryDebugMessage from './galleryDebugMessage.js';
 import PlayIcon from '../../svgs/components/play';
 import PauseIcon from '../../svgs/components/pause';
+import { shouldRenderNavArrows } from '../../helpers/navigationArrowUtils.js';
+import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
+import GalleryDebugMessage from './galleryDebugMessage.js';
 import NavigationPanel, {
   getCustomNavigationPanelInlineStyles,
 } from './navigationPanel';
-import { getItemsInViewportOrMarginByActiveGroup } from '../../helpers/virtualization';
 import { NavigationArrows } from './navigationArrows.js';
-import { shouldRenderNavArrows } from '../../helpers/navigationArrowUtils.js';
 import { toggleScrollLessAnimation } from './scrollLessAnimationHelper';
 
 const SKIP_SLIDES_MULTIPLIER = 1.5;
