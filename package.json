@@ -3,8 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": ">=20.19.0",
+    "npm": ">=9.0.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "postinstall": "lerna bootstrap --force-local --hoist --strict",
+    "postinstall": "echo 'Dependencies installed. Lerna workspaces managed by npm.'",
     "lint": "lerna run lint",
     "lint:fix": "lerna run lint:fix",
     "build": "lerna run build",
@@ -44,7 +51,7 @@
     "chalk": "^2.4.2",
     "gh-pages": "2.0.1",
     "husky": "^4.3.0",
-    "lerna": "4.0.0",
+    "lerna": "9.0.0",
     "lerna-packages": "0.0.1",
     "lint-staged": "^10.5.2",
     "lodash": "^4.17.21",
