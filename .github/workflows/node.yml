@@ -28,7 +28,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install
-    - run: git checkout -- package-lock.json
     - run: npm run lint
 
   tests:
@@ -46,7 +45,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install
-    - run: git checkout -- package-lock.json
     - run: npm run build
     - run: npm run ${{ matrix.test-script }}
       env:
@@ -72,7 +70,6 @@ jobs:
         cache: 'npm'
         registry-url: 'https://registry.npmjs.org'
     - run: npm install
-    - run: git checkout -- package-lock.json
     - run: npm run build --if-present
     - run: |
         git config --global user.email "octocat@github.com"
@@ -115,7 +112,6 @@ jobs:
         cache: 'npm'
         registry-url: 'https://registry.npmjs.org'
     - run: npm install
-    - run: git checkout -- package-lock.json
     - run: npm run build --if-present
     - run: node scripts/deployToSurge
       env:
