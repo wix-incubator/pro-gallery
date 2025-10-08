@@ -24,7 +24,7 @@
     "generateValidationFunction": "node buildScripts/buildRuntimeValidateFunctionFromTypes.js",
     "unit": "mocha --require ts-node/register test/*.spec.*",
     "test": "echo 'no test in wix CI'",
-    "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
+    "lint": "npx eslint \"{src,test}/**/*.{js,jsx,ts}\"",
     "lint:fix": "npm run lint -- --fix"
   },
   "devDependencies": {
