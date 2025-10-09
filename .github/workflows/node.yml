@@ -27,7 +27,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm install
+    - run: npm config set engine-strict false
+    - run: npm config set fetch-timeout 60000
+    - run: npm config set fetch-retry-mintimeout 20000
+    - run: npm config set fetch-retry-maxtimeout 120000
+    - run: npm install --no-audit --no-fund
     - run: git checkout -- package-lock.json
     - run: npm run lint
 
@@ -45,7 +49,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm install
+    - run: npm config set engine-strict false
+    - run: npm config set fetch-timeout 60000
+    - run: npm config set fetch-retry-mintimeout 20000
+    - run: npm config set fetch-retry-maxtimeout 120000
+    - run: npm install --no-audit --no-fund
     - run: git checkout -- package-lock.json
     - run: npm run build
     - run: npm run ${{ matrix.test-script }}
@@ -71,7 +79,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         registry-url: 'https://registry.npmjs.org'
-    - run: npm install
+    - run: npm config set engine-strict false
+    - run: npm config set fetch-timeout 60000
+    - run: npm config set fetch-retry-mintimeout 20000
+    - run: npm config set fetch-retry-maxtimeout 120000
+    - run: npm install --no-audit --no-fund
     - run: git checkout -- package-lock.json
     - run: npm run build --if-present
     - run: |
@@ -114,7 +126,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         registry-url: 'https://registry.npmjs.org'
-    - run: npm install
+    - run: npm config set engine-strict false
+    - run: npm config set fetch-timeout 60000
+    - run: npm config set fetch-retry-mintimeout 20000
+    - run: npm config set fetch-retry-maxtimeout 120000
+    - run: npm install --no-audit --no-fund
     - run: git checkout -- package-lock.json
     - run: npm run build --if-present
     - run: node scripts/deployToSurge
