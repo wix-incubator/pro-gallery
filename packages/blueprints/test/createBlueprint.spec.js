@@ -12,7 +12,7 @@ function readJsonFromDir(name) {
   return args;
 }
 
-const threshholdForBlueprintInMs = 50;
+const threshholdForBlueprintInMs = process.env.CI ? 100 : 50;
 it(`should run in less than ${threshholdForBlueprintInMs}ms`, () => {
   const args = readJsonFromDir('slowArgs.json');
   const hrstart = process.hrtime();
