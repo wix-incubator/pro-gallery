@@ -419,7 +419,7 @@ class SlideshowView extends React.Component {
   onCurrentItemChanged() {
     if (this.lastCurrentItem !== this.state.activeIndex) {
       this.lastCurrentItem = this.state.activeIndex;
-      // this.props.actions.onCurrentItemChanged(this.state.currentIdx);
+      //this.props.actions.onCurrentItemChanged(this.state.currentIdx);
       const currentGalleryItem =
         this.props.galleryStructure.galleryItems[this.state.activeIndex];
       const item = this.props.items[this.state.activeIndex];
