@@ -27,9 +27,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm config set engine-strict false
     - run: npm config set registry https://registry.npmjs.org/
-    - run: npm ci --force --no-audit --no-fund
+    - run: npm install
     - run: npm install @nx/nx-linux-x64-gnu --force
     - run: git checkout -- package-lock.json
     - run: npm run lint
@@ -48,9 +47,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm config set engine-strict false
     - run: npm config set registry https://registry.npmjs.org/
-    - run: npm ci --force --no-audit --no-fund
+    - run: npm install
     - run: npm install @nx/nx-linux-x64-gnu --force
     - run: git checkout -- package-lock.json
     - run: npm run build
@@ -77,9 +75,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         registry-url: 'https://registry.npmjs.org'
-    - run: npm config set engine-strict false
     - run: npm config set registry https://registry.npmjs.org/
-    - run: npm ci --force --no-audit --no-fund
+    - run: npm install
     - run: npm install @nx/nx-linux-x64-gnu --force
     - run: git checkout -- package-lock.json
     - run: npm run build --if-present
@@ -123,9 +120,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         registry-url: 'https://registry.npmjs.org'
-    - run: npm config set engine-strict false
     - run: npm config set registry https://registry.npmjs.org/
-    - run: npm ci --force --no-audit --no-fund
+    - run: npm install
     - run: npm install @nx/nx-linux-x64-gnu --force
     - run: git checkout -- package-lock.json
     - run: npm run build --if-present
