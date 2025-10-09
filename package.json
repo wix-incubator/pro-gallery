@@ -1,61 +1,61 @@
 {
-	"name": "pro-gallery-monorepo",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"workspaces": [
-		"packages/*"
-	],
-	"scripts": {
-		"lint": "lerna run lint",
-		"lint:fix": "lerna run lint:fix",
-		"build": "lerna run build",
-		"changelog": "sh scripts/changelog-builder.sh > CHANGELOG.md",
-		"start-playground": "cd packages/playground && npm run start",
-		"test:e2e": "start-server-and-test build-all-and-start-playground http-get://localhost:3006 'lerna run test:e2e-all'",
-		"test": "echo 'not running tests from root - runnign it using GitHub actions",
-		"ci:run-playground": "cd packages/playground && npx serve -s build -l 3006 && cd ../..",
-		"ci:test-unit": "lerna run unit",
-		"ci:test-e2e-layouts": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-layouts'",
-		"ci:test-e2e-styleParams": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-styleParams'",
-		"ci:test-e2e-integration": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-integration'",
-		"build-all-and-start-playground": "npm run start-playground"
-	},
-	"overrides": {
-		"cheerio": "1.0.0-rc.3"
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
-		}
-	},
-	"lint-staged": {
-		"packages/**/*.{js,jsx,ts,tsx}": "eslint --fix --"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/wix/pro-gallery.git"
-	},
-	"author": "",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/wix/pro-gallery/issues"
-	},
-	"homepage": "https://github.com/wix/pro-gallery#readme",
-	"devDependencies": {
-		"chalk": "^2.4.2",
-		"gh-pages": "2.0.1",
-		"husky": "^4.3.0",
-		"lerna": "7.4.2",
-		"lerna-packages": "0.0.1",
-		"lint-staged": "^10.5.2",
-		"lodash": "^4.17.21",
-		"prettier": "^2.1.2",
-		"prompt": "^1.0.0",
-		"semver": "^6.3.0",
-		"set-value": "^4.1.0"
-	},
-	"dependencies": {
-		"start-server-and-test": "^1.10.6"
-	}
+  "name": "pro-gallery-monorepo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "lint": "lerna run lint",
+    "lint:fix": "lerna run lint:fix",
+    "build": "lerna run build",
+    "changelog": "sh scripts/changelog-builder.sh > CHANGELOG.md",
+    "start-playground": "cd packages/playground && npm run start",
+    "test:e2e": "start-server-and-test build-all-and-start-playground http-get://localhost:3006 'lerna run test:e2e-all'",
+    "test": "echo 'not running tests from root - runnign it using GitHub actions",
+    "ci:run-playground": "cd packages/playground && npx serve -s build -l 3006 && cd ../..",
+    "ci:test-unit": "lerna run unit",
+    "ci:test-e2e-layouts": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-layouts'",
+    "ci:test-e2e-styleParams": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-styleParams'",
+    "ci:test-e2e-integration": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-integration'",
+    "build-all-and-start-playground": "npm run start-playground"
+  },
+  "overrides": {
+    "cheerio": "1.0.0-rc.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "packages/**/*.{js,jsx,ts,tsx}": "eslint --fix --"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wix/pro-gallery.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wix/pro-gallery/issues"
+  },
+  "homepage": "https://github.com/wix/pro-gallery#readme",
+  "devDependencies": {
+    "chalk": "^2.4.2",
+    "gh-pages": "2.0.1",
+    "husky": "^4.3.0",
+    "lerna": "7.4.2",
+    "lerna-packages": "0.0.1",
+    "lint-staged": "^10.5.2",
+    "lodash": "^4.17.21",
+    "prettier": "^2.1.2",
+    "prompt": "^1.0.0",
+    "semver": "^6.3.0",
+    "set-value": "^4.1.0"
+  },
+  "dependencies": {
+    "start-server-and-test": "^1.10.6"
+  }
 }
