@@ -30,7 +30,7 @@ jobs:
     - run: npm config set registry https://registry.npmjs.org/
     - run: npm install
     - run: npm install @nx/nx-linux-x64-gnu --force
-    - run: git checkout -- package-lock.json
+    - run: git checkout -- package-lock.json package.json
     - run: npm run lint
 
   tests:
@@ -50,7 +50,7 @@ jobs:
     - run: npm config set registry https://registry.npmjs.org/
     - run: npm install
     - run: npm install @nx/nx-linux-x64-gnu --force
-    - run: git checkout -- package-lock.json
+    - run: git checkout -- package-lock.json package.json
     - run: npm run build
     - run: npm run ${{ matrix.test-script }}
       env:
@@ -78,7 +78,7 @@ jobs:
     - run: npm config set registry https://registry.npmjs.org/
     - run: npm install
     - run: npm install @nx/nx-linux-x64-gnu --force
-    - run: git checkout -- package-lock.json
+    - run: git checkout -- package-lock.json package.json
     - run: npm run build --if-present
     - run: |
         git config --global user.email "octocat@github.com"
@@ -123,7 +123,7 @@ jobs:
     - run: npm config set registry https://registry.npmjs.org/
     - run: npm install
     - run: npm install @nx/nx-linux-x64-gnu --force
-    - run: git checkout -- package-lock.json
+    - run: git checkout -- package-lock.json package.json
     - run: npm run build --if-present
     - run: node scripts/deployToSurge
       env:
