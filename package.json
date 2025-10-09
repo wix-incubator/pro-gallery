@@ -44,7 +44,7 @@
     "chalk": "^2.4.2",
     "gh-pages": "2.0.1",
     "husky": "^4.3.0",
-    "lerna": "^4.0.0",
+    "lerna": "4.0.0",
     "lerna-packages": "0.0.1",
     "lint-staged": "^10.5.2",
     "lodash": "^4.17.21",
