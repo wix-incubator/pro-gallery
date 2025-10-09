@@ -112,7 +112,6 @@
 		"postcss-normalize": "^8.0.1",
 		"postcss-preset-env": "^6.7.0",
 		"postcss-safe-parser": "^4.0.1",
-		"pro-gallery": "3.1.38",
 		"puppeteer": "^1.5.0",
 		"re-resizable": "^6.10.3",
 		"react": "^16.8.6",
