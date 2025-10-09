@@ -16,6 +16,7 @@
     "ci:test-unit": "lerna run unit",
     "ci:test-e2e-layouts": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-layouts'",
     "ci:test-e2e-styleParams": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-styleParams'",
+    "lint-staged": "lint-staged",
     "ci:test-e2e-integration": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-integration'",
     "build-all-and-start-playground": "npm run start-playground"
   },
@@ -44,7 +45,7 @@
     "chalk": "^2.4.2",
     "gh-pages": "2.0.1",
     "husky": "^4.3.0",
-    "lerna": "4.0.0",
+    "lerna": "^4.0.0",
     "lerna-packages": "0.0.1",
     "lint-staged": "^10.5.2",
     "lodash": "^4.17.21",
@@ -54,7 +55,6 @@
     "set-value": "^4.1.0"
   },
   "dependencies": {
-    "pro-gallery": "3.1.38",
     "start-server-and-test": "^1.10.6"
   }
 }
