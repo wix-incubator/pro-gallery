@@ -57,5 +57,8 @@
   },
   "dependencies": {
     "start-server-and-test": "^1.10.6"
+  },
+  "optionalDependencies": {
+    "@nx/nx-linux-x64-gnu": "*"
   }
 }
