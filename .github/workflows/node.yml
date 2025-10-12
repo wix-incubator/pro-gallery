@@ -29,6 +29,7 @@ jobs:
         cache: 'npm'
         registry-url: 'https://registry.npmjs.org'
     - run: npm install
+    - run: npm install @nx/nx-linux-x64-gnu --force
     - run: git checkout -- package-lock.json
     - run: npm run lint
 
