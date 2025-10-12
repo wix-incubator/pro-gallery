@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-
 import { expect } from 'chai';
+import { blueprints } from '../src/index';
 
 // Preload NX binary to avoid cold start penalty (only on Linux)
 if (process.platform === 'linux') {
@@ -9,8 +9,6 @@ if (process.platform === 'linux') {
     console.log('NX binary preloaded');
   });
 }
-
-import { blueprints } from '../src/index';
 
 const opts = { encoding: 'utf-8' };
 function readJsonFromDir(name) {
