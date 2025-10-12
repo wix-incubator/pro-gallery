@@ -3,6 +3,13 @@ import path from 'path';
 
 import { expect } from 'chai';
 
+// Preload NX binary to avoid cold start penalty (only on Linux)
+if (process.platform === 'linux') {
+  import('@nx/nx-linux-x64-gnu').then(() => {
+    console.log('NX binary preloaded');
+  });
+}
+
 import { blueprints } from '../src/index';
 
 const opts = { encoding: 'utf-8' };
@@ -12,8 +19,13 @@ function readJsonFromDir(name) {
   return args;
 }
 
-const threshholdForBlueprintInMs = 100;
-it(`should run in less than ${threshholdForBlueprintInMs}ms`, () => {
+const threshholdForBlueprintInMs = 50;
+it(`should run in less than ${threshholdForBlueprintInMs}ms`, async () => {
+  // Ensure NX binary is loaded before test (only on Linux)
+  if (process.platform === 'linux') {
+    await import('@nx/nx-linux-x64-gnu');
+  }
+
   const args = readJsonFromDir('slowArgs.json');
   const hrstart = process.hrtime();
   blueprints.createBlueprint(args);
