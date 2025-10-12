@@ -27,6 +27,8 @@ jobs:
       with:
         path: node_modules/@nx/nx-linux-x64-gnu
         key: nx-binary-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          nx-binary-${{ runner.os }}-
     - name: Install and run lint
       uses: actions/setup-node@v4
       with:
@@ -46,11 +48,6 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
     - uses: actions/checkout@v4
-    - name: Cache NX binary
-      uses: actions/cache@v3
-      with:
-        path: node_modules/@nx/nx-linux-x64-gnu
-        key: nx-binary-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
     - name: Install, build and run test
       uses: actions/setup-node@v4
       with:
@@ -77,11 +74,6 @@ jobs:
       with:
         token: ${{ secrets.PAT_TOKEN }}
         fetch-depth: 0
-    - name: Cache NX binary
-      uses: actions/cache@v3
-      with:
-        path: node_modules/@nx/nx-linux-x64-gnu
-        key: nx-binary-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
     - name: Install, build, configure git and lerna publish
       uses: actions/setup-node@v4
       with:
