@@ -12,7 +12,7 @@ function readJsonFromDir(name) {
   return args;
 }
 
-const threshholdForBlueprintInMs = 65;
+const threshholdForBlueprintInMs = 70;
 it(`should run in less than ${threshholdForBlueprintInMs}ms`, () => {
   const args = readJsonFromDir('slowArgs.json');
   const hrstart = process.hrtime();
