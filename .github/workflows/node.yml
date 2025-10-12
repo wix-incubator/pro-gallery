@@ -22,13 +22,6 @@ jobs:
         node-version: [16.20.0]
     steps:
     - uses: actions/checkout@v4
-    - name: Cache NX binary
-      uses: actions/cache@v3
-      with:
-        path: node_modules/@nx/nx-linux-x64-gnu
-        key: nx-binary-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-        restore-keys: |
-          nx-binary-${{ runner.os }}-
     - name: Install and run lint
       uses: actions/setup-node@v4
       with:
