@@ -43,6 +43,7 @@
   },
   "homepage": "https://github.com/wix/pro-gallery#readme",
   "devDependencies": {
+    "@nx/nx-linux-x64-gnu": "latest",
     "chalk": "^2.4.2",
     "gh-pages": "2.0.1",
     "husky": "^4.3.0",
