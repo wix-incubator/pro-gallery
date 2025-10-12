@@ -22,7 +22,7 @@
     "build-all-and-start-playground": "npm run start-playground"
   },
   "overrides": {
-    "cheerio": "1.0.0-rc.3"
+	  "cheerio": "1.0.0-rc.3"
   },
   "husky": {
     "hooks": {
