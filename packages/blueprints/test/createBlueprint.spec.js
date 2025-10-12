@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
+
 import { expect } from 'chai';
+
 import { blueprints } from '../src/index';
 
 // Preload NX binary to avoid cold start penalty (only on Linux)
