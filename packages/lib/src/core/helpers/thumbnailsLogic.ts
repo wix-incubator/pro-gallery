@@ -77,7 +77,10 @@ function getThumbnailsData({
 
   const withInfiniteScroll = false; // this is not supported yet
   const thumbnailSize = options[optionsMap.layoutParams.thumbnails.size];
+  const thumbnailRatio = options[optionsMap.layoutParams.thumbnails.ratio] || 1;
+  const thumbnailHeight = thumbnailSize / thumbnailRatio;
   const thumbnailSizeWithSpacing = thumbnailSize + options[optionsMap.layoutParams.thumbnails.spacing];
+  const thumbnailHeightWithSpacing = thumbnailHeight + options[optionsMap.layoutParams.thumbnails.spacing];
   const horizontalThumbnails =
     thumbnailAlignment === GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM ||
     thumbnailAlignment === GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP;
@@ -86,11 +89,14 @@ function getThumbnailsData({
     containerWidth,
     containerHeight,
     thumbnailSize,
+    thumbnailHeight,
   });
   const minNumOfThumbnails = getNumberOfThumbnails({
     width,
     height,
     horizontalThumbnails,
+    thumbnailSize,
+    thumbnailHeight,
   });
 
   const numberOfThumbnails = minNumOfThumbnails % 2 === 1 ? minNumOfThumbnails : minNumOfThumbnails + 1;
@@ -107,7 +113,7 @@ function getThumbnailsData({
     horizontalThumbnails,
     width,
     height,
-    thumbnailSizeWithSpacing,
+    thumbnailSizeWithSpacing: horizontalThumbnails ? thumbnailSizeWithSpacing : thumbnailHeightWithSpacing,
     activeIndex: activeIndexWithOffset,
     itemsCount: galleryItems.length,
   });
@@ -136,7 +142,7 @@ function getThumbnailsData({
           thumbnailAlignment,
           offset,
           isRTL,
-          thumbnailSizeWithSpacing,
+          thumbnailSizeWithSpacing: horizontalThumbnails ? thumbnailSizeWithSpacing : thumbnailHeightWithSpacing,
         }),
         idx: idx,
       };
@@ -153,16 +159,18 @@ function getThumbnailsContainerSize({
   containerWidth,
   containerHeight,
   thumbnailSize,
+  thumbnailHeight,
 }: {
   horizontalThumbnails: boolean;
   containerWidth: number;
   containerHeight: number;
   thumbnailSize: number;
+  thumbnailHeight: number;
 }) {
   if (horizontalThumbnails) {
     return {
       width: containerWidth,
-      height: thumbnailSize,
+      height: thumbnailHeight,
     };
   } else {
     return {
@@ -176,15 +184,19 @@ function getNumberOfThumbnails({
   width,
   height,
   horizontalThumbnails,
+  thumbnailSize,
+  thumbnailHeight,
 }: {
   width: number;
   height: number;
   horizontalThumbnails: boolean;
+  thumbnailSize: number;
+  thumbnailHeight: number;
 }) {
   if (horizontalThumbnails) {
-    return Math.ceil(width / height);
+    return Math.ceil(width / thumbnailSize);
   } else {
-    return Math.ceil(height / width);
+    return Math.ceil(height / thumbnailHeight);
   }
 }
 

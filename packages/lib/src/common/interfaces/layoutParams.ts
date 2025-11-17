@@ -25,6 +25,7 @@ export interface Thumbnails {
   marginToGallery?: number;
   size?: number;
   alignment?: 'BOTTOM' | 'RIGHT' | 'LEFT' | 'TOP';
+  ratio?: number;
 }
 
 export interface Scatter {

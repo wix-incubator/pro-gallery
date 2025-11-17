@@ -116,6 +116,7 @@ import layoutParams_targetItemSize_value from './layoutParams_targetItemSize_val
 import layoutParams_thumbnails_alignment from './layoutParams_thumbnails_alignment.js';
 import layoutParams_thumbnails_enable from './layoutParams_thumbnails_enable.js';
 import layoutParams_thumbnails_position from './layoutParams_thumbnails_position.js';
+import layoutParams_thumbnails_ratio from './layoutParams_thumbnails_ratio.js';
 import layoutParams_thumbnails_size from './layoutParams_thumbnails_size.js';
 import layoutParams_thumbnails_spacing from './layoutParams_thumbnails_spacing.js';
 import layoutParams_thumbnails_marginToGallery from './layoutParams_thumbnails_marginToGallery.js';
@@ -258,6 +259,7 @@ export default {
   layoutParams_thumbnails_alignment,
   layoutParams_thumbnails_enable,
   layoutParams_thumbnails_position,
+  layoutParams_thumbnails_ratio,
   layoutParams_thumbnails_size,
   layoutParams_thumbnails_spacing,
   layoutParams_thumbnails_marginToGallery,

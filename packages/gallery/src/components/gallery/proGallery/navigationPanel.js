@@ -71,9 +71,12 @@ class NavigationPanel extends React.Component {
         >
           {items.map(({ thumbnailItem, location, idx }) => {
             const highlighted = idx === activeIndex % clearedGalleryItems.length;
+            const thumbnailSize = options[optionsMap.layoutParams.thumbnails.size];
+            const thumbnailRatio = options[optionsMap.layoutParams.thumbnails.ratio] || 1;
+            const thumbnailHeight = thumbnailSize / thumbnailRatio;
             const itemStyle = {
-              width: options[optionsMap.layoutParams.thumbnails.size],
-              height: options[optionsMap.layoutParams.thumbnails.size],
+              width: thumbnailSize,
+              height: thumbnailHeight,
               overflow: 'hidden',
               backgroundImage: `url(${thumbnailItem.createUrl(
                 GALLERY_CONSTS.urlSizes.THUMBNAIL,
