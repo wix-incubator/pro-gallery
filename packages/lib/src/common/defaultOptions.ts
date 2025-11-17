@@ -54,6 +54,7 @@ const defaultOptions = flattenObject({
       enable: false,
       position: GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.position].OUTSIDE_GALLERY,
       alignment: GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM,
+      ratio: 1,
     },
     navigationArrows: {
       enable: true,

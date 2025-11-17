@@ -74,6 +74,7 @@ class GalleryItem {
       this.sharpParams.usm = {};
     }
     this.thumbnailSize = config.thumbnailSize || 120;
+    this.thumbnailRatio = config.thumbnailRatio || 1;
 
     this.resetUrls();
     this.updateSharpParams();
@@ -389,10 +390,11 @@ class GalleryItem {
 
   get thumbnail_url() {
     if (!this.urls.thumbnail_url) {
+      const thumbnailHeight = this.thumbnailSize / this.thumbnailRatio;
       this.urls.thumbnail_url = this.processedMediaUrl(
         GALLERY_CONSTS.resizeMethods.FILL,
         this.thumbnailSize,
-        this.thumbnailSize,
+        thumbnailHeight,
         { quality: 70 }
       );
     }

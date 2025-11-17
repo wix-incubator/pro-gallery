@@ -23,18 +23,25 @@ class NavigationPanel extends React.Component {
     );
     const activeIndex = utils.inRange(this.props.activeIndex, clearedGalleryItems.length);
 
-    const { horizontalThumbnails, items, thumbnailsMargins, thumbnailsStyle, activeIndexOffsetMemory } =
-      thumbnailsLogic.getThumbnailsData({
-        items: this.props.items,
-        activeIndex,
-        options,
-        galleryStructure,
-        thumbnailAlignment,
-        containerHeight: this.props.container.height,
-        containerWidth: this.props.container.width,
-        activeIndexOffsetMemory: this.activeIndexOffsetMemory,
-        prevActiveIndex: this.prevActiveIndex,
-      });
+    const {
+      horizontalThumbnails,
+      items,
+      thumbnailsMargins,
+      thumbnailsStyle,
+      activeIndexOffsetMemory,
+      thumbnailWidth,
+      thumbnailHeight,
+    } = thumbnailsLogic.getThumbnailsData({
+      items: this.props.items,
+      activeIndex,
+      options,
+      galleryStructure,
+      thumbnailAlignment,
+      containerHeight: this.props.container.height,
+      containerWidth: this.props.container.width,
+      activeIndexOffsetMemory: this.activeIndexOffsetMemory,
+      prevActiveIndex: this.prevActiveIndex,
+    });
 
     this.prevActiveIndex = activeIndex;
     this.activeIndexOffsetMemory = activeIndexOffsetMemory;
@@ -72,8 +79,8 @@ class NavigationPanel extends React.Component {
           {items.map(({ thumbnailItem, location, idx }) => {
             const highlighted = idx === activeIndex % clearedGalleryItems.length;
             const itemStyle = {
-              width: options[optionsMap.layoutParams.thumbnails.size],
-              height: options[optionsMap.layoutParams.thumbnails.size],
+              width: thumbnailWidth,
+              height: thumbnailHeight,
               overflow: 'hidden',
               backgroundImage: `url(${thumbnailItem.createUrl(
                 GALLERY_CONSTS.urlSizes.THUMBNAIL,
