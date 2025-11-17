@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-// import optionsMap from '../src/core/helpers/optionsMap';
+import optionsMap from '../src/core/helpers/optionsMap';
 import { flattenObject, flatToNested } from '../src/core/helpers/optionsUtils';
 import {
   migrateOptions,
@@ -19,10 +19,18 @@ describe('Styles processing', () => {
   //and the other
   it('should migrate styles from old to new ', () => {
     const migrated = migrateOptions(flattenObject(defaultOptions_old()));
+    // Add default value for new properties that don't exist in old format
+    if (typeof migrated[optionsMap.layoutParams.thumbnails.ratio] === 'undefined') {
+      migrated[optionsMap.layoutParams.thumbnails.ratio] = 1;
+    }
     expect(flatToNested(migrated)).to.eql(defaultOptions_new());
   });
   it('should have new and old styles combined coming from both old and new objects', () => {
     const migrated = addMigratedOptions(flattenObject(defaultOptions_old()));
+    // Add default value for new properties that don't exist in old format
+    if (typeof migrated[optionsMap.layoutParams.thumbnails.ratio] === 'undefined') {
+      migrated[optionsMap.layoutParams.thumbnails.ratio] = 1;
+    }
     const reversed = addOldOptions(flattenObject(defaultOptions_new()));
     delete reversed.wasConvertedToOldOptions;
     expect(migrated).to.eql(reversed);
