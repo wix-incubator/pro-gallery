@@ -34,7 +34,6 @@ function reverseMigrateOptions(flatOptionsObject) {
     [...reversedLayoutParams].map((ele) => [...ele].reverse())
   );
   oldOptions = process_new_to_old_ThumbnailAlignment(oldOptions);
-  oldOptions = process_new_to_old_ThumbnailRatio(oldOptions);
   oldOptions = process_new_to_old_ScrollDirection(oldOptions);
   oldOptions = process_new_to_old_LayoutOrientation(oldOptions);
   oldOptions = process_new_to_old_groupsOrder(oldOptions);
@@ -85,12 +84,6 @@ function process_new_to_old_ThumbnailAlignment(obj) {
   let _obj = obj;
   _obj = namingChange(_obj, optionsMap.layoutParams.thumbnails.alignment, 'galleryThumbnailsAlignment');
   _obj['galleryThumbnailsAlignment'] = _obj['galleryThumbnailsAlignment']?.toLowerCase();
-  return _obj;
-}
-function process_new_to_old_ThumbnailRatio(obj) {
-  // Remove the ratio property as it doesn't exist in v3
-  let _obj = obj;
-  delete _obj[optionsMap.layoutParams.thumbnails.ratio];
   return _obj;
 }
 function process_new_to_old_targetItemSizeUnit(obj) {
