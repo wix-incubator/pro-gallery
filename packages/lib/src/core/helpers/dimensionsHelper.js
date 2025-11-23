@@ -115,10 +115,18 @@ class DimensionsHelper {
   }
 
   getThumbnailHeightDelta() {
+    const thumbnailSize = this.options[optionsMap.layoutParams.thumbnails.size];
+    const thumbnailRatio = this.options[optionsMap.layoutParams.thumbnails.ratio] || 1;
     switch (this.options[optionsMap.layoutParams.thumbnails.alignment]) {
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP:
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM:
-        return this.getThumbnailSize();
+        // For horizontal thumbnails: maintain width, adjust height
+        // Height = thumbnailSize / thumbnailRatio
+        return (
+          thumbnailSize / thumbnailRatio +
+          this.options[optionsMap.layoutParams.structure.gallerySpacing] +
+          this.options[optionsMap.layoutParams.thumbnails.marginToGallery]
+        );
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].RIGHT:
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT:
         return 0;
@@ -127,13 +135,21 @@ class DimensionsHelper {
     }
   }
   getThumbnailWidthDelta() {
+    const thumbnailSize = this.options[optionsMap.layoutParams.thumbnails.size];
+    const thumbnailRatio = this.options[optionsMap.layoutParams.thumbnails.ratio] || 1;
     switch (this.options[optionsMap.layoutParams.thumbnails.alignment]) {
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP:
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM:
         return 0;
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].RIGHT:
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT:
-        return this.getThumbnailSize();
+        // For vertical thumbnails: maintain height, adjust width
+        // Width = thumbnailSize * thumbnailRatio
+        return (
+          thumbnailSize * thumbnailRatio +
+          this.options[optionsMap.layoutParams.structure.gallerySpacing] +
+          this.options[optionsMap.layoutParams.thumbnails.marginToGallery]
+        );
       default:
         break;
     }

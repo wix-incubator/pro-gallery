@@ -74,4 +74,71 @@ describe('options - layoutParams_thumbnails_ratio', () => {
     expect(height).to.eq(100); // 200 / 2 = 100
     driver.detach.proGallery();
   });
+  it('should apply ratio to width for vertical thumbnails (LEFT placement)', async () => {
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
+      [optionsMap.layoutParams.thumbnails.size]: 120,
+      [optionsMap.layoutParams.thumbnails.ratio]: 1.333,
+      [optionsMap.layoutParams.thumbnails.alignment]: GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT,
+    });
+    driver.mount.proGallery(initialProps);
+    await driver.update();
+    const thumbnailItem = driver.find.selector('.thumbnailItem').at(0);
+    const { width, height } = thumbnailItem.props().style;
+    // For vertical thumbnails: maintain height, adjust width
+    expect(height).to.eq(120); // height stays constant
+    expect(width).to.be.closeTo(160, 1); // 120 * 1.333 ≈ 160
+    driver.detach.proGallery();
+  });
+  it('should apply ratio to width for vertical thumbnails (RIGHT placement)', async () => {
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
+      [optionsMap.layoutParams.thumbnails.size]: 120,
+      [optionsMap.layoutParams.thumbnails.ratio]: 0.75,
+      [optionsMap.layoutParams.thumbnails.alignment]:
+        GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].RIGHT,
+    });
+    driver.mount.proGallery(initialProps);
+    await driver.update();
+    const thumbnailItem = driver.find.selector('.thumbnailItem').at(0);
+    const { width, height } = thumbnailItem.props().style;
+    // For vertical thumbnails: maintain height, adjust width
+    expect(height).to.eq(120); // height stays constant
+    expect(width).to.be.closeTo(90, 1); // 120 * 0.75 = 90
+    driver.detach.proGallery();
+  });
+  it('should apply ratio to height for horizontal thumbnails (TOP placement)', async () => {
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
+      [optionsMap.layoutParams.thumbnails.size]: 120,
+      [optionsMap.layoutParams.thumbnails.ratio]: 1.333,
+      [optionsMap.layoutParams.thumbnails.alignment]: GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP,
+    });
+    driver.mount.proGallery(initialProps);
+    await driver.update();
+    const thumbnailItem = driver.find.selector('.thumbnailItem').at(0);
+    const { width, height } = thumbnailItem.props().style;
+    // For horizontal thumbnails: maintain width, adjust height
+    expect(width).to.eq(120); // width stays constant
+    expect(height).to.be.closeTo(90, 1); // 120 / 1.333 ≈ 90
+    driver.detach.proGallery();
+  });
+  it('should apply ratio of 0.5625 (9:16 portrait thumbnails)', async () => {
+    initialProps.options = Object.assign(initialProps.options, {
+      [optionsMap.layoutParams.structure.galleryLayout]:
+        GALLERY_CONSTS[optionsMap.layoutParams.structure.galleryLayout].THUMBNAIL,
+      [optionsMap.layoutParams.thumbnails.size]: 120,
+      [optionsMap.layoutParams.thumbnails.ratio]: 9 / 16,
+    });
+    driver.mount.proGallery(initialProps);
+    await driver.update();
+    const thumbnailItem = driver.find.selector('.thumbnailItem').at(0);
+    const { width, height } = thumbnailItem.props().style;
+    expect(width).to.eq(120);
+    expect(height).to.be.closeTo(213.33, 1); // 120 / (9/16) = 120 / 0.5625 ≈ 213.33
+    driver.detach.proGallery();
+  });
 });
