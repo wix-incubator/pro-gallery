@@ -75,17 +75,15 @@ function getThumbnailsData({
     console.log('creating thumbnails for idx', activeIndex);
   }
 
-  const withInfiniteScroll = false; // this is not supported yet
+  const withInfiniteScroll = false;
   const thumbnailSize = options[optionsMap.layoutParams.thumbnails.size];
   const thumbnailRatio = options[optionsMap.layoutParams.thumbnails.ratio] || 1;
   const horizontalThumbnails =
     thumbnailAlignment === GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM ||
     thumbnailAlignment === GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP;
 
-  // For horizontal thumbnails (top/bottom): maintain width, adjust height
-  // For vertical thumbnails (left/right): maintain height, adjust width
-  const thumbnailWidth = horizontalThumbnails ? thumbnailSize : thumbnailSize * thumbnailRatio;
-  const thumbnailHeight = horizontalThumbnails ? thumbnailSize / thumbnailRatio : thumbnailSize;
+  const thumbnailWidth = horizontalThumbnails ? thumbnailSize * thumbnailRatio : thumbnailSize;
+  const thumbnailHeight = horizontalThumbnails ? thumbnailSize : thumbnailSize / thumbnailRatio;
   const thumbnailWidthWithSpacing = thumbnailWidth + options[optionsMap.layoutParams.thumbnails.spacing];
   const thumbnailHeightWithSpacing = thumbnailHeight + options[optionsMap.layoutParams.thumbnails.spacing];
   const { width, height } = getThumbnailsContainerSize({
