@@ -24,6 +24,7 @@ function addOldOptions(flatOptions) {
 
 function reverseMigrateOptions(flatOptionsObject) {
   let oldOptions = { ...flatOptionsObject };
+  delete oldOptions[optionsMap.layoutParams.thumbnails.ratio]; // Remove new-only property that doesn't exist in old format
   ///----------- LAYOUT -------------///
   oldOptions = changeNames(
     oldOptions,
