@@ -198,9 +198,8 @@ function getNumberOfThumbnails({
 }) {
   if (horizontalThumbnails) {
     return Math.ceil(width / thumbnailWidth);
-  } else {
-    return Math.ceil(height / thumbnailHeight);
   }
+  return Math.ceil(height / thumbnailHeight);
 }
 
 function getThumbnailsStyles({
