@@ -106,19 +106,16 @@ class DimensionsHelper {
     });
   }
 
-  getThumbnailSize() {
-    const fixedThumbnailSize =
-      this.options[optionsMap.layoutParams.thumbnails.size] +
-      this.options[optionsMap.layoutParams.structure.gallerySpacing] +
-      this.options[optionsMap.layoutParams.thumbnails.marginToGallery];
-    return fixedThumbnailSize;
-  }
-
   getThumbnailHeightDelta() {
+    const thumbnailSize = this.options[optionsMap.layoutParams.thumbnails.size];
     switch (this.options[optionsMap.layoutParams.thumbnails.alignment]) {
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP:
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM:
-        return this.getThumbnailSize();
+        return (
+          thumbnailSize +
+          this.options[optionsMap.layoutParams.structure.gallerySpacing] +
+          this.options[optionsMap.layoutParams.thumbnails.marginToGallery]
+        );
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].RIGHT:
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT:
         return 0;
@@ -127,13 +124,18 @@ class DimensionsHelper {
     }
   }
   getThumbnailWidthDelta() {
+    const thumbnailSize = this.options[optionsMap.layoutParams.thumbnails.size];
     switch (this.options[optionsMap.layoutParams.thumbnails.alignment]) {
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].TOP:
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].BOTTOM:
         return 0;
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].RIGHT:
       case GALLERY_CONSTS[optionsMap.layoutParams.thumbnails.alignment].LEFT:
-        return this.getThumbnailSize();
+        return (
+          thumbnailSize +
+          this.options[optionsMap.layoutParams.structure.gallerySpacing] +
+          this.options[optionsMap.layoutParams.thumbnails.marginToGallery]
+        );
       default:
         break;
     }
