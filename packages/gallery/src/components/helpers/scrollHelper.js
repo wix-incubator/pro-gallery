@@ -114,7 +114,7 @@ export function scrollToGroupImp(scrollParams) {
     scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL &&
     horizontalElement
   ) {
-    from = horizontalElement.scrollLeft;
+    from = horizontalElement.scrollLeft * rtlFix;
     to = from + (groupIdx * galleryWidth) / 2;
     // console.log('[RTL SCROLL] scrollTogroupImp: ', from, to);
   } else {
@@ -150,6 +150,7 @@ export function scrollToGroupImp(scrollParams) {
       to = Math.max(0, to);
       to = Math.min(to, totalWidth - galleryWidth + scrollMarginCorrection);
       to *= rtlFix;
+      from *= rtlFix;
       if (utils.isVerbose()) {
         console.log('Scrolling to new position ' + to, this);
       }
@@ -279,9 +280,27 @@ function horizontalCssScrollTo({
       }
     );
     scroller.style.removeProperty('scroll-snap-type');
-    scroller.scrollLeft = to;
-    scroller.setAttribute('data-scrolling', '');
-    scrollDeffered.resolve(to);
+
+    // Fix for Safari iOS RTL flickering issue (PG-1152)
+    // Safari iOS doesn't handle negative scrollLeft values well in RTL mode
+    // when combined with transforms, causing flickering
+    // Use double requestAnimationFrame to ensure transform is fully reset before setting scrollLeft
+    const scrollLeftValue = isRTL && utils.isiOS() ? Math.abs(to) : to;
+
+    if (isRTL && utils.isiOS()) {
+      // Double RAF ensures the transform reset is fully painted before setting scrollLeft
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          scroller.scrollLeft = scrollLeftValue;
+          scroller.setAttribute('data-scrolling', '');
+          scrollDeffered.resolve(to);
+        });
+      });
+    } else {
+      scroller.scrollLeft = scrollLeftValue;
+      scroller.setAttribute('data-scrolling', '');
+      scrollDeffered.resolve(to);
+    }
   }, duration);
 
   return {
@@ -312,7 +331,11 @@ function animateStopScroll({ scroller, at, isRTL }) {
       transform: `translateX(0px)`,
     }
   );
-  scroller.scrollLeft = at;
+
+  // Fix for Safari iOS RTL flickering issue (PG-1152)
+  // Safari iOS doesn't handle negative scrollLeft values well in RTL mode
+  const scrollLeftValue = isRTL && utils.isiOS() ? Math.abs(at) : at;
+  scroller.scrollLeft = scrollLeftValue;
   scrollDeffered.resolve(at);
 
   return {

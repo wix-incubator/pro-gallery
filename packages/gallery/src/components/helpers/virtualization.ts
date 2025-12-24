@@ -28,10 +28,12 @@ export function getItemsInViewportOrMarginByActiveGroup({
   } = virtualizationSettings || {};
 
   const isHorizontal =
-    options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
+    (options as any).scrollDirection ===
+    (GALLERY_CONSTS as any).scrollDirection.HORIZONTAL;
   const isScrollable =
     !isHorizontal ||
-    options.slideAnimation === GALLERY_CONSTS.slideAnimations.SCROLL;
+    (options as any).slideAnimation ===
+      (GALLERY_CONSTS as any).slideAnimations.SCROLL;
   const getFallbackGroups = () => {
     return groups.map((group) => ({
       group,
@@ -130,7 +132,8 @@ export function getItemsInViewportOrMarginByScrollLocation({
 
   try {
     const isHorizontal =
-      options.scrollDirection === GALLERY_CONSTS.scrollDirection.HORIZONTAL;
+      (options as any).scrollDirection ===
+      (GALLERY_CONSTS as any).scrollDirection.HORIZONTAL;
     const size = isHorizontal ? galleryWidth : galleryHeight;
     const unit = isHorizontal ? 'width' : 'height';
 

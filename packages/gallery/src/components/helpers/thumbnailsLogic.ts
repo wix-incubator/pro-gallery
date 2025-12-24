@@ -77,7 +77,7 @@ export function getThumbnailsData({
     prevActiveIndex,
   });
   const activeIndexWithOffset = activeIndexOffsetMemory! + activeIndex;
-  const { thumbnailSize, isRTL, thumbnailSpacings } = options;
+  const { thumbnailSize, isRTL, thumbnailSpacings } = options as any;
 
   if (utils.isVerbose()) {
     console.log('creating thumbnails for idx', activeIndex);
@@ -86,8 +86,8 @@ export function getThumbnailsData({
   const withInfiniteScroll = false; // this is not supported yet
   const thumbnailSizeWithSpacing = thumbnailSize + thumbnailSpacings * 2;
   const horizontalThumbnails =
-    thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM ||
-    thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.TOP;
+    thumbnailAlignment === (GALLERY_CONSTS as any).thumbnailsAlignment.BOTTOM ||
+    thumbnailAlignment === (GALLERY_CONSTS as any).thumbnailsAlignment.TOP;
   const { width, height } = getThumbnailsContainerSize({
     horizontalThumbnails,
     containerWidth,
@@ -236,16 +236,18 @@ function getThumbnailsContainerMargin({
   thumbnailSpacings: number;
 }) {
   const horizontalThumbnails =
-    thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM ||
-    thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.TOP;
+    thumbnailAlignment === (GALLERY_CONSTS as any).thumbnailsAlignment.BOTTOM ||
+    thumbnailAlignment === (GALLERY_CONSTS as any).thumbnailsAlignment.TOP;
   if (horizontalThumbnails) {
-    const isTop = thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.TOP;
+    const isTop =
+      thumbnailAlignment === (GALLERY_CONSTS as any).thumbnailsAlignment.TOP;
     return {
       marginTop: isTop ? 0 : thumbnailSpacings,
       marginBottom: isTop ? thumbnailSpacings : 0,
     };
   }
-  const isLeft = thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.LEFT;
+  const isLeft =
+    thumbnailAlignment === (GALLERY_CONSTS as any).thumbnailsAlignment.LEFT;
   return {
     marginLeft: isLeft ? 0 : thumbnailSpacings,
     marginRight: isLeft ? thumbnailSpacings : 0,
@@ -264,8 +266,8 @@ function getThumbnailLocation({
   isRTL: boolean;
 }) {
   const horizontalThumbnails =
-    thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.BOTTOM ||
-    thumbnailAlignment === GALLERY_CONSTS.thumbnailsAlignment.TOP;
+    thumbnailAlignment === (GALLERY_CONSTS as any).thumbnailsAlignment.BOTTOM ||
+    thumbnailAlignment === (GALLERY_CONSTS as any).thumbnailsAlignment.TOP;
   const offsetSize = offset * thumbnailSizeWithSpacing;
   if (horizontalThumbnails) {
     return {
