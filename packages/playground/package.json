@@ -6,13 +6,13 @@
     "watch": "sleep 10 && node scripts/start.js",
     "start": "PORT=3006 node scripts/start.js",
     "build": "node scripts/build.js",
-    "unit": "npm run test:esm && npm run test:cjs && node scripts/test.js",
+    "unit": "yarn test:esm && yarn test:cjs && node scripts/test.js",
     "test:esm": "node scripts/test-progallery.mjs",
     "test:cjs": "node scripts/test-progallery.cjs",
     "test": "echo 'no test in wix CI'",
     "deploy": "node scripts/build.js",
     "lint": "eslint src/**/*.js",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "yarn lint -- --fix",
     "start-playground": "node scripts/start.js"
   },
   "dependencies": {

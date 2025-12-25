@@ -1,7 +1,6 @@
 {
   "name": "pro-gallery-lib",
   "version": "5.0.147",
-  "private": false,
   "author": {
     "name": "Rita Bazak",
     "email": "ritab@wix.com"
@@ -27,12 +26,12 @@
   "scripts": {
     "watch": "tsc -w",
     "start": "tsc -w -p tsconfig-dev.json",
-    "build": "npm run generateValidationFunction && tsc -p tsconfig-cjs.json && tsc && cp ../../scripts/esm_package.json dist/esm/package.json",
+    "build": "yarn generateValidationFunction && tsc -p tsconfig-cjs.json && tsc && cp ../../scripts/esm_package.json dist/esm/package.json",
     "generateValidationFunction": "node buildScripts/buildRuntimeValidateFunctionFromTypes.js",
     "unit": "NODE_OPTIONS=\"--import=tsx\" mocha test/*.spec.*",
     "test": "echo 'no test in wix CI'",
     "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "yarn lint -- --fix"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "6.12.0",
