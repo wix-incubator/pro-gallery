@@ -21,13 +21,13 @@ jobs:
       matrix:
         node-version: [22.10.0]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
     - name: Install and run lint
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - run: yarn install
+    - run: NPQ_PKG_MGR=yarn npx npq install
     - run: yarn lint
 
   tests:
@@ -38,13 +38,13 @@ jobs:
         test-script: ["ci:test-unit", "ci:test-e2e-layouts","ci:test-e2e-styleParams", "ci:test-e2e-integration"]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
     - name: Install, build and run test
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - run: yarn install
+    - run: NPQ_PKG_MGR=yarn npx npq install
     - run: yarn build
     - run: yarn ${{ matrix.test-script }}
       env:
@@ -59,17 +59,17 @@ jobs:
       matrix:
         node-version: [22.10.0]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
       with:
         token: ${{ secrets.PAT_TOKEN }}
         fetch-depth: 0
     - name: Install, build, configure git and lerna publish
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
         registry-url: 'https://registry.npmjs.org'
-    - run: yarn install
+    - run: NPQ_PKG_MGR=yarn npx npq install
     - run: git checkout -- package.json
     - run: yarn build --if-present
     - run: |
@@ -105,14 +105,14 @@ jobs:
       matrix:
         node-version: [22.10.0]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
     - name: update-playground
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
         registry-url: 'https://registry.npmjs.org'
-    - run: yarn install
+    - run: NPQ_PKG_MGR=yarn npx npq install
     - run: yarn build --if-present
     - run: node scripts/deployToSurge
       env:
