@@ -28,9 +28,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
     - run: NPQ_PKG_MGR=yarn npx npq install
-      env:
-        NODE_OPTIONS: --no-network-family-autoselection
-    - run: git checkout -- yarn.lock
     - run: yarn lint
 
   tests:
@@ -48,9 +45,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
     - run: NPQ_PKG_MGR=yarn npx npq install
-      env:
-        NODE_OPTIONS: --no-network-family-autoselection
-    - run: git checkout -- yarn.lock
     - run: yarn build
     - run: yarn ${{ matrix.test-script }}
       env:
@@ -76,9 +70,6 @@ jobs:
         cache: 'yarn'
         registry-url: 'https://registry.npmjs.org'
     - run: NPQ_PKG_MGR=yarn npx npq install
-      env:
-        NODE_OPTIONS: --no-network-family-autoselection
-    - run: git checkout -- yarn.lock
     - run: yarn build --if-present
     - run: |
         git config --global user.email "octocat@github.com"
@@ -121,9 +112,6 @@ jobs:
         cache: 'yarn'
         registry-url: 'https://registry.npmjs.org'
     - run: NPQ_PKG_MGR=yarn npx npq install
-      env:
-        NODE_OPTIONS: --no-network-family-autoselection
-    - run: git checkout -- yarn.lock
     - run: yarn build --if-present
     - run: node scripts/deployToSurge
       env:
