@@ -30,13 +30,16 @@ jobs:
     - run: NPQ_PKG_MGR=yarn npx npq install
     - name: Debug Installation
       run: |
-        echo -e "\033[1;34m>>> Checking Yarn Version <<<\033[0m"
-        yarn --version
-        echo -e "\033[1;34m>>> Checking for node_modules <<<\033[0m"
-        ls -d node_modules || echo "node_modules NOT FOUND"
-        echo -e "\033[1;34m>>> Checking for Yarn State File <<<\033[0m"
-        ls -l .yarn/install-state.gz || echo "Yarn state file NOT FOUND"
-        echo -e "\033[1;34m>>> Checking for lockfile changes <<<\033[0m"
+        echo -e "\033[1;34m>>> Active Yarn Configuration <<<\033[0m"
+        yarn config get nodeLinker
+        yarn config get cacheFolder
+        echo -e "\033[1;34m>>> Checking for PnP files <<<\033[0m"
+        ls -a .pnp.* || echo "No PnP files found"
+        echo -e "\033[1;34m>>> Checking root directory structure <<<\033[0m"
+        ls -F
+        echo -e "\033[1;34m>>> Checking for node_modules in packages <<<\033[0m"
+        find packages -name "node_modules" -type d -maxdepth 2
+        echo -e "\033[1;34m>>> Checking lockfile changes <<<\033[0m"
         git status
     - run: yarn lint
 
