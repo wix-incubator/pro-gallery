@@ -38,7 +38,6 @@ jobs:
         ls -l .yarn/install-state.gz || echo "Yarn state file NOT FOUND"
         echo -e "\033[1;34m>>> Checking for lockfile changes <<<\033[0m"
         git status
-    - run: git checkout -- yarn.lock
     - run: yarn lint
 
   tests:
@@ -87,7 +86,6 @@ jobs:
         cache: 'yarn'
         registry-url: 'https://registry.npmjs.org'
     - run: NPQ_PKG_MGR=yarn npx npq install
-    - run: git checkout -- package.json
     - run: yarn build --if-present
     - run: |
         git config --global user.email "octocat@github.com"
