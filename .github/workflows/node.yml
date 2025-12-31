@@ -28,6 +28,17 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
     - run: NPQ_PKG_MGR=yarn npx npq install
+    - name: Debug Installation
+      run: |
+        echo -e "\033[1;34m>>> Checking Yarn Version <<<\033[0m"
+        yarn --version
+        echo -e "\033[1;34m>>> Checking for node_modules <<<\033[0m"
+        ls -d node_modules || echo "node_modules NOT FOUND"
+        echo -e "\033[1;34m>>> Checking for Yarn State File <<<\033[0m"
+        ls -l .yarn/install-state.gz || echo "Yarn state file NOT FOUND"
+        echo -e "\033[1;34m>>> Checking for lockfile changes <<<\033[0m"
+        git status
+    - run: git checkout -- yarn.lock
     - run: yarn lint
 
   tests:
@@ -45,6 +56,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
     - run: NPQ_PKG_MGR=yarn npx npq install
+    - name: Debug Installation
+      run: |
+        echo -e "\033[1;35m>>> [TEST JOB] Checking node_modules <<<\033[0m"
+        ls -d node_modules || echo "node_modules NOT FOUND"
+        echo -e "\033[1;35m>>> [TEST JOB] Checking Yarn State File <<<\033[0m"
+        ls -l .yarn/install-state.gz || echo "Yarn state file NOT FOUND"
     - run: yarn build
     - run: yarn ${{ matrix.test-script }}
       env:
@@ -70,6 +87,7 @@ jobs:
         cache: 'yarn'
         registry-url: 'https://registry.npmjs.org'
     - run: NPQ_PKG_MGR=yarn npx npq install
+    - run: git checkout -- package.json
     - run: yarn build --if-present
     - run: |
         git config --global user.email "octocat@github.com"
