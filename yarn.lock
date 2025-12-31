@@ -9849,7 +9849,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eventemitter3@npm:^4.0.0, eventemitter3@npm:^4.0.3, eventemitter3@npm:^4.0.4":
+"eventemitter3@npm:^4.0.0, eventemitter3@npm:^4.0.4":
   version: 4.0.7
   resolution: "eventemitter3@npm:4.0.7::__archiveUrl=https%3A%2F%2Fnpm.dev.wixpress.com%2Fapi%2Fnpm%2Fnpm-repos%2Feventemitter3%2F-%2Feventemitter3-4.0.7.tgz"
   checksum: 10c0/5f6d97cbcbac47be798e6355e3a7639a84ee1f7d9b199a07017f1d2f1e2fe236004d14fa5dfaeba661f94ea57805385e326236a6debbc7145c8877fbc0297c6b
@@ -11518,16 +11518,6 @@ __metadata:
   version: 1.0.0
   resolution: "highlightjs-vue@npm:1.0.0::__archiveUrl=https%3A%2F%2Fnpm.dev.wixpress.com%2Fapi%2Fnpm%2Fnpm-repos%2Fhighlightjs-vue%2F-%2Fhighlightjs-vue-1.0.0.tgz"
   checksum: 10c0/9be378c70b864ca5eee87b07859222e31c946a8ad176227e54f7006a498223974ebe19fcce6e38ad5eb3c1ed0e16a580c4edefdf2cb882b6dfab1c3866cc047a
-  languageName: node
-  linkType: hard
-
-"hls.js@npm:^0.14.12":
-  version: 0.14.17
-  resolution: "hls.js@npm:0.14.17::__archiveUrl=https%3A%2F%2Fnpm.dev.wixpress.com%2Fapi%2Fnpm%2Fnpm-repos%2Fhls.js%2F-%2Fhls.js-0.14.17.tgz"
-  dependencies:
-    eventemitter3: "npm:^4.0.3"
-    url-toolkit: "npm:^2.1.6"
-  checksum: 10c0/d8a3f09dbcd72e15a5b6562b21fe29904410a1f56dcba5a03dab3cd253871d051231dfaef89d4297732652b999640b4adc1dfba5d7fbe790331184fd6d0521a3
   languageName: node
   linkType: hard
 
@@ -18272,15 +18262,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"pro-gallery-lib@npm:3.1.37":
-  version: 3.1.37
-  resolution: "pro-gallery-lib@npm:3.1.37::__archiveUrl=https%3A%2F%2Fnpm.dev.wixpress.com%2Fapi%2Fnpm%2Fnpm-repos%2Fpro-gallery-lib%2F-%2Fpro-gallery-lib-3.1.37.tgz"
-  dependencies:
-    pro-layouts: "npm:3.1.37"
-  checksum: 10c0/7da23aa35ca57cbf2b3a4bc03fefab23118a9b13c611859705f1f2f988df9aca87057645d6083e722c3d145bc97b326ea9d9a12ac591f9016776b50ea388a166
-  languageName: node
-  linkType: hard
-
 "pro-gallery-lib@npm:4.1.205, pro-gallery-lib@workspace:packages/lib":
   version: 0.0.0-use.local
   resolution: "pro-gallery-lib@workspace:packages/lib"
@@ -18316,7 +18297,6 @@ __metadata:
     lint-staged: "npm:^10.5.2"
     lodash: "npm:^4.17.21"
     prettier: "npm:^2.1.2"
-    pro-gallery: "npm:3.1.38"
     prompt: "npm:^1.0.0"
     semver: "npm:^6.3.0"
     set-value: "npm:^4.1.0"
@@ -18326,22 +18306,6 @@ __metadata:
       optional: true
   languageName: unknown
   linkType: soft
-
-"pro-gallery@npm:3.1.38":
-  version: 3.1.38
-  resolution: "pro-gallery@npm:3.1.38::__archiveUrl=https%3A%2F%2Fnpm.dev.wixpress.com%2Fapi%2Fnpm%2Fnpm-repos%2Fpro-gallery%2F-%2Fpro-gallery-3.1.38.tgz"
-  dependencies:
-    "@vimeo/player": "npm:2.8.2"
-    hls.js: "npm:^0.14.12"
-    pro-gallery-lib: "npm:3.1.37"
-    pro-layouts: "npm:3.1.37"
-    react-player: "npm:^2.6.2"
-  peerDependencies:
-    react: ^16.8.6
-    react-dom: ^16.8.6
-  checksum: 10c0/306b53afa02a13aeed4bbb6406a2424fc6925e8523d9ca92f38c5c3c143639b8d8450c1d1a1d40612f2d9bcd743aa0deb2e5302e0bec7a746bb8b3229c50ec4d
-  languageName: node
-  linkType: hard
 
 "pro-gallery@npm:4.1.212, pro-gallery@workspace:packages/gallery":
   version: 0.0.0-use.local
@@ -18386,13 +18350,6 @@ __metadata:
     react-dom: ^16.8.6
   languageName: unknown
   linkType: soft
-
-"pro-layouts@npm:3.1.37":
-  version: 3.1.37
-  resolution: "pro-layouts@npm:3.1.37::__archiveUrl=https%3A%2F%2Fnpm.dev.wixpress.com%2Fapi%2Fnpm%2Fnpm-repos%2Fpro-layouts%2F-%2Fpro-layouts-3.1.37.tgz"
-  checksum: 10c0/2ddeec6314ba41f257925e50b1f1b563d4aa1031d8976ab40b51a21b9f6a8fe75b70e6a86b2258108d8276ae9b84c7d66599b4dd34bd25ffda44ef301d3828f1
-  languageName: node
-  linkType: hard
 
 "pro-layouts@npm:4.1.205, pro-layouts@workspace:packages/layouts":
   version: 0.0.0-use.local
@@ -23109,13 +23066,6 @@ __metadata:
     querystringify: "npm:^2.1.1"
     requires-port: "npm:^1.0.0"
   checksum: 10c0/bd5aa9389f896974beb851c112f63b466505a04b4807cea2e5a3b7092f6fbb75316f0491ea84e44f66fed55f1b440df5195d7e3a8203f64fcefa19d182f5be87
-  languageName: node
-  linkType: hard
-
-"url-toolkit@npm:^2.1.6":
-  version: 2.2.5
-  resolution: "url-toolkit@npm:2.2.5::__archiveUrl=https%3A%2F%2Fnpm.dev.wixpress.com%2Fapi%2Fnpm%2Fnpm-repos%2Furl-toolkit%2F-%2Furl-toolkit-2.2.5.tgz"
-  checksum: 10c0/758d1921988661beec9e5bbc49447470cef0979b30a69002f0c357d393f23f22c257cf863893411e5ad1f3a7e7e8c17d057653f965afcd1c8f85583abeb9eca4
   languageName: node
   linkType: hard
 
