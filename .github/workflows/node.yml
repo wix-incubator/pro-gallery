@@ -1,4 +1,4 @@
-# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node.
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
 name: Test
@@ -27,38 +27,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - name: 🔍 System Information
-      run: |
-        echo -e "\033[1;34m>>> Node Version <<<\033[0m"
-        node -v
-        echo -e "\033[1;34m>>> Yarn Version <<<\033[0m"
-        yarn -v
-        echo -e "\033[1;34m>>> Workspace Root <<<\033[0m"
-        ls -F
-    - name: Install dependencies
-      env:
-        NODE_OPTIONS: "--no-network-family-autoselection"
-      run: NPQ_PKG_MGR=yarn npx npq install
-    - name: 💡 Post-Installation Audit
-      if: always()
-      run: |
-        echo -e "\033[1;36m>>> Checking for node_modules <<<\033[0m"
-        if [ -d "node_modules" ]; then
-          echo -e "\033[1;32m✅ node_modules directory exists\033[0m"
-          ls -F node_modules | head -n 10
-        else
-          echo -e "\033[1;31m❌ node_modules directory IS MISSING\033[0m"
-        fi
-        
-        echo -e "\033[1;36m>>> Checking for Yarn State File <<<\033[0m"
-        if [ -f ".yarn/install-state.gz" ]; then
-          echo -e "\033[1;32m✅ Yarn state file exists\033[0m"
-          ls -l .yarn/install-state.gz
-        else
-          echo -e "\033[1;31m❌ Yarn state file IS MISSING\033[0m"
-        fi
-    - name: Revert lockfile changes
-      run: git checkout -- yarn.lock
+    - run: NPQ_PKG_MGR=yarn npx npq install
     - run: yarn lint
 
   tests:
@@ -75,12 +44,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - name: Install dependencies
-      env:
-        NODE_OPTIONS: "--no-network-family-autoselection"
-      run: NPQ_PKG_MGR=yarn npx npq install
-    - name: Revert lockfile changes
-      run: git checkout -- yarn.lock
+    - run: NPQ_PKG_MGR=yarn npx npq install
     - run: yarn build
     - run: yarn ${{ matrix.test-script }}
       env:
@@ -105,12 +69,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
         registry-url: 'https://registry.npmjs.org'
-    - name: Install dependencies
-      env:
-        NODE_OPTIONS: "--no-network-family-autoselection"
-      run: NPQ_PKG_MGR=yarn npx npq install
-    - name: Revert lockfile changes
-      run: git checkout -- yarn.lock
+    - run: NPQ_PKG_MGR=yarn npx npq install
+    - run: git checkout -- package.json
     - run: yarn build --if-present
     - run: |
         git config --global user.email "octocat@github.com"
@@ -152,12 +112,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
         registry-url: 'https://registry.npmjs.org'
-    - name: Install dependencies
-      env:
-        NODE_OPTIONS: "--no-network-family-autoselection"
-      run: NPQ_PKG_MGR=yarn npx npq install
-    - name: Revert lockfile changes
-      run: git checkout -- yarn.lock
+    - run: NPQ_PKG_MGR=yarn npx npq install
     - run: yarn build --if-present
     - run: node scripts/deployToSurge
       env:
