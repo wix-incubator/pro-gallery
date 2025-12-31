@@ -27,20 +27,38 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - run: NPQ_PKG_MGR=yarn npx npq install
-    - name: Debug Installation
+    - name: 🔍 System Information
       run: |
-        echo -e "\033[1;34m>>> Active Yarn Configuration <<<\033[0m"
-        yarn config get nodeLinker
-        yarn config get cacheFolder
-        echo -e "\033[1;34m>>> Checking for PnP files <<<\033[0m"
-        ls -a .pnp.* || echo "No PnP files found"
-        echo -e "\033[1;34m>>> Checking root directory structure <<<\033[0m"
+        echo -e "\033[1;34m>>> Node Version <<<\033[0m"
+        node -v
+        echo -e "\033[1;34m>>> Yarn Version <<<\033[0m"
+        yarn -v
+        echo -e "\033[1;34m>>> Workspace Root <<<\033[0m"
         ls -F
-        echo -e "\033[1;34m>>> Checking for node_modules in packages <<<\033[0m"
-        find packages -name "node_modules" -type d -maxdepth 2
-        echo -e "\033[1;34m>>> Checking lockfile changes <<<\033[0m"
-        git status
+    - name: Install dependencies
+      env:
+        NODE_OPTIONS: "--no-network-family-autoselection"
+      run: NPQ_PKG_MGR=yarn npx npq install
+    - name: 💡 Post-Installation Audit
+      if: always()
+      run: |
+        echo -e "\033[1;36m>>> Checking for node_modules <<<\033[0m"
+        if [ -d "node_modules" ]; then
+          echo -e "\033[1;32m✅ node_modules directory exists\033[0m"
+          ls -F node_modules | head -n 10
+        else
+          echo -e "\033[1;31m❌ node_modules directory IS MISSING\033[0m"
+        fi
+        
+        echo -e "\033[1;36m>>> Checking for Yarn State File <<<\033[0m"
+        if [ -f ".yarn/install-state.gz" ]; then
+          echo -e "\033[1;32m✅ Yarn state file exists\033[0m"
+          ls -l .yarn/install-state.gz
+        else
+          echo -e "\033[1;31m❌ Yarn state file IS MISSING\033[0m"
+        fi
+    - name: Revert lockfile changes
+      run: git checkout -- yarn.lock
     - run: yarn lint
 
   tests:
@@ -57,13 +75,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - run: NPQ_PKG_MGR=yarn npx npq install
-    - name: Debug Installation
-      run: |
-        echo -e "\033[1;35m>>> [TEST JOB] Checking node_modules <<<\033[0m"
-        ls -d node_modules || echo "node_modules NOT FOUND"
-        echo -e "\033[1;35m>>> [TEST JOB] Checking Yarn State File <<<\033[0m"
-        ls -l .yarn/install-state.gz || echo "Yarn state file NOT FOUND"
+    - name: Install dependencies
+      env:
+        NODE_OPTIONS: "--no-network-family-autoselection"
+      run: NPQ_PKG_MGR=yarn npx npq install
+    - name: Revert lockfile changes
+      run: git checkout -- yarn.lock
     - run: yarn build
     - run: yarn ${{ matrix.test-script }}
       env:
@@ -88,7 +105,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
         registry-url: 'https://registry.npmjs.org'
-    - run: NPQ_PKG_MGR=yarn npx npq install
+    - name: Install dependencies
+      env:
+        NODE_OPTIONS: "--no-network-family-autoselection"
+      run: NPQ_PKG_MGR=yarn npx npq install
+    - name: Revert lockfile changes
+      run: git checkout -- yarn.lock
     - run: yarn build --if-present
     - run: |
         git config --global user.email "octocat@github.com"
@@ -130,7 +152,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
         registry-url: 'https://registry.npmjs.org'
-    - run: NPQ_PKG_MGR=yarn npx npq install
+    - name: Install dependencies
+      env:
+        NODE_OPTIONS: "--no-network-family-autoselection"
+      run: NPQ_PKG_MGR=yarn npx npq install
+    - name: Revert lockfile changes
+      run: git checkout -- yarn.lock
     - run: yarn build --if-present
     - run: node scripts/deployToSurge
       env:
