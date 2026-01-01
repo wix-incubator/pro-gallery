@@ -35,6 +35,7 @@
     "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
+    "@babel/preset-react": "^7.5.5",
     "@vimeo/player": "2.8.2",
     "hls.js": "^1.1.5",
     "pro-gallery-blueprints": "4.1.212",

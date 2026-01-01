@@ -1811,7 +1811,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-react@npm:^7.0.0":
+"@babel/preset-react@npm:^7.0.0, @babel/preset-react@npm:^7.5.5":
   version: 7.28.5
   resolution: "@babel/preset-react@npm:7.28.5"
   dependencies:
@@ -3232,8 +3232,8 @@ __metadata:
   linkType: hard
 
 "@nx/nx-linux-x64-gnu@npm:*":
-  version: 22.2.7
-  resolution: "@nx/nx-linux-x64-gnu@npm:22.2.7"
+  version: 22.3.1
+  resolution: "@nx/nx-linux-x64-gnu@npm:22.3.1"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
@@ -18293,6 +18293,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:7.16.7"
     "@babel/preset-env": "npm:^7.5.5"
+    "@babel/preset-react": "npm:^7.5.5"
     "@types/node": "npm:11.15.20"
     "@types/react": "npm:^16.14.6"
     "@typescript-eslint/eslint-plugin": "npm:^4.8.1"
