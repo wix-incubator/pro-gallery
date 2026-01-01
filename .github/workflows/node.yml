@@ -85,9 +85,12 @@ jobs:
       if: github.event_name == 'push'
       run: |
         git checkout ${{ github.ref_name }}
-        lerna publish patch --exact  --yes --dist-tag stable --registry https://registry.npmjs.org
+        lerna publish patch --exact  --yes --dist-tag stable --registry https://registry.npmjs.org --verbose
         yarn changelog
       env:
+        NPM_CONFIG_LOGLEVEL: silly  # Increases npm logging verbosity
+        LERNA_LOG_LEVEL: silly      # Increases lerna logging verbosity
+        NODE_ENV: development       # Optional: Ensures full stack traces if needed
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
     - name: Push to pull request
