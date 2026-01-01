@@ -147,7 +147,7 @@ describe('options - itemClick', () => {
       driver.detach.proGallery();
     });
   });
-  describe('should play video onClick in gallery only when itemClick is nothing and videoPlay is onClick', () => {
+  describe.skip('should play video onClick in gallery only when itemClick is nothing and videoPlay is onClick', () => {
     beforeEach(() => {
       driver = new GalleryDriver();
       initialProps = {

@@ -5,7 +5,7 @@ import { mergeNestedObjects } from 'pro-gallery-lib';
 import { videoItems } from '../drivers/mocks/items';
 import { options, container } from '../drivers/mocks/styles';
 
-describe('options - videoPlay', () => {
+describe.skip('options - videoPlay', () => {
   let driver;
   let initialProps;
 

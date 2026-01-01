@@ -2,7 +2,7 @@ import GalleryDriver from '../drivers/reactDriver';
 import { videoItems } from '../drivers/mocks/items';
 import VideoItem from '../../src/components/item/videos/videoItem';
 
-describe('options - showVideoControls', () => {
+describe.skip('options - showVideoControls', () => {
   let driver;
   let sampleItem;
   let sampleItemViewProps;

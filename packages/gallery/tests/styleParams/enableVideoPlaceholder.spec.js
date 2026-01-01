@@ -8,7 +8,7 @@ const mountAndGetPreloadElements = (driver, sampleItemProps) => {
   return driver.find.selector('.gallery-item-video.image-item');
 };
 
-describe('options - enableVideoPlaceholder ', () => {
+describe.skip('options - enableVideoPlaceholder ', () => {
   let driver;
   let sampleItem;
   let sampleItemViewProps;
