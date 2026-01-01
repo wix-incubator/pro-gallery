@@ -87,7 +87,7 @@
       "^.+\\.(js|jsx)$": "babel-jest"
     },
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!cheerio/)"
+      "node_modules/(?!cheerio)/"
     ],
     "testEnvironment": "jsdom",
     "moduleNameMapper": {
