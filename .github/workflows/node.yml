@@ -27,7 +27,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - run: NPQ_PKG_MGR=yarn npx npq install
+    - run: yes | NPQ_PKG_MGR=yarn npx --yes npq install
     - run: yarn lint
 
   tests:
@@ -44,7 +44,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - run: NPQ_PKG_MGR=yarn npx npq install
+    - run: yes | NPQ_PKG_MGR=yarn npx --yes npq install
     - run: yarn build
     - run: yarn ${{ matrix.test-script }}
       env:
@@ -69,7 +69,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
         registry-url: 'https://registry.npmjs.org'
-    - run: NPQ_PKG_MGR=yarn npx npq install
+    - run: yes | NPQ_PKG_MGR=yarn npx --yes npq install
     - run: git checkout -- package.json
     - run: yarn build
     - run: |
@@ -112,7 +112,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
         registry-url: 'https://registry.npmjs.org'
-    - run: NPQ_PKG_MGR=yarn npx npq install
+    - run: yes | NPQ_PKG_MGR=yarn npx --yes npq install
     - run: yarn build
     - run: node scripts/deployToSurge
       env:
