@@ -85,7 +85,7 @@ jobs:
       if: github.event_name == 'push'
       run: |
         git checkout ${{ github.ref_name }}
-        lerna publish patch --exact  --yes --dist-tag stable --registry https://registry.npmjs.org --verbose
+        lerna publish patch --exact  --yes --dist-tag stable --registry https://registry.npmjs.org
         yarn changelog
       env:
         NPM_CONFIG_LOGLEVEL: silly  # Increases npm logging verbosity
@@ -95,8 +95,9 @@ jobs:
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
     - name: Push to pull request
       if: github.event_name == 'pull_request' && github.actor != 'dependabot' 
-      run: lerna publish --canary --preid ${{ github.sha }} --yes --verbose
+      run: lerna publish --canary --preid ${{ github.sha }} --yes
       env:
+        LERNA_LOG_LEVEL: silly
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
 
