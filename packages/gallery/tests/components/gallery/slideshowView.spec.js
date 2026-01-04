@@ -13,9 +13,7 @@ describe('Slideshow View', () => {
   beforeEach(() => {
     driver = new GalleryDriver();
     initialGalleryViewProps = driver.props.galleryView();
-    initialGalleryViewProps.options = JSON.parse(
-      JSON.stringify(initialGalleryViewProps.options)
-    );
+    initialGalleryViewProps.options = JSON.parse(JSON.stringify(initialGalleryViewProps.options));
     Object.assign(initialGalleryViewProps.options, {
       [optionsMap.layoutParams.structure.scrollDirection]:
         GALLERY_CONSTS[optionsMap.layoutParams.structure.scrollDirection].HORIZONTAL,
