@@ -95,9 +95,15 @@ jobs:
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
     - name: Push to pull request
       if: github.event_name == 'pull_request' && github.actor != 'dependabot' 
-      run: lerna publish --canary --preid ${{ github.sha }} --yes
+      run: |
+        echo "Starting canary publish for pull request"
+        echo "GitHub SHA: ${{ github.sha }}"
+        echo "Current branch: ${{ github.head_ref }}"
+        lerna publish --canary --preid ${{ github.sha }} --yes
       env:
+        NPM_CONFIG_LOGLEVEL: silly
         LERNA_LOG_LEVEL: silly
+        NODE_ENV: development
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
 
