@@ -99,7 +99,7 @@ jobs:
         echo "Starting canary publish for pull request"
         echo "GitHub SHA: ${{ github.sha }}"
         echo "Current branch: ${{ github.head_ref }}"
-        lerna publish --canary --preid ${{ github.sha }} --yes
+        lerna publish --canary --preid ${{ github.sha }} --yes --loglevel silly
       env:
         NPM_CONFIG_LOGLEVEL: silly
         LERNA_LOG_LEVEL: silly
