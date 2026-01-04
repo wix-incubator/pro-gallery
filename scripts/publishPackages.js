@@ -1,19 +1,9 @@
 /* eslint-disable no-console */
 const execSync = require('child_process').execSync;
 const semver = require('semver');
-const { get, memoize } = require('lodash');
 const fs = require('fs');
 const path = require('path');
-
-// Simple color helpers (chalk v5 is ESM-only)
-const colors = {
-  red: (str) => `\x1b[31m${str}\x1b[0m`,
-  green: (str) => `\x1b[32m${str}\x1b[0m`,
-  yellow: (str) => `\x1b[33m${str}\x1b[0m`,
-  blue: (str) => `\x1b[34m${str}\x1b[0m`,
-  magenta: (str) => `\x1b[35m${str}\x1b[0m`,
-  bold: (str) => `\x1b[1m${str}\x1b[0m`,
-};
+const { get, memoize, colors } = require('./utils');
 
 function lernaPackages() {
   const packagesDir = path.join(__dirname, '../packages');
