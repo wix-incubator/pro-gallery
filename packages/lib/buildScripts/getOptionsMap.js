@@ -1,6 +1,7 @@
 module.exports = getOptionsMap;
 
-const _ = require('lodash');
+// Native replacement for lodash.clone (shallow clone)
+const clone = (obj) => (Array.isArray(obj) ? [...obj] : { ...obj });
 
 function getOptionsMap(schema) {
   let final = {};
@@ -9,7 +10,7 @@ function getOptionsMap(schema) {
 
   function traverseProperties(properties, schema, route) {
     for (const [key, value] of Object.entries(properties)) {
-      const newRoute = _.clone(route);
+      const newRoute = clone(route);
       newRoute.push(key);
       traverse(key, value, schema, newRoute);
     }

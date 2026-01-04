@@ -3,12 +3,8 @@ const { //v5 TODO check if this file is used...
     spawn,
     execSync
 } = require('child_process');
-const chalk = require('chalk');
 const prompt = require('prompt');
-const {
-    get,
-    memoize
-} = require('lodash');
+const { get, memoize, colors } = require('./utils');
 
 const PACKAGE = 'pro-gallery';
 const BUMP_TYPES = {
@@ -35,7 +31,7 @@ const getPackageDetails = memoize(() => {
         }));
     } catch (error) {
         if (!error.stdout.toString().includes('E404')) {
-            console.error(chalk.red(`\nError: ${error}`));
+            console.error(colors.red(`\nError: ${error}`));
         }
     }
 });
@@ -174,11 +170,11 @@ function getVersionBump() {
 }
 
 function fail(message) {
-    console.log(chalk.red('Not publishing new version, ' + message));
+    console.log(colors.red('Not publishing new version, ' + message));
 }
 
 function log(message) {
-    console.log(chalk.green(message));
+    console.log(colors.green(message));
 }
 
 function run() {

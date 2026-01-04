@@ -1,9 +1,31 @@
 /* eslint-disable no-console */
 const execSync = require('child_process').execSync;
-const chalk = require('chalk');
 const semver = require('semver');
-const { get, memoize } = require('lodash');
-const lernaPackages = require('lerna-packages');
+const fs = require('fs');
+const path = require('path');
+const { get, memoize, colors } = require('./utils');
+
+function lernaPackages() {
+  const packagesDir = path.join(__dirname, '../packages');
+
+  return fs.readdirSync(packagesDir)
+    .filter(dir => fs.statSync(path.join(packagesDir, dir)).isDirectory())
+    .map(dir => {
+      const pkgPath = path.join(packagesDir, dir, 'package.json');
+      if (fs.existsSync(pkgPath)) {
+        const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+        return {
+          name: pkg.name,
+          version: pkg.version,
+          private: pkg.private,
+          path: path.join(packagesDir, dir),
+          registry: (pkg.publishConfig && pkg.publishConfig.registry) || 'https://registry.npmjs.org/'
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
+}
 
 const LATEST_TAG = 'latest';
 const NEXT_TAG = 'next';
@@ -17,7 +39,7 @@ const getPackageDetails = memoize(pkg => {
     return JSON.parse(execSync(npmShowCommand, { stdio: ['pipe', 'pipe', 'ignore'] }));
   } catch (error) {
     if (!error.stdout.toString().includes('E404')) {
-      console.error(chalk.red(`\nError: ${error}`));
+      console.error(colors.red(`\nError: ${error}`));
     }
   }
 });
@@ -56,18 +78,18 @@ function getTag(pkg) {
 
 function publish(pkg) {
   const publishCommand = `npm publish ${pkg.path} --tag=${getTag(pkg)} --registry=${pkg.registry}`;
-  console.log(chalk.magenta(`Running: "${publishCommand}" for ${pkg.name}@${pkg.version}`));
+  console.log(colors.magenta(`Running: "${publishCommand}" for ${pkg.name}@${pkg.version}`));
   execSync(publishCommand, { stdio: 'inherit' });
   publishedPackages.push(pkg);
   return true;
 }
 
 function release(pkg) {
-  console.log(`\nStarting the release process for ${chalk.bold(pkg.name)}`);
+  console.log(`\nStarting the release process for ${colors.bold(pkg.name)}`);
 
   if (!shouldPublishPackage(pkg)) {
     console.log(
-      chalk.blue(`${pkg.name}@${pkg.version} already exists on registry ${pkg.registry}`)
+      colors.blue(`${pkg.name}@${pkg.version} already exists on registry ${pkg.registry}`)
     );
     console.log('No publish performed');
     return;
@@ -76,7 +98,7 @@ function release(pkg) {
   const published = publish(pkg);
   if (published) {
     console.log(
-      chalk.green(`Published "${pkg.name}@${pkg.version}" succesfully to ${pkg.registry}`)
+      colors.green(`Published "${pkg.name}@${pkg.version}" succesfully to ${pkg.registry}`)
     );
   } else {
     console.log('No publish performed');
@@ -107,7 +129,7 @@ function run() {
     skip = 'Not in CI';
   }
   if (skip) {
-    console.log(chalk.yellow(`${skip} - skipping publish`));
+    console.log(colors.yellow(`${skip} - skipping publish`));
     return false;
   }
 

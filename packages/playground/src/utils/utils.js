@@ -1,4 +1,4 @@
-import cloneDeep from 'lodash.clonedeep';
+const cloneDeep = (obj) => JSON.parse(JSON.stringify(obj));
 
 export function formatValue(val) {
   if (!isNaN(Number(val))) {
