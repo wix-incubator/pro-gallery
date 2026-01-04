@@ -2,8 +2,7 @@ import GalleryItem from '../src/classes/galleryItem';
 import { expect } from 'chai';
 import { schemeSample } from './itemSchemeSample';
 
-const pick = (obj, keys) =>
-  Object.fromEntries(keys.filter((k) => k in obj).map((k) => [k, obj[k]]));
+const pick = (obj, keys) => Object.fromEntries(keys.filter((k) => k in obj).map((k) => [k, obj[k]]));
 
 describe('GalleryItem ', () => {
   let galleryItem;
