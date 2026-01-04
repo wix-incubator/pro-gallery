@@ -338,8 +338,8 @@ export function App() {
   let GalleryComponent = gallerySettings.clickToExpand
     ? ExpandableProGallery
     : gallerySettings.useBlueprints
-    ? ProGalleryRenderer
-    : ProGallery;
+      ? ProGalleryRenderer
+      : ProGallery;
 
   window.playgroundItems = getItems();
 
