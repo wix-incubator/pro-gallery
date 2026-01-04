@@ -105,7 +105,7 @@
     },
     "resolver": "ts-jest-resolver",
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/"
+      "<rootDir>/node_modules/(?!cheerio|htmlparser2|dom-serializer|domutils|domhandler|entities)"
     ],
     "testEnvironment": "jsdom",
     "moduleNameMapper": {
