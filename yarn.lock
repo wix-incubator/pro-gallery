@@ -14116,16 +14116,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"lerna-packages@npm:0.0.1":
-  version: 0.0.1
-  resolution: "lerna-packages@npm:0.0.1"
-  dependencies:
-    glob: "npm:^7.1.2"
-    lodash.get: "npm:^4.4.2"
-  checksum: 10c0/a5a96c1d9570feed24fc82820625fec927a89f293f89ff3d053db73f10a3d96ebf85bdd269acd08a8d443f9363a81d8d4eac093f7fca5a06b011ab4e1a8315b3
-  languageName: node
-  linkType: hard
-
 "lerna@npm:7.4.2":
   version: 7.4.2
   resolution: "lerna@npm:7.4.2"
@@ -18192,7 +18182,6 @@ __metadata:
     gh-pages: "npm:^6.3.0"
     husky: "npm:^9.1.7"
     lerna: "npm:7.4.2"
-    lerna-packages: "npm:0.0.1"
     lint-staged: "npm:^10.5.2"
     lodash: "npm:^4.17.21"
     prettier: "npm:^2.1.2"

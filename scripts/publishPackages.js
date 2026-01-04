@@ -3,7 +3,30 @@ const execSync = require('child_process').execSync;
 const chalk = require('chalk');
 const semver = require('semver');
 const { get, memoize } = require('lodash');
-const lernaPackages = require('lerna-packages');
+const fs = require('fs');
+const path = require('path');
+
+function lernaPackages() {
+  const packagesDir = path.join(__dirname, '../packages');
+
+  return fs.readdirSync(packagesDir)
+    .filter(dir => fs.statSync(path.join(packagesDir, dir)).isDirectory())
+    .map(dir => {
+      const pkgPath = path.join(packagesDir, dir, 'package.json');
+      if (fs.existsSync(pkgPath)) {
+        const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+        return {
+          name: pkg.name,
+          version: pkg.version,
+          private: pkg.private,
+          path: path.join(packagesDir, dir),
+          registry: (pkg.publishConfig && pkg.publishConfig.registry) || 'https://registry.npmjs.org/'
+        };
+      }
+      return null;
+    })
+    .filter(Boolean);
+}
 
 const LATEST_TAG = 'latest';
 const NEXT_TAG = 'next';
