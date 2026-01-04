@@ -45,7 +45,7 @@
   "devDependencies": {
     "chalk": "^2.4.2",
     "gh-pages": "^6.3.0",
-    "husky": "^4.3.0",
+    "husky": "^9.1.7",
     "lerna": "7.4.2",
     "lerna-packages": "0.0.1",
     "lint-staged": "^10.5.2",
