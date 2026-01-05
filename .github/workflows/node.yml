@@ -91,8 +91,7 @@ jobs:
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
     - name: Push to pull request
       if: github.event_name == 'pull_request' && github.actor != 'dependabot' 
-      # run: echo "PULL REQUEST PUSH"
-      run: lerna publish --canary --preid ${{ github.sha }} --yes --registry https://registry.npmjs.org
+      run: lerna publish --canary --preid ${{ github.sha }} --yes --registry
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
