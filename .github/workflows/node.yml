@@ -76,6 +76,7 @@ jobs:
         yarn config set npmRegistryServer "https://registry.npmjs.org"
         yarn config set npmAuthToken "${NODE_AUTH_TOKEN}"
         git checkout .yarn/install-state.gz 2>/dev/null || true
+        git checkout .yarnrc.yml 2>/dev/null || true
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     - name: Push to master
