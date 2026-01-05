@@ -57,6 +57,10 @@ typings/
 
 # Yarn Integrity file
 .yarn-integrity
+.yarn/install-state.gz
+
+# NPM config
+.npmrc
 
 # Server output
 maven
