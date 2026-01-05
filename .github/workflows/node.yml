@@ -67,18 +67,17 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-        registry-url: 'https://registry.npmjs.org'
     - run: NPQ_PKG_MGR=yarn npx npq install
     - run: yarn build
     - run: git config --global user.email "octocat@github.com"
     - run: git config --global user.name "GitHub Actions"
     - run: git remote set-url origin https://wix@github.com/wix/pro-gallery
     - run: |
-        echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
-        echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
+        yarn config set npmRegistryServer "https://registry.npmjs.org"
+        yarn config set npmAuthToken "${NODE_AUTH_TOKEN}"
+        git checkout .yarn/install-state.gz 2>/dev/null || true
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
     - name: Push to master
       if: github.event_name == 'push'
       # run: echo "this is a push to master"
@@ -109,7 +108,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-        registry-url: 'https://registry.npmjs.org'
     - run: NPQ_PKG_MGR=yarn npx npq install
     - run: yarn build
     - run: node scripts/deployToSurge
