@@ -13,7 +13,7 @@
     "changelog": "sh scripts/changelog-builder.sh > CHANGELOG.md",
     "start-playground": "cd packages/playground && yarn start",
     "test:e2e": "start-server-and-test build-all-and-start-playground http-get://localhost:3006 'lerna run test:e2e-all'",
-    "test": "echo 'not running tests from root - runnign it using GitHub actions",
+    "test": "echo 'not running tests from root - running it using GitHub actions",
     "ci:run-playground": "cd packages/playground && npx serve -s build -l 3006 && cd ../..",
     "ci:test-unit": "lerna run unit",
     "ci:test-e2e-layouts": "start-server-and-test ci:run-playground http-get://localhost:3006 'lerna run test:e2e-layouts'",
