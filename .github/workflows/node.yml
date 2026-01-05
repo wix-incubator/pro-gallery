@@ -85,7 +85,7 @@ jobs:
       # run: echo "this is a push to master"
       run: |
         git checkout ${{ github.ref_name }}
-        lerna publish patch --exact  --yes  --dist-tag stable --registry https://registry.npmjs.org --loglevel verbose
+        lerna publish patch --exact --yes --dist-tag stable --registry https://registry.npmjs.org
         yarn changelog
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
