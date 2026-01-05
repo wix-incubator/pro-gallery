@@ -1,4 +1,4 @@
-# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node.
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
 name: Test
@@ -73,10 +73,11 @@ jobs:
     - run: git config --global user.name "GitHub Actions"
     - run: git remote set-url origin https://wix@github.com/wix/pro-gallery
     - run: |
-        yarn config set npmRegistryServer "https://registry.npmjs.org"
-        yarn config set npmAuthToken "${NODE_AUTH_TOKEN}"
-        git checkout .yarn/install-state.gz 2>/dev/null || true
-        git checkout .yarnrc.yml 2>/dev/null || true
+        git config --global user.email "octocat@github.com"
+        git config --global user.name "GitHub Actions"
+        git remote set-url origin https://wix@github.com/wix/pro-gallery
+        echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
+        echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     - name: Push to master
