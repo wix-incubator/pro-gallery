@@ -18273,7 +18273,7 @@ __metadata:
     puppeteer: "npm:^1.5.0"
     react: "npm:^16.8.6"
     react-dom: "npm:^16.8.6"
-    react-player: "npm:^2.6.2"
+    react-player: "npm:2.11.2"
     sass: "npm:^1.29.0"
     sinon: "npm:^6.0.0"
     ts-jest: "npm:^29.1.1"
@@ -19493,9 +19493,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-player@npm:^2.6.2":
-  version: 2.16.1
-  resolution: "react-player@npm:2.16.1"
+"react-player@npm:2.11.2":
+  version: 2.11.2
+  resolution: "react-player@npm:2.11.2"
   dependencies:
     deepmerge: "npm:^4.0.0"
     load-script: "npm:^1.0.0"
@@ -19504,7 +19504,7 @@ __metadata:
     react-fast-compare: "npm:^3.0.1"
   peerDependencies:
     react: ">=16.6.0"
-  checksum: 10c0/fb89e25e0fd4e5e97441f1617e2c658cda9738176dc2ce167d245435647f11bbfcafd165b86523ae57de29439f89adbe322e97b54d3772dcfbdb6a226466d9b9
+  checksum: 10c0/5138f4865677ddaeb74f4ef9f469e54b77163dece1918414a2b75feed2e41a3e8d5432593d0fdfc1a8078d1cd951003e57fd37731a6988df673bd957a298942f
   languageName: node
   linkType: hard
 
