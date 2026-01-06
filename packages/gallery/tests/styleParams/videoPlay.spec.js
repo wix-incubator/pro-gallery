@@ -1,13 +1,4 @@
 import { GALLERY_CONSTS } from 'pro-gallery-lib';
-import path from 'path';
-
-// Mock react-player before all tests
-beforeAll(function () {
-  require('mock-require')(
-    'react-player',
-    path.resolve(__dirname, '../__mocks__/react-player.js')
-  );
-});
 import GalleryDriver from '../drivers/reactDriver';
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
