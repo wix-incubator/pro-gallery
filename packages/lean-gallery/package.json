@@ -1,5 +1,4 @@
 {
-  "private": false,
   "name": "lean-gallery",
   "version": "4.1.205",
   "sideEffects": [
@@ -19,14 +18,14 @@
     "dist"
   ],
   "scripts": {
-    "watch": "npm run start",
-    "start": "tsc -w & npm run css-watch",
-    "build": "tsc && tsc -p tsconfig-esm.json && npm run css-compile",
+    "watch": "yarn start",
+    "start": "tsc -w & yarn css-watch",
+    "build": "tsc && tsc -p tsconfig-esm.json && yarn css-compile",
     "test": "echo 'no test'",
     "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css src/leanGallery/leanGallery.scss:dist/styles/leanGallery.css",
     "css-watch": "sass --watch src/leanGallery/leanGallery.scss:dist/styles/leanGallery.css",
     "lint": "eslint \"src/**/*.{js,jsx,ts}\"",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
     "pro-gallery-lib": "4.1.205"

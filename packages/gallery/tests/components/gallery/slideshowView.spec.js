@@ -3,7 +3,6 @@ import GalleryDriver from '../../drivers/reactDriver';
 import SlideshowView from '../../../src/components/gallery/proGallery/slideshowView';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import _ from 'lodash';
 
 describe('Slideshow View', () => {
   let driver;
@@ -14,8 +13,8 @@ describe('Slideshow View', () => {
   beforeEach(() => {
     driver = new GalleryDriver();
     initialGalleryViewProps = driver.props.galleryView();
-    initialGalleryViewProps.options = _.cloneDeep(
-      initialGalleryViewProps.options
+    initialGalleryViewProps.options = JSON.parse(
+      JSON.stringify(initialGalleryViewProps.options)
     );
     Object.assign(initialGalleryViewProps.options, {
       scrollDirection: GALLERY_CONSTS.scrollDirection.HORIZONTAL,
