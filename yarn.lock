@@ -14224,7 +14224,7 @@ __metadata:
     eslint-config-prettier: "npm:^6.15.0"
     eslint-plugin-prettier: "npm:^3.1.4"
     prettier: "npm:^2.1.2"
-    pro-gallery-lib: "npm:4.1.212"
+    pro-gallery-lib: "npm:4.1.205"
     react: "npm:^16.8.6"
     react-dom: "npm:^16.8.6"
     sass: "npm:^1.29.0"
@@ -18192,7 +18192,7 @@ __metadata:
     eslint-plugin-prettier: "npm:^3.1.4"
     mocha: "npm:^8.2.1"
     prettier: "npm:^2.1.2"
-    pro-gallery-lib: "npm:4.1.212"
+    pro-gallery-lib: "npm:4.1.205"
     pro-layouts: "npm:4.1.205"
     ts-node: "npm:^10.9.1"
     tslib: "npm:^2.1.0"
@@ -18200,7 +18200,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"pro-gallery-lib@npm:4.1.212, pro-gallery-lib@workspace:packages/lib":
+"pro-gallery-lib@npm:4.1.205, pro-gallery-lib@workspace:packages/lib":
   version: 0.0.0-use.local
   resolution: "pro-gallery-lib@workspace:packages/lib"
   dependencies:
@@ -18268,7 +18268,7 @@ __metadata:
     jest-stare: "npm:2.2.0"
     prettier: "npm:^2.1.2"
     pro-gallery-blueprints: "npm:4.1.212"
-    pro-gallery-lib: "npm:4.1.212"
+    pro-gallery-lib: "npm:4.1.205"
     pro-layouts: "npm:4.1.205"
     puppeteer: "npm:^1.5.0"
     react: "npm:^16.8.6"
@@ -18298,7 +18298,7 @@ __metadata:
     eslint-plugin-prettier: "npm:^3.1.4"
     mocha: "npm:^8.2.1"
     prettier: "npm:^2.1.2"
-    pro-gallery-lib: "npm:4.1.212"
+    pro-gallery-lib: "npm:4.1.205"
     ts-node: "npm:^10.9.1"
     tslib: "npm:^2.1.0"
     typescript: "npm:^4.9.5"
@@ -18349,7 +18349,7 @@ __metadata:
     postcss-safe-parser: "npm:^4.0.1"
     pro-gallery: "npm:4.1.212"
     pro-gallery-blueprints: "npm:4.1.212"
-    pro-gallery-lib: "npm:4.1.212"
+    pro-gallery-lib: "npm:4.1.205"
     pro-layouts: "npm:4.1.205"
     re-resizable: "npm:^6.10.3"
     react: "npm:^16.8.6"

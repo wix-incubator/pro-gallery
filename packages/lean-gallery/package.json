@@ -28,7 +28,7 @@
     "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
-    "pro-gallery-lib": "4.1.212"
+    "pro-gallery-lib": "4.1.205"
   },
   "peerDependencies": {
     "react": "^16.8.6",
