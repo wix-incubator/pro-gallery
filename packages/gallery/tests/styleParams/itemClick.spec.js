@@ -1,4 +1,12 @@
 import GalleryDriver from '../drivers/reactDriver';
+import path from 'path';
+
+beforeAll(function () {
+  require('mock-require')(
+    'react-player',
+    path.resolve(__dirname, '../__mocks__/react-player.js')
+  );
+});
 import { expect } from 'chai';
 import { mergeNestedObjects } from 'pro-gallery-lib';
 import { images2, videoItems } from '../drivers/mocks/items';

@@ -1,4 +1,12 @@
 import GalleryDriver from '../drivers/reactDriver';
+import path from 'path';
+
+beforeAll(function () {
+  require('mock-require')(
+    'react-player',
+    path.resolve(__dirname, '../__mocks__/react-player.js')
+  );
+});
 import { videoItems } from '../drivers/mocks/items';
 import VideoItem from '../../src/components/item/videos/videoItem';
 

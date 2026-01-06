@@ -1,4 +1,12 @@
 import { utils } from 'pro-gallery-lib';
+import path from 'path';
+
+beforeAll(function () {
+  require('mock-require')(
+    'react-player',
+    path.resolve(__dirname, '../../../__mocks__/react-player.js')
+  );
+});
 import GalleryDriver from '../../../drivers/reactDriver';
 import { testVideos } from '../../../drivers/mocks/images-mock';
 import sinon from 'sinon';
