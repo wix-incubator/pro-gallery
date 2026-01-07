@@ -6,7 +6,17 @@ import { GalleryContainer } from '../../src/components/gallery/proGallery/galler
 import React from 'react';
 import Adapter from '@cfaester/enzyme-adapter-react-18';
 import ProGallery from '../../src/components/gallery';
-import _ from 'lodash';
+
+// Native replacement for lodash.uniqBy
+const uniqBy = (arr, key) => {
+  const seen = new Set();
+  return arr.filter((item) => {
+    const k = typeof key === 'function' ? key(item) : item[key];
+    if (seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  });
+};
 
 configure({ adapter: new Adapter() });
 
@@ -186,7 +196,7 @@ class galleryDriver {
   }
 
   get images() {
-    return _.uniqBy(Array.from(this.find.hook('gallery-item-image-img')), ({ props }) => props.src);
+    return uniqBy(Array.from(this.find.hook('gallery-item-image-img')), ({ props }) => props.src);
   }
 
   getContainer() {

@@ -3,5 +3,6 @@
     "packages/*"
   ],
   "registry": "https://registry.npmjs.org/",
-  "version": "5.0.147"
+  "version": "5.0.147",
+  "npmClient": "yarn"
 }

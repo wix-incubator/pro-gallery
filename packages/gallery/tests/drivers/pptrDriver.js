@@ -5,7 +5,6 @@ import { flattenObject } from 'pro-gallery-lib';
 export default class galleryDriver {
   constructor() {
     this.timeout = 60000;
-    jest.setTimeout(40000);
     this.browser = {};
     this.windowSize = {
       width: 1920,
@@ -48,7 +47,7 @@ export default class galleryDriver {
     const pageUrl = this.getPageUrl(options);
     await this.page.goto(pageUrl, { waitUntil: 'networkidle2' });
     await this.scrollInteraction();
-    await this.page.waitFor(500);
+    await new Promise((resolve) => setTimeout(resolve, 500));
     return this.page;
   }
 
@@ -129,11 +128,11 @@ export default class galleryDriver {
         await this.page.waitForSelector(`[data-hook="${str}"]`, {
           hidden: true,
         }),
-      timer: async (time) => await this.page.waitFor(time),
+      timer: async (time) => await new Promise((resolve) => setTimeout(resolve, time)),
       newPage: async (timeoutSec = 5000) => {
         return new Promise((resolve, reject) => {
           this.browser.on('targetcreated', resolve);
-          this.page.waitFor(timeoutSec).then(reject);
+          setTimeout(reject, timeoutSec);
         });
       },
     };

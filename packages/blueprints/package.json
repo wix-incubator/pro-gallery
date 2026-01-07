@@ -1,7 +1,6 @@
 {
   "name": "pro-gallery-blueprints",
   "version": "5.0.147",
-  "private": false,
   "author": {
     "name": "Nir Naor",
     "email": "nirna@wix.com"
@@ -24,7 +23,7 @@
     "unit": "NODE_OPTIONS=\"--import=tsx\" mocha test/*.spec.*",
     "test": "echo 'no test in wix CI'",
     "lint": "eslint \"{src,test}/**/*.{js,jsx,ts}\"",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "yarn lint -- --fix"
   },
   "exports": {
     ".": {
