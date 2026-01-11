@@ -57,7 +57,7 @@ export function App() {
   sideShownOnce = sideShownOnce || showSide;
 
   // const [fullscreenIdx, setFullscreenIdx] = useState(-1);
-  const { numberOfItems = 0, mediaTypes = 'media' } = gallerySettings || {};
+  const { numberOfItems = 0, mediaTypes = 'media' } = gallerySettings || {}; //TODO check
   const isTestingEnv = isTestingEnvironment(window.location.search);
 
   const [resizedDims, setResizedDims] = useState({ width: 320, height: 500 });
