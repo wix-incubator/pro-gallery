@@ -820,8 +820,7 @@ export class GalleryContainer extends React.Component {
 
   getMoreItemsIfNeeded(scrollPos) {
     if (this.deferredGettingMoreItems?.isPending) {
-      this.latestScrollPosWhileBlocked = scrollPos;
-      // Already getting more items so just remember the scroll position
+      // Already getting more items so do nothing
     } else {
       this.deferredGettingMoreItems = new Deferred();
 
@@ -864,16 +863,10 @@ export class GalleryContainer extends React.Component {
             GALLERY_CONSTS.events.NEED_MORE_ITEMS,
             this.state.items.length
           );
-
           setTimeout(() => {
             //wait a bit before allowing more items to be fetched - ugly hack before promises still not working
             this.deferredGettingMoreItems.resolve();
-            if (this.latestScrollPosWhileBlocked !== undefined) {
-              const capturedPos = this.latestScrollPosWhileBlocked;
-              this.latestScrollPosWhileBlocked = undefined; // Clear it
-              this.getMoreItemsIfNeeded(capturedPos);
-            }
-          }, 500);
+          }, 2000);
         } else {
           // No items are fetched -> reject
           this.deferredGettingMoreItems.reject();
