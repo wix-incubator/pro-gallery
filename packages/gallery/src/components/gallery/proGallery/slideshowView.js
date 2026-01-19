@@ -637,6 +637,11 @@ class SlideshowView extends React.Component {
   }
 
   setCurrentItemByScroll() {
+    console.log('[SlideshowView] setCurrentItemByScroll called', {
+      isAutoScrolling: this.isAutoScrolling,
+      isSliding: this.isSliding,
+      hasAutoSlideshow: !!this.autoSlideshowInterval,
+    });
     if (utils.isVerbose()) {
       console.log('Setting current Idx by scroll', this.isAutoScrolling);
     }
@@ -644,6 +649,14 @@ class SlideshowView extends React.Component {
     if (this.isAutoScrolling) {
       //avoid this function if the scroll was originated by us (arrows or navigationPanels)
       this.isAutoScrolling = false;
+      return;
+    }
+
+    // Prevent scroll-based updates during autoplay or sliding
+    if (this.isSliding || this.autoSlideshowInterval) {
+      console.log(
+        '[SlideshowView] Ignoring scroll event during slide/autoplay'
+      );
       return;
     }
 
@@ -661,7 +674,14 @@ class SlideshowView extends React.Component {
 
     const activeIndex = this.getCenteredItemOrGroupIdxByScroll('galleryItems');
 
-    if (!utils.isUndefined(activeIndex)) {
+    if (
+      !utils.isUndefined(activeIndex) &&
+      activeIndex !== this.state.activeIndex
+    ) {
+      console.log('[SlideshowView] Setting activeIndex from scroll', {
+        previousIndex: this.state.activeIndex,
+        newIndex: activeIndex,
+      });
       utils.setStateAndLog(
         this,
         'Set Current Item',
