@@ -102,7 +102,10 @@ export class GalleryContainer extends React.Component {
       console.log('[GalleryContainer] Scrolling to active index', activeIndex);
       this.scrollToItem(activeIndex, false, true, 0);
       const currentItem = this.galleryStructure.items[activeIndex];
-      console.log('[GalleryContainer] Current item offset', currentItem?.offset);
+      console.log(
+        '[GalleryContainer] Current item offset',
+        currentItem?.offset
+      );
       this.onGalleryScroll(currentItem.offset);
     }
   }
