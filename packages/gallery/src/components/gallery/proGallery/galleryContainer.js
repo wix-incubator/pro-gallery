@@ -27,6 +27,10 @@ import { isGalleryInViewport, Deferred } from './galleryHelpers';
 export class GalleryContainer extends React.Component {
   constructor(props) {
     super(props);
+    console.log('[GalleryContainer] constructor called', {
+      activeIndex: props.activeIndex,
+      itemsCount: props.items?.length,
+    });
     if (utils.isVerbose()) {
       console.count('[OOISSR] galleryContainer constructor', window.isMock);
     }
@@ -88,9 +92,20 @@ export class GalleryContainer extends React.Component {
     //not sure if there needs to be a handleNEwGalleryStructure here with the intial state. currently looks like not
   }
   initializeScrollPosition() {
+    console.log('[GalleryContainer] initializeScrollPosition', {
+      activeIndex: this.props.activeIndex,
+    });
     if (this.props.activeIndex > 0) {
+      console.log(
+        '[GalleryContainer] Scrolling to active index',
+        this.props.activeIndex
+      );
       this.scrollToItem(this.props.activeIndex, false, true, 0);
       const currentItem = this.galleryStructure.items[this.props.activeIndex];
+      console.log(
+        '[GalleryContainer] Current item offset',
+        currentItem?.offset
+      );
       this.onGalleryScroll(currentItem.offset);
     }
   }
@@ -133,6 +148,12 @@ export class GalleryContainer extends React.Component {
   }
 
   componentDidMount() {
+    console.log('[GalleryContainer] componentDidMount', {
+      activeIndex: this.props.activeIndex,
+      itemsCount: this.state.items?.length,
+      scrollDirection: this.state.options.scrollDirection,
+      itemClick: this.state.options.itemClick,
+    });
     const scrollHelperNewGalleryStructure = {
       galleryStructure: this.galleryStructure,
       galleryWidth: this.state.container.galleryWidth,
@@ -759,6 +780,10 @@ export class GalleryContainer extends React.Component {
   }
 
   setCurrentSlideshowViewIdx(idx) {
+    console.log('[GalleryContainer] setCurrentSlideshowViewIdx', {
+      previousIdx: this.currentSlideshowViewIdx,
+      newIdx: idx,
+    });
     this.currentSlideshowViewIdx = idx;
   }
 
@@ -776,11 +801,20 @@ export class GalleryContainer extends React.Component {
       window.dispatchEvent(this.currentHoverChangeEvent);
     }
     if (eventName === GALLERY_CONSTS.events.CURRENT_ITEM_CHANGED) {
+      console.log('[GalleryContainer] CURRENT_ITEM_CHANGED event', {
+        eventData,
+        isScrollLess: this.getIsScrollLessGallery(this.state.options),
+        firstUserInteraction: this.state.firstUserInteractionExecuted,
+      });
       this.setCurrentSlideshowViewIdx(eventData.idx);
       if (
         this.getIsScrollLessGallery(this.state.options) &&
         this.state.firstUserInteractionExecuted
       ) {
+        console.log(
+          '[GalleryContainer] Simulating horizontal scroll to item',
+          eventData.idx
+        );
         this.simulateHorizontalScrollToItem(
           this.galleryStructure.items[eventData.idx]
         );

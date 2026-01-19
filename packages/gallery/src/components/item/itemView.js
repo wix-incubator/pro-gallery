@@ -28,6 +28,11 @@ const TextWithSecondMedia = withSecondaryMedia(TextItem);
 class ItemView extends React.Component {
   constructor(props) {
     super(props);
+    console.log('[ItemView] constructor', {
+      id: props.id,
+      idx: props.idx,
+      itemClick: props.options?.itemClick,
+    });
     this.props.actions.eventsListener(
       GALLERY_CONSTS.events.ITEM_CREATED,
       this.props
@@ -95,6 +100,11 @@ class ItemView extends React.Component {
   }
 
   onMouseEnter() {
+    console.log('[ItemView] onMouseEnter', {
+      itemId: this.props.id,
+      idx: this.props.idx,
+      isMobile: utils.isMobile(),
+    });
     if (!utils.isMobile()) {
       this.props.actions.eventsListener(
         GALLERY_CONSTS.events.HOVER_SET,
@@ -194,6 +204,11 @@ class ItemView extends React.Component {
   }
 
   onItemWrapperClick(e) {
+    console.log('[ItemView] onItemWrapperClick', {
+      itemId: this.props.id,
+      idx: this.props.idx,
+      targetTag: e.target?.tagName,
+    });
     const clickTarget = 'item-media';
     this.onItemClick(e, clickTarget);
   }
@@ -205,6 +220,13 @@ class ItemView extends React.Component {
   }
 
   onItemClick(e, clickTarget, shouldPreventDefault = true) {
+    console.log('[ItemView] onItemClick', {
+      clickTarget,
+      shouldPreventDefault,
+      itemId: this.props.id,
+      idx: this.props.idx,
+      itemClick: this.props.options?.itemClick,
+    });
     if (
       utils.isFunction(utils.get(window, 'galleryWixCodeApi.onItemClicked'))
     ) {

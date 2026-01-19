@@ -31,6 +31,11 @@ function getDirection(code) {
 class SlideshowView extends React.Component {
   constructor(props) {
     super(props);
+    console.log('[SlideshowView] constructor', {
+      activeIndex: props.activeIndex,
+      totalItems: props.totalItemsCount,
+      isScrollLess: props.isScrollLessGallery,
+    });
     this.navigationPanelCallbackOnIndexChange = () => {};
     this.scrollToThumbnail = this.scrollToThumbnail.bind(this);
     this.clearAutoSlideshowInterval =
@@ -159,13 +164,20 @@ class SlideshowView extends React.Component {
   }
 
   async nextWithEffects(props) {
+    console.log('[SlideshowView] nextWithEffects called', props);
     const nextItem = await this.next(props);
+    console.log('[SlideshowView] nextWithEffects - nextItem result', {
+      nextItem,
+      skipFromSlide: this.skipFromSlide,
+      isScrollLess: this.props.isScrollLessGallery,
+    });
     if (
       this.props.options.groupSize === 1 &&
       this.props.isScrollLessGallery &&
       nextItem >= this.skipFromSlide
     ) {
       const skipToSlide = this.skipFromSlide - this.props.totalItemsCount;
+      console.log('[SlideshowView] Skipping to slide', skipToSlide);
 
       toggleScrollLessAnimation(() =>
         this.onScrollToItemOrGroup(skipToSlide, false)
@@ -183,7 +195,18 @@ class SlideshowView extends React.Component {
     const scrollingUpTheGallery = this.props.options.isRTL
       ? direction <= -1
       : direction >= 1;
+    console.log('[SlideshowView] next called', {
+      direction,
+      isAutoTrigger,
+      scrollDuration,
+      isKeyboardNavigation,
+      isContinuousScrolling,
+      scrollingUpTheGallery,
+      activeIndex: this.state.activeIndex,
+      isRTL: this.props.options.isRTL,
+    });
     if (this.shouldBlockNext({ scrollingUpTheGallery })) {
+      console.log('[SlideshowView] Blocking next - at gallery boundary');
       this.clearAutoSlideshowInterval();
       return;
     }
@@ -280,7 +303,18 @@ class SlideshowView extends React.Component {
     isContinuousScrolling,
     scrollingUpTheGallery,
   }) {
+    console.log('[SlideshowView] nextItem called', {
+      direction,
+      isAutoTrigger,
+      scrollDuration,
+      avoidIndividualNavigation,
+      ignoreScrollPosition,
+      isContinuousScrolling,
+      scrollingUpTheGallery,
+      currentActiveIndex: this.state.activeIndex,
+    });
     if (this.isSliding) {
+      console.log('[SlideshowView] Already sliding, returning');
       return;
     }
 
@@ -291,6 +325,7 @@ class SlideshowView extends React.Component {
       avoidIndividualNavigation,
       isAutoTrigger
     );
+    console.log('[SlideshowView] nextItem calculated', { nextItem });
 
     try {
       const itemToScroll = ignoreScrollPosition ? 0 : nextItem;
@@ -332,11 +367,20 @@ class SlideshowView extends React.Component {
     isContinuousScrolling = false,
     scrollingUpTheGallery,
   }) {
+    console.log('[SlideshowView] nextGroup called', {
+      direction,
+      scrollDuration,
+      isContinuousScrolling,
+      scrollingUpTheGallery,
+      currentActiveIndex: this.state.activeIndex,
+    });
     if (this.isSliding) {
+      console.log('[SlideshowView] Already sliding in nextGroup, returning');
       return;
     }
 
     const nextGroup = this.getNextItemOrGroupToScrollTo('nextGroup', direction);
+    console.log('[SlideshowView] nextGroup calculated', { nextGroup });
 
     try {
       await this.scrollToItemOrGroup(
@@ -392,6 +436,11 @@ class SlideshowView extends React.Component {
   }
 
   onScrollToItemOrGroup(nextItem, isContinuousScrolling) {
+    console.log('[SlideshowView] onScrollToItemOrGroup', {
+      previousActiveIndex: this.state.activeIndex,
+      nextItem,
+      isContinuousScrolling,
+    });
     utils.setStateAndLog(
       this,
       'Next Item',
@@ -1250,9 +1299,16 @@ class SlideshowView extends React.Component {
   }
 
   componentDidMount() {
+    console.log('[SlideshowView] componentDidMount', {
+      activeIndex: this.state.activeIndex,
+      totalItems: this.props.totalItemsCount,
+      id: this.props.id,
+      isScrollLess: this.props.isScrollLessGallery,
+    });
     this.scrollElement = window.document.querySelector(
       `#pro-gallery-${this.props.id} #gallery-horizontal-scroll-${this.props.id}`
     );
+    console.log('[SlideshowView] scrollElement found:', !!this.scrollElement);
     if (this.scrollElement) {
       this.scrollElement.addEventListener(
         'scroll',
@@ -1260,6 +1316,10 @@ class SlideshowView extends React.Component {
       );
     }
     if (this.state.activeIndex > 0) {
+      console.log(
+        '[SlideshowView] Scrolling to initial activeIndex',
+        this.state.activeIndex
+      );
       this.props.actions.scrollToItem(this.state.activeIndex);
       this.onCurrentItemChanged();
     } else {
@@ -1280,6 +1340,12 @@ class SlideshowView extends React.Component {
   //-----------------------------------------| RENDER |--------------------------------------------//
 
   render() {
+    console.log('[SlideshowView] render', {
+      activeIndex: this.state.activeIndex,
+      hideLeftArrow: this.state.hideLeftArrow,
+      hideRightArrow: this.state.hideRightArrow,
+      isInView: this.state.isInView,
+    });
     if (utils.isVerbose()) {
       console.count('galleryView render');
       console.count('Rendering Gallery count');

@@ -3,6 +3,12 @@ import { GALLERY_CONSTS } from 'pro-gallery-lib';
 import { Deferred } from '../gallery/proGallery/galleryHelpers';
 
 export function scrollToItemImp(scrollParams) {
+  console.log('[scrollHelper] scrollToItemImp called', {
+    itemIdx: scrollParams.itemIdx,
+    scrollDirection: scrollParams.scrollDirection,
+    fixedScroll: scrollParams.fixedScroll,
+    isContinuousScrolling: scrollParams.isContinuousScrolling,
+  });
   let to, from;
   const {
     scrollMarginCorrection = 0,
@@ -46,6 +52,12 @@ export function scrollToItemImp(scrollParams) {
         ? utils.get(item, 'offset.left')
         : utils.get(item, 'offset.top');
 
+    console.log('[scrollHelper] Found item to scroll to', {
+      itemIdx,
+      item,
+      to,
+      scrollDirection,
+    });
     if (utils.isVerbose()) {
       console.log('Scrolling to position ' + to, item);
     }
@@ -63,6 +75,14 @@ export function scrollToItemImp(scrollParams) {
       to = Math.min(to, totalWidth - galleryWidth + scrollMarginCorrection);
       to *= rtlFix;
       from *= rtlFix;
+      console.log('[scrollHelper] Horizontal scroll calculated', {
+        from,
+        to,
+        galleryWidth,
+        totalWidth,
+        rtlFix,
+        isRTL,
+      });
       if (utils.isVerbose()) {
         console.log('Scrolling to new position ' + to, this);
       }

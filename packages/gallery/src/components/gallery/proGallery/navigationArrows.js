@@ -175,7 +175,14 @@ export function ArrowButton({
   navigationArrowPortalId,
 }) {
   const isNext = (directionIsLeft && isRTL) || (!directionIsLeft && !isRTL);
-  const nextAction = () => next({ direction: directionIsLeft ? -1 : 1 });
+  const nextAction = () => {
+    console.log('[NavigationArrows] Arrow clicked', {
+      directionIsLeft,
+      isRTL,
+      isNext,
+    });
+    next({ direction: directionIsLeft ? -1 : 1 });
+  };
   const buttonProps = {
     className: arrowsBaseClasses.join(' '),
     onClick: () => setTimeout(nextAction, 0),
