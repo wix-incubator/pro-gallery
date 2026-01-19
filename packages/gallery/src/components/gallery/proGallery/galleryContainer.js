@@ -92,20 +92,17 @@ export class GalleryContainer extends React.Component {
     //not sure if there needs to be a handleNEwGalleryStructure here with the intial state. currently looks like not
   }
   initializeScrollPosition() {
+    const activeIndex =
+      this.props.activeIndex !== undefined ? this.props.activeIndex : 0;
     console.log('[GalleryContainer] initializeScrollPosition', {
-      activeIndex: this.props.activeIndex,
+      activeIndex,
+      originalActiveIndex: this.props.activeIndex,
     });
-    if (this.props.activeIndex > 0) {
-      console.log(
-        '[GalleryContainer] Scrolling to active index',
-        this.props.activeIndex
-      );
-      this.scrollToItem(this.props.activeIndex, false, true, 0);
-      const currentItem = this.galleryStructure.items[this.props.activeIndex];
-      console.log(
-        '[GalleryContainer] Current item offset',
-        currentItem?.offset
-      );
+    if (activeIndex > 0) {
+      console.log('[GalleryContainer] Scrolling to active index', activeIndex);
+      this.scrollToItem(activeIndex, false, true, 0);
+      const currentItem = this.galleryStructure.items[activeIndex];
+      console.log('[GalleryContainer] Current item offset', currentItem?.offset);
       this.onGalleryScroll(currentItem.offset);
     }
   }

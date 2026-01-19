@@ -328,6 +328,18 @@ class SlideshowView extends React.Component {
     console.log('[SlideshowView] nextItem calculated', { nextItem });
 
     try {
+      // Handle infinite loop wraparound BEFORE scrolling to avoid visible flicker
+      if (
+        this.props.options.groupSize === 1 &&
+        !this.props.isScrollLessGallery &&
+        nextItem >= this.skipFromSlide
+      ) {
+        nextItem = utils.inRange(nextItem, this.props.totalItemsCount);
+        console.log('[SlideshowView] Wrapped nextItem to avoid overflow', {
+          wrappedNextItem: nextItem,
+        });
+      }
+
       const itemToScroll = ignoreScrollPosition ? 0 : nextItem;
       await this.scrollToItemOrGroup(
         this.props.actions.scrollToItem,
@@ -336,16 +348,6 @@ class SlideshowView extends React.Component {
         scrollDuration,
         scrollingUpTheGallery
       );
-
-      if (
-        this.props.options.groupSize === 1 &&
-        !this.props.isScrollLessGallery
-      ) {
-        if (nextItem >= this.skipFromSlide) {
-          nextItem = utils.inRange(nextItem, this.props.totalItemsCount);
-          await this.props.actions.scrollToItem(nextItem);
-        }
-      }
 
       this.onScrollToItemOrGroup(nextItem, isContinuousScrolling);
 
