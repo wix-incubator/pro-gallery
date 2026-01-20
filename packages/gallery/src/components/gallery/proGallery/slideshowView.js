@@ -334,7 +334,8 @@ class SlideshowView extends React.Component {
         !this.props.isScrollLessGallery &&
         nextItem >= this.skipFromSlide
       ) {
-        nextItem = utils.inRange(nextItem, this.props.totalItemsCount);
+        // Wrap to the actual item index within totalItemsCount
+        nextItem = nextItem % this.props.totalItemsCount;
         console.log('[SlideshowView] Wrapped nextItem to avoid overflow', {
           wrappedNextItem: nextItem,
         });
@@ -359,6 +360,7 @@ class SlideshowView extends React.Component {
       }
       return nextItem;
     } catch (e) {
+      this.isSliding = false;
       this.onThrowScrollError('Cannot proceed to the next Item', e);
     }
   }
@@ -405,6 +407,7 @@ class SlideshowView extends React.Component {
 
       this.onScrollToItemOrGroup(nextItem, isContinuousScrolling);
     } catch (e) {
+      this.isSliding = false;
       this.onThrowScrollError('Cannot proceed to the next Group', e);
     }
   }
@@ -672,8 +675,11 @@ class SlideshowView extends React.Component {
 
     const activeIndex = this.getCenteredItemOrGroupIdxByScroll('galleryItems');
 
+    // Ensure we only react to valid indices within the actual item count
     if (
       !utils.isUndefined(activeIndex) &&
+      activeIndex >= 0 &&
+      activeIndex < this.props.totalItemsCount &&
       activeIndex !== this.state.activeIndex
     ) {
       console.log('[SlideshowView] Setting activeIndex from scroll', {
@@ -1342,9 +1348,9 @@ class SlideshowView extends React.Component {
       );
       this.props.actions.scrollToItem(this.state.activeIndex);
       this.onCurrentItemChanged();
-    } else {
-      this.setCurrentItemByScroll();
     }
+    // Don't call setCurrentItemByScroll on mount - it causes erratic jumps
+    // The scroll position is already correct at 0
     this.startAutoSlideshowIfNeeded(this.props.options);
   }
 
