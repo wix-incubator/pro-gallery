@@ -80,6 +80,7 @@ class SlideshowView extends React.Component {
     this.isAutoScrolling = false;
     this.isSliding = false;
     this.isInitialMount = true;
+    this.mountTimeoutId = null;
   }
 
   isFirstItem() {
@@ -1368,9 +1369,10 @@ class SlideshowView extends React.Component {
     // from causing index jumps during mount. Use requestAnimationFrame to wait
     // for the next paint, then add a safety buffer for iOS scroll events
     requestAnimationFrame(() => {
-      setTimeout(() => {
+      this.mountTimeoutId = setTimeout(() => {
         console.log('[SlideshowView] Clearing isInitialMount flag');
         this.isInitialMount = false;
+        this.mountTimeoutId = null;
       }, 150);
     });
   }
@@ -1381,6 +1383,11 @@ class SlideshowView extends React.Component {
         'scroll',
         this._setCurrentItemByScroll
       );
+    }
+    // Clean up the mount timeout if component unmounts before it fires
+    if (this.mountTimeoutId) {
+      clearTimeout(this.mountTimeoutId);
+      this.mountTimeoutId = null;
     }
   }
 
