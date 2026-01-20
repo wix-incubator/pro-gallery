@@ -652,11 +652,9 @@ class SlideshowView extends React.Component {
       return;
     }
 
-    // Prevent scroll-based updates during autoplay or sliding
-    if (this.isSliding || this.autoSlideshowInterval) {
-      console.log(
-        '[SlideshowView] Ignoring scroll event during slide/autoplay'
-      );
+    // Only block scroll updates during programmatic sliding, not during autoplay idle time
+    if (this.isSliding) {
+      console.log('[SlideshowView] Ignoring scroll event during slide');
       return;
     }
 

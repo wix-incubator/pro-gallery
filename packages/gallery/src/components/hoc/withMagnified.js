@@ -51,37 +51,17 @@ function withMagnified(WrappedComponent) {
     onMouseDown(e) {
       const { clientX, clientY } = e;
       const { x, y, shouldMagnify } = this.state;
-      console.log('[withMagnified] onMouseDown', {
-        clientX,
-        clientY,
-        x,
-        y,
-        shouldMagnify,
-      });
       if (!shouldMagnify) {
         const initialPos = this.getMagnifyInitialPos(e);
-        console.log(
-          '[withMagnified] Setting magnify initial position',
-          initialPos
-        );
         this.setState(initialPos);
       } else {
         this.dragStartX = x + clientX;
         this.dragStartY = y + clientY;
         this.dragStarted = true;
-        console.log('[withMagnified] Starting drag', {
-          dragStartX: this.dragStartX,
-          dragStartY: this.dragStartY,
-        });
       }
     }
     onMouseUp() {
-      console.log('[withMagnified] onMouseUp', {
-        isDragging: this.isDragging,
-        dragStarted: this.dragStarted,
-      });
       if (!this.isDragging) {
-        console.log('[withMagnified] Toggling magnify');
         this.toggleMagnify();
       }
       this.dragStarted = false;
@@ -90,12 +70,6 @@ function withMagnified(WrappedComponent) {
 
     toggleMagnify(bool) {
       const { shouldMagnify } = this.state;
-      const newValue = typeof bool === 'boolean' ? bool : !shouldMagnify;
-      console.log('[withMagnified] toggleMagnify', {
-        currentShouldMagnify: shouldMagnify,
-        newValue,
-        bool,
-      });
       if (typeof bool === 'boolean') {
         this.setState({ shouldMagnify: bool });
       } else {
@@ -109,17 +83,10 @@ function withMagnified(WrappedComponent) {
         options: { behaviourParams },
       } = this.props;
       const { magnificationValue } = behaviourParams.item.content;
-      const dimensions = {
+      return {
         magnifiedHeight: innerHeight * magnificationValue,
         magnifiedWidth: innerWidth * magnificationValue,
       };
-      console.log('[withMagnified] getMagnifiedDimensions', {
-        innerHeight,
-        innerWidth,
-        magnificationValue,
-        dimensions,
-      });
-      return dimensions;
     }
     getPreloadImage() {
       const { createUrl, id, style, imageDimensions, options } = this.props;
@@ -186,17 +153,8 @@ function withMagnified(WrappedComponent) {
     isMagnifiedBiggerThanContainer(itemStyle) {
       const { magnifiedWidth, magnifiedHeight } = this.getMagnifiedDimensions();
       const { cubedWidth, cubedHeight } = itemStyle;
-      const isBigger =
-        cubedWidth < magnifiedWidth || cubedHeight < magnifiedHeight;
-      console.log('[withMagnified] isMagnifiedBiggerThanContainer', {
-        magnifiedWidth,
-        magnifiedHeight,
-        cubedWidth,
-        cubedHeight,
-        isBigger,
-      });
 
-      return isBigger;
+      return cubedWidth < magnifiedWidth || cubedHeight < magnifiedHeight;
     }
 
     getMagnifyInitialPos(e) {
@@ -265,11 +223,6 @@ function withMagnified(WrappedComponent) {
     render() {
       const { shouldMagnify } = this.state;
       const { itemClick } = this.props.options;
-      console.log('[withMagnified] render', {
-        shouldMagnify,
-        itemClick,
-        isMagnifyMode: itemClick === GALLERY_CONSTS.itemClick.MAGNIFY,
-      });
       if (itemClick !== GALLERY_CONSTS.itemClick.MAGNIFY) {
         return <WrappedComponent {...this.props} />;
       }
