@@ -76,6 +76,10 @@ class SlideshowView extends React.Component {
     this.skipFromSlide = Math.round(
       this.props.totalItemsCount * SKIP_SLIDES_MULTIPLIER
     ); // Used in infinite loop
+    // Initialize flags to prevent flickering during mount
+    this.isAutoScrolling = false;
+    this.isSliding = false;
+    this.isInitialMount = true;
   }
 
   isFirstItem() {
@@ -644,9 +648,16 @@ class SlideshowView extends React.Component {
       isAutoScrolling: this.isAutoScrolling,
       isSliding: this.isSliding,
       hasAutoSlideshow: !!this.autoSlideshowInterval,
+      isInitialMount: this.isInitialMount,
     });
     if (utils.isVerbose()) {
       console.log('Setting current Idx by scroll', this.isAutoScrolling);
+    }
+
+    // Block scroll reactions during initial mount to prevent flickering
+    if (this.isInitialMount) {
+      console.log('[SlideshowView] Ignoring scroll during initial mount');
+      return;
     }
 
     if (this.isAutoScrolling) {
@@ -1352,6 +1363,16 @@ class SlideshowView extends React.Component {
     // Don't call setCurrentItemByScroll on mount - it causes erratic jumps
     // The scroll position is already correct at 0
     this.startAutoSlideshowIfNeeded(this.props.options);
+
+    // Clear initial mount flag after layout stabilizes to prevent scroll events
+    // from causing index jumps during mount. Use requestAnimationFrame to wait
+    // for the next paint, then add a safety buffer for iOS scroll events
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        console.log('[SlideshowView] Clearing isInitialMount flag');
+        this.isInitialMount = false;
+      }, 150);
+    });
   }
 
   componentWillUnmount() {
