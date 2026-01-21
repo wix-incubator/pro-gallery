@@ -110,13 +110,49 @@ export class GalleryContainer extends React.Component {
 
   // This function runs if site is scroll-less => tries to fetch gallery's items, -- called from didMount only! --
   async getMoreItemsIfScrollIsDisabled(height, viewportHeight) {
+    console.log(
+      '%c[GET_MORE_IF_SCROLL_DISABLED] 🎯 Called from componentDidMount',
+      'background: #8e44ad; color: white; padding: 2px 5px; border-radius: 3px;',
+      {
+        height,
+        viewportHeight,
+        isScrollingUnavailable: this.isScrollingUnavailable(
+          height,
+          viewportHeight
+        ),
+        scrollDirection: this.state.options?.scrollDirection,
+      }
+    );
+
     //there can be no scroll to trigger getMoreItems, but there could be more items
     if (this.isScrollingUnavailable(height, viewportHeight)) {
       const lastItemsCount = this.state.items.length;
+      console.log(
+        '%c[GET_MORE_IF_SCROLL_DISABLED] 📥 Scrolling unavailable - fetching items',
+        'background: #16a085; color: white; padding: 2px 5px; border-radius: 3px;',
+        {
+          lastItemsCount,
+        }
+      );
+
       // Trying to get more items
       this.getMoreItemsIfNeeded(0).then(() => {
+        console.log(
+          '%c[GET_MORE_IF_SCROLL_DISABLED] ✅ First fetch completed',
+          'background: #27ae60; color: white; padding: 2px 5px; border-radius: 3px;',
+          {
+            previousCount: lastItemsCount,
+            currentCount: this.state.items.length,
+            itemsAdded: this.state.items.length - lastItemsCount,
+          }
+        );
+
         // No need to continue calling if no items are left to fetch
         if (this.state.items.length > lastItemsCount) {
+          console.log(
+            '%c[GET_MORE_IF_SCROLL_DISABLED] 🔄 Items were added - calling recursively',
+            'background: #d35400; color: white; padding: 2px 5px; border-radius: 3px;'
+          );
           const { body, documentElement: html } = document;
           const viewportHeight = window.innerHeight;
           const height = Math.max(
@@ -127,8 +163,18 @@ export class GalleryContainer extends React.Component {
             html.offsetHeight
           );
           this.getMoreItemsIfScrollIsDisabled(height, viewportHeight);
+        } else {
+          console.log(
+            '%c[GET_MORE_IF_SCROLL_DISABLED] 🛑 No items added - stopping',
+            'background: #7f8c8d; color: white; padding: 2px 5px; border-radius: 3px;'
+          );
         }
       });
+    } else {
+      console.log(
+        '%c[GET_MORE_IF_SCROLL_DISABLED] ↔️ Scrolling available - skipping',
+        'background: #95a5a6; color: white; padding: 2px 5px; border-radius: 3px;'
+      );
     }
   }
 
@@ -612,6 +658,22 @@ export class GalleryContainer extends React.Component {
   }
 
   onGalleryScroll(scrollPosition) {
+    const isSlideshow =
+      this.state.options?.scrollDirection ===
+      GALLERY_CONSTS.scrollDirection.HORIZONTAL;
+    console.log(
+      '%c[ON_GALLERY_SCROLL] 📜 Scroll event',
+      `background: ${
+        isSlideshow ? '#e91e63' : '#2196f3'
+      }; color: white; padding: 2px 5px; border-radius: 3px;`,
+      {
+        scrollPosition,
+        isSlideshow,
+        isInDisplay: this.props.isInDisplay,
+        slideAnimation: this.state.options?.slideAnimation,
+      }
+    );
+
     if (this.props.isInDisplay) {
       this.eventsListener(
         GALLERY_CONSTS.events.GALLERY_SCROLLED,
@@ -809,6 +871,18 @@ export class GalleryContainer extends React.Component {
     }
 
     if (eventName === GALLERY_CONSTS.events.GALLERY_SCROLLED) {
+      console.log(
+        '%c[EVENTS_LISTENER] 📜 GALLERY_SCROLLED event',
+        'background: #673ab7; color: white; padding: 2px 5px; border-radius: 3px;',
+        {
+          eventData,
+          currentScrollPosition: this.state.scrollPosition,
+          isSlideshow:
+            this.state.options?.scrollDirection ===
+            GALLERY_CONSTS.scrollDirection.HORIZONTAL,
+        }
+      );
+
       this.videoScrollHelper.trigger.SCROLL(eventData);
       const newScrollPosition = {
         ...this.state.scrollPosition,
@@ -819,10 +893,42 @@ export class GalleryContainer extends React.Component {
   }
 
   getMoreItemsIfNeeded(scrollPos) {
+    const isSlideshow =
+      this.state.options?.scrollDirection ===
+      GALLERY_CONSTS.scrollDirection.HORIZONTAL;
+    const slideAnimation = this.state.options?.slideAnimation;
+
+    console.log(
+      '%c[GET_MORE_ITEMS] 🎬 Method called',
+      'background: #ff6b6b; color: white; padding: 2px 5px; border-radius: 3px;',
+      {
+        scrollPos,
+        isSlideshow,
+        slideAnimation,
+        isPending: this.deferredGettingMoreItems?.isPending,
+        currentItemsLength: this.state.items?.length,
+        galleryStructureItemsLength:
+          this.galleryStructure?.galleryItems?.length,
+        timestamp: new Date().toISOString(),
+      }
+    );
+
     if (this.deferredGettingMoreItems?.isPending) {
+      console.log(
+        '%c[GET_MORE_ITEMS] ⏸️ Already pending - blocking',
+        'background: #ffa500; color: white; padding: 2px 5px; border-radius: 3px;',
+        {
+          scrollPos,
+          latestScrollPosWhileBlocked: this.latestScrollPosWhileBlocked,
+        }
+      );
       this.latestScrollPosWhileBlocked = scrollPos;
       // Already getting more items so just remember the scroll position
     } else {
+      console.log(
+        '%c[GET_MORE_ITEMS] ✅ Creating new Deferred',
+        'background: #4ecdc4; color: white; padding: 2px 5px; border-radius: 3px;'
+      );
       this.deferredGettingMoreItems = new Deferred();
 
       if (
@@ -836,6 +942,18 @@ export class GalleryContainer extends React.Component {
         )
       ) {
         // No items are fetched -> reject
+        console.log(
+          '%c[GET_MORE_ITEMS] ❌ Missing required data - rejecting',
+          'background: #e74c3c; color: white; padding: 2px 5px; border-radius: 3px;',
+          {
+            hasGalleryStructure: !!this.galleryStructure,
+            hasGalleryItems: !!this.galleryStructure?.galleryItems,
+            galleryItemsLength: this.galleryStructure?.galleryItems?.length,
+            hasStateItems: !!this.state.items,
+            hasOptions: !!this.state.options,
+            hasContainer: !!this.state.container,
+          }
+        );
         this.deferredGettingMoreItems.reject();
       } else {
         //more items can be fetched from the server
@@ -858,28 +976,99 @@ export class GalleryContainer extends React.Component {
           ];
         const scrollEnd = scrollPos + screenSize;
         const getItemsDistance = scrollPos ? 3 * screenSize : 0; //first scrollPos is 0 falsy. dont load before a scroll happened.
-        if (galleryEnd < getItemsDistance + scrollEnd) {
+
+        const needsMoreItems = galleryEnd < getItemsDistance + scrollEnd;
+
+        console.log(
+          '%c[GET_MORE_ITEMS] 📊 Calculating if more items needed',
+          'background: #9b59b6; color: white; padding: 2px 5px; border-radius: 3px;',
+          {
+            scrollDirection,
+            galleryEnd,
+            screenSize,
+            scrollPos,
+            scrollEnd,
+            getItemsDistance,
+            needsMoreItems,
+            calculation: `${galleryEnd} < ${getItemsDistance} + ${scrollEnd} = ${needsMoreItems}`,
+          }
+        );
+
+        if (needsMoreItems) {
           //only when the last item turns visible we should try getting more items
+          console.log(
+            '%c[GET_MORE_ITEMS] 🔄 Triggering NEED_MORE_ITEMS event',
+            'background: #3498db; color: white; padding: 2px 5px; border-radius: 3px;',
+            {
+              currentItemsLength: this.state.items.length,
+            }
+          );
+
           this.eventsListener(
             GALLERY_CONSTS.events.NEED_MORE_ITEMS,
             this.state.items.length
           );
 
+          console.log(
+            '%c[GET_MORE_ITEMS] ⏰ Setting 500ms timeout before resolving',
+            'background: #f39c12; color: white; padding: 2px 5px; border-radius: 3px;',
+            {
+              latestScrollPosWhileBlocked: this.latestScrollPosWhileBlocked,
+            }
+          );
+
           setTimeout(() => {
             //wait a bit before allowing more items to be fetched - ugly hack before promises still not working
+            console.log(
+              '%c[GET_MORE_ITEMS] ⏰ Timeout fired - resolving deferred',
+              'background: #2ecc71; color: white; padding: 2px 5px; border-radius: 3px;',
+              {
+                latestScrollPosWhileBlocked: this.latestScrollPosWhileBlocked,
+                isSlideshow,
+              }
+            );
+
             this.deferredGettingMoreItems.resolve();
+
             if (this.latestScrollPosWhileBlocked !== undefined) {
               const capturedPos = this.latestScrollPosWhileBlocked;
               this.latestScrollPosWhileBlocked = undefined; // Clear it
+
+              console.log(
+                '%c[GET_MORE_ITEMS] 🔁 RECURSIVE CALL - Processing blocked scroll position',
+                'background: #e67e22; color: white; padding: 2px 5px; border-radius: 3px; font-weight: bold;',
+                {
+                  capturedPos,
+                  isSlideshow,
+                  slideAnimation,
+                }
+              );
+
               this.getMoreItemsIfNeeded(capturedPos);
+            } else {
+              console.log(
+                '%c[GET_MORE_ITEMS] ✅ Timeout completed - no blocked positions',
+                'background: #27ae60; color: white; padding: 2px 5px; border-radius: 3px;'
+              );
             }
           }, 500);
         } else {
           // No items are fetched -> reject
+          console.log(
+            '%c[GET_MORE_ITEMS] 🚫 No more items needed - rejecting',
+            'background: #95a5a6; color: white; padding: 2px 5px; border-radius: 3px;',
+            {
+              reason: 'galleryEnd >= getItemsDistance + scrollEnd',
+            }
+          );
           this.deferredGettingMoreItems.reject();
         }
       }
     }
+    console.log(
+      '%c[GET_MORE_ITEMS] 🏁 Method ending - returning promise',
+      'background: #34495e; color: white; padding: 2px 5px; border-radius: 3px;'
+    );
     return this.deferredGettingMoreItems.promise.catch(() => {});
   }
 
