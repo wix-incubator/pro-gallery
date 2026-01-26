@@ -923,11 +923,13 @@ class SlideshowView extends React.Component {
     let navigationPanel;
     if (customNavigationPanelRenderer) {
       const { galleryHeight, galleryWidth, height, width } = this.props.container;
+      const infoHeight = this.props.options.layoutParams_info_height;
       const customNavigationPanelInlineStyles = getCustomNavigationPanelInlineStyles({
         galleryHeight,
         galleryWidth,
         height,
         width,
+        infoHeight,
         galleryThumbnailsAlignment: this.props.options.layoutParams_thumbnails_alignment,
         navigationPanelPosition: this.props.options.layoutParams_thumbnails_position,
       });
