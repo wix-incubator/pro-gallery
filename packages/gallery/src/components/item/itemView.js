@@ -745,16 +745,16 @@ class ItemView extends React.Component {
     switch (slideAnimation) {
       case GALLERY_CONSTS.slideAnimations.FADE:
         slideAnimationStyles = {
-          left: isRTL ? 'auto' : 0,
-          right: !isRTL ? 'auto' : 0,
+          left: isRTL ? 'auto' : '0px !important',
+          right: !isRTL ? 'auto' : '0px !important',
           pointerEvents: activeIndex === idx ? 'auto' : 'none',
           zIndex: activeIndex === idx ? 1 : 0,
         };
         break;
       case GALLERY_CONSTS.slideAnimations.DECK:
         slideAnimationStyles = {
-          left: isRTL ? 'auto' : 0,
-          right: !isRTL ? 'auto' : 0,
+          left: isRTL ? 'auto' : '0px !important',
+          right: !isRTL ? 'auto' : '0px !important',
           pointerEvents: activeIndex === idx ? 'auto' : 'none',
           zIndex: Math.sign(activeIndex - idx),
         };
